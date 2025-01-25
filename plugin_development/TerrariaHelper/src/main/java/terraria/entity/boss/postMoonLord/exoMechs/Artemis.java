@@ -1,6 +1,5 @@
 package terraria.entity.boss.postMoonLord.exoMechs;
 
-import io.netty.channel.unix.DomainSocketReadMode;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -33,7 +32,7 @@ public class Artemis extends EntitySlime {
             LASER_SPREAD_INTERVAL = 12.5, LASER_SPREAD_TOTAL = 51,
             FINAL_LASER_LENGTH = 128.0, FINAL_LASER_WIDTH = 2.25, FINAL_LASER_ROTATION = 3.0;
     static HashMap<String, Double> ATTR_MAP_LASER, ATTR_MAP_FINAL_LASER;
-    static EntityHelper.AimHelperOptions
+    static AimHelper.AimHelperOptions
             AIM_HELPER_LASER, AIM_HELPER_LASER_INACCURATE, AIM_HELPER_LASER_OFFSET,
             AIM_HELPER_DASH, AIM_HELPER_DASH_INACCURATE;
     static GenericHelper.StrikeLineOptions STRIKE_OPTION_FINAL_LASER;
@@ -46,20 +45,20 @@ public class Artemis extends EntitySlime {
         ATTR_MAP_FINAL_LASER.put("damage", 1560d);
         ATTR_MAP_FINAL_LASER.put("knockback", 2.25d);
 
-        AIM_HELPER_LASER = new EntityHelper.AimHelperOptions(LASER_TYPE)
+        AIM_HELPER_LASER = new AimHelper.AimHelperOptions(LASER_TYPE)
                 .setProjectileSpeed(LASER_SPEED);
-        AIM_HELPER_LASER_INACCURATE = new EntityHelper.AimHelperOptions(LASER_TYPE)
+        AIM_HELPER_LASER_INACCURATE = new AimHelper.AimHelperOptions(LASER_TYPE)
                 .setProjectileSpeed(LASER_SPEED)
                 .setEpoch(3)
                 .setAccelerationMode(true);
-        AIM_HELPER_LASER_OFFSET = new EntityHelper.AimHelperOptions(LASER_TYPE)
+        AIM_HELPER_LASER_OFFSET = new AimHelper.AimHelperOptions(LASER_TYPE)
                 .setProjectileSpeed(LASER_SPEED)
                 .setRandomOffsetRadius(3)
                 .setAccelerationMode(true);
 
-        AIM_HELPER_DASH = new EntityHelper.AimHelperOptions()
+        AIM_HELPER_DASH = new AimHelper.AimHelperOptions()
                 .setProjectileSpeed(DASH_SPEED);
-        AIM_HELPER_DASH_INACCURATE = new EntityHelper.AimHelperOptions()
+        AIM_HELPER_DASH_INACCURATE = new AimHelper.AimHelperOptions()
                 .setProjectileSpeed(DASH_SPEED)
                 .setEpoch(2);
 
@@ -228,7 +227,7 @@ public class Artemis extends EntitySlime {
     // fire lasers at the player
     private void phase1Attack() {
         int shootInterval;
-        EntityHelper.AimHelperOptions aimHelper;
+        AimHelper.AimHelperOptions aimHelper;
         switch (owner.calculateDifficulty(this)) {
             case LOW:
                 shootInterval = 10;
@@ -261,7 +260,7 @@ public class Artemis extends EntitySlime {
             // Unleash a roar
             owner.playWarningSound(false);
             // Dash towards the player
-            Location aimLoc = EntityHelper.helperAimEntity(bukkitEntity, target,
+            Location aimLoc = AimHelper.helperAimEntity(bukkitEntity, target,
                     owner.calculateDifficulty(this) == Draedon.Difficulty.HIGH ? AIM_HELPER_DASH : AIM_HELPER_DASH_INACCURATE);
             dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), aimLoc, DASH_SPEED);
             bukkitEntity.setVelocity(dashVelocity);
@@ -297,10 +296,10 @@ public class Artemis extends EntitySlime {
         }
     }
 
-    private void shootLaser(int shootInterval, EntityHelper.AimHelperOptions aimHelper) {
+    private void shootLaser(int shootInterval, AimHelper.AimHelperOptions aimHelper) {
         if (phaseDurationCounter % shootInterval == 0) {
             Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-            Location aimLoc = EntityHelper.helperAimEntity(shootLoc, target, aimHelper);
+            Location aimLoc = AimHelper.helperAimEntity(shootLoc, target, aimHelper);
             shootInfoLaser.shootLoc = shootLoc;
             shootInfoLaser.velocity = MathHelper.getDirection(shootLoc, aimLoc, LASER_SPEED);
             EntityHelper.spawnProjectile(shootInfoLaser);
@@ -331,7 +330,7 @@ public class Artemis extends EntitySlime {
         Location newLocation = pivot.clone().add(laserDir.clone().multiply(-32));
         Vector eyeToFootDir = bukkitEntity.getLocation().subtract(((LivingEntity) bukkitEntity).getEyeLocation()).toVector();
         newLocation.add(eyeToFootDir);
-        EntityHelper.movementTP(bukkitEntity, newLocation);
+        EntityMovementHelper.movementTP(bukkitEntity, newLocation);
         bukkitEntity.setVelocity(new Vector(0, 0, 0));
 
         double laserLength = Math.max( ((LivingEntity) bukkitEntity).getEyeLocation()
@@ -405,7 +404,7 @@ public class Artemis extends EntitySlime {
             attrMap.put("defence", 200d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.BULLET);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.BULLET);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -436,7 +435,7 @@ public class Artemis extends EntitySlime {
         // shoot info's
         {
             shootInfoLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), ATTR_MAP_LASER,
-                    EntityHelper.DamageType.ARROW, LASER_TYPE);
+                    DamageHelper.DamageType.ARROW, LASER_TYPE);
         }
         // apollo
         apollo = new Apollo(owner, this, spawnLoc);

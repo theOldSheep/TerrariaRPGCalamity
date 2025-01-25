@@ -148,7 +148,7 @@ public class QueenSlime extends EntitySlime {
             case SMASH: {
                 // begin smash
                 if (sizeChangeTimeIndex == 0) {
-                    EntityHelper.tweakAttribute(attrMap, "damageMeleeMulti", "0.2", true);
+                    AttributeHelper.tweakAttribute(attrMap, "damageMeleeMulti", "0.2", true);
                 }
                 motX = 0;
                 motY = -(secondPhase ? SMASH_SPEED_NORMAL : SMASH_SPEED_ENRAGED);
@@ -156,7 +156,7 @@ public class QueenSlime extends EntitySlime {
                 sizeChangeTimeIndex ++;
                 // end smash
                 if (locY <= 1 || (locY <= target.getLocation().getY() && isOnGround() )) {
-                    EntityHelper.tweakAttribute(attrMap, "damageMeleeMulti", "0.2", false);
+                    AttributeHelper.tweakAttribute(attrMap, "damageMeleeMulti", "0.2", false);
                     if (secondPhase) {
                         sizeChangeState = SizeState.FLY;
                     }
@@ -315,7 +315,7 @@ public class QueenSlime extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -348,7 +348,7 @@ public class QueenSlime extends EntitySlime {
         // projectile info
         {
             projectileProperty = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapRegalGel,
-                    EntityHelper.DamageType.ARROW, "挥发明胶");
+                    DamageHelper.DamageType.ARROW, "挥发明胶");
         }
     }
 

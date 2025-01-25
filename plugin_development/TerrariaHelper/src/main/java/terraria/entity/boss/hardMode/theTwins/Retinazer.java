@@ -35,7 +35,7 @@ public class Retinazer extends EntitySlime {
     boolean dashingPhase = false;
     int phaseAI = 1, indexAI = -40;
     static HashMap<String, Double> attrMapEyeLaser, attrMapDeathLaser, attrMapRapidFire, attrMapHomingMissile;
-    static EntityHelper.AimHelperOptions laserAimHelper;
+    static AimHelper.AimHelperOptions laserAimHelper;
     static final double SPEED_LASER_1 = 1.5, SPEED_LASER_2 = 1.85, SPEED_LASER_3 = 2, SPEED_MISSILE = 1;
     EntityHelper.ProjectileShootInfo shootInfoGenericLaser, shootInfoMissile;
     static {
@@ -52,7 +52,7 @@ public class Retinazer extends EntitySlime {
         attrMapHomingMissile.put("damage", 420d);
         attrMapHomingMissile.put("knockback", 4d);
 
-        laserAimHelper = new EntityHelper.AimHelperOptions()
+        laserAimHelper = new AimHelper.AimHelperOptions()
                 .setProjectileSpeed(SPEED_LASER_3)
                 .setIntensity(0.5);
     }
@@ -62,9 +62,9 @@ public class Retinazer extends EntitySlime {
         bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
         if (phaseAI == 2) {
             // damage: 306 -> 458
-            EntityHelper.tweakAttribute(attrMap, "damage", "152", true);
+            AttributeHelper.tweakAttribute(attrMap, "damage", "152", true);
             // defence: 20 -> 40
-            EntityHelper.tweakAttribute(attrMap, "defence", "20", true);
+            AttributeHelper.tweakAttribute(attrMap, "defence", "20", true);
             addScoreboardTag("isMechanic");
             setCustomName(bossName + "§1");
         }
@@ -91,7 +91,7 @@ public class Retinazer extends EntitySlime {
             case 3:
                 shootInfoGenericLaser.attrMap = attrMapRapidFire;
                 laserSpeed = SPEED_LASER_3;
-                targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, laserAimHelper);
+                targetLoc = AimHelper.helperAimEntity(bukkitEntity, target, laserAimHelper);
                 break;
         }
         shootInfoGenericLaser.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
@@ -352,7 +352,7 @@ public class Retinazer extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

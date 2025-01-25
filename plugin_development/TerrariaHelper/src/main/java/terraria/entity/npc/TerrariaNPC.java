@@ -1,14 +1,11 @@
 package terraria.entity.npc;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
-import terraria.TerrariaHelper;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
@@ -41,7 +38,7 @@ public class TerrariaNPC extends EntityVillager {
         this.goalSelector.a(0, new PathfinderGoalFloat(this));
         this.goalSelector.a(0, new PathfinderGoalNPCRestrictLocation(this));
         this.goalSelector.a(2, new PathfinderGoalAvoidTarget(this, EntityLiving.class,
-                (enemy) -> EntityHelper.checkCanDamage( ((EntityLiving) enemy).getBukkitEntity(), this.getBukkitEntity(), true),
+                (enemy) -> DamageHelper.checkCanDamage( ((EntityLiving) enemy).getBukkitEntity(), this.getBukkitEntity(), true),
                 9.0F, 0.5, 0.75));
         this.goalSelector.a(3, new PathfinderGoalRandomStrollLand(this, 0.6));
         this.goalSelector.a(4, new PathfinderGoalMoveIndoors(this));
@@ -71,41 +68,41 @@ public class TerrariaNPC extends EntityVillager {
         switch (type) {
             case GUIDE: {
                 attrMap.put("damage", 30d);
-                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
+                DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.ARROW);
                 break;
             }
             case ANGLER: {
                 attrMap.put("damage", 24d);
-                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
+                DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.ARROW);
                 break;
             }
             case BLOCK_SELLER: {
                 attrMap.put("damage", 32d);
-                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+                DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
                 break;
             }
             case CLOTHIER: {
                 attrMap.put("damage", 48d);
-                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
+                DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
                 break;
             }
             case ARMS_DEALER: {
                 attrMap.put("damage", 72d);
-                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.BULLET);
+                DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.BULLET);
                 break;
             }
             case GOBLIN_TINKERER: {
                 attrMap.put("damage", 44d);
-                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
+                DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.ARROW);
                 break;
             }
             case DEMOLITIONIST: {
                 attrMap.put("damage", 60d);
-                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
+                DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.ARROW);
                 break;
             }
             default:
-                EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+                DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
         }
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         // health
@@ -183,7 +180,7 @@ public class TerrariaNPC extends EntityVillager {
         }
         if (shootInterval != -1 && ticksLived % shootInterval == 0) {
             List<Entity> toLoop = getWorld().getEntities(null, getBoundingBox().g(24d),
-                    (entity) -> EntityHelper.checkCanDamage(this.getBukkitEntity(), entity.getBukkitEntity(), true));
+                    (entity) -> DamageHelper.checkCanDamage(this.getBukkitEntity(), entity.getBukkitEntity(), true));
             double minDistance;
             switch (NPCType) {
                 case BLOCK_SELLER:
@@ -268,12 +265,12 @@ public class TerrariaNPC extends EntityVillager {
                     }
                 }
                 // help aim enemy
-                EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions();
+                AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions();
                 aimHelper.setAccelerationMode(true)
                         .setProjectileSpeed(projectileSpd)
                         .setProjectileGravity((double) shootInfo.properties.getOrDefault("gravity", 0.05))
                         .setNoGravityTicks((int) shootInfo.properties.getOrDefault("noGravityTicks", 5));
-                Location aimLoc = EntityHelper.helperAimEntity(shootInfo.shootLoc, finalTarget, aimHelper);
+                Location aimLoc = AimHelper.helperAimEntity(shootInfo.shootLoc, finalTarget, aimHelper);
                 shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, aimLoc, projectileSpd);
 
                 EntityHelper.spawnProjectile(shootInfo);

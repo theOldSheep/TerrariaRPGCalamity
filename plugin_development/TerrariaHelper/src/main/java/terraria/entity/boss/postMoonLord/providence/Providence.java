@@ -57,7 +57,7 @@ public class Providence extends EntitySlime {
 
 
     static HashMap<String, Double> attrMapDmgLow, attrMapDmgMid, attrMapDmgHigh;
-    static EntityHelper.AimHelperOptions aimBomb, aimBlast;
+    static AimHelper.AimHelperOptions aimBomb, aimBlast;
     static GenericHelper.StrikeLineOptions strikeOptionLaser;
     static {
         // majority of projectiles
@@ -82,10 +82,10 @@ public class Providence extends EntitySlime {
                                 .setTicksLinger(1)
                                 .setParticleColor("255|255|150"));
 
-        aimBomb = new EntityHelper.AimHelperOptions()
+        aimBomb = new AimHelper.AimHelperOptions()
                 .setAccelerationMode(true)
                 .setProjectileSpeed(BOMB_SPEED);
-        aimBlast = new EntityHelper.AimHelperOptions()
+        aimBlast = new AimHelper.AimHelperOptions()
                 .setAccelerationMode(false)
                 .setProjectileSpeed(BLAST_SPEED);
     }
@@ -136,7 +136,7 @@ public class Providence extends EntitySlime {
         int projectileInterval, phaseDuration;
         // Modify this to your type
         EntityHelper.ProjectileShootInfo projectileType;
-        EntityHelper.AimHelperOptions aimHelper;
+        AimHelper.AimHelperOptions aimHelper;
         if (AIPhase == 0) {
             if (commanderState == 1) {
                 hoverLoc = commanderMinion.getBukkitEntity().getLocation().add(0, 10, 0);
@@ -176,7 +176,7 @@ public class Providence extends EntitySlime {
             projectileType.setLockedTarget(target);
             projectileType.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             projectileType.velocity = MathHelper.getDirection( projectileType.shootLoc,
-                    EntityHelper.helperAimEntity(projectileType.shootLoc, this.target, aimHelper), projectileSpeed, false );
+                    AimHelper.helperAimEntity(projectileType.shootLoc, this.target, aimHelper), projectileSpeed, false );
             projectilesManager.handleProjectile( EntityHelper.spawnProjectile(projectileType) );
         }
         // Do not transition out of this phase if guardians are alive!
@@ -398,7 +398,7 @@ public class Providence extends EntitySlime {
         AIPhase = newPhase;
     }
     private void tweakDamageReduction(boolean addOrRemove) {
-        EntityHelper.tweakAttribute(attrMap, "damageTakenMulti", "-6", addOrRemove);
+        AttributeHelper.tweakAttribute(attrMap, "damageTakenMulti", "-6", addOrRemove);
     }
     // default constructor to handle chunk unload
     public Providence(World world) {
@@ -437,7 +437,7 @@ public class Providence extends EntitySlime {
             attrMap.put("defence", 100d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -471,11 +471,11 @@ public class Providence extends EntitySlime {
         // shoot info's
         {
             shootInfoBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapDmgLow,
-                    EntityHelper.DamageType.MAGIC, "闪耀之弹");
+                    DamageHelper.DamageType.MAGIC, "闪耀之弹");
             shootInfoBomb = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapDmgLow,
-                    EntityHelper.DamageType.MAGIC, "圣之爆焱");
+                    DamageHelper.DamageType.MAGIC, "圣之爆焱");
             shootInfoStar = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapDmgMid,
-                    EntityHelper.DamageType.MAGIC, "神圣新星");
+                    DamageHelper.DamageType.MAGIC, "神圣新星");
         }
     }
 

@@ -3,7 +3,6 @@ package terraria.entity.boss.postMoonLord.exoMechs;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -12,10 +11,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.*;
 
@@ -358,7 +355,7 @@ public class Draedon extends EntitySlime {
             attrMap.put("defence", 0d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

@@ -10,10 +10,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.*;
 
@@ -227,7 +225,7 @@ public class Signus extends EntitySlime {
             attrMap.put("defence", 120d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -264,9 +262,9 @@ public class Signus extends EntitySlime {
         // shoot info's
         {
             shootInfoLantern = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapLantern,
-                    EntityHelper.DamageType.ARROW, "无限灯笼");
+                    DamageHelper.DamageType.ARROW, "无限灯笼");
             shootInfoScythe = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapScythe,
-                    EntityHelper.DamageType.MAGIC, "西格纳斯鬼镰");
+                    DamageHelper.DamageType.MAGIC, "西格纳斯鬼镰");
         }
     }
 

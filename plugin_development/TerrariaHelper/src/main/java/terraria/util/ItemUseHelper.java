@@ -585,7 +585,7 @@ public class ItemUseHelper {
     public static Vector getPlayerAimDir(Player ply, Location startShootLoc, double projectileVelocity, String projectileType,
                                          boolean tickOffsetOrSpeed, int tickOffset) {
         // default to acceleration-aim mode
-        EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions(projectileType)
+        AimHelper.AimHelperOptions aimHelperOptions = new AimHelper.AimHelperOptions(projectileType)
                 .setAccelerationMode(Setting.getOptionBool(ply, Setting.Options.AIM_HELPER_ACCELERATION))
                 .setAimMode(tickOffsetOrSpeed)
                 .setTicksTotal(tickOffset)
@@ -603,17 +603,17 @@ public class ItemUseHelper {
     // strict mode: do not target critters and entities that are strictly speaking, non-enemy
     public static class PlyTargetLocInfo {
         Player ply = null;
-        EntityHelper.AimHelperOptions aimHelperInfo = null;
+        AimHelper.AimHelperOptions aimHelperInfo = null;
         double traceDist, entityEnlargeRadius, blockDist = 0;
         boolean strictMode = true;
         // constructors
-        public PlyTargetLocInfo(Player ply, EntityHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
+        public PlyTargetLocInfo(Player ply, AimHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
             this.ply = ply;
             initPlyPreferences(ply);
             this.aimHelperInfo = aimHelperInfo;
             this.strictMode = strictMode;
         }
-        public PlyTargetLocInfo(Player ply, double blockDist, EntityHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
+        public PlyTargetLocInfo(Player ply, double blockDist, AimHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
             this.ply = ply;
             initPlyPreferences(ply);
             this.blockDist = blockDist;
@@ -629,7 +629,7 @@ public class ItemUseHelper {
             this.ply = ply;
             return this;
         }
-        public PlyTargetLocInfo setAimHelper(EntityHelper.AimHelperOptions aimHelperInfo) {
+        public PlyTargetLocInfo setAimHelper(AimHelper.AimHelperOptions aimHelperInfo) {
             this.aimHelperInfo = aimHelperInfo;
             return this;
         }
@@ -654,7 +654,7 @@ public class ItemUseHelper {
     // gets the player's targeted location with the aim helper
     public static Location getPlayerTargetLoc(PlyTargetLocInfo targetLocInfo) {
         Player ply = targetLocInfo.ply;
-        EntityHelper.AimHelperOptions aimHelperInfo = targetLocInfo.aimHelperInfo;
+        AimHelper.AimHelperOptions aimHelperInfo = targetLocInfo.aimHelperInfo;
         double traceDist = targetLocInfo.traceDist;
         double blockDist = targetLocInfo.blockDist;
         double entityEnlargeRadius = targetLocInfo.entityEnlargeRadius;
@@ -698,12 +698,12 @@ public class ItemUseHelper {
                     plyWorld, traceStart, traceEnd,
                     entityEnlargeRadius,
                     (net.minecraft.server.v1_12_R1.Entity target) ->
-                            EntityHelper.checkCanDamage(ply, target.getBukkitEntity(), strictMode) &&
+                            DamageHelper.checkCanDamage(ply, target.getBukkitEntity(), strictMode) &&
                                     ply.hasLineOfSight(target.getBukkitEntity()));
             if (hits.size() > 0) {
                 HitEntityInfo hitInfo = hits.iterator().next();
                 Entity hitEntity = hitInfo.getHitEntity().getBukkitEntity();
-                targetLoc = EntityHelper.helperAimEntity(ply, hitEntity, aimHelperInfo);
+                targetLoc = AimHelper.helperAimEntity(ply, hitEntity, aimHelperInfo);
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE, hitEntity);
                 tracedEntity = true;
             }
@@ -722,7 +722,7 @@ public class ItemUseHelper {
         }
         return targetLoc;
     }
-    public static Location getPlayerCachedTargetLoc(Player ply, EntityHelper.AimHelperOptions aimHelperInfo) {
+    public static Location getPlayerCachedTargetLoc(Player ply, AimHelper.AimHelperOptions aimHelperInfo) {
         MetadataValue metadataValue = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE);
         if (metadataValue == null)
             return ply.getEyeLocation();
@@ -734,7 +734,7 @@ public class ItemUseHelper {
         // if the entity is below bedrock layer (usually boss AI phase that should not be targeted)
         if (targetEntity.getLocation().getY() < 0d)
             return ply.getEyeLocation();
-        return EntityHelper.helperAimEntity(ply, targetEntity, aimHelperInfo);
+        return AimHelper.helperAimEntity(ply, targetEntity, aimHelperInfo);
     }
     // special weapon attack helper functions below
     protected static void handleSingleZenithSwingAnimation(Player ply, HashMap<String, Double> attrMap,
@@ -764,7 +764,7 @@ public class ItemUseHelper {
         // setup vector info etc.
         EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
         Vector lookDir = MathHelper.vectorFromYawPitch_approx(nmsPly.yaw, nmsPly.pitch);
-        Location targetLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, 4, new EntityHelper.AimHelperOptions().setTicksTotal(8).setAimMode(true), true));
+        Location targetLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, 4, new AimHelper.AimHelperOptions().setTicksTotal(8).setAimMode(true), true));
         Location centerLoc = targetLoc.clone().add(ply.getEyeLocation()).multiply(0.5);
         Vector reachVec = centerLoc.clone().subtract(ply.getEyeLocation()).toVector();
         Vector offsetVec = MathHelper.getNonZeroCrossProd(reachVec, reachVec);
@@ -828,7 +828,7 @@ public class ItemUseHelper {
             // if the player is dealing melee damage, display the player's weapon instead of particle
             case 0:
             case 1:
-                if (EntityHelper.getDamageType(ply) == EntityHelper.DamageType.MELEE) {
+                if (DamageHelper.getDamageType(ply) == DamageHelper.DamageType.MELEE) {
                     // create a new weapon item that has the same material and name of the weapon used, but without lore
                     // it is used as a holographic display, the absence of lore prevents lag.
                     ItemStack displayItem = new ItemStack(weaponItem.getType());
@@ -886,7 +886,7 @@ public class ItemUseHelper {
                                     Vector projVel = MathHelper.randomVector();
                                     projVel.multiply(0.2);
                                     EntityHelper.spawnProjectile(ply, hitLoc, projVel,
-                                            attrMap, EntityHelper.DamageType.MELEE, "电火花");
+                                            attrMap, DamageHelper.DamageType.MELEE, "电火花");
                                 });
                     }
                     break;
@@ -899,10 +899,10 @@ public class ItemUseHelper {
                                     // melee invulnerability tick
                                     int invulnerabilityTicks = 4;
                                     EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                            EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
+                                            DamageHelper.getInvulnerabilityTickName(DamageHelper.DamageType.MELEE),
                                             invulnerabilityTicks);
                                     EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                            EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
+                                            DamageHelper.getInvulnerabilityTickName(DamageHelper.DamageType.TRUE_MELEE),
                                             invulnerabilityTicks);
                                 });
                     }
@@ -914,18 +914,18 @@ public class ItemUseHelper {
                         strikeLineInfo
                                 .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
                                     // predict enemy location
-                                    EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                                    AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions()
                                             .setAimMode(true)
                                             .setTicksTotal(8)
                                             .setRandomOffsetRadius(1.5);
-                                    Location predictedLoc = EntityHelper.helperAimEntity(ply, entityHit, aimHelper);
+                                    Location predictedLoc = AimHelper.helperAimEntity(ply, entityHit, aimHelper);
                                     Vector projVel = MathHelper.vectorFromYawPitch_approx(
                                             Math.random() * 360, 70 + Math.random() * 20);
                                     projVel.multiply(24);
                                     predictedLoc.subtract(projVel);
                                     projVel.multiply(1/8d);
                                     EntityHelper.spawnProjectile(ply, predictedLoc, projVel, attrMap,
-                                            EntityHelper.DamageType.MELEE, "伽利略小行星");
+                                            DamageHelper.DamageType.MELEE, "伽利略小行星");
                                 });
                     }
                     break;
@@ -944,7 +944,7 @@ public class ItemUseHelper {
                                         Vector projVel = MathHelper.randomVector();
                                         projVel.multiply(0.35);
                                         EntityHelper.spawnProjectile(ply, hitLoc, projVel,
-                                                attrMap, EntityHelper.DamageType.MELEE, "硫磺火间歇泉");
+                                                attrMap, DamageHelper.DamageType.MELEE, "硫磺火间歇泉");
                                     }
                                 });
                     }
@@ -967,7 +967,7 @@ public class ItemUseHelper {
                                             Vector projVel = MathHelper.randomVector();
                                             projVel.multiply(1);
                                             EntityHelper.spawnProjectile(ply, hitLoc, projVel,
-                                                    attrMap, EntityHelper.DamageType.MELEE, "追踪火球");
+                                                    attrMap, DamageHelper.DamageType.MELEE, "追踪火球");
                                         }
                                 });
                     }
@@ -986,7 +986,7 @@ public class ItemUseHelper {
                                         Vector projVel = MathHelper.randomVector();
                                         projVel.multiply(1.5);
                                         EntityHelper.spawnProjectile(ply, hitLoc, projVel,
-                                                plagueSeekerAttrMap, EntityHelper.DamageType.MELEE, "瘟疫搜寻者");
+                                                plagueSeekerAttrMap, DamageHelper.DamageType.MELEE, "瘟疫搜寻者");
                                     }
                                 });
                     }
@@ -1002,7 +1002,7 @@ public class ItemUseHelper {
                         projAttrMap.put("damage", projAttrMap.get("damage") * 0.65);
 
                         EntityHelper.spawnProjectile(ply, projVel,
-                                projAttrMap, EntityHelper.DamageType.MELEE, "能量脉冲");
+                                projAttrMap, DamageHelper.DamageType.MELEE, "能量脉冲");
                     }
                     break;
                 }
@@ -1021,7 +1021,7 @@ public class ItemUseHelper {
                                         projVel.multiply(1.5);
                                         locOffset.multiply(30);
                                         EntityHelper.spawnProjectile(ply, hitLoc.subtract(locOffset), projVel,
-                                                attrMap, EntityHelper.DamageType.MELEE, "彗星");
+                                                attrMap, DamageHelper.DamageType.MELEE, "彗星");
                                     }
                                 });
                     }
@@ -1044,7 +1044,7 @@ public class ItemUseHelper {
                         projVel.normalize().multiply(2.75);
 
                         EntityHelper.spawnProjectile(ply, shootLoc, projVel,
-                                attrMap, EntityHelper.DamageType.MELEE, "灵魂鬼爪");
+                                attrMap, DamageHelper.DamageType.MELEE, "灵魂鬼爪");
                     }
                     break;
                 }
@@ -1055,8 +1055,8 @@ public class ItemUseHelper {
                         double finalStrikePitch = strikePitch;
                         strikeLineInfo
                                 .setDamagedFunction((hitIndex, entityHit, hitLoc) -> {
-                                    EntityHelper.getAttrMap(entityHit).put("damageMeleeMulti", 6.0);
-                                    EntityHelper.getAttrMap(entityHit).put("crit", 100.0);
+                                    AttributeHelper.getAttrMap(entityHit).put("damageMeleeMulti", 6.0);
+                                    AttributeHelper.getAttrMap(entityHit).put("crit", 100.0);
                                     Vector projVel = MathHelper.vectorFromYawPitch_approx(finalStrikeYaw, finalStrikePitch);
                                     projVel.multiply(3);
                                     entityHit.setVelocity(projVel);
@@ -1075,7 +1075,7 @@ public class ItemUseHelper {
                         if (currentIndex == 0) {
                             Vector plyVel = lookDir.clone();
                             plyVel.multiply(2);
-                            EntityHelper.setVelocity(ply, plyVel);
+                            EntityMovementHelper.setVelocity(ply, plyVel);
                         }
                         // hitting enemies will lock the player in a proper place
                         int finalCurrentIndex = currentIndex;
@@ -1087,14 +1087,14 @@ public class ItemUseHelper {
                                         // repels the player when the strike would finish soon
                                         if ( ( (finalCurrentIndex + 3) * 1.75) >= maxIndex) {
                                             Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc, 2);
-                                            EntityHelper.setVelocity(ply, plyVel);
+                                            EntityMovementHelper.setVelocity(ply, plyVel);
                                         }
                                         // otherwise, keep a safe distance from enemy
                                         else {
                                             Vector offsetDir = MathHelper.getDirection(hitLoc, finalStartStrikeLoc, 5.5);
                                             Vector plyVel = MathHelper.getDirection(
                                                     finalStartStrikeLoc, hitLoc.add(offsetDir), 1.75, true);
-                                            EntityHelper.setVelocity(ply, plyVel);
+                                            EntityMovementHelper.setVelocity(ply, plyVel);
                                         }
                                     }
                                 })
@@ -1141,16 +1141,16 @@ public class ItemUseHelper {
                                     // hit projectile: respective invulnerability tick
                                     if (entityHit instanceof Projectile) {
                                         EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                                EntityHelper.getInvulnerabilityTickName(EntityHelper.getDamageType(entityHit)),
+                                                DamageHelper.getInvulnerabilityTickName(DamageHelper.getDamageType(entityHit)),
                                                 invulnerabilityTicks);
                                     }
                                     // hit entity: apply melee invulnerability tick
                                     else {
                                         EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                                EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
+                                                DamageHelper.getInvulnerabilityTickName(DamageHelper.DamageType.MELEE),
                                                 invulnerabilityTicks);
                                         EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                                EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
+                                                DamageHelper.getInvulnerabilityTickName(DamageHelper.DamageType.TRUE_MELEE),
                                                 invulnerabilityTicks);
                                     }
                                     // recharge
@@ -1163,7 +1163,7 @@ public class ItemUseHelper {
                                 .setDamageCD(30)
                                 // should parry entities that can damage player (and not in damage CD list)
                                 .setShouldDamageFunction( (e) ->
-                                        EntityHelper.checkCanDamage(e, ply, true) && !finalDamagedList.contains(e));
+                                        DamageHelper.checkCanDamage(e, ply, true) && !finalDamagedList.contains(e));
                         // render scissors
                         switch (weaponType) {
                             case "元素方舟_RIGHT_CLICK":
@@ -1243,7 +1243,7 @@ public class ItemUseHelper {
                                     ply.setFallDistance(0f);
                                     // repels the player
                                     Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc1, 1.5);
-                                    EntityHelper.setVelocity(ply, plyVel);
+                                    EntityMovementHelper.setVelocity(ply, plyVel);
                                 }
                             });
                     break;
@@ -1256,7 +1256,7 @@ public class ItemUseHelper {
                         if (currentIndex == 0 && ply.isOnGround()) {
                             Vector plyVel = lookDir.clone();
                             plyVel.multiply(1.5);
-                            EntityHelper.setVelocity(ply, plyVel);
+                            EntityMovementHelper.setVelocity(ply, plyVel);
                         }
                         // hitting enemies will knock back the player
                         Location finalStartStrikeLoc2 = startStrikeLoc;
@@ -1266,7 +1266,7 @@ public class ItemUseHelper {
                                         ply.setFallDistance(0f);
                                         // repels the player
                                         Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc2, 0.75);
-                                        EntityHelper.setVelocity(ply, plyVel);
+                                        EntityMovementHelper.setVelocity(ply, plyVel);
                                         // heal for a small amount
                                         PlayerHelper.heal(ply, 3);
                                     }
@@ -1283,7 +1283,7 @@ public class ItemUseHelper {
                         if (currentIndex == 0) {
                             Vector plyVel = lookDir.clone();
                             plyVel.multiply(1.75);
-                            EntityHelper.setVelocity(ply, plyVel);
+                            EntityMovementHelper.setVelocity(ply, plyVel);
                         }
                         // hitting enemies will knock back the player
                         int overrideCD = 12 - currentIndex;
@@ -1294,7 +1294,7 @@ public class ItemUseHelper {
                                         ply.setFallDistance(0f);
                                         // repels the player
                                         Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc3, 1);
-                                        EntityHelper.setVelocity(ply, plyVel);
+                                        EntityMovementHelper.setVelocity(ply, plyVel);
                                         // heal for a small amount
                                         PlayerHelper.heal(ply, 4);
                                         applyCD(ply, overrideCD);
@@ -1323,7 +1323,7 @@ public class ItemUseHelper {
                         {
                             Vector plyVel = MathHelper.vectorFromYawPitch_approx(strikeYaw, strikePitch);
                             plyVel.multiply(2);
-                            EntityHelper.setVelocity(ply, plyVel);
+                            EntityMovementHelper.setVelocity(ply, plyVel);
                         }
                         // remove all stacks on last blow
                         if (currentIndex == maxIndex) {
@@ -1356,7 +1356,7 @@ public class ItemUseHelper {
                         {
                             Vector plyVel = MathHelper.vectorFromYawPitch_approx(strikeYaw, strikePitch);
                             plyVel.multiply(2);
-                            EntityHelper.setVelocity(ply, plyVel);
+                            EntityMovementHelper.setVelocity(ply, plyVel);
                         }
                         // remove all stacks on last blow
                         if (currentIndex == maxIndex) {
@@ -1431,7 +1431,7 @@ public class ItemUseHelper {
                                     ply.setFallDistance(0f);
                                     // repels the player
                                     Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc4, 1.5);
-                                    EntityHelper.setVelocity(ply, plyVel);
+                                    EntityMovementHelper.setVelocity(ply, plyVel);
                                 }
                             });
                     break;
@@ -1447,7 +1447,7 @@ public class ItemUseHelper {
                         if (durability.get() >= 50) {
                             Vector plyVel = lookDir.clone();
                             plyVel.multiply(2.25);
-                            EntityHelper.setVelocity(ply, plyVel);
+                            EntityMovementHelper.setVelocity(ply, plyVel);
                         }
                         // save durability
                         durability.addAndGet(-12);
@@ -1465,7 +1465,7 @@ public class ItemUseHelper {
                                     ply.setFallDistance(0f);
                                     // repels the player
                                     Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc5, 1.5);
-                                    EntityHelper.setVelocity(ply, plyVel);
+                                    EntityMovementHelper.setVelocity(ply, plyVel);
                                     // heal for a small amount
                                     PlayerHelper.heal(ply, 8);
                                     applyCD(ply, overrideCD);
@@ -1489,7 +1489,7 @@ public class ItemUseHelper {
                         Vector projVel = MathHelper.randomVector();
                         projVel.multiply(2.5);
                         EntityHelper.spawnProjectile(ply, projVel, passiveProjAttrMap,
-                                EntityHelper.DamageType.MELEE, "巨蟹之礼星环");
+                                DamageHelper.DamageType.MELEE, "巨蟹之礼星环");
                     }
                     // durability tweak
                     if (currentIndex % 2 == 0)
@@ -1517,14 +1517,14 @@ public class ItemUseHelper {
                         Vector projVel = MathHelper.randomVector();
                         projVel.multiply(2.5);
                         EntityHelper.spawnProjectile(ply, projVel, passiveProjAttrMap,
-                                EntityHelper.DamageType.MELEE, "巨蟹之礼星环");
+                                DamageHelper.DamageType.MELEE, "巨蟹之礼星环");
                     }
                     // dash attempt
                     if (currentIndex == 0) {
                         if (durability.get() >= 25) {
                             Vector plyVel = lookDir.clone();
                             plyVel.multiply(3);
-                            EntityHelper.setVelocity(ply, plyVel);
+                            EntityMovementHelper.setVelocity(ply, plyVel);
                         }
                         // save durability
                         durability.addAndGet(-25);
@@ -1542,7 +1542,7 @@ public class ItemUseHelper {
                                     ply.setFallDistance(0f);
                                     // repels the player
                                     Vector plyVel = MathHelper.getDirection(hitLoc, finalStartStrikeLoc5, 1.5);
-                                    EntityHelper.setVelocity(ply, plyVel);
+                                    EntityMovementHelper.setVelocity(ply, plyVel);
                                     // heal for a small amount
                                     PlayerHelper.heal(ply, 10);
                                     applyCD(ply, overrideCD);
@@ -1563,7 +1563,7 @@ public class ItemUseHelper {
                         Vector projVel = MathHelper.randomVector();
                         projVel.multiply(2.5);
                         EntityHelper.spawnProjectile(ply, projVel, passiveProjAttrMap,
-                                EntityHelper.DamageType.MELEE, "巨蟹之礼星环");
+                                DamageHelper.DamageType.MELEE, "巨蟹之礼星环");
                     }
                     // deal low damage during charging phase
                     attrMap.put("damage", 1000d);
@@ -1590,7 +1590,7 @@ public class ItemUseHelper {
                         Vector projVel = MathHelper.randomVector();
                         projVel.multiply(2.5);
                         EntityHelper.spawnProjectile(ply, projVel, passiveProjAttrMap,
-                                EntityHelper.DamageType.MELEE, "巨蟹之礼星环");
+                                DamageHelper.DamageType.MELEE, "巨蟹之礼星环");
                     }
 
                     // dash
@@ -1608,7 +1608,7 @@ public class ItemUseHelper {
                     // maintain the dash
                     Vector plyVel = lookDir.clone();
                     plyVel.multiply(3);
-                    EntityHelper.setVelocity(ply, plyVel);
+                    EntityMovementHelper.setVelocity(ply, plyVel);
 
                     // strike options
                     Vector finalLookDir1 = lookDir.clone();
@@ -1618,16 +1618,16 @@ public class ItemUseHelper {
                             .setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
                                 int invulnerabilityTicks = 5;
                                 EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                        EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MELEE),
+                                        DamageHelper.getInvulnerabilityTickName(DamageHelper.DamageType.MELEE),
                                         invulnerabilityTicks);
                                 EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                        EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.TRUE_MELEE),
+                                        DamageHelper.getInvulnerabilityTickName(DamageHelper.DamageType.TRUE_MELEE),
                                         invulnerabilityTicks);
                                 EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                        EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.ARROW),
+                                        DamageHelper.getInvulnerabilityTickName(DamageHelper.DamageType.ARROW),
                                         invulnerabilityTicks);
                                 EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                        EntityHelper.getInvulnerabilityTickName(EntityHelper.DamageType.MAGIC),
+                                        DamageHelper.getInvulnerabilityTickName(DamageHelper.DamageType.MAGIC),
                                         invulnerabilityTicks);
                             })
                             // releases all charges & create massive explosion after colliding with terrain
@@ -1677,8 +1677,8 @@ public class ItemUseHelper {
                                         Location cachedLoc = currExplodeLoc.clone();
                                         if (i <= 1) {
                                             // projectile
-                                            EntityHelper.spawnProjectile(ply, cachedLoc, traceDir, EntityHelper.getAttrMap(ply),
-                                                    EntityHelper.DamageType.MELEE, "银河之雷");
+                                            EntityHelper.spawnProjectile(ply, cachedLoc, traceDir, AttributeHelper.getAttrMap(ply),
+                                                    DamageHelper.DamageType.MELEE, "银河之雷");
                                         }
                                         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                                                 () -> {
@@ -1698,7 +1698,7 @@ public class ItemUseHelper {
                     strikePitch = -45;
                     // summons meteors from the sky
                     int hitDelay = 5 + (int) (Math.random() * 5);
-                    Location targetLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, new EntityHelper.AimHelperOptions()
+                    Location targetLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, new AimHelper.AimHelperOptions()
                             .setAimMode(true)
                             .setTicksTotal(hitDelay)
                             .setRandomOffsetRadius(5), true));
@@ -1706,7 +1706,7 @@ public class ItemUseHelper {
                     projVel.multiply(2.5 + Math.random());
                     targetLoc.subtract(projVel.clone().multiply(hitDelay));
 
-                    EntityHelper.spawnProjectile(ply, targetLoc, projVel, attrMap, EntityHelper.DamageType.MELEE, "焚灭天惩燃烧陨石");
+                    EntityHelper.spawnProjectile(ply, targetLoc, projVel, attrMap, DamageHelper.DamageType.MELEE, "焚灭天惩燃烧陨石");
                     break;
                 }
                 case "光棱破碎者": {
@@ -1765,7 +1765,7 @@ public class ItemUseHelper {
                         plyVel = lookDir.clone();
                     }
                     else
-                        plyVel = EntityHelper.getRawVelocity(ply).normalize();
+                        plyVel = EntityMovementHelper.getRawVelocity(ply).normalize();
                     // end dash earlier after recoil (hitting entity); do not update velocity
                     if (plyVel.dot(lookDir) < 0) {
                         if (currentIndex + 5 < maxIndex) {
@@ -1776,11 +1776,11 @@ public class ItemUseHelper {
                     // init and maintain dash velocity as well as init base charge gain
                     else {
                         plyVel.multiply(dashVel);
-                        EntityHelper.setVelocity(ply, plyVel);
+                        EntityMovementHelper.setVelocity(ply, plyVel);
                     }
                     // remove dash velocity on timeout
                     if (currentIndex == maxIndex)
-                        EntityHelper.setVelocity(ply, new Vector());
+                        EntityMovementHelper.setVelocity(ply, new Vector());
 
                     // hitting enemies will knock back the player and fully charge the weapon
                     Vector lookDirCopy = lookDir.clone().multiply(-1);
@@ -1797,11 +1797,11 @@ public class ItemUseHelper {
                                         spawnLoc.subtract(projVel);
                                         projVel.multiply(2);
                                         EntityHelper.spawnProjectile(ply, spawnLoc, projVel, attrMap,
-                                                EntityHelper.DamageType.MELEE, "星流斩切光束");
+                                                DamageHelper.DamageType.MELEE, "星流斩切光束");
                                     }, i);
                                 }
                                 // recoil
-                                EntityHelper.setVelocity(ply, lookDirCopy);
+                                EntityMovementHelper.setVelocity(ply, lookDirCopy);
                             })
                             .setLingerDelay(1);
                     break;
@@ -1846,7 +1846,7 @@ public class ItemUseHelper {
                     }
                     case "狂星之怒": {
                         if (currentIndex == 0) {
-                            EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                            AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions()
                                     .setAimMode(true)
                                     .setTicksTotal(10);
                             Location aimLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, aimHelper, true));
@@ -1859,7 +1859,7 @@ public class ItemUseHelper {
                                 Location shootLoc = aimLoc.clone().add(Math.random() * 16 - 8, 25, Math.random() * 16 - 8);
                                 Vector velocity = targetLoc.subtract(shootLoc).toVector().multiply(0.1);
                                 EntityHelper.spawnProjectile(ply, shootLoc, velocity, attrMap,
-                                        EntityHelper.DamageType.MELEE, "狂星之怒");
+                                        DamageHelper.DamageType.MELEE, "狂星之怒");
                             }
                         }
                         break;
@@ -1921,7 +1921,7 @@ public class ItemUseHelper {
                                 Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), 2, "远古剑气", false, 0);
                                 projVel.normalize().multiply(2);
 
-                                EntityHelper.spawnProjectile(ply, projVel, EntityHelper.getAttrMap(ply), "远古剑气");
+                                EntityHelper.spawnProjectile(ply, projVel, AttributeHelper.getAttrMap(ply), "远古剑气");
                                 charge --;
                                 setDurability(weaponItem, 10, charge);
                             }
@@ -1943,7 +1943,7 @@ public class ItemUseHelper {
                                         plyPitch + Math.random() * 10 - 5);
                                 projVel.multiply(2.75);
                                 EntityHelper.spawnProjectile(ply, projVel, projAttrMap,
-                                        EntityHelper.DamageType.MELEE, "死神擢升镰刀");
+                                        DamageHelper.DamageType.MELEE, "死神擢升镰刀");
                             }
                         }
                         break;
@@ -1965,7 +1965,7 @@ public class ItemUseHelper {
                             Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), 3, "热熔光刃", false, 0);
                             projVel.normalize().multiply(3);
                             EntityHelper.spawnProjectile(ply, projVel, attrMap,
-                                    EntityHelper.DamageType.MELEE, "热熔光刃");
+                                    DamageHelper.DamageType.MELEE, "热熔光刃");
                         }
                         break;
                     }
@@ -1984,7 +1984,7 @@ public class ItemUseHelper {
                             double strikeYaw = Math.random() * 360, strikePitch = Math.random() * 360;
                             damaged.clear();
                             // direction
-                            Location targetLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, size * 0.5, new EntityHelper.AimHelperOptions().setAimMode(true), true));
+                            Location targetLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, size * 0.5, new AimHelper.AimHelperOptions().setAimMode(true), true));
                             targetLoc.subtract(
                                     MathHelper.vectorFromYawPitch_approx(strikeYaw, strikePitch)
                                             .multiply(size * 0.75));
@@ -2013,7 +2013,7 @@ public class ItemUseHelper {
                             Vector projVel = MathHelper.randomVector();
                             projVel.multiply(3);
                             EntityHelper.spawnProjectile(ply, projVel, projAttrMap,
-                                    EntityHelper.DamageType.MELEE, "银河之雷");
+                                    DamageHelper.DamageType.MELEE, "银河之雷");
                         }
                         // passive projectile
                         if (currentIndex == 0) {
@@ -2023,7 +2023,7 @@ public class ItemUseHelper {
                             Vector projVel = MathHelper.randomVector();
                             projVel.multiply(2.5);
                             EntityHelper.spawnProjectile(ply, projVel, passiveProjAttrMap,
-                                    EntityHelper.DamageType.MELEE, "摩羯之祈星环");
+                                    DamageHelper.DamageType.MELEE, "摩羯之祈星环");
                         }
                         break;
                     }
@@ -2037,7 +2037,7 @@ public class ItemUseHelper {
                             Vector projVel = MathHelper.randomVector();
                             projVel.multiply(2.5);
                             EntityHelper.spawnProjectile(ply, hitLoc, projVel, projAttrMap,
-                                    EntityHelper.DamageType.MELEE, "银河之雷");
+                                    DamageHelper.DamageType.MELEE, "银河之雷");
                         })
                                 .setDamageCD(5);
                         // passive projectile
@@ -2048,7 +2048,7 @@ public class ItemUseHelper {
                             Vector projVel = MathHelper.randomVector();
                             projVel.multiply(2.5);
                             EntityHelper.spawnProjectile(ply, projVel, passiveProjAttrMap,
-                                    EntityHelper.DamageType.MELEE, "摩羯之祈星环");
+                                    DamageHelper.DamageType.MELEE, "摩羯之祈星环");
                         }
                         break;
                     }
@@ -2061,7 +2061,7 @@ public class ItemUseHelper {
                             Vector projVel = MathHelper.randomVector();
                             projVel.multiply(2.5);
                             EntityHelper.spawnProjectile(ply, hitLoc, projVel, projAttrMap,
-                                    EntityHelper.DamageType.MELEE, "巨龙之怒火球");
+                                    DamageHelper.DamageType.MELEE, "巨龙之怒火球");
                         });
                         break;
                     }
@@ -2084,7 +2084,7 @@ public class ItemUseHelper {
                                 projVel.multiply(0.04);
                                 String projectileType = Math.random() < 0.5 ? "蓝色宙能聚爆" : "红色宙能聚爆";
                                 EntityHelper.spawnProjectile(ply, spawnLoc, projVel, attrMap,
-                                        EntityHelper.DamageType.MELEE, projectileType);
+                                        DamageHelper.DamageType.MELEE, projectileType);
                             }
                         }
                         break;
@@ -2096,7 +2096,7 @@ public class ItemUseHelper {
                                     Vector projVel = MathHelper.randomVector();
                                     projVel.multiply(0.35);
                                     EntityHelper.spawnProjectile(ply, hitLoc, projVel,
-                                            attrMap, EntityHelper.DamageType.MELEE, "硫磺火间歇泉");
+                                            attrMap, DamageHelper.DamageType.MELEE, "硫磺火间歇泉");
                                 }
                             }
                         });
@@ -2120,7 +2120,7 @@ public class ItemUseHelper {
                     case "混乱之刃": {
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
                             double damage = ply.getMaxHealth() - ply.getHealth();
-                            EntityHelper.handleDamage(ply, hitEntity, damage, EntityHelper.DamageReason.STRIKE);
+                            DamageHelper.handleDamage(ply, hitEntity, damage, DamageHelper.DamageReason.STRIKE);
                         });
                         break;
                     }
@@ -2161,7 +2161,7 @@ public class ItemUseHelper {
                                         Math.random() * 12 - 6);
                                 projVel = MathHelper.getDirection(spawnLoc, hitLoc, projectileSpeed);
                                 EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
-                                        attrMap, EntityHelper.DamageType.MELEE, projectileName);
+                                        attrMap, DamageHelper.DamageType.MELEE, projectileName);
                             }
                         });
                         break;
@@ -2199,7 +2199,7 @@ public class ItemUseHelper {
                                         Vector projVel = MathHelper.vectorFromYawPitch_approx(projYaw, -30);
                                         projVel.multiply(1.5);
                                         EntityHelper.spawnProjectile(ply, hitLoc, projVel, attrMap,
-                                                EntityHelper.DamageType.MELEE, "彩虹弹幕");
+                                                DamageHelper.DamageType.MELEE, "彩虹弹幕");
                                     }
                                 }
                             }
@@ -2225,7 +2225,7 @@ public class ItemUseHelper {
                                 projVel.add(MathHelper.randomVector().multiply( projVel.length() * 0.02 ) );
                                 projVel.normalize().multiply(1.5);
                                 EntityHelper.spawnProjectile(ply, projVel,
-                                        projAttrMap, EntityHelper.DamageType.MELEE, projectileType);
+                                        projAttrMap, DamageHelper.DamageType.MELEE, projectileType);
                             }
                         }
                         break;
@@ -2236,7 +2236,7 @@ public class ItemUseHelper {
                                 LivingEntity hitEntityLiving = (LivingEntity) hitEntity;
                                 double victimHealthRatio = hitEntityLiving.getHealth() / hitEntityLiving.getMaxHealth();
                                 double damage = attrMap.get("damage") * victimHealthRatio;
-                                EntityHelper.handleDamage(ply, hitEntity, damage, EntityHelper.DamageReason.STRIKE);
+                                DamageHelper.handleDamage(ply, hitEntity, damage, DamageHelper.DamageReason.STRIKE);
                             }
                         });
                         break;
@@ -2250,7 +2250,7 @@ public class ItemUseHelper {
                                 projVel.multiply(1.5);
                                 EntityHelper.spawnProjectile(ply,
                                         projVel, attrMap,
-                                        EntityHelper.DamageType.MELEE, "禁忌镰刀");
+                                        DamageHelper.DamageType.MELEE, "禁忌镰刀");
                                 projPitch += 15;
                             }
                         }
@@ -2274,7 +2274,7 @@ public class ItemUseHelper {
                                 projVel.multiply(3.5);
                                 EntityHelper.spawnProjectile(ply,
                                         projVel, attrMap,
-                                        EntityHelper.DamageType.MELEE, "禁忌镰刀");
+                                        DamageHelper.DamageType.MELEE, "禁忌镰刀");
                                 projPitch += 15;
                             }
                         }
@@ -2314,7 +2314,7 @@ public class ItemUseHelper {
                                         plyYaw + Math.random() * 10 - 5, plyPitch + Math.random() * 10 - 5);
                                 projVel.multiply(2.25);
                                 EntityHelper.spawnProjectile(ply, projVel,
-                                        projAttrMap, EntityHelper.DamageType.MELEE, "熵离子球");
+                                        projAttrMap, DamageHelper.DamageType.MELEE, "熵离子球");
                             }
                         }
                         break;
@@ -2331,7 +2331,7 @@ public class ItemUseHelper {
                             Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), 3, projType, false, 0);
                             projVel.normalize().multiply(3);
                             EntityHelper.spawnProjectile(ply, projVel,
-                                    projAttrMap, EntityHelper.DamageType.MELEE, projType);
+                                    projAttrMap, DamageHelper.DamageType.MELEE, projType);
                         }
                         break;
                     }
@@ -2344,7 +2344,7 @@ public class ItemUseHelper {
                                         Math.random() * 10 - 5, Math.random() * 10 + 15, Math.random() * 10 - 5);
                                 Vector projVel = MathHelper.getDirection(spawnLoc, targetLoc, 3);
                                 EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
-                                        attrMap, EntityHelper.DamageType.MELEE, "破坏重剑剑气");
+                                        attrMap, DamageHelper.DamageType.MELEE, "破坏重剑剑气");
                             }
                         }
                         break;
@@ -2365,28 +2365,28 @@ public class ItemUseHelper {
                                     projVel.multiply(3);
                                 }
                                 EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
-                                        attrMap, EntityHelper.DamageType.MELEE, "爆破剑气");
+                                        attrMap, DamageHelper.DamageType.MELEE, "爆破剑气");
                             }
                         }
                         break;
                     }
                     case "圣火之刃": {
                         strikeLineInfo.setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
-                            HashMap<String, Double> projAttrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(ply).clone();
+                            HashMap<String, Double> projAttrMap = (HashMap<String, Double>) AttributeHelper.getAttrMap(ply).clone();
                             projAttrMap.put("damage", projAttrMap.get("damage") * 0.5);
                             double startYaw = Math.random() * 360;
                             for (int i = 0; i < 4; i ++) {
                                 Vector projVel = MathHelper.vectorFromYawPitch_approx(startYaw + 90 * i, 0);
                                 projVel.multiply(1.5);
                                 EntityHelper.spawnProjectile(ply, hitLoc, projVel, projAttrMap,
-                                        EntityHelper.DamageType.MELEE,"神圣之火");
+                                        DamageHelper.DamageType.MELEE,"神圣之火");
                             }
                         });
                         break;
                     }
                     case "星河之刃": {
                         if (currentIndex == 0) {
-                            Location targetLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, new EntityHelper.AimHelperOptions().setAimMode(true).setTicksTotal(10), true));
+                            Location targetLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, new AimHelper.AimHelperOptions().setAimMode(true).setTicksTotal(10), true));
                             for (int i = 0; i < 5; i ++) {
                                 Location spawnLoc = targetLoc.clone().add(
                                         Math.random() * 8 - 4, Math.random() * 5 + 15, Math.random() * 8 - 4);
@@ -2394,7 +2394,7 @@ public class ItemUseHelper {
                                         Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1);
                                 Vector projVel = MathHelper.getDirection(spawnLoc, aimLoc, 2);
                                 EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
-                                        attrMap, EntityHelper.DamageType.MELEE, "星河陨石");
+                                        attrMap, DamageHelper.DamageType.MELEE, "星河陨石");
                             }
                         }
                         break;
@@ -2424,7 +2424,7 @@ public class ItemUseHelper {
 
                             Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), 2.25, projType, false, 0);
                             projVel.normalize().multiply(2.25);
-                            EntityHelper.spawnProjectile(ply, projVel, EntityHelper.getAttrMap(ply), projType);
+                            EntityHelper.spawnProjectile(ply, projVel, AttributeHelper.getAttrMap(ply), projType);
                         }
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
                             EntityHelper.applyEffect(ply, "暴君之怒", 100);
@@ -2438,8 +2438,8 @@ public class ItemUseHelper {
                             Location spawnLoc = hitLoc.add(hitEntity.getLocation()).multiply(0.5);
                             spawnLoc.subtract(projVel);
                             projVel.multiply(2);
-                            EntityHelper.spawnProjectile(ply, spawnLoc, projVel, EntityHelper.getAttrMap(ply),
-                                    EntityHelper.DamageType.MELEE, "泰拉斩切光束");
+                            EntityHelper.spawnProjectile(ply, spawnLoc, projVel, AttributeHelper.getAttrMap(ply),
+                                    DamageHelper.DamageType.MELEE, "泰拉斩切光束");
                         });
                         break;
                     }
@@ -2451,7 +2451,7 @@ public class ItemUseHelper {
                                     ArrayList<Entity> dmgExceptions = new ArrayList<>();
                                     dmgExceptions.add(hitEntity);
                                     EntityHelper.handleEntityExplode(ply, 2, dmgExceptions, hitLoc);
-                                    EntityHelper.dropHeart(hitLoc);
+                                    DamageHelper.dropHeart(hitLoc);
                                 }
                             }
                         });
@@ -2464,15 +2464,15 @@ public class ItemUseHelper {
                                         plyYaw + Math.random() * 20 - 10, plyPitch + Math.random() * 20 - 10);
                                 projVel.multiply(3);
                                 EntityHelper.spawnProjectile(ply, projVel,
-                                        attrMap, EntityHelper.DamageType.MELEE, "镜之刃镜子");
+                                        attrMap, DamageHelper.DamageType.MELEE, "镜之刃镜子");
                             }
                         }
 
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
-                            HashMap<String, Double> victimAttrMap = EntityHelper.getAttrMap(hitEntity);
+                            HashMap<String, Double> victimAttrMap = AttributeHelper.getAttrMap(hitEntity);
                             double extraDamage = Math.min(1000, victimAttrMap.getOrDefault("damage", 1d) );
-                            EntityHelper.handleDamage(ply, hitEntity, extraDamage,
-                                    EntityHelper.DamageReason.STRIKE);
+                            DamageHelper.handleDamage(ply, hitEntity, extraDamage,
+                                    DamageHelper.DamageReason.STRIKE);
                         });
                         break;
                     }
@@ -2489,7 +2489,7 @@ public class ItemUseHelper {
                                 projVel.add( MathHelper.randomVector().multiply(projVel.length() * 0.1) );
                                 projVel.normalize().multiply(2.25);
                                 EntityHelper.spawnProjectile(ply, projVel,
-                                        attrMap, EntityHelper.DamageType.MELEE, "宙魔之纹");
+                                        attrMap, DamageHelper.DamageType.MELEE, "宙魔之纹");
                             }
                         }
                         break;
@@ -2504,7 +2504,7 @@ public class ItemUseHelper {
                                 Vector projVel = MathHelper.randomVector();
                                 projVel.multiply(3);
                                 EntityHelper.spawnProjectile(ply, shootLoc, projVel,
-                                        attrMap, EntityHelper.DamageType.MELEE, "精华火焰");
+                                        attrMap, DamageHelper.DamageType.MELEE, "精华火焰");
                             }
                         });
                         break;
@@ -2518,7 +2518,7 @@ public class ItemUseHelper {
                                         plyYaw, plyPitch + i * 15);
                                 Location spawnLoc = ply.getEyeLocation().add(spawnLocOffset);
                                 EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
-                                        attrMap, EntityHelper.DamageType.MELEE,
+                                        attrMap, DamageHelper.DamageType.MELEE,
                                         i == 0 ? "爆炸禅心导弹" : "分裂禅心导弹");
                             }
                         }
@@ -2537,7 +2537,7 @@ public class ItemUseHelper {
                                                 plyYaw, plyPitch + i * 15);
                                         Location spawnLoc = ply.getEyeLocation().add(spawnLocOffset);
                                         EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
-                                                attrMap, EntityHelper.DamageType.MELEE, "跟踪血骷髅");
+                                                attrMap, DamageHelper.DamageType.MELEE, "跟踪血骷髅");
                                     }
                                     break;
                                 case 1:
@@ -2545,13 +2545,13 @@ public class ItemUseHelper {
                                     projVel.normalize().multiply(1.75);
                                     Location spawnLoc = ply.getEyeLocation();
                                     EntityHelper.spawnProjectile(ply, spawnLoc, projVel,
-                                            attrMap, EntityHelper.DamageType.MELEE, "巨大血骷髅");
+                                            attrMap, DamageHelper.DamageType.MELEE, "巨大血骷髅");
                                     break;
                                 case 2:
                                 default:
                                     double dmg = attrMap.getOrDefault("damage", 100d);
                                     strikeLineInfo.setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
-                                        EntityHelper.handleDamage(ply, hitEntity, dmg, EntityHelper.DamageReason.STRIKE);
+                                        DamageHelper.handleDamage(ply, hitEntity, dmg, DamageHelper.DamageReason.STRIKE);
                                     });
                             }
                             // charge up
@@ -2563,7 +2563,7 @@ public class ItemUseHelper {
                                             Math.random() * 360, Math.random() * -90);
                                     projVel.multiply(2.5);
                                     EntityHelper.spawnProjectile(ply, projVel,
-                                            attrMap, EntityHelper.DamageType.MELEE, "跟踪血骷髅");
+                                            attrMap, DamageHelper.DamageType.MELEE, "跟踪血骷髅");
                                 }
                             }
                             setDurability(weaponItem, 50, charge);
@@ -2579,11 +2579,11 @@ public class ItemUseHelper {
                             spawnLoc.subtract(projVel);
                             projVel.multiply(2);
                             EntityHelper.spawnProjectile(ply, spawnLoc, projVel, attrMap,
-                                    EntityHelper.DamageType.MELEE, "星流斩切光束");
+                                    DamageHelper.DamageType.MELEE, "星流斩切光束");
                             // explode on hit when fully charged
                             if (currCharge == 8) {
                                 EntityHelper.spawnProjectile(ply, hitLoc, new Vector(), attrMap,
-                                        EntityHelper.DamageType.MELEE, "星流能量爆炸");
+                                        DamageHelper.DamageType.MELEE, "星流能量爆炸");
                             }
                         });
                         // charge also increases the blade size
@@ -2595,13 +2595,13 @@ public class ItemUseHelper {
                         break;
                     }
                     case "无限大地": {
-                        EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                        AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions()
                                 .setAimMode(true).setTicksTotal(10);
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
                             // heal
                             PlayerHelper.heal(ply, (int) (Math.random() * 10));
                             // spawn projectiles
-                            Location aimLoc = EntityHelper.helperAimEntity(ply, hitEntity, aimHelper);
+                            Location aimLoc = AimHelper.helperAimEntity(ply, hitEntity, aimHelper);
                             Location spawnLoc = aimLoc.clone().add(
                                     Math.random() * 12 - 6,
                                     Math.random() * 4 + 12,
@@ -2609,7 +2609,7 @@ public class ItemUseHelper {
                             Vector projVel = aimLoc.clone().subtract(spawnLoc).toVector();
                             projVel.multiply(0.1);
                             EntityHelper.spawnProjectile(ply, spawnLoc, projVel, attrMap,
-                                    EntityHelper.DamageType.MELEE, "三色大地流星");
+                                    DamageHelper.DamageType.MELEE, "三色大地流星");
                         });
                         break;
                     }
@@ -2632,7 +2632,7 @@ public class ItemUseHelper {
                                     i == (int) (loopTimes * 0.7)) {
                                 offsetDir.multiply(1.35);
                                 EntityHelper.spawnProjectile(ply, offsetDir,
-                                        EntityHelper.getAttrMap(ply), "血之镰刀");
+                                        AttributeHelper.getAttrMap(ply), "血之镰刀");
                             }
                             break;
                         }
@@ -2685,11 +2685,11 @@ public class ItemUseHelper {
                                             // pulls the player
                                             ply.setFallDistance(0f);
                                             Vector plyVel = MathHelper.getDirection(finalStartStrikeLoc, hitLocation, 1.5);
-                                            EntityHelper.setVelocity(ply, plyVel);
+                                            EntityMovementHelper.setVelocity(ply, plyVel);
                                         });
                             }
                             // cache the crit rate, set it to 100, handle hit and reset to normal
-                            HashMap<String, Double> plyAttrMap = EntityHelper.getAttrMap(ply);
+                            HashMap<String, Double> plyAttrMap = AttributeHelper.getAttrMap(ply);
                             double critRate = plyAttrMap.getOrDefault("crit", 4d);
                             plyAttrMap.put("crit", 100d);
                             String bladeColor = weaponType.equals("真·环境之刃[缚囚之悼]") ? "255|255|255" : "166|251|46";
@@ -2702,7 +2702,7 @@ public class ItemUseHelper {
                         case "银河[白羊之怒]": {
                             // yoyo-like behaviour
                             Location targetLoc;
-                            EntityHelper.AimHelperOptions aimOption = new EntityHelper.AimHelperOptions().setAimMode(true);
+                            AimHelper.AimHelperOptions aimOption = new AimHelper.AimHelperOptions().setAimMode(true);
                             // only initialize target once to prevent dashing into multiple enemies with one swing
                             if (i == 0)
                                 targetLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, strikeLength * 0.75, aimOption, true));
@@ -2725,7 +2725,7 @@ public class ItemUseHelper {
                         case "恣睢": {
                             // yoyo-like behaviour
                             Location targetLoc;
-                            EntityHelper.AimHelperOptions aimOption = new EntityHelper.AimHelperOptions().setAimMode(true);
+                            AimHelper.AimHelperOptions aimOption = new AimHelper.AimHelperOptions().setAimMode(true);
                             // its base damage is low, hence damage check should be very frequent
                             strikeLineInfo.setDamageCD(1);
                             // only initialize target once to prevent dashing into multiple enemies with one swing
@@ -2749,7 +2749,7 @@ public class ItemUseHelper {
                                 if (i == 0) {
                                     Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), 2.5, "真·远古剑气", false, 0);
                                     projVel.normalize().multiply(2.5);
-                                    EntityHelper.spawnProjectile(ply, projVel, EntityHelper.getAttrMap(ply), "真·远古剑气");
+                                    EntityHelper.spawnProjectile(ply, projVel, AttributeHelper.getAttrMap(ply), "真·远古剑气");
                                     charge--;
                                     setDurability(weaponItem, 10, charge);
                                 }
@@ -2760,7 +2760,7 @@ public class ItemUseHelper {
                                         i == (int) (loopTimes * 0.5) ||
                                         i == (int) (loopTimes * 0.65)) {
                                     offsetDir.multiply(1.75);
-                                    HashMap<String, Double> attrMapPly = (HashMap<String, Double>) EntityHelper.getAttrMap(ply).clone();
+                                    HashMap<String, Double> attrMapPly = (HashMap<String, Double>) AttributeHelper.getAttrMap(ply).clone();
                                     attrMapPly.put("damage", attrMapPly.getOrDefault("damage", 1d) * 0.35);
                                     EntityHelper.spawnProjectile(ply, offsetDir,
                                             attrMapPly, "远古之星");
@@ -2800,7 +2800,7 @@ public class ItemUseHelper {
                                 Location startStrikeLocOriginal = startStrikeLoc.clone();
                                 // this is the player's target location (equivalent to cursor pos. in Terraria)
                                 Location targetLoc;
-                                EntityHelper.AimHelperOptions aimOption = new EntityHelper.AimHelperOptions().setAimMode(true);
+                                AimHelper.AimHelperOptions aimOption = new AimHelper.AimHelperOptions().setAimMode(true);
                                 // only initialize target once to prevent scissors dashing into multiple enemies with one swing
                                 if (i == 0)
                                     targetLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, strikeLength * 0.75, aimOption, true));
@@ -3102,7 +3102,7 @@ public class ItemUseHelper {
                         Vector projVel = getPlayerAimDir(ply, shootLoc, projectileSpeed, projectileType, false, 0);
                         MathHelper.setVectorLength( projVel, projectileSpeed );
                         spawnedProjectile = EntityHelper.spawnProjectile(ply, shootLoc,
-                                projVel, attrMapProjectile, EntityHelper.DamageType.MELEE, projectileType);
+                                projVel, attrMapProjectile, DamageHelper.DamageType.MELEE, projectileType);
                     } else {
                         Vector projVel;
                         switch (itemType) {
@@ -3116,7 +3116,7 @@ public class ItemUseHelper {
                                 MathHelper.setVectorLength( projVel, projectileSpeed );
                         }
                         spawnedProjectile = EntityHelper.spawnProjectile(ply, shootLoc,
-                                projVel, attrMapProjectile, EntityHelper.DamageType.MELEE, projectileType);
+                                projVel, attrMapProjectile, DamageHelper.DamageType.MELEE, projectileType);
                     }
                     if (itemType.equals("钨钢螺丝刀")) {
                         spawnedProjectile.setVelocity(new Vector(0, 0.3, 0));
@@ -3299,7 +3299,7 @@ public class ItemUseHelper {
         double projectileSpeed = weaponSection.getDouble("velocity", 5d);
         double distance = weaponSection.getDouble("distance", 10d);
         // note that the gravity of boomerangs are turned off in the boomerang class, so DO NOT use aim helper, it will cause issue.
-        EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions(itemType)
+        AimHelper.AimHelperOptions aimHelperOptions = new AimHelper.AimHelperOptions(itemType)
                 .setAccelerationMode(Setting.getOptionBool(ply, Setting.Options.AIM_HELPER_ACCELERATION))
                 .setAimMode(false)
                 .setProjectileSpeed(projectileSpeed);
@@ -3384,7 +3384,7 @@ public class ItemUseHelper {
         int fireAmount = isLoadingWeapon ? swingAmount : weaponSection.getInt("shots", 1);
         double spread = weaponSection.getDouble("offSet", -1d);
         EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
-        EntityHelper.DamageType damageType = EntityHelper.getDamageType(ply);
+        DamageHelper.DamageType damageType = DamageHelper.getDamageType(ply);
         double projectileSpeed = calculateProjectileSpeed(attrMapOriginal);
         // account for arrow attribute.
         String ammoType = ammoTypeInitial;
@@ -3461,13 +3461,13 @@ public class ItemUseHelper {
                 // setup projectile velocity
                 if (shouldFire) {
                     if (fireVelocity == null) {
-                        Location aimLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, new EntityHelper.AimHelperOptions(extraProjectileType)
+                        Location aimLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, new AimHelper.AimHelperOptions(extraProjectileType)
                                 .setProjectileSpeed(projectileSpeed), true));
                         fireVelocity = MathHelper.getDirection(fireLoc, aimLoc, projectileSpeed);
                     }
                     for (int i = 0; i < extraProjectileAmount; i ++) {
                         EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMapExtraProjectile,
-                                EntityHelper.getDamageType(ply), extraProjectileType);
+                                DamageHelper.getDamageType(ply), extraProjectileType);
                     }
                 }
                 break;
@@ -3481,7 +3481,7 @@ public class ItemUseHelper {
                 for (int i = -1; i <= 1; i ++) {
                     Vector fireVelocity = MathHelper.vectorFromYawPitch_approx(facingDirYaw, facingDirPitch + i * 10);
                     EntityHelper.spawnProjectile(ply, fireLoc, fireVelocity, attrMapExtraProjectile,
-                            EntityHelper.getDamageType(ply), "天蓝羽毛");
+                            DamageHelper.getDamageType(ply), "天蓝羽毛");
                 }
                 break;
             }
@@ -3616,7 +3616,7 @@ public class ItemUseHelper {
                         48,
                         (net.minecraft.server.v1_12_R1.Entity toCheck) ->
                                 toCheck instanceof EntityLiving &&
-                                        EntityHelper.checkCanDamage(ply, toCheck.getBukkitEntity(), true));
+                                        DamageHelper.checkCanDamage(ply, toCheck.getBukkitEntity(), true));
                 if (! hitCandidates.isEmpty()) {
                     Iterator<HitEntityInfo> hitCandidateIter = hitCandidates.iterator();
                     for (int i = 0; i < 12; i++) {
@@ -3678,7 +3678,7 @@ public class ItemUseHelper {
             if (ammoAttributeSection == null)
                 ammoAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoTypeInitial + ".attributes");
             if (ammoAttributeSection != null) {
-                EntityHelper.tweakAllAttributes(attrMap, ammoAttributeSection, true);
+                AttributeHelper.tweakAllAttributes(attrMap, ammoAttributeSection, true);
                 // update projectile speed
                 projectileSpeed = calculateProjectileSpeed(attrMap);
             }
@@ -3701,7 +3701,7 @@ public class ItemUseHelper {
                 if (ammoAttributeSection == null)
                     ammoAttributeSection = TerrariaHelper.itemConfig.getConfigurationSection(ammoTypeInitial + ".attributes");
                 if (ammoAttributeSection != null) {
-                    EntityHelper.tweakAllAttributes(attrMap, ammoAttributeSection, true);
+                    AttributeHelper.tweakAllAttributes(attrMap, ammoAttributeSection, true);
                     // update projectile speed
                     projectileSpeed = calculateProjectileSpeed(attrMap);
                 }
@@ -3799,7 +3799,7 @@ public class ItemUseHelper {
                 case "血陨": {
                     Vector offset = new Vector(Math.random() * 30 - 15, 20 + Math.random() * 20, Math.random() * 30 - 15);
                     fireVelocity = offset.clone().multiply(-1).normalize();
-                    Location destination = getPlayerTargetLoc(new PlyTargetLocInfo(ply, new EntityHelper.AimHelperOptions()
+                    Location destination = getPlayerTargetLoc(new PlyTargetLocInfo(ply, new AimHelper.AimHelperOptions()
                             .setAimMode(true)
                             .setRandomOffsetRadius(5)
                             .setTicksTotal(offset.length() / projectileSpeed), true));
@@ -3957,7 +3957,7 @@ public class ItemUseHelper {
                     // projectile
                     aimDir.normalize().multiply(projSpd);
                     EntityHelper.spawnProjectile(ply, aimDir,
-                            fireballAttrMap, EntityHelper.getDamageType(ply), projType);
+                            fireballAttrMap, DamageHelper.getDamageType(ply), projType);
                 }
                 break;
             }
@@ -3978,7 +3978,7 @@ public class ItemUseHelper {
                     // projectile
                     aimDir.normalize().multiply(projSpd);
                     EntityHelper.spawnProjectile(ply, aimDir,
-                            fireballAttrMap, EntityHelper.getDamageType(ply), projType);
+                            fireballAttrMap, DamageHelper.getDamageType(ply), projType);
                 }
                 break;
             }
@@ -4056,7 +4056,7 @@ public class ItemUseHelper {
                                 fireLoc.toVector(),
                                 radius,
                                 (e) -> (e instanceof EntityLiving) &&
-                                        EntityHelper.checkCanDamage(ply, e.getBukkitEntity(), true))) {
+                                        DamageHelper.checkCanDamage(ply, e.getBukkitEntity(), true))) {
                             LivingEntity target = (LivingEntity) (targetInfo.getHitEntity()).getBukkitEntity();
                             currVel = MathHelper.getDirection(fireLoc, target.getEyeLocation(), projectileSpeed);
                             shootInfo.velocity = currVel;
@@ -4080,14 +4080,14 @@ public class ItemUseHelper {
                                 double healthConsumed = ply.getHealth() * 0.3;
                                 double extraBaseDmg = healthConsumed * 0.4;
                                 PlayerHelper.heal(ply, -healthConsumed);
-                                EntityHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
+                                AttributeHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
                                 break;
                             }
                             case "牺牲Ex": {
                                 double healthConsumed = ply.getHealth() * 0.2;
                                 double extraBaseDmg = healthConsumed * 0.75;
                                 PlayerHelper.heal(ply, -healthConsumed);
-                                EntityHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
+                                AttributeHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
                                 break;
                             }
                         }
@@ -4182,7 +4182,7 @@ public class ItemUseHelper {
         if (currMana >= mana) {
             currMana -= mana;
             ply.setLevel(currMana);
-            int maxMana = EntityHelper.getAttrMap(ply).getOrDefault("maxMana", 20d).intValue();
+            int maxMana = AttributeHelper.getAttrMap(ply).getOrDefault("maxMana", 20d).intValue();
             int regenDelay = (int) Math.ceil(0.3 * (
                     (1 - ((double) currMana / maxMana)) * 240 + 45   ));
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_DELAY, regenDelay);
@@ -4260,7 +4260,7 @@ public class ItemUseHelper {
                 case "星火凤凰雨": {
                     Vector offset = new Vector(Math.random() * 30 - 15, 20 + Math.random() * 20, Math.random() * 30 - 15);
                     fireVelocity = offset.clone().multiply(-1).normalize();
-                    EntityHelper.AimHelperOptions options = new EntityHelper.AimHelperOptions()
+                    AimHelper.AimHelperOptions options = new AimHelper.AimHelperOptions()
                             .setAimMode(true)
                             .setTicksTotal(offset.length() / projectileSpeed);
                     switch (itemType) {
@@ -4302,7 +4302,7 @@ public class ItemUseHelper {
                 case "神圣天罚": {
                     Vector offset = new Vector(Math.random() * 30 - 15, -20 - Math.random() * 20, Math.random() * 30 - 15);
                     fireVelocity = offset.clone().multiply(-1).normalize();
-                    EntityHelper.AimHelperOptions options = new EntityHelper.AimHelperOptions()
+                    AimHelper.AimHelperOptions options = new AimHelper.AimHelperOptions()
                             .setAimMode(true)
                             .setTicksTotal(offset.length() / projectileSpeed);
                     switch (itemType) {
@@ -4360,7 +4360,7 @@ public class ItemUseHelper {
                                     (100 + projAttrMap.getOrDefault("crit", 4d)) / 100);
                             projAttrMap.put("crit", 100d);
                             EntityHelper.spawnProjectile(ply, ply.getEyeLocation().add(0, 15, 0), new Vector(),
-                                    projAttrMap, EntityHelper.DamageType.MAGIC, "光之舞闪光");
+                                    projAttrMap, DamageHelper.DamageType.MAGIC, "光之舞闪光");
                         }
                         setDurability(weaponItem, 90, charge);
                     }
@@ -4368,7 +4368,7 @@ public class ItemUseHelper {
                     break;
                 }
                 case "血涌": {
-                    EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                    AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions()
                             .setAimMode(true)
                             .setTicksTotal(10);
                     Location aimLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, aimHelper, true));
@@ -4390,7 +4390,7 @@ public class ItemUseHelper {
                 }
                 case "极点光伏":
                 case "虚空漩涡": {
-                    EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions()
+                    AimHelper.AimHelperOptions aimHelperOptions = new AimHelper.AimHelperOptions()
                             .setAimMode(true)
                             .setTicksTotal(0);
                     if (i == 0)
@@ -4486,7 +4486,7 @@ public class ItemUseHelper {
                 fireVelocity.multiply(projectileSpeed);
                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                         ply, fireLoc, fireVelocity, attrMap,
-                        EntityHelper.getDamageType(ply), projectileName);
+                        DamageHelper.getDamageType(ply), projectileName);
                 switch (itemType) {
                     case "水晶风暴": {
                         shootInfo.properties.put("gravity", 0d);
@@ -4668,7 +4668,7 @@ public class ItemUseHelper {
                                 .setThruWall(false)
                                 .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
                                     if (hitEntity instanceof LivingEntity && hitIndex == 1) {
-                                        EntityHelper.DamageType damageType = EntityHelper.getDamageType(ply);
+                                        DamageHelper.DamageType damageType = DamageHelper.getDamageType(ply);
                                         for (int i = 0; i < 4; i ++) {
                                             Location explodeLoc = hitLoc.clone()
                                                     .add(Math.random() * 8 - 4, Math.random() * 8 - 4, Math.random() * 8 - 4);
@@ -4698,7 +4698,7 @@ public class ItemUseHelper {
                                 .setLingerDelay(4)
                                 .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
                                     if (hitEntity instanceof LivingEntity && hitIndex == 1) {
-                                        EntityHelper.DamageType damageType = EntityHelper.getDamageType(ply);
+                                        DamageHelper.DamageType damageType = DamageHelper.getDamageType(ply);
                                         for (int i = 0; i < 3; i ++) {
                                             Location explodeLoc = hitLoc.clone()
                                                     .add(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);
@@ -4770,7 +4770,7 @@ public class ItemUseHelper {
                                         .setLingerDelay(4)
                                         .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
                                             if (hitEntity instanceof LivingEntity && Math.random() < (0.5d / (hitIndex + 1))) {
-                                                EntityHelper.DamageType damageType = EntityHelper.getDamageType(ply);
+                                                DamageHelper.DamageType damageType = DamageHelper.getDamageType(ply);
                                                 for (int i = 0; i < 4; i ++) {
                                                     Location explodeLoc = hitLoc.clone()
                                                             .add(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);
@@ -4849,7 +4849,7 @@ public class ItemUseHelper {
                             // 8 homing projectiles
                             else {
                                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                        ply, location, new Vector(), attrMap, EntityHelper.DamageType.MAGIC, "耀界之光能量体");
+                                        ply, location, new Vector(), attrMap, DamageHelper.DamageType.MAGIC, "耀界之光能量体");
                                 for (int i = 0; i < 8; i ++) {
                                     shootInfo.velocity = MathHelper.randomVector().multiply(2);
                                     EntityHelper.spawnProjectile(shootInfo);
@@ -4923,7 +4923,7 @@ public class ItemUseHelper {
                                     }
                                     if (spawnLava) {
                                         EntityHelper.spawnProjectile(ply, hitLoc, new Vector(),
-                                                attrMap, EntityHelper.DamageType.MAGIC, lavaName)
+                                                attrMap, DamageHelper.DamageType.MAGIC, lavaName)
                                                 .addScoreboardTag("ignoreCanDamageCheck");
                                     }
                                     // has a chance to spawn a hand
@@ -4931,7 +4931,7 @@ public class ItemUseHelper {
                                         if (Math.random() < 0.1) {
                                             Location spawnLoc = hitLoc.clone().add(0, 2, 0);
                                             EntityHelper.spawnProjectile(ply, spawnLoc, new Vector(),
-                                                    attrMap, EntityHelper.DamageType.MAGIC, "怨戾之手")
+                                                    attrMap, DamageHelper.DamageType.MAGIC, "怨戾之手")
                                                     .addScoreboardTag("ignoreCanDamageCheck");
                                         }
                                     }
@@ -5030,7 +5030,7 @@ public class ItemUseHelper {
         if (weaponType.equals("MAGIC_PROJECTILE")) {
             handleMagicProjectileFire(ply, attrMap, weaponSection, swingAmount, 1, itemType, weaponType, autoSwing);
         } else {
-            Location targetedLocation = getPlayerTargetLoc(new PlyTargetLocInfo(ply, new EntityHelper.AimHelperOptions()
+            Location targetedLocation = getPlayerTargetLoc(new PlyTargetLocInfo(ply, new AimHelper.AimHelperOptions()
                     .setAimMode(true), true));
             handleMagicSpecialFire(ply, attrMap, weaponSection, 1, itemType, weaponType,
                     targetedLocation, autoSwing, swingAmount, null);
@@ -5060,7 +5060,7 @@ public class ItemUseHelper {
                                 centerYaw + Math.random() * 10 - 5, centerPitch + Math.random() * 10 - 5);
                         projVel.multiply(projSpd);
                         EntityHelper.spawnProjectile(ply, projVel,
-                                fireballAttrMap, EntityHelper.getDamageType(ply), projType);
+                                fireballAttrMap, DamageHelper.getDamageType(ply), projType);
                     }
                 }
                 break;
@@ -5081,7 +5081,7 @@ public class ItemUseHelper {
                     Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), projSpd, projType, false, 0);
                     MathHelper.setVectorLength(projVel, projSpd);
                     EntityHelper.spawnProjectile(ply, projVel,
-                            fireballAttrMap, EntityHelper.getDamageType(ply), projType);
+                            fireballAttrMap, DamageHelper.getDamageType(ply), projType);
                 }
                 break;
             }
@@ -5104,7 +5104,7 @@ public class ItemUseHelper {
                                 centerYaw + Math.random() * 10 - 5, centerPitch + Math.random() * 10 - 5);
                         projVel.multiply(projSpd);
                         EntityHelper.spawnProjectile(ply, projVel,
-                                fireballAttrMap, EntityHelper.getDamageType(ply), projType);
+                                fireballAttrMap, DamageHelper.getDamageType(ply), projType);
                     }
                 }
                 // blood orb, from blood flare
@@ -5123,7 +5123,7 @@ public class ItemUseHelper {
                     Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), projSpd, projType, false, 0);
                     MathHelper.setVectorLength(projVel, projSpd);
                     EntityHelper.spawnProjectile(ply, projVel,
-                            fireballAttrMap, EntityHelper.getDamageType(ply), projType);
+                            fireballAttrMap, DamageHelper.getDamageType(ply), projType);
                 }
                 break;
             }
@@ -5212,7 +5212,7 @@ public class ItemUseHelper {
         if (!consumeMana(ply, manaConsumption)) return false;
         boolean sentryOrMinion = weaponType.equals("SENTRY");
         boolean hasContactDamage = weaponSection.getString(
-                "damageType", EntityHelper.DamageType.MELEE.internalName).equals(EntityHelper.DamageType.MELEE.internalName);
+                "damageType", DamageHelper.DamageType.MELEE.internalName).equals(DamageHelper.DamageType.MELEE.internalName);
         boolean noDuplication = weaponSection.getBoolean("noDuplication", false);
         int slotsConsumed = weaponSection.getInt("slotsRequired", 1);
         String minionName = weaponSection.getString("minionName");
@@ -5442,7 +5442,7 @@ public class ItemUseHelper {
         if (scoreboardTags.contains("toolChanged"))
             PlayerHelper.setupAttribute(ply);
         // variable setup
-        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+        HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(ply);
         boolean isRightClick = scoreboardTags.contains("isSecondaryAttack");
         // other items that require item type info
         ItemStack mainHandItem = ply.getInventory().getItemInMainHand();
@@ -5475,7 +5475,7 @@ public class ItemUseHelper {
                 // prevent accidental glitch that creates endless item use cool down
                 if (attrMap.getOrDefault("useCD", 0d) < 0.01) {
                     PlayerHelper.setupAttribute(ply);
-                    attrMap = EntityHelper.getAttrMap(ply);
+                    attrMap = AttributeHelper.getAttrMap(ply);
                 }
                 // handle loading
                 boolean autoSwing = weaponSection.getBoolean("autoSwing",

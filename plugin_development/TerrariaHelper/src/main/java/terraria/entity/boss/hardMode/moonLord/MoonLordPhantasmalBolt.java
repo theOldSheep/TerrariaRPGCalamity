@@ -9,9 +9,7 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
-import terraria.util.MathHelper;
+import terraria.util.*;
 
 import java.util.HashMap;
 
@@ -21,9 +19,9 @@ public class MoonLordPhantasmalBolt extends EntitySlime {
     HashMap<String, Double> attrMap;
     Player target = null;
     // other variables and AI
-    static EntityHelper.AimHelperOptions aimHelper;
+    static AimHelper.AimHelperOptions aimHelper;
     static {
-        aimHelper = new EntityHelper.AimHelperOptions()
+        aimHelper = new AimHelper.AimHelperOptions()
                 .setAimMode(true)
                 .setTicksTotal(12);
     }
@@ -83,7 +81,7 @@ public class MoonLordPhantasmalBolt extends EntitySlime {
             attrMap.put("defence", 0d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init health and slime size
@@ -97,7 +95,7 @@ public class MoonLordPhantasmalBolt extends EntitySlime {
             this.persistent = true;
         }
         // init velocity
-        Vector velocity = EntityHelper.helperAimEntity(bukkitEntity.getLocation(), target, aimHelper)
+        Vector velocity = AimHelper.helperAimEntity(bukkitEntity.getLocation(), target, aimHelper)
                 .subtract(bukkitEntity.getLocation()).toVector();
         velocity.multiply(1d / 8);
         setVelocity(velocity);

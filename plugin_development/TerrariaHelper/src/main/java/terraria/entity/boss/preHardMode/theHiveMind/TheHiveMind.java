@@ -63,7 +63,7 @@ public class TheHiveMind extends EntitySlime {
                     return;
                 }
                 EntityHelper.spawnProjectile(bukkitEntity, spawnLoc, new Vector(), attrMapShaderRain,
-                        EntityHelper.DamageType.MAGIC, "腐蚀之云");
+                        DamageHelper.DamageType.MAGIC, "腐蚀之云");
             }
             // eater of soul
             else if (rdm < 0.4) {
@@ -279,7 +279,7 @@ public class TheHiveMind extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

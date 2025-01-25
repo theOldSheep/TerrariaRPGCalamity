@@ -1,11 +1,9 @@
 package terraria.event.listener;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.Hash;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftProjectile;
 import org.bukkit.entity.*;
@@ -19,7 +17,6 @@ import terraria.TerrariaHelper;
 import terraria.entity.others.PlayerTornado;
 import terraria.entity.projectile.BulletHellProjectile;
 import terraria.entity.projectile.GenericProjectile;
-import terraria.entity.projectile.HitEntityInfo;
 import terraria.event.TerrariaProjectileHitEvent;
 import terraria.gameplay.EventAndTime;
 import terraria.util.*;
@@ -40,7 +37,7 @@ public class ArrowHitListener implements Listener {
         }
     }
     private static void handleHitEntity(TerrariaProjectileHitEvent e, Projectile projectile, Entity entity) {
-        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(projectile);
+        HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(projectile);
         Set<String> projectileScoreboardTags = projectile.getScoreboardTags();
         String projectileName = projectile.getName();
         // if the projectile is reflected
@@ -64,16 +61,16 @@ public class ArrowHitListener implements Listener {
             return;
         // handle damage
         boolean guaranteeCrit = false;
-        EntityHelper.DamageReason dmgReason = EntityHelper.DamageReason.PROJECTILE;
+        DamageHelper.DamageReason dmgReason = DamageHelper.DamageReason.PROJECTILE;
         if (projectileName.equals("瘟疫自爆无人机") && EntityHelper.hasEffect(entity, "瘟疫"))
             guaranteeCrit = true;
         if (guaranteeCrit) {
             double lastCrit = attrMap.getOrDefault("crit", 0d);
             attrMap.put("crit", 100d);
-            EntityHelper.handleDamage(projectile, entity, attrMap.getOrDefault("damage", 20d), dmgReason);
+            DamageHelper.handleDamage(projectile, entity, attrMap.getOrDefault("damage", 20d), dmgReason);
             attrMap.put("crit", lastCrit);
         } else {
-            EntityHelper.handleDamage(projectile, entity, attrMap.getOrDefault("damage", 20d), dmgReason);
+            DamageHelper.handleDamage(projectile, entity, attrMap.getOrDefault("damage", 20d), dmgReason);
         }
         // explosive projectiles
         if (projectileScoreboardTags.contains("isGrenade")) {
@@ -95,7 +92,7 @@ public class ArrowHitListener implements Listener {
                                               Entity entityHit, Set<String> projectileScoreboardTags) {
         // vortex arrow
         if (projectileScoreboardTags.contains("isVortex")) {
-            HashMap<String, Double> attrMapProj = (HashMap<String, Double>) EntityHelper.getAttrMap(projectile).clone();
+            HashMap<String, Double> attrMapProj = (HashMap<String, Double>) AttributeHelper.getAttrMap(projectile).clone();
             attrMapProj.put("damage", attrMapProj.get("damage") * 0.3);
             attrMapProj.put("knockback", 0d);
             LivingEntity shooter = (LivingEntity) projectile.getShooter();
@@ -118,10 +115,10 @@ public class ArrowHitListener implements Listener {
         if (projectileName.equals("弑神弹")) {
             // only handle extra projectile once per bullet
             if (! projectileScoreboardTags.contains("godSlyHandled")) {
-                HashMap<String, Double> attrMapProj = (HashMap<String, Double>) EntityHelper.getAttrMap(projectile).clone();
+                HashMap<String, Double> attrMapProj = (HashMap<String, Double>) AttributeHelper.getAttrMap(projectile).clone();
                 attrMapProj.put("damage", attrMapProj.get("damage") * 0.85);
                 LivingEntity shooter = (LivingEntity) projectile.getShooter();
-                Player ply = (Player) EntityHelper.getDamageSource(shooter);
+                Player ply = (Player) DamageHelper.getDamageSource(shooter);
                 projectile.addScoreboardTag("godSlyHandled");
                 // after 5 ticks, remove current bullet and fire a new one
                 Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
@@ -134,7 +131,7 @@ public class ArrowHitListener implements Listener {
                             ply, fireLoc, projSpd, projType, false, 0);
                     MathHelper.setVectorLength(velocity, projSpd);
 
-                    EntityHelper.spawnProjectile(shooter, fireLoc, velocity, attrMapProj, EntityHelper.DamageType.BULLET, projType);
+                    EntityHelper.spawnProjectile(shooter, fireLoc, velocity, attrMapProj, DamageHelper.DamageType.BULLET, projType);
                 }, 5);
             }
         }
@@ -151,9 +148,9 @@ public class ArrowHitListener implements Listener {
             MetadataValue lastParticleName = EntityHelper.getMetadata(entityHit,
                     EntityHelper.MetadataName.LAST_ADAMANTITE_PARTICLE_TYPE);
             if (lastParticleName != null && ! (lastParticleName.asString().equals(projectileName) )) {
-                HashMap<String, Double> attrMapProj = EntityHelper.getAttrMap(projectile);
-                EntityHelper.handleDamage((Entity) projectile.getShooter(), entityHit,
-                        attrMapProj.get("damage"), EntityHelper.DamageReason.PROJECTILE);
+                HashMap<String, Double> attrMapProj = AttributeHelper.getAttrMap(projectile);
+                DamageHelper.handleDamage((Entity) projectile.getShooter(), entityHit,
+                        attrMapProj.get("damage"), DamageHelper.DamageReason.PROJECTILE);
             }
             EntityHelper.setMetadata(entityHit, EntityHelper.MetadataName.LAST_ADAMANTITE_PARTICLE_TYPE,
                     projectileName);
@@ -163,7 +160,7 @@ public class ArrowHitListener implements Listener {
         if (projectile.getShooter() instanceof Player) {
             Player shooter = (Player) projectile.getShooter();
             String armorSet = PlayerHelper.getArmorSet(shooter);
-            EntityHelper.DamageType damageType = EntityHelper.getDamageType(projectile);
+            DamageHelper.DamageType damageType = DamageHelper.getDamageType(projectile);
             Set<String> plyScoreboardTags = shooter.getScoreboardTags();
             switch (armorSet) {
                 case "龙蒿远程套装":
@@ -184,7 +181,7 @@ public class ArrowHitListener implements Listener {
                             for (int i = 0; i < 2; i ++) {
                                 EntityHelper.spawnProjectile(shooter, projectile.getLocation(),
                                         MathHelper.randomVector().multiply(2), extraProjAttrMap,
-                                        EntityHelper.DamageType.MAGIC, "龙蒿生命能量");
+                                        DamageHelper.DamageType.MAGIC, "龙蒿生命能量");
                             }
                         }
                     }
@@ -227,7 +224,7 @@ public class ArrowHitListener implements Listener {
                         (Player) projectile.getShooter(), projectileDestroyLoc.clone().subtract(0, 2, 0),
                         new ArrayList<>(),
                         0, 18, 20, 9,
-                        2, 0.9, "鲨鱼旋风", EntityHelper.getAttrMap(projectile));
+                        2, 0.9, "鲨鱼旋风", AttributeHelper.getAttrMap(projectile));
                 break;
             }
         }
@@ -263,7 +260,7 @@ public class ArrowHitListener implements Listener {
         else
             shouldFire = clusterSection.getBoolean("fireOnTimeout", true);
         if (shouldFire) {
-            HashMap<String, Double> attrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(projectile).clone();
+            HashMap<String, Double> attrMap = (HashMap<String, Double>) AttributeHelper.getAttrMap(projectile).clone();
             spawnProjectileClusterBomb(clusterSection, projectile, attrMap, entityHit);
         }
     }
@@ -291,7 +288,7 @@ public class ArrowHitListener implements Listener {
             // projectile basic info
             Entity projectileSource = null;
             if (projectile.getShooter() instanceof Entity) projectileSource = (Entity) projectile.getShooter();
-            EntityHelper.DamageType damageType = EntityHelper.getDamageType(projectile);
+            DamageHelper.DamageType damageType = DamageHelper.getDamageType(projectile);
             // get a more precise location at the edge of the enemy's bounding box
             Location projectileDestroyLoc = projectile.getLocation();
             // bullet hell blasts
@@ -375,8 +372,8 @@ public class ArrowHitListener implements Listener {
                                         Math.random() * 3 - 1.5,
                                         Math.random() * 3 - 1.5);
                             else
-                                aimLoc = EntityHelper.helperAimEntity(spawnLoc, entityHit,
-                                        new EntityHelper.AimHelperOptions(clusterName)
+                                aimLoc = AimHelper.helperAimEntity(spawnLoc, entityHit,
+                                        new AimHelper.AimHelperOptions(clusterName)
                                                 .setAccelerationMode(true)
                                                 .setProjectileSpeed(clusterSpeed)
                                                 .setRandomOffsetRadius(1.5));

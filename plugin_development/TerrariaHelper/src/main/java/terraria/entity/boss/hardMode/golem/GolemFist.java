@@ -65,7 +65,7 @@ public class GolemFist extends EntitySlime {
                 }
                 if (indexAI < 15) {
                     bukkitEntity.setVelocity(owner.getBukkitEntity().getVelocity());
-                    EntityHelper.movementTP(bukkitEntity, idleLocation);
+                    EntityMovementHelper.movementTP(bukkitEntity, idleLocation);
                 }
                 else {
                     if (indexAI == 15) {
@@ -124,7 +124,7 @@ public class GolemFist extends EntitySlime {
             attrMap.put("defence", 56d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

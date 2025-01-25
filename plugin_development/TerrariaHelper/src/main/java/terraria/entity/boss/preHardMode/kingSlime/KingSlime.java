@@ -207,7 +207,7 @@ public class KingSlime extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

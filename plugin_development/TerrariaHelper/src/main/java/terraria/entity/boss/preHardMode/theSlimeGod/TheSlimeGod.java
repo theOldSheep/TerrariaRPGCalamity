@@ -39,13 +39,13 @@ public class TheSlimeGod extends EntitySlime {
     static final int BIG_JUMP_DELAY = 6, MID_JUMP_DELAY = 3, SMALL_JUMP_DELAY = 2;
     EntityHelper.ProjectileShootInfo shootInfo;
     static final HashMap<String, Double> attrMapProjectile;
-    static final EntityHelper.AimHelperOptions aimOption;
+    static final AimHelper.AimHelperOptions aimOption;
     static {
         attrMapProjectile = new HashMap<>();
         attrMapProjectile.put("damage", 252d);
         attrMapProjectile.put("knockback", 4d);
 
-        aimOption = new EntityHelper.AimHelperOptions()
+        aimOption = new AimHelper.AimHelperOptions()
                 .setAimMode(false)
                 .setProjectileSpeed(PROJECTILE_SPEED)
                 .setIntensity(1d);
@@ -53,7 +53,7 @@ public class TheSlimeGod extends EntitySlime {
     private Vector getTargetDirectionVector(double length) {
         Location targetLoc;
         if (enraged)
-            targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, aimOption);
+            targetLoc = AimHelper.helperAimEntity(bukkitEntity, target, aimOption);
         else
             targetLoc = target.getEyeLocation();
         return getTargetDirectionVector(targetLoc, length);
@@ -182,7 +182,7 @@ public class TheSlimeGod extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

@@ -9,9 +9,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
-import terraria.util.MathHelper;
+import terraria.util.*;
 
 import java.util.HashMap;
 
@@ -27,7 +25,7 @@ public class GuardianRock extends EntitySlime {
     static final double ROCK_ORBIT_RADIUS_MIN = 5.0, ROCK_ORBIT_RADIUS_MAX = 8.5, ROCK_ORBIT_SPEED = 0.05;
     static final double DASH_SPEED = 2.25;
 
-    EntityHelper.AimHelperOptions aimHelperDash;
+    AimHelper.AimHelperOptions aimHelperDash;
 
 
     double angle = Math.random() * 2 * Math.PI;
@@ -90,7 +88,7 @@ public class GuardianRock extends EntitySlime {
     }
     private void launchTowardsTarget() {
         ticksSinceLaunch = 1;
-        Location predictedTargetLoc = EntityHelper.helperAimEntity(
+        Location predictedTargetLoc = AimHelper.helperAimEntity(
                 bukkitEntity.getLocation(), target, aimHelperDash);
         velocity = MathHelper.getDirection(bukkitEntity.getLocation(), predictedTargetLoc, DASH_SPEED, false);
     }
@@ -127,7 +125,7 @@ public class GuardianRock extends EntitySlime {
             attrMap.put("defence", 100d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.ARROW);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target
@@ -159,7 +157,7 @@ public class GuardianRock extends EntitySlime {
             this.orbitX.multiply(rdm);
             this.orbitZ.multiply(rdm);
         }
-        aimHelperDash = new EntityHelper.AimHelperOptions().setProjectileSpeed(DASH_SPEED).setAccelerationMode(true);
+        aimHelperDash = new AimHelper.AimHelperOptions().setProjectileSpeed(DASH_SPEED).setAccelerationMode(true);
     }
 
     // rewrite AI

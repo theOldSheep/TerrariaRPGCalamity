@@ -14,10 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
-import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
+import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,8 +38,8 @@ public class PhantomDragon extends EntitySlime {
             HEAD_DMG = 540d, HEAD_DEF = 30d,
             BODY_DMG = 270d, BODY_DEF = 60d,
             TAIL_DMG = 270d, TAIL_DEF = 60d;
-    public static final EntityHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
-            new EntityHelper.WormSegmentMovementOptions()
+    public static final EntityMovementHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
+            new EntityMovementHelper.WormSegmentMovementOptions()
                     .setFollowDistance(2)
                     .setFollowingMultiplier(1)
                     .setStraighteningMultiplier(0.1)
@@ -156,7 +153,7 @@ public class PhantomDragon extends EntitySlime {
                     // face the player
                     this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
                     // follow
-                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
+                    EntityMovementHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
                 }
             }
         }
@@ -220,7 +217,7 @@ public class PhantomDragon extends EntitySlime {
                 attrMap.put("damage", BODY_DMG);
                 attrMap.put("defence", BODY_DEF);
             }
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map

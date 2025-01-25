@@ -1,24 +1,18 @@
 package terraria.entity.boss.postMoonLord.theOldDuke;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.SmallFireball;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,13 +39,13 @@ public class TheOldDuke extends EntitySlime {
     public static final double SPIKE_BALL_SPEED = 1.2;
     public static final double SHARK_PROJECTILE_SPEED = 1.15;
     static HashMap<String, Double> attrMapSpikeBall, attrMapShark, attrMapVortex;
-    static EntityHelper.AimHelperOptions aimHelperDash, aimHelperDashAcceleration;
+    static AimHelper.AimHelperOptions aimHelperDash, aimHelperDashAcceleration;
     EntityHelper.ProjectileShootInfo shootInfoSpikeBall, shootInfoShark, shootInfoVortex;
     static {
-        aimHelperDash = new EntityHelper.AimHelperOptions()
+        aimHelperDash = new AimHelper.AimHelperOptions()
                 .setAccelerationMode(false)
                 .setProjectileSpeed(DASH_SPEED);
-        aimHelperDashAcceleration = new EntityHelper.AimHelperOptions()
+        aimHelperDashAcceleration = new AimHelper.AimHelperOptions()
                 .setAccelerationMode(true)
                 .setProjectileSpeed(DASH_SPEED);
 
@@ -121,7 +115,7 @@ public class TheOldDuke extends EntitySlime {
     private void dash() {
         bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), Sound.ENTITY_ENDERDRAGON_GROWL, 10, 1f);
 
-        EntityHelper.AimHelperOptions aimHelperOption;
+        AimHelper.AimHelperOptions aimHelperOption;
         double random = Math.random();
         if (AIPhase == 1) {
             if (random < 0.6) {
@@ -147,7 +141,7 @@ public class TheOldDuke extends EntitySlime {
 
         Location targetLocation;
         if (aimHelperOption != null) {
-            targetLocation = EntityHelper.helperAimEntity(bukkitEntity, target, aimHelperOption);
+            targetLocation = AimHelper.helperAimEntity(bukkitEntity, target, aimHelperOption);
         } else {
             targetLocation = target.getEyeLocation();
         }
@@ -373,7 +367,7 @@ public class TheOldDuke extends EntitySlime {
             attrMap.put("defence", 90d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -407,11 +401,11 @@ public class TheOldDuke extends EntitySlime {
         // shoot info's
         {
             shootInfoSpikeBall = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSpikeBall,
-                    EntityHelper.DamageType.ARROW, "遗爵鲨牙刺球");
+                    DamageHelper.DamageType.ARROW, "遗爵鲨牙刺球");
             shootInfoShark = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapShark,
-                    EntityHelper.DamageType.MELEE, "硫海龙鲨");
+                    DamageHelper.DamageType.MELEE, "硫海龙鲨");
             shootInfoVortex = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapVortex,
-                    EntityHelper.DamageType.MAGIC, "遗爵硫海漩涡");
+                    DamageHelper.DamageType.MAGIC, "遗爵硫海漩涡");
         }
     }
 

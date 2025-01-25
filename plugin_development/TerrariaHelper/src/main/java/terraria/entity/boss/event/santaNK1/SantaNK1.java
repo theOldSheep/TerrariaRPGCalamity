@@ -36,7 +36,7 @@ public class SantaNK1 extends EntitySlime {
     Player target = null;
     // other variables and AI
     int indexAI = 0;
-    static EntityHelper.AimHelperOptions aimHelperRocket;
+    static AimHelper.AimHelperOptions aimHelperRocket;
     static HashMap<String, Double> attrMapBullet, attrMapSpikyBall, attrMapRocket;
     EntityHelper.ProjectileShootInfo shootInfoBullet, shootInfoSpikyBall, shootInfoRocket;
     static {
@@ -50,7 +50,7 @@ public class SantaNK1 extends EntitySlime {
         attrMapRocket.put("damage", 504d);
         attrMapRocket.put("knockback", 2d);
 
-        aimHelperRocket = new EntityHelper.AimHelperOptions()
+        aimHelperRocket = new AimHelper.AimHelperOptions()
                 .setProjectileSpeed(ROCKET_SPEED)
                 .setRandomOffsetRadius(1);
     }
@@ -123,7 +123,7 @@ public class SantaNK1 extends EntitySlime {
                 case 296:
                 {
                     shootInfoRocket.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-                    Location targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, aimHelperRocket);
+                    Location targetLoc = AimHelper.helperAimEntity(bukkitEntity, target, aimHelperRocket);
                     shootInfoRocket.velocity = MathHelper.getDirection(shootInfoRocket.shootLoc,
                             targetLoc, ROCKET_SPEED);
                     EntityHelper.spawnProjectile(shootInfoRocket);
@@ -199,7 +199,7 @@ public class SantaNK1 extends EntitySlime {
             attrMap.put("defence", 112d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -239,11 +239,11 @@ public class SantaNK1 extends EntitySlime {
         EventAndTime.eventBossAmount[EVENT_BOSS_INDEX] ++;
         // shoot info
         shootInfoSpikyBall = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, new Vector(), attrMapSpikyBall, EntityHelper.DamageType.ARROW, "尖刺球");
+                bukkitEntity, new Vector(), attrMapSpikyBall, DamageHelper.DamageType.ARROW, "尖刺球");
         shootInfoBullet = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, new Vector(), attrMapBullet, EntityHelper.DamageType.BULLET, "火枪子弹");
+                bukkitEntity, new Vector(), attrMapBullet, DamageHelper.DamageType.BULLET, "火枪子弹");
         shootInfoRocket = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, new Vector(), attrMapRocket, EntityHelper.DamageType.ROCKET, "红烟花火箭");
+                bukkitEntity, new Vector(), attrMapRocket, DamageHelper.DamageType.ROCKET, "红烟花火箭");
     }
 
     // disable death function to remove boss bar

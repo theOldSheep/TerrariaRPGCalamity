@@ -11,10 +11,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,7 +86,7 @@ public class CeaselessVoid extends EntitySlime {
 
             for (int i = 0; i < numEntities; i++) {
                 DarkEnergy darkEnergy = new DarkEnergy(owner);
-                EntityHelper.movementTP(darkEnergy.getBukkitEntity(),
+                EntityMovementHelper.movementTP(darkEnergy.getBukkitEntity(),
                         owner.getBukkitEntity().getLocation());
                 darkEnergies.add(darkEnergy);
             }
@@ -298,7 +296,7 @@ public class CeaselessVoid extends EntitySlime {
             attrMap.put("defence", 0d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -335,7 +333,7 @@ public class CeaselessVoid extends EntitySlime {
         // shoot info's
         {
             shootInfoProjectile = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapProjectile,
-                    EntityHelper.DamageType.MAGIC, "暗能量球");
+                    DamageHelper.DamageType.MAGIC, "暗能量球");
         }
     }
 

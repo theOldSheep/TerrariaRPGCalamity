@@ -10,9 +10,8 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.Setting;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.PlayerHelper;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -49,7 +48,7 @@ public class Mount extends EntitySlime {
 
     // synchronize attribute, such as knockback resistance, from owner
     protected void synchronizeAttribute() {
-        attrMap.put("knockbackResistance", EntityHelper.getAttrMap(owner).getOrDefault("knockbackResistance", 0d));
+        attrMap.put("knockbackResistance", AttributeHelper.getAttrMap(owner).getOrDefault("knockbackResistance", 0d));
     }
     // default constructor accounting for default behaviour (removal)
     public Mount(World world) {
@@ -288,7 +287,7 @@ public class Mount extends EntitySlime {
         // update facing dir
         yaw = ownerNMS.yaw;
         // update owner in-world and internal velocity
-        EntityHelper.setVelocity(owner, bukkitEntity.getVelocity());
+        EntityMovementHelper.setVelocity(owner, bukkitEntity.getVelocity());
     }
     public void handleCollisionDamage() {
         if (contactDmg <= 0d)
@@ -317,7 +316,7 @@ public class Mount extends EntitySlime {
         Set<HitEntityInfo> toDamage = HitEntityInfo.getEntitiesHit(bukkitEntity.getWorld(),
                 initLoc, initLoc.clone().add(bukkitEntity.getVelocity()),
                 entityHalfWidth, entityHalfHeight, entityHalfWidth,
-                (Entity entity) -> EntityHelper.checkCanDamage(bukkitEntity, entity.getBukkitEntity(), false));
+                (Entity entity) -> DamageHelper.checkCanDamage(bukkitEntity, entity.getBukkitEntity(), false));
         for (HitEntityInfo hitEntityInfo : toDamage) {
             org.bukkit.entity.Entity victimBukkit = hitEntityInfo.getHitEntity().getBukkitEntity();
             // do not collide with passenger or itself
@@ -326,9 +325,9 @@ public class Mount extends EntitySlime {
             if (bukkitEntity == victimBukkit)
                 continue;
             if (!damageCD.contains(victimBukkit)) {
-                EntityHelper.damageCD(damageCD, victimBukkit, 5);
-                EntityHelper.handleDamage(bukkitEntity, victimBukkit,
-                        currDmg, EntityHelper.DamageReason.CONTACT_DAMAGE);
+                DamageHelper.damageCD(damageCD, victimBukkit, 5);
+                DamageHelper.handleDamage(bukkitEntity, victimBukkit,
+                        currDmg, DamageHelper.DamageReason.CONTACT_DAMAGE);
                 // slimes also bounce upward
                 switch (mountType) {
                     case "史莱姆坐骑":

@@ -7,8 +7,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
 
 import java.util.ArrayList;
@@ -47,7 +46,7 @@ public class GuardianDefender extends EntitySlime {
     GuardianCommander commander;
     GuardianAttacker attacker;
     EntityHelper.ProjectileShootInfo shootInfoSpear, shootInfoBlast;
-    EntityHelper.AimHelperOptions aimHelperSpear, aimHelperBlast, aimHelperDash;
+    AimHelper.AimHelperOptions aimHelperSpear, aimHelperBlast, aimHelperDash;
 
     protected AttackMode currentAttackMode = AttackMode.PROJECTILE;
     int indexAI = 0;
@@ -125,11 +124,11 @@ public class GuardianDefender extends EntitySlime {
         if (shouldFire) {
             boolean blastOrSpear = secondPhase && Math.random() < BLAST_CHANCE;
             // Setup projectile features
-            EntityHelper.AimHelperOptions aimOption = blastOrSpear ? aimHelperBlast : aimHelperSpear;
+            AimHelper.AimHelperOptions aimOption = blastOrSpear ? aimHelperBlast : aimHelperSpear;
             EntityHelper.ProjectileShootInfo shootInfo = blastOrSpear ? shootInfoBlast : shootInfoSpear;
             double speed = blastOrSpear ? BLAST_SPEED : SPEAR_SPEED;
             // Fire projectile
-            Location predictedTargetLoc = EntityHelper.helperAimEntity(
+            Location predictedTargetLoc = AimHelper.helperAimEntity(
                     bukkitEntity.getLocation(), target, aimOption);
             shootInfo.shootLoc = bukkitEntity.getLocation().add(SPEAR_SHOOT_LOC_OFFSET);
             shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, predictedTargetLoc, speed, false);
@@ -140,7 +139,7 @@ public class GuardianDefender extends EntitySlime {
     private void handleDashAttack() {
         // Dash towards the player
         if (indexAI % DASH_DURATION_SINGLE == 0) {
-            Location targetLoc = EntityHelper.helperAimEntity(bukkitEntity.getLocation(), target, aimHelperDash);
+            Location targetLoc = AimHelper.helperAimEntity(bukkitEntity.getLocation(), target, aimHelperDash);
             velocity = MathHelper.getDirection( ((LivingEntity) bukkitEntity).getEyeLocation(), targetLoc, DASH_SPEED, false);
             bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
         }
@@ -185,7 +184,7 @@ public class GuardianDefender extends EntitySlime {
             attrMap.put("defence", 100d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target
@@ -214,15 +213,15 @@ public class GuardianDefender extends EntitySlime {
         // shoot info's
         {
             shootInfoSpear = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSpear,
-                    EntityHelper.DamageType.ARROW, "神圣之矛");
+                    DamageHelper.DamageType.ARROW, "神圣之矛");
             shootInfoBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapBlast,
-                    EntityHelper.DamageType.MAGIC, "闪耀之弹");
-            aimHelperSpear = new EntityHelper.AimHelperOptions()
+                    DamageHelper.DamageType.MAGIC, "闪耀之弹");
+            aimHelperSpear = new AimHelper.AimHelperOptions()
                     .setProjectileSpeed(SPEAR_SPEED)
                     .setAccelerationMode(true);
-            aimHelperBlast = new EntityHelper.AimHelperOptions()
+            aimHelperBlast = new AimHelper.AimHelperOptions()
                     .setProjectileSpeed(BLAST_SPEED);
-            aimHelperDash = new EntityHelper.AimHelperOptions()
+            aimHelperDash = new AimHelper.AimHelperOptions()
                     .setProjectileSpeed(DASH_SPEED)
                     .setAccelerationMode(true);
         }

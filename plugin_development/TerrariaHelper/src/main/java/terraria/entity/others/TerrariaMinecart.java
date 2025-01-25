@@ -11,6 +11,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
+import terraria.util.DamageHelper;
 import terraria.util.EntityHelper;
 import terraria.util.PlayerHelper;
 
@@ -135,7 +136,7 @@ public class TerrariaMinecart extends EntityMinecartRideable {
         Set<HitEntityInfo> toDamage = HitEntityInfo.getEntitiesHit(bukkitEntity.getWorld(),
                 initLoc, initLoc.clone().add(bukkitEntity.getVelocity()),
                 xWidth * 1.25, height * 1.25 + 1, zWidth * 1.25,
-                (Entity entity) -> EntityHelper.checkCanDamage(bukkitEntity, entity.getBukkitEntity(), false));
+                (Entity entity) -> DamageHelper.checkCanDamage(bukkitEntity, entity.getBukkitEntity(), false));
         for (HitEntityInfo hitEntityInfo : toDamage) {
             org.bukkit.entity.Entity victimBukkit = hitEntityInfo.getHitEntity().getBukkitEntity();
             // do not collide with passenger or itself
@@ -144,9 +145,9 @@ public class TerrariaMinecart extends EntityMinecartRideable {
             if (bukkitEntity == victimBukkit)
                 continue;
             if (!damageCD.contains(victimBukkit)) {
-                EntityHelper.damageCD(damageCD, victimBukkit, 10);
-                EntityHelper.handleDamage(bukkitEntity, victimBukkit,
-                        attrMap.getOrDefault("damage", 100d), EntityHelper.DamageReason.CONTACT_DAMAGE);
+                DamageHelper.damageCD(damageCD, victimBukkit, 10);
+                DamageHelper.handleDamage(bukkitEntity, victimBukkit,
+                        attrMap.getOrDefault("damage", 100d), DamageHelper.DamageReason.CONTACT_DAMAGE);
             }
         }
     }

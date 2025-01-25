@@ -7,10 +7,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +36,7 @@ public class EbonianSlime extends EntitySlime {
     boolean lastOnGround = true;
     Vector horVelocity = new Vector();
     EntityHelper.ProjectileShootInfo shootInfo;
-    EntityHelper.AimHelperOptions aimOption;
+    AimHelper.AimHelperOptions aimOption;
     static final HashMap<String, Double> ATTR_MAP_PROJECTILE;
     static {
         ATTR_MAP_PROJECTILE = new HashMap<>();
@@ -52,7 +50,7 @@ public class EbonianSlime extends EntitySlime {
     }
     private void shootProjectiles() {
         for (int i = 0; i < projectileAmount; i ++) {
-            Location targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, aimOption);
+            Location targetLoc = AimHelper.helperAimEntity(bukkitEntity, target, aimOption);
             Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
             Vector velocity = targetLoc.subtract(shootLoc).toVector();
             double velLen = velocity.length();
@@ -188,7 +186,7 @@ public class EbonianSlime extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map
@@ -226,7 +224,7 @@ public class EbonianSlime extends EntitySlime {
         // shoot info, aim helper and other size-specific values
         {
             shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), ATTR_MAP_PROJECTILE, "黑檀深渊之球");
-            aimOption = new EntityHelper.AimHelperOptions()
+            aimOption = new AimHelper.AimHelperOptions()
                     .setAimMode(false)
                     .setProjectileSpeed(TheSlimeGod.PROJECTILE_SPEED);
             switch (slimeSize) {

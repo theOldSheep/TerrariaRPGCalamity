@@ -256,18 +256,18 @@ public class BossHelper {
         Set<HitEntityInfo> toDamage = HitEntityInfo.getEntitiesHit(monsterBkt.getWorld(),
                 initLoc, finalLoc,
                 xWidth, height, zWidth,
-                (net.minecraft.server.v1_12_R1.Entity entity) -> EntityHelper.checkCanDamage(monsterBkt, entity.getBukkitEntity(), false));
-        double damage = EntityHelper.getAttrMap(monsterBkt).getOrDefault("damage", 1d);
+                (net.minecraft.server.v1_12_R1.Entity entity) -> DamageHelper.checkCanDamage(monsterBkt, entity.getBukkitEntity(), false));
+        double damage = AttributeHelper.getAttrMap(monsterBkt).getOrDefault("damage", 1d);
         for (HitEntityInfo hitEntityInfo : toDamage) {
             Entity victimEntity = hitEntityInfo.getHitEntity().getBukkitEntity();
             // do not damage an entity with exception
             if (damageExceptions != null && damageExceptions.contains(victimEntity))
                 continue;
-            EntityHelper.handleDamage(monsterBkt, victimEntity,
-                    damage, EntityHelper.DamageReason.CONTACT_DAMAGE);
+            DamageHelper.handleDamage(monsterBkt, victimEntity,
+                    damage, DamageHelper.DamageReason.CONTACT_DAMAGE);
             // record damage CD
             if (damageExceptions != null) {
-                EntityHelper.damageCD(damageExceptions, victimEntity, damageCDTicks);
+                DamageHelper.damageCD(damageExceptions, victimEntity, damageCDTicks);
             }
         }
     }

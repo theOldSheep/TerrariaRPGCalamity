@@ -2,7 +2,6 @@ package terraria;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.PlaceholderHook;
-import net.minecraft.server.v1_12_R1.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
@@ -155,7 +154,7 @@ public class TerrariaHelper extends JavaPlugin {
                     }
                 }
                 // BELOW: attributes that would require attribute map to be computed
-                HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+                HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(ply);
                 if (attrMap == null) attrMap = new HashMap<>(1);
                 switch (params) {
                     case "defence":

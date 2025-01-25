@@ -11,7 +11,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.entity.boss.event.celestialPillar.CelestialPillar;
 import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 import terraria.util.MathHelper;
@@ -310,7 +309,7 @@ public class LunaticCultist extends EntityZombie {
             attrMap.put("defence", 94d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -344,7 +343,7 @@ public class LunaticCultist extends EntityZombie {
         // shoot info's
         {
             shootInfoFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFireball,
-                    EntityHelper.DamageType.ARROW, "火球");
+                    DamageHelper.DamageType.ARROW, "火球");
         }
     }
 

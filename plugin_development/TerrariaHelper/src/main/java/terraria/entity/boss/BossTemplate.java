@@ -10,10 +10,9 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
+import terraria.util.*;
 import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,7 +114,7 @@ public class BossTemplate extends EntitySlime {
             attrMap.put("defence", 100d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -149,7 +148,7 @@ public class BossTemplate extends EntitySlime {
         // shoot info's
         {
             shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapProjectile,
-                    EntityHelper.DamageType.ARROW, "projectile");
+                    DamageHelper.DamageType.ARROW, "projectile");
         }
     }
 

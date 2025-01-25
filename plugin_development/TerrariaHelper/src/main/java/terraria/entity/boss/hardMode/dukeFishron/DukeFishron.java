@@ -36,9 +36,9 @@ public class DukeFishron extends EntitySlime {
             DASH_SPEED_2 = 1.5, BUBBLE_ROTATE_RADIUS = 32,
             DASH_SPEED_3 = 2;
     static final HashMap<String, Double> attrMapDetonatingBubble;
-    static final EntityHelper.AimHelperOptions dashAimHelper;
+    static final AimHelper.AimHelperOptions dashAimHelper;
     static {
-        dashAimHelper = new EntityHelper.AimHelperOptions();
+        dashAimHelper = new AimHelper.AimHelperOptions();
 
         attrMapDetonatingBubble = new HashMap<>();
         attrMapDetonatingBubble.put("damage", 450d);
@@ -66,18 +66,18 @@ public class DukeFishron extends EntitySlime {
                 bossbar.color = BossBattle.BarColor.YELLOW;
                 attackPhase = AttackPhase.DASH;
                 // damage: 420 -> 604
-                EntityHelper.tweakAttribute(bukkitEntity, "damage", "184", true);
+                AttributeHelper.tweakAttribute(bukkitEntity, "damage", "184", true);
                 // defence: 100 -> 80
-                EntityHelper.tweakAttribute(bukkitEntity, "defence", "20", false);
+                AttributeHelper.tweakAttribute(bukkitEntity, "defence", "20", false);
                 break;
             case 3:
                 setCustomName(BOSS_TYPE.msgName + "§3");
                 bossbar.color = BossBattle.BarColor.RED;
                 attackPhase = AttackPhase.DASH_1;
                 // damage: 604 -> 554
-                EntityHelper.tweakAttribute(bukkitEntity, "damage", "50", false);
+                AttributeHelper.tweakAttribute(bukkitEntity, "damage", "50", false);
                 // defence: 80 -> 0
-                EntityHelper.tweakAttribute(bukkitEntity, "defence", "80", false);
+                AttributeHelper.tweakAttribute(bukkitEntity, "defence", "80", false);
                 break;
         }
         bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
@@ -126,7 +126,7 @@ public class DukeFishron extends EntitySlime {
             // 50% chance to dash into predicted location of enemy
         else {
             dashAimHelper.setAimMode(true).setTicksTotal(ticksReach);
-            targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, dashAimHelper);
+            targetLoc = AimHelper.helperAimEntity(bukkitEntity, target, dashAimHelper);
         }
         dashVelocity = targetLoc.subtract(((LivingEntity) bukkitEntity).getEyeLocation()).toVector();
         // (minSpeed * ticksReach) ^ 2
@@ -437,7 +437,7 @@ public class DukeFishron extends EntitySlime {
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             // damage multiplier
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -471,7 +471,7 @@ public class DukeFishron extends EntitySlime {
         // shoot info's
         {
             psiDetonatingBubble = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapDetonatingBubble,
-                    EntityHelper.DamageType.MAGIC, "爆炸泡泡");
+                    DamageHelper.DamageType.MAGIC, "爆炸泡泡");
         }
     }
 

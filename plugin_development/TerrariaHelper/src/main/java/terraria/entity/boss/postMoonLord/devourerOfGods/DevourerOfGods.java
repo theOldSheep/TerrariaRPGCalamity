@@ -18,10 +18,8 @@ import terraria.TerrariaHelper;
 import terraria.entity.boss.postMoonLord.ceaselessVoid.CeaselessVoid;
 import terraria.entity.boss.postMoonLord.signus.Signus;
 import terraria.entity.boss.postMoonLord.stormWeaver.StormWeaver;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.*;
 
@@ -62,9 +60,9 @@ public class DevourerOfGods extends EntitySlime {
         attrMapLaser.put("damage", 992d);
         attrMapLaser.put("knockback", 1.75d);
     }
-    static final EntityHelper.WormSegmentMovementOptions
+    static final EntityMovementHelper.WormSegmentMovementOptions
             FOLLOW_PROPERTY =
-            new EntityHelper.WormSegmentMovementOptions()
+            new EntityMovementHelper.WormSegmentMovementOptions()
                     .setFollowDistance(SEGMENT_RADIUS)
                     .setFollowingMultiplier(1)
                     .setStraighteningMultiplier(-0.1)
@@ -395,7 +393,7 @@ public class DevourerOfGods extends EntitySlime {
                     EntityHelper.setMetadata(effectiveHead, "yaw", (float) MathHelper.getVectorYaw(directionToInPortal));
                     EntityHelper.setMetadata(effectiveHead, "pitch", (float) MathHelper.getVectorPitch(directionToInPortal));
 
-                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, wormhole.segmentBehindIndex, endIndex);
+                    EntityMovementHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, wormhole.segmentBehindIndex, endIndex);
                     endIndex = wormhole.segmentBehindIndex;
                 }
             }
@@ -406,7 +404,7 @@ public class DevourerOfGods extends EntitySlime {
             wormholes.poll().remove();
 
         // segments that should follow the head
-        EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex, endIndex);
+        EntityMovementHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex, endIndex);
         this.yaw = (float) MathHelper.getVectorYaw(velocityPool);
         this.pitch = (float) MathHelper.getVectorPitch(velocityPool);
     }
@@ -562,7 +560,7 @@ public class DevourerOfGods extends EntitySlime {
             } else {
                 attrMap.put("damageTakenMulti", SEGMENT_DAMAGE_TAKEN[segmentTypeIndex]); // Head or tail
             }
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -605,9 +603,9 @@ public class DevourerOfGods extends EntitySlime {
             this.persistent = true;
             // projectile info; the vector specified the projectile speed!
             shootInfoFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(2, 0, 0), attrMapFireball,
-                    EntityHelper.DamageType.MAGIC, "弑神火球");
+                    DamageHelper.DamageType.MAGIC, "弑神火球");
             shootInfoLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(2, 0, 0), attrMapLaser,
-                    EntityHelper.DamageType.BULLET, "弑神激光");
+                    DamageHelper.DamageType.BULLET, "弑神激光");
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
             if (segmentTypeIndex != 2)

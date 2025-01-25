@@ -223,7 +223,7 @@ public class Leviathan extends EntitySlime {
             attrMap.put("defence", 80d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -254,7 +254,7 @@ public class Leviathan extends EntitySlime {
         // shoot info's
         {
             shootInfoMeteor = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapMeteor,
-                    EntityHelper.DamageType.MAGIC, "流星喷射");
+                    DamageHelper.DamageType.MAGIC, "流星喷射");
         }
     }
 

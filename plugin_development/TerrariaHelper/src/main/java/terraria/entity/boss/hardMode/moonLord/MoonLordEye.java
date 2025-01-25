@@ -12,10 +12,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
-import terraria.util.GenericHelper;
-import terraria.util.MathHelper;
+import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -151,7 +148,7 @@ public class MoonLordEye extends EntitySlime {
                 break;
             case 150:
                 MoonLordPhantasmalSphere center = allSpheres.get(allSpheres.size() / 2);
-                Location aimLoc = EntityHelper.helperAimEntity(center.getBukkitEntity(), target, MoonLordPhantasmalSphere.aimHelper);
+                Location aimLoc = AimHelper.helperAimEntity(center.getBukkitEntity(), target, MoonLordPhantasmalSphere.aimHelper);
                 Vector velocity = aimLoc.subtract( ((LivingEntity) center.getBukkitEntity()).getEyeLocation() ).toVector();
                 velocity.multiply(1d / 15d);
                 for (MoonLordPhantasmalSphere currSphere : allSpheres) {
@@ -341,7 +338,7 @@ public class MoonLordEye extends EntitySlime {
             attrMap.put("defence", eyeLocation.defence);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map
@@ -369,7 +366,7 @@ public class MoonLordEye extends EntitySlime {
         // init shoot info
         {
             shootInfoPhantasmalEye = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPhantasmalEye,
-                    EntityHelper.DamageType.MAGIC, "幻影眼");
+                    DamageHelper.DamageType.MAGIC, "幻影眼");
         }
         // init background
         background = new MoonLordBackground(target, owner, eyeLocation.backgroundType);

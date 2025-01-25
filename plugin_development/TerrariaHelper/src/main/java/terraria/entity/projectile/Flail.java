@@ -7,7 +7,6 @@ import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
-import terraria.TerrariaHelper;
 import terraria.util.*;
 
 public class Flail extends GenericProjectile {
@@ -133,7 +132,7 @@ public class Flail extends GenericProjectile {
                         super.blockHitAction = "stick";
                     }
                     // update velocity
-                    EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions(projectileType)
+                    AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions(projectileType)
                             .setProjectileSpeed(speed);
                     Vector newVelocity = MathHelper.getDirection(
                             owner.getEyeLocation(),

@@ -15,10 +15,8 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,15 +60,15 @@ public class StormWeaver extends EntitySlime {
         attrMapLaser.put("damage", 792d);
         attrMapLaser.put("knockback", 1.5d);
     }
-    static final EntityHelper.WormSegmentMovementOptions
+    static final EntityMovementHelper.WormSegmentMovementOptions
             FOLLOW_PROPERTY_PHASE_1 =
-                    new EntityHelper.WormSegmentMovementOptions()
+                    new EntityMovementHelper.WormSegmentMovementOptions()
                             .setFollowDistance(SLIME_SIZE_ARMORED * 0.5)
                             .setFollowingMultiplier(1)
                             .setStraighteningMultiplier(-0.1)
                             .setVelocityOrTeleport(false),
             FOLLOW_PROPERTY_PHASE_2 =
-                    new EntityHelper.WormSegmentMovementOptions()
+                    new EntityMovementHelper.WormSegmentMovementOptions()
                             .setFollowDistance(SLIME_SIZE_UNARMORED * 0.5)
                             .setFollowingMultiplier(1)
                             .setStraighteningMultiplier(-0.1)
@@ -224,7 +222,7 @@ public class StormWeaver extends EntitySlime {
                     headMovement();
 
                     // follow
-                    EntityHelper.handleSegmentsFollow(bossParts,
+                    EntityMovementHelper.handleSegmentsFollow(bossParts,
                             phase == 1 ? FOLLOW_PROPERTY_PHASE_1 : FOLLOW_PROPERTY_PHASE_2, segmentIndex);
                 }
                 // update facing direction from handleSegmentsFollow
@@ -256,7 +254,7 @@ public class StormWeaver extends EntitySlime {
                     }
                 }
                 setCustomName(BOSS_TYPE.msgName + NAME_SUFFIXES[segmentTypeIndex]);
-                EntityHelper.tweakAttribute(attrMap, "defence",
+                AttributeHelper.tweakAttribute(attrMap, "defence",
                         (SEGMENT_DEFENCE[segmentTypeIndex][1] - SEGMENT_DEFENCE[segmentTypeIndex][0]) + "", true);
             }
         }
@@ -322,7 +320,7 @@ public class StormWeaver extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("damage", SEGMENT_DAMAGE[segmentTypeIndex][0]);
             attrMap.put("defence", SEGMENT_DEFENCE[segmentTypeIndex][0]);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -365,9 +363,9 @@ public class StormWeaver extends EntitySlime {
             this.persistent = true;
             // projectile info
             shootInfoFrostWave = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFrostWave,
-                    EntityHelper.DamageType.MAGIC, "寒霜波");
+                    DamageHelper.DamageType.MAGIC, "寒霜波");
             shootInfoLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapLaser,
-                    EntityHelper.DamageType.BULLET, "电击激光");
+                    DamageHelper.DamageType.BULLET, "电击激光");
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
             if (segmentTypeIndex != 2)

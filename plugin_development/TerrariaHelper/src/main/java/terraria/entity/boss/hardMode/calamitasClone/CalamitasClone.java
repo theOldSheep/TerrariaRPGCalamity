@@ -37,9 +37,9 @@ public class CalamitasClone extends EntitySlime {
     static final String BULLET_HELL_WARNING = "§6§l弹幕炼狱开始，请小心躲避！", BROTHER_REBORN = "§6§l兄弟重生!";
     static final double FINAL_DASH_SPEED = 3, SPEED = 2, BULLET_HELL_RADIUS = 32, DART_SPEED = 0.5, DISPLAY_OFFSET = 32;
     static final HashMap<String, Double> attrMapBrimstoneDart, attrMapHellFireball;
-    static final EntityHelper.AimHelperOptions dashAimHelper;
+    static final AimHelper.AimHelperOptions dashAimHelper;
     static {
-        dashAimHelper = new EntityHelper.AimHelperOptions()
+        dashAimHelper = new AimHelper.AimHelperOptions()
                 .setProjectileSpeed(FINAL_DASH_SPEED);
 
         attrMapBrimstoneDart = new HashMap<>();
@@ -275,7 +275,7 @@ public class CalamitasClone extends EntitySlime {
                                 else {
                                     // dash
                                     if (indexAI == 0) {
-                                        Location targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, dashAimHelper);
+                                        Location targetLoc = AimHelper.helperAimEntity(bukkitEntity, target, dashAimHelper);
                                         dashVelocity = MathHelper.getDirection(
                                                 ((LivingEntity) bukkitEntity).getEyeLocation(), targetLoc, FINAL_DASH_SPEED);
                                     }
@@ -335,7 +335,7 @@ public class CalamitasClone extends EntitySlime {
             attrMap.put("defence", 50d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -369,13 +369,13 @@ public class CalamitasClone extends EntitySlime {
         // projectile info
         {
             psiFireBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(0, DART_SPEED, 0), attrMapBrimstoneDart,
-                    EntityHelper.DamageType.MAGIC, "无际裂变");
+                    DamageHelper.DamageType.MAGIC, "无际裂变");
             psiDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(0, DART_SPEED, 0), attrMapBrimstoneDart,
-                    EntityHelper.DamageType.MAGIC, "硫火飞弹");
+                    DamageHelper.DamageType.MAGIC, "硫火飞弹");
             psiFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(0, DART_SPEED, 0), attrMapHellFireball,
-                    EntityHelper.DamageType.MAGIC, "炼狱硫火球");
+                    DamageHelper.DamageType.MAGIC, "炼狱硫火球");
             psiHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(0, DART_SPEED, 0), attrMapHellFireball,
-                    EntityHelper.DamageType.MAGIC, "深渊亡魂");
+                    DamageHelper.DamageType.MAGIC, "深渊亡魂");
         }
         // health lock info
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, getMaxHealth() * 0.69);

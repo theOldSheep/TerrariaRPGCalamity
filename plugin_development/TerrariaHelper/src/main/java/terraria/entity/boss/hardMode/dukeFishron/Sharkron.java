@@ -7,10 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.entity.projectile.HitEntityInfo;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -57,7 +55,7 @@ public class Sharkron extends EntitySlime {
             if (bukkitEntity.getLocation().getBlock().getType() != org.bukkit.Material.AIR || hitLocation
                      != null) {
                 if (hitLocation != null)
-                    EntityHelper.movementTP(bukkitEntity,
+                    EntityMovementHelper.movementTP(bukkitEntity,
                             MathHelper.toBukkitVector(hitLocation.pos).toLocation(bukkitEntity.getWorld()));
                 setHealth(0f);
             }
@@ -100,7 +98,7 @@ public class Sharkron extends EntitySlime {
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             // damage multiplier
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map

@@ -1,9 +1,7 @@
 package terraria.gameplay;
 
-import com.comphenix.protocol.PacketType;
 import net.minecraft.server.v1_12_R1.BossBattle;
 import net.minecraft.server.v1_12_R1.BossBattleServer;
-import net.minecraft.server.v1_12_R1.IHopper;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -26,7 +24,6 @@ import terraria.entity.boss.event.pumpking.PumpkingHead;
 import terraria.entity.boss.event.santaNK1.SantaNK1;
 import terraria.util.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.logging.Level;
 
@@ -394,7 +391,7 @@ public class EventAndTime {
         else {
             EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(null,
                     null, null,
-                    attrMapFallenStar, EntityHelper.DamageType.ARROW, "坠星");
+                    attrMapFallenStar, DamageHelper.DamageType.ARROW, "坠星");
             for (Chunk chunk : surfaceWorld.getLoadedChunks()) {
                 if (Math.random() < 0.0001) {
                     double spawnX = (chunk.getX() << 4) + Math.random() * 16;

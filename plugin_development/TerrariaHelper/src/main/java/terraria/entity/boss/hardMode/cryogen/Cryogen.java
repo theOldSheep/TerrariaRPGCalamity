@@ -73,24 +73,24 @@ public class Cryogen extends EntitySlime {
         switch (newPhase) {
             case 2:
                 // Damage Taken multiplier: 0.73 -> 0.79
-                EntityHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.08219178", false);
+                AttributeHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.08219178", false);
                 assert Math.abs(0.79 - attrMap.get("damageTakenMulti")) > 1e-3;
                 // Defence: 26 -> 20
-                EntityHelper.tweakAttribute(attrMap, "defence", "6", false);
+                AttributeHelper.tweakAttribute(attrMap, "defence", "6", false);
                 break;
             case 3:
                 // Damage Taken multiplier: 0.79 -> 0.88
-                EntityHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.11392405", false);
+                AttributeHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.11392405", false);
                 assert Math.abs(0.88 - attrMap.get("damageTakenMulti")) > 1e-3;
                 // Defence: 20 -> 12
-                EntityHelper.tweakAttribute(attrMap, "defence", "8", false);
+                AttributeHelper.tweakAttribute(attrMap, "defence", "8", false);
                 break;
             case 4:
                 // Damage Taken multiplier: 0.88 -> 1
-                EntityHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.13636363", false);
+                AttributeHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.13636363", false);
                 assert Math.abs(1 - attrMap.get("damageTakenMulti")) > 1e-3;
                 // Defence: 12 -> 0
-                EntityHelper.tweakAttribute(attrMap, "defence", "12", false);
+                AttributeHelper.tweakAttribute(attrMap, "defence", "12", false);
                 break;
             case 5:
                 psiBlast.properties.put("homing", true);
@@ -469,7 +469,7 @@ public class Cryogen extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -503,9 +503,9 @@ public class Cryogen extends EntitySlime {
         // projectile info
         {
             psiBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapIceBlast,
-                    EntityHelper.DamageType.MAGIC, "冰霜爆");
+                    DamageHelper.DamageType.MAGIC, "冰霜爆");
             psiBomb = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapIceBomb,
-                    EntityHelper.DamageType.MAGIC, "冰霜炸弹");
+                    DamageHelper.DamageType.MAGIC, "冰霜炸弹");
         }
         // spawn with shield
         {

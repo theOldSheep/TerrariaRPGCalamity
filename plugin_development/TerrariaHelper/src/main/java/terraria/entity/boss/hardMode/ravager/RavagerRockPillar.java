@@ -7,6 +7,7 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import terraria.util.BossHelper;
+import terraria.util.DamageHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 
@@ -81,7 +82,7 @@ public class RavagerRockPillar extends EntitySlime {
         {
             attrMap = (HashMap<String, Double>) owner.attrMap.clone();
             attrMap.put("damageTakenMulti", 0.7);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map

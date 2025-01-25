@@ -12,10 +12,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,13 +34,13 @@ public class Polterghast extends EntitySlime {
     static final double SPEED_PROJECTILE_FOLLOW = 0.6, HOVER_SPEED = 2.0, HOVER_DIST = 24.0, DASH_SPEED = 3.0;
     static final double SPEED_PROJECTILE_CLUSTER = 1.25, SPEED_PROJECTILE = 2.0;
     static HashMap<String, Double> attrMapProjectile;
-    static EntityHelper.AimHelperOptions aimHelperDash, aimHelperDashAcceleration;
+    static AimHelper.AimHelperOptions aimHelperDash, aimHelperDashAcceleration;
     EntityHelper.ProjectileShootInfo shootInfoCluster, shootInfoProjectile;
     static {
-        aimHelperDash = new EntityHelper.AimHelperOptions()
+        aimHelperDash = new AimHelper.AimHelperOptions()
                 .setAccelerationMode(false)
                 .setProjectileSpeed(DASH_SPEED);
-        aimHelperDashAcceleration = new EntityHelper.AimHelperOptions()
+        aimHelperDashAcceleration = new AimHelper.AimHelperOptions()
                 .setAccelerationMode(true)
                 .setProjectileSpeed(DASH_SPEED);
 
@@ -77,8 +75,8 @@ public class Polterghast extends EntitySlime {
                 bossbar.color = BossBattle.BarColor.YELLOW;
                 bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
                 setCustomName(BOSS_TYPE.msgName + "§1");
-                EntityHelper.tweakAttribute(attrMap, "damage", "152", true);
-                EntityHelper.tweakAttribute(attrMap, "defence", "36", false);
+                AttributeHelper.tweakAttribute(attrMap, "damage", "152", true);
+                AttributeHelper.tweakAttribute(attrMap, "defence", "36", false);
             }
             indexAI = -1;
         }
@@ -103,8 +101,8 @@ public class Polterghast extends EntitySlime {
                 bossbar.color = BossBattle.BarColor.PINK;
                 bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
                 setCustomName(BOSS_TYPE.msgName + "§2");
-                EntityHelper.tweakAttribute(attrMap, "damage", "154", true);
-                EntityHelper.tweakAttribute(attrMap, "defence", "54", false);
+                AttributeHelper.tweakAttribute(attrMap, "damage", "154", true);
+                AttributeHelper.tweakAttribute(attrMap, "defence", "54", false);
                 // rest for 5 seconds (very long as the player needs to align the boss correctly)
                 indexAI = -100;
             }
@@ -208,10 +206,10 @@ public class Polterghast extends EntitySlime {
         Location dashLoc;
         switch (AIPhase) {
             case 2:
-                dashLoc = EntityHelper.helperAimEntity(bukkitEntity, target, aimHelperDash);
+                dashLoc = AimHelper.helperAimEntity(bukkitEntity, target, aimHelperDash);
                 break;
             case 3:
-                dashLoc = EntityHelper.helperAimEntity(bukkitEntity, target, aimHelperDashAcceleration);
+                dashLoc = AimHelper.helperAimEntity(bukkitEntity, target, aimHelperDashAcceleration);
                 break;
             default:
                 dashLoc = target.getEyeLocation();
@@ -308,7 +306,7 @@ public class Polterghast extends EntitySlime {
             attrMap.put("defence", 180d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -342,9 +340,9 @@ public class Polterghast extends EntitySlime {
         // shoot info's
         {
             shootInfoCluster = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapProjectile,
-                    EntityHelper.DamageType.MAGIC, "幽花子母弹");
+                    DamageHelper.DamageType.MAGIC, "幽花子母弹");
             shootInfoProjectile = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapProjectile,
-                    EntityHelper.DamageType.MAGIC, "幽花弹幕");
+                    DamageHelper.DamageType.MAGIC, "幽花弹幕");
         }
     }
 

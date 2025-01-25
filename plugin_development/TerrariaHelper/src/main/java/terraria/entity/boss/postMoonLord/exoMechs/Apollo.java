@@ -6,8 +6,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class Apollo extends EntitySlime {
     // other variables and AI
     static final double DASH_SPEED = 3.0;
     static HashMap<String, Double> ATTR_MAP_PLASMA, ATTR_MAP_ROCKET;
-    static EntityHelper.AimHelperOptions AIM_HELPER_DASH;
+    static AimHelper.AimHelperOptions AIM_HELPER_DASH;
     EntityHelper.ProjectileShootInfo shootInfoPlasma, shootInfoRocket;
     static {
         ATTR_MAP_PLASMA = new HashMap<>();
@@ -38,7 +37,7 @@ public class Apollo extends EntitySlime {
         ATTR_MAP_ROCKET.put("damage", 1450d);
         ATTR_MAP_ROCKET.put("knockback", 3.5d);
 
-        AIM_HELPER_DASH = new EntityHelper.AimHelperOptions()
+        AIM_HELPER_DASH = new AimHelper.AimHelperOptions()
                 .setProjectileSpeed(DASH_SPEED);
     }
     Vector dashVel = null;
@@ -125,7 +124,7 @@ public class Apollo extends EntitySlime {
     }
     private Vector getDashDirection(boolean aimedOrDirect) {
         Location eyeLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-        Location targetLoc = aimedOrDirect ? EntityHelper.helperAimEntity(eyeLoc, target, AIM_HELPER_DASH) : target.getEyeLocation();
+        Location targetLoc = aimedOrDirect ? AimHelper.helperAimEntity(eyeLoc, target, AIM_HELPER_DASH) : target.getEyeLocation();
         return MathHelper.getDirection(eyeLoc, targetLoc, DASH_SPEED);
     }
     private void AI() {
@@ -183,7 +182,7 @@ public class Apollo extends EntitySlime {
             attrMap.put("defence", 200d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.BULLET);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.BULLET);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -214,9 +213,9 @@ public class Apollo extends EntitySlime {
         // shoot info's
         {
             shootInfoPlasma = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), ATTR_MAP_PLASMA,
-                    EntityHelper.DamageType.ARROW, "巨大挥发性等离子光球");
+                    DamageHelper.DamageType.ARROW, "巨大挥发性等离子光球");
             shootInfoRocket = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), ATTR_MAP_ROCKET,
-                    EntityHelper.DamageType.ROCKET, "高爆等离子火箭");
+                    DamageHelper.DamageType.ROCKET, "高爆等离子火箭");
         }
     }
 

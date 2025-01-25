@@ -7,14 +7,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
 
 public class Sharknado extends EntitySlime {
     // basic variables
@@ -94,7 +91,7 @@ public class Sharknado extends EntitySlime {
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             // damage multiplier
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init slime size and offsets

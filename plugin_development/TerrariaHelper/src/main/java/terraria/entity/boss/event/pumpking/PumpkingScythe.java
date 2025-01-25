@@ -11,12 +11,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
-import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
+import terraria.util.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PumpkingScythe extends EntitySlime {
@@ -83,7 +79,7 @@ public class PumpkingScythe extends EntitySlime {
             attrMap.put("defence", 0d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init health and slime size

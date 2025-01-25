@@ -13,10 +13,8 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,8 +38,8 @@ public class AquaticScourge extends EntitySlime {
             HEAD_DMG = 528d, HEAD_DEF = 20d, HEAD_DR = 0.05,
             BODY_DMG = 360d, BODY_DEF = 30d, BODY_DR = 0.1,
             TAIL_DMG = 312d, TAIL_DEF = 50d, TAIL_DR = 0.15;
-    public static final EntityHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
-            new EntityHelper.WormSegmentMovementOptions()
+    public static final EntityMovementHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
+            new EntityMovementHelper.WormSegmentMovementOptions()
                     .setFollowDistance(3)
                     .setFollowingMultiplier(1)
                     .setStraighteningMultiplier(0.1)
@@ -227,7 +225,7 @@ public class AquaticScourge extends EntitySlime {
                 this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
                 this.pitch = (float) MathHelper.getVectorPitch( bukkitEntity.getVelocity() );
                 // follow
-                EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
+                EntityMovementHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
             }
             // body
             else if (segmentIndex < TOTAL_LENGTH - 1) {
@@ -312,7 +310,7 @@ public class AquaticScourge extends EntitySlime {
                 attrMap.put("defence", BODY_DEF);
                 attrMap.put("damageTakenMulti", 1 - BODY_DR);
             }
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -352,11 +350,11 @@ public class AquaticScourge extends EntitySlime {
             this.persistent = true;
             // projectile info
             projectilePropertySandTooth = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSandTooth,
-                    EntityHelper.DamageType.ARROW, "渊海灾虫毒牙");
+                    DamageHelper.DamageType.ARROW, "渊海灾虫毒牙");
             projectilePropertySandPoisonCloud = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSandPoisonCloud,
-                    EntityHelper.DamageType.ARROW, "渊海灾虫沙爆");
+                    DamageHelper.DamageType.ARROW, "渊海灾虫沙爆");
             projectilePropertyToxicCloud = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapToxicCloud,
-                    EntityHelper.DamageType.ARROW, "渊海灾虫毒云");
+                    DamageHelper.DamageType.ARROW, "渊海灾虫毒云");
             // segment settings
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment

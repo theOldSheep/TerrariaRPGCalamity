@@ -48,7 +48,7 @@ public class PumpkingHead extends EntitySlime {
         Vector velocity = MathHelper.getDirection(
                 ((LivingEntity) bukkitEntity).getEyeLocation(), targetLoc, 0.35 );
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, velocity, flame_attrMap, EntityHelper.DamageType.MAGIC, "希腊烈火");
+                bukkitEntity, velocity, flame_attrMap, DamageHelper.DamageType.MAGIC, "希腊烈火");
         EntityHelper.spawnProjectile(shootInfo);
     }
     private void AI() {
@@ -140,7 +140,7 @@ public class PumpkingHead extends EntitySlime {
             attrMap.put("defence", 80d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

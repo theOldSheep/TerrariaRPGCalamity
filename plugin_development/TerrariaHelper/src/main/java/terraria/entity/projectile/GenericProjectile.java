@@ -10,7 +10,6 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.projectiles.ProjectileSource;
@@ -195,7 +194,7 @@ public class GenericProjectile extends EntityPotion {
                              String projectileType, HashMap<String, Object> properties,
                              HashMap<String, Double> attrMap,
                              ProjectileSource shooter, Entity lockedTarget,
-                             EntityHelper.DamageType damageType) {
+                             DamageHelper.DamageType damageType) {
         super(((CraftWorld) loc.getWorld()).getHandle(), loc.getX(), loc.getY(), loc.getZ(),
                 GenericProjectile.generateItemStack(projectileItemName));
         this.projectileItemName = projectileItemName;
@@ -216,7 +215,7 @@ public class GenericProjectile extends EntityPotion {
         this.attrMap = (HashMap<String, Double>) attrMap.clone();
         this.lastTrailDisplayLocation = loc.clone();
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, this.attrMap);
-        EntityHelper.setDamageType(bukkitEntity, damageType);
+        DamageHelper.setDamageType(bukkitEntity, damageType);
         setProperties(projectileType);
         // play spawned sound
         if (spawnSound.length() > 0) {
@@ -235,7 +234,7 @@ public class GenericProjectile extends EntityPotion {
     // Note: -1e5 is the threshold to be even considered
     protected double getHomingInterest(Entity target) {
         // should only home into "proper" enemies
-        if (!EntityHelper.checkCanDamage(bukkitEntity, target.getBukkitEntity()))
+        if (!DamageHelper.checkCanDamage(bukkitEntity, target.getBukkitEntity()))
             return -1e9;
         // check for recent damage; note that most homing do not lose their alive target anyway.
         if (damageCD.contains(target.getBukkitEntity())) {
@@ -252,7 +251,7 @@ public class GenericProjectile extends EntityPotion {
         org.bukkit.entity.Entity bukkitE = e.getBukkitEntity();
         if (damageCD.contains(bukkitE)) return false;
         // should still be able to hit entities that are neither monster nor forbidden to hit
-        return EntityHelper.checkCanDamage(bukkitEntity, bukkitE, false);
+        return DamageHelper.checkCanDamage(bukkitEntity, bukkitE, false);
     }
     public Vec3D hitEntity(Entity e, MovingObjectPosition position, Vec3D futureLoc, Vector velocityHolder) {
         // handle damage CD before doing anything else. Otherwise, exploding projectiles will damage the enemy being hit twice.
@@ -352,7 +351,7 @@ public class GenericProjectile extends EntityPotion {
                             "潜伏衍生弹幕." + accessory);
                     if (clusterSectionCfg == null)
                         continue;
-                    HashMap<String, Double> attrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(bukkitEntity).clone();
+                    HashMap<String, Double> attrMap = (HashMap<String, Double>) AttributeHelper.getAttrMap(bukkitEntity).clone();
                     if (secondaryDmgMulti != 1.0)
                         attrMap.put("damage", attrMap.getOrDefault("damage", 1d) * secondaryDmgMulti);
                     ArrowHitListener.spawnProjectileClusterBomb(clusterSectionCfg, bukkitEntity, attrMap, entityHit.getBukkitEntity());
@@ -400,14 +399,14 @@ public class GenericProjectile extends EntityPotion {
                             offset,
                             (Entity toCheck) -> {
                                 if (this.shooter != null && this.shooter == toCheck) return false;
-                                return EntityHelper.checkCanDamage(bukkitEntity, toCheck.getBukkitEntity(), true);
+                                return DamageHelper.checkCanDamage(bukkitEntity, toCheck.getBukkitEntity(), true);
                             });
 
                     for (HitEntityInfo hitInfo : hitCandidates) {
                         org.bukkit.entity.Entity hitEntity = hitInfo.getHitEntity().getBukkitEntity();
                         if (hitEntity instanceof LivingEntity) {
-                            Location targetLoc = EntityHelper.helperAimEntity(extraProjectileShootInfo.shootLoc, hitEntity,
-                                    new EntityHelper.AimHelperOptions(extraProjectileShootInfo.projectileName)
+                            Location targetLoc = AimHelper.helperAimEntity(extraProjectileShootInfo.shootLoc, hitEntity,
+                                    new AimHelper.AimHelperOptions(extraProjectileShootInfo.projectileName)
                                             .setAccelerationMode(true)
                                             .setProjectileSpeed(extraProjectileSpeed));
                             velocity = terraria.util.MathHelper.getDirection(extraProjectileShootInfo.shootLoc, targetLoc, 1);
@@ -492,7 +491,7 @@ public class GenericProjectile extends EntityPotion {
                         radius,
                         (Entity toCheck) -> {
                             if (this.shooter != null && this.shooter == toCheck) return false;
-                            return EntityHelper.checkCanDamage(bukkitEntity, toCheck.getBukkitEntity(), true);
+                            return DamageHelper.checkCanDamage(bukkitEntity, toCheck.getBukkitEntity(), true);
                         });
 
                 // suck enemies towards projectile
@@ -687,10 +686,10 @@ public class GenericProjectile extends EntityPotion {
                         MetadataValue targetCache = EntityHelper.getMetadata(owner, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE);
                         if (targetCache != null &&
                                 targetCache.value() instanceof LivingEntity &&
-                                EntityHelper.checkCanDamage(owner, ((LivingEntity) targetCache.value()), true))
+                                DamageHelper.checkCanDamage(owner, ((LivingEntity) targetCache.value()), true))
                             targetLoc = ((LivingEntity) targetCache.value()).getEyeLocation();
                         else
-                            targetLoc = ItemUseHelper.getPlayerTargetLoc(new ItemUseHelper.PlyTargetLocInfo(owner, new EntityHelper.AimHelperOptions().setAimMode(true).setTicksTotal(0), true));
+                            targetLoc = ItemUseHelper.getPlayerTargetLoc(new ItemUseHelper.PlyTargetLocInfo(owner, new AimHelper.AimHelperOptions().setAimMode(true).setTicksTotal(0), true));
                         // move towards the owner's target
                         Vector dir = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                         terraria.util.MathHelper.setVectorLength(dir, speed);
@@ -1279,7 +1278,7 @@ public class GenericProjectile extends EntityPotion {
         double smallestDistSqr = 1e9;
         Location currLoc = new Location(this.bukkitEntity.getWorld(), location.x, location.y, location.z);
         boolean velocityChanged = false;
-        EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions()
+        AimHelper.AimHelperOptions aimHelperOptions = new AimHelper.AimHelperOptions()
                 .setAccelerationMode(true)
                 .setProjectileSpeed(this.speed)
                 .setProjectileGravity(this.gravity)
@@ -1291,7 +1290,7 @@ public class GenericProjectile extends EntityPotion {
             if (damageCD.contains(entity))
                 continue;
             // should strictly home into "proper" enemies (no critters!)
-            if (!EntityHelper.checkCanDamage(this.bukkitEntity, entity, true))
+            if (!DamageHelper.checkCanDamage(this.bukkitEntity, entity, true))
                 continue;
             // make sure the closest entity is targeted
             double currDistSqr = entity.getLocation().distanceSquared(currLoc);
@@ -1308,7 +1307,7 @@ public class GenericProjectile extends EntityPotion {
             if (blockedLocation != null)
                 continue;
             // predicts the enemy's future location; note that gravity is turned off in the previous code.
-            Location predictedLoc = EntityHelper.helperAimEntity(currLoc, entity, aimHelperOptions);
+            Location predictedLoc = AimHelper.helperAimEntity(currLoc, entity, aimHelperOptions);
             // initializes direction the projectile should go to
             Vector dir = predictedLoc.subtract(currLoc).toVector();
             // update the smallest distance & velocity

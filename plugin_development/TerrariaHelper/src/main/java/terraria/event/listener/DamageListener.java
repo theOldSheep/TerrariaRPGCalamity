@@ -1,16 +1,12 @@
 package terraria.event.listener;
 
-import net.minecraft.server.v1_12_R1.AxisAlignedBB;
-import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
-import terraria.util.EntityHelper;
+import terraria.util.DamageHelper;
 
-import java.util.HashMap;
 import java.util.Set;
 
 public class DamageListener implements Listener {
@@ -25,10 +21,10 @@ public class DamageListener implements Listener {
             case SUFFOCATION:
                 if (victim.getType() == EntityType.SLIME) break;
             case VOID:
-                EntityHelper.handleDamage(victim, victim, 10, EntityHelper.DamageReason.SUFFOCATION);
+                DamageHelper.handleDamage(victim, victim, 10, DamageHelper.DamageReason.SUFFOCATION);
                 break;
             case LAVA:
-                EntityHelper.handleDamage(victim, victim, 200, EntityHelper.DamageReason.LAVA);
+                DamageHelper.handleDamage(victim, victim, 200, DamageHelper.DamageReason.LAVA);
                 break;
             // drowning damage is handled in extra ticking
             case DROWNING:
@@ -36,7 +32,7 @@ public class DamageListener implements Listener {
             case FALL:
                 if (victim.getType() == EntityType.SLIME) break;
                 if (victimScoreboardTags.contains("noFallDamage")) break;
-                EntityHelper.handleDamage(victim, victim, 50, EntityHelper.DamageReason.FALL);
+                DamageHelper.handleDamage(victim, victim, 50, DamageHelper.DamageReason.FALL);
                 break;
             case FIRE:
             case FIRE_TICK:

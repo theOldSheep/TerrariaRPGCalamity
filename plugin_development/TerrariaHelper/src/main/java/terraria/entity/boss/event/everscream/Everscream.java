@@ -173,7 +173,7 @@ public class Everscream extends EntitySlime {
             attrMap.put("defence", 76d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -213,9 +213,9 @@ public class Everscream extends EntitySlime {
         EventAndTime.eventBossAmount[EVENT_BOSS_INDEX] ++;
         // shoot info
         shootInfoPineNeedle = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, new Vector(), attrMapPineNeedle, EntityHelper.DamageType.MAGIC, "松针");
+                bukkitEntity, new Vector(), attrMapPineNeedle, DamageHelper.DamageType.MAGIC, "松针");
         shootInfoOrnament = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, new Vector(), attrMapOrnament, EntityHelper.DamageType.MAGIC, "装饰");
+                bukkitEntity, new Vector(), attrMapOrnament, DamageHelper.DamageType.MAGIC, "装饰");
     }
 
     // disable death function to remove boss bar

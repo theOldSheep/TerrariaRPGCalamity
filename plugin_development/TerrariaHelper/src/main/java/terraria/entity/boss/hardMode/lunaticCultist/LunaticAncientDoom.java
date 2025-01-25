@@ -8,9 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
-import terraria.util.MathHelper;
+import terraria.util.*;
 
 import java.util.HashMap;
 
@@ -70,7 +68,7 @@ public class LunaticAncientDoom extends EntitySlime {
                     Vector offset2 = dir2.clone();
                     offset2.multiply(cosVal);
 
-                    EntityHelper.movementTP(bukkitEntity,
+                    EntityMovementHelper.movementTP(bukkitEntity,
                             target.getEyeLocation().add(offset1).add(offset2));
                     bukkitEntity.setVelocity(new Vector());
 
@@ -127,7 +125,7 @@ public class LunaticAncientDoom extends EntitySlime {
             attrMap.put("crit", 0.04);
             attrMap.put("damage", doomOrEnd ? 1d : 540d);
             attrMap.put("knockback", 2d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // size and other properties

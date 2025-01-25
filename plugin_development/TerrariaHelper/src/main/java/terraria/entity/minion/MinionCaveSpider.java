@@ -4,7 +4,6 @@ import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.entity.CaveSpider;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -12,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+import terraria.util.DamageHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 
@@ -74,7 +74,7 @@ public class MinionCaveSpider extends EntityCaveSpider {
         EntityHelper.setMetadata(getBukkitEntity(), EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         addScoreboardTag("isMinion");
         EntityHelper.setMetadata(getBukkitEntity(), EntityHelper.MetadataName.DAMAGE_SOURCE, owner);
-        EntityHelper.setDamageType(getBukkitEntity(), EntityHelper.DamageType.SUMMON);
+        DamageHelper.setDamageType(getBukkitEntity(), DamageHelper.DamageType.SUMMON);
         addScoreboardTag("noDamage");
         addScoreboardTag("noMelee");
         setCustomName(minionType);

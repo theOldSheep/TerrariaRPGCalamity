@@ -24,9 +24,9 @@ public class HiveBlob extends EntitySlime {
     Vector offset = null;
     int indexAI = (int) (Math.random() * 300);
     static final double PROJECTILE_SPEED_PHASE_ONE = 1.5, PROJECTILE_SPEED_PHASE_TWO = 1;
-    static final EntityHelper.AimHelperOptions aimHelper;
+    static final AimHelper.AimHelperOptions aimHelper;
     static {
-        aimHelper = new EntityHelper.AimHelperOptions()
+        aimHelper = new AimHelper.AimHelperOptions()
                 .setAimMode(false)
                 .setIntensity(1d)
                 .setProjectileSpeed(PROJECTILE_SPEED_PHASE_ONE);
@@ -66,7 +66,7 @@ public class HiveBlob extends EntitySlime {
                     if (owner.secondPhase) {
                         targetLoc = target.getLocation();
                     } else {
-                        targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, aimHelper);
+                        targetLoc = AimHelper.helperAimEntity(bukkitEntity, target, aimHelper);
                     }
                     // setup projectile velocity
                     Vector projVel = targetLoc.subtract(((LivingEntity) bukkitEntity).getEyeLocation()).toVector();
@@ -127,7 +127,7 @@ public class HiveBlob extends EntitySlime {
             attrMap.put("knockbackResistance", 0.2d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.ARROW);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map

@@ -9,9 +9,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
-import terraria.util.GenericHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
 
 import java.util.ArrayList;
@@ -133,7 +131,7 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
                 allSpheres.add(sphere);
                 break;
             case 70:
-                Location aimLoc = EntityHelper.helperAimEntity(getBukkitEntity(), target, MoonLordPhantasmalSphere.aimHelper);
+                Location aimLoc = AimHelper.helperAimEntity(getBukkitEntity(), target, MoonLordPhantasmalSphere.aimHelper);
                 Vector velocity = aimLoc.subtract( ((LivingEntity) getBukkitEntity()).getEyeLocation() ).toVector();
                 velocity.multiply(1d / 15d);
                 for (MoonLordPhantasmalSphere currSphere : allSpheres) {
@@ -286,7 +284,7 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
             attrMap.put("defence", 0d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map
@@ -310,7 +308,7 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
         // init shoot info
         {
             shootInfoPhantasmalEye = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPhantasmalEye,
-                    EntityHelper.DamageType.MAGIC, "幻影眼");
+                    DamageHelper.DamageType.MAGIC, "幻影眼");
         }
     }
 

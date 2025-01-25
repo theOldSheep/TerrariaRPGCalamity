@@ -37,8 +37,8 @@ public class DesertNuisance extends EntitySlime {
             HEAD_DMG = 180d, HEAD_DEF = 4d,
             BODY_DMG = 90d, BODY_DEF = 8d,
             TAIL_DMG = 60d, TAIL_DEF = 14d;
-    public static final EntityHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
-            new EntityHelper.WormSegmentMovementOptions()
+    public static final EntityMovementHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
+            new EntityMovementHelper.WormSegmentMovementOptions()
                     .setFollowDistance(2)
                     .setFollowingMultiplier(1)
                     .setStraighteningMultiplier(0.1)
@@ -157,7 +157,7 @@ public class DesertNuisance extends EntitySlime {
                     // face the charging direction
                     this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
                     // follow
-                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
+                    EntityMovementHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
                 }
             }
         }
@@ -239,7 +239,7 @@ public class DesertNuisance extends EntitySlime {
                 attrMap.put("damage", BODY_DMG);
                 attrMap.put("defence", BODY_DEF);
             }
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map

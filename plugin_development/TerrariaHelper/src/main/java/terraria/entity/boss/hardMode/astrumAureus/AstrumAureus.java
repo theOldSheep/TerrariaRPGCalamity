@@ -12,10 +12,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,9 +75,9 @@ public class AstrumAureus extends EntitySlime {
             case RECHARGE:
                 phaseAI = AIPhase.CRAWL;
                 // Damage Taken: 1 -> 0.5
-                EntityHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.5", true);
+                AttributeHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.5", true);
                 // defence: 40 -> 80
-                EntityHelper.tweakAttribute(attrMap, "defence", "40", true);
+                AttributeHelper.tweakAttribute(attrMap, "defence", "40", true);
                 break;
             case CRAWL:
                 phaseAI = AIPhase.JUMP;
@@ -93,9 +91,9 @@ public class AstrumAureus extends EntitySlime {
             bossbar.color = BossBattle.BarColor.GREEN;
             bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
             // Damage Taken: 0.5 -> 1
-            EntityHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.5", false);
+            AttributeHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.5", false);
             // defence: 80 -> 40
-            EntityHelper.tweakAttribute(attrMap, "defence", "40", false);
+            AttributeHelper.tweakAttribute(attrMap, "defence", "40", false);
         }
         else {
             bossbar.color = BossBattle.BarColor.RED;
@@ -303,7 +301,7 @@ public class AstrumAureus extends EntitySlime {
             attrMap.put("defence", 40d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -337,9 +335,9 @@ public class AstrumAureus extends EntitySlime {
         // shoot info's
         {
             shootInfoLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapLaser,
-                    EntityHelper.DamageType.MAGIC, "星幻激光");
+                    DamageHelper.DamageType.MAGIC, "星幻激光");
             shootInfoCrystal = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapCrystal,
-                    EntityHelper.DamageType.BULLET, "星幻凝晶");
+                    DamageHelper.DamageType.BULLET, "星幻凝晶");
         }
     }
 

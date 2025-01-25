@@ -3,22 +3,16 @@ package terraria.entity.boss.postMoonLord.supremeCalamitas;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,9 +45,9 @@ public class Sepulcher extends EntitySlime {
         attrMapDart.put("damage", 1400d);
         attrMapDart.put("knockback", 1.5d);
     }
-    static final EntityHelper.WormSegmentMovementOptions
+    static final EntityMovementHelper.WormSegmentMovementOptions
             FOLLOW_PROPERTY =
-                    new EntityHelper.WormSegmentMovementOptions()
+                    new EntityMovementHelper.WormSegmentMovementOptions()
                             .setFollowDistance(SLIME_SIZE * 0.5)
                             .setFollowingMultiplier(1)
                             .setStraighteningMultiplier(-0.1)
@@ -146,7 +140,7 @@ public class Sepulcher extends EntitySlime {
                     dashTowardsPlayer();
 
                     // follow
-                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
+                    EntityMovementHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
                 }
                 // update facing direction from handleSegmentsFollow
                 {
@@ -204,7 +198,7 @@ public class Sepulcher extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("damage", SEGMENT_DAMAGE[segmentTypeIndex][0]);
             attrMap.put("defence", 0d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // clone target map
@@ -228,7 +222,7 @@ public class Sepulcher extends EntitySlime {
             this.persistent = true;
             // projectile info
             shootInfoDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapDart,
-                    EntityHelper.DamageType.MAGIC, "灾厄飞弹");
+                    DamageHelper.DamageType.MAGIC, "灾厄飞弹");
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
             if (segmentTypeIndex != 2)

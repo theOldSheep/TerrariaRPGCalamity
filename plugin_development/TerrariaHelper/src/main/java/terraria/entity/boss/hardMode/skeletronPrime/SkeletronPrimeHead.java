@@ -245,7 +245,7 @@ public class SkeletronPrimeHead extends EntitySlime {
             attrMap.put("defence", 48d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -280,7 +280,7 @@ public class SkeletronPrimeHead extends EntitySlime {
         // shoot info
         {
             shootInfoSkull = new EntityHelper.ProjectileShootInfo(
-                    bukkitEntity, new Vector(), attrMapSkull, EntityHelper.DamageType.MAGIC, "");
+                    bukkitEntity, new Vector(), attrMapSkull, DamageHelper.DamageType.MAGIC, "");
             shootInfoSkull.projectileName = "诅咒头";
             shootInfoSkull.properties.put("homing", true);
             shootInfoSkull.properties.put("homingMethod", 2);
@@ -293,9 +293,9 @@ public class SkeletronPrimeHead extends EntitySlime {
             shootInfoSkull.properties.put("gravity", 0d);
             shootInfoSkull.properties.put("blockHitAction", "thru");
             shootInfoLaser = new EntityHelper.ProjectileShootInfo(
-                    bukkitEntity, new Vector(), attrMapRocket, EntityHelper.DamageType.MAGIC, "死亡激光");
+                    bukkitEntity, new Vector(), attrMapRocket, DamageHelper.DamageType.MAGIC, "死亡激光");
             shootInfoRocket = new EntityHelper.ProjectileShootInfo(
-                    bukkitEntity, new Vector(), attrMapRocket, EntityHelper.DamageType.ROCKET, "");
+                    bukkitEntity, new Vector(), attrMapRocket, DamageHelper.DamageType.ROCKET, "");
             shootInfoRocket.projectileName = "红烟花火箭";
             shootInfoRocket.properties.put("homing", true);
             shootInfoRocket.properties.put("homingMethod", 2);

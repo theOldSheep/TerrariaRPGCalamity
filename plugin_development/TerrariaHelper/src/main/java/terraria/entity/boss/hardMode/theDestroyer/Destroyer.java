@@ -1,7 +1,6 @@
 package terraria.entity.boss.hardMode.theDestroyer;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -14,10 +13,8 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,15 +38,15 @@ public class Destroyer extends EntitySlime {
             HEAD_DMG = 840d, HEAD_DEF = 0d,
             BODY_DMG = 408d, BODY_DEF = 80d,
             TAIL_DMG = 306d, TAIL_DEF = 70d;
-    public static final EntityHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
-            new EntityHelper.WormSegmentMovementOptions()
+    public static final EntityMovementHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
+            new EntityMovementHelper.WormSegmentMovementOptions()
                     .setFollowDistance(4)
                     .setFollowingMultiplier(2)
                     .setStraighteningMultiplier(0.1)
                     .setVelocityOrTeleport(false);
     static double laserSpeed = 2.5;
     static HashMap<String, Double> attrMapDeathLaser, attrMapCursedLaser, attrMapElectricLaser;
-    static EntityHelper.AimHelperOptions laserAimHelper;
+    static AimHelper.AimHelperOptions laserAimHelper;
     static {
         attrMapDeathLaser = new HashMap<>();
         attrMapDeathLaser.put("damage", 384d);
@@ -61,7 +58,7 @@ public class Destroyer extends EntitySlime {
         attrMapElectricLaser.put("damage", 468d);
         attrMapElectricLaser.put("knockback", 2d);
 
-        laserAimHelper = new EntityHelper.AimHelperOptions()
+        laserAimHelper = new AimHelper.AimHelperOptions()
                 .setProjectileSpeed(laserSpeed);
     }
     public EntityHelper.ProjectileShootInfo projectilePropertyDeathLaser, projectilePropertyCursedLaser, projectilePropertyElectricLaser;
@@ -90,7 +87,7 @@ public class Destroyer extends EntitySlime {
         shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         shootInfo.velocity = MathHelper.getDirection(
                 shootInfo.shootLoc,
-                EntityHelper.helperAimEntity(
+                AimHelper.helperAimEntity(
                         bukkitEntity, target, laserAimHelper),
                 laserSpeed);
         EntityHelper.spawnProjectile(shootInfo);
@@ -210,7 +207,7 @@ public class Destroyer extends EntitySlime {
                     // face the charging direction
                     this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
                     // follow
-                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
+                    EntityMovementHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
                 }
                 // body, shoot laser
                 else if (segmentIndex < TOTAL_LENGTH - 1) {
@@ -304,7 +301,7 @@ public class Destroyer extends EntitySlime {
                 attrMap.put("damage", BODY_DMG);
                 attrMap.put("defence", BODY_DEF);
             }
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -344,11 +341,11 @@ public class Destroyer extends EntitySlime {
             this.persistent = true;
             // projectile info
             projectilePropertyDeathLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapDeathLaser,
-                    EntityHelper.DamageType.MAGIC, "死亡激光");
+                    DamageHelper.DamageType.MAGIC, "死亡激光");
             projectilePropertyCursedLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapCursedLaser,
-                    EntityHelper.DamageType.MAGIC, "诅咒激光");
+                    DamageHelper.DamageType.MAGIC, "诅咒激光");
             projectilePropertyElectricLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapElectricLaser,
-                    EntityHelper.DamageType.MAGIC, "电击激光");
+                    DamageHelper.DamageType.MAGIC, "电击激光");
             // segment settings
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment

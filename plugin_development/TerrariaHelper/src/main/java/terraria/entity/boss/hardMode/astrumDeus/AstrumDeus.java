@@ -41,16 +41,16 @@ public class AstrumDeus extends EntitySlime {
             BODY_DMG = 480d, BODY_DEF = 40d, BODY_DR = 0.1,
             TAIL_DMG = 384d, TAIL_DEF = 100d, TAIL_DR = 0.3,
             SPEED_LASER = 2.25, SPEED_MINE = 1.5;
-    public static final EntityHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
-            new EntityHelper.WormSegmentMovementOptions()
+    public static final EntityMovementHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
+            new EntityMovementHelper.WormSegmentMovementOptions()
                     .setFollowDistance(5)
                     .setFollowingMultiplier(1)
                     .setStraighteningMultiplier(0.1)
                     .setVelocityOrTeleport(false);
-    static final EntityHelper.AimHelperOptions laserAimHelper;
+    static final AimHelper.AimHelperOptions laserAimHelper;
     static HashMap<String, Double> attrMapLaser, attrMapMine, attrMapHead, attrMapBody, attrMapTail;
     static {
-        laserAimHelper = new EntityHelper.AimHelperOptions()
+        laserAimHelper = new AimHelper.AimHelperOptions()
                 .setProjectileSpeed(SPEED_LASER);
 
         attrMapLaser = new HashMap<>();
@@ -199,7 +199,7 @@ public class AstrumDeus extends EntitySlime {
                 if (healthRatio > 0.5)
                     targetLoc = target.getEyeLocation();
                 else
-                    targetLoc = EntityHelper.helperAimEntity(shootInfo.shootLoc, target, laserAimHelper);
+                    targetLoc = AimHelper.helperAimEntity(shootInfo.shootLoc, target, laserAimHelper);
                 shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, targetLoc, SPEED_LASER);
                 EntityHelper.spawnProjectile(shootInfo);
                 break;
@@ -351,7 +351,7 @@ public class AstrumDeus extends EntitySlime {
                     // face the charging direction
                     this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
                     // follow
-                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
+                    EntityMovementHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
                 }
                 // body and tail
                 else {
@@ -428,7 +428,7 @@ public class AstrumDeus extends EntitySlime {
             else {
                 attrMap = (HashMap<String, Double>) attrMapBody.clone();
             }
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -469,12 +469,12 @@ public class AstrumDeus extends EntitySlime {
             this.persistent = true;
             // projectile info
             projectilePropertyLaserBlue = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapLaser,
-                    EntityHelper.DamageType.ARROW, "星幻激光");
+                    DamageHelper.DamageType.ARROW, "星幻激光");
             projectilePropertyLaserOrange = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapLaser,
-                    EntityHelper.DamageType.ARROW, "星幻激光");
+                    DamageHelper.DamageType.ARROW, "星幻激光");
             projectilePropertyLaserOrange.properties.put("trailColor", "255|255|0");
             projectilePropertyMine = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapMine,
-                    EntityHelper.DamageType.ARROW, "幻星雷");
+                    DamageHelper.DamageType.ARROW, "幻星雷");
             // segment settings
             if (head != null)
                 EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());

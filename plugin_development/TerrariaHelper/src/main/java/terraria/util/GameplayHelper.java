@@ -189,7 +189,7 @@ public class GameplayHelper {
             }
             if (breakRule.contains("powerPickaxe")) {
                 // requires certain pickaxe power
-                if (EntityHelper.getAttrMap(ply).getOrDefault("powerPickaxe", 0d) <
+                if (AttributeHelper.getAttrMap(ply).getOrDefault("powerPickaxe", 0d) <
                         breakRule.getDouble("powerPickaxe", 0d))
                     return true;
             }
@@ -221,7 +221,7 @@ public class GameplayHelper {
         if (configSection != null)
             breakingProgressMax = configSection.getInt("totalProgress");
         // get pickaxe power
-        int powerPickaxe = EntityHelper.getAttrMap(ply).getOrDefault("powerPickaxe", 0d).intValue();
+        int powerPickaxe = AttributeHelper.getAttrMap(ply).getOrDefault("powerPickaxe", 0d).intValue();
         // handle breaking progress
         breakingProgress += powerPickaxe;
         int breakProgressDisplayID = getBlockBreakingDisplayID(blockToBreak.getLocation());

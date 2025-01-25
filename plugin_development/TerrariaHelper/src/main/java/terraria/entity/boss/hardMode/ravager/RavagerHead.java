@@ -8,8 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
 
 import java.util.ArrayList;
@@ -59,7 +58,7 @@ public class RavagerHead extends EntitySlime {
                 // velocity and location
                 if (!free) {
                     bukkitEntity.setVelocity(owner.getBukkitEntity().getVelocity());
-                    EntityHelper.movementTP(bukkitEntity,
+                    EntityMovementHelper.movementTP(bukkitEntity,
                             owner.getBukkitEntity().getLocation().add(offsetDir));
                 }
                 else {
@@ -109,7 +108,7 @@ public class RavagerHead extends EntitySlime {
             attrMap.put("defence", postProvidence ? 160d : 80d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

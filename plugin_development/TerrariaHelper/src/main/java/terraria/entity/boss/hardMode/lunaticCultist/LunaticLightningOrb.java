@@ -10,10 +10,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
-import terraria.util.GenericHelper;
-import terraria.util.MathHelper;
+import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,7 +102,7 @@ public class LunaticLightningOrb extends EntitySlime {
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 660d);
             attrMap.put("knockback", 4d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // size and other properties

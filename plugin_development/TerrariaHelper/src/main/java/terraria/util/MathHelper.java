@@ -1,7 +1,6 @@
 package terraria.util;
 
 import net.minecraft.server.v1_12_R1.Vec3D;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
@@ -197,8 +196,8 @@ public class MathHelper {
     }
     public static ArrayList<Vector> getCircularProjectileDirections(int amountPerArc, int amountArcs, double halfArcAngleDeg,
                                                                     Entity target, Location shootLoc, double length) {
-        EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions().setProjectileSpeed(length);
-        Location targetLoc = EntityHelper.helperAimEntity(shootLoc, target, aimHelper);
+        AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions().setProjectileSpeed(length);
+        Location targetLoc = AimHelper.helperAimEntity(shootLoc, target, aimHelper);
         Vector fwdDir = targetLoc.subtract(shootLoc).toVector();
         ArrayList<Vector> result = getCircularProjectileDirections(amountPerArc, amountArcs, halfArcAngleDeg, fwdDir, length);
         return result;
@@ -242,14 +241,14 @@ public class MathHelper {
     }
     public static ArrayList<Vector> getEvenlySpacedProjectileDirections(double projectileIntervalDegree, double spreadAngleDegree,
                                                                         Entity target, Location shootLoc, double length) {
-        EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+        AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions()
                 .setProjectileSpeed(length);
         return getEvenlySpacedProjectileDirections(projectileIntervalDegree, spreadAngleDegree, target, shootLoc, aimHelper, length);
     }
     public static ArrayList<Vector> getEvenlySpacedProjectileDirections(double projectileIntervalDegree, double spreadAngleDegree,
-                                                                        Entity target, Location shootLoc, EntityHelper.AimHelperOptions aimHelper,
+                                                                        Entity target, Location shootLoc, AimHelper.AimHelperOptions aimHelper,
                                                                         double length) {
-        Location targetLoc = EntityHelper.helperAimEntity(shootLoc, target, aimHelper);
+        Location targetLoc = AimHelper.helperAimEntity(shootLoc, target, aimHelper);
         Vector fwdDir = targetLoc.subtract(shootLoc).toVector();
         return getEvenlySpacedProjectileDirections(projectileIntervalDegree, spreadAngleDegree, fwdDir, length);
     }

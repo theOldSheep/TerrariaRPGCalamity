@@ -42,12 +42,12 @@ public class WallOfFleshEye extends EntitySlime {
     private void shootLaser(int threatLevel) {
         Location targetedLoc = target.getEyeLocation();
         if (threatLevel == 2) {
-            EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+            AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions()
                     .setAimMode(false)
                     .setIntensity(1d)
                     .setProjectileSpeed(laserSpeeds[threatLevel])
                     .setRandomOffsetRadius(2d);
-            targetedLoc = EntityHelper.helperAimEntity(bukkitEntity, target, aimHelper);
+            targetedLoc = AimHelper.helperAimEntity(bukkitEntity, target, aimHelper);
         }
         Vector velocity = targetedLoc.subtract( ((LivingEntity) bukkitEntity).getEyeLocation() ).toVector();
         double velLen = velocity.length();
@@ -134,7 +134,7 @@ public class WallOfFleshEye extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map

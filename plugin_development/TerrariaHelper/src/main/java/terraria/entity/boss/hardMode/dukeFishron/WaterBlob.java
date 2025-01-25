@@ -9,10 +9,8 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -122,7 +120,7 @@ public class WaterBlob extends EntitySlime {
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             // damage multiplier
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init health and slime size

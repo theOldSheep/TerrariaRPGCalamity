@@ -9,10 +9,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,9 +52,9 @@ public class Spazmatism extends EntitySlime {
         bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1);
         if (phaseAI == 2) {
             // damage: 408 -> 612
-            EntityHelper.tweakAttribute(attrMap, "damage", "204", true);
+            AttributeHelper.tweakAttribute(attrMap, "damage", "204", true);
             // defence: 20 -> 56
-            EntityHelper.tweakAttribute(attrMap, "defence", "36", true);
+            AttributeHelper.tweakAttribute(attrMap, "defence", "36", true);
             addScoreboardTag("isMechanic");
             setCustomName(bossName + "§1");
         }
@@ -296,7 +294,7 @@ public class Spazmatism extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

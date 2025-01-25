@@ -11,10 +11,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -307,7 +305,7 @@ public class ThePlaguebringerGoliath extends EntitySlime {
             attrMap.put("defence", 100d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -341,11 +339,11 @@ public class ThePlaguebringerGoliath extends EntitySlime {
         // shoot info's
         {
             shootInfoStinger = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapStingerMissile,
-                    EntityHelper.DamageType.ARROW, "歌莉娅瘟疫导弹");
+                    DamageHelper.DamageType.ARROW, "歌莉娅瘟疫导弹");
             shootInfoMissile = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapStingerMissile,
-                    EntityHelper.DamageType.ROCKET, "瘟疫火箭");
+                    DamageHelper.DamageType.ROCKET, "瘟疫火箭");
             shootInfoNukeBarrage = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapNukeBarrage,
-                    EntityHelper.DamageType.ROCKET, "瘟疫核弹");
+                    DamageHelper.DamageType.ROCKET, "瘟疫核弹");
         }
     }
 

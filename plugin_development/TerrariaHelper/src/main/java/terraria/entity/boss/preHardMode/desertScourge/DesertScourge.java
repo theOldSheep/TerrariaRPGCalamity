@@ -38,8 +38,8 @@ public class DesertScourge extends EntitySlime {
             HEAD_DMG = 264d, HEAD_DEF = 8d,
             BODY_DMG = 120d, BODY_DEF = 12d,
             TAIL_DMG = 84d, TAIL_DEF = 18d;
-    public static final EntityHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
-            new EntityHelper.WormSegmentMovementOptions()
+    public static final EntityMovementHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
+            new EntityMovementHelper.WormSegmentMovementOptions()
                     .setFollowDistance(2)
                     .setFollowingMultiplier(1)
                     .setStraighteningMultiplier(0.1)
@@ -182,7 +182,7 @@ public class DesertScourge extends EntitySlime {
                     // face the charging direction
                     this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
                     // follow
-                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
+                    EntityMovementHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, segmentIndex);
                 }
             }
         }
@@ -262,7 +262,7 @@ public class DesertScourge extends EntitySlime {
                 attrMap.put("damage", BODY_DMG);
                 attrMap.put("defence", BODY_DEF);
             }
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -302,7 +302,7 @@ public class DesertScourge extends EntitySlime {
             this.persistent = true;
             // projectile info
             projectileProperty = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMap,
-                    EntityHelper.DamageType.ARROW, "--");
+                    DamageHelper.DamageType.ARROW, "--");
                 projectileProperty.projectileName = "沙尘暴弹幕";
             projectileProperty.properties.put("projectileSize", 0.5);
             projectileProperty.properties.put("penetration", 9);

@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.util.BossHelper;
+import terraria.util.DamageHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 
@@ -87,7 +88,7 @@ public class LunaticAncientLight extends EntitySlime {
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 540d);
             attrMap.put("knockback", 4d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // size and other properties

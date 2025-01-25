@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.util.BossHelper;
+import terraria.util.DamageHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 
@@ -79,7 +80,7 @@ public class PlanteraTentacle extends EntitySlime {
             attrMap.put("defence", 40d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // boss bar

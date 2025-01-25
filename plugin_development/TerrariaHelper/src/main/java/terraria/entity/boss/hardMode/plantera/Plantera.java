@@ -10,10 +10,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -174,9 +172,9 @@ public class Plantera extends EntitySlime {
                     secondPhase = true;
                     setCustomName(BOSS_TYPE.msgName + "§1");
                     // damage 414 -> 578
-                    EntityHelper.tweakAttribute(attrMap, "damage", "164", true);
+                    AttributeHelper.tweakAttribute(attrMap, "damage", "164", true);
                     // defence 64 -> 20
-                    EntityHelper.tweakAttribute(attrMap, "defence", "44", false);
+                    AttributeHelper.tweakAttribute(attrMap, "defence", "44", false);
                     for (int i = 0; i < 50; i ++) {
                         new PlanteraTentacle(target, this);
                     }
@@ -259,7 +257,7 @@ public class Plantera extends EntitySlime {
             attrMap.put("defence", 64d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -293,11 +291,11 @@ public class Plantera extends EntitySlime {
         // projectile info
         {
             shootInfoSeed = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSeed,
-                    EntityHelper.DamageType.ARROW, "种子");
+                    DamageHelper.DamageType.ARROW, "种子");
             shootInfoThornBall = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapThornBall,
-                    EntityHelper.DamageType.ARROW, "刺球");
+                    DamageHelper.DamageType.ARROW, "刺球");
             shootInfoSporeGas = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSporeGas,
-                    EntityHelper.DamageType.MAGIC, "孢子云");
+                    DamageHelper.DamageType.MAGIC, "孢子云");
             shootInfoSporeGas.properties.put("liveTime", 300);
         }
     }

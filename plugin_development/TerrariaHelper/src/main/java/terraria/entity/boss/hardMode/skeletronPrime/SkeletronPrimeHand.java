@@ -8,10 +8,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -181,7 +179,7 @@ public class SkeletronPrimeHand extends EntitySlime {
             attrMap.put("crit", 0.04);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map
@@ -256,10 +254,10 @@ public class SkeletronPrimeHand extends EntitySlime {
         // shoot info
         {
             shootInfoLaser = new EntityHelper.ProjectileShootInfo(
-                    bukkitEntity, new Vector(), SkeletronPrimeHead.attrMapRocket, EntityHelper.DamageType.MAGIC, "死亡激光");
+                    bukkitEntity, new Vector(), SkeletronPrimeHead.attrMapRocket, DamageHelper.DamageType.MAGIC, "死亡激光");
             shootInfoLaser.properties.put("liveTime", 40);
             shootInfoRocket = new EntityHelper.ProjectileShootInfo(
-                    bukkitEntity, new Vector(), SkeletronPrimeHead.attrMapRocket, EntityHelper.DamageType.ROCKET, "红烟花火箭");
+                    bukkitEntity, new Vector(), SkeletronPrimeHead.attrMapRocket, DamageHelper.DamageType.ROCKET, "红烟花火箭");
             shootInfoRocket.properties.put("homing", true);
             shootInfoRocket.properties.put("homingMethod", 2);
             shootInfoRocket.properties.put("homingRadius", 128d);

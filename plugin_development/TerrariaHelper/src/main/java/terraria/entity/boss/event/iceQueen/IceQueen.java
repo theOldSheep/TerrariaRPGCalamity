@@ -149,7 +149,7 @@ public class IceQueen extends EntitySlime {
             attrMap.put("defence", 76d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -189,9 +189,9 @@ public class IceQueen extends EntitySlime {
         EventAndTime.eventBossAmount[EVENT_BOSS_INDEX] ++;
         // shoot info
         shootInfoFrostShard = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, new Vector(), attrMapFrostShard, EntityHelper.DamageType.ARROW, "寒霜碎块");
+                bukkitEntity, new Vector(), attrMapFrostShard, DamageHelper.DamageType.ARROW, "寒霜碎块");
         shootInfoFrostWave = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, new Vector(), attrMapFrostWave, EntityHelper.DamageType.MAGIC, "寒霜波");
+                bukkitEntity, new Vector(), attrMapFrostWave, DamageHelper.DamageType.MAGIC, "寒霜波");
     }
 
     // disable death function to remove boss bar

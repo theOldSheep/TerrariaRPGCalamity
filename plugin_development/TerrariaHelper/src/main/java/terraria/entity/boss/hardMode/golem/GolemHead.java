@@ -8,10 +8,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,11 +29,11 @@ public class GolemHead extends EntitySlime {
     // other variables and AI
     static final String name = "石巨人头";
     static final double FLIGHT_SPEED = 2.5, SPEED_FIREBALL = 3, SPEED_BEAM = 2.25;
-    static final EntityHelper.AimHelperOptions aimHelperFireball, aimHelperBolt;
+    static final AimHelper.AimHelperOptions aimHelperFireball, aimHelperBolt;
     static {
-        aimHelperFireball = new EntityHelper.AimHelperOptions()
+        aimHelperFireball = new AimHelper.AimHelperOptions()
                 .setProjectileSpeed(SPEED_FIREBALL);
-        aimHelperBolt = new EntityHelper.AimHelperOptions()
+        aimHelperBolt = new AimHelper.AimHelperOptions()
                 .setAimMode(true)
                 .setTicksTotal(15)
                 .setRandomOffsetRadius(1);
@@ -54,7 +52,7 @@ public class GolemHead extends EntitySlime {
             case 1:
                 shootInfo = shootInfoFireball;
                 projectileSpeed = SPEED_FIREBALL;
-                shootTargetLocation = EntityHelper.helperAimEntity(bukkitEntity, target, aimHelperFireball);
+                shootTargetLocation = AimHelper.helperAimEntity(bukkitEntity, target, aimHelperFireball);
                 break;
             case 2:
                 shootInfo = shootInfoBeam;
@@ -64,7 +62,7 @@ public class GolemHead extends EntitySlime {
             case 3:
                 shootInfo = shootInfoInfernoBolt;
                 projectileSpeed = 0;
-                shootTargetLocation = EntityHelper.helperAimEntity(bukkitEntity, target, aimHelperBolt);
+                shootTargetLocation = AimHelper.helperAimEntity(bukkitEntity, target, aimHelperBolt);
                 break;
             default:
                 return;
@@ -101,7 +99,7 @@ public class GolemHead extends EntitySlime {
                 // velocity and location
                 if (owner.phaseAI < 3) {
                     bukkitEntity.setVelocity(owner.getBukkitEntity().getVelocity());
-                    EntityHelper.movementTP(bukkitEntity,
+                    EntityMovementHelper.movementTP(bukkitEntity,
                             owner.getBukkitEntity().getLocation().add(offsetDir));
                 }
                 else {
@@ -160,7 +158,7 @@ public class GolemHead extends EntitySlime {
             attrMap.put("defence", 40d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -191,11 +189,11 @@ public class GolemHead extends EntitySlime {
         // shoot info
         {
             shootInfoFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), Golem.attrMapFireball,
-                    EntityHelper.DamageType.ARROW, "石巨人火球");
+                    DamageHelper.DamageType.ARROW, "石巨人火球");
             shootInfoBeam = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), Golem.attrMapBeam,
-                    EntityHelper.DamageType.MAGIC, "石巨人激光");
+                    DamageHelper.DamageType.MAGIC, "石巨人激光");
             shootInfoInfernoBolt = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), Golem.attrMapInfernoBolt,
-                    EntityHelper.DamageType.ARROW, "爆裂火球");
+                    DamageHelper.DamageType.ARROW, "爆裂火球");
         }
     }
 

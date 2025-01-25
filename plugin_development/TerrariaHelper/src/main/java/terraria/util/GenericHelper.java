@@ -7,7 +7,6 @@ import org.apache.logging.log4j.util.TriConsumer;
 import org.bukkit.*;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -504,7 +503,7 @@ public class GenericHelper {
                 wld, startLoc.toVector(), terminalLoc.toVector(), width, predication);
         for (HitEntityInfo info : entityHitCandidate) {
             Entity victim = info.getHitEntity().getBukkitEntity();
-            EntityHelper.handleDamage(damager, victim, damage, EntityHelper.DamageReason.STRIKE);
+            DamageHelper.handleDamage(damager, victim, damage, DamageHelper.DamageReason.STRIKE);
             // damage decay
             damage *= decayCoef;
             if (useAttrMapDamage)
@@ -634,7 +633,7 @@ public class GenericHelper {
         else
             predication = (e) -> {
                 Entity entity = e.getBukkitEntity();
-                if (EntityHelper.checkCanDamage(damager, entity, false)) {
+                if (DamageHelper.checkCanDamage(damager, entity, false)) {
                     return !exceptions.contains(entity);
                 }
                 return false;

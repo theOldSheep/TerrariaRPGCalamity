@@ -50,8 +50,8 @@ public class MoonLord extends EntitySlime {
         // teleport
         Location eyeLoc = backgroundLoc.clone()
                 .add(facingDirection).add(0, verticalOffset, 0);
-        EntityHelper.movementTP(eye.getBukkitEntity(), eyeLoc);
-        EntityHelper.movementTP(background.getBukkitEntity(), backgroundLoc);
+        EntityMovementHelper.movementTP(eye.getBukkitEntity(), eyeLoc);
+        EntityMovementHelper.movementTP(background.getBukkitEntity(), backgroundLoc);
     }
     private void setupLocation() {
         double centerLocAngle = indexAI / 10d;
@@ -120,7 +120,7 @@ public class MoonLord extends EntitySlime {
             // teleport to follow the player
             Location tpLoc = target.getLocation();
             tpLoc.setY(-40);
-            EntityHelper.movementTP(bukkitEntity, tpLoc);
+            EntityMovementHelper.movementTP(bukkitEntity, tpLoc);
             // visual effects
             int ticksDuration = -1;
             switch (indexSpawnAnimation) {
@@ -220,7 +220,7 @@ public class MoonLord extends EntitySlime {
             attrMap.put("defence", 140d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

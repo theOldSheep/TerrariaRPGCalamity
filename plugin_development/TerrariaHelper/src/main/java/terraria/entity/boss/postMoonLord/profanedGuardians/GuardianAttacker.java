@@ -8,9 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
-import terraria.util.GenericHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
 
 import java.util.ArrayList;
@@ -178,7 +176,7 @@ public class GuardianAttacker extends EntitySlime {
             attrMap.put("defence", 60d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target
@@ -207,7 +205,7 @@ public class GuardianAttacker extends EntitySlime {
         // shoot info's
         {
             shootInfoProjectile = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapProjectile,
-                    EntityHelper.DamageType.MAGIC, "神圣新星");
+                    DamageHelper.DamageType.MAGIC, "神圣新星");
         }
     }
 

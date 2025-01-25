@@ -6,9 +6,7 @@ import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
 import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Location;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
-import terraria.util.MathHelper;
+import terraria.util.*;
 
 import java.util.HashMap;
 
@@ -29,7 +27,7 @@ public class CryogenShield extends EntitySlime {
         // AI
         {
             bukkitEntity.setVelocity(owner.getBukkitEntity().getVelocity());
-            EntityHelper.movementTP(bukkitEntity, owner.getBukkitEntity().getLocation().subtract(0, 1, 0));
+            EntityMovementHelper.movementTP(bukkitEntity, owner.getBukkitEntity().getLocation().subtract(0, 1, 0));
 
             
         }
@@ -77,7 +75,7 @@ public class CryogenShield extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map

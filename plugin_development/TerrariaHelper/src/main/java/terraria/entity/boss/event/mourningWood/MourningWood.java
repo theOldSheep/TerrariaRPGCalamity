@@ -171,7 +171,7 @@ public class MourningWood extends EntitySlime {
             attrMap.put("defence", 68d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -211,9 +211,9 @@ public class MourningWood extends EntitySlime {
         EventAndTime.eventBossAmount[EVENT_BOSS_INDEX] ++;
         // shoot info
         shootInfoFlamingWood = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, new Vector(), attrMapFlamingWood, EntityHelper.DamageType.MAGIC, "烈焰木");
+                bukkitEntity, new Vector(), attrMapFlamingWood, DamageHelper.DamageType.MAGIC, "烈焰木");
         shootInfoGreekFire = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, new Vector(), attrMapGreekFire, EntityHelper.DamageType.MAGIC, "希腊烈火");
+                bukkitEntity, new Vector(), attrMapGreekFire, DamageHelper.DamageType.MAGIC, "希腊烈火");
     }
 
     // disable death function to remove boss bar

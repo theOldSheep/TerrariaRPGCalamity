@@ -49,20 +49,20 @@ public class DragonFolly extends EntitySlime {
     private static final double PROJECTILE_SPEED = 1.0;
     private static final int PROJECTILE_TICKS_OFFSET = 30;
     static HashMap<String, Double> attrMapFeather;
-    static EntityHelper.AimHelperOptions aimHelperFeather;
-    static EntityHelper.AimHelperOptions[] aimHelperDashes;
+    static AimHelper.AimHelperOptions aimHelperFeather;
+    static AimHelper.AimHelperOptions[] aimHelperDashes;
     static {
         attrMapFeather = new HashMap<>();
         attrMapFeather.put("damage", 732d);
         attrMapFeather.put("knockback", 1.5d);
 
-        aimHelperFeather = new EntityHelper.AimHelperOptions()
+        aimHelperFeather = new AimHelper.AimHelperOptions()
                 .setAimMode(true).setAccelerationMode(false)
                 .setProjectileSpeed(PROJECTILE_SPEED).setTicksTotal(PROJECTILE_TICKS_OFFSET);
-        aimHelperDashes = new EntityHelper.AimHelperOptions[]{
-                new EntityHelper.AimHelperOptions().setAccelerationMode(true).setProjectileSpeed(DASH_SPEEDS[0]),
-                new EntityHelper.AimHelperOptions().setAccelerationMode(false).setProjectileSpeed(DASH_SPEEDS[1]),
-                new EntityHelper.AimHelperOptions().setAccelerationMode(false).setProjectileSpeed(DASH_SPEEDS[2]),
+        aimHelperDashes = new AimHelper.AimHelperOptions[]{
+                new AimHelper.AimHelperOptions().setAccelerationMode(true).setProjectileSpeed(DASH_SPEEDS[0]),
+                new AimHelper.AimHelperOptions().setAccelerationMode(false).setProjectileSpeed(DASH_SPEEDS[1]),
+                new AimHelper.AimHelperOptions().setAccelerationMode(false).setProjectileSpeed(DASH_SPEEDS[2]),
         };
     }
     EntityHelper.ProjectileShootInfo shootInfoFeather;
@@ -149,7 +149,7 @@ public class DragonFolly extends EntitySlime {
             // Initialize dash direction
             if (indexAI == 0) {
                 velocity = MathHelper.getDirection(bukkitEntity.getLocation(),
-                        EntityHelper.helperAimEntity(bukkitEntity, target, aimHelperDashes[AIPhase]),
+                        AimHelper.helperAimEntity(bukkitEntity, target, aimHelperDashes[AIPhase]),
                         DASH_SPEEDS[AIPhase], false);
                 bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), "entity.enderdragon.growl", 10, 1.0f);
             }
@@ -254,7 +254,7 @@ public class DragonFolly extends EntitySlime {
             attrMap.put("defence", 80d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -288,7 +288,7 @@ public class DragonFolly extends EntitySlime {
         // shoot info's
         {
             shootInfoFeather = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFeather,
-                    EntityHelper.DamageType.ARROW, "闪耀红羽");
+                    DamageHelper.DamageType.ARROW, "闪耀红羽");
         }
         // center of arena
         spawnPosition = target.getLocation();

@@ -8,10 +8,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +58,7 @@ public class GolemFoot extends EntitySlime {
                     Vector orthogonalOffsetVec = owner.orthogonalDir.clone();
                     orthogonalOffsetVec.multiply(0.9 *
                             (componentIndex == 2 ? -5.4 : 5.4));
-                    EntityHelper.movementTP(bukkitEntity,
+                    EntityMovementHelper.movementTP(bukkitEntity,
                             owner.getBukkitEntity().getLocation().add(offsetDir).add(orthogonalOffsetVec));
                 }
             }
@@ -97,7 +95,7 @@ public class GolemFoot extends EntitySlime {
         // init attribute map
         {
             attrMap = owner.attrMap;
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

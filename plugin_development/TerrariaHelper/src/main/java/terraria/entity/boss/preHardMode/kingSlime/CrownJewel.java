@@ -109,7 +109,7 @@ public class CrownJewel extends EntitySlime {
             attrMap.put("damage", 100d);
             attrMap.put("damageMulti", 1d);
             attrMap.put("knockback", 4d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.ARROW);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init health and slime size

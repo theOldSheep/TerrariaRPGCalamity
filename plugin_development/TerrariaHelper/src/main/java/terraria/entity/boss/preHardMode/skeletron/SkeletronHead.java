@@ -55,7 +55,7 @@ public class SkeletronHead extends EntitySlime {
         }
         velocity.multiply(1.75 / velLen);
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, velocity, skull_attrMap, EntityHelper.DamageType.MAGIC, "--");
+                bukkitEntity, velocity, skull_attrMap, DamageHelper.DamageType.MAGIC, "--");
         shootInfo.projectileName = "诅咒头";
         shootInfo.properties.put("homing", true);
         shootInfo.properties.put("homingMethod", 2);
@@ -72,7 +72,7 @@ public class SkeletronHead extends EntitySlime {
     private void spitShadowFlame() {
         if (target == null) return;
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, new Vector(), skull_attrMap, EntityHelper.DamageType.MAGIC, "--");
+                bukkitEntity, new Vector(), skull_attrMap, DamageHelper.DamageType.MAGIC, "--");
         shootInfo.projectileName = "骷髅头";
         shootInfo.properties.put("gravity", 0d);
         shootInfo.properties.put("homing", false);
@@ -263,7 +263,7 @@ public class SkeletronHead extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

@@ -556,7 +556,7 @@ public class Yharon extends EntitySlime {
             attrMap.put("defence", 180d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -590,11 +590,11 @@ public class Yharon extends EntitySlime {
         // shoot info's
         {
             shootInfoFireballRegular = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFireball,
-                    EntityHelper.DamageType.MAGIC, "灼焱余烬");
+                    DamageHelper.DamageType.MAGIC, "灼焱余烬");
             shootInfoFireballHoming = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFireball,
-                    EntityHelper.DamageType.MAGIC, "追踪灼焱余烬");
+                    DamageHelper.DamageType.MAGIC, "追踪灼焱余烬");
             shootInfoFlareTornado = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFlareTornado,
-                    EntityHelper.DamageType.MAGIC, "大型火焰龙卷");
+                    DamageHelper.DamageType.MAGIC, "大型火焰龙卷");
         }
         // center of arena
         spawnPosition = target.getLocation();

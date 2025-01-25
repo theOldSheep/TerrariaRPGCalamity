@@ -10,9 +10,9 @@ import org.bukkit.util.Vector;
 import terraria.util.*;
 
 public class Yoyo extends GenericProjectile {
-    static EntityHelper.AimHelperOptions aimHelper;
+    static AimHelper.AimHelperOptions aimHelper;
     static {
-        aimHelper = new EntityHelper.AimHelperOptions()
+        aimHelper = new AimHelper.AimHelperOptions()
                 .setAimMode(true)
                 .setTicksTotal(1);
     }

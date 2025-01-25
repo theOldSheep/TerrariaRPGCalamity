@@ -10,10 +10,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +51,7 @@ public class GuardianCommander extends EntitySlime {
             VERTICAL_ALIGN_ACCELERATION = 0.35, HORIZONTAL_ADJUST_ACCELERATION = 0.5,
             DASH_SPEED = 3.0, MAX_SPEED_FOLLOW = 1.5, DASH_SLOWDOWN_FACTOR = 0.925,
             PROJECTILE_SPEED = 1.2;
-    private EntityHelper.AimHelperOptions aimHelperOptionProjectile, aimHelperOptionDash;
+    private AimHelper.AimHelperOptions aimHelperOptionProjectile, aimHelperOptionDash;
     private Vector velocity = new Vector();
     private GuardianDefender defender;
 
@@ -82,7 +80,7 @@ public class GuardianCommander extends EntitySlime {
         int fireInterval = defenderAlive ? SHOOT_INTERVAL_DEFENDER_ALIVE : SHOOT_INTERVAL_DEFENDER_DEAD;
         if (indexAI % fireInterval == 0) {
             // Fire projectile
-            Location aimLocation = EntityHelper.helperAimEntity(getBukkitEntity(), target, aimHelperOptionProjectile);
+            Location aimLocation = AimHelper.helperAimEntity(getBukkitEntity(), target, aimHelperOptionProjectile);
             Location newFireLocation = ((LivingEntity) getBukkitEntity()).getEyeLocation();
             Vector newFireVelocity = MathHelper.getDirection(newFireLocation, aimLocation, PROJECTILE_SPEED, false);
 
@@ -95,7 +93,7 @@ public class GuardianCommander extends EntitySlime {
     }
     private void AIPhaseDash() {
         Location bossLoc = bukkitEntity.getLocation();
-        Location targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, aimHelperOptionDash);
+        Location targetLoc = AimHelper.helperAimEntity(bukkitEntity, target, aimHelperOptionDash);
         // Dash phase
 
         if (indexAI % DASH_INTERVAL == 0) {
@@ -206,7 +204,7 @@ public class GuardianCommander extends EntitySlime {
             attrMap.put("defence", 80d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -244,11 +242,11 @@ public class GuardianCommander extends EntitySlime {
         // shoot info's
         {
             shootInfoProjectile = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapProjectile,
-                    EntityHelper.DamageType.MAGIC, "神圣之火");
-            aimHelperOptionProjectile = new EntityHelper.AimHelperOptions()
+                    DamageHelper.DamageType.MAGIC, "神圣之火");
+            aimHelperOptionProjectile = new AimHelper.AimHelperOptions()
                     .setAccelerationMode(false)
                     .setProjectileSpeed(PROJECTILE_SPEED);
-            aimHelperOptionDash = new EntityHelper.AimHelperOptions()
+            aimHelperOptionDash = new AimHelper.AimHelperOptions()
                     .setAccelerationMode(true)
                     .setProjectileSpeed(DASH_SPEED);
         }

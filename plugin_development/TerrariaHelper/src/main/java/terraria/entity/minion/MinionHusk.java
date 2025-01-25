@@ -13,9 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
-import terraria.util.EntityHelper;
-import terraria.util.GenericHelper;
-import terraria.util.ItemUseHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
 
 import java.util.ArrayList;
@@ -78,7 +76,7 @@ public class MinionHusk extends EntityZombieHusk {
         EntityHelper.setMetadata(getBukkitEntity(), EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         addScoreboardTag("isMinion");
         EntityHelper.setMetadata(getBukkitEntity(), EntityHelper.MetadataName.DAMAGE_SOURCE, owner);
-        EntityHelper.setDamageType(getBukkitEntity(), EntityHelper.DamageType.SUMMON);
+        DamageHelper.setDamageType(getBukkitEntity(), DamageHelper.DamageType.SUMMON);
         addScoreboardTag("noDamage");
         addScoreboardTag("noMelee");
         setCustomName(minionType);
@@ -210,8 +208,8 @@ public class MinionHusk extends EntityZombieHusk {
                     if (index % 12 == 0) {
                         String projType = "蚀骨尖刺";
                         double projSpd = 1.5;
-                        Location aimLoc = EntityHelper.helperAimEntity(bukkitEntity, target,
-                                new EntityHelper.AimHelperOptions(projType).setProjectileSpeed(projSpd));
+                        Location aimLoc = AimHelper.helperAimEntity(bukkitEntity, target,
+                                new AimHelper.AimHelperOptions(projType).setProjectileSpeed(projSpd));
                         EntityHelper.spawnProjectile(minionBukkit, MathHelper.getDirection(minionBukkit.getEyeLocation(),
                                 aimLoc, projSpd), attrMap, projType);
                     }
@@ -229,8 +227,8 @@ public class MinionHusk extends EntityZombieHusk {
                 if (!targetIsOwner && ticksLived % 8 == 0) {
                     String projType = "缠怨鬼碟";
                     double projSpd = 2;
-                    Location aimLoc = EntityHelper.helperAimEntity(bukkitEntity, target,
-                            new EntityHelper.AimHelperOptions(projType).setProjectileSpeed(projSpd));
+                    Location aimLoc = AimHelper.helperAimEntity(bukkitEntity, target,
+                            new AimHelper.AimHelperOptions(projType).setProjectileSpeed(projSpd));
                     Vector projVel = MathHelper.getDirection(minionBukkit.getEyeLocation(), aimLoc, projSpd);
                     EntityHelper.spawnProjectile(minionBukkit, projVel, attrMap, projType);
                 }
@@ -282,8 +280,8 @@ public class MinionHusk extends EntityZombieHusk {
             }
             case "矮人": {
                 if (!targetIsOwner && ticksLived % 12 == 0) {
-                    Location targetLoc = EntityHelper.helperAimEntity(minionBukkit, target,
-                            new EntityHelper.AimHelperOptions("投矛")
+                    Location targetLoc = AimHelper.helperAimEntity(minionBukkit, target,
+                            new AimHelper.AimHelperOptions("投矛")
                                     .setProjectileSpeed(2.5));
                     Vector v = MathHelper.getDirection(minionBukkit.getEyeLocation(), targetLoc, 2.5);
                     EntityHelper.spawnProjectile(minionBukkit, v, attrMap, "投矛");

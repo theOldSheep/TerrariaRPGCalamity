@@ -2,22 +2,13 @@ package terraria.entity.boss.postMoonLord.supremeCalamitas;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
-import java.security.acl.Owner;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -34,16 +25,16 @@ public class SupremeCalamitasBrother extends EntitySlime {
     // other variables and AI
     static final double[] PROJECTILE_SPEEDS = {0.5, 2.0};
     static HashMap<String, Double> attrMapProjectile;
-    static EntityHelper.AimHelperOptions[] aimHelpers;
+    static AimHelper.AimHelperOptions[] aimHelpers;
     EntityHelper.ProjectileShootInfo shootInfo;
     static {
         attrMapProjectile = new HashMap<>();
         attrMapProjectile.put("damage", 1450d);
         attrMapProjectile.put("knockback", 2.5d);
 
-        aimHelpers = new EntityHelper.AimHelperOptions[]{
-                new EntityHelper.AimHelperOptions(PROJECTILE_TYPES[0]).setProjectileSpeed(PROJECTILE_SPEEDS[0]),
-                new EntityHelper.AimHelperOptions(PROJECTILE_TYPES[1]).setProjectileSpeed(PROJECTILE_SPEEDS[1])};
+        aimHelpers = new AimHelper.AimHelperOptions[]{
+                new AimHelper.AimHelperOptions(PROJECTILE_TYPES[0]).setProjectileSpeed(PROJECTILE_SPEEDS[0]),
+                new AimHelper.AimHelperOptions(PROJECTILE_TYPES[1]).setProjectileSpeed(PROJECTILE_SPEEDS[1])};
     }
     int typeIdx;
     int indexAI = 0;
@@ -79,7 +70,7 @@ public class SupremeCalamitasBrother extends EntitySlime {
             }
         }
         if (fireDirectProj) {
-            Location aimLoc = EntityHelper.helperAimEntity(shootInfo.shootLoc, target, aimHelpers[typeIdx]);
+            Location aimLoc = AimHelper.helperAimEntity(shootInfo.shootLoc, target, aimHelpers[typeIdx]);
             shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, aimLoc, PROJECTILE_SPEEDS[typeIdx]);
             EntityHelper.spawnProjectile(shootInfo);
         }
@@ -148,7 +139,7 @@ public class SupremeCalamitasBrother extends EntitySlime {
             attrMap.put("defence", 160d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map
@@ -174,7 +165,7 @@ public class SupremeCalamitasBrother extends EntitySlime {
         // shoot info's
         {
             shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapProjectile,
-                    EntityHelper.DamageType.ARROW, PROJECTILE_TYPES[typeIdx]);
+                    DamageHelper.DamageType.ARROW, PROJECTILE_TYPES[typeIdx]);
         }
     }
 

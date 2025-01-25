@@ -16,6 +16,8 @@ import org.bukkit.metadata.MetadataValue;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.Setting;
+import terraria.util.AttributeHelper;
+import terraria.util.DamageHelper;
 import terraria.util.EntityHelper;
 import terraria.util.PlayerHelper;
 
@@ -28,7 +30,7 @@ public class MinionHelper {
             "armorPenetration", "damage", "damageMulti", "damageSummonMulti", "knockback", "knockbackMulti"
     };
     public static void updateAttrMap(HashMap<String, Double> attrMap, Player owner, ItemStack originalStaff) {
-        HashMap<String, Double> ownerAttrMap = EntityHelper.getAttrMap(owner);
+        HashMap<String, Double> ownerAttrMap = AttributeHelper.getAttrMap(owner);
         // clear the attribute
         attrMap.clear();
 
@@ -41,11 +43,11 @@ public class MinionHelper {
             currentTool = new ItemStack(Material.AIR);
         // account for changed player tool
         if (!currentTool.isSimilar(originalStaff)) {
-            EntityHelper.tweakAttribute(attrMap, originalStaff, true);
-            EntityHelper.tweakAttribute(attrMap, currentTool, false);
+            AttributeHelper.tweakAttribute(attrMap, originalStaff, true);
+            AttributeHelper.tweakAttribute(attrMap, currentTool, false);
         }
         // account for non-summon tool
-        if (EntityHelper.getDamageType(owner) != EntityHelper.DamageType.SUMMON) {
+        if (DamageHelper.getDamageType(owner) != DamageHelper.DamageType.SUMMON) {
             attrMap.put("damageMulti",
                     attrMap.getOrDefault("damageMulti", 1d) *
                     ownerAttrMap.getOrDefault("minionDamagePenaltyFactor", 0.5d));
@@ -57,7 +59,7 @@ public class MinionHelper {
         if (!owner.isOnline()) return false;
         if (!PlayerHelper.isProperlyPlaying(owner)) return false;
         // setup variables
-        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(owner);
+        HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(owner);
         ArrayList<Entity> minionList;
         int minionLimit;
         {
@@ -96,12 +98,12 @@ public class MinionHelper {
                 size,
                 (e) -> {
                     Entity bukkitE = e.getBukkitEntity();
-                    return !damageCD.contains(bukkitE) && EntityHelper.checkCanDamage(minionBukkit, bukkitE, false);
+                    return !damageCD.contains(bukkitE) && DamageHelper.checkCanDamage(minionBukkit, bukkitE, false);
                 });
         for (HitEntityInfo info : toDamage) {
             Entity victimBukkit = info.getHitEntity().getBukkitEntity();
-            EntityHelper.damageCD(damageCD, victimBukkit, invincibilityTick);
-            EntityHelper.handleDamage(minionBukkit, victimBukkit, basicDamage, EntityHelper.DamageReason.CONTACT_DAMAGE);
+            DamageHelper.damageCD(damageCD, victimBukkit, invincibilityTick);
+            DamageHelper.handleDamage(minionBukkit, victimBukkit, basicDamage, DamageHelper.DamageReason.CONTACT_DAMAGE);
         }
         return toDamage;
     }
@@ -130,12 +132,12 @@ public class MinionHelper {
         if (needLineOfSight)
             return (entity) ->
                     entity != null &&
-                            EntityHelper.checkCanDamage(minionBukkit, entity.getBukkitEntity(), true) &&
+                            DamageHelper.checkCanDamage(minionBukkit, entity.getBukkitEntity(), true) &&
                             (minion.hasLineOfSight(entity) || owner.hasLineOfSight(entity));
         else
             return (entity) ->
                     entity != null &&
-                            EntityHelper.checkCanDamage(minionBukkit, entity.getBukkitEntity(), true);
+                            DamageHelper.checkCanDamage(minionBukkit, entity.getBukkitEntity(), true);
     }
     public static boolean checkTargetIsValidEnemy(EntityInsentient minion, EntityPlayer owner, EntityLiving target, boolean needLineOfSight) {
         com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> predication = getTargetPredication(minion, owner, needLineOfSight);

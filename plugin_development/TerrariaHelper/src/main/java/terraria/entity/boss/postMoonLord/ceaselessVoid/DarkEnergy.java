@@ -4,15 +4,13 @@ import net.minecraft.server.v1_12_R1.EntitySlime;
 import net.minecraft.server.v1_12_R1.GenericAttributes;
 import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
 import net.minecraft.server.v1_12_R1.World;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.entity.boss.postMoonLord.profanedGuardians.GuardianCommander;
-import terraria.entity.boss.postMoonLord.profanedGuardians.GuardianDefender;
 import terraria.util.BossHelper;
+import terraria.util.DamageHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 
@@ -104,7 +102,7 @@ public class DarkEnergy extends EntitySlime {
             attrMap.put("defence", 100d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target

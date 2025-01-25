@@ -71,7 +71,7 @@ public class EyeOfCthulhu extends EntitySlime {
                             bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
                             setCustomName(BOSS_TYPE.msgName + "§1");
                             // enrage spinning, defence: 24 -> 124
-                            EntityHelper.tweakAttribute(attrMap, "defence", "100", true);
+                            AttributeHelper.tweakAttribute(attrMap, "defence", "100", true);
                         }
                         else {
                             switch (typeAI) {
@@ -133,9 +133,9 @@ public class EyeOfCthulhu extends EntitySlime {
                         // end of spinning state
                         if (rageRotationIndex == 0) {
                             // enrage spinning, damage: 102 -> 132
-                            EntityHelper.tweakAttribute(attrMap, "damage", "30", true);
+                            AttributeHelper.tweakAttribute(attrMap, "damage", "30", true);
                             // enrage spinning, defence: 124 -> 0
-                            EntityHelper.tweakAttribute(attrMap, "defence", "124", false);
+                            AttributeHelper.tweakAttribute(attrMap, "defence", "124", false);
                             bossbar.color = BossBattle.BarColor.RED;
                             bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
                             indexAI = -1;
@@ -280,7 +280,7 @@ public class EyeOfCthulhu extends EntitySlime {
                                             direction.multiply(4 / dirLen);
                                             bukkitEntity.setVelocity(direction);
                                             // quick dash, damage multiplier: 1 -> 1.5
-                                            EntityHelper.tweakAttribute(attrMap, "damageMulti", "0.5", true);
+                                            AttributeHelper.tweakAttribute(attrMap, "damageMulti", "0.5", true);
                                         }
                                         // back to directly charging player
                                         else if (indexAI >= 15) {
@@ -288,7 +288,7 @@ public class EyeOfCthulhu extends EntitySlime {
                                             countAI = 0;
                                             typeAI = AIPhase.CHARGE;
                                             // end of quick dash, damage multiplier: 1.5 -> 1
-                                            EntityHelper.tweakAttribute(attrMap, "damageMulti", "0.5", false);
+                                            AttributeHelper.tweakAttribute(attrMap, "damageMulti", "0.5", false);
                                         }
                                     }
                                     // hover if health is relatively high
@@ -362,7 +362,7 @@ public class EyeOfCthulhu extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

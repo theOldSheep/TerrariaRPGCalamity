@@ -211,16 +211,16 @@ public class Crabulon extends EntitySlime {
             attrMap.put("knockbackResistance", 1d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init projectile shoot info
         {
             psiSpore = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSpore,
-                    EntityHelper.DamageType.ARROW, "-");
+                    DamageHelper.DamageType.ARROW, "-");
             psiSpore.projectileName = "孢子";
             psiShroom = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapShroom,
-                    EntityHelper.DamageType.ARROW, "-");
+                    DamageHelper.DamageType.ARROW, "-");
             psiShroom.projectileName = "孢子";
             psiShroom.properties.put("gravity", 0.01);
             psiShroom.properties.put("blockHitAction", "thru");

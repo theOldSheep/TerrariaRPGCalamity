@@ -10,10 +10,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -189,7 +187,7 @@ public class Golem extends EntitySlime {
             attrMap.put("damageTakenMulti", 0.75d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -233,7 +231,7 @@ public class Golem extends EntitySlime {
         // shoot info
         {
             shootInfoBeam = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapBeam,
-                    EntityHelper.DamageType.MAGIC, "石巨人激光");
+                    DamageHelper.DamageType.MAGIC, "石巨人激光");
         }
     }
 

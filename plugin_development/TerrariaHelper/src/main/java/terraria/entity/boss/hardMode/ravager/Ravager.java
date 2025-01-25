@@ -31,9 +31,9 @@ public class Ravager extends EntitySlime {
     Player target = null;
     // other variables and AI
     static double HORIZONTAL_SPEED = 1, VERTICAL_SPEED = 2.5, FLY_SPEED_MIN = 2.25, SMASH_SPEED = 2, PILLAR_OFFSET = 6.5;
-    static final EntityHelper.AimHelperOptions spawnAimHelper;
+    static final AimHelper.AimHelperOptions spawnAimHelper;
     static {
-        spawnAimHelper = new EntityHelper.AimHelperOptions()
+        spawnAimHelper = new AimHelper.AimHelperOptions()
                 .setAimMode(true)
                 .setTicksTotal(10);
     }
@@ -81,7 +81,7 @@ public class Ravager extends EntitySlime {
         bukkitEntity.getWorld().playSound(bukkitEntity.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
         // spawn
         Location currTargetLoc = target.getLocation();
-        Location predictedTargetLoc = EntityHelper.helperAimEntity(getBukkitEntity(), target, spawnAimHelper);
+        Location predictedTargetLoc = AimHelper.helperAimEntity(getBukkitEntity(), target, spawnAimHelper);
         Vector offset = predictedTargetLoc.subtract(currTargetLoc).toVector();
         double spawnYaw = MathHelper.getVectorYaw(offset);
         Vector offset1 = MathHelper.vectorFromYawPitch_approx(spawnYaw, 0);
@@ -256,7 +256,7 @@ public class Ravager extends EntitySlime {
             attrMap.put("defence", postProvidence ? 220d : 110d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

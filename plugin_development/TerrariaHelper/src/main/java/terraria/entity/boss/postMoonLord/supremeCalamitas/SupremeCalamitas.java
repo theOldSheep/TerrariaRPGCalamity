@@ -84,7 +84,7 @@ public class SupremeCalamitas extends EntitySlime {
             DART_SPREAD_SINGLE = 8.5, DART_SPREAD_TOTAL = 35;
     static HashMap<String, Double> attrMapPrjLow, attrMapPrjMid, attrMapPrjHigh, attrMapPrjExtreme;
     static BulletHellPattern[] bulletHellPatterns;
-    static EntityHelper.AimHelperOptions dashAimHelper, blastAimHelper;
+    static AimHelper.AimHelperOptions dashAimHelper, blastAimHelper;
     static {
         attrMapPrjLow = new HashMap<>();
         attrMapPrjLow.put("damage", 1350d);
@@ -237,8 +237,8 @@ public class SupremeCalamitas extends EntitySlime {
                         .setEndFunc(SupremeCalamitas::die),
         };
 
-        dashAimHelper = new EntityHelper.AimHelperOptions().setProjectileSpeed(DASH_SPEED);
-        blastAimHelper = new EntityHelper.AimHelperOptions().setProjectileSpeed(HELL_BLAST_SPEED);
+        dashAimHelper = new AimHelper.AimHelperOptions().setProjectileSpeed(DASH_SPEED);
+        blastAimHelper = new AimHelper.AimHelperOptions().setProjectileSpeed(HELL_BLAST_SPEED);
     }
 
     EntityHelper.ProjectileShootInfo shootInfoDart, shootInfoHellBlast, shootInfoGigaBlast;
@@ -288,7 +288,7 @@ public class SupremeCalamitas extends EntitySlime {
                 // prepare shoot info
                 EntityHelper.ProjectileShootInfo shootInfo = bulletHellShootInfoMap.computeIfAbsent(projOption.projectileType,
                         (type) -> new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), projOption.attrMap,
-                                EntityHelper.DamageType.MAGIC, type
+                                DamageHelper.DamageType.MAGIC, type
                         ));
                 // fire projectile
                 shootInfo.setLockedTarget(target);
@@ -388,7 +388,7 @@ public class SupremeCalamitas extends EntitySlime {
                 case 2:
                     shootInfoHellBlast.shootLoc = livingEntity.getEyeLocation();
                     shootInfoHellBlast.setLockedTarget(target);
-                    Location aimedLoc = EntityHelper.helperAimEntity(shootInfoHellBlast.shootLoc, target, blastAimHelper);
+                    Location aimedLoc = AimHelper.helperAimEntity(shootInfoHellBlast.shootLoc, target, blastAimHelper);
                     shootInfoHellBlast.velocity = MathHelper.getDirection(shootInfoHellBlast.shootLoc, aimedLoc, HELL_BLAST_SPEED);
                     projectilesManager.handleProjectile( EntityHelper.spawnProjectile(shootInfoHellBlast) );
                     break;
@@ -401,7 +401,7 @@ public class SupremeCalamitas extends EntitySlime {
                     break;
                 // dash
                 case 4:
-                    Location targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, dashAimHelper);
+                    Location targetLoc = AimHelper.helperAimEntity(bukkitEntity, target, dashAimHelper);
                     velocity = MathHelper.getDirection(livingEntity.getEyeLocation(), targetLoc, DASH_SPEED);
                     break;
             }
@@ -563,7 +563,7 @@ public class SupremeCalamitas extends EntitySlime {
             attrMap.put("defence", 200d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -597,11 +597,11 @@ public class SupremeCalamitas extends EntitySlime {
         // shoot info's
         {
             shootInfoDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjLow,
-                    EntityHelper.DamageType.MAGIC, "灾厄飞弹");
+                    DamageHelper.DamageType.MAGIC, "灾厄飞弹");
             shootInfoHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjMid,
-                    EntityHelper.DamageType.MAGIC, "灾厄亡魂");
+                    DamageHelper.DamageType.MAGIC, "灾厄亡魂");
             shootInfoGigaBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjHigh,
-                    EntityHelper.DamageType.MAGIC, "深渊炙炎弹");
+                    DamageHelper.DamageType.MAGIC, "深渊炙炎弹");
         }
     }
 

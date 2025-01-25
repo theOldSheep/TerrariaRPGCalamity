@@ -37,8 +37,8 @@ public class EaterOfWorld extends EntitySlime {
             HEAD_DMG = 264d, HEAD_DEF = 16d,
             BODY_DMG = 80d, BODY_DEF = 12d,
             TAIL_DMG = 64d, TAIL_DEF = 20d;
-    public static final EntityHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
-            new EntityHelper.WormSegmentMovementOptions()
+    public static final EntityMovementHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
+            new EntityMovementHelper.WormSegmentMovementOptions()
                     .setFollowDistance(1.53)
                     .setFollowingMultiplier(1)
                     .setStraighteningMultiplier(0.1)
@@ -214,7 +214,7 @@ public class EaterOfWorld extends EntitySlime {
                     // face the charging direction
                     this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
                     // follow
-                    EntityHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
+                    EntityMovementHelper.handleSegmentsFollow(bossParts, FOLLOW_PROPERTY, index);
                 }
                 else {
                     bodySpit();
@@ -286,7 +286,7 @@ public class EaterOfWorld extends EntitySlime {
                 attrMap.put("damage", BODY_DMG);
                 attrMap.put("defence", BODY_DEF);
             }
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -326,7 +326,7 @@ public class EaterOfWorld extends EntitySlime {
             this.persistent = true;
             // projectile info
             projectileProperty = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSpit,
-                    EntityHelper.DamageType.ARROW, "魔唾液");
+                    DamageHelper.DamageType.ARROW, "魔唾液");
             projectileProperty.properties.put("penetration", 9);
             // next segment
             if (index + 1 < TOTAL_LENGTH)
@@ -342,20 +342,20 @@ public class EaterOfWorld extends EntitySlime {
         if (index > 0) {
             LivingEntity before = bossParts.get(index - 1);
             if (before.getHealth() > 1e-5 && !before.isDead()) {
-                HashMap<String, Double> atm = EntityHelper.getAttrMap(before);
-                EntityHelper.tweakAttribute(atm, "damage",
+                HashMap<String, Double> atm = AttributeHelper.getAttrMap(before);
+                AttributeHelper.tweakAttribute(atm, "damage",
                         "" + (TAIL_DMG - atm.get("damage")), true);
-                EntityHelper.tweakAttribute(atm, "defence",
+                AttributeHelper.tweakAttribute(atm, "defence",
                         "" + (TAIL_DEF - atm.get("defence")), true);
             }
         }
         if (index + 1 < TOTAL_LENGTH) {
             LivingEntity after = bossParts.get(index + 1);
             if (after.getHealth() > 1e-5 && !after.isDead()) {
-                HashMap<String, Double> atm = EntityHelper.getAttrMap(after);
-                EntityHelper.tweakAttribute(atm, "damage",
+                HashMap<String, Double> atm = AttributeHelper.getAttrMap(after);
+                AttributeHelper.tweakAttribute(atm, "damage",
                         "" + (HEAD_DMG - atm.get("damage")), true);
-                EntityHelper.tweakAttribute(atm, "defence",
+                AttributeHelper.tweakAttribute(atm, "defence",
                         "" + (HEAD_DEF - atm.get("defence")), true);
             }
         }

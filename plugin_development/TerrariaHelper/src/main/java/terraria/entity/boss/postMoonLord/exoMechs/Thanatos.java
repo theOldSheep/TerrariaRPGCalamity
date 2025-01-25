@@ -1,7 +1,6 @@
 package terraria.entity.boss.postMoonLord.exoMechs;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -54,7 +53,7 @@ public class Thanatos extends EntitySlime {
             FINAL_LASER_MINIMUM_LENGTH = 24.0, FINAL_LASER_WIDTH = 0.5;
     private static final int ARMOR_CLOSE_COUNTDOWN = 60;
     private static final int LASER_DELAY = 1;
-    static EntityHelper.AimHelperOptions
+    static AimHelper.AimHelperOptions
             AIM_HELPER_LASER, AIM_HELPER_LASER_GENTLE, AIM_HELPER_LASER_ACC;
     static GenericHelper.StrikeLineOptions STRIKE_OPTION_GAMMA_LASER;
     static HashMap<String, Double> ATTR_MAP_LASER, ATTR_MAP_FINAL_LASER;
@@ -67,12 +66,12 @@ public class Thanatos extends EntitySlime {
         ATTR_MAP_FINAL_LASER.put("damage", 1560d);
         ATTR_MAP_FINAL_LASER.put("knockback", 2.25d);
 
-        AIM_HELPER_LASER = new EntityHelper.AimHelperOptions()
+        AIM_HELPER_LASER = new AimHelper.AimHelperOptions()
                 .setProjectileSpeed(LASER_SPEED);
-        AIM_HELPER_LASER_GENTLE = new EntityHelper.AimHelperOptions()
+        AIM_HELPER_LASER_GENTLE = new AimHelper.AimHelperOptions()
                 .setProjectileSpeed(LASER_SPEED)
                 .setEpoch(1);
-        AIM_HELPER_LASER_ACC = new EntityHelper.AimHelperOptions()
+        AIM_HELPER_LASER_ACC = new AimHelper.AimHelperOptions()
                 .setProjectileSpeed(LASER_SPEED)
                 .setAccelerationMode(true);
 
@@ -84,12 +83,12 @@ public class Thanatos extends EntitySlime {
                                 .setIntensityMulti(0.5)
                                 .setParticleColor("255|255|255", "63|105|249"));
     }
-    static final EntityHelper.WormSegmentMovementOptions followOption = new EntityHelper.WormSegmentMovementOptions()
+    static final EntityMovementHelper.WormSegmentMovementOptions followOption = new EntityMovementHelper.WormSegmentMovementOptions()
             .setStraighteningMultiplier(-0.1)
             .setFollowingMultiplier(1)
             .setFollowDistance(SLIME_SIZE * 0.5)
             .setVelocityOrTeleport(false);
-    static final EntityHelper.WormSegmentMovementOptions followOptionStationary = new EntityHelper.WormSegmentMovementOptions()
+    static final EntityMovementHelper.WormSegmentMovementOptions followOptionStationary = new EntityMovementHelper.WormSegmentMovementOptions()
             .setStraighteningMultiplier(0)
             .setFollowingMultiplier(1)
             .setFollowDistance(SLIME_SIZE * 0.5)
@@ -109,11 +108,11 @@ public class Thanatos extends EntitySlime {
 
     public void setOpen(boolean open) {
         if (open && armorCloseCountdown <= 0) {
-            EntityHelper.tweakAttribute(attrMap, "defenceMulti", "10", false);
+            AttributeHelper.tweakAttribute(attrMap, "defenceMulti", "10", false);
             addScoreboardTag("isMonster");
             setCustomName(segmentType.openName);
         } else if (!open && armorCloseCountdown <= 0) {
-            EntityHelper.tweakAttribute(attrMap, "defenceMulti", "10", true);
+            AttributeHelper.tweakAttribute(attrMap, "defenceMulti", "10", true);
             removeScoreboardTag("isMonster");
             setCustomName(segmentType.closedName);
         }
@@ -136,7 +135,7 @@ public class Thanatos extends EntitySlime {
                 attackMethod = AttackMethod.LASER_PROJECTILE;
                 ticks = 0;
                 // Let the remaining segments follow the head
-                EntityHelper.handleSegmentsFollow(livingSegments, followOptionStationary);
+                EntityMovementHelper.handleSegmentsFollow(livingSegments, followOptionStationary);
             }
             else {
                 Draedon.Difficulty difficulty = owner.calculateDifficulty(this);
@@ -155,7 +154,7 @@ public class Thanatos extends EntitySlime {
                 adjustLength();
                 ticks++;
                 // Let the remaining segments follow the head
-                EntityHelper.handleSegmentsFollow(livingSegments, followOption);
+                EntityMovementHelper.handleSegmentsFollow(livingSegments, followOption);
             }
             // Movement
             bukkitEntity.setVelocity(velocity);
@@ -318,10 +317,10 @@ public class Thanatos extends EntitySlime {
             }
         }
     }
-    private void spawnSingleLaser(EntityHelper.AimHelperOptions aimHelper) {
+    private void spawnSingleLaser(AimHelper.AimHelperOptions aimHelper) {
         shootInfoLaser.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         Location targetLoc = aimHelper == null ? target.getEyeLocation() :
-                EntityHelper.helperAimEntity(shootInfoLaser.shootLoc, target, aimHelper);
+                AimHelper.helperAimEntity(shootInfoLaser.shootLoc, target, aimHelper);
         shootInfoLaser.velocity = MathHelper.getDirection(shootInfoLaser.shootLoc, targetLoc, LASER_SPEED);
         EntityHelper.spawnProjectile(shootInfoLaser);
     }
@@ -409,7 +408,7 @@ public class Thanatos extends EntitySlime {
             attrMap.put("defence", 300d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.BULLET);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.BULLET);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -452,7 +451,7 @@ public class Thanatos extends EntitySlime {
         // shoot info's
         {
             shootInfoLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), ATTR_MAP_LASER,
-                    EntityHelper.DamageType.ARROW, "红色星流脉冲激光");
+                    DamageHelper.DamageType.ARROW, "红色星流脉冲激光");
         }
     }
 

@@ -8,8 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
 
 import java.util.ArrayList;
@@ -58,7 +57,7 @@ public class RavagerLeg extends EntitySlime {
                     Vector orthogonalOffsetVec = owner.orthogonalDir.clone();
                     orthogonalOffsetVec.multiply(0.9 *
                             (componentIndex == 2 ? -5.4 : 5.4));
-                    EntityHelper.movementTP(bukkitEntity,
+                    EntityMovementHelper.movementTP(bukkitEntity,
                             owner.getBukkitEntity().getLocation().add(offsetDir).add(orthogonalOffsetVec));
                 }
             }
@@ -95,7 +94,7 @@ public class RavagerLeg extends EntitySlime {
         {
             attrMap = (HashMap<String, Double>) owner.attrMap.clone();
             attrMap.put("damageTakenMulti", 0.85);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar

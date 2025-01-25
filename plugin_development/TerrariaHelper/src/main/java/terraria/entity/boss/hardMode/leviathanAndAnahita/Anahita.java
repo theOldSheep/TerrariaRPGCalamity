@@ -10,10 +10,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,9 +95,9 @@ public class Anahita extends EntityZombieHusk {
         bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
         // deal extra contact damage when dashing
         if (lastPhase == AIPhase.DASH)
-            EntityHelper.tweakAttribute(attrMap, "damageMulti", "0.5", false);
+            AttributeHelper.tweakAttribute(attrMap, "damageMulti", "0.5", false);
         else if (phaseAI == AIPhase.DASH)
-            EntityHelper.tweakAttribute(attrMap, "damageMulti", "0.5", true);
+            AttributeHelper.tweakAttribute(attrMap, "damageMulti", "0.5", true);
     }
     private void shootProjectiles() {
         EntityHelper.ProjectileShootInfo shootInfo;
@@ -285,7 +283,7 @@ public class Anahita extends EntityZombieHusk {
             attrMap.put("defence", 50d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -321,13 +319,13 @@ public class Anahita extends EntityZombieHusk {
         // shoot info's
         {
             shootInfoWaterSpear = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapWaterSpear,
-                    EntityHelper.DamageType.MAGIC, "水之枪");
+                    DamageHelper.DamageType.MAGIC, "水之枪");
             shootInfoFrostMist = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFrostMist,
-                    EntityHelper.DamageType.MAGIC, "霜雾");
+                    DamageHelper.DamageType.MAGIC, "霜雾");
             shootInfoTrebleClef = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapTrebleClef,
-                    EntityHelper.DamageType.MAGIC, "魅惑之音");
+                    DamageHelper.DamageType.MAGIC, "魅惑之音");
             shootInfoBubble = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapBubble,
-                    EntityHelper.DamageType.MAGIC, "爆炸泡泡");
+                    DamageHelper.DamageType.MAGIC, "爆炸泡泡");
         }
     }
 

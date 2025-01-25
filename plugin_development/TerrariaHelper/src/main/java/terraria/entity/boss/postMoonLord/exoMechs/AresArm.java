@@ -6,8 +6,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
 
 import java.util.ArrayList;
@@ -99,8 +98,8 @@ public class AresArm extends EntitySlime {
             return projectileSpeed;
         }
 
-        public EntityHelper.AimHelperOptions getAimHelperOptions(int difficulty) {
-            return new EntityHelper.AimHelperOptions(projectileType)
+        public AimHelper.AimHelperOptions getAimHelperOptions(int difficulty) {
+            return new AimHelper.AimHelperOptions(projectileType)
                     .setProjectileSpeed(projectileSpeed)
                     .setIntensity(intensities[difficulty])
                     .setRandomOffsetRadius(randomOffsetRadii[difficulty]);
@@ -155,9 +154,9 @@ public class AresArm extends EntitySlime {
                 int fireInterval = attackPattern.getFireInterval(difficulty);
                 if (fireInterval == 0 || chargeTicks % fireInterval == 0) {
                     Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-                    EntityHelper.AimHelperOptions aimHelperOptions = attackPattern.getAimHelperOptions(difficulty);
+                    AimHelper.AimHelperOptions aimHelperOptions = attackPattern.getAimHelperOptions(difficulty);
 
-                    Location aimLocation = EntityHelper.helperAimEntity(shootLoc, target, aimHelperOptions);
+                    Location aimLocation = AimHelper.helperAimEntity(shootLoc, target, aimHelperOptions);
 
                     Vector direction = aimLocation.toVector().subtract(shootLoc.toVector());
                     if (direction.lengthSquared() < 1e-9) {
@@ -248,7 +247,7 @@ public class AresArm extends EntitySlime {
             attrMap.put("defence", 200d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.BULLET);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.BULLET);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -278,7 +277,7 @@ public class AresArm extends EntitySlime {
         }
         // shoot info
         projectileShootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(),
-                armType.getAttackPattern().getAttributeMap(), EntityHelper.DamageType.ARROW,
+                armType.getAttackPattern().getAttributeMap(), DamageHelper.DamageType.ARROW,
                 armType.getAttackPattern().getProjectileType());
     }
 

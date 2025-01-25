@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.util.BossHelper;
+import terraria.util.DamageHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
 
@@ -100,7 +101,7 @@ public class LunaticCultistClone extends EntityZombieHusk {
             attrMap.put("defence", 94d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // other properties
@@ -113,7 +114,7 @@ public class LunaticCultistClone extends EntityZombieHusk {
         // shoot info
         {
             shootInfoShadowFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapShadowFireball,
-                    EntityHelper.DamageType.ARROW, "暗影焰");
+                    DamageHelper.DamageType.ARROW, "暗影焰");
         }
     }
 

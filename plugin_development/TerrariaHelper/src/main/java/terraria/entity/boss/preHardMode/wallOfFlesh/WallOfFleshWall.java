@@ -4,7 +4,6 @@ import net.minecraft.server.v1_12_R1.EntitySlime;
 import net.minecraft.server.v1_12_R1.GenericAttributes;
 import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
 import net.minecraft.server.v1_12_R1.World;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -13,6 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import terraria.util.BossHelper;
 import terraria.util.EntityHelper;
+import terraria.util.EntityMovementHelper;
 import terraria.util.MathHelper;
 
 public class WallOfFleshWall extends EntitySlime {
@@ -40,7 +40,7 @@ public class WallOfFleshWall extends EntitySlime {
                 Vector offsetDir = owner.horizontalMoveDirection.clone().multiply(-SLIME_SIZE_BLOCKS * 0.5);
                 Location hoverLoc = owner.getBukkitEntity().getLocation().add(offsetDir);
                 hoverLoc.setY(yCoord);
-                EntityHelper.movementTP(bukkitEntity, hoverLoc);
+                EntityMovementHelper.movementTP(bukkitEntity, hoverLoc);
                 bukkitEntity.setVelocity(owner.getBukkitEntity().getVelocity());
             }
         }

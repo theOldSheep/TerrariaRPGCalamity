@@ -8,10 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
-import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
+import terraria.util.*;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -101,7 +98,7 @@ public class DarkHeart extends EntitySlime {
             attrMap.put("knockbackResistance", 0.68d);
             attrMap.put("knockbackMeleeMulti", 1d);
             attrMap.put("knockbackMulti", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.ARROW);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.ARROW);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map

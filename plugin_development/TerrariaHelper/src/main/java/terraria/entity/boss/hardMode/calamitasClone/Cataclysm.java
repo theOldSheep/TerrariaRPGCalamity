@@ -9,10 +9,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -142,7 +140,7 @@ public class Cataclysm extends EntitySlime {
             attrMap.put("defence", 20d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -173,7 +171,7 @@ public class Cataclysm extends EntitySlime {
         // shoot info's
         {
             shootInfoFlameThrower = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFlameThrower,
-                    EntityHelper.DamageType.MAGIC,"硫火喷射");
+                    DamageHelper.DamageType.MAGIC,"硫火喷射");
         }
     }
 

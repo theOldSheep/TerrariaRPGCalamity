@@ -162,9 +162,9 @@ public class EmpressOfLight extends EntitySlime {
         attackPhase = phaseCycle[++indexAttackPhase % phaseCycle.length];
         // damage increase when start dash, back to normal when finishing
         if (attackPhase == AttackPhase.CHARGE)
-            EntityHelper.tweakAttribute(attrMap, "damageMeleeMulti", "0.5", true);
+            AttributeHelper.tweakAttribute(attrMap, "damageMeleeMulti", "0.5", true);
         if (lastPhase == AttackPhase.CHARGE)
-            EntityHelper.tweakAttribute(attrMap, "damageMeleeMulti", "0.5", false);
+            AttributeHelper.tweakAttribute(attrMap, "damageMeleeMulti", "0.5", false);
         // play sound
         String soundName;
         switch (attackPhase) {
@@ -229,7 +229,7 @@ public class EmpressOfLight extends EntitySlime {
     }
     // attack AI
     private void AIPhasePrismaticBolt() {
-        EntityHelper.movementTP(bukkitEntity, attackLoc);
+        EntityMovementHelper.movementTP(bukkitEntity, attackLoc);
         bukkitEntity.setVelocity(new Vector());
         for (int shootIndex = 0; shootIndex < 15; shootIndex ++) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
@@ -240,7 +240,7 @@ public class EmpressOfLight extends EntitySlime {
         }
     }
     private void AIPhasePrismaticBoltV2() {
-        EntityHelper.movementTP(bukkitEntity, attackLoc);
+        EntityMovementHelper.movementTP(bukkitEntity, attackLoc);
         bukkitEntity.setVelocity(new Vector());
         for (int shootIndex = 0; shootIndex < 25; shootIndex ++) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
@@ -266,7 +266,7 @@ public class EmpressOfLight extends EntitySlime {
         EntityHelper.spawnProjectile(shootInfoPrismaticBolt);
     }
     private void AIPhaseCharge() {
-        EntityHelper.movementTP(bukkitEntity, attackLoc);
+        EntityMovementHelper.movementTP(bukkitEntity, attackLoc);
         Vector velocity = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(),
                 target.getEyeLocation(), 1);
         Vector velWindup = velocity.clone().multiply(-SPEED_CHARGE_WINDUP);
@@ -296,7 +296,7 @@ public class EmpressOfLight extends EntitySlime {
         }, waitTime);
     }
     private void AIPhaseSunDance() {
-        EntityHelper.movementTP(bukkitEntity, attackLoc);
+        EntityMovementHelper.movementTP(bukkitEntity, attackLoc);
         bukkitEntity.setVelocity(new Vector());
         int rays = summonedDuringDay ? 8 : 6;
         // angle offset: the single ray would travel about 50% of the gap
@@ -322,7 +322,7 @@ public class EmpressOfLight extends EntitySlime {
         targetLoc.setY(plyLoc.getY());
         targetLoc = plyLoc.add(MathHelper.getDirection(
                 plyLoc, targetLoc, SUN_DANCE_MAX_LENGTH * 0.65, true));
-        EntityHelper.movementTP(bukkitEntity, targetLoc);
+        EntityMovementHelper.movementTP(bukkitEntity, targetLoc);
         // handle particle/damage
         double sizeMultiplier = Math.sqrt(1 - Math.abs(20d - index) / 20);
         if (sizeMultiplier > 1e-5) {
@@ -353,7 +353,7 @@ public class EmpressOfLight extends EntitySlime {
             }, 1);
     }
     private void AIPhaseEverlastingRainbow() {
-        EntityHelper.movementTP(bukkitEntity, attackLoc);
+        EntityMovementHelper.movementTP(bukkitEntity, attackLoc);
         bukkitEntity.setVelocity(new Vector());
 
         Vector offset = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, 0);
@@ -402,7 +402,7 @@ public class EmpressOfLight extends EntitySlime {
             }, 2);
     }
     private void AIPhaseEtherealLance() {
-        EntityHelper.movementTP(bukkitEntity, attackLoc);
+        EntityMovementHelper.movementTP(bukkitEntity, attackLoc);
         bukkitEntity.setVelocity(new Vector());
         for (int i = 0; i < 20; i ++) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
@@ -417,7 +417,7 @@ public class EmpressOfLight extends EntitySlime {
         }
     }
     private void AIPhaseEtherealLanceV2() {
-        EntityHelper.movementTP(bukkitEntity, attackLoc);
+        EntityMovementHelper.movementTP(bukkitEntity, attackLoc);
         bukkitEntity.setVelocity(new Vector());
         int ticksOffset = 0;
         for (Vector offsetDir : eLV2Dirs) {
@@ -540,7 +540,7 @@ public class EmpressOfLight extends EntitySlime {
             attrMapSunDance.put("damageMulti", damageMultiplier);
             attrMapEverlastingRainbow.put("damageMulti", damageMultiplier);
             attrMapEtherealLance.put("damageMulti", damageMultiplier);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MAGIC);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -574,7 +574,7 @@ public class EmpressOfLight extends EntitySlime {
         // shoot info's
         {
             shootInfoPrismaticBolt = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrismaticBolt,
-                    EntityHelper.DamageType.MAGIC, "水晶矢");
+                    DamageHelper.DamageType.MAGIC, "水晶矢");
         }
         // particle and strike options
         {

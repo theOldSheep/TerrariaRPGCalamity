@@ -5,20 +5,13 @@ import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
 import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.entity.boss.hardMode.dukeFishron.DukeFishron;
-import terraria.entity.boss.hardMode.dukeFishron.Sharkron;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
-import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
+import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
 
 public class Infernado extends EntitySlime {
     // basic variables
@@ -94,7 +87,7 @@ public class Infernado extends EntitySlime {
             attrMap.put("damage", 1392d);
             attrMap.put("knockback", 4d);
             // damage multiplier
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init slime size and offsets

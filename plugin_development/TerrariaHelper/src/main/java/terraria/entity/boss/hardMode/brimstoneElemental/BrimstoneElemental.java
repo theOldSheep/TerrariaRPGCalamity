@@ -31,11 +31,11 @@ public class BrimstoneElemental extends EntitySlime {
     Player target = null;
     // other variables and AI
     static final HashMap<String, Double> attrMapBrimstoneRay, attrMapBrimstoneDart, attrMapHellFireball;
-    static final EntityHelper.AimHelperOptions rayAimHelper;
+    static final AimHelper.AimHelperOptions rayAimHelper;
     static final GenericHelper.ParticleLineOptions hintParticleOption, rayParticleOption;
     static final GenericHelper.StrikeLineOptions rayOption;
     static {
-        rayAimHelper = new EntityHelper.AimHelperOptions()
+        rayAimHelper = new AimHelper.AimHelperOptions()
                 .setAimMode(true)
                 .setTicksTotal(20);
 
@@ -130,18 +130,18 @@ public class BrimstoneElemental extends EntitySlime {
         setCustomName(BOSS_TYPE.msgName + "§" + newPhase);
         switch (newPhase) {
             case 1:
-                EntityHelper.tweakAttribute(attrMap, "defence",
+                AttributeHelper.tweakAttribute(attrMap, "defence",
                         "" + (30 - attrMap.get("defence")), true);
                 bossbar.color = BossBattle.BarColor.GREEN;
                 break;
             case 2:
-                EntityHelper.tweakAttribute(attrMap, "defence",
+                AttributeHelper.tweakAttribute(attrMap, "defence",
                         "" + (120 - attrMap.get("defence")), true);
                 bossbar.color = BossBattle.BarColor.RED;
                 indexAI = -60;
                 break;
             case 3:
-                EntityHelper.tweakAttribute(attrMap, "defence",
+                AttributeHelper.tweakAttribute(attrMap, "defence",
                         "" + (60 - attrMap.get("defence")), true);
                 bossbar.color = BossBattle.BarColor.YELLOW;
                 break;
@@ -229,7 +229,7 @@ public class BrimstoneElemental extends EntitySlime {
                             if (cycleIndex <= 30) {
                                 // update aimed location
                                 if (cycleIndex <= 20)
-                                    aimLoc = EntityHelper.helperAimEntity(bukkitEntity, target, rayAimHelper);
+                                    aimLoc = AimHelper.helperAimEntity(bukkitEntity, target, rayAimHelper);
                                 // get direction
                                 Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
                                 Vector direction = aimLoc.clone().subtract(shootLoc).toVector();
@@ -308,7 +308,7 @@ public class BrimstoneElemental extends EntitySlime {
             attrMap.put("defence", 30d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -342,11 +342,11 @@ public class BrimstoneElemental extends EntitySlime {
         // projectile info
         {
             psiDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapBrimstoneDart,
-                    EntityHelper.DamageType.MAGIC, "硫火飞弹");
+                    DamageHelper.DamageType.MAGIC, "硫火飞弹");
             psiFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball,
-                    EntityHelper.DamageType.MAGIC, "炼狱硫火球");
+                    DamageHelper.DamageType.MAGIC, "炼狱硫火球");
             psiHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball,
-                    EntityHelper.DamageType.MAGIC, "灾厄亡魂");
+                    DamageHelper.DamageType.MAGIC, "灾厄亡魂");
         }
     }
 

@@ -29,7 +29,6 @@ import terraria.entity.others.Mount;
 import terraria.gameplay.EventAndTime;
 import terraria.gameplay.Setting;
 
-import javax.xml.ws.Holder;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -406,7 +405,7 @@ public class PlayerHelper {
         }
     }
     public static int getMaxMana(Player ply) {
-        return EntityHelper.getAttrMap(ply).getOrDefault("maxMana", 20d).intValue();
+        return AttributeHelper.getAttrMap(ply).getOrDefault("maxMana", 20d).intValue();
     }
     public static String getPlayerDataFilePath(Player ply) {
         return TerrariaHelper.Constants.DATA_PLAYER_FOLDER_DIR + ply.getName() + ".yml";
@@ -614,7 +613,7 @@ public class PlayerHelper {
                                     Entity target = null;
                                     for (Entity e : ply.getWorld().getNearbyEntities(ply.getEyeLocation(), 25, 25, 25)) {
                                         // ignore if is not a valid enemy
-                                        if (!(EntityHelper.checkCanDamage(ply, e, true)))
+                                        if (!(DamageHelper.checkCanDamage(ply, e, true)))
                                             continue;
                                         double distSqr = e.getLocation().distanceSquared(ply.getLocation());
                                         // ignore if is further than current
@@ -625,14 +624,14 @@ public class PlayerHelper {
                                     }
                                     if (target != null) {
                                         double projSpd = 1.5;
-                                        EntityHelper.AimHelperOptions aimHelperOptions = new EntityHelper.AimHelperOptions()
+                                        AimHelper.AimHelperOptions aimHelperOptions = new AimHelper.AimHelperOptions()
                                                 .setProjectileSpeed(projSpd)
                                                 .setProjectileGravity(0.05);
-                                        Location aimedLoc = EntityHelper.helperAimEntity(ply, target, aimHelperOptions);
+                                        Location aimedLoc = AimHelper.helperAimEntity(ply, target, aimHelperOptions);
 
                                         Vector v = MathHelper.getDirection(ply.getEyeLocation(), aimedLoc, 1.5);
                                         EntityHelper.spawnProjectile(ply, v, attrMapChlorophyte,
-                                                EntityHelper.DamageType.ARROW, "树叶");
+                                                DamageHelper.DamageType.ARROW, "树叶");
                                     }
                                 }
                                 break;
@@ -656,7 +655,7 @@ public class PlayerHelper {
                                         Entity target = null;
                                         for (Entity e : ply.getWorld().getNearbyEntities(ply.getEyeLocation(), 12, 12, 12)) {
                                             // is not a valid enemy
-                                            if (!(EntityHelper.checkCanDamage(ply, e, true)))
+                                            if (!(DamageHelper.checkCanDamage(ply, e, true)))
                                                 continue;
                                             // has no vision
                                             if (! ply.hasLineOfSight(e))
@@ -677,11 +676,11 @@ public class PlayerHelper {
                                             if (accessory.equals("新手版挥发明胶")) {
                                                 v.normalize().multiply(0.5);
                                                 EntityHelper.spawnProjectile(ply, v, attrMapVolatileGelatinJr,
-                                                        EntityHelper.DamageType.ARROW, "挥发明胶");
+                                                        DamageHelper.DamageType.ARROW, "挥发明胶");
                                             } else {
                                                 v.normalize().multiply(0.6);
                                                 EntityHelper.spawnProjectile(ply, v, attrMapVolatileGelatin,
-                                                        EntityHelper.DamageType.ARROW, "挥发明胶");
+                                                        DamageHelper.DamageType.ARROW, "挥发明胶");
                                             }
                                         }
                                     }
@@ -694,7 +693,7 @@ public class PlayerHelper {
                                         Location spawnLoc = ply.getEyeLocation().add(
                                                 Math.random() * 10 - 5, Math.random() * 8 - 3, Math.random() * 10 - 5);
                                         EntityHelper.spawnProjectile(ply, spawnLoc, velocity, attrMapSpore,
-                                                EntityHelper.DamageType.MAGIC, "孢子球");
+                                                DamageHelper.DamageType.MAGIC, "孢子球");
                                     }
                                     break;
                                 }
@@ -1053,7 +1052,7 @@ public class PlayerHelper {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 if (!isProperlyPlaying(ply)) continue;
                 // spawn rate multipliers apply to critters as well
-                HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+                HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(ply);
                 double spawnRateMulti = attrMap.getOrDefault("mobSpawnRateMulti", 1d);
                 // critter spawn, expected 1 critter per second (may change according to spawn rate).
                 if (Math.random() < spawnRateMulti * spawnRateAdjustFactor)
@@ -1122,7 +1121,7 @@ public class PlayerHelper {
                 if (isFirstContact) {
                     Vector knockbackDir = ply.getEyeLocation().subtract( block.getLocation().add(0.5, 0.5, 0.5) ).toVector();
                     MathHelper.setVectorLength(knockbackDir, 2);
-                    EntityHelper.setVelocity(ply, knockbackDir);
+                    EntityMovementHelper.setVelocity(ply, knockbackDir);
                     block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE,
                             SoundCategory.BLOCKS, 3f, 1f);
                     EntityHelper.applyEffect(ply, "带电", 100);
@@ -1369,7 +1368,7 @@ public class PlayerHelper {
             // speed multiplier
             double speedMulti = 1d, speedMultiWing = 1d;
             {
-                HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+                HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(ply);
                 speedMulti = attrMap.getOrDefault("speedMulti", 1d);
                 speedMultiWing = speedMulti;
                 // speed multiplier that exceeds 100% are only 10% as effective on wings, 20% as effective otherwise.
@@ -1483,7 +1482,7 @@ public class PlayerHelper {
                 }
                 // thrust tick and misc mechanism
                 if (isThrusting) {
-                    thrustProgressMax *= EntityHelper.getAttrMap(ply).getOrDefault("flightTimeMulti", 1d);
+                    thrustProgressMax *= AttributeHelper.getAttrMap(ply).getOrDefault("flightTimeMulti", 1d);
                     if (thrustProgress < extraJumpTime + thrustProgressMax) {
 //                        Bukkit.broadcastMessage(thrustProgress + "/" + extraJumpTime + ", " + thrustProgressMax);
                         ply.setFallDistance(0);
@@ -1631,7 +1630,7 @@ public class PlayerHelper {
                 submerged = true;
                 break;
         }
-        double waterAffinity = EntityHelper.getAttrMap(ply).getOrDefault("waterAffinity", 0d);
+        double waterAffinity = AttributeHelper.getAttrMap(ply).getOrDefault("waterAffinity", 0d);
         // oxygen handling
         {
             int oxygen = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR).asInt();
@@ -1642,8 +1641,8 @@ public class PlayerHelper {
                 // drowning damage
                 if (oxygen <= 0) {
                     oxygen = 0;
-                    EntityHelper.handleDamage(ply, ply, 10 * Math.max(oxygenDepleteRate, 1),
-                            EntityHelper.DamageReason.DROWNING);
+                    DamageHelper.handleDamage(ply, ply, 10 * Math.max(oxygenDepleteRate, 1),
+                            DamageHelper.DamageReason.DROWNING);
                 }
             }
             else {
@@ -1714,7 +1713,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     plySpd = underwaterMovement(ply, plySpd, contactBlocks);
 
                     // update speed
-                    EntityHelper.setVelocity(ply, plySpd);
+                    EntityMovementHelper.setVelocity(ply, plySpd);
                     // save location info
                     saveMovementData(ply, plyWorldSpd.clone(), plyAcc);
                 }
@@ -1752,17 +1751,17 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                             initPlayerStats(ply, false);
                             // revive invulnerability ticks - 3 seconds
                             int dmgImmuneTicks = 60;
-                            EntityHelper.DamageType[] dmgImmuneTypes = {
-                                    EntityHelper.DamageType.MELEE, EntityHelper.DamageType.ARROW,
-                                    EntityHelper.DamageType.BULLET, EntityHelper.DamageType.ROCKET, EntityHelper.DamageType.MAGIC};
-                            for (EntityHelper.DamageType type : dmgImmuneTypes)
+                            DamageHelper.DamageType[] dmgImmuneTypes = {
+                                    DamageHelper.DamageType.MELEE, DamageHelper.DamageType.ARROW,
+                                    DamageHelper.DamageType.BULLET, DamageHelper.DamageType.ROCKET, DamageHelper.DamageType.MAGIC};
+                            for (DamageHelper.DamageType type : dmgImmuneTypes)
                                 EntityHelper.handleEntityTemporaryScoreboardTag(ply,
-                                        EntityHelper.getInvulnerabilityTickName(type), dmgImmuneTicks);
+                                        DamageHelper.getInvulnerabilityTickName(type), dmgImmuneTicks);
                         }
                     } else {
                         if (!isProperlyPlaying(ply)) continue; // waiting to revive etc.
                         // basic variable setup
-                        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+                        HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(ply);
                         HashSet<String> accessories = getAccessories(ply);
                         HashMap<String, Integer> effectMap = EntityHelper.getEffectMap(ply);
                         Vector velocity = ply.getVelocity();
@@ -1817,7 +1816,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 healthRegenTime += delay;
                                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.REGEN_TIME, Math.min(healthRegenTime, 1201));
                             } else {
-                                EntityHelper.handleDeath(ply, ply, ply, EntityHelper.DamageType.NEGATIVE_REGEN, EntityHelper.DamageReason.DEBUFF, null);
+                                DamageHelper.handleDeath(ply, ply, ply, DamageHelper.DamageType.NEGATIVE_REGEN, DamageHelper.DamageReason.DEBUFF, null);
                             }
                         }
                         // mana regen
@@ -2067,7 +2066,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             // re-initialize attribute map
 
             // attrMap is being overridden after newAttrMap is ready to prevent client glitch (especially on max mana)
-            HashMap<String, Double> formerAttrMap = EntityHelper.getAttrMap(ply);
+            HashMap<String, Double> formerAttrMap = AttributeHelper.getAttrMap(ply);
             double originalMaxHealth = ply.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
 
             HashMap<String, Double> newAttrMap = getDefaultPlayerAttributes();
@@ -2089,24 +2088,24 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
 
                         // the greater effect also converts the health loss into mana regen
                         if (effect.equals("魔力熔蚀")) {
-                            EntityHelper.tweakAttribute(ply, newAttrMap, "manaRegenFixed",
+                            AttributeHelper.tweakAttribute(ply, newAttrMap, "manaRegenFixed",
                                     (healthLoss * 1.75) + "", true);
                         }
-                        EntityHelper.tweakAttribute(ply, newAttrMap, "regen", healthLoss + "", false);
+                        AttributeHelper.tweakAttribute(ply, newAttrMap, "regen", healthLoss + "", false);
                         negRegenCause.put(effect, healthLoss);
                         break;
                     case "魔力疾病":
                         // maximum: 20s = 400 tick, -400/800 = -50% damage
-                        EntityHelper.tweakAttribute(ply, newAttrMap, "damageMagicMulti",
+                        AttributeHelper.tweakAttribute(ply, newAttrMap, "damageMagicMulti",
                                 ((double)-ticksRemaining / 800) + "", true);
                         break;
                     case "防御损毁":
                         // -1 defence per tick
-                        EntityHelper.tweakAttribute(ply, newAttrMap, "defence", ticksRemaining + "", false);
+                        AttributeHelper.tweakAttribute(ply, newAttrMap, "defence", ticksRemaining + "", false);
                         break;
                     case "血炎防御损毁":
                         // -1 defence per tick
-                        EntityHelper.tweakAttribute(ply, newAttrMap, "defence", ticksRemaining + "", false);
+                        AttributeHelper.tweakAttribute(ply, newAttrMap, "defence", ticksRemaining + "", false);
                         break;
                     default: {
                         String attributesPath = "effects." + effect + ".attributes";
@@ -2119,10 +2118,10 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 // so it is safe to read the attribute from level > 1 as double.
                                 // if a buff can be leveled but its level is 1, it does not matter as multiplication is not required.
                                 if (buffLevel > 1)
-                                    EntityHelper.tweakAttribute(ply, newAttrMap, attr,
+                                    AttributeHelper.tweakAttribute(ply, newAttrMap, attr,
                                             (effectSection.getDouble(attr) * buffLevel) + "", true);
                                 else
-                                    EntityHelper.tweakAttribute(ply, newAttrMap, attr,
+                                    AttributeHelper.tweakAttribute(ply, newAttrMap, attr,
                                             effectSection.getString(attr), true);
                                 if (attr.equals("regen")) {
                                     double attrVal = effectSection.getDouble(attr);
@@ -2140,7 +2139,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             {
                 String toolCombatType = ItemHelper.getItemCombatType(plyTool);
                 if (toolCombatType.equals("武器")) {
-                    EntityHelper.tweakAttribute(ply, newAttrMap, plyTool, true);
+                    AttributeHelper.tweakAttribute(ply, newAttrMap, plyTool, true);
                 }
             }
             // armor
@@ -2172,7 +2171,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                 }
                 // basic attributes
                 for (ItemStack armorPiece : armors) {
-                    EntityHelper.tweakAttribute(ply, newAttrMap, armorPiece, true);
+                    AttributeHelper.tweakAttribute(ply, newAttrMap, armorPiece, true);
                 }
                 // set bonus
                 String armorSet = "";
@@ -2211,7 +2210,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                         plyInv.setChestplate(armors.get(1));
                         plyInv.setLeggings(armors.get(2));
                         // tweak attributes
-                        EntityHelper.tweakAllAttributes(ply, newAttrMap,
+                        AttributeHelper.tweakAllAttributes(ply, newAttrMap,
                                 setBonusSection.getConfigurationSection("attributes"), true);
                     }
                 }
@@ -2222,13 +2221,13 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     case "金源盗贼套装": {
                         double plyHealthRatio = ply.getHealth() / ply.getMaxHealth();
                         if (plyHealthRatio > 0.8) {
-                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                            AttributeHelper.tweakAttribute(ply, newAttrMap,
                                     "defence", "30", true);
-                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                            AttributeHelper.tweakAttribute(ply, newAttrMap,
                                     "damageRogueMulti", "0.05", true);
                         }
                         else {
-                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                            AttributeHelper.tweakAttribute(ply, newAttrMap,
                                     "damageRogueMulti", "0.1", true);
                         }
                         break;
@@ -2237,10 +2236,10 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     case "金源召唤套装": {
                         double plyHealthRatio = ply.getHealth() / ply.getMaxHealth();
                         if (plyHealthRatio > 0.9)
-                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                            AttributeHelper.tweakAttribute(ply, newAttrMap,
                                     "damageSummonMulti", "0.15", true);
                         else if (plyHealthRatio <= 0.5) {
-                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                            AttributeHelper.tweakAttribute(ply, newAttrMap,
                                     "defence", "30", true);
                         }
                         break;
@@ -2252,13 +2251,13 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     case "金源盗贼套装": {
                         double plyHealthRatio = ply.getHealth() / ply.getMaxHealth();
                         if (plyHealthRatio > 0.99999) {
-                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                            AttributeHelper.tweakAttribute(ply, newAttrMap,
                                     "damageRogueMulti", "0.1", true);
-                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                            AttributeHelper.tweakAttribute(ply, newAttrMap,
                                     "critRogue", "10", true);
-                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                            AttributeHelper.tweakAttribute(ply, newAttrMap,
                                     "useSpeedRogueMulti", "0.1", true);
-                            EntityHelper.tweakAttribute(ply, newAttrMap,
+                            AttributeHelper.tweakAttribute(ply, newAttrMap,
                                     "stealthRegenMulti", "0.1", true);
                         }
                         break;
@@ -2290,21 +2289,21 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     switch (currAccType) {
                         case "钨钢屏障生成仪": {
                             if (effectMap.containsKey("保护矩阵")) {
-                                EntityHelper.tweakAttribute(ply, newAttrMap, "defence", "20", true);
+                                AttributeHelper.tweakAttribute(ply, newAttrMap, "defence", "20", true);
                             }
                             break;
                         }
                         case "化绵留香石": {
                             if (effectMap.containsKey("保护矩阵")) {
-                                EntityHelper.tweakAttribute(ply, newAttrMap, "defence", "40", true);
-                                EntityHelper.tweakAttribute(ply, newAttrMap, "damageTakenMulti", "-0.075", true);
+                                AttributeHelper.tweakAttribute(ply, newAttrMap, "defence", "40", true);
+                                AttributeHelper.tweakAttribute(ply, newAttrMap, "damageTakenMulti", "-0.075", true);
                             }
                             break;
                         }
                         case "嘉登之心": {
                             if (effectMap.containsKey("保护矩阵")) {
-                                EntityHelper.tweakAttribute(ply, newAttrMap, "regen", "6", true);
-                                EntityHelper.tweakAttribute(ply, newAttrMap, "damageTakenMulti", "-0.15", true);
+                                AttributeHelper.tweakAttribute(ply, newAttrMap, "regen", "6", true);
+                                AttributeHelper.tweakAttribute(ply, newAttrMap, "damageTakenMulti", "-0.15", true);
                             }
                             break;
                         }
@@ -2320,7 +2319,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                         }
                         case "魔能谐振仪": {
                             if (ply.getLevel() * 2 > getMaxMana(ply)) {
-                                EntityHelper.tweakAttribute(ply, newAttrMap,
+                                AttributeHelper.tweakAttribute(ply, newAttrMap,
                                         "regen", "6", false);
                                 negRegenCause.put(currAccType, 6d);
                             }
@@ -2328,7 +2327,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                         }
                         case "恼怒项链": {
                             if (ply.getHealth() * 2 > ply.getMaxHealth())
-                                EntityHelper.tweakAttribute(ply, newAttrMap,
+                                AttributeHelper.tweakAttribute(ply, newAttrMap,
                                         "damageMulti", "0.2", true);
                             break;
                         }
@@ -2511,14 +2510,14 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                                 toTweak.put("flightTimeMulti", "0.05");
                             }
                             for (String attributeKey : toTweak.keySet()) {
-                                EntityHelper.tweakAttribute(ply, newAttrMap,
+                                AttributeHelper.tweakAttribute(ply, newAttrMap,
                                         attributeKey, toTweak.get(attributeKey), true);
                             }
                             break;
                         }
                     }
                     // attribute
-                    EntityHelper.tweakAttribute(ply, newAttrMap, currAcc, true);
+                    AttributeHelper.tweakAttribute(ply, newAttrMap, currAcc, true);
                     if (regen < 0)
                         negRegenCause.put(currAccType, -regen);
                     // save accessory info
@@ -2534,7 +2533,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             }
             // extra handling
             if (ItemHelper.splitItemName(plyTool)[1].equals("月神Prime")) {
-                EntityHelper.tweakAttribute(ply, newAttrMap, "critDamage",
+                AttributeHelper.tweakAttribute(ply, newAttrMap, "critDamage",
                         (newAttrMap.getOrDefault("crit", 4d) * 0.5) + "", true);
             }
             // stealth increases rogue damage & crit
@@ -2542,10 +2541,10 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             if (maxStealth > 1) {
                 double currStealth = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble();
                 double stealthRatio = currStealth / maxStealth;
-                EntityHelper.tweakAttribute(ply, newAttrMap, "critRogue",
+                AttributeHelper.tweakAttribute(ply, newAttrMap, "critRogue",
                         ( (currStealth * 0.1 + newAttrMap.getOrDefault("critStealth", 0d)) * stealthRatio) + "",
                         true);
-                EntityHelper.tweakAttribute(ply, newAttrMap, "damageRogueMulti",
+                AttributeHelper.tweakAttribute(ply, newAttrMap, "damageRogueMulti",
                         ( (currStealth * 0.001 + newAttrMap.getOrDefault("damageStealthMulti", 1d) - 1 ) * stealthRatio ) + "",
                         true);
             }
@@ -2625,7 +2624,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             return;
         if (EntityHelper.hasEffect(ply, "进升证章冷却"))
             return;
-        if (EntityHelper.getMount(ply) != null)
+        if (EntityMovementHelper.getMount(ply) != null)
             return;
         resetPlayerFlightTime(ply);
         EntityHelper.applyEffect(ply, "进升证章冷却", 800);
@@ -2669,7 +2668,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                 if (! EntityHelper.hasEffect(ply, "幽火游魂冷却")) {
                     EntityHelper.applyEffect(ply, "幽火游魂冷却", 600);
                     // projectiles
-                    HashMap<String, Double> projAttrMap = (HashMap<String, Double>) EntityHelper.getAttrMap(ply).clone();
+                    HashMap<String, Double> projAttrMap = (HashMap<String, Double>) AttributeHelper.getAttrMap(ply).clone();
                     projAttrMap.put("damage", 600d);
                     for (int i = 0; i < 12; i ++) {
                         EntityHelper.spawnProjectile(ply, MathHelper.randomVector().multiply(2.5), projAttrMap, "血炎灵魂");
@@ -2862,7 +2861,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         heal(ply, amount, displayActualAmount, "");
     }
     public static void heal(LivingEntity ply, double amount, boolean displayActualAmount, String dmgReason) {
-        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+        HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(ply);
         double healAmount;
         if (amount < 0)
             healAmount = amount;
@@ -2874,8 +2873,8 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         if (newHealth < 1e-9) {
             // negative regen death messages are handled differently
             // such abrupt dmg would slightly better align with debuff dmg anyway
-            EntityHelper.handleDeath(ply, ply, ply, EntityHelper.DamageType.DEBUFF,
-                    EntityHelper.DamageReason.DEBUFF, dmgReason);
+            DamageHelper.handleDeath(ply, ply, ply, DamageHelper.DamageType.DEBUFF,
+                    DamageHelper.DamageReason.DEBUFF, dmgReason);
         }
         // set the player's health as usual otherwise
         else {
@@ -2935,7 +2934,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                 if (healingOrDamage) {
                     heal((Player) target, num);
                 } else {
-                    EntityHelper.handleDamage(dPly, target, num, EntityHelper.DamageReason.SPECTRE);
+                    DamageHelper.handleDamage(dPly, target, num, DamageHelper.DamageReason.SPECTRE);
                 }
                 return;
             }
@@ -2976,7 +2975,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             // target a random target that is valid.
             ArrayList<Entity> candidates = new ArrayList<>(35);
             for (Entity e : loc.getWorld().getNearbyEntities(loc, 24, 24, 24)) {
-                if (EntityHelper.checkCanDamage(dPly, e)) {
+                if (DamageHelper.checkCanDamage(dPly, e)) {
                     candidates.add(e);
                 }
             }
@@ -3040,17 +3039,17 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     // cool down (5 second)
                     EntityHelper.handleEntityTemporaryScoreboardTag(dPly, coolDownTag, 100);
                     // explosion
-                    HashMap<String, Double> explosionAttribute = (HashMap<String, Double>) EntityHelper.getAttrMap(dPly).clone();
+                    HashMap<String, Double> explosionAttribute = (HashMap<String, Double>) AttributeHelper.getAttrMap(dPly).clone();
                     double explosionDmg = 1600 + explosionAttribute.getOrDefault("damage", 10d) * 0.6;
                     explosionAttribute.put("damage", Math.min(explosionDmg, 2800d));
                     EntityHelper.spawnProjectile(dPly, v.getEyeLocation(), new Vector(),
-                            explosionAttribute, EntityHelper.DamageType.MAGIC, "始源林海爆炸");
+                            explosionAttribute, DamageHelper.DamageType.MAGIC, "始源林海爆炸");
                 }
                 break;
             }
         }
         HashSet<String> accessories = PlayerHelper.getAccessories(dPly);
-        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(dPly);
+        HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(dPly);
         if (accessories.contains("魔能谐振仪")) {
             if (dmg > 2 && !(dPly.getScoreboardTags().contains(spectreCD))) {
                 int projectilePower = (int) Math.min( 50, Math.ceil(dmg * 0.125) );
@@ -3119,7 +3118,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         }
         // dash if applicable
         if (dashCD > 0) {
-            HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+            HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(ply);
             // speed multiplier above 100% will contribute 25%
             double speedMulti = attrMap.getOrDefault("speedMulti", 1d);
             if (speedMulti > 1)
@@ -3127,7 +3126,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             dashSpeed *= attrMap.getOrDefault("speedMulti", 1d) * speedMulti;
 
             Vector dashVelocity = MathHelper.vectorFromYawPitch_approx(yaw, pitch).multiply(dashSpeed);
-            EntityHelper.setVelocity(ply, getPlayerRawVelocity(ply).add(dashVelocity));
+            EntityMovementHelper.setVelocity(ply, getPlayerRawVelocity(ply).add(dashVelocity));
             ply.addScoreboardTag("temp_dashCD");
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                     () -> ply.removeScoreboardTag("temp_dashCD"), dashCD);

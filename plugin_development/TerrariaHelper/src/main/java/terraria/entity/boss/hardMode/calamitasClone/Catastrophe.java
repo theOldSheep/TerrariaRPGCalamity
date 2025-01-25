@@ -9,10 +9,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.EntityHelper;
+import terraria.util.*;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +30,7 @@ public class Catastrophe extends EntitySlime {
     // other variables and AI
     static String bossName = "灾难";
     static HashMap<String, Double> attrMapDeathLaser, attrMapRapidFire;
-    static EntityHelper.AimHelperOptions laserAimHelper;
+    static AimHelper.AimHelperOptions laserAimHelper;
     static final double SPEED_LASER_1 = 1.85, SPEED_LASER_2 = 2;
     CalamitasClone owner;
     int indexAI = -60;
@@ -45,7 +43,7 @@ public class Catastrophe extends EntitySlime {
         attrMapRapidFire.put("damage", 280d);
         attrMapRapidFire.put("knockback", 2d);
 
-        laserAimHelper = new EntityHelper.AimHelperOptions()
+        laserAimHelper = new AimHelper.AimHelperOptions()
                 .setProjectileSpeed(SPEED_LASER_2)
                 .setIntensity(0.5);
     }
@@ -60,7 +58,7 @@ public class Catastrophe extends EntitySlime {
             case 2:
                 shootInfoGenericLaser.attrMap = attrMapRapidFire;
                 laserSpeed = SPEED_LASER_2;
-                targetLoc = EntityHelper.helperAimEntity(bukkitEntity, target, laserAimHelper);
+                targetLoc = AimHelper.helperAimEntity(bukkitEntity, target, laserAimHelper);
                 break;
         }
         shootInfoGenericLaser.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
@@ -174,7 +172,7 @@ public class Catastrophe extends EntitySlime {
             attrMap.put("defence", 20d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
-            EntityHelper.setDamageType(bukkitEntity, EntityHelper.DamageType.MELEE);
+            DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
@@ -205,7 +203,7 @@ public class Catastrophe extends EntitySlime {
         // shoot info's
         {
             shootInfoGenericLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapDeathLaser,
-                    EntityHelper.DamageType.MAGIC, "硫火飞弹");
+                    DamageHelper.DamageType.MAGIC, "硫火飞弹");
         }
     }
     // rewrite AI

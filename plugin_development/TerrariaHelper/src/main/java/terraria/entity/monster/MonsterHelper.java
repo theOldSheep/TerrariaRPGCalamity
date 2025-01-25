@@ -205,9 +205,9 @@ public class MonsterHelper {
                     health = attributeConfigSection.getDouble(attribute);
                     break;
                 case "damageType":
-                    EntityHelper.setDamageType(bukkitMonster,
-                            EntityHelper.DAMAGE_TYPE_INTERNAL_NAME_MAPPING.getOrDefault(
-                                    attributeConfigSection.getString(attribute), EntityHelper.DamageType.MELEE));
+                    DamageHelper.setDamageType(bukkitMonster,
+                            DamageHelper.DAMAGE_TYPE_INTERNAL_NAME_MAPPING.getOrDefault(
+                                    attributeConfigSection.getString(attribute), DamageHelper.DamageType.MELEE));
                     break;
                 default:
                     attrMap.put(attribute, attributeConfigSection.getDouble(attribute));
@@ -434,7 +434,7 @@ public class MonsterHelper {
                     for (int i = 0; i < additionalSegAmount; i++) {
                         org.bukkit.entity.Slime segment = (Slime) (new MonsterSlime(target, type, loc, true))
                                 .getBukkitEntity();
-                        HashMap<String, Double> attrMapSegment = EntityHelper.getAttrMap(segment);
+                        HashMap<String, Double> attrMapSegment = AttributeHelper.getAttrMap(segment);
                         attrMapSegment.put("damageMulti", 0.45);
                         attrMapSegment.put("defenceMulti", 2d);
                         EntityHelper.setMetadata(segment, EntityHelper.MetadataName.DAMAGE_TAKER, bukkitMonster);
@@ -459,7 +459,7 @@ public class MonsterHelper {
                     }
                     extraVariables.put("attachments", segments);
                     // following option
-                    EntityHelper.WormSegmentMovementOptions followInfo = new EntityHelper.WormSegmentMovementOptions();
+                    EntityMovementHelper.WormSegmentMovementOptions followInfo = new EntityMovementHelper.WormSegmentMovementOptions();
                     switch (type) {
                         case "千足蜈蚣":
                             followInfo.setFollowDistance(1.5);
@@ -638,7 +638,7 @@ public class MonsterHelper {
         // other mechanisms after death
         switch (type) {
             case "沼泽之眼": {
-                EntityHelper.spawnProjectile(monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "腐蚀之云");
+                EntityHelper.spawnProjectile(monsterBkt, new Vector(), AttributeHelper.getAttrMap(monsterBkt), "腐蚀之云");
                 break;
             }
         }
@@ -727,7 +727,7 @@ public class MonsterHelper {
                         // shoot projectile
                         if (indexAI % 10 == 0) {
                             EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                    monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "电击激光");
+                                    monsterBkt, new Vector(), AttributeHelper.getAttrMap(monsterBkt), "电击激光");
                             shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, target.getEyeLocation(), 2);
                             EntityHelper.spawnProjectile(shootInfo);
                         }
@@ -757,18 +757,18 @@ public class MonsterHelper {
                                     randOffset = 1.25;
                                 }
                             }
-                            EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                            AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions()
                                     .setNoGravityTicks(5)
                                     .setProjectileGravity(0.05)
                                     .setProjectileSpeed(projSpd)
                                     .setRandomOffsetRadius(randOffset)
                                     .setAccelerationMode(useAcc)
                                     .setIntensity(aimPrecision);
-                            Location aimLoc = EntityHelper.helperAimEntity(monsterBkt, target, aimHelper);
+                            Location aimLoc = AimHelper.helperAimEntity(monsterBkt, target, aimHelper);
                             Vector projVel = MathHelper.getDirection(monsterBkt.getEyeLocation(), aimLoc, projSpd);
                             // fire projectile
                             EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                    monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "烈焰箭");
+                                    monsterBkt, projVel, AttributeHelper.getAttrMap(monsterBkt), "烈焰箭");
                             EntityHelper.spawnProjectile(shootInfo);
                         }
                     }
@@ -838,7 +838,7 @@ public class MonsterHelper {
                                     Location targetLoc = target.getEyeLocation();
                                     Vector velocity = MathHelper.getDirection(monsterBkt.getEyeLocation(), targetLoc, 1);
                                     EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                            monsterBkt, velocity, EntityHelper.getAttrMap(monsterBkt), "鸟妖羽毛");
+                                            monsterBkt, velocity, AttributeHelper.getAttrMap(monsterBkt), "鸟妖羽毛");
                                     shootInfo.properties.put("penetration", 10);
                                     EntityHelper.spawnProjectile(shootInfo);
                             }
@@ -966,7 +966,7 @@ public class MonsterHelper {
                                         Vector projectileV = MathHelper.getDirection(
                                                 monsterBkt.getEyeLocation(), target.getEyeLocation(), shootSpd);
                                         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                                monsterBkt, projectileV, EntityHelper.getAttrMap(monsterBkt), projectileType);
+                                                monsterBkt, projectileV, AttributeHelper.getAttrMap(monsterBkt), projectileType);
                                         shootInfo.properties.put("gravity", 0d);
                                         shootInfo.properties.put("penetration", 10);
                                         if (type.equals("探测怪"))
@@ -1019,11 +1019,11 @@ public class MonsterHelper {
                             if (indexAI % 200 == 0) {
                                 EntityHelper.slimeResize((Slime) monsterBkt, 3);
                                 monsterBkt.addScoreboardTag("noDamage");
-                                EntityHelper.tweakAttribute(monsterBkt, "damageMulti", "0.3", true);
+                                AttributeHelper.tweakAttribute(monsterBkt, "damageMulti", "0.3", true);
                             } else if (indexAI % 200 == 100) {
                                 EntityHelper.slimeResize((Slime) monsterBkt, 2);
                                 monsterBkt.removeScoreboardTag("noDamage");
-                                EntityHelper.tweakAttribute(monsterBkt, "damageMulti", "0.3", false);
+                                AttributeHelper.tweakAttribute(monsterBkt, "damageMulti", "0.3", false);
                             }
                         }
                         // dashes into player when in water, can not move on land.
@@ -1255,7 +1255,7 @@ public class MonsterHelper {
                                         acc = MathHelper.getDirection(target.getEyeLocation(), monsterBkt.getEyeLocation(), 0.125);
                                         if (indexAI % 20 == 0) {
                                             EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                                    monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "激光");
+                                                    monsterBkt, new Vector(), AttributeHelper.getAttrMap(monsterBkt), "激光");
                                             shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, target.getEyeLocation(), 1.5);
                                             EntityHelper.spawnProjectile(shootInfo);
                                         }
@@ -1314,7 +1314,7 @@ public class MonsterHelper {
                                 case "剧毒米诺鱼":
                                 case "眼后剧毒米诺鱼": {
                                     EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                            monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "渊海灾虫毒云");
+                                            monsterBkt, new Vector(), AttributeHelper.getAttrMap(monsterBkt), "渊海灾虫毒云");
                                     for (int i = 0; i < 20; i ++) {
                                         shootInfo.velocity = MathHelper.randomVector().multiply(0.35);
                                         EntityHelper.spawnProjectile(shootInfo);
@@ -1337,7 +1337,7 @@ public class MonsterHelper {
                             // fire projectiles
                             if (indexAI % 25 == 0) {
                                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                        monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "追踪墨汁");
+                                        monsterBkt, new Vector(), AttributeHelper.getAttrMap(monsterBkt), "追踪墨汁");
                                 shootInfo.properties.put("homingAbility", 1d);
                                 shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, target.getEyeLocation(), 1);
                                 EntityHelper.spawnProjectile(shootInfo);
@@ -1422,7 +1422,7 @@ public class MonsterHelper {
                                 if (indexAI % 20 == 0) {
                                     Vector projVel = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 0.05);
                                     EntityHelper.ProjectileShootInfo projectileShootInfo = new EntityHelper.ProjectileShootInfo(
-                                            monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "恶魔之镰");
+                                            monsterBkt, projVel, AttributeHelper.getAttrMap(monsterBkt), "恶魔之镰");
                                     EntityHelper.spawnProjectile(projectileShootInfo);
                                 }
                                 break;
@@ -1430,7 +1430,7 @@ public class MonsterHelper {
                                 if (indexAI % 20 == 0) {
                                     Vector projVel = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 1);
                                     EntityHelper.ProjectileShootInfo projectileShootInfo = new EntityHelper.ProjectileShootInfo(
-                                            monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "邪恶三叉戟");
+                                            monsterBkt, projVel, AttributeHelper.getAttrMap(monsterBkt), "邪恶三叉戟");
                                     EntityHelper.spawnProjectile(projectileShootInfo);
                                 }
                                 break;
@@ -1514,7 +1514,7 @@ public class MonsterHelper {
                             if (indexAI % 40 == 39) {
                                 Vector projVel = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 1.5);
                                 EntityHelper.ProjectileShootInfo projectileShootInfo = new EntityHelper.ProjectileShootInfo(
-                                        monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "诅咒骷髅头");
+                                        monsterBkt, projVel, AttributeHelper.getAttrMap(monsterBkt), "诅咒骷髅头");
                                 EntityHelper.spawnProjectile(projectileShootInfo);
                             }
                         }
@@ -1527,7 +1527,7 @@ public class MonsterHelper {
                         if (monsterBkt.getLocation().subtract(0, 1, 0).getBlock().getType().isSolid()) {
                             String projectileName = type.equals("尖刺史莱姆") ? "史莱姆尖刺" : "史莱姆水晶";
                             double projectileSpd = type.equals("尖刺史莱姆") ? 0.6 : 1.2;
-                            HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
+                            HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(monsterBkt);
                             Location shootLoc = monsterBkt.getEyeLocation();
                             for (Vector projVel : MathHelper.getCircularProjectileDirections(
                                     3, 3, 75, target, shootLoc, projectileSpd)) {
@@ -1550,7 +1550,7 @@ public class MonsterHelper {
                             projVel.multiply(1 / projVelLen);
                             projVel.setY(projVel.getY() + ticksFlight * 0.025);
                             EntityHelper.ProjectileShootInfo projInfo = new EntityHelper.ProjectileShootInfo(
-                                    monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "挥发明胶");
+                                    monsterBkt, projVel, AttributeHelper.getAttrMap(monsterBkt), "挥发明胶");
                             projInfo.properties.put("penetration", 1);
                             projInfo.properties.put("blockHitAction", "bounce");
                             projInfo.properties.put("bounce", 5);
@@ -1633,7 +1633,7 @@ public class MonsterHelper {
                                 indexAI = -1;
                         }
                     }
-                    EntityHelper.handleSegmentsFollow(segments, (EntityHelper.WormSegmentMovementOptions) extraVariables.get("wormMoveOption"));
+                    EntityMovementHelper.handleSegmentsFollow(segments, (EntityMovementHelper.WormSegmentMovementOptions) extraVariables.get("wormMoveOption"));
                     break;
                 }
                 case "瘟疫龟":
@@ -1659,7 +1659,7 @@ public class MonsterHelper {
                         if (rollProgress == 0) {
                             monsterBkt.setGravity(false);
                             monsterBkt.setCustomName(type + "§1");
-                            HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
+                            HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(monsterBkt);
                             attrMap.put("damageMulti", 2d);
                             attrMap.put("defenceMulti", 2d);
                             ((MonsterHusk) monster).defaultSpeed = 0;
@@ -1692,7 +1692,7 @@ public class MonsterHelper {
                         // land
                         else if (rollProgress == 50 || rollProgress >= 75) {
                             monster.setNoGravity(false);
-                            HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
+                            HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(monsterBkt);
                             attrMap.put("damageMulti", 1d);
                             attrMap.put("defenceMulti", 1d);
                             if (monsterBkt.isOnGround()) {
@@ -1706,7 +1706,7 @@ public class MonsterHelper {
                 }
                 case "蛾怪": {
                     if (monster.getHealth() > 0) {
-                        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
+                        HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(monsterBkt);
                         Vector v = monsterBkt.getVelocity();
                         if (indexAI < 10) {
                             if (target.getLocation().getY() > monsterBkt.getLocation().getY())
@@ -1758,7 +1758,7 @@ public class MonsterHelper {
                                             5 * (Math.random() - 0.5), 5 * (Math.random() - 0.5), 5 * (Math.random() - 0.5)),
                                     1.25);
                             EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                    monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "火枪子弹");
+                                    monsterBkt, projVel, AttributeHelper.getAttrMap(monsterBkt), "火枪子弹");
                             EntityHelper.spawnProjectile(shootInfo);
                         }
                     }
@@ -1771,9 +1771,9 @@ public class MonsterHelper {
                         if (indexAI < 100) {}
                         // stop and reflect projectiles
                         else if (indexAI == 100) {
-                            HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
+                            HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(monsterBkt);
                             // tweak defence to be almost invincible
-                            EntityHelper.tweakAttribute(attrMap, "defence", "500", true);
+                            AttributeHelper.tweakAttribute(attrMap, "defence", "500", true);
                             monsterBkt.addScoreboardTag("reflectProjectile");
                         }
                         else if (indexAI < 200) {
@@ -1784,9 +1784,9 @@ public class MonsterHelper {
                         else if (indexAI < 300) {
                             if (indexAI == 200) {
                                 monsterBkt.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.75d);
-                                HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
+                                HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(monsterBkt);
                                 // remove increased defence
-                                EntityHelper.tweakAttribute(attrMap, "defence", "500", false);
+                                AttributeHelper.tweakAttribute(attrMap, "defence", "500", false);
                                 monsterBkt.removeScoreboardTag("reflectProjectile");
                             }
                         }
@@ -1859,7 +1859,7 @@ public class MonsterHelper {
                                 if (monsterBkt.hasLineOfSight(target)) {
                                     Vector projVel = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 1.5);
                                     EntityHelper.ProjectileShootInfo projInfo = new EntityHelper.ProjectileShootInfo(
-                                            monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), EntityHelper.DamageType.MELEE, "圣骑士锤");
+                                            monsterBkt, projVel, AttributeHelper.getAttrMap(monsterBkt), DamageHelper.DamageType.MELEE, "圣骑士锤");
                                     EntityHelper.spawnProjectile(projInfo);
                                 }
                                 break;
@@ -1942,7 +1942,7 @@ public class MonsterHelper {
                                             GenericHelper.handleStrikeLine(monsterBkt, monsterBkt.getEyeLocation(),
                                                     MathHelper.getVectorYaw(dir), MathHelper.getVectorPitch(dir),
                                                     48, 0.25, "", "255|125|255",
-                                                    new ArrayList<>(), EntityHelper.getAttrMap(monsterBkt),
+                                                    new ArrayList<>(), AttributeHelper.getAttrMap(monsterBkt),
                                                     new GenericHelper.StrikeLineOptions().setBounceWhenHitBlock(true));
                                             break;
                                         case 161:
@@ -1957,7 +1957,7 @@ public class MonsterHelper {
                                             if (monsterBkt.hasLineOfSight(target)) {
                                                 Vector projVel = MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 1.5);
                                                 EntityHelper.ProjectileShootInfo projInfo = new EntityHelper.ProjectileShootInfo(
-                                                        monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "亡魂");
+                                                        monsterBkt, projVel, AttributeHelper.getAttrMap(monsterBkt), "亡魂");
                                                 projInfo.properties.put("penetration", 2);
                                                 projInfo.properties.put("liveTime", 24);
                                                 EntityHelper.spawnProjectile(projInfo);
@@ -1979,7 +1979,7 @@ public class MonsterHelper {
                                                 int ticksTravel = (int) Math.round(pVL / spd);
                                                 projVel.multiply(1d / pVL);
                                                 EntityHelper.ProjectileShootInfo projInfo = new EntityHelper.ProjectileShootInfo(
-                                                        monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "狱火爆破弹");
+                                                        monsterBkt, projVel, AttributeHelper.getAttrMap(monsterBkt), "狱火爆破弹");
                                                 projInfo.properties.put("penetration", 2);
                                                 projInfo.properties.put("liveTime", ticksTravel);
                                                 EntityHelper.spawnProjectile(projInfo);
@@ -2017,7 +2017,7 @@ public class MonsterHelper {
                                                     projVel.normalize().multiply(2);
                                                 }
                                                 EntityHelper.ProjectileShootInfo projInfo = new EntityHelper.ProjectileShootInfo(
-                                                        monsterBkt, projVel, EntityHelper.getAttrMap(monsterBkt), "火枪子弹");
+                                                        monsterBkt, projVel, AttributeHelper.getAttrMap(monsterBkt), "火枪子弹");
                                                 EntityHelper.spawnProjectile(projInfo);
                                             }
                                             break;
@@ -2106,7 +2106,7 @@ public class MonsterHelper {
                         extraVariables.put("SPN", true);
                         CelestialPillar.handlePillarMonsterDeath(CelestialPillar.PillarTypes.SOLAR, monsterBkt.getEyeLocation());
                     }
-                    EntityHelper.handleSegmentsFollow(segments, (EntityHelper.WormSegmentMovementOptions) extraVariables.get("wormMoveOption"));
+                    EntityMovementHelper.handleSegmentsFollow(segments, (EntityMovementHelper.WormSegmentMovementOptions) extraVariables.get("wormMoveOption"));
                     break;
                 }
                 case "火月怪":
@@ -2197,12 +2197,12 @@ public class MonsterHelper {
                         // shoot projectiles
                         if (indexAI % 125 == 100) {
                             EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                    monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "星旋激光");
-                            EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                                    monsterBkt, new Vector(), AttributeHelper.getAttrMap(monsterBkt), "星旋激光");
+                            AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions()
                                     .setProjectileSpeed(2)
                                     .setRandomOffsetRadius(2);
                             for (int i = 0; i < 6; i ++) {
-                                Location targetLoc = EntityHelper.helperAimEntity(monsterBkt, target, aimHelper);
+                                Location targetLoc = AimHelper.helperAimEntity(monsterBkt, target, aimHelper);
                                 shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, targetLoc, 2);
                                 EntityHelper.spawnProjectile(shootInfo);
                             }
@@ -2267,7 +2267,7 @@ public class MonsterHelper {
                             EntityHelper.spawnProjectile(
                                     monsterBkt,
                                     MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 1.5),
-                                    EntityHelper.getAttrMap(monsterBkt),
+                                    AttributeHelper.getAttrMap(monsterBkt),
                                     "异星黏液");
                         }
                     }
@@ -2311,12 +2311,12 @@ public class MonsterHelper {
                             // shoot projectile
                             if (indexAI >= 100) {
                                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                        monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "星云针弹");
-                                EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                                        monsterBkt, new Vector(), AttributeHelper.getAttrMap(monsterBkt), "星云针弹");
+                                AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions()
                                         .setProjectileSpeed(2)
                                         .setRandomOffsetRadius(2);
                                 for (int i = 0; i < 10; i ++) {
-                                    Location targetLoc = EntityHelper.helperAimEntity(monsterBkt, target, aimHelper);
+                                    Location targetLoc = AimHelper.helperAimEntity(monsterBkt, target, aimHelper);
                                     shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, targetLoc, 2);
                                     EntityHelper.spawnProjectile(shootInfo);
                                 }
@@ -2355,7 +2355,7 @@ public class MonsterHelper {
                                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                                         monsterBkt,
                                         MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 2.5),
-                                        EntityHelper.getAttrMap(monsterBkt), "星云针弹");
+                                        AttributeHelper.getAttrMap(monsterBkt), "星云针弹");
                                 EntityHelper.spawnProjectile(shootInfo);
                                 break;
                             // teleport
@@ -2416,7 +2416,7 @@ public class MonsterHelper {
                 }
                 case "星尘细胞": {
                     if (monster.getHealth() > 0) {
-                        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(monsterBkt);
+                        HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(monsterBkt);
                         Slime slimeMonsterBkt = (Slime) monsterBkt;
                         // baby
                         if ( slimeMonsterBkt.getSize() < 4) {
@@ -2555,10 +2555,10 @@ public class MonsterHelper {
                             if (amountProjectile > 5) {
                                 amountProjectile--;
                                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                        monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "流体入侵怪");
-                                EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                                        monsterBkt, new Vector(), AttributeHelper.getAttrMap(monsterBkt), "流体入侵怪");
+                                AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions()
                                         .setProjectileSpeed(2);
-                                Location targetLoc = EntityHelper.helperAimEntity(monsterBkt, target, aimHelper);
+                                Location targetLoc = AimHelper.helperAimEntity(monsterBkt, target, aimHelper);
                                 shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, targetLoc, 2);
                                 EntityHelper.spawnProjectile(shootInfo);
                             }
@@ -2573,12 +2573,12 @@ public class MonsterHelper {
                         // shoot remaining projectiles on death
                         if (amountProjectile > 0) {
                             EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                    monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "流体入侵怪");
-                            EntityHelper.AimHelperOptions aimHelper = new EntityHelper.AimHelperOptions()
+                                    monsterBkt, new Vector(), AttributeHelper.getAttrMap(monsterBkt), "流体入侵怪");
+                            AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions()
                                     .setProjectileSpeed(2)
                                     .setRandomOffsetRadius(3);
                             for (int i = 0; i < amountProjectile; i ++) {
-                                Location targetLoc = EntityHelper.helperAimEntity(monsterBkt, target, aimHelper);
+                                Location targetLoc = AimHelper.helperAimEntity(monsterBkt, target, aimHelper);
                                 shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, targetLoc, 2);
                                 EntityHelper.spawnProjectile(shootInfo);
                             }
@@ -2602,7 +2602,7 @@ public class MonsterHelper {
                                     dir = MathHelper.randomVector();
                                 GenericHelper.handleStrikeLine(monsterBkt, monsterBkt.getEyeLocation(),
                                         MathHelper.getVectorYaw(dir), MathHelper.getVectorPitch(dir), 48, 1,
-                                        "", "100|150|255", new ArrayList<>(), EntityHelper.getAttrMap(monsterBkt),
+                                        "", "100|150|255", new ArrayList<>(), AttributeHelper.getAttrMap(monsterBkt),
                                         new GenericHelper.StrikeLineOptions());
                                 break;
                         }
@@ -2637,7 +2637,7 @@ public class MonsterHelper {
                         if (indexAI >= 150 ||
                                 monsterBkt.getLocation().add(0, 4, 0).distanceSquared(target.getLocation()) < 16) {
                             EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                    monsterBkt, new Vector(), EntityHelper.getAttrMap(monsterBkt), "闪耀怪");
+                                    monsterBkt, new Vector(), AttributeHelper.getAttrMap(monsterBkt), "闪耀怪");
                             for (int i = 0; i < 20; i ++) {
                                 shootInfo.velocity = new Vector(
                                         Math.random() * 1 - 0.5,
@@ -2681,11 +2681,11 @@ public class MonsterHelper {
             Set<HitEntityInfo> toDamage = HitEntityInfo.getEntitiesHit(monsterBkt.getWorld(),
                     initLoc, initLoc.clone().add(monsterBkt.getVelocity()),
                     xWidth, height, zWidth,
-                    (Entity entity) -> EntityHelper.checkCanDamage(monsterBkt, entity.getBukkitEntity(), false));
-            double damage = EntityHelper.getAttrMap(monsterBkt).getOrDefault("damage", 1d);
+                    (Entity entity) -> DamageHelper.checkCanDamage(monsterBkt, entity.getBukkitEntity(), false));
+            double damage = AttributeHelper.getAttrMap(monsterBkt).getOrDefault("damage", 1d);
             for (HitEntityInfo hitEntityInfo : toDamage) {
-                EntityHelper.handleDamage(monsterBkt, hitEntityInfo.getHitEntity().getBukkitEntity(),
-                        damage, EntityHelper.DamageReason.CONTACT_DAMAGE);
+                DamageHelper.handleDamage(monsterBkt, hitEntityInfo.getHitEntity().getBukkitEntity(),
+                        damage, DamageHelper.DamageReason.CONTACT_DAMAGE);
             }
         }
         // update saved velocity

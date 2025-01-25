@@ -141,7 +141,7 @@ public class MonsterHelper {
         return true;
     }
     public static void naturalMobSpawning(Player ply) {
-        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(ply);
+        HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(ply);
         int mobLimit = attrMap.getOrDefault("mobLimit", 10d).intValue();
         if (EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_MONSTER_SPAWNED_AMOUNT).asInt() >= mobLimit)
             return;
@@ -220,7 +220,7 @@ public class MonsterHelper {
     }
     public static Entity spawnMob(String type, Location loc, Player target) {
         // monsters are prohibited to spawn when the active monsters are exceeding target's mob limit by 3 times
-        HashMap<String, Double> attrMap = EntityHelper.getAttrMap(target);
+        HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(target);
         int mobLimit = attrMap.getOrDefault("mobLimit", 10d).intValue();
         if (EntityHelper.getMetadata(target, EntityHelper.MetadataName.PLAYER_MONSTER_SPAWNED_AMOUNT).asInt() >= mobLimit * 3)
             return null;
