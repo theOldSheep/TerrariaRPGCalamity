@@ -154,10 +154,10 @@ public class DamageHelper {
             }
 
             List<String> deathMessages;
-            if (TerrariaHelper.settingConfig.contains(deathMessageConfigDir)) {
-                deathMessages = TerrariaHelper.settingConfig.getStringList(deathMessageConfigDir);
+            if (TerrariaHelper.messagesConfig.contains(deathMessageConfigDir)) {
+                deathMessages = TerrariaHelper.messagesConfig.getStringList(deathMessageConfigDir);
             } else {
-                deathMessages = TerrariaHelper.settingConfig.getStringList("deathMessages.Generic");
+                deathMessages = TerrariaHelper.messagesConfig.getStringList("deathMessages.Generic");
             }
             dm = deathMessages.get((int) (Math.random() * deathMessages.size()));
             if (killer != null && d != v) {

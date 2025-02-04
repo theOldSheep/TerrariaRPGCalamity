@@ -2572,9 +2572,9 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         HashMap<String, Inventory> inventories = new HashMap<>();
         YmlHelper.YmlSection plyFile = getPlayerDataFile(ply);
         // storage inventories (piggy bank, void bag)
-        List<String> otherInvs = TerrariaHelper.settingConfig.getStringList("settings.playerInventories");
+        List<String> otherInvs = TerrariaHelper.settingConfig.getStringList("plyInventories.playerInventories");
         for (String invName : otherInvs) {
-            String title = TerrariaHelper.settingConfig.getString("settings.playerInventoryTitles." + invName, "");
+            String title = TerrariaHelper.settingConfig.getString("plyInventories.playerInventoryTitles." + invName, "");
             List<String> contents = plyFile.getStringList("inventory." + invName);
             if (contents == null) contents = new ArrayList<>(1);
             Inventory inv = Bukkit.createInventory(ply, PLAYER_EXTRA_INVENTORY_SIZE, title);

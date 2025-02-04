@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public class RandomTitleListener implements Listener {
-    static List<String> titles = TerrariaHelper.settingConfig.getStringList("titleMessages");
+    static List<String> titles = TerrariaHelper.messagesConfig.getStringList("titleMessages");
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent e) {

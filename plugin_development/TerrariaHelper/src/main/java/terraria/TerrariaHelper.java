@@ -49,6 +49,7 @@ public class TerrariaHelper extends JavaPlugin {
     public static final YmlHelper.YmlSection hookConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "hooks.yml");
     public static final YmlHelper.YmlSection itemConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "items.yml");
     public static final YmlHelper.YmlSection menusConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "menus.yml");
+    public static final YmlHelper.YmlSection messagesConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "messages.yml");
     public static final YmlHelper.YmlSection mobSpawningConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "mobSpawning.yml");
     public static final YmlHelper.YmlSection mountConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "mounts.yml");
     public static final YmlHelper.YmlSection NPCConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "NPC.yml");
