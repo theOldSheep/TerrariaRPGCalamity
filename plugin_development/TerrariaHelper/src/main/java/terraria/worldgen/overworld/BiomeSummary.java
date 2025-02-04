@@ -20,7 +20,7 @@ import java.util.List;
 import static terraria.worldgen.overworld.OverworldBiomeGenerator.getBiome;
 
 public class BiomeSummary {
-    public static final ConfigurationSection CONFIG = TerrariaHelper.settingConfig.getConfigurationSection("worldGen.mapConfig");
+    public static final ConfigurationSection CONFIG = TerrariaHelper.optimizationConfig.getConfigurationSection("worldGen.mapConfig");
 
     public static final int BLOCKS_PER_PIXEL = CONFIG.getInt("blocksPerPixel", 20);
     public static final int BIOME_MARKER_RADIUS_PIXEL = CONFIG.getInt("biomeMarkerRadiusPixel", 1);

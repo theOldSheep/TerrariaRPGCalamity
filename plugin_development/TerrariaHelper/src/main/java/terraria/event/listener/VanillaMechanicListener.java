@@ -34,16 +34,16 @@ public class VanillaMechanicListener implements Listener {
     // deny Vanilla Minecraft's compensation-tick
     public static final long MS_TO_NS_RATE = 1000000;
     // when the thread should be halted for at least this long, the mechanism would take effect.
-    public static final long TICK_DELAY_THRESHOLD = TerrariaHelper.settingConfig.getLong(
+    public static final long TICK_DELAY_THRESHOLD = TerrariaHelper.optimizationConfig.getLong(
             "tickCompensationSetting.tickCompensationSetting", 5) * MS_TO_NS_RATE;
     // the minimum tick interval willing to maintain (at the highest tick rate)
-    public static final long MIN_TICK_INTERVAL = TerrariaHelper.settingConfig.getLong(
+    public static final long MIN_TICK_INTERVAL = TerrariaHelper.optimizationConfig.getLong(
             "tickCompensationSetting.fastestTickInterval", 45) * MS_TO_NS_RATE;
     // when the compensation ticks ends, this would control how smoothly the tick rate goes back to normal
-    public static final double DECAY_FACTOR = TerrariaHelper.settingConfig.getDouble(
+    public static final double DECAY_FACTOR = TerrariaHelper.optimizationConfig.getDouble(
             "tickCompensationSetting.decayFactor", 0.5);
     // only trigger this effect when a boss is alive
-    public static final boolean BOSS_ACTIVE_ONLY = TerrariaHelper.settingConfig.getBoolean(
+    public static final boolean BOSS_ACTIVE_ONLY = TerrariaHelper.optimizationConfig.getBoolean(
             "tickCompensationSetting.bossFightOnly", true);
     long lastTickNS = System.nanoTime(), waitNS = 0;
     private void tick() {

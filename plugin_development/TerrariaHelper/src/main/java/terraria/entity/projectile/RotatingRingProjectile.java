@@ -11,7 +11,7 @@ import terraria.util.MathHelper;
 
 
 public class RotatingRingProjectile extends GenericProjectile {
-    public static final int VEL_UPDATE_INTERVAL = TerrariaHelper.settingConfig.getInt("optimization.projVelUpdItvDragonFireball", 2);
+    public static final int VEL_UPDATE_INTERVAL = TerrariaHelper.optimizationConfig.getInt("optimization.projVelUpdItvDragonFireball", 2);
 
     // Enum for rotation direction
     public enum RotationDirection {

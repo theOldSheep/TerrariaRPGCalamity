@@ -52,6 +52,7 @@ public class TerrariaHelper extends JavaPlugin {
     public static final YmlHelper.YmlSection mobSpawningConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "mobSpawning.yml");
     public static final YmlHelper.YmlSection mountConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "mounts.yml");
     public static final YmlHelper.YmlSection NPCConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "NPC.yml");
+    public static final YmlHelper.YmlSection optimizationConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "optimization.yml");
     public static final YmlHelper.YmlSection potionItemConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "potionItem.yml");
     public static final YmlHelper.YmlSection prefixConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "prefix.yml");
     public static final YmlHelper.YmlSection projectileConfig = YmlHelper.getFile(Constants.DATA_FOLDER_DIR + "projectiles.yml");
@@ -64,7 +65,7 @@ public class TerrariaHelper extends JavaPlugin {
     public TerrariaHelper() {
         super();
         // manipulate around the seed to generate a long number
-        String seedRaw = settingConfig.getString("worldGen.params.seed", "SEED");
+        String seedRaw = optimizationConfig.getString("worldGen.params.seed", "SEED");
         if (seedRaw.length() <= 1) {
             seedRaw += "SALT";
         }

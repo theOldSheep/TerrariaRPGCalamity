@@ -15,18 +15,18 @@ import java.util.*;
 
 public class OverworldChunkGenerator extends ChunkGenerator {
     // optimization & logging variables
-    public static final boolean LOG_TIMING = TerrariaHelper.settingConfig.getBoolean("worldGen.opt.chunkPrepDurationLog", false);
+    public static final boolean LOG_TIMING = TerrariaHelper.optimizationConfig.getBoolean("worldGen.opt.chunkPrepDurationLog", false);
     static long[] testGenDurTotal = {0, 0, 0, 0};
     static long testGenAmount = 0;
 
     // world generator parameters
-    public static final int OCTAVES_CAVE = TerrariaHelper.settingConfig.getInt("worldGen.params.caveOctaves", 4);
-    public static final int NEARBY_BIOME_SAMPLE_RADIUS = TerrariaHelper.settingConfig.getInt("worldGen.params.nearbyBiomeSampleRadius", 25);
-    public static final int LAND_HEIGHT = TerrariaHelper.settingConfig.getInt("worldGen.params.landHeight", 100);
-    public static final int SEA_LEVEL = TerrariaHelper.settingConfig.getInt("worldGen.params.seaLevel", 90);
-    public static final int RIVER_DEPTH = TerrariaHelper.settingConfig.getInt("worldGen.params.riverDepth", 25);
-    public static final int LAKE_DEPTH = TerrariaHelper.settingConfig.getInt("worldGen.params.lakeDepth", 30);
-    public static final int PLATEAU_HEIGHT = TerrariaHelper.settingConfig.getInt("worldGen.params.plateauHeight", 40);
+    public static final int OCTAVES_CAVE = TerrariaHelper.optimizationConfig.getInt("worldGen.params.caveOctaves", 4);
+    public static final int NEARBY_BIOME_SAMPLE_RADIUS = TerrariaHelper.optimizationConfig.getInt("worldGen.params.nearbyBiomeSampleRadius", 25);
+    public static final int LAND_HEIGHT = TerrariaHelper.optimizationConfig.getInt("worldGen.params.landHeight", 100);
+    public static final int SEA_LEVEL = TerrariaHelper.optimizationConfig.getInt("worldGen.params.seaLevel", 90);
+    public static final int RIVER_DEPTH = TerrariaHelper.optimizationConfig.getInt("worldGen.params.riverDepth", 25);
+    public static final int LAKE_DEPTH = TerrariaHelper.optimizationConfig.getInt("worldGen.params.lakeDepth", 30);
+    public static final int PLATEAU_HEIGHT = TerrariaHelper.optimizationConfig.getInt("worldGen.params.plateauHeight", 40);
     public static final int LAVA_LEVEL = -150;
     public static final int Y_OFFSET_OVERWORLD = 0;
     public static final int HEIGHT_SAMPLING_DIAMETER;

@@ -21,11 +21,11 @@ public class OverworldCaveGenerator {
     int testInfoIndex;
     long[] testCaveDetailDurTotal = {0, 0},
                 testCaveSetupDurTotal = {0, 0}, testCaveGenAmount = {0, 0};
-    static final boolean CAVE_GEN_TIME_LOG = TerrariaHelper.settingConfig.getBoolean("worldGen.opt.caveGenDurationLog", false);
+    static final boolean CAVE_GEN_TIME_LOG = TerrariaHelper.optimizationConfig.getBoolean("worldGen.opt.caveGenDurationLog", false);
     static final int
-            CAVE_ROUGH_SKETCH_DIAMETER = Math.max( TerrariaHelper.settingConfig.getInt("worldGen.opt.caveSketchSize", 3), 0),
-            CAVE_ROUGH_SKETCH_THREADS = Math.max( TerrariaHelper.settingConfig.getInt("worldGen.opt.caveSketchThreads", 3), 1),
-            CAVE_DETAIL_THREADS = Math.max( TerrariaHelper.settingConfig.getInt("worldGen.opt.caveDetailThreads", 8), 1);
+            CAVE_ROUGH_SKETCH_DIAMETER = Math.max( TerrariaHelper.optimizationConfig.getInt("worldGen.opt.caveSketchSize", 3), 0),
+            CAVE_ROUGH_SKETCH_THREADS = Math.max( TerrariaHelper.optimizationConfig.getInt("worldGen.opt.caveSketchThreads", 3), 1),
+            CAVE_DETAIL_THREADS = Math.max( TerrariaHelper.optimizationConfig.getInt("worldGen.opt.caveDetailThreads", 8), 1);
 
 
     static ExecutorService poolRoughSketch = Executors.newFixedThreadPool(CAVE_ROUGH_SKETCH_THREADS);

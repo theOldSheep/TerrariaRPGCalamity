@@ -1,38 +1,3 @@
-worldGen:
-  params:
-    seed: 876239938
-    landHeight: 100
-    seaLevel: 90
-    riverDepth: 25
-    lakeDepth: 30
-    plateauHeight: 40
-    nearbyBiomeSampleRadius: 25
-    caveOctaves: 4
-    railYCoordinate: 125
-  opt:
-    chunkPrepDurationLog: true
-    caveGenDurationLog: false
-    caveSketchSize: 3
-    caveSketchThreads: 4
-    caveDetailThreads: 16
-    structureNanoSecond: 10000000
-  mapConfig:
-    blocksPerPixel: 20
-    biomeMarkerRadiusPixel: 2
-    spawnMarkerRadiusPixel: 3
-    axisMarkerLengthPixel: 25
-    axisMarkerFontSize: 15
-    biomeScanRadiusInBlocks: 5000
-    minLabeledBiomeAreaPixels: 50
-    gridSizeInPixels: 50
-    outputFolder: worldGenDebug
-optimization:
-  projVelUpdItvNormal: 2
-  projVelUpdItvHoming: 2
-  projVelUpdItvAcceleration: 2
-  projVelUpdItvDragonFireball: 3
-  projectileVelocityUpdateDistance: 96
-  globalParticleDensity: 1.0
 miscSetting:
   summoningItemConsumption: false
   restartCountdown: 30
@@ -40,11 +5,6 @@ miscSetting:
   restartCountdownInterval: 5
   ammoConsumptionChanceMulti: 0.1
   potionConsumptionChanceMulti: 0.2
-tickCompensationSetting:
-  triggerThreshold: 5
-  fastestTickInterval: 45
-  decayFactor: 0.5
-  bossFightOnly: true
 rarity:
   '-2': §#AAAAAA§l
   '-1': §#6B6B6B§l

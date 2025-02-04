@@ -1,0 +1,25 @@
+inventory:
+  piggyBank:
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  trashBin:
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  voidBag:
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+  - "AIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR\tAIR"
+stats:
+  healthTier: 5
+  manaTier: 1

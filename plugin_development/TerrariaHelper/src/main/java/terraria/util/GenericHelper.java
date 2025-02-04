@@ -21,7 +21,7 @@ public class GenericHelper {
     static long nextWorldTextureIndex = 0;
     // 80 * 80 = 6400
     static final double PARTICLE_DISPLAY_RADIUS_SQR = 80 * 80;
-    public static final double GLOBAL_PARTICLE_DENSITY = TerrariaHelper.settingConfig.getDouble("optimization.globalParticleDensity", 1d);
+    public static final double GLOBAL_PARTICLE_DENSITY = TerrariaHelper.optimizationConfig.getDouble("optimization.globalParticleDensity", 1d);
     public static class ParticleLineOptions {
         boolean particleOrItem;
         boolean vanillaParticle;

@@ -24,10 +24,10 @@ import java.util.*;
 public class GenericProjectile extends EntityPotion {
     private static final double distFromBlock = 1e-5, distCheckOnGround = 1e-1;
     public static final int DESTROY_HIT_BLOCK = 0, DESTROY_HIT_ENTITY = 1, DESTROY_TIME_OUT = 2;
-    private static final int VELOCITY_UPDATE_INTERVAL_NORMAL = TerrariaHelper.settingConfig.getInt("optimization.projVelUpdItvNormal", 10);
-    private static final int VELOCITY_UPDATE_INTERVAL_HOMING = TerrariaHelper.settingConfig.getInt("optimization.projVelUpdItvHoming", 5);
-    private static final int VELOCITY_UPDATE_INTERVAL_ACCELERATION = TerrariaHelper.settingConfig.getInt("optimization.projVelUpdItvAcceleration", 3);
-    private static final double VELOCITY_UPDATE_DIST = TerrariaHelper.settingConfig.getDouble("optimization.projectileVelocityUpdateDistance", 96d);
+    private static final int VELOCITY_UPDATE_INTERVAL_NORMAL = TerrariaHelper.optimizationConfig.getInt("optimization.projVelUpdItvNormal", 10);
+    private static final int VELOCITY_UPDATE_INTERVAL_HOMING = TerrariaHelper.optimizationConfig.getInt("optimization.projVelUpdItvHoming", 5);
+    private static final int VELOCITY_UPDATE_INTERVAL_ACCELERATION = TerrariaHelper.optimizationConfig.getInt("optimization.projVelUpdItvAcceleration", 3);
+    private static final double VELOCITY_UPDATE_DIST = TerrariaHelper.optimizationConfig.getDouble("optimization.projectileVelocityUpdateDistance", 96d);
 
     // projectile info
     public String projectileType, projectileItemName, blockHitAction = "die", spawnSound = "", trailColor = null;
