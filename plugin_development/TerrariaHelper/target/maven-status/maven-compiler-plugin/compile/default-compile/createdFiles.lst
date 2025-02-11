@@ -124,6 +124,7 @@ terraria\util\WorldHelper$LeafLayerShape.class
 terraria\entity\boss\preHardMode\eyeOfCthulhu\EyeOfCthulhu$1.class
 terraria\entity\projectile\Boomerang.class
 terraria\entity\others\TerrariaFishingHook.class
+terraria\util\DamageHelper$DamageInfoBus.class
 terraria\worldgen\overworld\StructurePopulator.class
 terraria\entity\boss\postMoonLord\providence\Providence.class
 terraria\util\WorldHelper.class
