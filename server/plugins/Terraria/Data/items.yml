@@ -9278,11 +9278,11 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r投出追踪敌人的飞刀
-  - §r潜伏攻击会在敌人周围投掷10把飞刀
+  - §r潜伏攻击会在敌人周围投掷6把飞刀
   - §r“砸！瓦鲁多！”
   attributes:
     damage: 175
-    damageStealth: 200
+    damageStealth: 225
     damageType: Rogue
     crit: 8
     knockback: 4
@@ -9340,10 +9340,10 @@ Dodu的手炮:
   lore:
   - §r扔出三把无视重力的追踪苦无
   - §r飞行足够距离后，苦无会获得月之能量，追踪至附近敌人
-  - §r潜伏攻击会立即投掷出九把加强的苦无
+  - §r潜伏攻击会立即投掷出五把加强的苦无
   attributes:
     damage: 224
-    damageStealth: 250
+    damageStealth: 300
     damageType: Rogue
     crit: 4
     knockback: 2
@@ -15148,7 +15148,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 32
-    damageRogueMulti: 0.1
+    damageMulti: 0.1
     critRogue: 10
   worth: 9600000
   rarity: 7
@@ -15158,7 +15158,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 24
-    damageMagicMulti: 0.09
+    damageMulti: 0.09
     critRogue: 6
     speedMulti: 0.2
   worth: 9600000
@@ -15418,8 +15418,8 @@ Dodu的手炮:
   - §r近战伤害造成狱炎减益
   attributes:
     defence: 66
-    damageMeleeMulti: 0.17
-    critMelee: 10
+    damageMeleeMulti: 0.1
+    critMelee: 5
     buffInflictMelee: 狱炎|30|1
   worth: 12000000
   rarity: 8
@@ -15429,8 +15429,8 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 30
-    damageRangedMulti: 0.12
-    critRanged: 10
+    damageRangedMulti: 0.1
+    critRanged: 5
     ammoConsumptionRate: -0.25
   worth: 12000000
   rarity: 8
@@ -15440,8 +15440,8 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 28
-    damageRogueMulti: 0.12
-    critRogue: 10
+    damageRogueMulti: 0.1
+    critRogue: 5
     speedMulti: 0.05
   worth: 12000000
   rarity: 8
@@ -15453,7 +15453,7 @@ Dodu的手炮:
     defence: 24
     damageMagicMulti: 0.1
     maxMana: 100
-    critMagic: 15
+    critMagic: 5
   worth: 12000000
   rarity: 8
 渊泉头盔:

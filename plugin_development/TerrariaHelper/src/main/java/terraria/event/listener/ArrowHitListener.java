@@ -143,7 +143,7 @@ public class ArrowHitListener implements Listener {
             Player shooter = (Player) projectile.getShooter();
             ItemUseHelper.applyCD(shooter, 2);
         }
-        // adamantite particle accelerator
+        // adamantite particle accelerator's double damage handling
         if (projectileScoreboardTags.contains("isAPA")) {
             MetadataValue lastParticleName = EntityHelper.getMetadata(entityHit,
                     EntityHelper.MetadataName.LAST_ADAMANTITE_PARTICLE_TYPE);

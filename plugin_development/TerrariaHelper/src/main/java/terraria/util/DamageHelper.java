@@ -507,7 +507,6 @@ public class DamageHelper {
             Entity damager = damageInfoBus.damager;
             LivingEntity victim = damageInfoBus.victim;
             LivingEntity damageSource = damageInfoBus.damageSource;
-            LivingEntity damageTaker = damageInfoBus.damageTaker;
             DamageType damageType = damageInfoBus.damageType;
             DamageReason damageReason = damageInfoBus.damageReason;
             double dmg = damageInfoBus.getCurrDmg();
@@ -581,13 +580,6 @@ public class DamageHelper {
                 }
                 // damage type-based armor set properties
                 switch (damageType) {
-                    // magic damage
-                    case MAGIC: {
-                        if (! (damageReason == DamageReason.SPECTRE)) {
-                            PlayerHelper.playerMagicArmorSet(dPly, victim, dmg);
-                        }
-                        break;
-                    }
                     case MELEE:
                     case TRUE_MELEE: {
                         switch (armorSet) {
@@ -624,6 +616,12 @@ public class DamageHelper {
                                     EntityHelper.applyEffect(dPly, "鲜血狂怒", 100);
                                 break;
                             }
+                        }
+                        break;
+                    }
+                    case MAGIC: {
+                        if (! (damageReason == DamageReason.SPECTRE)) {
+                            PlayerHelper.playerMagicArmorSet(dPly, victim, dmg);
                         }
                         break;
                     }
@@ -707,8 +705,8 @@ public class DamageHelper {
                             if (victimEffects.containsKey("闪避冷却"))
                                 break;
                             double dmgRatio = dmg / vPly.getMaxHealth();
-                            // dodge if fatal or more than 10% max health
-                            boolean shouldDodge = dmg >= vPly.getHealth() || dmgRatio > 0.1;
+                            // dodge direct damage only, if fatal or more than 10% max health
+                            boolean shouldDodge = isDirectDmg && (dmg >= vPly.getHealth() || dmgRatio > 0.1);
                             if (shouldDodge) {
                                 // transform dmgRatio 0.1~0.5 into 0~1
                                 double extraCDRatio = (dmgRatio - 0.1) / 0.4;

@@ -178,7 +178,7 @@
         amount: 1
         damageFixed: 180
         name: 追踪纳米叶片
-        velocity: 3
+        velocity: 2.5
 钩爪:
     gravity: 0
     speedMultiPerTick: 1

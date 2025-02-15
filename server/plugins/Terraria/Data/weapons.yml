@@ -3300,7 +3300,7 @@ Dodu的手炮:
   stealth:
     projectile: 恒星匕首
     projectileSpeed: 3.5
-    shots: 10
+    shots: 6
     offset: 16
 孔雀翎:
   type: ROGUE
@@ -3338,7 +3338,7 @@ Dodu的手炮:
   stealth:
     projectile: 月明苦无Ex
     projectileSpeed: 4
-    shots: 9
+    shots: 5
     offset: 25
 裂阳:
   type: ROGUE

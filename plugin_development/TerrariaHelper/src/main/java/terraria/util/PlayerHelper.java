@@ -2207,6 +2207,16 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                 updateArmorSetMetadata(ply, armorSet);
                 // special armor sets
                 switch (armorSet) {
+                    case "皇天套装": {
+                        double plyHealthRatio = ply.getHealth() / ply.getMaxHealth();
+                        if (plyHealthRatio < 0.5) {
+                            AttributeHelper.tweakAttribute(ply, newAttrMap,
+                                    "damageMulti", "0.1", true);
+                            AttributeHelper.tweakAttribute(ply, newAttrMap,
+                                    "crit", "5", true);
+                        }
+                        break;
+                    }
                     case "血炎盗贼套装":
                     case "金源盗贼套装": {
                         double plyHealthRatio = ply.getHealth() / ply.getMaxHealth();
