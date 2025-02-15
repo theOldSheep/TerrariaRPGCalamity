@@ -77,56 +77,6 @@ public class DamageHelper {
                 damageInfoBus.setCancelled(true);
             }
         } );
-        // inflict debuff
-        DMG_CALLBACK_PIPELINE.add( (damageInfoBus) -> {
-            Entity damager = damageInfoBus.damager;
-            if (damageInfoBus.isDirectAttackDamage) {
-                List<String> buffInflict = new ArrayList<>();
-                // projectile buff inflict
-                if (damager instanceof Projectile) {
-                    buffInflict.addAll(TerrariaHelper.projectileConfig.getStringList(damager.getName() + ".buffInflict"));
-                }
-                // monster/minion direct damage buff inflict
-                else if (! (damager instanceof Player)) {
-                    buffInflict.addAll(TerrariaHelper.entityConfig.getStringList(
-                            GenericHelper.trimText(damager.getName()) + ".buffInflict"));
-                }
-                // player buff inflict
-                if (damageInfoBus.damageSource instanceof Player) {
-                    // player minion buff inflict
-                    HashMap<String, ArrayList<String>> buffInflictMap = PlayerHelper.getPlayerEffectInflict(damageInfoBus.damageSource);
-                    buffInflict.addAll(buffInflictMap.getOrDefault("buffInflict", new ArrayList<>(0)));
-                    switch (damageInfoBus.damageType) {
-                        case ARROW:
-                        case BULLET:
-                        case ROCKET:
-                            buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictRanged", new ArrayList<>(0)));
-                            break;
-                        case TRUE_MELEE:
-                            buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
-                            buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictTrueMelee", new ArrayList<>(0)));
-                            break;
-                        // Melee, Magic, Summon, Rogue
-                        default:
-                            // whip
-                            if (damageInfoBus.damageType == DamageType.SUMMON && damageInfoBus.damageReason == DamageReason.STRIKE)
-                                buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
-                            buffInflict.addAll(buffInflictMap.getOrDefault("buffInflict" + damageInfoBus.damageType, new ArrayList<>(0)));
-                    }
-                }
-                // apply (de)buff(s) to victim
-                for (String buff : buffInflict) {
-                    String[] buffInfo = buff.split("\\|");
-                    double chance;
-                    try {
-                        chance = Double.parseDouble(buffInfo[2]);
-                        if (Math.random() < chance)
-                            EntityHelper.applyEffect(damageInfoBus.victim, buffInfo[0], Integer.parseInt(buffInfo[1]));
-                    } catch (Exception ignored) {
-                    }
-                }
-            }
-        });
         // further setup damage info (fixed amount etc.); damage setup for special damage types
         // and setup knockback & crit rate for normal direct dmg
         DMG_CALLBACK_PIPELINE.add( (damageInfoBus) -> {
@@ -681,7 +631,8 @@ public class DamageHelper {
             }
         } );
         // mechanisms & validations triggered before dealing damage
-        // part 3 - when player is being damaged
+        // part 3 - when player is being damaged;
+        // defence-damage mechanism also here for simplicity (relevant accessory information etc. are available)
         DMG_CALLBACK_PIPELINE.add( (damageInfoBus) -> {
             Entity damager = damageInfoBus.damager;
             LivingEntity victim = damageInfoBus.victim;
@@ -734,22 +685,77 @@ public class DamageHelper {
                 }
                 HashSet<String> accessories = PlayerHelper.getAccessories(victim);
                 HashMap<String, Double> victimAttrMap = AttributeHelper.getAttrMap(victim);
-                // defence-damage style damage reduction POST damage calculation
-                if (isDirectDmg && originalDmg > 50) {
-                    boolean alternative = accessories.contains("血炎晶核") || accessories.contains("血神圣杯");
-                    double def = victimAttrMap.getOrDefault("defence", 0d);
-                    // alternative: lose more defence but regenerate health while recovering
-                    if (alternative) {
-                        int duration = (int) Math.min(def, Math.max(dmg, def * 0.5) );
-                        EntityHelper.applyEffect(victim, "血炎防御损毁", duration);
-                    }
-                    // "vanilla" behavior of defence-damage
-                    else {
-                        int duration = (int) ( Math.min(def, originalDmg * 0.05 + def * 0.15 ) );
-                        EntityHelper.applyEffect(victim, "防御损毁", duration);
-                        EntityHelper.applyEffect(victim, "防御修补冷却", 100);
+
+                // invulnerability accessories; handled before the rest to prevent buggy behavior
+                for (String accessory : accessories) {
+                    switch (accessory) {
+                        case "墨水炸弹": {
+                            // don't trigger on cool down
+                            if (victimEffects.containsKey("闪避冷却"))
+                                break;
+                            // restore massive stealth & apply cool down
+                            PlayerHelper.restoreStealth(vPly, PlayerHelper.getMaxStealth(vPly) * 0.5);
+                            EntityHelper.applyEffect(vPly, "闪避冷却", 400);
+                            break;
+                        }
+                        case "腐烂之脑":
+                        case "融合之脑":
+                        case "聚合之脑":
+                        case "深渊魔镜":
+                        case "日蚀魔镜": {
+                            // don't trigger on cool down
+                            if (victimEffects.containsKey("闪避冷却"))
+                                break;
+                            double dmgRatio = dmg / vPly.getMaxHealth();
+                            // dodge if fatal or more than 10% max health
+                            boolean shouldDodge = dmg >= vPly.getHealth() || dmgRatio > 0.1;
+                            if (shouldDodge) {
+                                // transform dmgRatio 0.1~0.5 into 0~1
+                                double extraCDRatio = (dmgRatio - 0.1) / 0.4;
+                                if (extraCDRatio < 0)
+                                    extraCDRatio = 0;
+                                else if (extraCDRatio > 1)
+                                    extraCDRatio = 1;
+                                int cdTicks = (int) (300 + 1500 * extraCDRatio);
+
+                                // apply cool down
+                                EntityHelper.applyEffect(vPly, "闪避冷却", cdTicks);
+                                // restore stealth if needed
+                                switch (accessory) {
+                                    case "深渊魔镜":
+                                        PlayerHelper.restoreStealth(vPly, PlayerHelper.getMaxStealth(vPly) * 0.75);
+                                        break;
+                                    case "日蚀魔镜":
+                                        PlayerHelper.restoreStealth(vPly, PlayerHelper.getMaxStealth(vPly));
+                                        break;
+                                }
+                                // handle invincibility ticks
+                                EntityHelper.handleEntityTemporaryScoreboardTag(damageTaker, getInvulnerabilityTickName(damageType),
+                                        damageInfoBus.getDamageInvulnerabilityTicks());
+                                // cancel damage event
+                                damageInfoBus.setCancelled(true);
+                                return;
+                            }
+                            break;
+                        }
                     }
                 }
+                // invulnerability armor sets; handled before the rest to prevent buggy behavior
+                String victimPlayerArmorSet = PlayerHelper.getArmorSet(vPly);
+                switch (victimPlayerArmorSet) {
+                    case "始源林海魔法套装":
+                    case "始源林海召唤套装":
+                    case "金源魔法套装":
+                    case "金源召唤套装": {
+                        if (dmg >= vPly.getHealth() && (!victimEffects.containsKey("始源林海无敌冷却"))) {
+                            EntityHelper.applyEffect(vPly, "始源林海无敌", 160);
+                            damageInfoBus.setCancelled(true);
+                            return;
+                        }
+                        break;
+                    }
+                }
+
                 // accessories
                 for (String accessory : accessories) {
                     switch (accessory) {
@@ -763,7 +769,8 @@ public class DamageHelper {
                         case "血神圣杯": {
                             if (isDirectDmg && dmg >= 100d) {
                                 double recovery = Math.min(vPly.getMaxHealth() - vPly.getHealth(), dmg * 0.95);
-                                PlayerHelper.heal(vPly, recovery);
+                                // update the health to wither away as the actual healing amount
+                                recovery = PlayerHelper.heal(vPly, recovery);
                                 EntityHelper.applyEffect(victim, "血神之凋零", (int) Math.ceil(recovery / 10));
                             }
                             break;
@@ -781,7 +788,6 @@ public class DamageHelper {
                     }
                 }
                 // armor sets
-                String victimPlayerArmorSet = PlayerHelper.getArmorSet(vPly);
                 switch (victimPlayerArmorSet) {
                     case "掠夺者坦克套装": {
                         if (isDirectDmg && Math.random() < 0.25)
@@ -813,17 +819,6 @@ public class DamageHelper {
                             EntityHelper.applyEffect(damageTaker, "生命涌流", 80);
                         if (isContactDmg) {
                             handleDamage(damageTaker, damager, Math.min(Math.max(dmg * 2.5, 500), 2500), DamageReason.THORN);
-                        }
-                        break;
-                    }
-                    case "始源林海魔法套装":
-                    case "始源林海召唤套装":
-                    case "金源魔法套装":
-                    case "金源召唤套装": {
-                        if (dmg >= vPly.getHealth() && (! victimEffects.containsKey("始源林海无敌冷却")) ) {
-                            EntityHelper.applyEffect(vPly, "始源林海无敌", 160);
-                            damageInfoBus.setCancelled(true);
-                            return;
                         }
                         break;
                     }
@@ -872,6 +867,22 @@ public class DamageHelper {
                     if (EntityHelper.hasEffect(vPly, "弑神者冲刺"))
                         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                                 () -> EntityHelper.applyEffect(vPly, "神弑者之停息", 600), 5);
+                }
+                // defence-damage style damage reduction POST damage calculation
+                if (isDirectDmg && getDamageSource(damager).getScoreboardTags().contains("isBOSS")) {
+                    boolean alternative = accessories.contains("血炎晶核") || accessories.contains("血神圣杯");
+                    double def = victimAttrMap.getOrDefault("defence", 0d);
+                    // alternative: lose more defence but regenerate health while recovering
+                    if (alternative) {
+                        int duration = (int) Math.min(def, Math.max(dmg, def * 0.5) );
+                        EntityHelper.applyEffect(victim, "血炎防御损毁", duration);
+                    }
+                    // "vanilla" behavior of defence-damage
+                    else {
+                        int duration = (int) ( Math.min(def, originalDmg * 0.05 + def * 0.15 ) );
+                        EntityHelper.applyEffect(victim, "防御损毁", duration);
+                        EntityHelper.applyEffect(victim, "防御修补冷却", 100);
+                    }
                 }
             }
         } );
@@ -965,6 +976,56 @@ public class DamageHelper {
                 }
             }
         } );
+        // inflict debuff
+        DMG_CALLBACK_PIPELINE.add( (damageInfoBus) -> {
+            Entity damager = damageInfoBus.damager;
+            if (damageInfoBus.isDirectAttackDamage) {
+                List<String> buffInflict = new ArrayList<>();
+                // projectile buff inflict
+                if (damager instanceof Projectile) {
+                    buffInflict.addAll(TerrariaHelper.projectileConfig.getStringList(damager.getName() + ".buffInflict"));
+                }
+                // monster/minion direct damage buff inflict
+                else if (! (damager instanceof Player)) {
+                    buffInflict.addAll(TerrariaHelper.entityConfig.getStringList(
+                            GenericHelper.trimText(damager.getName()) + ".buffInflict"));
+                }
+                // player buff inflict
+                if (damageInfoBus.damageSource instanceof Player) {
+                    // player minion buff inflict
+                    HashMap<String, ArrayList<String>> buffInflictMap = PlayerHelper.getPlayerEffectInflict(damageInfoBus.damageSource);
+                    buffInflict.addAll(buffInflictMap.getOrDefault("buffInflict", new ArrayList<>(0)));
+                    switch (damageInfoBus.damageType) {
+                        case ARROW:
+                        case BULLET:
+                        case ROCKET:
+                            buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictRanged", new ArrayList<>(0)));
+                            break;
+                        case TRUE_MELEE:
+                            buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
+                            buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictTrueMelee", new ArrayList<>(0)));
+                            break;
+                        // Melee, Magic, Summon, Rogue
+                        default:
+                            // whip
+                            if (damageInfoBus.damageType == DamageType.SUMMON && damageInfoBus.damageReason == DamageReason.STRIKE)
+                                buffInflict.addAll(buffInflictMap.getOrDefault("buffInflictMelee", new ArrayList<>(0)));
+                            buffInflict.addAll(buffInflictMap.getOrDefault("buffInflict" + damageInfoBus.damageType, new ArrayList<>(0)));
+                    }
+                }
+                // apply (de)buff(s) to victim
+                for (String buff : buffInflict) {
+                    String[] buffInfo = buff.split("\\|");
+                    double chance;
+                    try {
+                        chance = Double.parseDouble(buffInfo[2]);
+                        if (Math.random() < chance)
+                            EntityHelper.applyEffect(damageInfoBus.victim, buffInfo[0], Integer.parseInt(buffInfo[1]));
+                    } catch (Exception ignored) {
+                    }
+                }
+            }
+        });
         // post-damage handling: dmg display, invulnerability ticks etc.
         DMG_CALLBACK_PIPELINE.add( (damageInfoBus) -> {
             Entity victim = damageInfoBus.victim;

@@ -1860,19 +1860,9 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                         }
                         // stealth regen
                         if (! usingItem) {
-                            double stealth = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble();
-                            double stealthMax = attrMap.getOrDefault("stealthLimit", 0d);
-                            if (stealth < stealthMax) {
-                                // default to fully regenerate over 4 seconds = 80 ticks
-                                double stealthRegen = stealthMax * delay / 80 * attrMap.getOrDefault("stealthRegenMulti", 0d);
-                                stealth += stealthRegen;
-                                // on fully recovery
-                                if (stealth >= stealthMax) {
-                                    stealth = stealthMax;
-                                    ply.playSound(ply.getLocation(), Sound.BLOCK_NOTE_PLING, SoundCategory.PLAYERS,2, 2);
-                                }
-                                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH, stealth);
-                            }
+                            double stealthMax = getMaxStealth(ply);
+                            double stealthRegen = stealthMax * delay / 80 * attrMap.getOrDefault("stealthRegenMulti", 0d);
+                            restoreStealth(ply, stealthRegen);
                         }
                     }
                 } catch (Exception e) {
@@ -2852,15 +2842,37 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             return amountRemaining;
         }
     }
-    // heals the player by the amount.
-    public static void heal(LivingEntity ply, double amount) {
-        heal(ply, amount, false);
+
+    /**
+     * Heals the player by the specified amount. Displays the actual healing amount in hologram.
+     * @param ply The player to heal
+     * @param amount The amount to heal
+     * @return The actual healed amount, considering player's health vs max health, fixed healing multiplier etc.
+     */
+    public static double heal(LivingEntity ply, double amount) {
+        return heal(ply, amount, false);
     }
+    /**
+     * Heals the player by the specified amount.
+     * @param ply The player to heal
+     * @param amount The amount to heal
+     * @param displayActualAmount Whether to display the actual healed amount in hologram
+     * @return The actual healed amount, considering player's health vs max health, fixed healing multiplier etc.
+     */
     // heals the player by the amount; can specify whether to display the actual amount and damage source of negative regen.
-    public static void heal(LivingEntity ply, double amount, boolean displayActualAmount) {
-        heal(ply, amount, displayActualAmount, "");
+    public static double heal(LivingEntity ply, double amount, boolean displayActualAmount) {
+        return heal(ply, amount, displayActualAmount, "");
     }
-    public static void heal(LivingEntity ply, double amount, boolean displayActualAmount, String dmgReason) {
+    /**
+     * Heals the player by the specified amount.
+     * @param ply The player to heal
+     * @param amount The amount to heal
+     * @param displayActualAmount Whether to display the actual healed amount in hologram
+     * @param dmgReason If negative healing kills the player, the death cause is debuff;
+     *                  specifies the debuff name used to generate death message
+     * @return The actual healed amount, considering player's health vs max health, fixed healing multiplier etc.
+     */
+    public static double heal(LivingEntity ply, double amount, boolean displayActualAmount, String dmgReason) {
         HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(ply);
         double healAmount;
         if (amount < 0)
@@ -2875,12 +2887,15 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             // such abrupt dmg would slightly better align with debuff dmg anyway
             DamageHelper.handleDeath(ply, ply, ply, DamageHelper.DamageType.DEBUFF,
                     DamageHelper.DamageReason.DEBUFF, dmgReason);
+            // update the healed amount to exactly the damage dealt.
+            healAmount = - ply.getHealth();
         }
         // set the player's health as usual otherwise
         else {
             ply.setHealth(newHealth);
         }
         GenericHelper.displayHolo(ply, displayActualAmount ? healAmount : amount, false, "回血");
+        return healAmount;
     }
     public static void restoreMana(Player ply, double amount) {
         restoreMana(ply, amount, true);
@@ -2890,6 +2905,27 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         ply.setLevel(ply.getLevel() + restoreAmount);
         if (hologram) {
             GenericHelper.displayHolo(ply, amount, false, "回蓝");
+        }
+    }
+    public static double getMaxStealth(Player ply) {
+        return AttributeHelper.getAttrMap(ply).getOrDefault("stealthLimit", 0d);
+    }
+    public static void restoreStealth(Player ply, double amount) {
+        restoreStealth(ply, amount, true);
+    }
+    public static void restoreStealth(Player ply, double amount, boolean notifyPlyOnFull) {
+        double stealthMax = getMaxStealth(ply);
+        double stealth = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble();
+        if (stealth < stealthMax) {
+            stealth += amount;
+            // on fully recovery
+            if (stealth >= stealthMax) {
+                stealth = stealthMax;
+                // play notification sound
+                if (notifyPlyOnFull)
+                    ply.playSound(ply.getLocation(), Sound.BLOCK_NOTE_PLING, SoundCategory.PLAYERS,2, 2);
+            }
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH, stealth);
         }
     }
     public static void sendActionBar(Player player, String message) {
