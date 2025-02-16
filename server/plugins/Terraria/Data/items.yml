@@ -13227,24 +13227,28 @@ Dodu的手炮:
   rarity: 15
 阿瑞斯离子加农炮:
   item: PAPER
+  isDummyItem: true
   lore:
   - §r阿瑞斯外骨骼可装载的武器
   - §r每0.5秒发射一道挥发性等离子光球
   rarity: 14
 阿瑞斯特斯拉加农炮:
   item: PAPER
+  isDummyItem: true
   lore:
   - §r阿瑞斯外骨骼可装载的武器
   - §r每0.6秒发射一个向附近敌人射出电弧的特斯拉球状闪电。
   rarity: 14
 阿瑞斯镭射加农炮:
   item: PAPER
+  isDummyItem: true
   lore:
   - §r阿瑞斯外骨骼可装载的武器
   - §r每0.25秒发射一道红色星流脉冲激光，发射五次后转而发射一道持续1.25秒的星流致命光
   rarity: 14
 阿瑞斯高斯核弹发射井:
   item: PAPER
+  isDummyItem: true
   lore:
   - §r阿瑞斯外骨骼可装载的武器
   - §r每4秒向敌怪发射高斯核弹，带有强追踪性。击中敌怪或实体物块时引发巨大爆炸。
@@ -13887,6 +13891,7 @@ Dodu的手炮:
   rarity: 14
 极光弹:
   item: SLIME_BALL
+  isDummyItem: true
   attributes:
     damage: 22
     damageType: Bullet
@@ -13894,10 +13899,9 @@ Dodu的手炮:
     knockback: 4
     projectileSpeed: 4
     projectileSpeedMulti: 4
-  worth: 800
-  rarity: 3
 .50狙击弹:
   item: SLIME_BALL
+  isDummyItem: true
   attributes:
     damage: 22
     damageType: Bullet
@@ -13905,10 +13909,9 @@ Dodu的手炮:
     knockback: 4
     projectileSpeed: 4
     projectileSpeedMulti: 4
-  worth: 800
-  rarity: 3
 .70狙击弹:
   item: SLIME_BALL
+  isDummyItem: true
   attributes:
     damage: 22
     damageType: Bullet
@@ -13916,10 +13919,9 @@ Dodu的手炮:
     knockback: 4
     projectileSpeed: 4
     projectileSpeedMulti: 4
-  worth: 800
-  rarity: 3
 月神高速弹:
   item: SLIME_BALL
+  isDummyItem: true
   attributes:
     damage: 22
     damageType: Bullet
@@ -13927,8 +13929,6 @@ Dodu的手炮:
     knockback: 4
     projectileSpeed: 4
     projectileSpeedMulti: 2
-  worth: 800
-  rarity: 3
 初级火箭:
   item: BLAZE_POWDER
   attributes:
@@ -14547,6 +14547,7 @@ Dodu的手炮:
   rarity: 3
 天蓝护胫靴子:
   item: IRON_BOOTS
+  isDummyItem: true
   armourerModel:
     localId: -2080780066
 死灵头盔:

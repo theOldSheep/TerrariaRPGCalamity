@@ -15,6 +15,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import terraria.TerrariaHelper;
@@ -34,15 +35,27 @@ public class ItemUseAndAttributeListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public static void onInventoryClick(InventoryClickEvent e) {
         Player ply = (Player) e.getWhoClicked();
-        if (!PlayerHelper.isProperlyPlaying(ply)) {
+        // deny inventory click event if player is not properly playing
+        if (!PlayerHelper.isProperlyPlaying(ply))
             e.setCancelled(true);
-            return;
+        ItemStack clickedItem = e.getCurrentItem();
+        // don't let the player take off auto-generated boots according to the leggings
+        if (e.getSlotType() == InventoryType.SlotType.ARMOR) {
+            switch (clickedItem.getType()) {
+                case LEATHER_BOOTS:
+                case CHAINMAIL_BOOTS:
+                case IRON_BOOTS:
+                case GOLD_BOOTS:
+                case DIAMOND_BOOTS:
+                    e.setCancelled(true);
+            }
         }
-        if (ply.getScoreboardTags().contains("temp_useCD")) e.setCancelled(true);
+        if (ply.getScoreboardTags().contains("temp_useCD"))
+            e.setCancelled(true);
+        // if the event has been cancelled by here, proceed no further.
         if (e.isCancelled()) return;
         ply.addScoreboardTag("toolChanged");
         // make sure the armor set message does not linger on the armor clicked
-        ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem != null && ItemHelper.getItemCombatType(clickedItem).equals("装备")) {
             clickedItem.setItemMeta(ItemHelper.getRawItem(ItemHelper.splitItemName(clickedItem)[1]).getItemMeta());
         }

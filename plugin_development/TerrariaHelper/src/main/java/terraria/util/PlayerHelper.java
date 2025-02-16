@@ -2135,6 +2135,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             // armor
             {
                 List<ItemStack> armors = new ArrayList<>();
+                // helmet
                 {
                     ItemStack helm = plyInv.getHelmet();
                     if (helm != null) {
@@ -2143,6 +2144,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                         plyInv.setHelmet(helm);
                     }
                 }
+                // chest plate
                 {
                     ItemStack chestPlate = plyInv.getChestplate();
                     if (chestPlate != null) {
@@ -2151,12 +2153,21 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                         plyInv.setChestplate(chestPlate);
                     }
                 }
+                // leggings
                 {
                     ItemStack leggings = plyInv.getLeggings();
                     if (leggings != null) {
                         leggings = ItemHelper.getRawItem(ItemHelper.splitItemName(leggings)[1]);
                         armors.add(leggings);
                         plyInv.setLeggings(leggings);
+                    }
+                    // update the player's boots according to the leggings
+                    {
+                        ItemStack boots = new ItemStack(Material.AIR);
+                        if (leggings != null) {
+                            boots = ItemHelper.getRawItem(ItemHelper.splitItemName(leggings)[1] + "靴子");
+                        }
+                        plyInv.setBoots(boots);
                     }
                 }
                 // basic attributes
