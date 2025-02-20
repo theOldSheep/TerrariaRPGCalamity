@@ -162,6 +162,11 @@ public class ItemUseHelper {
                     successful = EventAndTime.startBossRush();
                 }
                 break;
+            case "血泪":
+                if (! isDayTime) {
+                    successful = EventAndTime.initializeEvent(EventAndTime.Events.BLOOD_MOON);
+                }
+                break;
             case "日耀碑牌":
                 if (isDayTime) {
                     successful = EventAndTime.initializeEvent(EventAndTime.Events.SOLAR_ECLIPSE);
@@ -4162,6 +4167,8 @@ public class ItemUseHelper {
             if (accessories.contains("掠夺者护符")) {
                 EntityHelper.applyEffect(ply, "掠夺者护符", 60);
             }
+            // register tool changed to let attribute update the next time.
+            ply.addScoreboardTag("toolChanged");
         }
         // use the weapon
         weaponSection = weaponSection.getConfigurationSection(isStealth ? "stealth" : "normal");

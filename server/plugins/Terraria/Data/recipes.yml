@@ -4525,6 +4525,15 @@ ENCHANTMENT_TABLE:
     - 暗影之魂:10
     - 恶魔锭:10
     recipeCategory: WEAPON_SUMMON
+  '20':
+    requireLevel: 1
+    resultItem: 血泪
+    requireItem:
+    - 血珠:16
+    - 暗影鳞片:4
+    - 凝胶:4
+    - 火焰花
+    recipeCategory: TOOL
 AIR:
   '1':
     requireLevel: 1

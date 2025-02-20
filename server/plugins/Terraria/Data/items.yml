@@ -415,11 +415,6 @@
 日耀碑牌碎片:
   item: CLAY_BALL
   rarity: 8
-日耀碑牌:
-  item: CLAY_BALL
-  lore:
-  - §r召唤日食
-  rarity: 8
 日耀碎片:
   item: NETHER_STAR
   lore:
@@ -963,6 +958,11 @@
   - §r在腐化之地召唤世界吞噬者
   - §r附近玩家均可参与挑战
   rarity: 1
+血泪:
+  item: GHAST_TEAR
+  lore:
+  - §r召唤血月
+  rarity: 2
 光明钥匙:
   item: SHEARS
   lore:
@@ -1008,12 +1008,11 @@
   - §r“打碎它之后，石巨人就会送你离开迷宫”
   worth: 1000000
   rarity: 7
-天界符:
+日耀碑牌:
   item: CLAY_BALL
   lore:
-  - §r召唤月亮末日
-  - §r附近石巨人后玩家均可参与挑战
-  rarity: 10
+  - §r召唤日食
+  rarity: 8
 南瓜月勋章:
   item: CLAY_BALL
   lore:
@@ -1026,6 +1025,12 @@
   - §r召唤冰霜月
   - §r世纪之花后玩家均可参与挑战
   rarity: 8
+天界符:
+  item: CLAY_BALL
+  lore:
+  - §r召唤月亮末日
+  - §r附近石巨人后玩家均可参与挑战
+  rarity: 10
 荒漠吊坠:
   item: CLAY_BALL
   lore:
@@ -2555,8 +2560,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    stealthLimit: 10
-    stealthRegenMulti: 0.04
+    stealthRegenMulti: 0.08
   worth: 800000
   rarity: 3
 污秽手套:
@@ -2596,6 +2600,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r盗贼攻击造成剧毒减益
   - §r潜伏攻击在击中敌人时生成毒云
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   attributes:
@@ -2662,7 +2667,7 @@ Drew之翼:
   - §r闪避攻击时会使你获得75%潜行值
   - §r“光无法到达海洋深处”
   attributes:
-    stealthRegenMulti: 0.12
+    stealthRegenMulti: 0.15
   worth: 9600000
   rarity: 6
 虚空掠夺者:
@@ -2692,8 +2697,6 @@ Drew之翼:
   - §r[饰品]
   - §r潜伏攻击在击中敌人时会召唤月球耀斑从天而降
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
-  attributes:
-    stealthLimit: 10
   worth: 22000000
   rarity: 11
 敬天神盗盒:
@@ -2731,10 +2734,6 @@ Drew之翼:
   - §r[饰品]
   - §r潜伏攻击在击中敌人时会留下一个追踪纳米叶片
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
-  attributes:
-    armorPenetration: 10
-    damageRogueMulti: 0.1
-    useSpeedRogueMulti: 0.1
   worth: 28000000
   rarity: 14
 浴火龙鳞:
@@ -2743,8 +2742,8 @@ Drew之翼:
   - §r[饰品]
   - §r盗贼攻击造成龙焰减益
   attributes:
-    critRogue: 12
-    damageRogueMulti: 0.12
+    critRogue: 1
+    damageRogueMulti: 0.1
     buffInflictRogue: 龙焰|100|1
   worth: 30000000
   rarity: 15

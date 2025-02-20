@@ -134,6 +134,12 @@ public class NPCListener implements Listener {
                                 double plyMoney = PlayerHelper.getMoney(ply);
                                 if (plyMoney >= cost) {
                                     ply.playSound(ply.getEyeLocation(), Sound.BLOCK_ANVIL_USE, SoundCategory.PLAYERS, 1f, 1f);
+                                    // return the over-stacked items to the player
+                                    if (toReforge.getAmount() > 1) {
+                                        ItemStack toReturn = toReforge.clone();
+                                        toReturn.setAmount( toReforge.getAmount() - 1 );
+                                        PlayerHelper.giveItem(ply, toReturn, true);
+                                    }
                                     // reforge
                                     String itemType = ItemHelper.splitItemName(toReforge)[1];
                                     ItemStack reforged = ItemHelper.getItemFromDescription(itemType, true);

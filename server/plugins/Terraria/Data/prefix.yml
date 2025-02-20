@@ -99,6 +99,8 @@ prefixList:
   - 鲁莽:3
   - 勇猛:2
   - 暴力:1
+  - 隐蔽:3
+  - 寂静:1
   - 注魔:3
   - 奥术:1
 prefixInfo:
@@ -745,12 +747,14 @@ prefixInfo:
     - §a+5%暴击率
     - §a+10%使用速度
     - §a+10%潜伏攻击伤害
+    - §a+10%击退威力
     - §r“这把武器似乎能与主人心意相通”
     attributes:
       damageMulti: 0.15
       crit: 5
       useSpeedMulti: 0.1
       damageStealthMulti: 0.1
+      knockbackMulti: 0.1
     priceMultiplier: 3.1
     rarity: 2
   神秘:
@@ -893,22 +897,22 @@ prefixInfo:
     lore:
     - ''
     - §a+2防御
-    - §a+0.5%防御
+    - §a+0.25%防御
     - §a所受伤害减少0.25%
     attributes:
       defence: 2
-      defenceMulti: 0.005
+      defenceMulti: 0.0025
       damageTakenMulti: -0.0025
     rarity: 1
   守护:
     lore:
     - ''
     - §a+4防御
-    - §a+1%防御
+    - §a+0.5%防御
     - §a所受伤害减少0.5%
     attributes:
       defence: 4
-      defenceMulti: 0.01
+      defenceMulti: 0.005
       damageTakenMulti: -0.005
     priceMultiplier: 1.15
     rarity: 1
@@ -916,11 +920,11 @@ prefixInfo:
     lore:
     - ''
     - §a+6防御
-    - §a+1.5%防御
+    - §a+0.75%防御
     - §a所受伤害减少0.75%
     attributes:
       defence: 6
-      defenceMulti: 0.015
+      defenceMulti: 0.0075
       damageTakenMulti: -0.0075
     priceMultiplier: 1.4
     rarity: 1
@@ -928,11 +932,11 @@ prefixInfo:
     lore:
     - ''
     - §a+8防御
-    - §a+2%防御
+    - §a+1%防御
     - §a所受伤害减少1%
     attributes:
       defence: 8
-      defenceMulti: 0.02
+      defenceMulti: 0.01
       damageTakenMulti: -0.01
     priceMultiplier: 1.6
     rarity: 2
@@ -1047,6 +1051,22 @@ prefixInfo:
     attributes:
       useSpeedMeleeMulti: 0.04
     priceMultiplier: 1.6
+    rarity: 2
+  隐蔽:
+    lore:
+    - ''
+    - §a+3%潜行值恢复速度
+    attributes:
+      stealthRegenMulti: 0.03
+    priceMultiplier: 1.21
+    rarity: 1
+  寂静:
+    lore:
+    - ''
+    - §a+6%潜行值恢复速度
+    attributes:
+      stealthRegenMulti: 0.06
+    priceMultiplier: 1.44
     rarity: 2
   注魔:
     lore:

@@ -200,8 +200,8 @@ public class TheHiveMind extends EntitySlime {
                             EntityHelper.slimeResize((Slime) bukkitEntity, SIZE - indexAI);
                         } else if (indexAI == SIZE) {
                             double angle = Math.random() * 360, radius = 15 + Math.random() * 10;
-                            Location teleportLoc = bukkitEntity.getWorld().getHighestBlockAt(
-                                            target.getLocation().add(MathHelper.xsin_degree(angle) * radius, 0,
+                            Location teleportLoc = WorldHelper.getHighestBlockBelow(
+                                            target.getLocation().add(MathHelper.xsin_degree(angle) * radius, 8,
                                                     MathHelper.xcos_degree(angle) * radius))
                                     .getLocation().add(0, 1, 0);
                             bukkitEntity.teleport(teleportLoc);
