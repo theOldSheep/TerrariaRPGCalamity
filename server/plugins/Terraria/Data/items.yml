@@ -536,6 +536,10 @@
   - §r它散发着诡异的温度
   worth: 900000
   rarity: 7
+日影面纱:
+  item: PAPER
+  worth: 800000
+  rarity: 7
 大狂鲨鳞:
   item: CLAY_BALL
   lore:
@@ -2842,7 +2846,6 @@ Drew之翼:
   - §r[饰品]
   attributes:
     armorPenetration: 20
-    damageMulti: 0.08
   worth: 9600000
   rarity: 7
 猎魂鲨齿项链:
@@ -2852,7 +2855,6 @@ Drew之翼:
   - §r取自顶级掠食者的恐怖战利品
   attributes:
     armorPenetration: 50
-    damageMulti: 0.12
   worth: 26000000
   rarity: 13
 恼怒项链:
@@ -3211,7 +3213,7 @@ Drew之翼:
   - §r[饰品]
   - §r不可与深渊潜游装同时装备
   attributes:
-    waterAffinity: 5
+    waterAffinity: 6
     defence: 25
     barrierMax: 175
   worth: 22000000
