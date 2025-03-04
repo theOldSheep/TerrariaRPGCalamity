@@ -17,8 +17,8 @@
   gravity: true
   damage: 500
   knockback: 35
-  horSpdMax: 1.2
-  verSpdMax: 1.6
+  horSpdMax: 1
+  verSpdMax: 1.5
   horAcc: 0.125
   verAcc: 1.6
   velIdleDecayMulti: 0.95
