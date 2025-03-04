@@ -28,6 +28,7 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
 import terraria.TerrariaHelper;
 import terraria.entity.npc.*;
+import terraria.event.listener.NPCListener;
 import terraria.gameplay.EventAndTime;
 
 import java.lang.reflect.InvocationTargetException;
@@ -45,6 +46,7 @@ public class NPCHelper {
         GUIDE("向导", TerrariaNPCGuide.class),
         NURSE("护士", TerrariaNPCNurse.class),
         // TODO
+        BANDIT("强盗", TerrariaNPCBandit.class),
 //        SEA_KING("海王", null),
 //        CALAMITAS("至尊灾厄", null),
         ;
@@ -175,7 +177,7 @@ public class NPCHelper {
             }
             case "护士": {
                 StringBuilder healBtnDisplay = new StringBuilder("治疗");
-                int btnW = 26;
+                int btnW = 30;
                 // init texts
                 {
                     double health = ply.getHealth();
@@ -183,8 +185,9 @@ public class NPCHelper {
                     if (health < maxHealth) {
                         int healthRatioInfo = 3 - (int) (health / maxHealth * 3);
                         texts.addAll(msgSection.getStringList("hurt." + healthRatioInfo));
+                        // width for quotes
+                        btnW += 10;
                         // btn display name
-                        btnW += 20;
                         healBtnDisplay = new StringBuilder("治疗§7(需要");
                         long[] coinNeeded = GenericHelper.coinConversion(getHealingCost(ply), false);
                         String[] additionalStr = {"§r■铂", "§e■金", "§7■银", "§c■铜"};
@@ -265,6 +268,31 @@ public class NPCHelper {
                     comps.add(new VexButton("CLOSE", "关闭", bg, bg, 100, h / 3 - 30, 26, 17));
                     if (NPCType.equals("哥布林工匠"))
                         comps.add(new VexButton("REFORGE", "重铸", bg, bg, 150, h / 3 - 30, 26, 17));
+                    else if (NPCType.equals("强盗")) {
+                        StringBuilder refundBtnDisplay;
+                        int btnW = 26;
+                        // init texts
+                        {
+                            // btn display name
+                            refundBtnDisplay = new StringBuilder("返现");
+                            long refundAmount = (long) NPCListener.getReforgeRefundAmount(ply);
+                            if (refundAmount > 0) {
+                                btnW += 5;
+                                refundBtnDisplay.append("§7(");
+                                long[] coinNeeded = GenericHelper.coinConversion(refundAmount, false);
+                                String[] additionalStr = {"§r■铂", "§e■金", "§7■银", "§c■铜"};
+                                for (int index = 0; index < 4; index++) {
+                                    if (coinNeeded[index] > 0) {
+                                        refundBtnDisplay.append(additionalStr[index].replace(
+                                                "■", coinNeeded[index] + ""));
+                                        btnW += 26;
+                                    }
+                                }
+                                refundBtnDisplay.append("§7)");
+                            }
+                        }
+                        comps.add(new VexButton("REFUND", refundBtnDisplay.toString(), bg, bg, 150, h / 3 - 30, btnW, 17));
+                    }
                 }
             }
         }

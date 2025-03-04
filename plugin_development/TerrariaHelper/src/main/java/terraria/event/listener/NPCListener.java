@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -23,6 +24,8 @@ import terraria.TerrariaHelper;
 import terraria.util.*;
 
 public class NPCListener implements Listener {
+    private static final String PLY_REFORGE_FUND_KEY = "misc.reforgeRefund";
+
     // some listeners to prevent bug
     @EventHandler(priority = EventPriority.HIGH)
     public void onInventoryClose(InventoryCloseEvent evt) {
@@ -99,6 +102,9 @@ public class NPCListener implements Listener {
         else if (btnID.equals("REFORGE")) {
             NPCHelper.openReforgeGui(ply, NPCViewing);
         }
+        else if (btnID.equals("REFUND")) {
+            refundReforgeCost(ply);
+        }
     }
     // below: secondary GUI (shop, reforge) features
     @EventHandler(priority = EventPriority.LOW)
@@ -146,6 +152,7 @@ public class NPCListener implements Listener {
                                     upperInventory.setItem(4, reforged);
                                     // money
                                     PlayerHelper.setMoney(ply, plyMoney - cost);
+                                    recordReforgeCost(ply, cost);
                                 }
                             }
                             // update reforge inventory now
@@ -245,5 +252,21 @@ public class NPCListener implements Listener {
                 break;
             }
         }
+    }
+
+    public static double getReforgeRefundAmount(Player ply) {
+        return PlayerHelper.getPlayerDataFile(ply).getDouble(PLY_REFORGE_FUND_KEY, 0d);
+    }
+
+    private static void recordReforgeCost(Player ply, double fund) {
+        ConfigurationSection section = PlayerHelper.getPlayerDataFile(ply);
+        section.set(PLY_REFORGE_FUND_KEY, getReforgeRefundAmount(ply) + fund * 0.2);
+    }
+
+    private static void refundReforgeCost(Player ply) {
+        ConfigurationSection section = PlayerHelper.getPlayerDataFile(ply);
+        PlayerHelper.setMoney(ply, PlayerHelper.getMoney(ply) + getReforgeRefundAmount(ply));
+        ply.getWorld().playSound(ply.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1f, 1f);
+        section.set(PLY_REFORGE_FUND_KEY, 0d);
     }
 }

@@ -10,7 +10,7 @@ worldGen:
     caveOctaves: 4
     railYCoordinate: 125
   opt:
-    chunkPrepDurationLog: true
+    chunkPrepDurationLog: false
     caveGenDurationLog: false
     caveSketchSize: 3
     caveSketchThreads: 4
@@ -34,7 +34,6 @@ optimization:
   projectileVelocityUpdateDistance: 96
   globalParticleDensity: 1.0
 tickCompensationSetting:
-  triggerThreshold: 5
-  fastestTickInterval: 45
-  decayFactor: 0.5
+  bufferThreshold: 1
+  bufferThresholdMax: 2
   bossFightOnly: true

@@ -228,6 +228,7 @@ public enum CustomEntities {
     NPC_GOBLIN_TINKERER     ("NPCGoblinTinkerer",      120, EntityType.VILLAGER,        EntityVillager.class,        TerrariaNPCGoblinTinkerer.class),
     NPC_GUIDE               ("NPCGuide",               120, EntityType.VILLAGER,        EntityVillager.class,        TerrariaNPCGuide.class),
     NPC_NURSE               ("NPCNurse",               120, EntityType.VILLAGER,        EntityVillager.class,        TerrariaNPCNurse.class),
+    NPC_BANDIT              ("NPCBandit",              120, EntityType.VILLAGER,        EntityVillager.class,        TerrariaNPCBandit.class),
     PLAYER_TORNADO          ("PlayerTornado",          55,  EntityType.SLIME,           EntitySlime.class,           PlayerTornado.class);
 
     private String name;
