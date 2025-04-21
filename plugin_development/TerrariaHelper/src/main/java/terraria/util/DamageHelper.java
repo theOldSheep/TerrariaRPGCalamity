@@ -25,6 +25,9 @@ import java.util.logging.Level;
 public class DamageHelper {
     public static final HashMap<String, DamageType> DAMAGE_TYPE_INTERNAL_NAME_MAPPING = new HashMap<>(30);
     private static final ArrayList<Consumer<DamageInfoBus>> DMG_CALLBACK_PIPELINE = new ArrayList();
+    public static final int DMG_HOLOGRAM_INTERVAL = TerrariaHelper.optimizationConfig.getInt("optimization.dmgHologramInterval", 5);
+    public static final int DPS_DISPLAY_INTERVAL = TerrariaHelper.optimizationConfig.getInt("optimization.dpsDisplayInterval", 3);
+
     // Initialize damage callbacks.
     static {
         // validations: whether the damage is applicable
@@ -1044,6 +1047,9 @@ public class DamageHelper {
                 case DROWNING:
                     displayDmg = false;
             }
+            // throttling
+            String throttlingTag = "temp_dmgHoloCD";
+            if (victim.getScoreboardTags().contains(throttlingTag)) displayDmg = false;
             if (displayDmg) {
                 String hologramInfo;
                 if (damageType == DamageType.DEBUFF)
@@ -1051,13 +1057,14 @@ public class DamageHelper {
                 else
                     hologramInfo = damageType.toString();
                 GenericHelper.displayHolo(victim, dmg, damageInfoBus.didCrit(), hologramInfo);
+                EntityHelper.handleEntityTemporaryScoreboardTag(victim, throttlingTag, DMG_HOLOGRAM_INTERVAL);
             }
 
             // track DPS for the damager player
             if (damageSource instanceof Player && damageTaker != damageSource) {
                 String vName = victim.getName();
                 double maxHealth = damageTaker.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-                trackDPS((Player) damageSource, vName, damageTaker.getHealth(), maxHealth, dmg, true);
+                trackDPS((Player) damageSource, vName, -1, damageTaker.getHealth(), maxHealth, dmg, true);
             }
 
             // handle invincibility ticks
@@ -1444,7 +1451,7 @@ public class DamageHelper {
                     health = 0;
                 }
                 if (damageSource instanceof Player)
-                    trackDPS((Player) damageSource, victim.getName(), health, maxHealth, damage, true);
+                    trackDPS((Player) damageSource, victim.getName(), -1, health, maxHealth, damage, true);
             }
             return null;
         }
@@ -1923,25 +1930,33 @@ public class DamageHelper {
     }
 
     // tracks the DPS and display the damage info to the player
-    private static void trackDPS(Player src, String victimName, double health, double maxHealth, double dmg, boolean beginOrEnd) {
+    private static void trackDPS(Player src, String victimName, int dpsVersion, double health, double maxHealth, double dmg, boolean beginOrEnd) {
         // update variables
+        int currVer = EntityHelper.getMetadata(src, EntityHelper.MetadataName.DPS_VERSION).asInt();
         int hits = EntityHelper.getMetadata(src, EntityHelper.MetadataName.DPS_HITS).asInt();
         double dmgTotal = EntityHelper.getMetadata(src, EntityHelper.MetadataName.DPS_DMG_TOTAL).asDouble();
+        // dps version mismatch, ignore this.
+        if (dpsVersion >= 0 && currVer != dpsVersion) return;
+
         int recordSign = beginOrEnd ? 1 : -1;
         hits += recordSign;
         dmgTotal += dmg * recordSign;
         EntityHelper.setMetadata(src, EntityHelper.MetadataName.DPS_HITS, hits);
         EntityHelper.setMetadata(src, EntityHelper.MetadataName.DPS_DMG_TOTAL, dmgTotal);
-        // send message etc.
+        // send message; remove this damage record later.
         if (beginOrEnd) {
+            String throttlingTag = "temp_DpsBarCD";
             int secInterval = Setting.getOptionInt(src, Setting.Options.DPS_DURATION);
-            double dps = dmgTotal / secInterval;
-            PlayerHelper.sendActionBar(src,
-                    String.format("§r%s §6[§a%.0f§6/§a%.0f§6] §b(-%.0f) §6[§a%d秒内%d次共%.0f§d|§a%.1f§dDPS§6]",
-                            victimName, health, maxHealth, dmg, secInterval, hits, dmgTotal, dps));
+            if (! src.getScoreboardTags().contains(throttlingTag)) {
+                double dps = dmgTotal / secInterval;
+                PlayerHelper.sendActionBar(src,
+                        String.format("§r%s §6[§a%.0f§6/§a%.0f§6] §b(-%.0f) §6[§a%d秒内%d次共%.0f§d|§a%.1f§dDPS§6]",
+                                victimName, health, maxHealth, dmg, secInterval, hits, dmgTotal, dps));
+                EntityHelper.handleEntityTemporaryScoreboardTag(src, throttlingTag, DPS_DISPLAY_INTERVAL);
+            }
             // plan to remove the info
             Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(),
-                    () -> trackDPS(src, victimName, health, maxHealth, dmg, false), secInterval * 20);
+                    () -> trackDPS(src, victimName, currVer, health, maxHealth, dmg, false), secInterval * 20L);
         }
     }
 

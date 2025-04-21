@@ -91,8 +91,9 @@ public class EntityHelper {
         DAMAGE_SOURCE("damageSourcePlayer"),
         DAMAGE_TAKER("damageTaker"),
         DAMAGE_TYPE("damageType"),
-        DPS_HITS("dpsHits"),
         DPS_DMG_TOTAL("dpsDmg"),
+        DPS_HITS("dpsHits"),
+        DPS_VERSION("dpsVersion"),
         DYNAMIC_DAMAGE_REDUCTION("dynamicDR"),
         EFFECTS("effects"),
         ENTITY_CURRENT_VELOCITY("eCurrVel"),
@@ -601,6 +602,10 @@ public class EntityHelper {
     }
 
     public static void knockback(Entity entity, Vector dir, boolean addOrReplace, double speedLimit, boolean ignoreKBR) {
+        // armor stands can not be moved around whatsoever.
+        if (entity instanceof ArmorStand) {
+            return;
+        }
         double kbMulti;
         if (ignoreKBR) {
             kbMulti = 1d;

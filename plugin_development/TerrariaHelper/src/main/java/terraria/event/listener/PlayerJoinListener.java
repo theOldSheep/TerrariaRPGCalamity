@@ -3,6 +3,7 @@ package terraria.event.listener;
 import net.minecraft.server.v1_12_R1.BossBattleServer;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -23,6 +24,7 @@ import terraria.util.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 
 public class PlayerJoinListener implements Listener {
@@ -75,6 +77,9 @@ public class PlayerJoinListener implements Listener {
         // give permission to show item in chat
         joinedPly.addAttachment(TerrariaHelper.getInstance())
                 .setPermission("chatitem.use", true);
+        // hint for settings/menu bar
+        joinedPly.sendMessage(ChatColor.GOLD + "输入/settings可以修改泰拉瑞亚相关设置");
+        joinedPly.sendMessage(ChatColor.GOLD + "点击物品栏中右下角菜单按钮可查看更多信息");
     }
 
 }

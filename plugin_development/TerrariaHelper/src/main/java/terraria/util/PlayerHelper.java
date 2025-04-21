@@ -1989,8 +1989,10 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, 0);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_NEXT_MINION_INDEX, 0);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_NEXT_SENTRY_INDEX, 0);
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.DPS_HITS, 0);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.DPS_DMG_TOTAL, 0d);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.DPS_HITS, 0);
+        MetadataValue dpsVersionLast = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.DPS_VERSION);
+        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.DPS_VERSION, dpsVersionLast == null ? 0 : dpsVersionLast.asInt() + 1);
         // object variables
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MINION_LIST, new ArrayList<Entity>());
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_SENTRY_LIST, new ArrayList<Entity>());

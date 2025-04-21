@@ -1,17 +1,12 @@
 package terraria.event.listener;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.metadata.MetadataValue;
-import sun.net.TelnetProtocolException;
 import terraria.util.EntityHelper;
 
 public class PlayerChatListener implements Listener {
