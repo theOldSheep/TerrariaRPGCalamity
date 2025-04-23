@@ -1881,9 +1881,10 @@ public class DamageHelper {
 
     public static Entity getDamageSource(Entity damager) {
         Entity source = damager;
-        if (source instanceof Projectile) {
+        while (source instanceof Projectile) {
             ProjectileSource shooter = ((Projectile) source).getShooter();
             if (shooter instanceof Entity) source = (Entity) shooter;
+            else break;
         }
         MetadataValue damageSourceMetadata = EntityHelper.getMetadata(source, EntityHelper.MetadataName.DAMAGE_SOURCE);
         if (damageSourceMetadata != null)
