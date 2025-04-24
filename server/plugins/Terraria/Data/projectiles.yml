@@ -1300,7 +1300,7 @@
 渎神邪水:
     liveTime: 60
     clusterBomb:
-        amount: 5
+        amount: 3
         damageMulti: 0.5
         name: 渎神邪水泡
         velocity: 1.2
@@ -1308,7 +1308,7 @@
     projDisguiseName: 渎神邪水
     liveTime: 60
     clusterBomb:
-        amount: 12
+        amount: 6
         damageMulti: 0.5
         name: 渎神邪水泡Ex
         velocity: 1.35
@@ -1350,7 +1350,7 @@
     clusterBomb:
         amount: 3
         damageMulti: 0.5
-        name: 渊海灾虫毒云
+        name: 腐蚀脊椎毒云
         velocity: 0.1
 驱魔十字架:
     projectileSize: 1.5
@@ -1372,7 +1372,7 @@
     projectileSize: 1
     gravity: 0
 燃爆瓶:
-    projectileSize: 0.5
+    projectileSize: 1
     isGrenade: true
     blastRadius: 2
     liveTime: 40
@@ -1397,41 +1397,38 @@
         name: 燃爆瓶
         velocity: 0.5
 瓶中尘:
-    projectileSize: 0.5
+    projectileSize: 0.75
     liveTime: 50
     clusterBomb:
-        amount: 8
+        amount: 3
         damageMulti: 0.5
         name: 瓶中沙尘
         velocity: 0.15
 瓶中尘Ex:
     projDisguiseName: 瓶中尘
-    projectileSize: 0.5
+    projectileSize: 0.75
     liveTime: 50
     clusterBomb:
-        amount: 24
+        amount: 10
         damageMulti: 0.65
         name: 瓶中沙尘
         velocity: 0.15
 瓶中沙尘:
-    projectileSize: 0.5
+    projectileSize: 0.75
     speedMultiPerTick: 0.99
     gravity: 0
     liveTime: 30
+    penetration: 1
+    enemyInvincibilityFrame: 10
     blockHitAction: thru
 咸水瓶:
-    projectileSize: 0.5
+    projectileSize: 1.5
     liveTime: 50
     buffInflict:
         - "剧毒|40|1"
-    clusterBomb:
-        amount: 4
-        damageMulti: 0.25
-        name: 水晶碎块
-        velocity: 0.5
 咸水瓶Ex:
     projDisguiseName: 咸水瓶
-    projectileSize: 0.5
+    projectileSize: 1.5
     liveTime: 50
     buffInflict:
         - "剧毒|40|1"
@@ -1496,7 +1493,7 @@
     clusterBomb:
         amount: 4
         damageMulti: 0.4
-        name: 毁灭裂片
+        name: 皇天星辰
         velocity: 2
 毁灭之星Ex:
     projDisguiseName: 毁灭之星
@@ -1509,9 +1506,9 @@
     clusterBomb:
         amount: 16
         damageMulti: 0.6
-        name: 毁灭裂片
+        name: 皇天星辰
         velocity: 2
-毁灭裂片:
+皇天星辰:
     projectileSize: 1
     liveTime: 80
     homing: true
@@ -1579,7 +1576,8 @@
         name: 半影之魂
         velocity: 2.25
 半影之魂:
-    projectileSize: 0.5
+    projDisguiseName: 半影飞弹
+    projectileSize: 2
     gravity: 0
     blockHitAction: thru
     liveTime: 100
@@ -1592,7 +1590,7 @@
     clusterBomb:
         amount: 1
         damageMulti: 3
-        name: 小型等离子手雷爆炸
+        name: 等离子手雷爆炸
         velocity: 0
 等离子手雷Ex:
     projDisguiseName: 等离子手雷
@@ -1603,25 +1601,25 @@
         damageMulti: 3
         name: 大型等离子手雷爆炸
         velocity: 0
-小型等离子手雷爆炸:
+等离子手雷爆炸:
     gravity: 0
     blockHitAction: thru
-    liveTime: 20
+    liveTime: 9
     projectileSize: 7.5
     penetration: 999999
     enemyInvincibilityFrame: 40
     worldSpriteMode: true
-    worldSpriteUpdateInterval: 2
+    worldSpriteUpdateInterval: 1
     spawnSound: item.exoblade.explode
     spawnSoundVolume: 10
 大型等离子手雷爆炸:
-    projDisguiseName: 小型等离子手雷爆炸
+    projDisguiseName: 等离子手雷爆炸
     gravity: 0
     blockHitAction: thru
-    liveTime: 20
+    liveTime: 18
     projectileSize: 10
     penetration: 999999
-    enemyInvincibilityFrame: 12
+    enemyInvincibilityFrame: 5
     worldSpriteMode: true
     worldSpriteUpdateInterval: 2
     spawnSound: item.exoblade.explode
@@ -1653,7 +1651,7 @@
         name: 超新星牵引
         velocity: 0
 超新星牵引:
-    projectileSize: 2
+    projectileSize: 3
     gravity: 0
     blockHitAction: thru
     penetration: 999999
@@ -1668,7 +1666,7 @@
     gravity: 0
     blockHitAction: thru
     penetration: 999999
-    liveTime: 20
+    liveTime: 12
     enemyInvincibilityFrame: 100
     worldSpriteMode: true
     worldSpriteUpdateInterval: 2
@@ -1678,10 +1676,10 @@
     gravity: 0
     blockHitAction: thru
     penetration: 999999
-    liveTime: 20
+    liveTime: 24
     enemyInvincibilityFrame: 100
     worldSpriteMode: true
-    worldSpriteUpdateInterval: 2
+    worldSpriteUpdateInterval: 4
     spawnSound: item.largeWeaponFire
 鱼骨回旋镖:
     projectileSize: 0.5
@@ -2875,7 +2873,7 @@
     clusterBomb:
         amount: 3
         damageMulti: 0.25
-        name: 毁灭裂片
+        name: 皇天星辰
         velocity: 2
 渎神投矛:
     blockHitAction: thru
@@ -3058,7 +3056,7 @@
     buffInflict:
         - "血液沸腾|200|1"
     clusterBomb:
-        amount: 30
+        amount: 45
         type: spread
         damageMulti: 0.05
         name: 绯红恶魔珠

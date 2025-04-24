@@ -2873,7 +2873,7 @@ Drew之翼:
     damageMulti: 0.15
     crit: 5
     regen: 2
-    minionLimit: 2
+    minionLimit: 1
     defence: 20
   worth: 28000000
   rarity: 14
@@ -8619,7 +8619,7 @@ Dodu的手炮:
     damageType: Rogue
     crit: 4
     knockback: 10
-    useTime: 40
+    useTime: 60
   worth: 16000000
   rarity: 9
 震波炸弹:
@@ -8676,7 +8676,7 @@ Dodu的手炮:
     damageType: Rogue
     crit: 4
     knockback: 3
-    useTime: 30
+    useTime: 60
   worth: 28000000
   rarity: 1100
 超新星:

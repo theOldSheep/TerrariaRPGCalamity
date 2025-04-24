@@ -262,14 +262,14 @@ effects:
     isBuff: false
     damageInterval: 4
     damage: 6
-    damageMonster: 225
+    damageMonster: 200
     attributes:
       regenMulti: -1
     snowStormParticle: burning
     tooltip: 被咆哮的火焰吞没
   超位崩解:
     isBuff: false
-    damageInterval: 2
+    damageInterval: 4
     damage: 8
     damageMonster: 250
     attributes:
@@ -278,8 +278,8 @@ effects:
     tooltip: 星流共振撕碎了组成你身体的物质
   解离:
     isBuff: false
-    damageInterval: 4
-    damage: 60
+    damageInterval: 5
+    damage: 25
     snowStormParticle: bleeding
     tooltip: 有人造了十把三尖匕首……
   流血:

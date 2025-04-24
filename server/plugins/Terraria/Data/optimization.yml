@@ -27,13 +27,15 @@ worldGen:
     gridSizeInPixels: 50
     outputFolder: worldGenDebug
 optimization:
-  projVelUpdItvNormal: 2
-  projVelUpdItvHoming: 2
-  projVelUpdItvAcceleration: 2
+  projVelUpdItvNormal: 10
+  projVelUpdItvHoming: 5
+  projVelUpdItvAcceleration: 5
   projVelUpdItvDragonFireball: 3
   projectileVelocityUpdateDistance: 96
   globalParticleDensity: 1.0
+  dmgHologramInterval: 3
+  dpsDisplayInterval: 3
 tickCompensationSetting:
-  bufferThreshold: 1
-  bufferThresholdMax: 2
+  bufferThreshold: 3
+  bufferThresholdMax: 4
   bossFightOnly: true

@@ -2461,8 +2461,6 @@ Dodu的手炮:
   type: GUN
   shots: 12
   offSet: 50
-  fireRounds: 2
-  fireRoundsDelay: 3
   autoSwing: true
 腐臭倾泻者:
   type: GUN
