@@ -1654,8 +1654,8 @@
     projectileSize: 3
     gravity: 0
     blockHitAction: thru
-    penetration: 999999
-    liveTime: 40
+    minimumDamageTicks: 999999
+    liveTime: 20
     clusterBomb:
         amount: 1
         damageMulti: 16
@@ -1706,7 +1706,7 @@
     projectileSize: 1
     gravity: 0
     spawnProjectiles:
-        interval: 3
+        interval: 4
         offset: 8
         spawnMechanism: ENEMY
         damageMulti: 0.5
@@ -1717,7 +1717,7 @@
     projectileSize: 1
     gravity: 0
     spawnProjectiles:
-        interval: 1
+        interval: 2
         offset: 12
         spawnMechanism: ENEMY
         damageMulti: 0.5
@@ -1749,6 +1749,7 @@
         velocity: 1.5
         fireOnCollideEntity: true
 追踪附魔飞斧:
+    projDisguiseName: 附魔飞斧
     projectileSize: 1
     gravity: 0
     liveTime: 60
@@ -1830,6 +1831,7 @@
         velocity: 1.75
         fireOnCollideEntity: true
 旋刃冰星:
+    projectileSize: 0.5
     blockHitAction: thru
     minimumDamageTicks: 2
     noHomingTicks: 2
@@ -1847,7 +1849,7 @@
     gravity: 0
     liveTime: 50
     clusterBomb:
-        amount: 10
+        amount: 6
         damageMulti: 0.25
         name: 硫火飞弹
         velocity: 2
@@ -1883,13 +1885,14 @@
     gravity: 0
     penetration: 999999
     spawnProjectiles:
-        interval: 2
+        interval: 4
         offset: 24
         spawnMechanism: ENEMY
-        damageMulti: 0.35
+        damageMulti: 0.5
         speed: 2
         spawnType: 迷你回春环刃
 迷你回春环刃:
+    projDisguiseName: 回春环刃
     projectileSize: 1.5
     gravity: 0
     liveTime: 50
@@ -1914,7 +1917,7 @@
     buffInflict:
         - "霜火|200|1"
     clusterBomb:
-        amount: 10
+        amount: 8
         damageMulti: 0.35
         name: 水晶碎块
         velocity: 0.6
@@ -1976,7 +1979,7 @@
     buffInflict:
         - "元素谐鸣|30|1"
     clusterBomb:
-        amount: 8
+        amount: 3
         damageMulti: 0.25
         name: 分裂元素飞盘
         velocity: 2
@@ -1989,12 +1992,13 @@
     buffInflict:
         - "元素谐鸣|300|1"
     clusterBomb:
-        amount: 8
+        amount: 6
         damageMulti: 0.25
         name: 分裂元素飞盘
         velocity: 2
         fireOnCollideEntity: true
 分裂元素飞盘:
+    projDisguiseName: 元素飞盘
     blockHitAction: thru
     projectileSize: 2
     gravity: 0
@@ -2094,7 +2098,7 @@
     buffInflict:
         - "弑神怒焰|60|1"
     spawnProjectiles:
-        interval: 3
+        interval: 5
         offset: 24
         spawnMechanism: ENEMY
         damageMulti: 0.35
@@ -2108,7 +2112,7 @@
     buffInflict:
         - "弑神怒焰|200|1"
     spawnProjectiles:
-        interval: 1
+        interval: 3
         offset: 24
         spawnMechanism: ENEMY
         damageMulti: 0.35
@@ -2133,7 +2137,7 @@
     homingRadius: 32
     noHomingTicks: 5
     spawnProjectiles:
-        interval: 3
+        interval: 5
         offset: 24
         spawnMechanism: ENEMY
         damageMulti: 0.2
@@ -2146,7 +2150,7 @@
     gravity: 0
     penetration: 4
     spawnProjectiles:
-        interval: 2
+        interval: 4
         offset: 24
         spawnMechanism: ENEMY
         damageMulti: 0.2
@@ -2159,7 +2163,7 @@
     buffInflict:
         - "超位崩解|30|1"
     clusterBomb:
-        amount: 3
+        amount: 1
         damageMulti: 0.5
         name: 星神幻影镰
         velocity: 2.5
@@ -2178,6 +2182,7 @@
         velocity: 2.5
         fireOnCollideEntity: true
 星神幻影镰:
+    projDisguiseName: 星神之杀
     blockHitAction: thru
     projectileSize: 3
     gravity: 0
@@ -2194,12 +2199,11 @@
     homingRadius: 48
     buffInflict:
         - "瘟疫|60|1"
-    spawnProjectiles:
-        interval: 3
-        spawnMechanism: SURROUND
-        damageMulti: 0.25
-        speed: 2.5
-        spawnType: 纳米黑能量刀刃
+    clusterBomb:
+        amount: 2
+        damageMulti: 0.35
+        name: 纳米能量刀刃
+        velocity: 2.5
 纳米黑死神Ex:
     projDisguiseName: 纳米黑死神
     blockHitAction: thru
@@ -2210,20 +2214,14 @@
     homingRadius: 48
     buffInflict:
         - "瘟疫|200|1"
-    spawnProjectiles:
-        interval: 2
-        spawnMechanism: SURROUND
-        damageMulti: 0.25
-        speed: 2.5
-        spawnType: 纳米黑能量刀刃
     clusterBomb:
         amount: 10
         damageMulti: 0.5
-        name: 纳米黑能量刀刃
+        name: 纳米能量刀刃
         velocity: 2.5
-纳米黑能量刀刃:
+纳米能量刀刃:
     blockHitAction: thru
-    projectileSize: 3
+    projectileSize: 2
     gravity: 0
     liveTime: 30
     homing: true
@@ -3169,7 +3167,7 @@
     blockHitAction: thru
     speedMultiPerTick: 0.85
     spawnProjectiles:
-        interval: 4
+        interval: 6
         spawnMechanism: SURROUND
         damageMulti: 1
         speed: 3
@@ -3202,7 +3200,7 @@
     blockHitAction: thru
     speedMultiPerTick: 0.85
     spawnProjectiles:
-        interval: 1
+        interval: 4
         offset: 80
         spawnMechanism: ENEMY
         damageMulti: 1
@@ -3718,7 +3716,8 @@
         - "中毒|80|1"
         - "剧毒|80|1"
 追踪纳米叶片:
-    projectileSize: 1
+    projDisguiseName: 纳米能量刀刃
+    projectileSize: 2
     minimumDamageTicks: 4
     homing: true
     homingSharpTurning: false
