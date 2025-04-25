@@ -2855,13 +2855,13 @@ Dodu的手炮:
     type: FLAIL
     projectile: 逐影飞盘
     velocity: 1.5
-    reach: 16
+    reach: 24
     canRotate: false
   stealth:
     type: FLAIL
     projectile: 逐影飞盘Ex
     velocity: 1.5
-    reach: 16
+    reach: 24
     canRotate: false
     returnOnHitBlock: false
 附魔飞斧:
@@ -2888,7 +2888,7 @@ Dodu的手炮:
     canRotate: false
   stealth:
     type: FLAIL
-    projectile: 回飞刃Ex
+    projectile: 回飞刃
     velocity: 3
     reach: 18
     canRotate: false

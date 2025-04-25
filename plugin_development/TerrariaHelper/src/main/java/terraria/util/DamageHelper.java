@@ -1160,7 +1160,7 @@ public class DamageHelper {
             this.damageReason = damageReason;
             this.debuffType = debuffType;
             this.initialDmg = initialDmg;
-            damageTaker = victim;
+            damageTaker = (LivingEntity) getDamageTaker(victim);
 
             victimAttrMap = AttributeHelper.getAttrMap(victim);
             damagerAttrMap = AttributeHelper.getAttrMap(damager);

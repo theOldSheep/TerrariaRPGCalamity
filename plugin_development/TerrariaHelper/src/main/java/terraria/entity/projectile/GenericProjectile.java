@@ -434,6 +434,7 @@ public class GenericProjectile extends EntityPotion {
             case "风暴管束者剑气":
             case "解封奇点":
             case "解封奇点Ex":
+            case "超新星小爆炸":
             case "超新星牵引":
             case "遗爵硫海漩涡":
             case "小遗爵硫海漩涡":
@@ -461,9 +462,14 @@ public class GenericProjectile extends EntityPotion {
                         suckSpeed = 0.75;
                         maxSpeed = 2;
                         break;
+                    case "超新星小爆炸":
+                        radius = 32;
+                        suckSpeed = 0.8;
+                        maxSpeed = 2.5;
+                        break;
                     case "超新星牵引":
-                        radius = 64;
-                        suckSpeed = 1;
+                        radius = 96;
+                        suckSpeed = 1.5;
                         maxSpeed = 4;
                         break;
                     case "遗爵硫海漩涡":
