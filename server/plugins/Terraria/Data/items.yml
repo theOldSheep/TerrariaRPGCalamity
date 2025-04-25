@@ -9063,7 +9063,7 @@ Dodu的手炮:
   prefixApplicable: false
   lore:
   - §r发射钨钢飞刀
-  - §r潜伏攻击会使飞刀飞得更远并迅速造成至多3次伤害
+  - §r潜伏攻击会使飞刀缓慢飞行，无视重力并迅速造成至多3次伤害
   attributes:
     damage: 18
     damageStealth: 20
@@ -9301,7 +9301,7 @@ Dodu的手炮:
     damageType: Rogue
     crit: 8
     knockback: 1.25
-    useTime: 5
+    useTime: 6
   worth: 16000000
   rarity: 8
 憎恶血刃:
@@ -9369,8 +9369,7 @@ Dodu的手炮:
   item: IRON_NUGGET
   prefixApplicable: false
   lore:
-  - §r投掷一支穿透投镖
-  - §r潜伏攻击无限穿透
+  - §r投掷一支小而致命的投镖
   attributes:
     damage: 760
     damageStealth: 950
@@ -9521,7 +9520,7 @@ Dodu的手炮:
     damageType: Rogue
     crit: 4
     knockback: 3.5
-    useTime: 24
+    useTime: 40
   worth: 7200000
   rarity: 5
 古岩投矛:

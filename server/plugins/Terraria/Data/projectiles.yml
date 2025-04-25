@@ -119,6 +119,7 @@
         # 若分裂方式为arc, 此项表示弧线单侧对应的圆心角（单位：角度）
         surroundMaxPitch: 30.0
         # 若分裂方式为surround, 分裂时距离撞击地点多远？默认10
+        # 若分裂方式为arc, 此项表示生成起始位置的距离（单位：格），此时默认为0
         surroundOffset: 10.0
         # 若分裂方式为arc, 分裂弹幕共有几条弧线？默认1
         arcAmount: 1
@@ -2237,9 +2238,9 @@
 钨钢飞刀Ex:
     projDisguiseName: 钨钢飞刀
     liveTime: 80
-    noGravityTicks: 10
+    gravity: 0
     penetration: 2
-    enemyInvincibilityFrame: 1
+    enemyInvincibilityFrame: 0
 镀金匕首:
     liveTime: 80
     noGravityTicks: 999999
@@ -2249,15 +2250,17 @@
     liveTime: 20
     noGravityTicks: 10
 晶体飞刀:
+    projectileSize: 0.75
     liveTime: 10
     noGravityTicks: 0
     clusterBomb:
-        amount: 3
+        amount: 2
         damageMulti: 0.5
         name: 晶体飞刀碎片
         velocity: 0.5
 晶体飞刀Ex:
     projDisguiseName: 晶体飞刀
+    projectileSize: 0.75
     liveTime: 10
     noGravityTicks: 0
     clusterBomb:
@@ -2266,6 +2269,8 @@
         name: 晶体飞刀
         velocity: 0.5
 晶体飞刀碎片:
+    projDisguiseName: 晶体飞刀
+    projectileSize: 0.75
     liveTime: 10
     noGravityTicks: 0
 狂菌根系:
@@ -2354,7 +2359,7 @@
         - "咒火|30|1"
 棱晶飞刀:
     liveTime: 10
-    projectileSize: 0.5
+    projectileSize: 1
     clusterBomb:
         amount: 5
         damageMulti: 0.35
@@ -2363,7 +2368,7 @@
 棱晶飞刀Ex:
     projDisguiseName: 棱晶飞刀
     liveTime: 15
-    projectileSize: 0.5
+    projectileSize: 1
     clusterBomb:
         amount: 8
         damageMulti: 0.35
@@ -2372,7 +2377,7 @@
 棱晶飞刀碎片:
     projDisguiseName: 棱晶飞刀
     liveTime: 10
-    projectileSize: 0.5
+    projectileSize: 1
     noGravityTicks: 0
 钴蓝苦无:
     liveTime: 50
@@ -2382,7 +2387,6 @@
     blockHitAction: thru
     homing: true
     homingRadius: 20
-    trailColor: 63|177|255
 秘银飞刀:
     liveTime: 50
     noGravityTicks: 8
@@ -2517,7 +2521,6 @@
     homingAbility: 5
     homingRadius: 24
     noHomingTicks: 6
-    trailColor: 164|101|124
 月明苦无Ex:
     projDisguiseName: 月明苦无
     blockHitAction: thru
@@ -2528,7 +2531,6 @@
     homingAbility: 6
     homingRadius: 24
     noHomingTicks: 4
-    trailColor: 151|247|221
 裂阳:
     blockHitAction: thru
     liveTime: 60
@@ -2537,7 +2539,7 @@
     buffInflict:
         - "神圣之火|60|1"
     clusterBomb:
-        amount: 3
+        amount: 2
         damageMulti: 0.35
         name: 裂阳刀刃
         velocity: 2
@@ -2550,7 +2552,7 @@
     buffInflict:
         - "神圣之火|200|1"
     clusterBomb:
-        amount: 8
+        amount: 5
         damageMulti: 0.35
         name: 裂阳刀刃
         velocity: 2.25
@@ -2569,14 +2571,7 @@
         - "神圣之火|40|1"
 龙蒿投镖:
     liveTime: 80
-    projectileSize: 2
-    penetration: 2
-    gravity: 0
-龙蒿投镖Ex:
-    projDisguiseName: 龙蒿投镖
-    liveTime: 80
-    projectileSize: 2
-    penetration: 999999
+    projectileSize: 1
     gravity: 0
 星体苦无:
     blockHitAction: thru
@@ -2656,9 +2651,9 @@
         amount: 7
         damageMulti: 0.5
         name: 炽天使光球
-        type: surround
+        type: arc
         surroundMaxPitch: 90
-        surroundOffset: 1
+        surroundOffset: 5
         velocity: 0
 炽天使光球:
     blockHitAction: thru
@@ -2717,6 +2712,7 @@
         name: 乱流旋风
         velocity: 1.5
 乱流旋风:
+    projDisguiseName: 瓶中沙尘
     projectileSize: 0.5
     liveTime: 40
     homing: true
@@ -2770,7 +2766,7 @@
     clusterBomb:
         amount: 1
         damageMulti: 0.35
-        name: 渊海灾虫沙爆
+        name: 腐蚀脊椎毒云
         velocity: 0.1
 渊海之灾Ex:
     projDisguiseName: 渊海之灾
@@ -2782,7 +2778,7 @@
     clusterBomb:
         amount: 3
         damageMulti: 0.35
-        name: 渊海灾虫沙爆
+        name: 腐蚀脊椎毒云
         velocity: 0.1
 古岩投矛:
     liveTime: 50
@@ -2814,7 +2810,6 @@
     homing: true
     homingRadius: 24
 命运之矛Ex:
-    projDisguiseName: 命运之矛
     blockHitAction: thru
     liveTime: 30
     projectileSize: 3
@@ -2934,7 +2929,7 @@
     projectileSize: 3
     gravity: 0
     clusterBomb:
-        amount: 4
+        amount: 2
         damageMulti: 0.25
         name: 日蚀之陨分裂矛
         type: star
@@ -3655,10 +3650,10 @@
         - "龙焰|80|1"
     clusterBomb:
         amount: 12
-        surroundMaxPitch: 180
         damageMulti: 0.75
         name: 巨龙之怒火球
         type: arc
+        surroundMaxPitch: 180
         fireOnTimeout: false
         velocity: 2.75
 焦锅:

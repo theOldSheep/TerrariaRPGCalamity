@@ -3170,7 +3170,7 @@ Dodu的手炮:
     projectileSpeed: 2.25
   stealth:
     projectile: 钨钢飞刀Ex
-    projectileSpeed: 2.25
+    projectileSpeed: 1
 镀金匕首:
   type: ROGUE
   normal:
@@ -3355,7 +3355,7 @@ Dodu的手炮:
     projectile: 龙蒿投镖
     projectileSpeed: 4.25
   stealth:
-    projectile: 龙蒿投镖Ex
+    projectile: 龙蒿投镖
     projectileSpeed: 4.25
 星体苦无:
   type: ROGUE

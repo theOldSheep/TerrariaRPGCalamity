@@ -317,9 +317,12 @@ public class ArrowHitListener implements Listener {
                             projectileSource, projectileDestroyLoc, new Vector(), attrMap, damageType, clusterName);
                     int arcAmount = clusterSection.getInt("arcAmount", 1);
                     double halfArcAngleDeg = clusterSection.getDouble("surroundMaxPitch", 30d);
+                    double dist = clusterSection.getDouble("surroundOffset", 0d);
                     for (Vector velocity : MathHelper.getCircularProjectileDirections(
-                            clusterAmount, arcAmount, halfArcAngleDeg, projectile.getVelocity(), clusterSpeed)) {
-                        shootInfo.velocity = velocity;
+                            clusterAmount, arcAmount, halfArcAngleDeg, projectile.getVelocity(), 1)) {
+                        shootInfo.velocity = velocity.clone().multiply(clusterSpeed);
+                        shootInfo.shootLoc = projectileDestroyLoc.clone().add(
+                                velocity.clone().multiply(dist));
                         EntityHelper.spawnProjectile(shootInfo);
                     }
                 }
