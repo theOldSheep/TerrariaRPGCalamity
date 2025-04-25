@@ -1,4 +1,5 @@
 import os
+import traceback
 from PIL import Image
 
 # https://stackoverflow.com/questions/41718892/pillow-resizing-a-gif
@@ -48,8 +49,8 @@ def extract_and_resize_frames(im, resize_to=None):
             If the GIF uses local colour tables, each frame will have its own palette.
             If not, we need to apply the global palette to the new frame.
             '''
-            if not im.getpalette():
-                im.putpalette(p)
+            # if not im.getpalette():
+            #     im.putpalette(p)
 
             new_frame = Image.new('RGBA', im.size)
 
@@ -105,6 +106,7 @@ def tile_image(input_dir, output_dir):
 
             except (OSError, ValueError) as e:
                 print(f"Error processing {filename}: {e}")
+                traceback.print_exception(e)
 
 # Example usage:
 image_dir = "rawimg"
