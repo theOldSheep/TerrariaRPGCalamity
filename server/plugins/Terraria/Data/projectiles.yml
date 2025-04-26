@@ -3076,7 +3076,7 @@
     bounceVelocityMulti: 0.25
     slowedByWater: true
 易碎金属球:
-    projectileSize: 0.5
+    projectileSize: 0.75
     blockHitAction: bounce
     liveTime: 100
     bounce: 999999
@@ -3089,7 +3089,7 @@
         velocity: 0.6
 易碎金属球Ex:
     projDisguiseName: 易碎金属球
-    projectileSize: 0.5
+    projectileSize: 0.75
     blockHitAction: bounce
     liveTime: 100
     bounce: 999999
@@ -3115,6 +3115,8 @@
         name: 小污泥斑点
         velocity: 0.6
 小污泥斑点:
+    projDisguiseName: 污泥斑点
+    projectileSize: 0.5
     noGravityTicks: 0
     liveTime: 20
     slowedByWater: true
@@ -3132,7 +3134,7 @@
     liveTime: 200
     blockHitAction: stick
     spawnProjectiles:
-        interval: 1
+        interval: 5
         offset: 32
         spawnMechanism: ENEMY
         damageMulti: 1
@@ -3298,8 +3300,10 @@
         velocity: 2
 精金投斧:
     liveTime: 50
+    projectileSize: 0.5
 精金投斧Ex:
     projDisguiseName: 精金投斧
+    projectileSize: 0.5
     liveTime: 60
     gravity: 0
 硫火飞爪:
@@ -3324,6 +3328,7 @@
         - "深渊水压|200|1"
 幻想符札:
     liveTime: 60
+    projectileSize: 0.5
     penetration: 999999
     enemyInvincibilityFrame: 999999
     gravity: 0
@@ -3337,6 +3342,7 @@
 幻想符札Ex:
     projDisguiseName: 幻想符札
     liveTime: 60
+    projectileSize: 0.5
     penetration: 999999
     enemyInvincibilityFrame: 999999
     gravity: 0
@@ -3676,6 +3682,7 @@
         name: 衍曜棱晶火箭
         velocity: 3
 衍曜旋刃Ex:
+    projDisguiseName: 衍曜旋刃
     projectileSize: 4
     blockHitAction: thru
     gravity: 0

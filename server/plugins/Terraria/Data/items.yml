@@ -14022,6 +14022,9 @@ Dodu的手炮:
   lore:
   - §r[装备]
   rarity: 0
+木护胫靴子:
+  item: CHAINMAIL_BOOTS
+  isDummyItem: true
 仙人掌头盔:
   item: CHAINMAIL_HELMET
   lore:
@@ -14046,6 +14049,9 @@ Dodu的手炮:
     defence: 2
   worth: 5000
   rarity: 0
+仙人掌护腿靴子:
+  item: CHAINMAIL_BOOTS
+  isDummyItem: true
 铜头盔:
   item: IRON_HELMET
   lore:
@@ -14073,6 +14079,9 @@ Dodu的手炮:
     speedMulti: 0.05
   worth: 15000
   rarity: 0
+铜护胫靴子:
+  item: IRON_BOOTS
+  isDummyItem: true
 铁头盔:
   item: IRON_HELMET
   lore:
@@ -14100,6 +14109,9 @@ Dodu的手炮:
     damageTakenMulti: -0.03
   worth: 80000
   rarity: 0
+铁护胫靴子:
+  item: IRON_BOOTS
+  isDummyItem: true
 钨钢战盔:
   item: IRON_HELMET
   lore:
@@ -14163,6 +14175,9 @@ Dodu的手炮:
     speedMulti: 0.05
   worth: 50000
   rarity: 1
+钨钢护胫靴子:
+  item: IRON_BOOTS
+  isDummyItem: true
 沙漠巡游者帽:
   item: IRON_HELMET
   lore:
@@ -14190,6 +14205,9 @@ Dodu的手炮:
     speedMulti: 0.1
   worth: 200000
   rarity: 1
+沙漠巡游者裤靴子:
+  item: IRON_BOOTS
+  isDummyItem: true
 白银头盔:
   item: IRON_HELMET
   lore:
@@ -14218,6 +14236,9 @@ Dodu的手炮:
     speedMulti: 0.08
   worth: 150000
   rarity: 0
+白银护胫靴子:
+  item: IRON_BOOTS
+  isDummyItem: true
 忍者头盔:
   item: CHAINMAIL_HELMET
   lore:
@@ -14245,6 +14266,9 @@ Dodu的手炮:
     crit: 3
   worth: 100000
   rarity: 1
+忍者护腿靴子:
+  item: CHAINMAIL_BOOTS
+  isDummyItem: true
 金头盔:
   item: GOLD_HELMET
   lore:
@@ -14272,6 +14296,9 @@ Dodu的手炮:
     speedMulti: 0.1
   worth: 400000
   rarity: 0
+金护胫靴子:
+  item: GOLD_BOOTS
+  isDummyItem: true
 丛林帽:
   item: IRON_HELMET
   lore:
@@ -14300,6 +14327,9 @@ Dodu的手炮:
     critMagic: 3
   worth: 600000
   rarity: 1
+丛林裤靴子:
+  item: IRON_BOOTS
+  isDummyItem: true
 胜潮贝盔:
   item: IRON_HELMET
   lore:
@@ -14364,6 +14394,9 @@ Dodu的手炮:
     speedMulti: 0.12
   worth: 400000
   rarity: 1
+胜潮护胫靴子:
+  item: IRON_BOOTS
+  isDummyItem: true
 黑曜石逃犯帽:
   item: IRON_HELMET
   lore:
@@ -14392,6 +14425,9 @@ Dodu的手炮:
     damageSummonMulti: 0.1
   worth: 90000
   rarity: 2
+黑曜石裤靴子:
+  item: IRON_BOOTS
+  isDummyItem: true
 流星头盔:
   item: DIAMOND_HELMET
   lore:
@@ -14419,6 +14455,9 @@ Dodu的手炮:
     damageMagicMulti: 0.08
   worth: 600000
   rarity: 2
+流星护腿靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 暗影头盔:
   item: DIAMOND_HELMET
   lore:
@@ -14446,6 +14485,9 @@ Dodu的手炮:
     crit: 5
   worth: 450000
   rarity: 2
+暗影护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 熔岩头盔:
   item: DIAMOND_HELMET
   lore:
@@ -14473,6 +14515,9 @@ Dodu的手炮:
     useSpeedMeleeMulti: 0.03
   worth: 600000
   rarity: 2
+熔岩护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 天蓝战盔:
   item: IRON_HELMET
   lore:
@@ -14577,6 +14622,9 @@ Dodu的手炮:
     damageRangedMulti: 0.1
   worth: 600000
   rarity: 3
+死灵护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 斯塔提斯战盔:
   item: IRON_HELMET
   lore:
@@ -14651,6 +14699,9 @@ Dodu的手炮:
     damageMulti: 0.05
   worth: 2400000
   rarity: 3
+斯塔提斯护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 钴头盔:
   item: DIAMOND_HELMET
   lore:
@@ -14701,6 +14752,9 @@ Dodu的手炮:
     damageMulti: 0.03
   worth: 900000
   rarity: 4
+钴护腿靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 蜘蛛面具:
   item: DIAMOND_HELMET
   lore:
@@ -14731,6 +14785,9 @@ Dodu的手炮:
     damageSummonMulti: 0.15
   worth: 750000
   rarity: 4
+蜘蛛护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 泰坦之心面具:
   item: DIAMOND_HELMET
   lore:
@@ -14762,6 +14819,9 @@ Dodu的手炮:
     critRogue: 3
   worth: 750000
   rarity: 4
+泰坦之心靴子靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 软壳贝盔:
   item: DIAMOND_HELMET
   lore:
@@ -14794,6 +14854,9 @@ Dodu的手炮:
     speedMulti: -0.07
   worth: 4800000
   rarity: 5
+软壳护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 水晶刺客兜帽:
   item: DIAMOND_HELMET
   lore:
@@ -14824,6 +14887,9 @@ Dodu的手炮:
     useSpeedMeleeMulti: 0.1
   worth: 2000000
   rarity: 5
+水晶刺客裤靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 秘银头盔:
   item: DIAMOND_HELMET
   lore:
@@ -14872,6 +14938,9 @@ Dodu的手炮:
     crit: 10
   worth: 1350000
   rarity: 4
+秘银护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 代达罗斯头盔:
   item: DIAMOND_HELMET
   lore:
@@ -14944,6 +15013,9 @@ Dodu的手炮:
     speedMulti: 0.1
   worth: 4800000
   rarity: 5
+代达罗斯护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 精金头盔:
   item: DIAMOND_HELMET
   lore:
@@ -14994,6 +15066,9 @@ Dodu的手炮:
     speedMulti: 0.05
   worth: 1800000
   rarity: 4
+精金护腿靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 寒霜头盔:
   item: DIAMOND_HELMET
   lore:
@@ -15023,6 +15098,9 @@ Dodu的手炮:
     useSpeedMeleeMulti: 0.1
   worth: 3000000
   rarity: 5
+寒霜护腿靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 神圣面具:
   item: DIAMOND_HELMET
   lore:
@@ -15083,6 +15161,9 @@ Dodu的手炮:
     damageMulti: 0.07
   worth: 3000000
   rarity: 5
+神圣护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 叶绿面具:
   item: DIAMOND_HELMET
   lore:
@@ -15134,6 +15215,9 @@ Dodu的手炮:
     speedMulti: 0.05
   worth: 3600000
   rarity: 7
+叶绿护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 日影兜帽:
   item: DIAMOND_HELMET
   lore:
@@ -15164,6 +15248,9 @@ Dodu的手炮:
     speedMulti: 0.2
   worth: 9600000
   rarity: 7
+日影靴子靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 硫火兜帽:
   item: DIAMOND_HELMET
   lore:
@@ -15196,6 +15283,9 @@ Dodu的手炮:
     speedMulti: 0.05
   worth: 9600000
   rarity: 7
+硫火靴子靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 掠夺者战盔:
   item: GOLD_HELMET
   lore:
@@ -15248,6 +15338,9 @@ Dodu的手炮:
     speedMulti: 0.12
   worth: 9600000
   rarity: 7
+掠夺者护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 幽灵兜帽:
   item: DIAMOND_HELMET
   lore:
@@ -15289,6 +15382,9 @@ Dodu的手炮:
     speedMulti: 0.08
   worth: 4500000
   rarity: 8
+幽灵裤靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 蘑菇矿头饰:
   item: DIAMOND_HELMET
   lore:
@@ -15340,6 +15436,9 @@ Dodu的手炮:
     speedMulti: 0.12
   worth: 4500000
   rarity: 8
+蘑菇矿护腿靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 阴森头盔:
   item: CHAINMAIL_HELMET
   lore:
@@ -15371,6 +15470,9 @@ Dodu的手炮:
     speedMulti: 0.2
   worth: 1000000
   rarity: 8
+阴森护腿靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 甲虫头盔:
   item: DIAMOND_HELMET
   lore:
@@ -15412,6 +15514,9 @@ Dodu的手炮:
     useSpeedMeleeMulti: 0.06
   worth: 3600000
   rarity: 8
+甲虫护腿靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 渊泉战盔:
   item: DIAMOND_HELMET
   lore:
@@ -15488,6 +15593,9 @@ Dodu的手炮:
     speedMulti: 0.1
   worth: 12000000
   rarity: 8
+渊泉战裙靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 瘟疫死神面罩:
   item: DIAMOND_HELMET
   lore:
@@ -15518,6 +15626,9 @@ Dodu的手炮:
     critRanged: 6
   worth: 12000000
   rarity: 8
+瘟疫死神长靴靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 星幻头盔:
   item: DIAMOND_HELMET
   lore:
@@ -15545,6 +15656,9 @@ Dodu的手炮:
     speedMulti: 0.1
   worth: 16000000
   rarity: 9
+星幻护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 耀斑头盔:
   item: DIAMOND_HELMET
   lore:
@@ -15575,6 +15689,9 @@ Dodu的手炮:
     useSpeedMeleeMulti: 0.15
   worth: 10500000
   rarity: 10
+耀斑护腿靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 星璇头盔:
   item: DIAMOND_HELMET
   lore:
@@ -15607,6 +15724,9 @@ Dodu的手炮:
     speedMulti: 0.1
   worth: 10500000
   rarity: 10
+星璇护腿靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 皇天面具:
   item: DIAMOND_HELMET
   lore:
@@ -15641,6 +15761,9 @@ Dodu的手炮:
     speedMulti: 0.15
   worth: 20000000
   rarity: 10
+皇天护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 星云头盔:
   item: DIAMOND_HELMET
   lore:
@@ -15673,6 +15796,9 @@ Dodu的手炮:
     speedMulti: 0.1
   worth: 10500000
   rarity: 10
+星云护腿靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 星尘头盔:
   item: DIAMOND_HELMET
   lore:
@@ -15703,6 +15829,9 @@ Dodu的手炮:
     damageSummonMulti: 0.27
   worth: 10500000
   rarity: 10
+星尘护腿靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 龙蒿战盔:
   item: DIAMOND_HELMET
   lore:
@@ -15791,6 +15920,9 @@ Dodu的手炮:
     speedMulti: 0.1
   worth: 24000000
   rarity: 12
+龙蒿护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 光棱头盔:
   item: DIAMOND_HELMET
   lore:
@@ -15834,6 +15966,9 @@ Dodu的手炮:
     speedMulti: 0.1
   worth: 24000000
   rarity: 12
+光棱护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 血碾溃阵盔:
   item: DIAMOND_HELMET
   lore:
@@ -15908,6 +16043,9 @@ Dodu的手炮:
     speedMulti: 0.17
   worth: 26000000
   rarity: 13
+血炎护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 蓝色欧米茄头盔:
   item: DIAMOND_HELMET
   lore:
@@ -15994,6 +16132,9 @@ Dodu的手炮:
     speedMulti: 0.05
   worth: 28000000
   rarity: 14
+弑神者腿甲靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 始源林海兜帽:
   item: DIAMOND_HELMET
   lore:
@@ -16038,6 +16179,9 @@ Dodu的手炮:
     speedMulti: 0.1
   worth: 28000000
   rarity: 14
+始源林海护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 金源耀日盔:
   item: DIAMOND_HELMET
   lore:
@@ -16112,6 +16256,9 @@ Dodu的手炮:
     crit: 5
   worth: 30000000
   rarity: 15
+古圣金源腿甲靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 天钻头饰:
   item: DIAMOND_HELMET
   lore:
@@ -16171,6 +16318,9 @@ Dodu的手炮:
     defence: 100
   worth: 100000000
   rarity: 16
+魔影护胫靴子:
+  item: DIAMOND_BOOTS
+  isDummyItem: true
 钱币槽:
   item: PAPER
   lore:
