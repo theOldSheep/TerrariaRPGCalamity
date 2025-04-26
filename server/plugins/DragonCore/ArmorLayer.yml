@@ -53,6 +53,9 @@
 钨钢头饰:
   match: "钨钢头饰"
   texture: "wulfrum/wulfrum_ranged"
+钨钢面具:
+  match: "钨钢面具"
+  texture: "wulfrum/wulfrum_rogue"
 钨钢兜帽:
   match: "钨钢兜帽"
   texture: "wulfrum/wulfrum_magic"
@@ -89,6 +92,9 @@
 胜潮瑚巾:
   match: "胜潮瑚巾"
   texture: "victide/victide_ranged"
+胜潮蟹盔:
+  match: "胜潮蟹盔"
+  texture: "victide/victide_rogue"
 胜潮隐帽:
   match: "胜潮隐帽"
   texture: "victide/victide_magic"
@@ -143,6 +149,9 @@
 天蓝兜帽:
   match: "天蓝兜帽"
   texture: "aerospec/aerospec_ranged"
+天蓝头套:
+  match: "天蓝头套"
+  texture: "aerospec/aerospec_rogue"
 天蓝帽:
   match: "天蓝帽"
   texture: "aerospec/aerospec_magic"
@@ -170,6 +179,9 @@
 斯塔提斯头饰:
   match: "斯塔提斯头饰"
   texture: "statigel/statigel_ranged"
+斯塔提斯面具:
+  match: "斯塔提斯面具"
+  texture: "statigel/statigel_rogue"
 斯塔提斯帽子:
   match: "斯塔提斯帽子"
   texture: "statigel/statigel_magic"
@@ -192,6 +204,15 @@
 蜘蛛护胫:
   match: "蜘蛛护胫"
   texture: "spider/spider"
+泰坦之心面具:
+  match: "泰坦之心面具"
+  texture: "titan_heart/titan_heart"
+泰坦之心斗篷:
+  match: "泰坦之心斗篷"
+  texture: "titan_heart/titan_heart"
+泰坦之心靴子:
+  match: "泰坦之心靴子"
+  texture: "titan_heart/titan_heart"
 软壳贝盔:
   match: "软壳贝盔"
   texture: "mollusk/mollusk"
@@ -246,6 +267,9 @@
 代达罗斯头罩:
   match: "代达罗斯头罩"
   texture: "daedalus/daedalus_ranged"
+代达罗斯面罩:
+  match: "代达罗斯面罩"
+  texture: "daedalus/daedalus_rogue"
 代达罗斯兜帽:
   match: "代达罗斯兜帽"
   texture: "daedalus/daedalus_magic"
@@ -306,6 +330,15 @@
 叶绿护胫:
   match: "叶绿护胫"
   texture: "chlorophyte/chlorophyte"
+日影兜帽:
+  match: "日影兜帽"
+  texture: "umbraphile/umbraphile"
+日影斗篷:
+  match: "日影斗篷"
+  texture: "umbraphile/umbraphile"
+日影靴子:
+  match: "日影靴子"
+  texture: "umbraphile/umbraphile"
 硫火兜帽:
   match: "硫火兜帽"
   texture: "brimflame/brimflame"
@@ -393,6 +426,9 @@
 渊泉头饰:
   match: "渊泉头饰"
   texture: "hydrothermic/hydrothermic_ranged"
+渊泉兜帽:
+  match: "渊泉兜帽"
+  texture: "hydrothermic/hydrothermic_rogue"
 渊泉面具:
   match: "渊泉面具"
   texture: "hydrothermic/hydrothermic_magic"
@@ -424,15 +460,6 @@
   match: "星幻护胫"
   texture: "astral/astral"
 # 月后护甲
-星云头盔:
-  match: "星云头盔"
-  texture: "nebula/nebula"
-星云胸甲:
-  match: "星云胸甲"
-  texture: "nebula/nebula"
-星云护腿:
-  match: "星云护腿"
-  texture: "nebula/nebula"
 耀斑头盔:
   match: "耀斑头盔"
   texture: "solar/solar"
@@ -442,15 +469,6 @@
 耀斑护腿:
   match: "耀斑护腿"
   texture: "solar/solar"
-星尘头盔:
-  match: "星尘头盔"
-  texture: "stardust/stardust"
-星尘板甲:
-  match: "星尘板甲"
-  texture: "stardust/stardust"
-星尘护腿:
-  match: "星尘护腿"
-  texture: "stardust/stardust"
 星璇头盔:
   match: "星璇头盔"
   texture: "vortex/vortex"
@@ -460,12 +478,42 @@
 星璇护腿:
   match: "星璇护腿"
   texture: "vortex/vortex"
+皇天面具:
+  match: "皇天面具"
+  texture: "empyrean/empyrean"
+皇天斗篷:
+  match: "皇天斗篷"
+  texture: "empyrean/empyrean"
+皇天护胫:
+  match: "皇天护胫"
+  texture: "empyrean/empyrean"
+星云头盔:
+  match: "星云头盔"
+  texture: "nebula/nebula"
+星云胸甲:
+  match: "星云胸甲"
+  texture: "nebula/nebula"
+星云护腿:
+  match: "星云护腿"
+  texture: "nebula/nebula"
+星尘头盔:
+  match: "星尘头盔"
+  texture: "stardust/stardust"
+星尘板甲:
+  match: "星尘板甲"
+  texture: "stardust/stardust"
+星尘护腿:
+  match: "星尘护腿"
+  texture: "stardust/stardust"
 龙蒿战盔:
   match: "龙蒿战盔"
   texture: "tarragon/tarragon_melee"
 龙蒿兜帽:
   match: "龙蒿兜帽"
   texture: "tarragon/tarragon_ranged"
+龙蒿头盔:
+  match: "龙蒿头盔"
+  texture: "tarragon/tarragon_rogue"
 龙蒿面具:
   match: "龙蒿面具"
   texture: "tarragon/tarragon_magic"
@@ -493,6 +541,9 @@
 血弑曲角盔:
   match: "血弑曲角盔"
   texture: "blood_flare/blood_flare_ranged"
+血饮魔精盔:
+  match: "血饮魔精盔"
+  texture: "blood_flare/blood_flare_rogue"
 血魇九头盔:
   match: "血魇九头盔"
   texture: "blood_flare/blood_flare_magic"
@@ -520,6 +571,9 @@
 弑神者头套:
   match: "弑神者头套"
   texture: "god_slayer/god_slayer_ranged"
+弑神者面具:
+  match: "弑神者面具"
+  texture: "god_slayer/god_slayer_rogue"
 弑神者胸甲:
   match: "弑神者胸甲"
   texture: "god_slayer/god_slayer"
@@ -544,6 +598,9 @@
 金兜铁面盔:
   match: "金兜铁面盔"
   texture: "auric_tesla/auric_tesla_ranged"
+金羽十杀盔:
+  match: "金羽十杀盔"
+  texture: "auric_tesla/auric_tesla_rogue"
 金虚万象盔:
   match: "金虚万象盔"
   texture: "auric_tesla/auric_tesla_magic"
