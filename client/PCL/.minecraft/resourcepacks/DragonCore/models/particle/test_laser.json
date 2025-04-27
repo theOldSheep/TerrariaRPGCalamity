@@ -1,0 +1,51 @@
+{
+	"format_version": "1.10.0",
+	"particle_effect": {
+		"description": {
+			"identifier": "snowstorm:test_laser",
+			"basic_render_parameters": {
+				"material": "particles_add",
+				"texture": "textures/particle/particles"
+			}
+		},
+		"components": {
+			"minecraft:emitter_initialization": {
+				"creation_expression": "variable.col = 50;variable.sz = 50;variable.sz_mul = 0.1;variable.len_mul = 0.15;",
+				"per_update_expression": "variable.len = ((variable.emitter_lifetime - math.mod(variable.emitter_lifetime, variable.col * variable.col * variable.col * variable.sz)) / (variable.col * variable.col * variable.col * variable.sz) * 0.5 * variable.len_mul);variable.r = ((math.mod(variable.emitter_lifetime, variable.col)) / (variable.col));variable.g = ((math.mod(variable.emitter_lifetime, variable.col * variable.col) - math.mod(variable.emitter_lifetime, variable.col)) / (variable.col * variable.col));variable.b = ((math.mod(variable.emitter_lifetime, variable.col * variable.col * variable.col) - math.mod(variable.emitter_lifetime, variable.col * variable.col)) / (variable.col * variable.col * variable.col));variable.s = ((math.mod(variable.emitter_lifetime, variable.col * variable.col * variable.col * variable.sz) - math.mod(variable.emitter_lifetime, variable.col * variable.col * variable.col)) / (variable.col * variable.col * variable.col) * variable.sz_mul);"
+			},
+			"minecraft:emitter_local_space": {
+				"position": true,
+				"rotation": true,
+				"velocity": true
+			},
+			"minecraft:emitter_rate_steady": {
+				"spawn_rate": "variable.len * 100",
+				"max_particles": "variable.len * 10"
+			},
+			"minecraft:emitter_lifetime_looping": {
+				"active_time": 413849950,
+				"sleep_time": 1
+			},
+			"minecraft:emitter_shape_box": {
+				"offset": ["variable.len", 0, 0],
+				"half_dimensions": ["variable.len", 0, 0]
+			},
+			"minecraft:particle_lifetime_expression": {
+				"max_lifetime": 1
+			},
+			"minecraft:particle_appearance_billboard": {
+				"size": ["variable.s", "variable.s"],
+				"facing_camera_mode": "rotate_xyz",
+				"uv": {
+					"texture_width": 128,
+					"texture_height": 128,
+					"uv": [48, 0],
+					"uv_size": [8, 8]
+				}
+			},
+			"minecraft:particle_appearance_tinting": {
+				"color": ["variable.r", "variable.g", "variable.b", 0.5]
+			}
+		}
+	}
+}
