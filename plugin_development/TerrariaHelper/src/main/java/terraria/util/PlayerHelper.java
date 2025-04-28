@@ -48,7 +48,7 @@ public class PlayerHelper {
     public static final String[] ARES_EXOSKELETON_WEAPON_NAMES =
             {"阿瑞斯离子加农炮", "阿瑞斯特斯拉加农炮", "阿瑞斯镭射加农炮", "阿瑞斯高斯核弹发射井"};
     public static final String[] GEM_TECH_GEMS = {
-            "黄色天钻宝石", "绿色天钻宝石", "紫色天钻宝石", "蓝色天钻宝石", "红色天钻宝石", "粉色天钻宝石"};
+            "黄色天钻宝石", "绿色天钻宝石", "红色天钻宝石", "紫色天钻宝石", "蓝色天钻宝石", "粉色天钻宝石"};
     public static final String TAG_HAS_SWITCHABLE_ACCESSORY = "temp_hasSwA", TAG_SWITCHED_SWITCHABLE_ACCESSORY = "temp_isSwAOn";
     static {
         // init default player attribute map
@@ -2306,13 +2306,6 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                             }
                             break;
                         }
-                        case "化绵留香石": {
-                            if (effectMap.containsKey("保护矩阵")) {
-                                AttributeHelper.tweakAttribute(ply, newAttrMap, "defence", "40", true);
-                                AttributeHelper.tweakAttribute(ply, newAttrMap, "damageTakenMulti", "-0.075", true);
-                            }
-                            break;
-                        }
                         case "嘉登之心": {
                             if (effectMap.containsKey("保护矩阵")) {
                                 AttributeHelper.tweakAttribute(ply, newAttrMap, "regen", "6", true);
@@ -2333,8 +2326,8 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                         case "魔能谐振仪": {
                             if (ply.getLevel() * 2 > getMaxMana(ply)) {
                                 AttributeHelper.tweakAttribute(ply, newAttrMap,
-                                        "regen", "6", false);
-                                negRegenCause.put(currAccType, 6d);
+                                        "regen", "3", false);
+                                negRegenCause.put(currAccType, 3d);
                             }
                             break;
                         }

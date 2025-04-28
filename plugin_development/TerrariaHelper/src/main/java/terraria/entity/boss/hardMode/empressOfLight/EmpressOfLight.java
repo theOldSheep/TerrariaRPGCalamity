@@ -440,7 +440,7 @@ public class EmpressOfLight extends EntitySlime {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
             handleEtherealLanceSingleDamage(location, 20, velocity,
                     MathHelper.getVectorYaw(velocity), MathHelper.getVectorPitch(velocity), new HashSet<>());
-        }, 30);
+        }, 10);
     }
     private void handleEtherealLanceSingleDamage(Location location, int ticksLeft, Vector direction,
                                                  double yaw, double pitch, HashSet<Entity> damageCD) {
@@ -578,6 +578,7 @@ public class EmpressOfLight extends EntitySlime {
         }
         // particle and strike options
         {
+            String particleSuffix = summonedDuringDay ? "_day" : "_night";
             particleLineOptionsSunDance = new GenericHelper.ParticleLineOptions()
                     .setVanillaParticle(false)
                     .setParticleColor(particleColor)
@@ -596,6 +597,7 @@ public class EmpressOfLight extends EntitySlime {
                     .setThruWall(true);
             particleLineOptionsLance = new GenericHelper.ParticleLineOptions()
                     .setVanillaParticle(false)
+                    .setParticleChar("boss/empress_lance" + particleSuffix)
                     .setParticleColor(particleColor)
                     .setTicksLinger(1);
             strikeLineOptionsLance = new GenericHelper.StrikeLineOptions()
@@ -603,9 +605,10 @@ public class EmpressOfLight extends EntitySlime {
                     .setThruWall(true);
             particleLineOptionsLanceWindup = new GenericHelper.ParticleLineOptions()
                     .setVanillaParticle(false)
+                    .setParticleChar("boss/empress_lance_windup" + particleSuffix)
                     .setParticleColor(particleColor)
                     .setTicksLinger(20)
-                    .setLength(32)
+                    .setLength(24)
                     .setWidth(0.1)
                     .setStepsize(0.5);
         }

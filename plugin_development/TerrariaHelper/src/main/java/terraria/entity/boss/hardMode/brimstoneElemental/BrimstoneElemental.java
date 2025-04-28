@@ -43,10 +43,12 @@ public class BrimstoneElemental extends EntitySlime {
                 .setLength(48)
                 .setWidth(0.1, false)
                 .setStepsize(2)
+                .setParticleChar("boss/brimstone_laser_hint")
                 .setParticleColor("255|100|150")
                 .setTicksLinger(1);
         rayParticleOption = new GenericHelper.ParticleLineOptions()
                 .setWidth(0.25)
+                .setParticleChar("boss/brimstone_laser")
                 .setParticleColor("255|50|50")
                 .setTicksLinger(20);
 

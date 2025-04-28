@@ -825,7 +825,7 @@ public class DamageHelper {
                     }
                     case "天钻套装": {
                         if (isDirectDmg) {
-                            int[] removeIndexOrder = {0, 4, 5};
+                            int[] removeIndexOrder = {0, 5};
                             switch (getDamageType(vPly)) {
                                 // ranged
                                 case ARROW:
@@ -833,13 +833,17 @@ public class DamageHelper {
                                 case ROCKET:
                                     removeIndexOrder[0] = 1;
                                     break;
+                                // rogue
+                                case ROGUE:
+                                    removeIndexOrder[0] = 2;
+                                    break;
                                 // magic
                                 case MAGIC:
-                                    removeIndexOrder[0] = 2;
+                                    removeIndexOrder[0] = 3;
                                     break;
                                 // summon
                                 case SUMMON:
-                                    removeIndexOrder[0] = 3;
+                                    removeIndexOrder[0] = 4;
                                     break;
                             }
                             // remove ONE gem, is possible.

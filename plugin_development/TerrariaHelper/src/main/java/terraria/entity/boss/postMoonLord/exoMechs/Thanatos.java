@@ -79,6 +79,8 @@ public class Thanatos extends EntitySlime {
                 .setThruWall(true)
                 .setParticleInfo(
                         new GenericHelper.ParticleLineOptions()
+                                .setVanillaParticle(false)
+                                .setParticleChar("boss/thanatos_final_laser")
                                 .setTicksLinger(1)
                                 .setIntensityMulti(0.5)
                                 .setParticleColor("255|255|255", "63|105|249"));

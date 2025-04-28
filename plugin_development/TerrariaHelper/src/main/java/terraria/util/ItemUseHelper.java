@@ -513,7 +513,7 @@ public class ItemUseHelper {
         // soul ring's special mana recovery
         if (quickBuffType == QuickBuffType.MANA) {
             if (PlayerHelper.getAccessories(ply).contains("灵魂之戒")) {
-                PlayerHelper.heal(ply, -50, false, "灵魂之戒");
+                PlayerHelper.heal(ply, -30, false, "灵魂之戒");
                 PlayerHelper.restoreMana(ply, 170);
                 applyManaPotionDebuff(ply, PlayerHelper.getAccessories(ply) );
                 return true;
@@ -4081,17 +4081,31 @@ public class ItemUseHelper {
                     default: {
                         // some attacks have extra handling
                         switch (projType) {
+                            case "憎恶血刃": {
+                                double healthConsumed = 10;
+                                double extraBaseDmg = healthConsumed * 0.4;
+                                PlayerHelper.heal(ply, -healthConsumed, false, projType);
+                                AttributeHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
+                                break;
+                            }
                             case "憎恶血刃Ex": {
                                 double healthConsumed = ply.getHealth() * 0.3;
                                 double extraBaseDmg = healthConsumed * 0.4;
-                                PlayerHelper.heal(ply, -healthConsumed);
+                                PlayerHelper.heal(ply, -healthConsumed, false, projType);
+                                AttributeHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
+                                break;
+                            }
+                            case "牺牲": {
+                                double healthConsumed = 15;
+                                double extraBaseDmg = healthConsumed * 0.75;
+                                PlayerHelper.heal(ply, -healthConsumed, false, projType);
                                 AttributeHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
                                 break;
                             }
                             case "牺牲Ex": {
                                 double healthConsumed = ply.getHealth() * 0.2;
                                 double extraBaseDmg = healthConsumed * 0.75;
-                                PlayerHelper.heal(ply, -healthConsumed);
+                                PlayerHelper.heal(ply, -healthConsumed, false, projType);
                                 AttributeHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
                                 break;
                             }

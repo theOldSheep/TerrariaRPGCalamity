@@ -286,7 +286,7 @@ public class ArrowHitListener implements Listener {
             attrMap.put("damage", projectileBaseDmg);
 
             // projectile basic info
-            Entity projectileSource = null;
+            Entity projectileSource = projectile;
             if (projectile.getShooter() instanceof Entity) projectileSource = (Entity) projectile.getShooter();
             DamageHelper.DamageType damageType = DamageHelper.getDamageType(projectile);
             // get a more precise location at the edge of the enemy's bounding box

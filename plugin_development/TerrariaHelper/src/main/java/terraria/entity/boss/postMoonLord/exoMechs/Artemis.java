@@ -67,6 +67,7 @@ public class Artemis extends EntitySlime {
                 .setParticleInfo(
                         new GenericHelper.ParticleLineOptions()
                                 .setVanillaParticle(false)
+                                .setParticleChar("boss/artemis_final_laser")
                                 .setTicksLinger(1)
                                 .setParticleColor("255|255|255", "236|122|16"));
     }

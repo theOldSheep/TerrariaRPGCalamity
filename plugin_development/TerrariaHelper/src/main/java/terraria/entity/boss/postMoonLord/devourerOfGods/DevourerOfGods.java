@@ -179,7 +179,7 @@ public class DevourerOfGods extends EntitySlime {
         AttackManager attackManager;
         if (stage == 0) {
             attackManager = new AttackManager(plugin, target, shootInfoLaser,
-                    FLYING_END_INDEX - FLYING_START_INDEX, 30, 2,
+                    FLYING_END_INDEX - FLYING_START_INDEX, 30, 3,
                     new DelayedWallAttackPattern(45, 5, 12, 0, DelayedWallAttackPattern.GRID),
                     new DelayedWallAttackPattern(45, 5, 12, 0, DelayedWallAttackPattern.GRID_SLANTED),
                     new CircleAttackPattern(16, 6, 0, 120)
@@ -196,7 +196,7 @@ public class DevourerOfGods extends EntitySlime {
             );
 
             AttackManager attackManagerExtra = new AttackManager(plugin, target, shootInfoFireball,
-                    FLYING_END_INDEX - FLYING_START_INDEX - 30, 60, 1,
+                    FLYING_END_INDEX - FLYING_START_INDEX - 30, 60, 2,
                     new ScatteringCircleAttackPattern(40, 16, 0, 16)
             );
             Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(), attackManagerExtra::start, 30);

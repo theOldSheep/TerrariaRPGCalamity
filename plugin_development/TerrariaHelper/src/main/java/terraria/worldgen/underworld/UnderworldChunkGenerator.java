@@ -87,7 +87,7 @@ public class UnderworldChunkGenerator extends ChunkGenerator {
     public static void tweakBiome(double[][] noise, BiomeGrid biome) {
         for (int i = 0; i < 16; i++)
             for (int j = 0; j < 16; j++) {
-                if (noise[i][j] > 0.5)
+                if (noise[i][j] > 0.25)
                     biome.setBiome(i, j, Biome.SAVANNA);
                 else
                     biome.setBiome(i, j, Biome.SAVANNA_ROCK);
@@ -110,11 +110,11 @@ public class UnderworldChunkGenerator extends ChunkGenerator {
 
                 // setup height info according to nearby biomes.
                 double brimstoneCragFactor = 0;
-                if (noise[i][j] > 0.4) {
-                    if (noise[i][j] > 0.6)
+                if (noise[i][j] > 0.2) {
+                    if (noise[i][j] > 0.4)
                         brimstoneCragFactor = 1d;
                     else
-                        brimstoneCragFactor = (noise[i][j] - 0.4) * 5;
+                        brimstoneCragFactor = (noise[i][j] - 0.2) * 5;
                 }
                 brimstoneCragFactor *= 0.5;
                 double underworldFactor = 1 - brimstoneCragFactor;

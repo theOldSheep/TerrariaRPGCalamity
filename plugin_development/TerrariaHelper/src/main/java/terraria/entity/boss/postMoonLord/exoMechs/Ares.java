@@ -45,6 +45,7 @@ public class Ares extends EntitySlime {
                 .setParticleInfo(
                         new GenericHelper.ParticleLineOptions()
                                 .setVanillaParticle(false)
+                                .setParticleChar("boss/ares_final_laser")
                                 .setTicksLinger(2)
                                 .setParticleColor("255|255|255", "191|246|145"));
     }

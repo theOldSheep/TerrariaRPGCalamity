@@ -321,7 +321,7 @@ public class GenericProjectile extends EntityPotion {
                 break;
             }
             case "牺牲Ex": {
-                double heal = (shooter.getMaxHealth() - shooter.getHealth()) * 0.1;
+                double heal = (shooter.getMaxHealth() - shooter.getHealth()) * 0.15;
                 PlayerHelper.heal( (LivingEntity) shooter.getBukkitEntity(), heal);
                 break;
             }
@@ -336,7 +336,8 @@ public class GenericProjectile extends EntityPotion {
             boolean isStealth = projectileScoreboardTags.contains("isStealth");
             // accessory on-hit
             if (accessories.contains("吸血鬼符咒")) {
-                PlayerHelper.heal(shooter, isStealth ? 5 : 1);
+                int healAmount = terraria.util.MathHelper.randomRound(isStealth ? 5 : 0.75);
+                if (healAmount > 0) PlayerHelper.heal(shooter, healAmount);
             }
             // stealth attack secondary projectiles
             boolean shouldTriggerSecondary = isStealth;

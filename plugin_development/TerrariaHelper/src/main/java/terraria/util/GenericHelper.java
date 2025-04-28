@@ -30,6 +30,7 @@ public class GenericHelper {
         double length, width, stepsize, intensityMulti;
         float alpha;
         int ticksLinger;
+        // Not using vanilla - if char is single char, it is the char rendered; otherwise it is snowstorm particle name.
         String particleChar;
         ArrayList<String> particleColor;
         ArrayList<Color> particleColorObjects;
@@ -372,10 +373,12 @@ public class GenericHelper {
     public static String getStringFromColor(Color color) {
         return color.getRed() + "|" + color.getGreen() + "|" + color.getBlue();
     }
+    // Parse color from R|G|B
     public static Color getColorFromString(String colorString) {
         String[] info = colorString.split("\\|");
         return Color.fromRGB(Integer.parseInt(info[0]), Integer.parseInt(info[1]), Integer.parseInt(info[2]));
     }
+    // Parse color list from a list of strings, used in particle display
     public static ArrayList<Color> getColorListFromStrings(List<String> colorStrings) {
         ArrayList<Color> colors = new ArrayList<>();
         if (colorStrings.get(0).equals("RAINBOW"))
@@ -385,6 +388,7 @@ public class GenericHelper {
         }
         return colors;
     }
+    // Get the interpolation color of color pivots
     public static Color getInterpolateColor(double progress, List<Color> allColors) {
         double colorProgress = progress * allColors.size();
         int colorIndex = (int) colorProgress;
@@ -404,6 +408,7 @@ public class GenericHelper {
         }
         return Color.fromRGB(rInt, gInt, bInt);
     }
+    // Rainbow colors
     public static Color getRainbowColor(long singleColorDuration) {
         long seed = Calendar.getInstance().getTimeInMillis();
         long internal = seed % singleColorDuration, phase = ((seed - internal) / singleColorDuration) % 3;
@@ -425,14 +430,19 @@ public class GenericHelper {
         }
         return Color.fromRGB(r, g, b);
     }
+    // Display particle line
     public static void handleParticleLine_particle(Vector vector, Location startLoc, ParticleLineOptions options) {
+        String particleCharacter = options.particleChar;
+        if (particleCharacter.length() > 1 && (! particleCharacter.startsWith("§")) ) {
+            handleParticleLine_snowstorm(vector, startLoc, options);
+            return;
+        }
         // variables copied from options
         double length = options.length;
         double width = options.width;
         double stepsize = options.stepsize;
         int ticksLinger = options.ticksLinger;
         float alpha = options.alpha;
-        String particleCharacter = options.particleChar;
         if (ticksLinger <= 0) return;
 
         Vector dVec = vector.clone().normalize();
@@ -481,6 +491,24 @@ public class GenericHelper {
             currLoc.add(dVec);
         }
     }
+    // Handle snowstorm particle
+    public static void handleParticleLine_snowstorm(Vector vector, Location startLoc, ParticleLineOptions options) {
+        // variables copied from options
+        double length = options.length;
+        double width = options.width;
+        double stepsize = options.stepsize;
+        int ticksLinger = options.ticksLinger;
+        String particleName = options.particleChar;
+
+        DragoncoreHelper.DragonCoreParticleInfo particleInfo = new DragoncoreHelper.DragonCoreParticleInfo(particleName, startLoc);
+
+        double rotateY = -(float) MathHelper.getVectorYaw(vector) + 90;
+        double rotateZ = (float) MathHelper.getVectorPitch(vector);
+        particleInfo.setRotationalInfo(String.format("0,%f,%f", rotateY, rotateZ));
+
+        DragoncoreHelper.displayBlizzardParticle(particleInfo, ticksLinger);
+    }
+
     // helper function for handle strike line. This only handles damage.
     private static Location handleStrikeLineDamage(World wld, Location startLoc, Location terminalLoc, double width,
                                                com.google.common.base.Predicate<? super net.minecraft.server.v1_12_R1.Entity> predication,

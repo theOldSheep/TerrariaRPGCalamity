@@ -9,7 +9,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import terraria.TerrariaHelper;
 
+import javax.swing.plaf.TableHeaderUI;
 import java.util.UUID;
 import java.util.function.Predicate;
 
@@ -56,6 +58,9 @@ public class DragoncoreHelper {
         public void setUID(UUID newUid) {
             this.uid = newUid;
             this.uidInfo = this.uid.toString();
+        }
+        public void setRotationalInfo(String newRot) {
+            this.rotationalInfo = newRot;
         }
     }
 
