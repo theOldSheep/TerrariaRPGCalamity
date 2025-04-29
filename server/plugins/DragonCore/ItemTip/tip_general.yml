@@ -3,12 +3,16 @@ match: "§2§3§3§r"
 priority: 0
 Functions:
   preRender: |-
+    界面变量.scale = 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size');
+    界面变量.cw = 界面变量.w * 界面变量.scale;
+    界面变量.ch = 界面变量.h * 界面变量.scale;
     界面变量.alpha = 0.85 + (0.15 * 方法.sin(方法.取当前时间() * 0.00314));
-    (界面变量.y + tip.height+40>h)?{
-      界面变量.y = h-tip.height-40;
+    界面变量.border = 1 + 4 * 界面变量.scale;
+    (界面变量.y + 界面变量.ch + 界面变量.border > h)?{
+      界面变量.y = h - 界面变量.ch - 界面变量.border;
     }:0;
-    (界面变量.x + tip.width+40>w)?{
-      界面变量.x = w-tip.width-40;
+    (界面变量.x + 界面变量.cw + 界面变量.border > w)?{
+      界面变量.x = w - 界面变量.cw - 界面变量.border;
     }:0;
 
 # 变量列表
@@ -24,6 +28,7 @@ Functions:
 
 itemname:
   type: label
-  x: 界面变量.x+4
-  y: 界面变量.y+4
+  x: 界面变量.x + 4 * 界面变量.scale
+  y: 界面变量.y + 4 * 界面变量.scale
   texts: "界面变量.lines"
+  scale: 界面变量.scale

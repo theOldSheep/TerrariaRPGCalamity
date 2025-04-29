@@ -98,11 +98,17 @@ Functions:
     界面变量.r_c = 界面变量.r_c_temp == 89 ? 'FF0011' : 界面变量.r_c;
     界面变量.color = 方法.合并文本('&#', 界面变量.r_c, '&l', 方法.去颜色(界面变量.lines[0]));
     界面变量.alpha = 0.6 + (0.4 * 方法.sin(方法.取当前时间() * 0.00314));
-    (界面变量.y + tip.height+40>h)?{
-      界面变量.y = h-tip.height-40;
+
+    界面变量.scale = 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size');
+    界面变量.cw = 界面变量.w * 界面变量.scale;
+    界面变量.ch = 界面变量.h * 界面变量.scale;
+    界面变量.alpha = 0.85 + (0.15 * 方法.sin(方法.取当前时间() * 0.00314));
+    界面变量.border = 1 + 17 * 界面变量.scale;
+    (界面变量.y + 界面变量.ch + 界面变量.border > h)?{
+      界面变量.y = h - 界面变量.ch - 界面变量.border;
     }:0;
-    (界面变量.x + tip.width+40>w)?{
-      界面变量.x = w-tip.width-40;
+    (界面变量.x + 界面变量.cw + 界面变量.border > w)?{
+      界面变量.x = w - 界面变量.cw - 界面变量.border;
     }:0;
 
 # 变量列表
@@ -118,88 +124,90 @@ Functions:
 
 背景:
   type: texture
-  x: 界面变量.x+12
-  y: 界面变量.y+12
-  width : 界面变量.w
-  height: 界面变量.ih
+  x: 界面变量.x + 12 * 界面变量.scale
+  y: 界面变量.y + 12 * 界面变量.scale
+  width : 界面变量.w * 界面变量.scale
+  height: 界面变量.ih * 界面变量.scale
   texture:  tip/背景.png
   alpha: 0.95
 左上角:
   type: texture
-  x : 界面变量.x+7
-  y : 界面变量.y+7
-  width : 5
-  height: 5
+  x : 界面变量.x + 7 * 界面变量.scale
+  y : 界面变量.y + 7 * 界面变量.scale
+  width : 5 * 界面变量.scale
+  height: 5 * 界面变量.scale
   texture:  tip/左上角.png
   alpha: 0.95
 右上角:
   type: texture
-  x : 界面变量.x+12+界面变量.w
-  y : 界面变量.y+7
-  width : 5
-  height: 5
+  x : 界面变量.x + (12 + 界面变量.w) * 界面变量.scale
+  y : 界面变量.y + 7 * 界面变量.scale
+  width : 5 * 界面变量.scale
+  height: 5 * 界面变量.scale
   texture:  tip/右上角.png
   alpha: 0.95
 左下角:
   type: texture
-  x : 界面变量.x+7
-  y : 界面变量.y+12+界面变量.ih
-  width : 5
-  height: 5
+  x : 界面变量.x + 7 * 界面变量.scale
+  y : 界面变量.y + (12 + 界面变量.ih) * 界面变量.scale
+  width : 5 * 界面变量.scale
+  height: 5 * 界面变量.scale
   texture:  tip/左下角.png
   alpha: 0.95
 右下角:
   type: texture
-  x : 界面变量.x+12+界面变量.w
-  y : 界面变量.y+12+界面变量.ih
-  width : 5
-  height: 5
+  x : 界面变量.x + (12 + 界面变量.w) * 界面变量.scale
+  y : 界面变量.y + (12 + 界面变量.ih) * 界面变量.scale
+  width : 5 * 界面变量.scale
+  height: 5 * 界面变量.scale
   texture:  tip/右下角.png
   alpha: 0.95
 
 左边:
   type: texture
-  x : 界面变量.x+7
-  y : 界面变量.y+12
-  width : 5
-  height: 界面变量.ih
+  x : 界面变量.x + 7 * 界面变量.scale
+  y : 界面变量.y + 12 * 界面变量.scale
+  width : 5 * 界面变量.scale
+  height: 界面变量.ih * 界面变量.scale
   texture:  tip/左边.png
   alpha: 0.95
 右边:
   type: texture
-  x : 界面变量.x+12+界面变量.w
-  y : 界面变量.y+12
-  width : 5
-  height: 界面变量.ih
+  x : 界面变量.x + (12 + 界面变量.w) * 界面变量.scale
+  y : 界面变量.y + 12 * 界面变量.scale
+  width : 5 * 界面变量.scale
+  height: 界面变量.ih * 界面变量.scale
   texture:  tip/右边.png
   alpha: 0.95
 上边:
   type: texture
-  x : 界面变量.x+12
-  y : 界面变量.y+7
-  width : 界面变量.w
-  height: 5
+  x : 界面变量.x + 12 * 界面变量.scale
+  y : 界面变量.y + 7 * 界面变量.scale
+  width : 界面变量.w * 界面变量.scale
+  height: 5 * 界面变量.scale
   texture:  tip/上边.png
   alpha: 0.955
 下边:
   type: texture
-  x : 界面变量.x+12
-  y : 界面变量.y+12+界面变量.ih
-  width : 界面变量.w
-  height: 5
+  x : 界面变量.x + 12 * 界面变量.scale
+  y : 界面变量.y + (12 + 界面变量.ih) * 界面变量.scale
+  width : 界面变量.w * 界面变量.scale
+  height: 5 * 界面变量.scale
   texture:  tip/下边.png
   alpha: 0.95
 
 
 itemname:
   type: label
-  x: 界面变量.x+12
-  y: 界面变量.y+12
+  x: 界面变量.x + 12 * 界面变量.scale
+  y: 界面变量.y + 12 * 界面变量.scale
   # 彩虹色物品名
   texts: "界面变量.color"
   alpha: 界面变量.alpha
+  scale: 界面变量.scale
 tip:
   type: label
-  x: 界面变量.x+12
-  y: 界面变量.y+22
+  x: 界面变量.x + 12 * 界面变量.scale
+  y: 界面变量.y + 22 * 界面变量.scale
   texts: "界面变量.lores"
+  scale: 界面变量.scale
