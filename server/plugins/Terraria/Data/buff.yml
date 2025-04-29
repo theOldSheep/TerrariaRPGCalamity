@@ -356,12 +356,11 @@ effects:
     attributes:
       ammoConsumptionRate: -0.2
     tooltip: 20%概率不消耗弹药
-  箭术:
+  射术:
     isBuff: true
     attributes:
-      projectileSpeedArrowMulti: 0.2
-      damageArrowMulti: 0.05
-    tooltip: 箭矢伤害增加5%，箭矢速度增加20%
+      damageRangedMulti: 0.05
+    tooltip: 远程伤害增加5%
   战斗:
     isBuff: true
     attributes:
@@ -418,11 +417,11 @@ effects:
     attributes:
       damageMagicMulti: 0.1
     tooltip: 魔法伤害增加 10%
-  魔力再生:
+  魔力掌控:
     isBuff: true
     attributes:
-      manaRegen: 10
-    tooltip: 魔力再生速度增加
+      manaUseMulti: -0.1
+    tooltip: 魔力消耗减少 10%
   黑曜石皮:
     isBuff: true
     tooltip: 免疫岩浆和燃烧
@@ -757,6 +756,16 @@ effects:
   绿色天钻宝石冷却:
     isBuff: false
     tooltip: 绿色天钻宝石破碎了！
+  红色天钻宝石:
+    isBuff: true
+    attributes:
+        stealthLimit: 130
+        damageRogueMulti: 0.5
+        critRogue: 16
+    tooltip: 盗贼属性大幅提高
+  红色天钻宝石冷却:
+    isBuff: false
+    tooltip: 红色天钻宝石破碎了！
   紫色天钻宝石:
     isBuff: true
     attributes:
@@ -770,27 +779,20 @@ effects:
   蓝色天钻宝石:
     isBuff: true
     attributes:
-        damageSummonMulti: 0.72
-        minionLimit: 6
+        damageSummonMulti: 0.3
+        minionLimit: 4
         minionDamagePenaltyFactor: 0.5
     tooltip: 召唤属性大幅提高
   蓝色天钻宝石冷却:
     isBuff: false
     tooltip: 蓝色天钻宝石破碎了！
-  红色天钻宝石:
+  粉色天钻宝石:
     isBuff: true
     attributes:
         defence: 150
         damageTakenMulti: -0.12
-    tooltip: 防御属性大幅提高
-  红色天钻宝石冷却:
-    isBuff: false
-    tooltip: 红色天钻宝石破碎了！
-  粉色天钻宝石:
-    isBuff: true
-    attributes:
         flightTimeMulti: 0.4
-        regen: 8
+        regen: 6
         invulnerabilityTick: 10
     tooltip: 杂项属性大幅提高
   粉色天钻宝石冷却:

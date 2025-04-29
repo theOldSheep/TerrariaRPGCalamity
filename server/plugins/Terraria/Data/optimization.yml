@@ -33,8 +33,8 @@ optimization:
   projVelUpdItvDragonFireball: 3
   projectileVelocityUpdateDistance: 96
   globalParticleDensity: 1.0
-  dmgHologramInterval: 3
-  dpsDisplayInterval: 3
+  dmgHologramInterval: 1
+  dpsDisplayInterval: 1
 tickCompensationSetting:
   bufferThreshold: 3
   bufferThresholdMax: 4

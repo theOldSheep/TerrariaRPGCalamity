@@ -49,6 +49,7 @@ public class Setting {
         PARTICLE_DENSITY_MULTI("普通粒子效果密度；取值范围<min>~<max>，默认值为<def>", 0.1d, 3d, 1d),
         UI_SIZE("UI（背包，快捷栏，生命值，魔力值等）大小；取值范围<min>~<max>，默认值为<def>", 0.25d, 1.5d, 1d),
         // gameplay
+        ENABLE_DOUBLE_CLICK_DASH("是否允许双击一个方向进行冲刺（不影响冲刺按键），默认值为<def>", true),
         AIM_HELPER_ACCELERATION("辅助瞄准功能是否考虑敌人加速度，默认值为<def>", true),
         AIM_HELPER_DISTANCE("辅助瞄准功能索敌最大距离（单位：格）；取值范围<min>~<max>，默认值为<def>", 32d, 96d, 96d),
         AIM_HELPER_RADIUS("辅助瞄准功能索敌最大范围（单位：格）；取值范围<min>~<max>，默认值为<def>", 0d, 15d, 5d),
@@ -63,6 +64,7 @@ public class Setting {
         CONTROL_S("后退按键，默认为[<def>]", "S"),
         CONTROL_D("向右移动按键，默认为[<def>]", "D"),
         CONTROL_SPACE("跳跃/飞行按键，默认为[<def>]", "SPACE"),
+        CONTROL_DASH("一键冲刺按键，默认为[<def>]", "Z"),
         CONTROL_MOUNT("坐骑开关按键，默认为[<def>]", "R"),
         CONTROL_HOOK("发射钩爪按键，默认为[<def>]", "F"),
         CONTROL_INSIGNIA("进升证章按键，默认为[<def>]", "X"),

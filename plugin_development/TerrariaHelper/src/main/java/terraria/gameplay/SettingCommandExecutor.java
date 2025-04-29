@@ -86,7 +86,8 @@ public class SettingCommandExecutor implements CommandExecutor, TabCompleter {
                                 new Setting.PendingKeyBind(player, option);
                                 player.sendMessage(ChatColor.GOLD + "请按下您想要绑定的按键。您可以转动视角来取消按键绑定。");
                                 player.sendMessage(ChatColor.GOLD + String.format(
-                                        "目前按键设置 [%s] 的绑定按键为： [%s]", option, Setting.getOptionString(player, option)) );
+                                        "按键设置 [%s] 的默认按键为： [%s]，当前绑定按键为： [%s]",
+                                        option, option.defaultVal, Setting.getOptionString(player, option)) );
                             }
                             else {
                                 // explain the option if the user did not specify the new value

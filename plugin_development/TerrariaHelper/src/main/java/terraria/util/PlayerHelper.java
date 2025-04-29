@@ -313,13 +313,32 @@ public class PlayerHelper {
         }
         return (Vector) mtv.value();
     }
+
+    /**
+     * Returns the player's moving direction (yaw).
+     * RETURNS 1e9 IF PLAYER IS NOT MOVING.
+     * @param ply The player
+     * @return The moving direction, yaw
+     */
     public static double getPlayerMoveYaw(Player ply) {
         HashSet<String> allKeysPressed = getPlayerKeyPressed(ply);
+        return getPlayerMoveYaw(ply, allKeysPressed);
+    }
+
+    /**
+     * Returns the player's moving direction (yaw), with the specified pressed keys.
+     * RETURNS 1e9 IF PLAYER IS NOT MOVING.
+     * @param ply The player
+     * @param keysPressed The keys being pressed
+     * @return The derived moving direction, yaw
+     */
+    public static double getPlayerMoveYaw(Player ply, Collection<String> keysPressed) {
         String movementKeyDown = "";
-        boolean fwd = allKeysPressed.contains( Setting.getOptionString(ply, Setting.Options.CONTROL_W) ),
-                rev = allKeysPressed.contains( Setting.getOptionString(ply, Setting.Options.CONTROL_S) ),
-                lft = allKeysPressed.contains( Setting.getOptionString(ply, Setting.Options.CONTROL_A) ),
-                rt = allKeysPressed.contains( Setting.getOptionString(ply, Setting.Options.CONTROL_D) );
+        // Get moving direction
+        boolean fwd = keysPressed.contains( Setting.getOptionString(ply, Setting.Options.CONTROL_W) ),
+                rev = keysPressed.contains( Setting.getOptionString(ply, Setting.Options.CONTROL_S) ),
+                lft = keysPressed.contains( Setting.getOptionString(ply, Setting.Options.CONTROL_A) ),
+                rt = keysPressed.contains( Setting.getOptionString(ply, Setting.Options.CONTROL_D) );
         if (fwd && !rev)
             movementKeyDown += "W";
         else if (rev && !fwd)
@@ -328,15 +347,8 @@ public class PlayerHelper {
             movementKeyDown += "A";
         else if (rt && !lft)
             movementKeyDown += "D";
-        return getPlayerMoveYaw(ply, movementKeyDown);
-    }
-    public static double getPlayerMoveYaw(Player ply, String movementKeyDown) {
-        movementKeyDown = movementKeyDown.replace(Setting.getOptionString(ply, Setting.Options.CONTROL_W), "W");
-        movementKeyDown = movementKeyDown.replace(Setting.getOptionString(ply, Setting.Options.CONTROL_A), "A");
-        movementKeyDown = movementKeyDown.replace(Setting.getOptionString(ply, Setting.Options.CONTROL_S), "S");
-        movementKeyDown = movementKeyDown.replace(Setting.getOptionString(ply, Setting.Options.CONTROL_D), "D");
 
-        double horizontalMoveYaw = ((CraftPlayer) ply).getHandle().yaw;
+        double horizontalMoveYaw = ply.getLocation().getYaw();
         switch (movementKeyDown) {
             case "":
                 horizontalMoveYaw = 1e9;

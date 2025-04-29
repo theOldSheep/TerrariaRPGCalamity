@@ -2463,7 +2463,7 @@
     liveTime: 60
     projectileSize: 1
     gravity: 0
-    healOnHit: 5
+    healOnHit: 10
     buffInflict:
         - "血液沸腾|60|1"
 憎恶血刃Ex:
@@ -2472,7 +2472,7 @@
     liveTime: 80
     projectileSize: 1
     gravity: 0
-    healOnHit: 100
+    healOnHit: 180
     buffInflict:
         - "血液沸腾|200|1"
 光辉星剑:
@@ -2678,7 +2678,7 @@
     liveTime: 30
     projectileSize: 2
     gravity: 0
-    healOnHit: 5
+    healOnHit: 15
 牺牲Ex:
     projDisguiseName: 牺牲
     blockHitAction: thru

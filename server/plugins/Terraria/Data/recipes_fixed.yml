@@ -22,189 +22,189 @@ categoryOrder:
 - TOOL
 - BLOCK
 FURNACE:
-  '1':
+  1:
     requireLevel: 1
     resultItem: 铜锭
     requireItem:
     - 铜矿石:4
     recipeCategory: MATERIAL
-  '2':
+  2:
     requireLevel: 1
     resultItem: 铁锭
     requireItem:
     - 铁矿石:4
     recipeCategory: MATERIAL
-  '3':
+  3:
     requireLevel: 1
     resultItem: 银锭
     requireItem:
     - 银矿石:5
     recipeCategory: MATERIAL
-  '4':
+  4:
     requireLevel: 1
     resultItem: 金锭
     requireItem:
     - 金矿石:5
     recipeCategory: MATERIAL
-  '5':
+  5:
     requireLevel: 1
     resultItem: 恶魔锭
     requireItem:
     - 恶魔矿:5
     recipeCategory: MATERIAL
-  '6':
+  6:
     requireLevel: 1
     resultItem: 陨星锭
     requireItem:
     - 陨星矿:3
     recipeCategory: MATERIAL
-  '7':
+  7:
     requireLevel: 1
     resultItem: 玻璃
     requireItem:
     - 沙块
     recipeCategory: BLOCK
-  '8':
+  8:
     requireLevel: 1
     resultItem: 炸鱼
     requireItem:
     - 大西洋鳕鱼
     recipeCategory: CONSUMABLE
-  '9':
+  9:
     requireLevel: 1
     resultItem: 炸鱼
     requireItem:
     - 鲈鱼
     recipeCategory: CONSUMABLE
-  '10':
+  10:
     requireLevel: 1
     resultItem: 炸鱼
     requireItem:
     - 鳟鱼
     recipeCategory: CONSUMABLE
-  '11':
+  11:
     requireLevel: 1
     resultItem: 炸鱼
     requireItem:
     - 金枪鱼
     recipeCategory: CONSUMABLE
-  '12':
+  12:
     requireLevel: 1
     resultItem: 炸鱼
     requireItem:
     - 棱晶孔雀鱼
     recipeCategory: CONSUMABLE
-  '13':
+  13:
     requireLevel: 1
     resultItem: 炸鱼
     requireItem:
     - 北河三烁光鱼
     recipeCategory: CONSUMABLE
-  '14':
+  14:
     requireLevel: 1
     resultItem: 熟虾
     requireItem:
     - 虾
     recipeCategory: CONSUMABLE
-  '15':
+  15:
     requireLevel: 1
     resultItem: 熟虾
     requireItem:
     - 南河三明虾
     recipeCategory: CONSUMABLE
-  '16':
+  16:
     requireLevel: 1
     resultItem: 熟龙虾尾
     requireItem:
     - 龙虾
     recipeCategory: CONSUMABLE
-  '17':
+  17:
     requireLevel: 1
     resultItem: 海鲜大餐
     requireItem:
     - 装甲洞穴鱼:2
     recipeCategory: CONSUMABLE
-  '18':
+  18:
     requireLevel: 1
     resultItem: 海鲜大餐
     requireItem:
     - 斑驳油鱼:2
     recipeCategory: CONSUMABLE
-  '19':
+  19:
     requireLevel: 1
     resultItem: 海鲜大餐
     requireItem:
     - 双鳍鳕鱼:2
     recipeCategory: CONSUMABLE
-  '20':
+  20:
     requireLevel: 1
     resultItem: 海鲜大餐
     requireItem:
     - 闪鳍锦鲤:2
     recipeCategory: CONSUMABLE
-  '21':
+  21:
     requireLevel: 1
     resultItem: 海鲜大餐
     requireItem:
     - 七彩矿鱼:2
     recipeCategory: CONSUMABLE
-  '22':
+  22:
     requireLevel: 1
     resultItem: 海鲜大餐
     requireItem:
     - 黑檀锦鲤:2
     recipeCategory: CONSUMABLE
-  '23':
+  23:
     requireLevel: 1
     resultItem: 海鲜大餐
     requireItem:
     - 镜面鱼:2
     recipeCategory: CONSUMABLE
-  '24':
+  24:
     requireLevel: 1
     resultItem: 海鲜大餐
     requireItem:
     - 霓虹脂鲤:2
     recipeCategory: CONSUMABLE
-  '25':
+  25:
     requireLevel: 1
     resultItem: 海鲜大餐
     requireItem:
     - 雀鲷:2
     recipeCategory: CONSUMABLE
-  '26':
+  26:
     requireLevel: 1
     resultItem: 海鲜大餐
     requireItem:
     - 毕宿五灰西鲱:2
     recipeCategory: CONSUMABLE
-  '27':
+  27:
     requireLevel: 1
     resultItem: 海鲜大餐
     requireItem:
     - 海岸恶魔鱼:2
     recipeCategory: CONSUMABLE
-  '28':
+  28:
     requireLevel: 2
     resultItem: 狱炎锭
     requireItem:
     - 狱炎矿:3
     - 黑曜石
     recipeCategory: MATERIAL
-  '29':
+  29:
     requireLevel: 1
     resultItem: 黑曜石头骨
     requireItem:
     - 黑曜石:20
     recipeCategory: ACCESSORY
-  '30':
+  30:
     requireLevel: 1
     resultItem: 水晶碎块:3
     requireItem:
     - 珍珠石:2
     - 冰川精华
     recipeCategory: MATERIAL
-  '31':
+  31:
     requireLevel: 2
     resultItem: 禁戒碎片
     requireItem:
@@ -215,58 +215,58 @@ FURNACE:
     - 光明碎块
     - 暗黑碎块
     recipeCategory: MATERIAL
-  '32':
+  32:
     requireLevel: 2
     resultItem: 大狂鲨鳞
     requireItem:
     - 禁戒碎片
     - 生命碎片:5
     recipeCategory: MATERIAL
-  '33':
+  33:
     requireLevel: 2
     resultItem: 钴锭
     requireItem:
     - 钴矿:3
     recipeCategory: MATERIAL
-  '34':
+  34:
     requireLevel: 2
     resultItem: 秘银锭
     requireItem:
     - 秘银矿:4
     recipeCategory: MATERIAL
-  '35':
+  35:
     requireLevel: 3
     resultItem: 精金锭
     requireItem:
     - 精金矿:5
     recipeCategory: MATERIAL
-  '36':
+  36:
     requireLevel: 3
     resultItem: 叶绿锭
     requireItem:
     - 叶绿矿:5
     recipeCategory: MATERIAL
-  '37':
+  37:
     requireLevel: 3
     resultItem: 幽灵锭:2
     requireItem:
     - 叶绿锭:2
     - 灵气
     recipeCategory: MATERIAL
-  '38':
+  38:
     requireLevel: 3
     resultItem: 蘑菇锭:2
     requireItem:
     - 幽灵锭:2
     - 发光蘑菇
     recipeCategory: MATERIAL
-  '39':
+  39:
     requireLevel: 1
     resultItem: 南瓜派
     requireItem:
     - 南瓜:8
     recipeCategory: CONSUMABLE
-  '40':
+  40:
     requireLevel: 2
     resultItem: 黑曜石逃犯帽
     requireItem:
@@ -274,7 +274,7 @@ FURNACE:
     - 丝绸:10
     - 暗影鳞片:10
     recipeCategory: ARMOR
-  '41':
+  41:
     requireLevel: 2
     resultItem: 黑曜石风衣
     requireItem:
@@ -282,7 +282,7 @@ FURNACE:
     - 丝绸:10
     - 暗影鳞片:5
     recipeCategory: ARMOR
-  '42':
+  42:
     requireLevel: 2
     resultItem: 黑曜石裤
     requireItem:
@@ -290,7 +290,7 @@ FURNACE:
     - 丝绸:10
     - 暗影鳞片:5
     recipeCategory: ARMOR
-  '43':
+  43:
     requireLevel: 1
     resultItem: 海洋残渣
     requireItem:
@@ -299,51 +299,51 @@ FURNACE:
     - 海星:2
     - 贝壳:2
     recipeCategory: MATERIAL
-  '44':
+  44:
     requireLevel: 1
     resultItem: 天蓝锭
     requireItem:
     - 天蓝矿:4
     recipeCategory: MATERIAL
-  '45':
+  45:
     requireLevel: 2
     resultItem: 寒元锭
     requireItem:
     - 寒元矿:4
     recipeCategory: MATERIAL
-  '46':
+  46:
     requireLevel: 3
     resultItem: 永恒锭
     requireItem:
     - 永恒矿:4
     recipeCategory: MATERIAL
-  '47':
+  47:
     requireLevel: 3
     resultItem: 熔渣锭
     requireItem:
     - 熔渣矿:4
     recipeCategory: MATERIAL
-  '48':
+  48:
     requireLevel: 3
     resultItem: 龙蒿锭
     requireItem:
     - 龙蒿矿:4
     recipeCategory: MATERIAL
-  '49':
+  49:
     requireLevel: 3
     resultItem: 圣金源锭:5
     requireItem:
     - 圣金源矿:64
     - 龙魂碎片:4
     recipeCategory: MATERIAL
-  '50':
+  50:
     requireLevel: 2
     resultItem: 污痕核心
     requireItem:
     - 狱炎矿:4
     - 焦炭矿:4
     recipeCategory: MATERIAL
-  '51':
+  51:
     requireLevel: 3
     resultItem: 血石核心:2
     requireItem:
@@ -351,7 +351,7 @@ FURNACE:
     - 血珠
     - 灵质
     recipeCategory: MATERIAL
-  '52':
+  52:
     requireLevel: 2
     resultItem: 焦炭玩偶
     requireItem:
@@ -360,319 +360,319 @@ FURNACE:
     - 污痕核心
     recipeCategory: BOSS
 ANVIL:
-  '1':
+  1:
     requireLevel: 1
     resultItem: 钨钢钓竿
     requireItem:
     - 钨钢金属废料:6
     recipeCategory: FISHING_ROD
-  '2':
+  2:
     requireLevel: 2
     resultItem: 寒元钓竿
     requireItem:
     - 寒元锭:6
     recipeCategory: FISHING_ROD
-  '3':
+  3:
     requireLevel: 2
     resultItem: 野性双头钓竿
     requireItem:
     - 永恒锭:6
     recipeCategory: FISHING_ROD
-  '4':
+  4:
     requireLevel: 2
     resultItem: 岩缝取鱼者
     requireItem:
     - 熔渣锭:6
     recipeCategory: FISHING_ROD
-  '5':
+  5:
     requireLevel: 2
     resultItem: 龙蒿钓竿
     requireItem:
     - 钓鱼竿
     - 龙蒿锭:6
     recipeCategory: FISHING_ROD
-  '6':
+  6:
     requireLevel: 3
     resultItem: 鳕鱼吞噬者
     requireItem:
     - 宇宙锭:6
     recipeCategory: FISHING_ROD
-  '7':
+  7:
     requireLevel: 1
     resultItem: 钨钢法杖
     requireItem:
     - 钨钢金属废料:12
     recipeCategory: WEAPON_MAGIC
-  '8':
+  8:
     requireLevel: 1
     resultItem: 钨钢弓
     requireItem:
     - 钨钢金属废料:10
     recipeCategory: WEAPON_ARROW
-  '9':
+  9:
     requireLevel: 1
     resultItem: 钨钢控制器
     requireItem:
     - 钨钢金属废料:9
     recipeCategory: WEAPON_SUMMON
-  '10':
+  10:
     requireLevel: 1
     resultItem: 钨钢战盔
     requireItem:
     - 钨钢金属废料:5
     - 能源核心
     recipeCategory: ARMOR
-  '11':
+  11:
     requireLevel: 1
     resultItem: 钨钢头饰
     requireItem:
     - 钨钢金属废料:5
     - 能源核心
     recipeCategory: ARMOR
-  '12':
+  12:
     requireLevel: 1
     resultItem: 钨钢面具
     requireItem:
     - 钨钢金属废料:5
     - 能源核心
     recipeCategory: ARMOR
-  '13':
+  13:
     requireLevel: 1
     resultItem: 钨钢兜帽
     requireItem:
     - 钨钢金属废料:5
     - 能源核心
     recipeCategory: ARMOR
-  '14':
+  14:
     requireLevel: 1
     resultItem: 钨钢头罩
     requireItem:
     - 钨钢金属废料:5
     - 能源核心
     recipeCategory: ARMOR
-  '15':
+  15:
     requireLevel: 1
     resultItem: 钨钢盔甲
     requireItem:
     - 钨钢金属废料:12
     - 能源核心
     recipeCategory: ARMOR
-  '16':
+  16:
     requireLevel: 1
     resultItem: 钨钢护胫
     requireItem:
     - 钨钢金属废料:8
     - 能源核心
     recipeCategory: ARMOR
-  '17':
+  17:
     requireLevel: 1
     resultItem: 铜质短剑
     requireItem:
     - 铜锭:9
     recipeCategory: WEAPON_MELEE
-  '18':
+  18:
     requireLevel: 1
     resultItem: 铜质阔剑
     requireItem:
     - 铜锭:16
     recipeCategory: WEAPON_MELEE
-  '19':
+  19:
     requireLevel: 1
     resultItem: 铜质短弓
     requireItem:
     - 铜锭:9
     recipeCategory: WEAPON_ARROW
-  '20':
+  20:
     requireLevel: 1
     resultItem: 铁弓
     requireItem:
     - 铁锭:9
     recipeCategory: WEAPON_ARROW
-  '21':
+  21:
     requireLevel: 1
     resultItem: 铁短剑
     requireItem:
     - 铁锭:9
     recipeCategory: WEAPON_MELEE
-  '22':
+  22:
     requireLevel: 1
     resultItem: 铁阔剑
     requireItem:
     - 铁锭:16
     recipeCategory: WEAPON_MELEE
-  '23':
+  23:
     requireLevel: 1
     resultItem: 银短剑
     requireItem:
     - 银锭:9
     recipeCategory: WEAPON_MELEE
-  '24':
+  24:
     requireLevel: 1
     resultItem: 银阔剑
     requireItem:
     - 银锭:17
     recipeCategory: WEAPON_MELEE
-  '25':
+  25:
     requireLevel: 1
     resultItem: 银弓
     requireItem:
     - 银锭:9
     recipeCategory: WEAPON_ARROW
-  '26':
+  26:
     requireLevel: 1
     resultItem: 金弓
     requireItem:
     - 金锭:10
     recipeCategory: WEAPON_ARROW
-  '27':
+  27:
     requireLevel: 1
     resultItem: 金短剑
     requireItem:
     - 金锭:10
     recipeCategory: WEAPON_MELEE
-  '28':
+  28:
     requireLevel: 1
     resultItem: 金阔剑
     requireItem:
     - 金锭:18
     recipeCategory: WEAPON_MELEE
-  '29':
+  29:
     requireLevel: 1
     resultItem: 光之驱逐
     requireItem:
     - 恶魔锭:18
     recipeCategory: WEAPON_MELEE
-  '30':
+  30:
     requireLevel: 1
     resultItem: 陨星光剑
     requireItem:
     - 陨星锭:18
     - 钻石:10
     recipeCategory: WEAPON_MELEE
-  '31':
+  31:
     requireLevel: 1
     resultItem: 草薙剑
     requireItem:
     - 毒刺:12
     - 丛林孢子:18
     recipeCategory: WEAPON_MELEE
-  '32':
+  32:
     requireLevel: 1
     resultItem: 烈焰剑
     requireItem:
     - 狱炎锭:25
     recipeCategory: WEAPON_MELEE
-  '33':
+  33:
     requireLevel: 1
     resultItem: 恶魔弓
     requireItem:
     - 恶魔锭:16
     recipeCategory: WEAPON_ARROW
-  '34':
+  34:
     requireLevel: 1
     resultItem: 钻石法杖
     requireItem:
     - 金锭:20
     - 钻石:10
     recipeCategory: WEAPON_MAGIC
-  '35':
+  35:
     requireLevel: 1
     resultItem: 银子弹:64
     requireItem:
     - 火枪子弹:64
     - 银锭
     recipeCategory: AMMO_BULLET
-  '36':
+  36:
     requireLevel: 1
     resultItem: 陨星弹:64
     requireItem:
     - 火枪子弹:64
     - 陨星锭
     recipeCategory: AMMO_BULLET
-  '37':
+  37:
     requireLevel: 2
     resultItem: 水晶子弹:96
     requireItem:
     - 火枪子弹:96
     - 水晶碎块
     recipeCategory: AMMO_BULLET
-  '38':
+  38:
     requireLevel: 2
     resultItem: 诅咒弹:96
     requireItem:
     - 火枪子弹:96
     - 诅咒焰
     recipeCategory: AMMO_BULLET
-  '39':
+  39:
     requireLevel: 2
     resultItem: 绿藻弹:64
     requireItem:
     - 叶绿锭
     recipeCategory: AMMO_BULLET
-  '40':
+  40:
     requireLevel: 1
     resultItem: 加速弹:144
     requireItem:
     - 火枪子弹:144
     - 珍珠碎片
     recipeCategory: AMMO_BULLET
-  '41':
+  41:
     requireLevel: 1
     resultItem: 弹球弹:144
     requireItem:
     - 陨星弹:144
     - 珍珠碎片
     recipeCategory: AMMO_BULLET
-  '42':
+  42:
     requireLevel: 2
     resultItem: 钫弹:96
     requireItem:
     - 火枪子弹:96
     - 寒元锭
     recipeCategory: AMMO_BULLET
-  '43':
+  43:
     requireLevel: 2
     resultItem: 泰拉弹:144
     requireItem:
     - 水晶子弹:96
     - 生命碎片
     recipeCategory: AMMO_BULLET
-  '44':
+  44:
     requireLevel: 2
     resultItem: 鼠疫弹:144
     requireItem:
     - 火枪子弹:144
     - 瘟疫细胞罐
     recipeCategory: AMMO_BULLET
-  '45':
+  45:
     requireLevel: 2
     resultItem: 海伯里斯弹:144
     requireItem:
     - 火枪子弹:144
     - 生命合金
     recipeCategory: AMMO_BULLET
-  '46':
+  46:
     requireLevel: 3
     resultItem: 弑神弹:960
     requireItem:
     - 宇宙锭
     - 弹壳:960
     recipeCategory: AMMO_BULLET
-  '47':
+  47:
     requireLevel: 1
     resultItem: 邪箭:24
     requireItem:
     - 木箭:24
     - 恶魔锭
     recipeCategory: AMMO_ARROW
-  '48':
+  48:
     requireLevel: 1
     resultItem: 狱炎箭:96
     requireItem:
     - 木箭:96
     - 狱炎锭
     recipeCategory: AMMO_ARROW
-  '49':
+  49:
     requireLevel: 2
     resultItem: 圣箭:96
     requireItem:
@@ -680,27 +680,27 @@ ANVIL:
     - 独角兽角
     - 妖精尘:3
     recipeCategory: AMMO_ARROW
-  '50':
+  50:
     requireLevel: 2
     resultItem: 诅咒箭:64
     requireItem:
     - 木箭:64
     - 诅咒焰
     recipeCategory: AMMO_ARROW
-  '51':
+  51:
     requireLevel: 2
     resultItem: 叶绿箭:96
     requireItem:
     - 叶绿锭
     recipeCategory: AMMO_ARROW
-  '52':
+  52:
     requireLevel: 2
     resultItem: 毒液箭:48
     requireItem:
     - 木箭:48
     - 小瓶毒液
     recipeCategory: AMMO_ARROW
-  '53':
+  53:
     requireLevel: 1
     resultItem: 汽油箭:240
     requireItem:
@@ -708,40 +708,40 @@ ANVIL:
     - 火把:4
     - 木箭:240
     recipeCategory: AMMO_ARROW
-  '54':
+  54:
     requireLevel: 2
     resultItem: 北极箭:240
     requireItem:
     - 寒元锭
     recipeCategory: AMMO_ARROW
-  '55':
+  55:
     requireLevel: 2
     resultItem: 泰拉箭:240
     requireItem:
     - 生命碎片
     - 木箭:240
     recipeCategory: AMMO_ARROW
-  '56':
+  56:
     requireLevel: 3
     resultItem: 征戮箭:960
     requireItem:
     - 宇宙锭
     recipeCategory: AMMO_ARROW
-  '57':
+  57:
     requireLevel: 1
     resultItem: 荆棘旋刃
     requireItem:
     - 毒刺:12
     - 丛林孢子:18
     recipeCategory: WEAPON_MELEE
-  '58':
+  58:
     requireLevel: 1
     resultItem: 烈焰回旋镖
     requireItem:
     - 附魔回力镖
     - 狱炎锭:15
     recipeCategory: WEAPON_MELEE
-  '59':
+  59:
     requireLevel: 1
     resultItem: 亚马逊悠悠球
     requireItem:
@@ -750,202 +750,202 @@ ANVIL:
     - 丛林孢子:7
     - 毒刺:6
     recipeCategory: WEAPON_MELEE
-  '60':
+  60:
     requireLevel: 1
     resultItem: 抑郁球
     requireItem:
     - 恶魔锭:18
     recipeCategory: WEAPON_MELEE
-  '61':
+  61:
     requireLevel: 1
     resultItem: 铜头盔
     requireItem:
     - 铜锭:10
     recipeCategory: ARMOR
-  '62':
+  62:
     requireLevel: 1
     resultItem: 铜链甲
     requireItem:
     - 铜锭:16
     recipeCategory: ARMOR
-  '63':
+  63:
     requireLevel: 1
     resultItem: 铜护胫
     requireItem:
     - 铜锭:14
     recipeCategory: ARMOR
-  '64':
+  64:
     requireLevel: 1
     resultItem: 铁头盔
     requireItem:
     - 铁锭:10
     recipeCategory: ARMOR
-  '65':
+  65:
     requireLevel: 1
     resultItem: 铁链甲
     requireItem:
     - 铁锭:16
     recipeCategory: ARMOR
-  '66':
+  66:
     requireLevel: 1
     resultItem: 铁护胫
     requireItem:
     - 铁锭:14
     recipeCategory: ARMOR
-  '67':
+  67:
     requireLevel: 1
     resultItem: 白银头盔
     requireItem:
     - 银锭:10
     recipeCategory: ARMOR
-  '68':
+  68:
     requireLevel: 1
     resultItem: 白银链甲
     requireItem:
     - 银锭:16
     recipeCategory: ARMOR
-  '69':
+  69:
     requireLevel: 1
     resultItem: 白银护胫
     requireItem:
     - 银锭:14
     recipeCategory: ARMOR
-  '70':
+  70:
     requireLevel: 1
     resultItem: 金头盔
     requireItem:
     - 金锭:10
     recipeCategory: ARMOR
-  '71':
+  71:
     requireLevel: 1
     resultItem: 金链甲
     requireItem:
     - 金锭:16
     recipeCategory: ARMOR
-  '72':
+  72:
     requireLevel: 1
     resultItem: 金护胫
     requireItem:
     - 金锭:14
     recipeCategory: ARMOR
-  '73':
+  73:
     requireLevel: 1
     resultItem: 流星头盔
     requireItem:
     - 陨星锭:10
     recipeCategory: ARMOR
-  '74':
+  74:
     requireLevel: 1
     resultItem: 流星护甲
     requireItem:
     - 陨星锭:20
     recipeCategory: ARMOR
-  '75':
+  75:
     requireLevel: 1
     resultItem: 流星护腿
     requireItem:
     - 陨星锭:15
     recipeCategory: ARMOR
-  '76':
+  76:
     requireLevel: 1
     resultItem: 暗影头盔
     requireItem:
     - 恶魔锭:20
     - 暗影鳞片:15
     recipeCategory: ARMOR
-  '77':
+  77:
     requireLevel: 1
     resultItem: 暗影鳞甲
     requireItem:
     - 恶魔锭:30
     - 暗影鳞片:25
     recipeCategory: ARMOR
-  '78':
+  78:
     requireLevel: 1
     resultItem: 暗影护胫
     requireItem:
     - 恶魔锭:25
     - 暗影鳞片:20
     recipeCategory: ARMOR
-  '79':
+  79:
     requireLevel: 1
     resultItem: 熔岩头盔
     requireItem:
     - 狱炎锭:10
     recipeCategory: ARMOR
-  '80':
+  80:
     requireLevel: 1
     resultItem: 熔岩胸甲
     requireItem:
     - 狱炎锭:20
     recipeCategory: ARMOR
-  '81':
+  81:
     requireLevel: 1
     resultItem: 熔岩护胫
     requireItem:
     - 狱炎锭:15
     recipeCategory: ARMOR
-  '82':
+  82:
     requireLevel: 1
     resultItem: 空桶
     requireItem:
     - 铁锭:3
     recipeCategory: TOOL
-  '83':
+  83:
     requireLevel: 1
     resultItem: 铜镐
     requireItem:
     - 铜锭:8
     - 木材:4
     recipeCategory: TOOL
-  '84':
+  84:
     requireLevel: 1
     resultItem: 铁镐
     requireItem:
     - 铁锭:8
     - 木材:4
     recipeCategory: TOOL
-  '85':
+  85:
     requireLevel: 1
     resultItem: 银镐
     requireItem:
     - 银锭:8
     - 木材:4
     recipeCategory: TOOL
-  '86':
+  86:
     requireLevel: 1
     resultItem: 金镐
     requireItem:
     - 金锭:8
     - 木材:4
     recipeCategory: TOOL
-  '87':
+  87:
     requireLevel: 1
     resultItem: 恶魔镐
     requireItem:
     - 恶魔锭:12
     - 暗影鳞片:6
     recipeCategory: TOOL
-  '88':
+  88:
     requireLevel: 1
     resultItem: 熔火镐
     requireItem:
     - 狱炎锭:20
     recipeCategory: TOOL
-  '89':
+  89:
     requireLevel: 1
     resultItem: 地狱熔炉
     requireItem:
     - 石头:32
     - 狱炎矿:16
     recipeCategory: BLOCK
-  '90':
+  90:
     requireLevel: 1
     resultItem: 太空枪
     requireItem:
     - 陨星锭:20
     recipeCategory: WEAPON_MAGIC
-  '91':
+  91:
     requireLevel: 1
     resultItem: 气泵枪
     requireItem:
@@ -953,248 +953,248 @@ ANVIL:
     - 非法枪械部件
     - 南瓜种子:5
     recipeCategory: WEAPON_BULLET
-  '92':
+  92:
     requireLevel: 1
     resultItem: 凤凰爆破枪
     requireItem:
     - 手枪
     - 狱炎锭:15
     recipeCategory: WEAPON_BULLET
-  '93':
+  93:
     requireLevel: 1
     resultItem: 熔火之怒
     requireItem:
     - 狱炎锭:20
     recipeCategory: WEAPON_ARROW
-  '94':
+  94:
     requireLevel: 1
     resultItem: 小鬼法杖
     requireItem:
     - 狱炎锭:20
     recipeCategory: WEAPON_SUMMON
-  '95':
+  95:
     requireLevel: 1
     resultItem: 铁轨:48
     requireItem:
     - 铁锭:2
     - 木材:2
     recipeCategory: BLOCK
-  '96':
+  96:
     requireLevel: 1
     resultItem: 充能铁轨:32
     requireItem:
     - 铁轨:32
     - 金锭
     recipeCategory: BLOCK
-  '97':
+  97:
     requireLevel: 1
     resultItem: 蜘蛛法杖
     requireItem:
     - 蜘蛛牙:16
     recipeCategory: WEAPON_SUMMON
-  '98':
+  98:
     requireLevel: 1
     resultItem: 蜘蛛女王法杖
     requireItem:
     - 蜘蛛牙:24
     recipeCategory: WEAPON_SUMMON
-  '99':
+  99:
     requireLevel: 1
     resultItem: 蜘蛛面具
     requireItem:
     - 蜘蛛牙:8
     recipeCategory: ARMOR
-  '100':
+  100:
     requireLevel: 1
     resultItem: 蜘蛛胸甲
     requireItem:
     - 蜘蛛牙:16
     recipeCategory: ARMOR
-  '101':
+  101:
     requireLevel: 1
     resultItem: 蜘蛛护胫
     requireItem:
     - 蜘蛛牙:12
     recipeCategory: ARMOR
-  '102':
+  102:
     requireLevel: 1
     resultItem: 泰坦之心面具
     requireItem:
     - 星辉石:10
     - 泰坦之心
     recipeCategory: ARMOR
-  '103':
+  103:
     requireLevel: 1
     resultItem: 泰坦之心斗篷
     requireItem:
     - 星辉石:20
     - 泰坦之心
     recipeCategory: ARMOR
-  '104':
+  104:
     requireLevel: 1
     resultItem: 泰坦之心靴子
     requireItem:
     - 星辉石:14
     - 泰坦之心
     recipeCategory: ARMOR
-  '105':
+  105:
     requireLevel: 2
     resultItem: 精金熔炉
     requireItem:
     - 精金矿:30
     - 地狱熔炉
     recipeCategory: BLOCK
-  '106':
+  106:
     requireLevel: 1
     resultItem: 秘银砧
     requireItem:
     - 秘银锭:10
     recipeCategory: BLOCK
-  '107':
+  107:
     requireLevel: 1
     resultItem: 钴镐
     requireItem:
     - 钴锭:15
     recipeCategory: TOOL
-  '108':
+  108:
     requireLevel: 1
     resultItem: 钴剑
     requireItem:
     - 钴锭:10
     recipeCategory: WEAPON_MELEE
-  '109':
+  109:
     requireLevel: 1
     resultItem: 钴连弩
     requireItem:
     - 钴锭:10
     recipeCategory: WEAPON_ARROW
-  '110':
+  110:
     requireLevel: 1
     resultItem: 钴帽
     requireItem:
     - 钴锭:10
     recipeCategory: ARMOR
-  '111':
+  111:
     requireLevel: 1
     resultItem: 钴头盔
     requireItem:
     - 钴锭:10
     recipeCategory: ARMOR
-  '112':
+  112:
     requireLevel: 1
     resultItem: 钴面具
     requireItem:
     - 钴锭:10
     recipeCategory: ARMOR
-  '113':
+  113:
     requireLevel: 1
     resultItem: 钴胸甲
     requireItem:
     - 钴锭:20
     recipeCategory: ARMOR
-  '114':
+  114:
     requireLevel: 1
     resultItem: 钴护腿
     requireItem:
     - 钴锭:15
     recipeCategory: ARMOR
-  '115':
+  115:
     requireLevel: 2
     resultItem: 秘银镐
     requireItem:
     - 秘银锭:15
     recipeCategory: TOOL
-  '116':
+  116:
     requireLevel: 2
     resultItem: 秘银剑
     requireItem:
     - 秘银锭:10
     recipeCategory: WEAPON_MELEE
-  '117':
+  117:
     requireLevel: 2
     resultItem: 秘银连弩
     requireItem:
     - 秘银锭:10
     recipeCategory: WEAPON_ARROW
-  '118':
+  118:
     requireLevel: 2
     resultItem: 秘银帽
     requireItem:
     - 秘银锭:10
     recipeCategory: ARMOR
-  '119':
+  119:
     requireLevel: 2
     resultItem: 秘银头盔
     requireItem:
     - 秘银锭:10
     recipeCategory: ARMOR
-  '120':
+  120:
     requireLevel: 2
     resultItem: 秘银兜帽
     requireItem:
     - 秘银锭:10
     recipeCategory: ARMOR
-  '121':
+  121:
     requireLevel: 2
     resultItem: 秘银链甲
     requireItem:
     - 秘银锭:20
     recipeCategory: ARMOR
-  '122':
+  122:
     requireLevel: 2
     resultItem: 秘银护胫
     requireItem:
     - 秘银锭:15
     recipeCategory: ARMOR
-  '123':
+  123:
     requireLevel: 2
     resultItem: 精金镐
     requireItem:
     - 精金锭:18
     recipeCategory: TOOL
-  '124':
+  124:
     requireLevel: 2
     resultItem: 精金剑
     requireItem:
     - 精金锭:12
     recipeCategory: WEAPON_MELEE
-  '125':
+  125:
     requireLevel: 2
     resultItem: 精金连弩
     requireItem:
     - 精金锭:12
     recipeCategory: WEAPON_ARROW
-  '126':
+  126:
     requireLevel: 2
     resultItem: 精金头饰
     requireItem:
     - 精金锭:10
     recipeCategory: ARMOR
-  '127':
+  127:
     requireLevel: 2
     resultItem: 精金头盔
     requireItem:
     - 精金锭:10
     recipeCategory: ARMOR
-  '128':
+  128:
     requireLevel: 2
     resultItem: 精金面具
     requireItem:
     - 精金锭:10
     recipeCategory: ARMOR
-  '129':
+  129:
     requireLevel: 2
     resultItem: 精金胸甲
     requireItem:
     - 精金锭:20
     recipeCategory: ARMOR
-  '130':
+  130:
     requireLevel: 2
     resultItem: 精金护腿
     requireItem:
     - 精金锭:15
     recipeCategory: ARMOR
-  '131':
+  131:
     requireLevel: 2
     resultItem: 巨兽鲨
     requireItem:
@@ -1202,7 +1202,7 @@ ANVIL:
     - 非法枪械部件
     - 力量之魂:15
     recipeCategory: WEAPON_BULLET
-  '132':
+  132:
     requireLevel: 2
     resultItem: 玛瑙爆破枪
     requireItem:
@@ -1210,14 +1210,14 @@ ANVIL:
     - 暗黑碎块:2
     - 暗影之魂:10
     recipeCategory: WEAPON_BULLET
-  '133':
+  133:
     requireLevel: 2
     resultItem: 裂天剑
     requireItem:
     - 光明碎块:2
     - 光明之魂:16
     recipeCategory: WEAPON_MAGIC
-  '134':
+  134:
     requireLevel: 2
     resultItem: 太极连枷
     requireItem:
@@ -1226,7 +1226,7 @@ ANVIL:
     - 光明之魂:7
     - 暗影之魂:7
     recipeCategory: WEAPON_MELEE
-  '135':
+  135:
     requireLevel: 2
     resultItem: 魔眼法杖
     requireItem:
@@ -1235,7 +1235,7 @@ ANVIL:
     - 神圣锭:12
     - 视域之魂:15
     recipeCategory: WEAPON_SUMMON
-  '136':
+  136:
     requireLevel: 2
     resultItem: 寒霜头盔
     requireItem:
@@ -1243,7 +1243,7 @@ ANVIL:
     - 冰川精华:4
     - 寒霜核
     recipeCategory: ARMOR
-  '137':
+  137:
     requireLevel: 2
     resultItem: 寒霜胸甲
     requireItem:
@@ -1251,7 +1251,7 @@ ANVIL:
     - 冰川精华:8
     - 寒霜核
     recipeCategory: ARMOR
-  '138':
+  138:
     requireLevel: 2
     resultItem: 寒霜护腿
     requireItem:
@@ -1259,13 +1259,13 @@ ANVIL:
     - 冰川精华:6
     - 寒霜核
     recipeCategory: ARMOR
-  '139':
+  139:
     requireLevel: 2
     resultItem: 迪朗达尔
     requireItem:
     - 神圣锭:12
     recipeCategory: WEAPON_SUMMON
-  '140':
+  140:
     requireLevel: 2
     resultItem: 镐斧
     requireItem:
@@ -1274,61 +1274,61 @@ ANVIL:
     - 力量之魂
     - 视域之魂
     recipeCategory: TOOL
-  '141':
+  141:
     requireLevel: 2
     resultItem: 永恒之枪
     requireItem:
     - 神圣锭:12
     recipeCategory: WEAPON_MELEE
-  '142':
+  142:
     requireLevel: 2
     resultItem: 圣剑
     requireItem:
     - 神圣锭:12
     recipeCategory: WEAPON_MELEE
-  '143':
+  143:
     requireLevel: 2
     resultItem: 神圣连弩
     requireItem:
     - 神圣锭:12
     recipeCategory: WEAPON_ARROW
-  '144':
+  144:
     requireLevel: 2
     resultItem: 神圣头饰
     requireItem:
     - 神圣锭:12
     recipeCategory: ARMOR
-  '145':
+  145:
     requireLevel: 2
     resultItem: 神圣头盔
     requireItem:
     - 神圣锭:12
     recipeCategory: ARMOR
-  '146':
+  146:
     requireLevel: 2
     resultItem: 神圣兜帽
     requireItem:
     - 神圣锭:12
     recipeCategory: ARMOR
-  '147':
+  147:
     requireLevel: 2
     resultItem: 神圣面具
     requireItem:
     - 神圣锭:12
     recipeCategory: ARMOR
-  '148':
+  148:
     requireLevel: 2
     resultItem: 神圣板甲
     requireItem:
     - 神圣锭:24
     recipeCategory: ARMOR
-  '149':
+  149:
     requireLevel: 2
     resultItem: 神圣护胫
     requireItem:
     - 神圣锭:18
     recipeCategory: ARMOR
-  '150':
+  150:
     requireLevel: 1
     resultItem: 机械骷髅头
     requireItem:
@@ -1337,7 +1337,7 @@ ANVIL:
     - 光明之魂:3
     - 暗影之魂:3
     recipeCategory: BOSS
-  '151':
+  151:
     requireLevel: 1
     resultItem: 机械魔眼
     requireItem:
@@ -1345,7 +1345,7 @@ ANVIL:
     - 铁锭:5
     - 光明之魂:6
     recipeCategory: BOSS
-  '152':
+  152:
     requireLevel: 1
     resultItem: 机械蠕虫
     requireItem:
@@ -1353,7 +1353,7 @@ ANVIL:
     - 铁锭:5
     - 暗影之魂:6
     recipeCategory: BOSS
-  '153':
+  153:
     requireLevel: 1
     resultItem: 极寒之匙
     requireItem:
@@ -1362,7 +1362,7 @@ ANVIL:
     - 暗影之魂:2
     - 冰川精华:8
     recipeCategory: BOSS
-  '154':
+  154:
     requireLevel: 1
     resultItem: 海鲜饵料
     requireItem:
@@ -1371,21 +1371,21 @@ ANVIL:
     - 贝壳:5
     - 珊瑚:5
     recipeCategory: BOSS
-  '155':
+  155:
     requireLevel: 2
     resultItem: 荒芜之眼
     requireItem:
     - 狱炎锭:3
     - 混乱精华:5
     recipeCategory: BOSS
-  '156':
+  156:
     requireLevel: 2
     resultItem: 星辉碎块
     requireItem:
     - 星尘:15
     - 坠星:8
     recipeCategory: BOSS
-  '157':
+  157:
     requireLevel: 2
     resultItem: 瘟疫起动装置
     requireItem:
@@ -1393,14 +1393,14 @@ ANVIL:
     - 铁锭:8
     - 黑曜石:3
     recipeCategory: BOSS
-  '158':
+  158:
     requireLevel: 2
     resultItem: 唤死笛哨
     requireItem:
     - 日耀碑牌碎片:8
     - 灾劫核心:4
     recipeCategory: BOSS
-  '159':
+  159:
     requireLevel: 3
     resultItem: 金源量子冷却电池:2
     requireItem:
@@ -1410,7 +1410,7 @@ ANVIL:
     - 恒温能量:5
     - 冰川核心
     recipeCategory: BOSS
-  '160':
+  160:
     requireLevel: 3
     resultItem: 祭魂瓮
     requireItem:
@@ -1418,7 +1418,7 @@ ANVIL:
     - 硫磺火石砖
     - 圣金源锭
     recipeCategory: BOSS
-  '161':
+  161:
     requireLevel: 3
     resultItem: 终末石
     requireItem:
@@ -1426,7 +1426,7 @@ ANVIL:
     - 湮灭余烬
     - 星流棱晶
     recipeCategory: BOSS
-  '162':
+  162:
     requireLevel: 2
     resultItem: 真·永夜之刃
     requireItem:
@@ -1435,14 +1435,14 @@ ANVIL:
     - 力量之魂:5
     - 视域之魂:5
     recipeCategory: WEAPON_MELEE
-  '163':
+  163:
     requireLevel: 2
     resultItem: 真·圣剑
     requireItem:
     - 圣剑
     - 叶绿锭:24
     recipeCategory: WEAPON_MELEE
-  '164':
+  164:
     requireLevel: 2
     resultItem: 泰拉之刃
     requireItem:
@@ -1451,14 +1451,14 @@ ANVIL:
     - 真·圣剑
     - 断裂英雄剑
     recipeCategory: WEAPON_MELEE
-  '165':
+  165:
     requireLevel: 1
     resultItem: 矿车
     requireItem:
     - 铁锭:5
     - 木材:10
     recipeCategory: MINECART
-  '166':
+  166:
     requireLevel: 2
     resultItem: 机械矿车
     requireItem:
@@ -1466,14 +1466,14 @@ ANVIL:
     - 机械车轮片
     - 机械车体片
     recipeCategory: MINECART
-  '167':
+  167:
     requireLevel: 3
     resultItem: 神明矿车
     requireItem:
     - 宇宙锭:10
     - 化神魂精
     recipeCategory: MINECART
-  '168':
+  168:
     requireLevel: 2
     resultItem: 南瓜月勋章
     requireItem:
@@ -1481,7 +1481,7 @@ ANVIL:
     - 灵气:5
     - 神圣锭:10
     recipeCategory: BOSS
-  '169':
+  169:
     requireLevel: 2
     resultItem: 调皮礼物
     requireItem:
@@ -1489,7 +1489,7 @@ ANVIL:
     - 灵气:5
     - 恐惧之魂:5
     recipeCategory: BOSS
-  '170':
+  170:
     requireLevel: 2
     resultItem: 天顶剑
     requireItem:
@@ -1500,115 +1500,115 @@ ANVIL:
     - 种子弯刀
     - 铜质短剑
     recipeCategory: WEAPON_MELEE
-  '171':
+  171:
     requireLevel: 2
     resultItem: 叶绿双刃刀
     requireItem:
     - 叶绿锭:12
     recipeCategory: WEAPON_MELEE
-  '172':
+  172:
     requireLevel: 2
     resultItem: 叶绿军刀
     requireItem:
     - 叶绿锭:12
     recipeCategory: WEAPON_MELEE
-  '173':
+  173:
     requireLevel: 2
     resultItem: 叶绿镋
     requireItem:
     - 叶绿锭:12
     recipeCategory: WEAPON_MELEE
-  '174':
+  174:
     requireLevel: 2
     resultItem: 叶绿连弩
     requireItem:
     - 叶绿锭:12
     recipeCategory: WEAPON_ARROW
-  '175':
+  175:
     requireLevel: 2
     resultItem: 叶绿头饰
     requireItem:
     - 叶绿锭:12
     recipeCategory: ARMOR
-  '176':
+  176:
     requireLevel: 2
     resultItem: 叶绿头盔
     requireItem:
     - 叶绿锭:12
     recipeCategory: ARMOR
-  '177':
+  177:
     requireLevel: 2
     resultItem: 叶绿面具
     requireItem:
     - 叶绿锭:12
     recipeCategory: ARMOR
-  '178':
+  178:
     requireLevel: 2
     resultItem: 叶绿板甲
     requireItem:
     - 叶绿锭:24
     recipeCategory: ARMOR
-  '179':
+  179:
     requireLevel: 2
     resultItem: 叶绿护胫
     requireItem:
     - 叶绿锭:18
     recipeCategory: ARMOR
-  '180':
+  180:
     requireLevel: 2
     resultItem: 幽灵兜帽
     requireItem:
     - 幽灵锭:12
     recipeCategory: ARMOR
-  '181':
+  181:
     requireLevel: 2
     resultItem: 幽灵面具
     requireItem:
     - 幽灵锭:12
     recipeCategory: ARMOR
-  '182':
+  182:
     requireLevel: 2
     resultItem: 幽灵长袍
     requireItem:
     - 幽灵锭:24
     recipeCategory: ARMOR
-  '183':
+  183:
     requireLevel: 2
     resultItem: 幽灵裤
     requireItem:
     - 幽灵锭:18
     recipeCategory: ARMOR
-  '184':
+  184:
     requireLevel: 2
     resultItem: 蘑菇矿头饰
     requireItem:
     - 蘑菇锭:12
     recipeCategory: ARMOR
-  '185':
+  185:
     requireLevel: 2
     resultItem: 蘑菇矿头盔
     requireItem:
     - 蘑菇锭:12
     recipeCategory: ARMOR
-  '186':
+  186:
     requireLevel: 2
     resultItem: 蘑菇矿面具
     requireItem:
     - 蘑菇锭:12
     recipeCategory: ARMOR
-  '187':
+  187:
     requireLevel: 2
     resultItem: 蘑菇矿胸甲
     requireItem:
     - 蘑菇锭:24
     recipeCategory: ARMOR
-  '188':
+  188:
     requireLevel: 2
     resultItem: 蘑菇矿护腿
     requireItem:
     - 蘑菇锭:18
     recipeCategory: ARMOR
-  '189':
+  189:
     requireLevel: 2
     resultItem: 甲虫头盔
     requireItem:
@@ -1616,7 +1616,7 @@ ANVIL:
     - 海龟壳
     - 叶绿面具
     recipeCategory: ARMOR
-  '190':
+  190:
     requireLevel: 2
     resultItem: 甲虫铠甲
     requireItem:
@@ -1624,7 +1624,7 @@ ANVIL:
     - 海龟壳
     - 叶绿板甲
     recipeCategory: ARMOR
-  '191':
+  191:
     requireLevel: 2
     resultItem: 甲虫壳
     requireItem:
@@ -1632,7 +1632,7 @@ ANVIL:
     - 海龟壳
     - 叶绿板甲
     recipeCategory: ARMOR
-  '192':
+  192:
     requireLevel: 2
     resultItem: 甲虫护腿
     requireItem:
@@ -1640,75 +1640,75 @@ ANVIL:
     - 海龟壳
     - 叶绿护胫
     recipeCategory: ARMOR
-  '193':
+  193:
     requireLevel: 2
     resultItem: 日耀碑牌
     requireItem:
     - 日耀碑牌碎片:8
     recipeCategory: BOSS
-  '194':
+  194:
     requireLevel: 1
     resultItem: 丛林帽
     requireItem:
     - 丛林孢子:8
     recipeCategory: ARMOR
-  '195':
+  195:
     requireLevel: 1
     resultItem: 丛林衣
     requireItem:
     - 丛林孢子:16
     - 毒刺:10
     recipeCategory: ARMOR
-  '196':
+  196:
     requireLevel: 1
     resultItem: 丛林裤
     requireItem:
     - 丛林孢子:8
     - 藤蔓:2
     recipeCategory: ARMOR
-  '197':
+  197:
     requireLevel: 1
     resultItem: 胜潮贝盔
     requireItem:
     - 海洋残渣:3
     recipeCategory: ARMOR
-  '198':
+  198:
     requireLevel: 1
     resultItem: 胜潮面罩
     requireItem:
     - 海洋残渣:3
     recipeCategory: ARMOR
-  '199':
+  199:
     requireLevel: 1
     resultItem: 胜潮隐帽
     requireItem:
     - 海洋残渣:3
     recipeCategory: ARMOR
-  '200':
+  200:
     requireLevel: 1
     resultItem: 胜潮瑚巾
     requireItem:
     - 海洋残渣:3
     recipeCategory: ARMOR
-  '201':
+  201:
     requireLevel: 1
     resultItem: 胜潮蟹盔
     requireItem:
     - 海洋残渣:3
     recipeCategory: ARMOR
-  '202':
+  202:
     requireLevel: 1
     resultItem: 胜潮护胫
     requireItem:
     - 海洋残渣:4
     recipeCategory: ARMOR
-  '203':
+  203:
     requireLevel: 1
     resultItem: 胜潮胸甲
     requireItem:
     - 海洋残渣:5
     recipeCategory: ARMOR
-  '204':
+  204:
     requireLevel: 1
     resultItem: 天蓝胸甲
     requireItem:
@@ -1716,7 +1716,7 @@ ANVIL:
     - 丝绸:15
     - 羽毛:2
     recipeCategory: ARMOR
-  '205':
+  205:
     requireLevel: 1
     resultItem: 天蓝护胫
     requireItem:
@@ -1724,7 +1724,7 @@ ANVIL:
     - 丝绸:9
     - 羽毛:2
     recipeCategory: ARMOR
-  '206':
+  206:
     requireLevel: 1
     resultItem: 天蓝战盔
     requireItem:
@@ -1732,7 +1732,7 @@ ANVIL:
     - 丝绸:4
     - 羽毛:1
     recipeCategory: ARMOR
-  '207':
+  207:
     requireLevel: 1
     resultItem: 天蓝兜帽
     requireItem:
@@ -1740,7 +1740,7 @@ ANVIL:
     - 丝绸:4
     - 羽毛:1
     recipeCategory: ARMOR
-  '208':
+  208:
     requireLevel: 1
     resultItem: 天蓝头套
     requireItem:
@@ -1748,7 +1748,7 @@ ANVIL:
     - 丝绸:4
     - 羽毛:1
     recipeCategory: ARMOR
-  '209':
+  209:
     requireLevel: 1
     resultItem: 天蓝帽
     requireItem:
@@ -1756,7 +1756,7 @@ ANVIL:
     - 丝绸:4
     - 羽毛:1
     recipeCategory: ARMOR
-  '210':
+  210:
     requireLevel: 1
     resultItem: 天蓝头盔
     requireItem:
@@ -1764,252 +1764,252 @@ ANVIL:
     - 丝绸:4
     - 羽毛:1
     recipeCategory: ARMOR
-  '211':
+  211:
     requireLevel: 1
     resultItem: 斯塔提斯盔甲
     requireItem:
     - 纯净凝胶:8
     - 狱炎锭:13
     recipeCategory: ARMOR
-  '212':
+  212:
     requireLevel: 1
     resultItem: 斯塔提斯护胫
     requireItem:
     - 纯净凝胶:6
     - 狱炎锭:11
     recipeCategory: ARMOR
-  '213':
+  213:
     requireLevel: 1
     resultItem: 斯塔提斯战盔
     requireItem:
     - 纯净凝胶:5
     - 狱炎锭:9
     recipeCategory: ARMOR
-  '214':
+  214:
     requireLevel: 1
     resultItem: 斯塔提斯头饰
     requireItem:
     - 纯净凝胶:5
     - 狱炎锭:9
     recipeCategory: ARMOR
-  '215':
+  215:
     requireLevel: 1
     resultItem: 斯塔提斯面具
     requireItem:
     - 纯净凝胶:5
     - 狱炎锭:9
     recipeCategory: ARMOR
-  '216':
+  216:
     requireLevel: 1
     resultItem: 斯塔提斯帽子
     requireItem:
     - 纯净凝胶:5
     - 狱炎锭:9
     recipeCategory: ARMOR
-  '217':
+  217:
     requireLevel: 1
     resultItem: 斯塔提斯兜帽
     requireItem:
     - 纯净凝胶:5
     - 狱炎锭:9
     recipeCategory: ARMOR
-  '218':
+  218:
     requireLevel: 1
     resultItem: 软壳贝盔
     requireItem:
     - 海棱晶:15
     - 软体动物外壳:6
     recipeCategory: ARMOR
-  '219':
+  219:
     requireLevel: 1
     resultItem: 软壳贝甲
     requireItem:
     - 海棱晶:25
     - 软体动物外壳:15
     recipeCategory: ARMOR
-  '220':
+  220:
     requireLevel: 1
     resultItem: 软壳护胫
     requireItem:
     - 海棱晶:20
     - 软体动物外壳:10
     recipeCategory: ARMOR
-  '221':
+  221:
     requireLevel: 2
     resultItem: 代达罗斯胸甲
     requireItem:
     - 寒元锭:15
     - 冰川精华:3
     recipeCategory: ARMOR
-  '222':
+  222:
     requireLevel: 2
     resultItem: 代达罗斯护胫
     requireItem:
     - 寒元锭:10
     - 冰川精华:2
     recipeCategory: ARMOR
-  '223':
+  223:
     requireLevel: 2
     resultItem: 代达罗斯头盔
     requireItem:
     - 寒元锭:8
     - 冰川精华
     recipeCategory: ARMOR
-  '224':
+  224:
     requireLevel: 2
     resultItem: 代达罗斯头罩
     requireItem:
     - 寒元锭:8
     - 冰川精华
     recipeCategory: ARMOR
-  '225':
+  225:
     requireLevel: 2
     resultItem: 代达罗斯面罩
     requireItem:
     - 寒元锭:8
     - 冰川精华
     recipeCategory: ARMOR
-  '226':
+  226:
     requireLevel: 2
     resultItem: 代达罗斯兜帽
     requireItem:
     - 寒元锭:8
     - 冰川精华
     recipeCategory: ARMOR
-  '227':
+  227:
     requireLevel: 2
     resultItem: 代达罗斯面具
     requireItem:
     - 寒元锭:8
     - 冰川精华
     recipeCategory: ARMOR
-  '228':
+  228:
     requireLevel: 2
     resultItem: 日影兜帽
     requireItem:
     - 日影面纱:12
     - 神圣锭:8
     recipeCategory: ARMOR
-  '229':
+  229:
     requireLevel: 2
     resultItem: 日影斗篷
     requireItem:
     - 日影面纱:18
     - 神圣锭:15
     recipeCategory: ARMOR
-  '230':
+  230:
     requireLevel: 2
     resultItem: 日影靴子
     requireItem:
     - 日影面纱:14
     - 神圣锭:11
     recipeCategory: ARMOR
-  '231':
+  231:
     requireLevel: 2
     resultItem: 硫火兜帽
     requireItem:
     - 灾厄尘:4
     - 污痕核心:2
     recipeCategory: ARMOR
-  '232':
+  232:
     requireLevel: 2
     resultItem: 硫火长袍
     requireItem:
     - 灾厄尘:8
     - 污痕核心:4
     recipeCategory: ARMOR
-  '233':
+  233:
     requireLevel: 2
     resultItem: 硫火靴子
     requireItem:
     - 灾厄尘:5
     - 污痕核心:3
     recipeCategory: ARMOR
-  '234':
+  234:
     requireLevel: 2
     resultItem: 掠夺者鳞甲
     requireItem:
     - 永恒锭:15
     - 生命碎片:3
     recipeCategory: ARMOR
-  '235':
+  235:
     requireLevel: 2
     resultItem: 掠夺者护胫
     requireItem:
     - 永恒锭:10
     - 生命碎片:2
     recipeCategory: ARMOR
-  '236':
+  236:
     requireLevel: 2
     resultItem: 掠夺者战盔
     requireItem:
     - 永恒锭:7
     - 生命碎片
     recipeCategory: ARMOR
-  '237':
+  237:
     requireLevel: 2
     resultItem: 掠夺者面罩
     requireItem:
     - 永恒锭:7
     - 生命碎片
     recipeCategory: ARMOR
-  '238':
+  238:
     requireLevel: 2
     resultItem: 掠夺者头套
     requireItem:
     - 永恒锭:7
     - 生命碎片
     recipeCategory: ARMOR
-  '239':
+  239:
     requireLevel: 2
     resultItem: 渊泉盔甲
     requireItem:
     - 熔渣锭:15
     - 混乱核心:3
     recipeCategory: ARMOR
-  '240':
+  240:
     requireLevel: 2
     resultItem: 渊泉战裙
     requireItem:
     - 熔渣锭:10
     - 混乱核心:2
     recipeCategory: ARMOR
-  '241':
+  241:
     requireLevel: 2
     resultItem: 渊泉战盔
     requireItem:
     - 熔渣锭:7
     - 混乱核心
     recipeCategory: ARMOR
-  '242':
+  242:
     requireLevel: 2
     resultItem: 渊泉头饰
     requireItem:
     - 熔渣锭:7
     - 混乱核心
     recipeCategory: ARMOR
-  '243':
+  243:
     requireLevel: 2
     resultItem: 渊泉兜帽
     requireItem:
     - 熔渣锭:7
     - 混乱核心
     recipeCategory: ARMOR
-  '244':
+  244:
     requireLevel: 2
     resultItem: 渊泉面具
     requireItem:
     - 熔渣锭:7
     - 混乱核心
     recipeCategory: ARMOR
-  '245':
+  245:
     requireLevel: 2
     resultItem: 渊泉头盔
     requireItem:
     - 熔渣锭:7
     - 混乱核心
     recipeCategory: ARMOR
-  '246':
+  246:
     requireLevel: 2
     resultItem: 瘟疫死神面罩
     requireItem:
@@ -2017,7 +2017,7 @@ ANVIL:
     - 瘟疫细胞罐:15
     - 纳米机器人:11
     recipeCategory: ARMOR
-  '247':
+  247:
     requireLevel: 2
     resultItem: 瘟疫死神夹克
     requireItem:
@@ -2025,7 +2025,7 @@ ANVIL:
     - 瘟疫细胞罐:29
     - 纳米机器人:19
     recipeCategory: ARMOR
-  '248':
+  248:
     requireLevel: 2
     resultItem: 瘟疫死神长靴
     requireItem:
@@ -2033,42 +2033,42 @@ ANVIL:
     - 瘟疫细胞罐:21
     - 纳米机器人:17
     recipeCategory: ARMOR
-  '249':
+  249:
     requireLevel: 3
     resultItem: 弑神者头盔
     requireItem:
     - 宇宙锭:7
     - 化神魂精:2
     recipeCategory: ARMOR
-  '250':
+  250:
     requireLevel: 3
     resultItem: 弑神者头套
     requireItem:
     - 宇宙锭:7
     - 化神魂精:2
     recipeCategory: ARMOR
-  '251':
+  251:
     requireLevel: 3
     resultItem: 弑神者面具
     requireItem:
     - 宇宙锭:7
     - 化神魂精:2
     recipeCategory: ARMOR
-  '252':
+  252:
     requireLevel: 3
     resultItem: 弑神者胸甲
     requireItem:
     - 宇宙锭:15
     - 化神魂精:3
     recipeCategory: ARMOR
-  '253':
+  253:
     requireLevel: 3
     resultItem: 弑神者腿甲
     requireItem:
     - 宇宙锭:10
     - 化神魂精:2
     recipeCategory: ARMOR
-  '254':
+  254:
     requireLevel: 3
     resultItem: 始源林海兜帽
     requireItem:
@@ -2077,7 +2077,7 @@ ANVIL:
     - 龙蒿锭:6
     - 金锭:2
     recipeCategory: ARMOR
-  '255':
+  255:
     requireLevel: 3
     resultItem: 始源林海头盔
     requireItem:
@@ -2086,7 +2086,7 @@ ANVIL:
     - 龙蒿锭:6
     - 金锭:2
     recipeCategory: ARMOR
-  '256':
+  256:
     requireLevel: 3
     resultItem: 始源林海盔甲
     requireItem:
@@ -2095,7 +2095,7 @@ ANVIL:
     - 龙蒿锭:12
     - 金锭:4
     recipeCategory: ARMOR
-  '257':
+  257:
     requireLevel: 3
     resultItem: 始源林海护胫
     requireItem:
@@ -2104,7 +2104,7 @@ ANVIL:
     - 龙蒿锭:9
     - 金锭:3
     recipeCategory: ARMOR
-  '258':
+  258:
     requireLevel: 3
     resultItem: 金源耀日盔
     requireItem:
@@ -2113,7 +2113,7 @@ ANVIL:
     - 弑神者头盔
     - 圣金源锭:12
     recipeCategory: ARMOR
-  '259':
+  259:
     requireLevel: 3
     resultItem: 金兜铁面盔
     requireItem:
@@ -2122,7 +2122,7 @@ ANVIL:
     - 弑神者头套
     - 圣金源锭:12
     recipeCategory: ARMOR
-  '260':
+  260:
     requireLevel: 3
     resultItem: 金羽十杀盔
     requireItem:
@@ -2131,7 +2131,7 @@ ANVIL:
     - 弑神者面具
     - 圣金源锭:12
     recipeCategory: ARMOR
-  '261':
+  261:
     requireLevel: 3
     resultItem: 金虚万象盔
     requireItem:
@@ -2140,7 +2140,7 @@ ANVIL:
     - 始源林海兜帽
     - 圣金源锭:12
     recipeCategory: ARMOR
-  '262':
+  262:
     requireLevel: 3
     resultItem: 金宇星界盔
     requireItem:
@@ -2149,7 +2149,7 @@ ANVIL:
     - 始源林海头盔
     - 圣金源锭:12
     recipeCategory: ARMOR
-  '263':
+  263:
     requireLevel: 3
     resultItem: 古圣金源盔甲
     requireItem:
@@ -2158,7 +2158,7 @@ ANVIL:
     - 始源林海盔甲
     - 圣金源锭:18
     recipeCategory: ARMOR
-  '264':
+  264:
     requireLevel: 3
     resultItem: 古圣金源盔甲
     requireItem:
@@ -2167,7 +2167,7 @@ ANVIL:
     - 弑神者胸甲
     - 圣金源锭:18
     recipeCategory: ARMOR
-  '265':
+  265:
     requireLevel: 3
     resultItem: 古圣金源腿甲
     requireItem:
@@ -2176,7 +2176,7 @@ ANVIL:
     - 弑神者腿甲
     - 圣金源锭:15
     recipeCategory: ARMOR
-  '266':
+  266:
     requireLevel: 3
     resultItem: 古圣金源腿甲
     requireItem:
@@ -2185,7 +2185,7 @@ ANVIL:
     - 始源林海护胫
     - 圣金源锭:15
     recipeCategory: ARMOR
-  '267':
+  267:
     requireLevel: 1
     resultItem: 翡翠斧
     requireItem:
@@ -2193,7 +2193,7 @@ ANVIL:
     - 银锭:10
     - 银镐
     recipeCategory: WEAPON_MELEE
-  '268':
+  268:
     requireLevel: 1
     resultItem: 海耀之刃
     requireItem:
@@ -2201,14 +2201,14 @@ ANVIL:
     - 海棱晶:7
     - 珍珠碎片:3
     recipeCategory: WEAPON_MELEE
-  '269':
+  269:
     requireLevel: 1
     resultItem: 风之刃
     requireItem:
     - 天蓝锭:9
     - 丝绸:3
     recipeCategory: WEAPON_MELEE
-  '270':
+  270:
     requireLevel: 1
     resultItem: 高斯短匕
     requireItem:
@@ -2217,7 +2217,7 @@ ANVIL:
     - 天蓝锭:4
     - 海棱晶:7
     recipeCategory: WEAPON_MELEE
-  '271':
+  271:
     requireLevel: 1
     resultItem: 凝胶波刃
     requireItem:
@@ -2225,19 +2225,19 @@ ANVIL:
     - 凝胶:35
     - 狱炎锭:10
     recipeCategory: WEAPON_MELEE
-  '272':
+  272:
     requireLevel: 1
     resultItem: 海棱晶
     requireItem:
     - 棱晶碎片:5
     recipeCategory: MATERIAL
-  '273':
+  273:
     requireLevel: 1
     resultItem: 坠星
     requireItem:
     - 星尘:5
     recipeCategory: MATERIAL
-  '274':
+  274:
     requireLevel: 2
     resultItem: 纯净之斧
     requireItem:
@@ -2245,21 +2245,21 @@ ANVIL:
     - 妖精尘:20
     - 水晶碎块:10
     recipeCategory: WEAPON_MELEE
-  '275':
+  275:
     requireLevel: 2
     resultItem: 遗忘之刃
     requireItem:
     - 禁戒碎片
     - 精金锭:5
     recipeCategory: WEAPON_MELEE
-  '276':
+  276:
     requireLevel: 1
     resultItem: 风暴军刀
     requireItem:
     - 日光精华:2
     - 天蓝锭:5
     recipeCategory: WEAPON_MELEE
-  '277':
+  277:
     requireLevel: 2
     resultItem: 巨剑“夜光”
     requireItem:
@@ -2267,7 +2267,7 @@ ANVIL:
     - 暗影之魂
     - 光明之魂
     recipeCategory: WEAPON_MELEE
-  '278':
+  278:
     requireLevel: 2
     resultItem: 炎霜之刃
     requireItem:
@@ -2275,7 +2275,7 @@ ANVIL:
     - 狱炎锭:8
     - 光明之魂:3
     recipeCategory: WEAPON_MELEE
-  '279':
+  279:
     requireLevel: 2
     resultItem: 灾难巨剑
     requireItem:
@@ -2284,20 +2284,20 @@ ANVIL:
     - 恐惧之魂:3
     - 视域之魂:3
     recipeCategory: WEAPON_MELEE
-  '280':
+  280:
     requireLevel: 2
     resultItem: 硫火之刃
     requireItem:
     - 污痕核心:6
     recipeCategory: WEAPON_MELEE
-  '281':
+  281:
     requireLevel: 2
     resultItem: 雄伟之护
     requireItem:
     - 精金剑
     - 力量之魂:15
     recipeCategory: WEAPON_MELEE
-  '282':
+  282:
     requireLevel: 2
     resultItem: 誓约与禁忌之刃
     requireItem:
@@ -2305,7 +2305,7 @@ ANVIL:
     - 旧神之誓约
     - 恐惧之魂:5
     recipeCategory: WEAPON_MELEE
-  '283':
+  283:
     requireLevel: 2
     resultItem: 炼狱
     requireItem:
@@ -2313,14 +2313,14 @@ ANVIL:
     - 混乱精华:3
     - 恐惧之魂:8
     recipeCategory: WEAPON_MELEE
-  '284':
+  284:
     requireLevel: 2
     resultItem: 硫火鞭
     requireItem:
     - 灾厄尘:12
     - 污痕核心:4
     recipeCategory: WEAPON_MELEE
-  '285':
+  285:
     requireLevel: 2
     resultItem: 混乱之刃
     requireItem:
@@ -2328,7 +2328,7 @@ ANVIL:
     - 毁灭刃
     - 混乱核心:3
     recipeCategory: WEAPON_MELEE
-  '286':
+  286:
     requireLevel: 2
     resultItem: 深渊之刃
     requireItem:
@@ -2336,33 +2336,33 @@ ANVIL:
     - 深渊细胞:20
     - 虚空石:20
     recipeCategory: WEAPON_MELEE
-  '287':
+  287:
     requireLevel: 2
     resultItem: 彗星陨刃
     requireItem:
     - 陨星锭:25
     - 灵气:5
     recipeCategory: WEAPON_MELEE
-  '288':
+  288:
     requireLevel: 2
     resultItem: 荆棘长刃
     requireItem:
     - 永恒锭:12
     recipeCategory: WEAPON_MELEE
-  '289':
+  289:
     requireLevel: 2
     resultItem: 地狱龙锋
     requireItem:
     - 烈焰剑
     - 永恒锭:8
     recipeCategory: WEAPON_MELEE
-  '290':
+  290:
     requireLevel: 2
     resultItem: 狱火重剑
     requireItem:
     - 熔渣锭:15
     recipeCategory: WEAPON_MELEE
-  '291':
+  291:
     requireLevel: 2
     resultItem: 灵魂收割者
     requireItem:
@@ -2370,7 +2370,7 @@ ANVIL:
     - 瘟疫细胞罐:10
     - 诅咒焰:20
     recipeCategory: WEAPON_MELEE
-  '292':
+  292:
     requireLevel: 2
     resultItem: 崇高誓约之剑
     requireItem:
@@ -2379,19 +2379,19 @@ ANVIL:
     - 瘟疫装甲镀层:8
     - 灾厄尘:8
     recipeCategory: WEAPON_MELEE
-  '293':
+  293:
     requireLevel: 3
     resultItem: 暴政
     requireItem:
     - 宇宙锭:12
     recipeCategory: WEAPON_MELEE
-  '294':
+  294:
     requireLevel: 3
     resultItem: 精元劫掠者
     requireItem:
     - 宇宙锭:12
     recipeCategory: WEAPON_MELEE
-  '295':
+  295:
     requireLevel: 3
     resultItem: 破灭魔王剑
     requireItem:
@@ -2400,7 +2400,7 @@ ANVIL:
     - 宇宙锭:8
     - 梦魇魔能:20
     recipeCategory: WEAPON_MELEE
-  '296':
+  296:
     requireLevel: 3
     resultItem: 携序之剑
     requireItem:
@@ -2408,7 +2408,7 @@ ANVIL:
     - 宇宙锭:8
     - 恒温能量:20
     recipeCategory: WEAPON_MELEE
-  '297':
+  297:
     requireLevel: 3
     resultItem: 光棱破碎者
     requireItem:
@@ -2418,7 +2418,7 @@ ANVIL:
     - 宇宙锭:8
     - 恒温能量:20
     recipeCategory: WEAPON_MELEE
-  '298':
+  298:
     requireLevel: 3
     resultItem: 禅心剑
     requireItem:
@@ -2428,7 +2428,7 @@ ANVIL:
     - 梦魇魔能:20
     - 圣金源锭:5
     recipeCategory: WEAPON_MELEE
-  '299':
+  299:
     requireLevel: 2
     resultItem: 卢克雷西亚
     requireItem:
@@ -2437,21 +2437,21 @@ ANVIL:
     - 暗影之魂:5
     - 光明之魂:5
     recipeCategory: WEAPON_MELEE
-  '300':
+  300:
     requireLevel: 3
     resultItem: 宇宙短剑
     requireItem:
     - 元素短剑
     - 宇宙锭:8
     recipeCategory: WEAPON_MELEE
-  '301':
+  301:
     requireLevel: 1
     resultItem: 烟陨彗星
     requireItem:
     - 钻石:5
     - 坠星:15
     recipeCategory: WEAPON_MELEE
-  '302':
+  302:
     requireLevel: 1
     resultItem: 涡旋
     requireItem:
@@ -2459,46 +2459,46 @@ ANVIL:
     - 沉沦渊石:10
     - 珍珠碎片:3
     recipeCategory: WEAPON_MELEE
-  '303':
+  303:
     requireLevel: 1
     resultItem: 空旋
     requireItem:
     - 天蓝锭:6
     - 丝绸:3
     recipeCategory: WEAPON_MELEE
-  '304':
+  304:
     requireLevel: 1
     resultItem: 神旨
     requireItem:
     - 纯净凝胶:18
     - 凝胶:18
     recipeCategory: WEAPON_MELEE
-  '305':
+  305:
     requireLevel: 2
     resultItem: 阴阳
     requireItem:
     - 光明碎块
     - 暗黑碎块
     recipeCategory: WEAPON_MELEE
-  '306':
+  306:
     requireLevel: 2
     resultItem: 烁光
     requireItem:
     - 寒元锭:6
     recipeCategory: WEAPON_MELEE
-  '307':
+  307:
     requireLevel: 2
     resultItem: 泥潭
     requireItem:
     - 永恒锭:6
     recipeCategory: WEAPON_MELEE
-  '308':
+  308:
     requireLevel: 2
     resultItem: 断层
     requireItem:
     - 熔渣锭:6
     recipeCategory: WEAPON_MELEE
-  '309':
+  309:
     requireLevel: 3
     resultItem: 神谕
     requireItem:
@@ -2506,20 +2506,20 @@ ANVIL:
     - 日炎
     - 圣金源锭:5
     recipeCategory: WEAPON_MELEE
-  '310':
+  310:
     requireLevel: 1
     resultItem: 赤潮矛
     requireItem:
     - 海洋残渣:4
     recipeCategory: WEAPON_MELEE
-  '311':
+  311:
     requireLevel: 1
     resultItem: 金羽
     requireItem:
     - 天蓝锭:10
     - 丝绸:4
     recipeCategory: WEAPON_MELEE
-  '312':
+  312:
     requireLevel: 1
     resultItem: 绽花毒藤
     requireItem:
@@ -2528,7 +2528,7 @@ ANVIL:
     - 毒刺:4
     - 藤蔓:2
     recipeCategory: WEAPON_MELEE
-  '313':
+  313:
     requireLevel: 3
     resultItem: 龙魂破
     requireItem:
@@ -2541,19 +2541,19 @@ ANVIL:
     - 龙魂碎片:4
     - 圣金源锭:5
     recipeCategory: WEAPON_MELEE
-  '314':
+  314:
     requireLevel: 2
     resultItem: 星夜长枪
     requireItem:
     - 寒元锭:12
     recipeCategory: WEAPON_MELEE
-  '315':
+  315:
     requireLevel: 2
     resultItem: 刺花长矛
     requireItem:
     - 永恒锭:12
     recipeCategory: WEAPON_MELEE
-  '316':
+  316:
     requireLevel: 2
     resultItem: 泰拉长枪
     requireItem:
@@ -2561,13 +2561,13 @@ ANVIL:
     - 永恒之枪
     - 生命碎片:12
     recipeCategory: WEAPON_MELEE
-  '317':
+  317:
     requireLevel: 2
     resultItem: 火山之矛
     requireItem:
     - 熔渣锭:10
     recipeCategory: WEAPON_MELEE
-  '318':
+  318:
     requireLevel: 2
     resultItem: 磁能分割刀
     requireItem:
@@ -2576,13 +2576,13 @@ ANVIL:
     - 生命合金:5
     - 瘟疫装甲镀层:10
     recipeCategory: WEAPON_MELEE
-  '319':
+  319:
     requireLevel: 1
     resultItem: 海胆链枷
     requireItem:
     - 海洋残渣:3
     recipeCategory: WEAPON_MELEE
-  '320':
+  320:
     requireLevel: 2
     resultItem: 风滚草
     requireItem:
@@ -2590,14 +2590,14 @@ ANVIL:
     - 大狂鲨鳞
     - 力量之魂:5
     recipeCategory: WEAPON_MELEE
-  '321':
+  321:
     requireLevel: 1
     resultItem: 钨钢螺丝刀
     requireItem:
     - 钨钢金属废料:12
     - 能源核心
     recipeCategory: WEAPON_MELEE
-  '322':
+  322:
     requireLevel: 1
     resultItem: 残缺环境刃[澄澈之纯净]
     requireItem:
@@ -2607,7 +2607,7 @@ ANVIL:
     - 天蓝锭:5
     - 狱炎锭:5
     recipeCategory: WEAPON_MELEE
-  '323':
+  323:
     requireLevel: 1
     resultItem: 破碎方舟
     requireItem:
@@ -2615,7 +2615,7 @@ ANVIL:
     - 纯净凝胶:5
     - 铜锭:10
     recipeCategory: WEAPON_MELEE
-  '324':
+  324:
     requireLevel: 2
     resultItem: 环境之刃[澄澈之纯净]
     requireItem:
@@ -2626,14 +2626,14 @@ ANVIL:
     - 妖精尘:2
     - 星尘:10
     recipeCategory: WEAPON_MELEE
-  '325':
+  325:
     requireLevel: 2
     resultItem: 远古方舟
     requireItem:
     - 破碎方舟
     - 断裂英雄剑
     recipeCategory: WEAPON_MELEE
-  '326':
+  326:
     requireLevel: 3
     resultItem: 相位剑
     requireItem:
@@ -2642,13 +2642,13 @@ ANVIL:
     - 宇宙锭:8
     - 化神魂精:2
     recipeCategory: WEAPON_MELEE
-  '327':
+  327:
     requireLevel: 3
     resultItem: 宇宙暗流
     requireItem:
     - 宇宙锭:12
     recipeCategory: WEAPON_MELEE
-  '328':
+  328:
     requireLevel: 3
     resultItem: 银河[凤凰之耀]
     requireItem:
@@ -2656,7 +2656,7 @@ ANVIL:
     - 宇宙锭:8
     - 日蚀之阴碎片:8
     recipeCategory: WEAPON_MELEE
-  '329':
+  329:
     requireLevel: 3
     resultItem: 鸿蒙方舟
     requireItem:
@@ -2664,21 +2664,21 @@ ANVIL:
     - 银河[凤凰之耀]
     - 圣金源锭:5
     recipeCategory: WEAPON_MELEE
-  '330':
+  330:
     requireLevel: 1
     resultItem: 烈风
     requireItem:
     - 天蓝锭:8
     - 丝绸:3
     recipeCategory: WEAPON_ARROW
-  '331':
+  331:
     requireLevel: 1
     resultItem: 凝胶弓
     requireItem:
     - 纯净凝胶:18
     - 凝胶:18
     recipeCategory: WEAPON_ARROW
-  '332':
+  332:
     requireLevel: 2
     resultItem: 黑翼蝙蝠弓
     requireItem:
@@ -2686,19 +2686,19 @@ ANVIL:
     - 日光精华:5
     - 黑曜石:10
     recipeCategory: WEAPON_ARROW
-  '333':
+  333:
     requireLevel: 2
     resultItem: 暗之回响
     requireItem:
     - 寒元锭:8
     recipeCategory: WEAPON_ARROW
-  '334':
+  334:
     requireLevel: 2
     resultItem: 硫火之怒
     requireItem:
     - 污痕核心:5
     recipeCategory: WEAPON_ARROW
-  '335':
+  335:
     requireLevel: 2
     resultItem: 宇束弓
     requireItem:
@@ -2706,7 +2706,7 @@ ANVIL:
     - 神圣连弩
     - 生命碎片:12
     recipeCategory: WEAPON_ARROW
-  '336':
+  336:
     requireLevel: 2
     resultItem: 破城巨弓
     requireItem:
@@ -2714,19 +2714,19 @@ ANVIL:
     - 禁戒碎片
     - 灵气:10
     recipeCategory: WEAPON_ARROW
-  '337':
+  337:
     requireLevel: 2
     resultItem: 猎人长弓
     requireItem:
     - 灵气:31
     recipeCategory: WEAPON_ARROW
-  '338':
+  338:
     requireLevel: 2
     resultItem: 洲陆巨弓
     requireItem:
     - 熔渣锭:10
     recipeCategory: WEAPON_ARROW
-  '339':
+  339:
     requireLevel: 3
     resultItem: 啸流
     requireItem:
@@ -2736,7 +2736,7 @@ ANVIL:
     - 恒温能量:20
     - 流明晶:20
     recipeCategory: WEAPON_ARROW
-  '340':
+  340:
     requireLevel: 3
     resultItem: 幻魔
     requireItem:
@@ -2745,7 +2745,7 @@ ANVIL:
     - 灵质:20
     - 梦魇魔能:20
     recipeCategory: WEAPON_ARROW
-  '341':
+  341:
     requireLevel: 3
     resultItem: 创世纪
     requireItem:
@@ -2757,7 +2757,7 @@ ANVIL:
     - 起源之簇:15
     - 日蚀之阴碎片:8
     recipeCategory: WEAPON_ARROW
-  '342':
+  342:
     requireLevel: 3
     resultItem: 赤陨霸龙弓
     requireItem:
@@ -2767,20 +2767,20 @@ ANVIL:
     - 圣金源锭:5
     - 龙魂碎片:4
     recipeCategory: WEAPON_ARROW
-  '343':
+  343:
     requireLevel: 2
     resultItem: 锋叶十字弩
     requireItem:
     - 永恒锭:12
     recipeCategory: WEAPON_ARROW
-  '344':
+  344:
     requireLevel: 1
     resultItem: 鹅卵石冲击波
     requireItem:
     - 石头:20
     - 钻石:3
     recipeCategory: WEAPON_BULLET
-  '345':
+  345:
     requireLevel: 1
     resultItem: 满弹霰弹枪
     requireItem:
@@ -2788,7 +2788,7 @@ ANVIL:
     - 铁锭:7
     - 天蓝锭:3
     recipeCategory: WEAPON_BULLET
-  '346':
+  346:
     requireLevel: 1
     resultItem: 碎水霰弹枪
     requireItem:
@@ -2796,14 +2796,14 @@ ANVIL:
     - 海棱晶:10
     - 天蓝锭:2
     recipeCategory: WEAPON_BULLET
-  '347':
+  347:
     requireLevel: 1
     resultItem: 胶泥散弹枪
     requireItem:
     - 纯净凝胶:18
     - 凝胶:18
     recipeCategory: WEAPON_BULLET
-  '348':
+  348:
     requireLevel: 1
     resultItem: 屠夫
     requireItem:
@@ -2812,14 +2812,14 @@ ANVIL:
     - 混乱精华:4
     - 非法枪械部件
     recipeCategory: WEAPON_BULLET
-  '349':
+  349:
     requireLevel: 1
     resultItem: 诅咒手枪
     requireItem:
     - 凤凰爆破枪
     - 诅咒焰:10
     recipeCategory: WEAPON_BULLET
-  '350':
+  350:
     requireLevel: 2
     resultItem: 精金粒子加速器
     requireItem:
@@ -2827,7 +2827,7 @@ ANVIL:
     - 光明之魂:3
     - 暗影之魂:3
     recipeCategory: WEAPON_BULLET
-  '351':
+  351:
     requireLevel: 2
     resultItem: 巨舰鲨
     requireItem:
@@ -2836,7 +2836,7 @@ ANVIL:
     - 深渊细胞:10
     - 虚空石:10
     recipeCategory: WEAPON_BULLET
-  '352':
+  352:
     requireLevel: 2
     resultItem: 九头蛇
     requireItem:
@@ -2844,7 +2844,7 @@ ANVIL:
     - 四管猎枪
     - 小瓶毒液:25
     recipeCategory: WEAPON_BULLET
-  '353':
+  353:
     requireLevel: 2
     resultItem: 珍珠之神
     requireItem:
@@ -2852,7 +2852,7 @@ ANVIL:
     - 幽灵锭:5
     - 诅咒手枪
     recipeCategory: WEAPON_BULLET
-  '354':
+  354:
     requireLevel: 2
     resultItem: 麦格纳冲锋炮
     requireItem:
@@ -2861,7 +2861,7 @@ ANVIL:
     - 灵气:5
     - 精金锭:6
     recipeCategory: WEAPON_BULLET
-  '355':
+  355:
     requireLevel: 2
     resultItem: 发条鳄鱼枪
     requireItem:
@@ -2869,13 +2869,13 @@ ANVIL:
     - 发条突击步枪
     - 生命合金:3
     recipeCategory: WEAPON_BULLET
-  '356':
+  356:
     requireLevel: 2
     resultItem: 地狱风暴
     requireItem:
     - 熔渣锭:7
     recipeCategory: WEAPON_BULLET
-  '357':
+  357:
     requireLevel: 2
     resultItem: 玷污之疫SMG
     requireItem:
@@ -2883,14 +2883,14 @@ ANVIL:
     - 地狱风暴
     - 瘟疫装甲镀层:25
     recipeCategory: WEAPON_BULLET
-  '358':
+  358:
     requireLevel: 3
     resultItem: 无穷
     requireItem:
     - 解离者
     - 宇宙锭:10
     recipeCategory: WEAPON_BULLET
-  '359':
+  359:
     requireLevel: 3
     resultItem: 宇宙之源
     requireItem:
@@ -2899,14 +2899,14 @@ ANVIL:
     - 宇宙锭:5
     - 散播者
     recipeCategory: WEAPON_BULLET
-  '360':
+  360:
     requireLevel: 3
     resultItem: 反器材狙击步枪
     requireItem:
     - 极光
     - 宇宙锭:10
     recipeCategory: WEAPON_BULLET
-  '361':
+  361:
     requireLevel: 3
     resultItem: 太空公爵机枪
     requireItem:
@@ -2915,7 +2915,7 @@ ANVIL:
     - 宇宙锭:10
     - 恒温能量:20
     recipeCategory: WEAPON_BULLET
-  '362':
+  362:
     requireLevel: 3
     resultItem: 奥妮克希亚
     requireItem:
@@ -2923,7 +2923,7 @@ ANVIL:
     - 宇宙锭:8
     - 日蚀之阴碎片:8
     recipeCategory: WEAPON_BULLET
-  '363':
+  363:
     requireLevel: 3
     resultItem: 迷你加特林
     requireItem:
@@ -2931,7 +2931,7 @@ ANVIL:
     - 发条鳄鱼枪
     - 圣金源锭:5
     recipeCategory: WEAPON_BULLET
-  '364':
+  364:
     requireLevel: 3
     resultItem: 暴政之终
     requireItem:
@@ -2939,14 +2939,14 @@ ANVIL:
     - 反器材狙击步枪
     - 圣金源锭:5
     recipeCategory: WEAPON_BULLET
-  '365':
+  365:
     requireLevel: 2
     resultItem: 岩鲨发射器
     requireItem:
     - 禁戒碎片
     - 精金锭:7
     recipeCategory: WEAPON_ROCKET
-  '366':
+  366:
     requireLevel: 3
     resultItem: 集束火箭发射器
     requireItem:
@@ -2956,7 +2956,7 @@ ANVIL:
     - 宇宙锭:8
     - 恒温能量:20
     recipeCategory: WEAPON_ROCKET
-  '367':
+  367:
     requireLevel: 3
     resultItem: 焦土
     requireItem:
@@ -2965,14 +2965,14 @@ ANVIL:
     - 日耀碎片:50
     - 精金锭:15
     recipeCategory: WEAPON_ROCKET
-  '368':
+  368:
     requireLevel: 1
     resultItem: 火花喷射器
     requireItem:
     - 金锭:10
     - 凝胶:12
     recipeCategory: WEAPON_ARROW
-  '369':
+  369:
     requireLevel: 2
     resultItem: 泰拉喷火器
     requireItem:
@@ -2981,19 +2981,19 @@ ANVIL:
     - 日光精华:5
     - 彩虹喵喷射器
     recipeCategory: WEAPON_ARROW
-  '370':
+  370:
     requireLevel: 3
     resultItem: 净化怒焰
     requireItem:
     - 宇宙锭:12
     recipeCategory: WEAPON_ARROW
-  '371':
+  371:
     requireLevel: 1
     resultItem: 芦苇吹管
     requireItem:
     - 海洋残渣:2
     recipeCategory: WEAPON_ARROW
-  '372':
+  372:
     requireLevel: 1
     resultItem: 旋风发射器
     requireItem:
@@ -3002,7 +3002,7 @@ ANVIL:
     - 风暴之颚
     - 珍珠碎片:3
     recipeCategory: WEAPON_BULLET
-  '373':
+  373:
     requireLevel: 1
     resultItem: 泰瑟枪
     requireItem:
@@ -3011,7 +3011,7 @@ ANVIL:
     - 天蓝锭:4
     - 海棱晶:7
     recipeCategory: WEAPON_BULLET
-  '374':
+  374:
     requireLevel: 2
     resultItem: 物质调谐器
     requireItem:
@@ -3019,7 +3019,7 @@ ANVIL:
     - 神秘电路:12
     - 秘银锭:10
     recipeCategory: WEAPON_BULLET
-  '375':
+  375:
     requireLevel: 2
     resultItem: 高斯来复枪
     requireItem:
@@ -3028,7 +3028,7 @@ ANVIL:
     - 生命合金:5
     - 瘟疫装甲镀层:10
     recipeCategory: WEAPON_BULLET
-  '376':
+  376:
     requireLevel: 3
     resultItem: 脉冲步枪
     requireItem:
@@ -3037,7 +3037,7 @@ ANVIL:
     - 宇宙锭:8
     - 化神魂精:2
     recipeCategory: WEAPON_BULLET
-  '377':
+  377:
     requireLevel: 3
     resultItem: 异象纳米枪
     requireItem:
@@ -3046,7 +3046,7 @@ ANVIL:
     - 宇宙锭:8
     - 神圣晶石:16
     recipeCategory: WEAPON_BULLET
-  '378':
+  378:
     requireLevel: 1
     resultItem: 海沫炸弹
     requireItem:
@@ -3054,13 +3054,13 @@ ANVIL:
     - 炸弹:16
     - 珍珠碎片
     recipeCategory: WEAPON_ROGUE
-  '379':
+  379:
     requireLevel: 1
     resultItem: 陨星拳套
     requireItem:
     - 陨星锭:10
     recipeCategory: WEAPON_ROGUE
-  '380':
+  380:
     requireLevel: 2
     resultItem: 渎神邪水
     requireItem:
@@ -3069,7 +3069,7 @@ ANVIL:
     - 诅咒焰:5
     - 暗影之魂:7
     recipeCategory: WEAPON_ROGUE
-  '381':
+  381:
     requireLevel: 2
     resultItem: 驱魔十字架
     requireItem:
@@ -3078,7 +3078,7 @@ ANVIL:
     - 恐惧之魂:6
     - 力量之魂:6
     recipeCategory: WEAPON_ROGUE
-  '382':
+  382:
     requireLevel: 2
     resultItem: 集束燃爆瓶
     requireItem:
@@ -3086,7 +3086,7 @@ ANVIL:
     - 凝胶:16
     - 日影面纱:10
     recipeCategory: WEAPON_ROGUE
-  '383':
+  383:
     requireLevel: 2
     resultItem: 瓶中尘
     requireItem:
@@ -3094,14 +3094,14 @@ ANVIL:
     - 大狂鲨鳞
     - 沙块:16
     recipeCategory: WEAPON_ROGUE
-  '384':
+  384:
     requireLevel: 2
     resultItem: 瘟疫蜜蜂手雷:64
     requireItem:
     - 手榴弹:64
     - 瘟疫细胞罐:2
     recipeCategory: WEAPON_ROGUE
-  '385':
+  385:
     requireLevel: 3
     resultItem: 半影飞弹
     requireItem:
@@ -3109,7 +3109,7 @@ ANVIL:
     - 梦魇魔能:20
     - 毁灭之灵:6
     recipeCategory: WEAPON_ROGUE
-  '386':
+  386:
     requireLevel: 3
     resultItem: 等离子手雷
     requireItem:
@@ -3118,13 +3118,13 @@ ANVIL:
     - 宇宙锭:8
     - 化神魂精:2
     recipeCategory: WEAPON_ROGUE
-  '387':
+  387:
     requireLevel: 1
     resultItem: 鱼骨回旋镖
     requireItem:
     - 海洋残渣:2
     recipeCategory: WEAPON_ROGUE
-  '388':
+  388:
     requireLevel: 1
     resultItem: 逐影飞盘
     requireItem:
@@ -3133,7 +3133,7 @@ ANVIL:
     - 天蓝锭:4
     - 海棱晶:7
     recipeCategory: WEAPON_ROGUE
-  '389':
+  389:
     requireLevel: 1
     resultItem: 附魔飞斧
     requireItem:
@@ -3142,7 +3142,7 @@ ANVIL:
     - 珍珠碎片:10
     - 骨头:30
     recipeCategory: WEAPON_ROGUE
-  '390':
+  390:
     requireLevel: 1
     resultItem: 烈火之星
     requireItem:
@@ -3150,7 +3150,7 @@ ANVIL:
     - 狱炎锭:5
     - 混乱精华:10
     recipeCategory: WEAPON_ROGUE
-  '391':
+  391:
     requireLevel: 2
     resultItem: 宁静回旋镖
     requireItem:
@@ -3158,19 +3158,19 @@ ANVIL:
     - 光明碎块
     - 暗黑碎块
     recipeCategory: WEAPON_ROGUE
-  '392':
+  392:
     requireLevel: 2
     resultItem: 硫火手里剑
     requireItem:
     - 污痕核心:4
     recipeCategory: WEAPON_ROGUE
-  '393':
+  393:
     requireLevel: 2
     resultItem: 红木环刃
     requireItem:
     - 永恒锭:7
     recipeCategory: WEAPON_ROGUE
-  '394':
+  394:
     requireLevel: 2
     resultItem: 回春环刃
     requireItem:
@@ -3178,7 +3178,7 @@ ANVIL:
     - 宁静回旋镖
     - 生命碎片:12
     recipeCategory: WEAPON_ROGUE
-  '395':
+  395:
     requireLevel: 2
     resultItem: 霜碎回旋镖
     requireItem:
@@ -3187,13 +3187,13 @@ ANVIL:
     - 虚空石:40
     - 冰川核心:5
     recipeCategory: WEAPON_ROGUE
-  '396':
+  396:
     requireLevel: 2
     resultItem: 板块斩切者
     requireItem:
     - 熔渣锭:9
     recipeCategory: WEAPON_ROGUE
-  '397':
+  397:
     requireLevel: 2
     resultItem: 瘟疫解离者
     requireItem:
@@ -3201,7 +3201,7 @@ ANVIL:
     - 纳米机器人:128
     - 瘟疫细胞罐:15
     recipeCategory: WEAPON_ROGUE
-  '398':
+  398:
     requireLevel: 3
     resultItem: 动能寻迹镖
     requireItem:
@@ -3209,14 +3209,14 @@ ANVIL:
     - 逐影飞盘
     - 圣金源锭:5
     recipeCategory: WEAPON_ROGUE
-  '399':
+  399:
     requireLevel: 1
     resultItem: 镀金匕首
     requireItem:
     - 金短剑
     - 坠星:3
     recipeCategory: WEAPON_ROGUE
-  '400':
+  400:
     requireLevel: 1
     resultItem: 晶体飞刀
     requireItem:
@@ -3224,28 +3224,28 @@ ANVIL:
     - 坠星:3
     - 钻石:3
     recipeCategory: WEAPON_ROGUE
-  '401':
+  401:
     requireLevel: 1
     resultItem: 地狱飞剑:128
     requireItem:
     - 狱炎锭:2
     - 黑曜石
     recipeCategory: WEAPON_ROGUE
-  '402':
+  402:
     requireLevel: 1
     resultItem: 羽刃:128
     requireItem:
     - 天蓝锭:2
     - 丝绸
     recipeCategory: WEAPON_ROGUE
-  '403':
+  403:
     requireLevel: 1
     resultItem: 凝胶飞镖:128
     requireItem:
     - 纯净凝胶:2
     - 凝胶:2
     recipeCategory: WEAPON_ROGUE
-  '404':
+  404:
     requireLevel: 1
     resultItem: 棱晶飞刀
     requireItem:
@@ -3253,19 +3253,19 @@ ANVIL:
     - 软体动物外壳:5
     - 海棱晶:5
     recipeCategory: WEAPON_ROGUE
-  '405':
+  405:
     requireLevel: 1
     resultItem: 钴蓝苦无:96
     requireItem:
     - 钴锭
     recipeCategory: WEAPON_ROGUE
-  '406':
+  406:
     requireLevel: 2
     resultItem: 秘银飞刀:96
     requireItem:
     - 秘银锭
     recipeCategory: WEAPON_ROGUE
-  '407':
+  407:
     requireLevel: 2
     resultItem: 风暴剃刃
     requireItem:
@@ -3275,21 +3275,21 @@ ANVIL:
     - 海棱晶:15
     - 风暴之颚:2
     recipeCategory: WEAPON_ROGUE
-  '408':
+  408:
     requireLevel: 3
     resultItem: 炽天使
     requireItem:
     - 裂阳
     - 圣金源锭:5
     recipeCategory: WEAPON_ROGUE
-  '409':
+  409:
     requireLevel: 1
     resultItem: 乱流
     requireItem:
     - 天蓝锭:7
     - 丝绸:3
     recipeCategory: WEAPON_ROGUE
-  '410':
+  410:
     requireLevel: 1
     resultItem: 越浪蛟
     requireItem:
@@ -3298,7 +3298,7 @@ ANVIL:
     - 海棱晶:15
     - 棱晶碎片:20
     recipeCategory: WEAPON_ROGUE
-  '411':
+  411:
     requireLevel: 2
     resultItem: 变频器
     requireItem:
@@ -3306,20 +3306,20 @@ ANVIL:
     - 神秘电路:8
     - 秘银锭:10
     recipeCategory: WEAPON_ROGUE
-  '412':
+  412:
     requireLevel: 2
     resultItem: 水晶穿刺者:128
     requireItem:
     - 寒元锭:2
     recipeCategory: WEAPON_ROGUE
-  '413':
+  413:
     requireLevel: 2
     resultItem: 古岩投矛
     requireItem:
     - 禁戒碎片
     - 精金锭:4
     recipeCategory: WEAPON_ROGUE
-  '414':
+  414:
     requireLevel: 2
     resultItem: 命运之矛
     requireItem:
@@ -3329,14 +3329,14 @@ ANVIL:
     - 视域之魂:5
     - 力量之魂:5
     recipeCategory: WEAPON_ROGUE
-  '415':
+  415:
     requireLevel: 2
     resultItem: 幻魂归墟
     requireItem:
     - 幽灵锭:15
     - 骨头:35
     recipeCategory: WEAPON_ROGUE
-  '416':
+  416:
     requireLevel: 3
     resultItem: 日蚀之陨
     requireItem:
@@ -3345,14 +3345,14 @@ ANVIL:
     - 宇宙锭:8
     - 日光核心:12
     recipeCategory: WEAPON_ROGUE
-  '417':
+  417:
     requireLevel: 1
     resultItem: 污泥斑点:32
     requireItem:
     - 凝胶:4
     - 暗影鳞片
     recipeCategory: WEAPON_ROGUE
-  '418':
+  418:
     requireLevel: 1
     resultItem: 易碎金属球
     requireItem:
@@ -3360,7 +3360,7 @@ ANVIL:
     - 铁锭:8
     - 骨头:32
     recipeCategory: WEAPON_ROGUE
-  '419':
+  419:
     requireLevel: 2
     resultItem: 神经系统紊乱装置
     requireItem:
@@ -3369,27 +3369,27 @@ ANVIL:
     - 生命合金:5
     - 瘟疫装甲镀层:10
     recipeCategory: WEAPON_ROGUE
-  '420':
+  420:
     requireLevel: 3
     resultItem: 神明妄论
     requireItem:
     - 宇宙锭:12
     recipeCategory: WEAPON_ROGUE
-  '421':
+  421:
     requireLevel: 1
     resultItem: 板砖:32
     requireItem:
     - 泥土
     - 石头
     recipeCategory: WEAPON_ROGUE
-  '422':
+  422:
     requireLevel: 1
     resultItem: 铁质飞斧:64
     requireItem:
     - 铁锭
     - 木材
     recipeCategory: WEAPON_ROGUE
-  '423':
+  423:
     requireLevel: 1
     resultItem: 腐蚀之球:96
     requireItem:
@@ -3397,13 +3397,13 @@ ANVIL:
     - 恶魔锭
     - 腐肉
     recipeCategory: WEAPON_ROGUE
-  '424':
+  424:
     requireLevel: 2
     resultItem: 精金投斧:96
     requireItem:
     - 精金锭
     recipeCategory: WEAPON_ROGUE
-  '425':
+  425:
     requireLevel: 2
     resultItem: 幻想符札:128
     requireItem:
@@ -3411,7 +3411,7 @@ ANVIL:
     - 丝绸
     - 灵气
     recipeCategory: WEAPON_ROGUE
-  '426':
+  426:
     requireLevel: 2
     resultItem: 沙暴手里剑
     requireItem:
@@ -3420,7 +3420,7 @@ ANVIL:
     - 金锭:10
     - 砂岩:25
     recipeCategory: WEAPON_ROGUE
-  '427':
+  427:
     requireLevel: 2
     resultItem: 末渊石板
     requireItem:
@@ -3428,13 +3428,13 @@ ANVIL:
     - 虚空石:50
     - 流明晶:20
     recipeCategory: WEAPON_ROGUE
-  '428':
+  428:
     requireLevel: 3
     resultItem: 终结者之刃
     requireItem:
     - 宇宙锭:12
     recipeCategory: WEAPON_ROGUE
-  '429':
+  429:
     requireLevel: 3
     resultItem: 焦锅
     requireItem:
@@ -3443,7 +3443,7 @@ ANVIL:
     - 骨头:92
     - 生命水晶
     recipeCategory: WEAPON_ROGUE
-  '430':
+  430:
     requireLevel: 1
     resultItem: 魔法玫瑰
     requireItem:
@@ -3451,7 +3451,7 @@ ANVIL:
     - 月光草:5
     - 魔力星
     recipeCategory: WEAPON_MAGIC
-  '431':
+  431:
     requireLevel: 1
     resultItem: 海水杖
     requireItem:
@@ -3459,7 +3459,7 @@ ANVIL:
     - 沉沦渊石:25
     - 珍珠碎片:3
     recipeCategory: WEAPON_MAGIC
-  '432':
+  432:
     requireLevel: 1
     resultItem: 丰收
     requireItem:
@@ -3467,13 +3467,13 @@ ANVIL:
     - 南瓜:20
     - 南瓜种子:5
     recipeCategory: WEAPON_MAGIC
-  '433':
+  433:
     requireLevel: 1
     resultItem: 狱火蝙蝠杖
     requireItem:
     - 狱炎锭:10
     recipeCategory: WEAPON_MAGIC
-  '434':
+  434:
     requireLevel: 2
     resultItem: 飞龙之歌
     requireItem:
@@ -3481,27 +3481,27 @@ ANVIL:
     - 秘银锭:5
     - 天空之羽
     recipeCategory: WEAPON_MAGIC
-  '435':
+  435:
     requireLevel: 2
     resultItem: 烁兰
     requireItem:
     - 魔法玫瑰
     - 神圣锭:5
     recipeCategory: WEAPON_MAGIC
-  '436':
+  436:
     requireLevel: 2
     resultItem: 狱炎裂空
     requireItem:
     - 裂天剑
     - 熔渣锭:10
     recipeCategory: WEAPON_MAGIC
-  '437':
+  437:
     requireLevel: 2
     resultItem: 硫火玫瑰
     requireItem:
     - 污痕核心:6
     recipeCategory: WEAPON_MAGIC
-  '438':
+  438:
     requireLevel: 2
     resultItem: 女武神权杖
     requireItem:
@@ -3511,7 +3511,7 @@ ANVIL:
     - 视域之魂
     - 恐惧之魂
     recipeCategory: WEAPON_MAGIC
-  '439':
+  439:
     requireLevel: 2
     resultItem: 深渊女神之复仇
     requireItem:
@@ -3519,7 +3519,7 @@ ANVIL:
     - 深渊细胞:30
     - 虚空石:30
     recipeCategory: WEAPON_MAGIC
-  '440':
+  440:
     requireLevel: 2
     resultItem: 泰拉射线
     requireItem:
@@ -3527,20 +3527,20 @@ ANVIL:
     - 永夜射线
     - 女武神权杖
     recipeCategory: WEAPON_MAGIC
-  '441':
+  441:
     requireLevel: 3
     resultItem: 灵魂穿透者
     requireItem:
     - 宇宙锭:12
     recipeCategory: WEAPON_MAGIC
-  '442':
+  442:
     requireLevel: 3
     resultItem: 极点光伏
     requireItem:
     - 磁场之融
     - 日蚀之阴碎片:8
     recipeCategory: WEAPON_MAGIC
-  '443':
+  443:
     requireLevel: 3
     resultItem: 氦闪
     requireItem:
@@ -3551,21 +3551,21 @@ ANVIL:
     - 日耀碎片:20
     - 星云碎片:5
     recipeCategory: WEAPON_MAGIC
-  '444':
+  444:
     requireLevel: 3
     resultItem: 虚空漩涡
     requireItem:
     - 极点光伏
     - 圣金源锭:5
     recipeCategory: WEAPON_MAGIC
-  '445':
+  445:
     requireLevel: 1
     resultItem: 麦格纳炮
     requireItem:
     - 石头:25
     - 黑曜石:15
     recipeCategory: WEAPON_MAGIC
-  '446':
+  446:
     requireLevel: 1
     resultItem: 脉冲手枪
     requireItem:
@@ -3574,13 +3574,13 @@ ANVIL:
     - 天蓝锭:4
     - 海棱晶:7
     recipeCategory: WEAPON_MAGIC
-  '447':
+  447:
     requireLevel: 2
     resultItem: 离子冲击波
     requireItem:
     - 精金锭:7
     recipeCategory: WEAPON_MAGIC
-  '448':
+  448:
     requireLevel: 2
     resultItem: 高斯手枪
     requireItem:
@@ -3588,7 +3588,7 @@ ANVIL:
     - 神秘电路:12
     - 秘银锭:10
     recipeCategory: WEAPON_MAGIC
-  '449':
+  449:
     requireLevel: 2
     resultItem: 激光加特林
     requireItem:
@@ -3597,7 +3597,7 @@ ANVIL:
     - 生命合金:5
     - 瘟疫装甲镀层:10
     recipeCategory: WEAPON_MAGIC
-  '450':
+  450:
     requireLevel: 3
     resultItem: 特斯拉巨炮
     requireItem:
@@ -3606,7 +3606,7 @@ ANVIL:
     - 宇宙锭:8
     - 化神魂精:2
     recipeCategory: WEAPON_MAGIC
-  '451':
+  451:
     requireLevel: 3
     resultItem: 以太流光炮
     requireItem:
@@ -3615,7 +3615,7 @@ ANVIL:
     - 龙蒿锭:12
     - 神圣晶石:8
     recipeCategory: WEAPON_MAGIC
-  '452':
+  452:
     requireLevel: 1
     resultItem: 霜华法杖
     requireItem:
@@ -3623,14 +3623,14 @@ ANVIL:
     - 木材:10
     - 冰块:50
     recipeCategory: WEAPON_SUMMON
-  '453':
+  453:
     requireLevel: 1
     resultItem: 太阳之灵法杖
     requireItem:
     - 砂岩:20
     - 风暴之颚:2
     recipeCategory: WEAPON_SUMMON
-  '454':
+  454:
     requireLevel: 1
     resultItem: 颠茄灵杖
     requireItem:
@@ -3639,7 +3639,7 @@ ANVIL:
     - 木材:25
     - 丛林孢子:5
     recipeCategory: WEAPON_SUMMON
-  '455':
+  455:
     requireLevel: 1
     resultItem: 腐化吞噬者
     requireItem:
@@ -3647,14 +3647,14 @@ ANVIL:
     - 暗影鳞片:9
     - 木材:20
     recipeCategory: WEAPON_SUMMON
-  '456':
+  456:
     requireLevel: 1
     resultItem: 烬英法杖
     requireItem:
     - 火焰花:5
     - 狱炎锭:10
     recipeCategory: WEAPON_SUMMON
-  '457':
+  457:
     requireLevel: 1
     resultItem: 噬星者控制元件
     requireItem:
@@ -3663,14 +3663,14 @@ ANVIL:
     - 天蓝锭:4
     - 海棱晶:7
     recipeCategory: WEAPON_SUMMON
-  '458':
+  458:
     requireLevel: 2
     resultItem: 失落极峰
     requireItem:
     - 禁戒碎片
     - 精金锭:5
     recipeCategory: WEAPON_SUMMON
-  '459':
+  459:
     requireLevel: 1
     resultItem: 闹鬼卷轴
     requireItem:
@@ -3678,7 +3678,7 @@ ANVIL:
     - 光明之魂:5
     - 暗影之魂:5
     recipeCategory: WEAPON_SUMMON
-  '460':
+  460:
     requireLevel: 2
     resultItem: 永冻之焱华
     requireItem:
@@ -3686,14 +3686,14 @@ ANVIL:
     - 霜华法杖
     - 秘银锭:5
     recipeCategory: WEAPON_SUMMON
-  '461':
+  461:
     requireLevel: 2
     resultItem: 淬焰之升华
     requireItem:
     - 污痕核心:10
     - 混乱精华:5
     recipeCategory: WEAPON_SUMMON
-  '462':
+  462:
     requireLevel: 2
     resultItem: 架式扫射机
     requireItem:
@@ -3701,7 +3701,7 @@ ANVIL:
     - 神秘电路:15
     - 秘银锭:10
     recipeCategory: WEAPON_SUMMON
-  '463':
+  463:
     requireLevel: 2
     resultItem: 太阳神法杖
     requireItem:
@@ -3711,7 +3711,7 @@ ANVIL:
     - 视域之魂:3
     - 恐惧之魂:3
     recipeCategory: WEAPON_SUMMON
-  '464':
+  464:
     requireLevel: 2
     resultItem: 苍华之庭
     requireItem:
@@ -3719,7 +3719,7 @@ ANVIL:
     - 永夜之眼
     - 生命碎片:12
     recipeCategory: WEAPON_SUMMON
-  '465':
+  465:
     requireLevel: 2
     resultItem: 沙龙卷法杖
     requireItem:
@@ -3728,33 +3728,33 @@ ANVIL:
     - 天蓝锭:10
     - 丝绸:5
     recipeCategory: WEAPON_SUMMON
-  '466':
+  466:
     requireLevel: 2
     resultItem: 剧毒芽孢
     requireItem:
     - 永恒锭:12
     recipeCategory: WEAPON_SUMMON
-  '467':
+  467:
     requireLevel: 2
     resultItem: 凋零绽放法杖
     requireItem:
     - 永冻之焱华
     - 瘟疫细胞罐:15
     recipeCategory: WEAPON_SUMMON
-  '468':
+  468:
     requireLevel: 2
     resultItem: 代达罗斯守卫法杖
     requireItem:
     - 寒元锭:12
     recipeCategory: WEAPON_SUMMON
-  '469':
+  469:
     requireLevel: 3
     resultItem: 宙极毒蝰引擎
     requireItem:
     - 战术瘟疫引擎
     - 宇宙锭:10
     recipeCategory: WEAPON_SUMMON
-  '470':
+  470:
     requireLevel: 3
     resultItem: 灭兆渡鸦杖
     requireItem:
@@ -3762,7 +3762,7 @@ ANVIL:
     - 宇宙锭:8
     - 梦魇魔能:20
     recipeCategory: WEAPON_SUMMON
-  '471':
+  471:
     requireLevel: 3
     resultItem: 星律之握揽
     requireItem:
@@ -3771,7 +3771,7 @@ ANVIL:
     - 宇宙锭:8
     - 梦魇魔能:8
     recipeCategory: WEAPON_SUMMON
-  '472':
+  472:
     requireLevel: 3
     resultItem: 电极解离机
     requireItem:
@@ -3780,7 +3780,7 @@ ANVIL:
     - 宇宙锭:8
     - 化神魂精:2
     recipeCategory: WEAPON_SUMMON
-  '473':
+  473:
     requireLevel: 3
     resultItem: 极昼信标
     requireItem:
@@ -3788,14 +3788,14 @@ ANVIL:
     - 月亮传送门法杖
     - 圣金源锭:5
     recipeCategory: WEAPON_SUMMON
-  '474':
+  474:
     requireLevel: 3
     resultItem: 硫心恶殖
     requireItem:
     - 星宇神卫召唤杖
     - 湮灭余烬:5
     recipeCategory: WEAPON_SUMMON
-  '475':
+  475:
     requireLevel: 2
     resultItem: 脉冲炮塔遥控装置
     requireItem:
@@ -3804,28 +3804,28 @@ ANVIL:
     - 生命合金:5
     - 瘟疫装甲镀层:10
     recipeCategory: WEAPON_SUMMON
-  '476':
+  476:
     requireLevel: 2
     resultItem: 冰川核心:3
     requireItem:
     - 灵气
     - 冰川精华
     recipeCategory: MATERIAL
-  '477':
+  477:
     requireLevel: 2
     resultItem: 日光核心:3
     requireItem:
     - 灵气
     - 日光精华
     recipeCategory: MATERIAL
-  '478':
+  478:
     requireLevel: 2
     resultItem: 混乱核心:3
     requireItem:
     - 灵气
     - 混乱精华
     recipeCategory: MATERIAL
-  '479':
+  479:
     requireLevel: 2
     resultItem: 灾劫核心:3
     requireItem:
@@ -3834,7 +3834,7 @@ ANVIL:
     - 冰川核心:3
     - 灾厄尘
     recipeCategory: MATERIAL
-  '480':
+  480:
     requireLevel: 2
     resultItem: 生命合金
     requireItem:
@@ -3842,7 +3842,7 @@ ANVIL:
     - 永恒锭
     - 熔渣锭
     recipeCategory: MATERIAL
-  '481':
+  481:
     requireLevel: 1
     resultItem: 彗星碎片
     requireItem:
@@ -3850,7 +3850,7 @@ ANVIL:
     - 坠星:10
     - 星尘:50
     recipeCategory: CONSUMABLE_PERMANENT
-  '482':
+  482:
     requireLevel: 2
     resultItem: 血橙
     requireItem:
@@ -3860,7 +3860,7 @@ ANVIL:
     - 力量之魂:5
     - 视域之魂:5
     recipeCategory: CONSUMABLE_PERMANENT
-  '483':
+  483:
     requireLevel: 2
     resultItem: 奇迹之果
     requireItem:
@@ -3868,7 +3868,7 @@ ANVIL:
     - 生命果:5
     - 生命碎片:10
     recipeCategory: CONSUMABLE_PERMANENT
-  '484':
+  484:
     requireLevel: 3
     resultItem: 龙果
     requireItem:
@@ -3878,101 +3878,101 @@ ANVIL:
     - 化神魂精:2
     recipeCategory: CONSUMABLE_PERMANENT
 WORKBENCH:
-  '1':
+  1:
     requireLevel: 1
     resultItem: 盔甲架
     requireItem:
     - 木材:8
     - 石头:2
     recipeCategory: TOOL
-  '2':
+  2:
     requireLevel: 1
     resultItem: 玻璃平台
     requireItem:
     - 玻璃:32
     recipeCategory: TOOL
-  '3':
+  3:
     requireLevel: 1
     resultItem: 木剑
     requireItem:
     - 木材:18
     recipeCategory: WEAPON_MELEE
-  '4':
+  4:
     requireLevel: 1
     resultItem: 木弓
     requireItem:
     - 木材:20
     recipeCategory: WEAPON_ARROW
-  '5':
+  5:
     requireLevel: 1
     resultItem: 木箭:24
     requireItem:
     - 木材
     - 石头
     recipeCategory: AMMO_ARROW
-  '6':
+  6:
     requireLevel: 1
     resultItem: 木制悠悠球
     requireItem:
     - 木材:20
     - 蛛丝:10
     recipeCategory: WEAPON_MELEE
-  '7':
+  7:
     requireLevel: 1
     resultItem: 木头盔
     requireItem:
     - 木材:25
     recipeCategory: ARMOR
-  '8':
+  8:
     requireLevel: 1
     resultItem: 木胸甲
     requireItem:
     - 木材:35
     recipeCategory: ARMOR
-  '9':
+  9:
     requireLevel: 1
     resultItem: 木护胫
     requireItem:
     - 木材:25
     recipeCategory: ARMOR
-  '10':
+  10:
     requireLevel: 1
     resultItem: 仙人掌剑
     requireItem:
     - 仙人掌:20
     recipeCategory: WEAPON_MELEE
-  '11':
+  11:
     requireLevel: 1
     resultItem: 仙人掌头盔
     requireItem:
     - 仙人掌:35
     recipeCategory: ARMOR
-  '12':
+  12:
     requireLevel: 1
     resultItem: 仙人掌胸甲
     requireItem:
     - 仙人掌:25
     recipeCategory: ARMOR
-  '13':
+  13:
     requireLevel: 1
     resultItem: 仙人掌护腿
     requireItem:
     - 仙人掌:30
     recipeCategory: ARMOR
-  '14':
+  14:
     requireLevel: 1
     resultItem: 火炉
     requireItem:
     - 火把:10
     - 石头:5
     recipeCategory: BLOCK
-  '15':
+  15:
     requireLevel: 1
     resultItem: 铁砧
     requireItem:
     - 铁锭:5
     recipeCategory: BLOCK
-  '16':
+  16:
     requireLevel: 1
     resultItem: 祭坛
     requireItem:
@@ -3982,7 +3982,7 @@ WORKBENCH:
     - 银锭:4
     - 金锭:4
     recipeCategory: BLOCK
-  '17':
+  17:
     requireLevel: 1
     resultItem: 酿造台
     requireItem:
@@ -3991,102 +3991,102 @@ WORKBENCH:
     - 空瓶:3
     - 金锭
     recipeCategory: BLOCK
-  '18':
+  18:
     requireLevel: 1
     resultItem: CHEST
     requireItem:
     - 木材:8
     - 铁锭:2
     recipeCategory: BLOCK
-  '19':
+  19:
     requireLevel: 1
     resultItem: 钓鱼竿
     requireItem:
     - 木材:5
     - 铁锭
     recipeCategory: FISHING_ROD
-  '20':
+  20:
     requireLevel: 1
     resultItem: 刺身
     requireItem:
     - 偏口鱼
     recipeCategory: CONSUMABLE
-  '21':
+  21:
     requireLevel: 1
     resultItem: 刺身
     requireItem:
     - 红鲷鱼
     recipeCategory: CONSUMABLE
-  '22':
+  22:
     requireLevel: 1
     resultItem: 刺身
     requireItem:
     - 三文鱼
     recipeCategory: CONSUMABLE
-  '23':
+  23:
     requireLevel: 1
     resultItem: 刺身
     requireItem:
     - 鳟鱼
     recipeCategory: CONSUMABLE
-  '24':
+  24:
     requireLevel: 1
     resultItem: 刺身
     requireItem:
     - 金枪鱼
     recipeCategory: CONSUMABLE
-  '25':
+  25:
     requireLevel: 1
     resultItem: 刺身
     requireItem:
     - 硫火崖回鱼
     recipeCategory: CONSUMABLE
-  '26':
+  26:
     requireLevel: 1
     resultItem: 仙人掌镐
     requireItem:
     - 仙人掌:15
     recipeCategory: TOOL
-  '27':
+  27:
     requireLevel: 1
     resultItem: 魔力星
     requireItem:
     - 坠星:3
     recipeCategory: CONSUMABLE_PERMANENT
-  '28':
+  28:
     requireLevel: 1
     resultItem: 木制回力镖
     requireItem:
     - 木材:22
     recipeCategory: WEAPON_MELEE
-  '29':
+  29:
     requireLevel: 1
     resultItem: 爆炸弹:48
     requireItem:
     - 弹壳:48
     - 火药
     recipeCategory: AMMO_BULLET
-  '30':
+  30:
     requireLevel: 1
     resultItem: 毒液弹:48
     requireItem:
     - 弹壳:48
     - 小瓶毒液
     recipeCategory: AMMO_BULLET
-  '31':
+  31:
     requireLevel: 1
     resultItem: 床
     requireItem:
     - 丝绸:8
     - 木材:4
     recipeCategory: BLOCK
-  '32':
+  32:
     requireLevel: 1
     resultItem: 阴森头盔
     requireItem:
     - 阴森木:100
     recipeCategory: ARMOR
-  '33':
+  33:
     requireLevel: 1
     resultItem: 阴森胸甲
     requireItem:
@@ -4094,32 +4094,32 @@ WORKBENCH:
     - 阴森木:100
     - 阴森木:100
     recipeCategory: ARMOR
-  '34':
+  34:
     requireLevel: 1
     resultItem: 阴森护腿
     requireItem:
     - 阴森木:100
     - 阴森木:100
     recipeCategory: ARMOR
-  '35':
+  35:
     requireLevel: 1
     resultItem: 光明钥匙
     requireItem:
     - 光明之魂:15
     recipeCategory: BOSS
-  '36':
+  36:
     requireLevel: 1
     resultItem: 夜光钥匙
     requireItem:
     - 暗影之魂:15
     recipeCategory: BOSS
-  '37':
+  37:
     requireLevel: 1
     resultItem: 丝绸
     requireItem:
     - 蛛丝:5
     recipeCategory: MATERIAL
-  '38':
+  38:
     requireLevel: 1
     resultItem: 鸟妖之翼
     requireItem:
@@ -4127,62 +4127,62 @@ WORKBENCH:
     - 巨型羽毛
     - 羽毛:16
     recipeCategory: ACCESSORY
-  '39':
+  39:
     requireLevel: 1
     resultItem: 发光蘑菇
     requireItem:
     - 蘑菇:4
     recipeCategory: MATERIAL
-  '40':
+  40:
     requireLevel: 1
     resultItem: 水晶风暴
     requireItem:
     - 水晶碎块:20
     - 光明之魂:15
     recipeCategory: WEAPON_MAGIC
-  '41':
+  41:
     requireLevel: 1
     resultItem: 死灵头盔
     requireItem:
     - 骨头:40
     - 蛛丝:40
     recipeCategory: ARMOR
-  '42':
+  42:
     requireLevel: 1
     resultItem: 死灵胸甲
     requireItem:
     - 骨头:60
     - 蛛丝:50
     recipeCategory: ARMOR
-  '43':
+  43:
     requireLevel: 1
     resultItem: 死灵护胫
     requireItem:
     - 骨头:50
     - 蛛丝:45
     recipeCategory: ARMOR
-  '44':
+  44:
     requireLevel: 1
     resultItem: 沙漠巡游者帽
     requireItem:
     - 丝绸:8
     - 荒漠之羽:2
     recipeCategory: ARMOR
-  '45':
+  45:
     requireLevel: 1
     resultItem: 沙漠巡游者衣
     requireItem:
     - 丝绸:10
     - 荒漠之羽:3
     recipeCategory: ARMOR
-  '46':
+  46:
     requireLevel: 1
     resultItem: 沙漠巡游者裤
     requireItem:
     - 丝绸:5
     - 荒漠之羽
     recipeCategory: ARMOR
-  '47':
+  47:
     requireLevel: 1
     resultItem: 冰矢
     requireItem:
@@ -4190,14 +4190,14 @@ WORKBENCH:
     - 寒颤棘:2
     - 雪块:10
     recipeCategory: WEAPON_MAGIC
-  '48':
+  48:
     requireLevel: 1
     resultItem: 珊瑚泥
     requireItem:
     - 海洋残渣:2
     - 珊瑚:5
     recipeCategory: WEAPON_MAGIC
-  '49':
+  49:
     requireLevel: 1
     resultItem: 火矢
     requireItem:
@@ -4205,14 +4205,14 @@ WORKBENCH:
     - 黑曜石:9
     - 火焰花:2
     recipeCategory: WEAPON_MAGIC
-  '50':
+  50:
     requireLevel: 1
     resultItem: 信风
     requireItem:
     - 天蓝锭:6
     - 丝绸:5
     recipeCategory: WEAPON_MAGIC
-  '51':
+  51:
     requireLevel: 1
     resultItem: 冰火矢
     requireItem:
@@ -4221,20 +4221,20 @@ WORKBENCH:
     - 冰川精华:2
     - 混乱精华:2
     recipeCategory: WEAPON_MAGIC
-  '52':
+  52:
     requireLevel: 1
     resultItem: 暗晶风暴
     requireItem:
     - 水晶风暴
     - 寒元锭:6
     recipeCategory: WEAPON_MAGIC
-  '53':
+  53:
     requireLevel: 1
     resultItem: 蒸海硫火
     requireItem:
     - 污痕核心:5
     recipeCategory: WEAPON_MAGIC
-  '54':
+  54:
     requireLevel: 1
     resultItem: 死亡之尘
     requireItem:
@@ -4242,14 +4242,14 @@ WORKBENCH:
     - 沙块:25
     - 精金锭:5
     recipeCategory: WEAPON_MAGIC
-  '55':
+  55:
     requireLevel: 1
     resultItem: 遗迹圣物
     requireItem:
     - 禁戒碎片
     - 精金锭:5
     recipeCategory: WEAPON_MAGIC
-  '56':
+  56:
     requireLevel: 1
     resultItem: 常青之气
     requireItem:
@@ -4257,7 +4257,7 @@ WORKBENCH:
     - 暗影之魂:15
     - 永恒锭:3
     recipeCategory: WEAPON_MAGIC
-  '57':
+  57:
     requireLevel: 1
     resultItem: 天堂之泪
     requireItem:
@@ -4266,7 +4266,7 @@ WORKBENCH:
     - 日光核心:5
     - 海棱晶:15
     recipeCategory: WEAPON_MAGIC
-  '58':
+  58:
     requireLevel: 1
     resultItem: 始源之尘
     requireItem:
@@ -4275,19 +4275,19 @@ WORKBENCH:
     - 陨星锭:5
     - 灵气:5
     recipeCategory: WEAPON_MAGIC
-  '59':
+  59:
     requireLevel: 1
     resultItem: 禁忌之阳
     requireItem:
     - 熔渣锭:6
     recipeCategory: WEAPON_MAGIC
-  '60':
+  60:
     requireLevel: 1
     resultItem: 命运之手
     requireItem:
     - 冥思构造体:9
     recipeCategory: WEAPON_MAGIC
-  '61':
+  61:
     requireLevel: 1
     resultItem: 原核之怒
     requireItem:
@@ -4295,7 +4295,7 @@ WORKBENCH:
     - 波塞冬
     - 夜明锭:5
     recipeCategory: WEAPON_MAGIC
-  '62':
+  62:
     requireLevel: 1
     resultItem: 先兆元素
     requireItem:
@@ -4305,14 +4305,14 @@ WORKBENCH:
     - 夜明锭:5
     - 生命合金:5
     recipeCategory: WEAPON_MAGIC
-  '63':
+  63:
     requireLevel: 1
     resultItem: 生命光流
     requireItem:
     - 丝绸:5
     - 龙蒿锭:8
     recipeCategory: WEAPON_MAGIC
-  '64':
+  64:
     requireLevel: 1
     resultItem: 始源之遗
     requireItem:
@@ -4321,7 +4321,7 @@ WORKBENCH:
     - 宇宙锭:8
     - 恒温能量:20
     recipeCategory: WEAPON_MAGIC
-  '65':
+  65:
     requireLevel: 1
     resultItem: 狂野复诵
     requireItem:
@@ -4331,7 +4331,7 @@ WORKBENCH:
     - 宇宙锭:8
     - 梦魇魔能:20
     recipeCategory: WEAPON_MAGIC
-  '66':
+  66:
     requireLevel: 1
     resultItem: 圣神光辉
     requireItem:
@@ -4342,7 +4342,7 @@ WORKBENCH:
     - 闪耀金羽:5
     - 梦魇魔能:20
     recipeCategory: WEAPON_MAGIC
-  '67':
+  67:
     requireLevel: 1
     resultItem: 黑洞边缘
     requireItem:
@@ -4353,21 +4353,21 @@ WORKBENCH:
     - 暗离子体
     - 扭曲虚空
     recipeCategory: WEAPON_MAGIC
-  '68':
+  68:
     requireLevel: 1
     resultItem: 怨戾
     requireItem:
     - 蒸海硫火
     - 湮灭余烬:5
     recipeCategory: WEAPON_MAGIC
-  '69':
+  69:
     requireLevel: 1
     resultItem: 异端僭越
     requireItem:
     - 鬼之形
     - 湮灭余烬:5
     recipeCategory: WEAPON_MAGIC
-  '70':
+  70:
     requireLevel: 1
     resultItem: 反魂蝶
     requireItem:
@@ -4376,7 +4376,7 @@ WORKBENCH:
     - 生命合金:5
     recipeCategory: WEAPON_SUMMON
 ENCHANTMENT_TABLE:
-  '1':
+  1:
     requireLevel: 1
     resultItem: 永夜之刃
     requireItem:
@@ -4385,14 +4385,14 @@ ENCHANTMENT_TABLE:
     - 草薙剑
     - 烈焰剑
     recipeCategory: WEAPON_MELEE
-  '2':
+  2:
     requireLevel: 1
     resultItem: 史莱姆王冠
     requireItem:
     - 凝胶:16
     - 金锭
     recipeCategory: BOSS
-  '3':
+  3:
     requireLevel: 1
     resultItem: 荒漠吊坠
     requireItem:
@@ -4400,25 +4400,25 @@ ENCHANTMENT_TABLE:
     - 蚁狮上颚:4
     - 风暴之颚:2
     recipeCategory: BOSS
-  '4':
+  4:
     requireLevel: 1
     resultItem: 可疑的眼球
     requireItem:
     - 晶状体:6
     recipeCategory: BOSS
-  '5':
+  5:
     requireLevel: 1
     resultItem: 节肢动物芽孢
     requireItem:
     - 发光蘑菇:16
     recipeCategory: BOSS
-  '6':
+  6:
     requireLevel: 1
     resultItem: 虫饵
     requireItem:
     - 腐肉:15
     recipeCategory: BOSS
-  '7':
+  7:
     requireLevel: 1
     resultItem: 畸形肿瘤
     requireItem:
@@ -4426,27 +4426,27 @@ ENCHANTMENT_TABLE:
     - 腐烂物质:7
     - 恶魔锭:3
     recipeCategory: BOSS
-  '8':
+  8:
     requireLevel: 1
     resultItem: 过载淤泥
     requireItem:
     - 凝胶:16
     - 黑檀石:16
     recipeCategory: BOSS
-  '9':
+  9:
     requireLevel: 1
     resultItem: 垃圾桶
     requireItem:
     - 铁锭:8
     recipeCategory: TOOL
-  '10':
+  10:
     requireLevel: 1
     resultItem: 虚空袋
     requireItem:
     - 丝绸:8
     - 丛林孢子:5
     recipeCategory: TOOL
-  '11':
+  11:
     requireLevel: 1
     resultItem: 绝望之刃
     requireItem:
@@ -4455,7 +4455,7 @@ ENCHANTMENT_TABLE:
     - 火焰花:2
     - 死亡草:2
     recipeCategory: WEAPON_MELEE
-  '12':
+  12:
     requireLevel: 1
     resultItem: 阴雷
     requireItem:
@@ -4463,7 +4463,7 @@ ENCHANTMENT_TABLE:
     - 腐烂物质:15
     - 腐肉:5
     recipeCategory: WEAPON_MELEE
-  '13':
+  13:
     requireLevel: 1
     resultItem: 真·绝望之刃
     requireItem:
@@ -4471,7 +4471,7 @@ ENCHANTMENT_TABLE:
     - 诅咒焰:15
     - 死亡草:4
     recipeCategory: WEAPON_MELEE
-  '14':
+  14:
     requireLevel: 1
     resultItem: 凋亡屠刀
     requireItem:
@@ -4480,7 +4480,7 @@ ENCHANTMENT_TABLE:
     - 小瓶毒液:15
     - 叶绿锭:15
     recipeCategory: WEAPON_MELEE
-  '15':
+  15:
     requireLevel: 1
     resultItem: 月光弓
     requireItem:
@@ -4488,7 +4488,7 @@ ENCHANTMENT_TABLE:
     - 熔火之怒
     - 纯净凝胶:10
     recipeCategory: WEAPON_ARROW
-  '16':
+  16:
     requireLevel: 1
     resultItem: 影流喷射器
     requireItem:
@@ -4496,7 +4496,7 @@ ENCHANTMENT_TABLE:
     - 腐肉:3
     - 腐烂物质:10
     recipeCategory: WEAPON_ARROW
-  '17':
+  17:
     requireLevel: 1
     resultItem: 永夜射线
     requireItem:
@@ -4506,7 +4506,7 @@ ENCHANTMENT_TABLE:
     - 水矢
     - 纯净凝胶:10
     recipeCategory: WEAPON_MAGIC
-  '18':
+  18:
     requireLevel: 1
     resultItem: 永夜之眼
     requireItem:
@@ -4516,7 +4516,7 @@ ENCHANTMENT_TABLE:
     - 小鬼法杖
     - 纯净凝胶:10
     recipeCategory: WEAPON_SUMMON
-  '19':
+  19:
     requireLevel: 1
     resultItem: 蚀骨法杖
     requireItem:
@@ -4525,7 +4525,7 @@ ENCHANTMENT_TABLE:
     - 暗影之魂:10
     - 恶魔锭:10
     recipeCategory: WEAPON_SUMMON
-  '20':
+  20:
     requireLevel: 1
     resultItem: 血泪
     requireItem:
@@ -4534,34 +4534,34 @@ ENCHANTMENT_TABLE:
     - 火焰花:4
     recipeCategory: TOOL
 AIR:
-  '1':
+  1:
     requireLevel: 1
     resultItem: 火把:3
     requireItem:
     - 凝胶
     - 木材
     recipeCategory: BLOCK
-  '2':
+  2:
     requireLevel: 1
     resultItem: 钨钢飞刀:64
     requireItem:
     - 钨钢金属废料
     recipeCategory: WEAPON_ROGUE
-  '3':
+  3:
     requireLevel: 1
     resultItem: 烈焰箭:16
     requireItem:
     - 木箭:16
     - 火把
     recipeCategory: AMMO_ARROW
-  '4':
+  4:
     requireLevel: 1
     resultItem: 小丑之箭:24
     requireItem:
     - 木箭:24
     - 坠星
     recipeCategory: AMMO_ARROW
-  '5':
+  5:
     requireLevel: 1
     resultItem: 冰焰箭:32
     requireItem:
@@ -4569,60 +4569,60 @@ AIR:
     - 火把:2
     - 冰块
     recipeCategory: AMMO_ARROW
-  '6':
+  6:
     requireLevel: 1
     resultItem: 附魔回力镖
     requireItem:
     - 木制回力镖
     - 坠星:3
     recipeCategory: WEAPON_MELEE
-  '7':
+  7:
     requireLevel: 1
     resultItem: 火焰锤
     requireItem:
     - 链锤
     - 火把:99
     recipeCategory: WEAPON_MELEE
-  '8':
+  8:
     requireLevel: 1
     resultItem: 木制工作台
     requireItem:
     - 木材:5
     recipeCategory: BLOCK
-  '9':
+  9:
     requireLevel: 1
     resultItem: 空瓶:3
     requireItem:
     - 玻璃
     recipeCategory: MATERIAL
-  '10':
+  10:
     requireLevel: 1
     resultItem: 圈地锄头
     requireItem:
     - 木材
     recipeCategory: TOOL
-  '11':
+  11:
     requireLevel: 1
     resultItem: 粘性炸弹
     requireItem:
     - 炸弹
     - 凝胶
     recipeCategory: TOOL
-  '12':
+  12:
     requireLevel: 1
     resultItem: 粘性雷管
     requireItem:
     - 雷管
     - 凝胶
     recipeCategory: TOOL
-  '13':
+  13:
     requireLevel: 1
     resultItem: 初学者鱼饵:2
     requireItem:
     - 蘑菇
     - 南瓜
     recipeCategory: FISH_BAIT
-  '14':
+  14:
     requireLevel: 1
     resultItem: 专家鱼饵:4
     requireItem:
@@ -4630,7 +4630,7 @@ AIR:
     - 腐烂物质
     - 腐肉
     recipeCategory: FISH_BAIT
-  '15':
+  15:
     requireLevel: 1
     resultItem: 大师鱼饵:8
     requireItem:
@@ -4639,7 +4639,7 @@ AIR:
     - 凝胶:4
     - 星尘:8
     recipeCategory: FISH_BAIT
-  '16':
+  16:
     requireLevel: 1
     resultItem: 嘉登熔炉
     requireItem:
@@ -4654,13 +4654,13 @@ AIR:
     - 化神魂精:25
     recipeCategory: BLOCK
 BREWING_STAND:
-  '1':
+  1:
     requireLevel: 1
     resultItem: 水瓶
     requireItem:
     - 空瓶
     recipeCategory: CONSUMABLE
-  '2':
+  2:
     requireLevel: 1
     resultItem: 弹药储备药水
     requireItem:
@@ -4668,7 +4668,7 @@ BREWING_STAND:
     - 月光草
     - 双鳍鳕鱼
     recipeCategory: CONSUMABLE
-  '3':
+  3:
     requireLevel: 1
     resultItem: 射术药水
     requireItem:
@@ -4676,7 +4676,7 @@ BREWING_STAND:
     - 太阳花
     - 晶状体
     recipeCategory: CONSUMABLE
-  '4':
+  4:
     requireLevel: 1
     resultItem: 战斗药水
     requireItem:
@@ -4684,7 +4684,7 @@ BREWING_STAND:
     - 死亡草
     - 腐肉
     recipeCategory: CONSUMABLE
-  '5':
+  5:
     requireLevel: 1
     resultItem: 镇静药水
     requireItem:
@@ -4692,7 +4692,7 @@ BREWING_STAND:
     - 雀鲷
     - 太阳花
     recipeCategory: CONSUMABLE
-  '6':
+  6:
     requireLevel: 1
     resultItem: 耐力药水
     requireItem:
@@ -4700,7 +4700,7 @@ BREWING_STAND:
     - 装甲洞穴鱼
     - 闪耀根
     recipeCategory: CONSUMABLE
-  '7':
+  7:
     requireLevel: 1
     resultItem: 鱼鳃药水
     requireItem:
@@ -4708,7 +4708,7 @@ BREWING_STAND:
     - 波浪叶
     - 沙块
     recipeCategory: CONSUMABLE
-  '8':
+  8:
     requireLevel: 1
     resultItem: 隐身药水
     requireItem:
@@ -4716,7 +4716,7 @@ BREWING_STAND:
     - 闪耀根
     - 月光草
     recipeCategory: CONSUMABLE
-  '9':
+  9:
     requireLevel: 1
     resultItem: 铁皮药水
     requireItem:
@@ -4724,7 +4724,7 @@ BREWING_STAND:
     - 太阳花
     - 铁矿石
     recipeCategory: CONSUMABLE
-  '10':
+  10:
     requireLevel: 1
     resultItem: 生命力药水
     requireItem:
@@ -4734,7 +4734,7 @@ BREWING_STAND:
     - 寒颤棘
     - 波浪叶
     recipeCategory: CONSUMABLE
-  '11':
+  11:
     requireLevel: 1
     resultItem: 魔能药水
     requireItem:
@@ -4743,7 +4743,7 @@ BREWING_STAND:
     - 死亡草
     - 坠星
     recipeCategory: CONSUMABLE
-  '12':
+  12:
     requireLevel: 1
     resultItem: 魔力掌控药水
     requireItem:
@@ -4752,7 +4752,7 @@ BREWING_STAND:
     - 太阳花
     - 坠星
     recipeCategory: CONSUMABLE
-  '13':
+  13:
     requireLevel: 1
     resultItem: 黑曜石皮药水
     requireItem:
@@ -4761,7 +4761,7 @@ BREWING_STAND:
     - 波浪叶
     - 黑曜石
     recipeCategory: CONSUMABLE
-  '14':
+  14:
     requireLevel: 1
     resultItem: 再生药水
     requireItem:
@@ -4769,7 +4769,7 @@ BREWING_STAND:
     - 太阳花
     - 蘑菇
     recipeCategory: CONSUMABLE
-  '15':
+  15:
     requireLevel: 1
     resultItem: 召唤药水
     requireItem:
@@ -4777,7 +4777,7 @@ BREWING_STAND:
     - 月光草
     - 斑驳油鱼
     recipeCategory: CONSUMABLE
-  '16':
+  16:
     requireLevel: 1
     resultItem: 敏捷药水
     requireItem:
@@ -4785,7 +4785,7 @@ BREWING_STAND:
     - 闪耀根
     - 仙人掌
     recipeCategory: CONSUMABLE
-  '17':
+  17:
     requireLevel: 1
     resultItem: 荆棘药水
     requireItem:
@@ -4793,7 +4793,7 @@ BREWING_STAND:
     - 死亡草
     - 仙人掌
     recipeCategory: CONSUMABLE
-  '18':
+  18:
     requireLevel: 1
     resultItem: 泰坦药水
     requireItem:
@@ -4802,7 +4802,7 @@ BREWING_STAND:
     - 寒颤棘
     - 骨头
     recipeCategory: CONSUMABLE
-  '19':
+  19:
     requireLevel: 1
     resultItem: 怒气药水
     requireItem:
@@ -4810,7 +4810,7 @@ BREWING_STAND:
     - 死亡草
     - 黑檀锦鲤
     recipeCategory: CONSUMABLE
-  '20':
+  20:
     requireLevel: 1
     resultItem: 虫潮药水
     requireItem:
@@ -4818,7 +4818,7 @@ BREWING_STAND:
     - 纯净凝胶:2
     - 腐烂物质
     recipeCategory: CONSUMABLE
-  '21':
+  21:
     requireLevel: 1
     resultItem: 禅定药水
     requireItem:
@@ -4826,7 +4826,7 @@ BREWING_STAND:
     - 纯净凝胶:2
     - 太阳花:3
     recipeCategory: CONSUMABLE
-  '22':
+  22:
     requireLevel: 1
     resultItem: 钙质药水
     requireItem:
@@ -4835,7 +4835,7 @@ BREWING_STAND:
     - 火焰花
     - 波浪叶
     recipeCategory: CONSUMABLE
-  '23':
+  23:
     requireLevel: 1
     resultItem: 磁力药水:2
     requireItem:
@@ -4843,7 +4843,7 @@ BREWING_STAND:
     - 铁锭
     - 火焰花:2
     recipeCategory: CONSUMABLE
-  '24':
+  24:
     requireLevel: 1
     resultItem: 无尽吞噬药水:4
     requireItem:
@@ -4851,7 +4851,7 @@ BREWING_STAND:
     - 暗离子体
     - 星系异石
     recipeCategory: CONSUMABLE
-  '25':
+  25:
     requireLevel: 1
     resultItem: 回城药水
     requireItem:
@@ -4859,7 +4859,7 @@ BREWING_STAND:
     - 镜面鱼
     - 太阳花
     recipeCategory: TOOL
-  '26':
+  26:
     requireLevel: 1
     resultItem: 虫洞药水
     requireItem:
@@ -4867,7 +4867,7 @@ BREWING_STAND:
     - 镜面鱼
     - 闪耀根
     recipeCategory: TOOL
-  '27':
+  27:
     requireLevel: 1
     resultItem: 弱效治疗药水:2
     requireItem:
@@ -4875,14 +4875,14 @@ BREWING_STAND:
     - 凝胶:2
     - 蘑菇
     recipeCategory: CONSUMABLE_HEAL
-  '28':
+  28:
     requireLevel: 1
     resultItem: 治疗药水:4
     requireItem:
     - 弱效治疗药水:4
     - 发光蘑菇
     recipeCategory: CONSUMABLE_HEAL
-  '29':
+  29:
     requireLevel: 1
     resultItem: 强效治疗药水:3
     requireItem:
@@ -4890,7 +4890,7 @@ BREWING_STAND:
     - 妖精尘:3
     - 水晶碎块
     recipeCategory: CONSUMABLE_HEAL
-  '30':
+  30:
     requireLevel: 1
     resultItem: 超级治疗药水:4
     requireItem:
@@ -4900,28 +4900,28 @@ BREWING_STAND:
     - 星尘碎片
     - 星璇碎片
     recipeCategory: CONSUMABLE_HEAL
-  '31':
+  31:
     requireLevel: 1
     resultItem: 至尊治疗药水:4
     requireItem:
     - 超级治疗药水:4
     - 血石:3
     recipeCategory: CONSUMABLE_HEAL
-  '32':
+  32:
     requireLevel: 1
     resultItem: 终极治疗药水:20
     requireItem:
     - 至尊治疗药水:20
     - 化神魂精
     recipeCategory: CONSUMABLE_HEAL
-  '33':
+  33:
     requireLevel: 1
     resultItem: 恢复药水
     requireItem:
     - 魔力药水
     - 治疗药水
     recipeCategory: CONSUMABLE_HEAL
-  '34':
+  34:
     requireLevel: 1
     resultItem: 弱效魔力药水:8
     requireItem:
@@ -4929,14 +4929,14 @@ BREWING_STAND:
     - 凝胶:4
     - 坠星
     recipeCategory: CONSUMABLE_MANA
-  '35':
+  35:
     requireLevel: 1
     resultItem: 魔力药水:4
     requireItem:
     - 弱效魔力药水:4
     - 发光蘑菇
     recipeCategory: CONSUMABLE_MANA
-  '36':
+  36:
     requireLevel: 1
     resultItem: 强效魔力药水:12
     requireItem:
@@ -4944,7 +4944,7 @@ BREWING_STAND:
     - 妖精尘:4
     - 坠星
     recipeCategory: CONSUMABLE_MANA
-  '37':
+  37:
     requireLevel: 1
     resultItem: 超级魔力药水:15
     requireItem:
@@ -4953,7 +4953,7 @@ BREWING_STAND:
     - 独角兽角
     - 水晶碎块:3
     recipeCategory: CONSUMABLE_MANA
-  '38':
+  38:
     requireLevel: 1
     resultItem: 至尊魔力药水:15
     requireItem:
@@ -4961,77 +4961,77 @@ BREWING_STAND:
     - 灵质
     recipeCategory: CONSUMABLE_MANA
 TINKER_WORKBENCH:
-  '1':
+  1:
     requireLevel: 1
     resultItem: 魔力花
     requireItem:
     - 大自然的恩赐
     - 魔力药水
     recipeCategory: ACCESSORY
-  '2':
+  2:
     requireLevel: 1
     resultItem: 魔力再生手环
     requireItem:
     - 星力手环
     - 魔力掌控药水
     recipeCategory: ACCESSORY
-  '3':
+  3:
     requireLevel: 1
     resultItem: 魔法手铐
     requireItem:
     - 镣铐
     - 魔力再生手环
     recipeCategory: ACCESSORY
-  '4':
+  4:
     requireLevel: 1
     resultItem: 天界手铐
     requireItem:
     - 天界磁石
     - 魔法手铐
     recipeCategory: ACCESSORY
-  '5':
+  5:
     requireLevel: 1
     resultItem: 天界徽章
     requireItem:
     - 天界磁石
     - 复仇者徽章
     recipeCategory: ACCESSORY
-  '6':
+  6:
     requireLevel: 1
     resultItem: 磁花
     requireItem:
     - 魔力花
     - 天界磁石
     recipeCategory: ACCESSORY
-  '7':
+  7:
     requireLevel: 1
     resultItem: 幽灵靴
     requireItem:
     - 航鱼靴
     - 火箭靴
     recipeCategory: ACCESSORY
-  '8':
+  8:
     requireLevel: 1
     resultItem: 黑曜石护盾
     requireItem:
     - 黑曜石头骨
     - 钴盾
     recipeCategory: ACCESSORY
-  '9':
+  9:
     requireLevel: 1
     resultItem: 熔火箭袋
     requireItem:
     - 魔法箭袋
     - 岩浆石
     recipeCategory: ACCESSORY
-  '10':
+  10:
     requireLevel: 1
     resultItem: 潜行者箭袋
     requireItem:
     - 魔法箭袋
     - 腐香囊
     recipeCategory: ACCESSORY
-  '11':
+  11:
     requireLevel: 1
     resultItem: 复仇者徽章
     requireItem:
@@ -5040,7 +5040,7 @@ TINKER_WORKBENCH:
     - 视域之魂:5
     - 恐惧之魂:5
     recipeCategory: ACCESSORY
-  '12':
+  12:
     requireLevel: 1
     resultItem: 复仇者徽章
     requireItem:
@@ -5049,7 +5049,7 @@ TINKER_WORKBENCH:
     - 视域之魂:5
     - 恐惧之魂:5
     recipeCategory: ACCESSORY
-  '13':
+  13:
     requireLevel: 1
     resultItem: 复仇者徽章
     requireItem:
@@ -5058,7 +5058,7 @@ TINKER_WORKBENCH:
     - 视域之魂:5
     - 恐惧之魂:5
     recipeCategory: ACCESSORY
-  '14':
+  14:
     requireLevel: 1
     resultItem: 复仇者徽章
     requireItem:
@@ -5067,7 +5067,7 @@ TINKER_WORKBENCH:
     - 视域之魂:5
     - 恐惧之魂:5
     recipeCategory: ACCESSORY
-  '15':
+  15:
     requireLevel: 1
     resultItem: 复仇者徽章
     requireItem:
@@ -5076,28 +5076,28 @@ TINKER_WORKBENCH:
     - 视域之魂:5
     - 恐惧之魂:5
     recipeCategory: ACCESSORY
-  '16':
+  16:
     requireLevel: 1
     resultItem: 狙击镜
     requireItem:
     - 步枪瞄准镜
     - 毁灭者徽章
     recipeCategory: ACCESSORY
-  '17':
+  17:
     requireLevel: 1
     resultItem: 侦察镜
     requireItem:
     - 狙击镜
     - 腐香囊
     recipeCategory: ACCESSORY
-  '18':
+  18:
     requireLevel: 1
     resultItem: 机械手套
     requireItem:
     - 泰坦手套
     - 复仇者徽章
     recipeCategory: ACCESSORY
-  '19':
+  19:
     requireLevel: 1
     resultItem: 烈火手套
     requireItem:
@@ -5107,49 +5107,49 @@ TINKER_WORKBENCH:
     - 灾厄尘:5
     - 熔渣锭:5
     recipeCategory: ACCESSORY
-  '20':
+  20:
     requireLevel: 1
     resultItem: 天界石
     requireItem:
     - 太阳石
     - 月亮石
     recipeCategory: ACCESSORY
-  '21':
+  21:
     requireLevel: 1
     resultItem: 毁灭者徽章
     requireItem:
     - 复仇者徽章
     - 石巨人之眼
     recipeCategory: ACCESSORY
-  '22':
+  22:
     requireLevel: 1
     resultItem: 甲虫莎草纸
     requireItem:
     - 死灵卷轴
     - 大力士甲虫
     recipeCategory: ACCESSORY
-  '23':
+  23:
     requireLevel: 1
     resultItem: 神话护身符
     requireItem:
     - 再生手环
     - 炼金石
     recipeCategory: ACCESSORY
-  '24':
+  24:
     requireLevel: 1
     resultItem: 冰冻护盾
     requireItem:
     - 圣骑士护盾
     - 冰冻海龟壳
     recipeCategory: ACCESSORY
-  '25':
+  25:
     requireLevel: 1
     resultItem: 气球束
     requireItem:
     - 跳跃之瓶
     - 天蓝锭:3
     recipeCategory: ACCESSORY
-  '26':
+  26:
     requireLevel: 1
     resultItem: 天使之靴
     requireItem:
@@ -5160,7 +5160,7 @@ TINKER_WORKBENCH:
     - 力量之魂
     - 恐惧之魂
     recipeCategory: ACCESSORY
-  '27':
+  27:
     requireLevel: 1
     resultItem: 女妖指环
     requireItem:
@@ -5168,7 +5168,7 @@ TINKER_WORKBENCH:
     - 羽毛:5
     - 丝绸:2
     recipeCategory: ACCESSORY
-  '28':
+  28:
     requireLevel: 1
     resultItem: 进升证章
     requireItem:
@@ -5177,7 +5177,7 @@ TINKER_WORKBENCH:
     - 闪耀金羽:5
     - 夜明锭:5
     recipeCategory: ACCESSORY
-  '29':
+  29:
     requireLevel: 1
     resultItem: 天羽之翼
     requireItem:
@@ -5185,14 +5185,14 @@ TINKER_WORKBENCH:
     - 羽毛:5
     - 丝绸:5
     recipeCategory: ACCESSORY
-  '30':
+  30:
     requireLevel: 1
     resultItem: 星光之翼
     requireItem:
     - 寒元锭:5
     - 飞翔之魂:20
     recipeCategory: ACCESSORY
-  '31':
+  31:
     requireLevel: 1
     resultItem: 气球之母
     requireItem:
@@ -5201,14 +5201,14 @@ TINKER_WORKBENCH:
     - 视域之魂
     - 恐惧之魂
     recipeCategory: ACCESSORY
-  '32':
+  32:
     requireLevel: 1
     resultItem: 玉金喷射器
     requireItem:
     - 永恒锭:5
     - 飞翔之魂:20
     recipeCategory: ACCESSORY
-  '33':
+  33:
     requireLevel: 1
     resultItem: 幽渊斗篷
     requireItem:
@@ -5216,7 +5216,7 @@ TINKER_WORKBENCH:
     - 混乱核心
     - 飞翔之魂:20
     recipeCategory: ACCESSORY
-  '34':
+  34:
     requireLevel: 1
     resultItem: 逸界之翼
     requireItem:
@@ -5224,7 +5224,7 @@ TINKER_WORKBENCH:
     - 夜明锭:10
     - 飞翔之魂:20
     recipeCategory: ACCESSORY
-  '35':
+  35:
     requireLevel: 1
     resultItem: 天界翼靴
     requireItem:
@@ -5233,14 +5233,14 @@ TINKER_WORKBENCH:
     - 逸界之翼
     - 夜明锭:5
     recipeCategory: ACCESSORY
-  '36':
+  36:
     requireLevel: 1
     resultItem: 龙蒿叶之翼
     requireItem:
     - 龙蒿锭:5
     - 飞翔之魂:30
     recipeCategory: ACCESSORY
-  '37':
+  37:
     requireLevel: 1
     resultItem: 极乐翼靴
     requireItem:
@@ -5249,7 +5249,7 @@ TINKER_WORKBENCH:
     - 宇宙锭:5
     - 化神魂精:4
     recipeCategory: ACCESSORY
-  '38':
+  38:
     requireLevel: 1
     resultItem: 始源林海之翼
     requireItem:
@@ -5258,7 +5258,7 @@ TINKER_WORKBENCH:
     - 飞翔之魂:20
     - 化神魂精:2
     recipeCategory: ACCESSORY
-  '39':
+  39:
     requireLevel: 1
     resultItem: 炽天使翼靴
     requireItem:
@@ -5266,7 +5266,7 @@ TINKER_WORKBENCH:
     - Drew之翼
     - 圣金源锭:5
     recipeCategory: ACCESSORY
-  '40':
+  40:
     requireLevel: 1
     resultItem: 绚彩明胶
     requireItem:
@@ -5276,14 +5276,14 @@ TINKER_WORKBENCH:
     - 光明之魂:2
     - 暗影之魂:2
     recipeCategory: ACCESSORY
-  '41':
+  41:
     requireLevel: 1
     resultItem: 勇气勋章
     requireItem:
     - 龙蒿锭:8
     - 泰坦手套
     recipeCategory: ACCESSORY
-  '42':
+  42:
     requireLevel: 1
     resultItem: 元素之握
     requireItem:
@@ -5292,7 +5292,7 @@ TINKER_WORKBENCH:
     - 星系异石:4
     - 化神魂精:4
     recipeCategory: ACCESSORY
-  '43':
+  43:
     requireLevel: 1
     resultItem: 星流之握
     requireItem:
@@ -5300,14 +5300,14 @@ TINKER_WORKBENCH:
     - 星流棱晶:8
     - 化神魂精:2
     recipeCategory: ACCESSORY
-  '44':
+  44:
     requireLevel: 1
     resultItem: 神射手胸针
     requireItem:
     - 灾劫核心:2
     - 游侠徽章
     recipeCategory: ACCESSORY
-  '45':
+  45:
     requireLevel: 1
     resultItem: 虚无箭袋
     requireItem:
@@ -5315,7 +5315,7 @@ TINKER_WORKBENCH:
     - 暗离子体:3
     - 星系异石:5
     recipeCategory: ACCESSORY
-  '46':
+  46:
     requireLevel: 1
     resultItem: 元素箭袋
     requireItem:
@@ -5325,7 +5325,7 @@ TINKER_WORKBENCH:
     - 星系异石:4
     - 化神魂精:4
     recipeCategory: ACCESSORY
-  '47':
+  47:
     requireLevel: 1
     resultItem: 星流箭袋
     requireItem:
@@ -5333,7 +5333,7 @@ TINKER_WORKBENCH:
     - 星流棱晶:8
     - 化神魂精:2
     recipeCategory: ACCESSORY
-  '48':
+  48:
     requireLevel: 1
     resultItem: 灵魂之戒
     requireItem:
@@ -5342,7 +5342,7 @@ TINKER_WORKBENCH:
     - 魔力掌控药水
     - 金锭:3
     recipeCategory: ACCESSORY
-  '49':
+  49:
     requireLevel: 1
     resultItem: 灾厄符章
     requireItem:
@@ -5350,7 +5350,7 @@ TINKER_WORKBENCH:
     - 灾厄尘:15
     - 熔渣锭:5
     recipeCategory: ACCESSORY
-  '50':
+  50:
     requireLevel: 1
     resultItem: 魔能过载仪
     requireItem:
@@ -5359,7 +5359,7 @@ TINKER_WORKBENCH:
     - 星系异石:4
     - 灵质:2
     recipeCategory: ACCESSORY
-  '51':
+  51:
     requireLevel: 1
     resultItem: 空灵护符
     requireItem:
@@ -5369,7 +5369,7 @@ TINKER_WORKBENCH:
     - 星系异石:4
     - 化神魂精:4
     recipeCategory: ACCESSORY
-  '52':
+  52:
     requireLevel: 1
     resultItem: 魔能熔毁仪
     requireItem:
@@ -5378,14 +5378,14 @@ TINKER_WORKBENCH:
     - 湮灭余烬:8
     - 化神魂精:2
     recipeCategory: ACCESSORY
-  '53':
+  53:
     requireLevel: 1
     resultItem: 灵魂浮雕
     requireItem:
     - 黑曜石:15
     - 钻石:5
     recipeCategory: ACCESSORY
-  '54':
+  54:
     requireLevel: 1
     resultItem: 神圣符文
     requireItem:
@@ -5395,7 +5395,7 @@ TINKER_WORKBENCH:
     - 力量之魂:5
     - 视域之魂:5
     recipeCategory: ACCESSORY
-  '55':
+  55:
     requireLevel: 1
     resultItem: 幻魂神物
     requireItem:
@@ -5404,7 +5404,7 @@ TINKER_WORKBENCH:
     - 黑曜石:16
     - 起源之簇:25
     recipeCategory: ACCESSORY
-  '56':
+  56:
     requireLevel: 1
     resultItem: 凝胶充能电池
     requireItem:
@@ -5413,7 +5413,7 @@ TINKER_WORKBENCH:
     - 纯净凝胶:10
     - 风暴之颚:2
     recipeCategory: ACCESSORY
-  '57':
+  57:
     requireLevel: 1
     resultItem: 斯塔提斯的祝福
     requireItem:
@@ -5422,7 +5422,7 @@ TINKER_WORKBENCH:
     - 召唤师徽章
     - 日光核心:5
     recipeCategory: ACCESSORY
-  '58':
+  58:
     requireLevel: 1
     resultItem: 玷星之源
     requireItem:
@@ -5431,7 +5431,7 @@ TINKER_WORKBENCH:
     - 星爆核心
     - 生命合金:3
     recipeCategory: ACCESSORY
-  '59':
+  59:
     requireLevel: 1
     resultItem: 斯塔提斯的诅咒
     requireItem:
@@ -5439,7 +5439,7 @@ TINKER_WORKBENCH:
     - 斯塔提斯的祝福
     - 始源暗影炎
     recipeCategory: ACCESSORY
-  '60':
+  60:
     requireLevel: 1
     resultItem: 核子之源
     requireItem:
@@ -5449,7 +5449,7 @@ TINKER_WORKBENCH:
     - 星系异石:4
     - 化神魂精:4
     recipeCategory: ACCESSORY
-  '61':
+  61:
     requireLevel: 1
     resultItem: 余烬挽歌
     requireItem:
@@ -5458,7 +5458,7 @@ TINKER_WORKBENCH:
     - 湮灭余烬:8
     - 化神魂精:2
     recipeCategory: ACCESSORY
-  '62':
+  62:
     requireLevel: 1
     resultItem: 惧魂神物
     requireItem:
@@ -5466,7 +5466,7 @@ TINKER_WORKBENCH:
     - 黑曜石:16
     - 起源之簇:25
     recipeCategory: ACCESSORY
-  '63':
+  63:
     requireLevel: 1
     resultItem: 渎魂神物
     requireItem:
@@ -5474,7 +5474,7 @@ TINKER_WORKBENCH:
     - 黑曜石:16
     - 起源之簇:25
     recipeCategory: ACCESSORY
-  '64':
+  64:
     requireLevel: 1
     resultItem: 维魂神物
     requireItem:
@@ -5482,7 +5482,7 @@ TINKER_WORKBENCH:
     - 黑曜石:16
     - 起源之簇:25
     recipeCategory: ACCESSORY
-  '65':
+  65:
     requireLevel: 1
     resultItem: 圣魂神物
     requireItem:
@@ -5490,28 +5490,28 @@ TINKER_WORKBENCH:
     - 黑曜石:16
     - 起源之簇:25
     recipeCategory: ACCESSORY
-  '66':
+  66:
     requireLevel: 1
     resultItem: 潜遁者宝石
     requireItem:
     - 钻石:2
     - 金锭:5
     recipeCategory: ACCESSORY
-  '67':
+  67:
     requireLevel: 1
     resultItem: 掠夺者护符
     requireItem:
     - 腐肉:5
     - 黑曜石:20
     recipeCategory: ACCESSORY
-  '68':
+  68:
     requireLevel: 1
     resultItem: 欺诈硬币
     requireItem:
     - 铜锭:12
     - 恶魔锭:8
     recipeCategory: ACCESSORY
-  '69':
+  69:
     requireLevel: 1
     resultItem: 寂静刀鞘
     requireItem:
@@ -5519,7 +5519,7 @@ TINKER_WORKBENCH:
     - 丝绸:10
     - 暗影鳞片:3
     recipeCategory: ACCESSORY
-  '70':
+  70:
     requireLevel: 1
     resultItem: 天羽头冠
     requireItem:
@@ -5527,14 +5527,14 @@ TINKER_WORKBENCH:
     - 丝绸:4
     - 羽毛:8
     recipeCategory: ACCESSORY
-  '71':
+  71:
     requireLevel: 1
     resultItem: 幻影魔镜
     requireItem:
     - 黑晶状体
     - 骨头:50
     recipeCategory: ACCESSORY
-  '72':
+  72:
     requireLevel: 1
     resultItem: 电击手套
     requireItem:
@@ -5542,7 +5542,7 @@ TINKER_WORKBENCH:
     - 风暴之颚:2
     - 秘银锭:5
     recipeCategory: ACCESSORY
-  '73':
+  73:
     requireLevel: 1
     resultItem: 毁灭勋章
     requireItem:
@@ -5550,14 +5550,14 @@ TINKER_WORKBENCH:
     - 污痕核心:4
     - 混乱精华:2
     recipeCategory: ACCESSORY
-  '74':
+  74:
     requireLevel: 1
     resultItem: 吸血鬼符咒
     requireItem:
     - 盗贼徽章
     - 日影面纱:10
     recipeCategory: ACCESSORY
-  '75':
+  75:
     requireLevel: 1
     resultItem: 深渊魔镜
     requireItem:
@@ -5566,7 +5566,7 @@ TINKER_WORKBENCH:
     - 深渊细胞:5
     - 流明晶:5
     recipeCategory: ACCESSORY
-  '76':
+  76:
     requireLevel: 1
     resultItem: 暗物质剑鞘
     requireItem:
@@ -5574,7 +5574,7 @@ TINKER_WORKBENCH:
     - 寂静刀鞘
     - 冥思构造体:5
     recipeCategory: ACCESSORY
-  '77':
+  77:
     requireLevel: 1
     resultItem: 月长石头冠
     requireItem:
@@ -5582,7 +5582,7 @@ TINKER_WORKBENCH:
     - 夜明锭:5
     - 星系异石:5
     recipeCategory: ACCESSORY
-  '78':
+  78:
     requireLevel: 1
     resultItem: 日蚀魔镜
     requireItem:
@@ -5590,7 +5590,7 @@ TINKER_WORKBENCH:
     - 深渊魔镜
     - 日蚀之阴碎片:20
     recipeCategory: ACCESSORY
-  '79':
+  79:
     requireLevel: 1
     resultItem: 纳米技术
     requireItem:
@@ -5602,7 +5602,7 @@ TINKER_WORKBENCH:
     - 夜明锭:8
     - 星系异石:4
     recipeCategory: ACCESSORY
-  '80':
+  80:
     requireLevel: 1
     resultItem: 星流校准器
     requireItem:
@@ -5610,14 +5610,14 @@ TINKER_WORKBENCH:
     - 星流棱晶:8
     - 化神魂精:2
     recipeCategory: ACCESSORY
-  '81':
+  81:
     requireLevel: 1
     resultItem: 融合之脑
     requireItem:
     - 腐烂之脑
     - 冰川精华:9
     recipeCategory: ACCESSORY
-  '82':
+  82:
     requireLevel: 1
     resultItem: 聚合之脑
     requireItem:
@@ -5628,7 +5628,7 @@ TINKER_WORKBENCH:
     - 宇宙锭:5
     - 化神魂精:4
     recipeCategory: ACCESSORY
-  '83':
+  83:
     requireLevel: 1
     resultItem: 旱海鲨牙项链
     requireItem:
@@ -5636,7 +5636,7 @@ TINKER_WORKBENCH:
     - 复仇者徽章
     - 大狂鲨鳞
     recipeCategory: ACCESSORY
-  '84':
+  84:
     requireLevel: 1
     resultItem: 猎魂鲨齿项链
     requireItem:
@@ -5644,21 +5644,21 @@ TINKER_WORKBENCH:
     - 猎魂鲨牙:6
     - 深渊细胞:15
     recipeCategory: ACCESSORY
-  '85':
+  85:
     requireLevel: 1
     resultItem: 恼怒项链
     requireItem:
     - 复仇者徽章
     - 永恒锭:2
     recipeCategory: ACCESSORY
-  '86':
+  86:
     requireLevel: 1
     resultItem: 蚀日尊戒
     requireItem:
     - 龙蒿锭:10
     - 日蚀之阴碎片:20
     recipeCategory: ACCESSORY
-  '87':
+  87:
     requireLevel: 1
     resultItem: 终结虚空
     requireItem:
@@ -5668,14 +5668,14 @@ TINKER_WORKBENCH:
     - 熔渣锭:3
     - 魔鬼之庇护
     recipeCategory: ACCESSORY
-  '88':
+  88:
     requireLevel: 1
     resultItem: 幻灭心元石
     requireItem:
     - 归一心元石
     - 湮灭余烬:8
     recipeCategory: ACCESSORY
-  '89':
+  89:
     requireLevel: 1
     resultItem: 钨钢屏障生成仪
     requireItem:
@@ -5683,14 +5683,14 @@ TINKER_WORKBENCH:
     - 钨钢金属废料:8
     - 能源核心
     recipeCategory: ACCESSORY
-  '90':
+  90:
     requireLevel: 1
     resultItem: 海之盾
     requireItem:
     - 海星:5
     - 海洋残渣:5
     recipeCategory: ACCESSORY
-  '91':
+  91:
     requireLevel: 1
     resultItem: 钨钢屏障转换仪
     requireItem:
@@ -5701,14 +5701,14 @@ TINKER_WORKBENCH:
     - 光明之魂:5
     - 暗影之魂:5
     recipeCategory: ACCESSORY
-  '92':
+  92:
     requireLevel: 1
     resultItem: 宝光盾牌
     requireItem:
     - 寒元锭:5
     - 水晶碎块:10
     recipeCategory: ACCESSORY
-  '93':
+  93:
     requireLevel: 1
     resultItem: 阿斯加德之英勇
     requireItem:
@@ -5718,7 +5718,7 @@ TINKER_WORKBENCH:
     - 克苏鲁之眼盾
     - 灾劫核心
     recipeCategory: ACCESSORY
-  '94':
+  94:
     requireLevel: 1
     resultItem: 阿斯加德之庇护
     requireItem:
@@ -5727,7 +5727,7 @@ TINKER_WORKBENCH:
     - 宇宙锭:10
     - 化神魂精:4
     recipeCategory: ACCESSORY
-  '95':
+  95:
     requireLevel: 1
     resultItem: 血神圣杯
     requireItem:
@@ -5737,7 +5737,7 @@ TINKER_WORKBENCH:
     - 血石核心:5
     - 化神魂精:4
     recipeCategory: ACCESSORY
-  '96':
+  96:
     requireLevel: 1
     resultItem: 神圣护符
     requireItem:
@@ -5746,7 +5746,7 @@ TINKER_WORKBENCH:
     - 炫星锭:10
     - 海棱晶:15
     recipeCategory: ACCESSORY
-  '97':
+  97:
     requireLevel: 1
     resultItem: 阴阳吸星石
     requireItem:
@@ -5755,7 +5755,7 @@ TINKER_WORKBENCH:
     - 炫星锭:10
     - 星系异石:5
     recipeCategory: ACCESSORY
-  '98':
+  98:
     requireLevel: 1
     resultItem: 神之壁垒
     requireItem:
@@ -5764,7 +5764,7 @@ TINKER_WORKBENCH:
     - 圣金源锭:10
     - 化神魂精:4
     recipeCategory: ACCESSORY
-  '99':
+  99:
     requireLevel: 1
     resultItem: 化绵留香石
     requireItem:
@@ -5775,7 +5775,7 @@ TINKER_WORKBENCH:
     - 宇宙锭:5
     - 化神魂精:4
     recipeCategory: ACCESSORY
-  '100':
+  100:
     requireLevel: 1
     resultItem: 龙心吊坠
     requireItem:
@@ -5784,7 +5784,7 @@ TINKER_WORKBENCH:
     - 龙魂碎片:2
     - 化神魂精:4
     recipeCategory: ACCESSORY
-  '101':
+  101:
     requireLevel: 1
     resultItem: 深渊潜游装
     requireItem:
@@ -5793,7 +5793,7 @@ TINKER_WORKBENCH:
     - 深渊细胞:10
     - 流明晶:10
     recipeCategory: ACCESSORY
-  '102':
+  102:
     requireLevel: 1
     resultItem: 深渊潜游服
     requireItem:
@@ -5803,7 +5803,7 @@ TINKER_WORKBENCH:
     - 软体动物外壳:15
     recipeCategory: ACCESSORY
 远古操纵机:
-  '1':
+  1:
     requireLevel: 1
     resultItem: 天界符
     requireItem:
@@ -5812,35 +5812,35 @@ TINKER_WORKBENCH:
     - 星云碎片:8
     - 星尘碎片:8
     recipeCategory: BOSS
-  '2':
+  2:
     requireLevel: 1
     resultItem: 星核
     requireItem:
     - 星尘:64
     - 炫星锭:8
     recipeCategory: BOSS
-  '3':
+  3:
     requireLevel: 1
     resultItem: 奇异信息素
     requireItem:
     - 生命合金:2
     - 日耀碎片:5
     recipeCategory: BOSS
-  '4':
+  4:
     requireLevel: 1
     resultItem: 亵渎碎片
     requireItem:
     - 夜明锭:2
     - 浊火精华:5
     recipeCategory: BOSS
-  '5':
+  5:
     requireLevel: 1
     resultItem: 死灵魂炬
     requireItem:
     - 灵质:12
     - 木材:8
     recipeCategory: BOSS
-  '6':
+  6:
     requireLevel: 1
     resultItem: 宇宙符文:3
     requireItem:
@@ -5848,7 +5848,7 @@ TINKER_WORKBENCH:
     - 夜明锭
     - 日耀碎片
     recipeCategory: BOSS
-  '7':
+  7:
     requireLevel: 1
     resultItem: 宇宙之虫
     requireItem:
@@ -5856,107 +5856,107 @@ TINKER_WORKBENCH:
     - 扭曲虚空
     - 暗离子体
     recipeCategory: BOSS
-  '8':
+  8:
     requireLevel: 1
     resultItem: 圣佑烬昭龙蛋
     requireItem:
     - 闪耀金羽:5
     - 生命合金:2
     recipeCategory: BOSS
-  '9':
+  9:
     requireLevel: 1
     resultItem: 破晓之光
     requireItem:
     - 日耀碎片:18
     recipeCategory: WEAPON_MELEE
-  '10':
+  10:
     requireLevel: 1
     resultItem: 日耀喷发剑
     requireItem:
     - 日耀碎片:18
     recipeCategory: WEAPON_MELEE
-  '11':
+  11:
     requireLevel: 1
     resultItem: 幻象弓
     requireItem:
     - 星璇碎片:18
     recipeCategory: WEAPON_ARROW
-  '12':
+  12:
     requireLevel: 1
     resultItem: 星璇机枪
     requireItem:
     - 星璇碎片:18
     recipeCategory: WEAPON_BULLET
-  '13':
+  13:
     requireLevel: 1
     resultItem: 星云烈焰
     requireItem:
     - 星云碎片:18
     recipeCategory: WEAPON_MAGIC
-  '14':
+  14:
     requireLevel: 1
     resultItem: 星云奥秘
     requireItem:
     - 星云碎片:18
     recipeCategory: WEAPON_MAGIC
-  '15':
+  15:
     requireLevel: 1
     resultItem: 星尘细胞法杖
     requireItem:
     - 星尘碎片:18
     recipeCategory: WEAPON_SUMMON
-  '16':
+  16:
     requireLevel: 1
     resultItem: 星尘之龙法杖
     requireItem:
     - 星尘碎片:18
     recipeCategory: WEAPON_SUMMON
-  '17':
+  17:
     requireLevel: 1
     resultItem: 夜明锭
     requireItem:
     - 夜明矿:4
     recipeCategory: MATERIAL
-  '18':
+  18:
     requireLevel: 1
     resultItem: 夜明箭:96
     requireItem:
     - 夜明锭
     recipeCategory: AMMO_ARROW
-  '19':
+  19:
     requireLevel: 1
     resultItem: 极乐之箭:128
     requireItem:
     - 圣箭:128
     - 浊火精华
     recipeCategory: AMMO_ARROW
-  '20':
+  20:
     requireLevel: 1
     resultItem: 血炎箭:320
     requireItem:
     - 血石核心
     recipeCategory: AMMO_ARROW
-  '21':
+  21:
     requireLevel: 1
     resultItem: 夜明弹:96
     requireItem:
     - 夜明锭
     recipeCategory: AMMO_BULLET
-  '22':
+  22:
     requireLevel: 1
     resultItem: 圣火弹:96
     requireItem:
     - 爆炸弹:96
     - 浊火精华
     recipeCategory: AMMO_BULLET
-  '23':
+  23:
     requireLevel: 1
     resultItem: 血炎弹:320
     requireItem:
     - 血石核心
     - 弹壳:320
     recipeCategory: AMMO_BULLET
-  '24':
+  24:
     requireLevel: 1
     resultItem: 月钩
     requireItem:
@@ -5965,170 +5965,170 @@ TINKER_WORKBENCH:
     - 星云碎片:6
     - 星尘碎片:6
     recipeCategory: TOOL
-  '25':
+  25:
     requireLevel: 1
     resultItem: 日耀之翼
     requireItem:
     - 日耀碎片:14
     - 夜明锭:10
     recipeCategory: ACCESSORY
-  '26':
+  26:
     requireLevel: 1
     resultItem: 星璇之翼
     requireItem:
     - 星璇碎片:14
     - 夜明锭:10
     recipeCategory: ACCESSORY
-  '27':
+  27:
     requireLevel: 1
     resultItem: 星云之翼
     requireItem:
     - 星云碎片:14
     - 夜明锭:10
     recipeCategory: ACCESSORY
-  '28':
+  28:
     requireLevel: 1
     resultItem: 星尘之翼
     requireItem:
     - 星尘碎片:14
     - 夜明锭:10
     recipeCategory: ACCESSORY
-  '29':
+  29:
     requireLevel: 1
     resultItem: 耀斑头盔
     requireItem:
     - 日耀碎片:10
     - 夜明锭:8
     recipeCategory: ARMOR
-  '30':
+  30:
     requireLevel: 1
     resultItem: 耀斑胸甲
     requireItem:
     - 日耀碎片:20
     - 夜明锭:16
     recipeCategory: ARMOR
-  '31':
+  31:
     requireLevel: 1
     resultItem: 耀斑护腿
     requireItem:
     - 日耀碎片:15
     - 夜明锭:12
     recipeCategory: ARMOR
-  '32':
+  32:
     requireLevel: 1
     resultItem: 星璇头盔
     requireItem:
     - 星璇碎片:10
     - 夜明锭:8
     recipeCategory: ARMOR
-  '33':
+  33:
     requireLevel: 1
     resultItem: 星璇胸甲
     requireItem:
     - 星璇碎片:20
     - 夜明锭:16
     recipeCategory: ARMOR
-  '34':
+  34:
     requireLevel: 1
     resultItem: 星璇护腿
     requireItem:
     - 星璇碎片:15
     - 夜明锭:12
     recipeCategory: ARMOR
-  '35':
+  35:
     requireLevel: 1
     resultItem: 皇天面具
     requireItem:
     - 冥思构造体:10
     - 夜明锭:8
     recipeCategory: ARMOR
-  '36':
+  36:
     requireLevel: 1
     resultItem: 皇天斗篷
     requireItem:
     - 冥思构造体:20
     - 夜明锭:16
     recipeCategory: ARMOR
-  '37':
+  37:
     requireLevel: 1
     resultItem: 皇天护胫
     requireItem:
     - 冥思构造体:15
     - 夜明锭:12
     recipeCategory: ARMOR
-  '38':
+  38:
     requireLevel: 1
     resultItem: 星云头盔
     requireItem:
     - 星云碎片:10
     - 夜明锭:8
     recipeCategory: ARMOR
-  '39':
+  39:
     requireLevel: 1
     resultItem: 星云胸甲
     requireItem:
     - 星云碎片:20
     - 夜明锭:16
     recipeCategory: ARMOR
-  '40':
+  40:
     requireLevel: 1
     resultItem: 星云护腿
     requireItem:
     - 星云碎片:15
     - 夜明锭:12
     recipeCategory: ARMOR
-  '41':
+  41:
     requireLevel: 1
     resultItem: 星尘头盔
     requireItem:
     - 星尘碎片:10
     - 夜明锭:8
     recipeCategory: ARMOR
-  '42':
+  42:
     requireLevel: 1
     resultItem: 星尘板甲
     requireItem:
     - 星尘碎片:20
     - 夜明锭:16
     recipeCategory: ARMOR
-  '43':
+  43:
     requireLevel: 1
     resultItem: 星尘护腿
     requireItem:
     - 星尘碎片:15
     - 夜明锭:12
     recipeCategory: ARMOR
-  '44':
+  44:
     requireLevel: 1
     resultItem: 日耀天塔柱
     requireItem:
     - 日耀碎片:15
     recipeCategory: TOOL
-  '45':
+  45:
     requireLevel: 1
     resultItem: 星璇天塔柱
     requireItem:
     - 星璇碎片:15
     recipeCategory: TOOL
-  '46':
+  46:
     requireLevel: 1
     resultItem: 星云天塔柱
     requireItem:
     - 星云碎片:15
     recipeCategory: TOOL
-  '47':
+  47:
     requireLevel: 1
     resultItem: 星尘天塔柱
     requireItem:
     - 星尘碎片:15
     recipeCategory: TOOL
-  '48':
+  48:
     requireLevel: 1
     resultItem: 虚空天塔柱
     requireItem:
     - 夜明矿:25
     recipeCategory: TOOL
-  '49':
+  49:
     requireLevel: 1
     resultItem: 日耀碎片
     requireItem:
@@ -6136,7 +6136,7 @@ TINKER_WORKBENCH:
     - 星云碎片
     - 星尘碎片
     recipeCategory: MATERIAL
-  '50':
+  50:
     requireLevel: 1
     resultItem: 星璇碎片
     requireItem:
@@ -6144,7 +6144,7 @@ TINKER_WORKBENCH:
     - 星云碎片
     - 星尘碎片
     recipeCategory: MATERIAL
-  '51':
+  51:
     requireLevel: 1
     resultItem: 星云碎片
     requireItem:
@@ -6152,7 +6152,7 @@ TINKER_WORKBENCH:
     - 星璇碎片
     - 星尘碎片
     recipeCategory: MATERIAL
-  '52':
+  52:
     requireLevel: 1
     resultItem: 星尘碎片
     requireItem:
@@ -6160,26 +6160,26 @@ TINKER_WORKBENCH:
     - 星璇碎片
     - 星云碎片
     recipeCategory: MATERIAL
-  '53':
+  53:
     requireLevel: 1
     resultItem: 幻星刀
     requireItem:
     - 炫星锭:8
     recipeCategory: WEAPON_MELEE
-  '54':
+  54:
     requireLevel: 1
     resultItem: 熵阔剑
     requireItem:
     - 冥思构造体:15
     recipeCategory: WEAPON_MELEE
-  '55':
+  55:
     requireLevel: 1
     resultItem: 邪恶收割者
     requireItem:
     - 无头骑士剑
     - 星尘碎片:12
     recipeCategory: WEAPON_MELEE
-  '56':
+  56:
     requireLevel: 1
     resultItem: 风暴管束者
     requireItem:
@@ -6188,7 +6188,7 @@ TINKER_WORKBENCH:
     - 风之刃
     - 日耀碎片:10
     recipeCategory: WEAPON_MELEE
-  '57':
+  57:
     requireLevel: 1
     resultItem: 大守卫者
     requireItem:
@@ -6196,7 +6196,7 @@ TINKER_WORKBENCH:
     - 灼炎弯刀
     - 星云碎片:6
     recipeCategory: WEAPON_MELEE
-  '58':
+  58:
     requireLevel: 1
     resultItem: 破坏重剑
     requireItem:
@@ -6205,20 +6205,20 @@ TINKER_WORKBENCH:
     - 炫星锭:10
     - 夜明锭:5
     recipeCategory: WEAPON_MELEE
-  '59':
+  59:
     requireLevel: 1
     resultItem: 制裁大剑
     requireItem:
     - 夜明锭:7
     recipeCategory: WEAPON_MELEE
-  '60':
+  60:
     requireLevel: 1
     resultItem: 瘟疫大剑
     requireItem:
     - 瘟疫毒刃
     - 夜明锭:5
     recipeCategory: WEAPON_MELEE
-  '61':
+  61:
     requireLevel: 1
     resultItem: 季节长剑
     requireItem:
@@ -6226,14 +6226,14 @@ TINKER_WORKBENCH:
     - 炫星锭:20
     - 星系异石:5
     recipeCategory: WEAPON_MELEE
-  '62':
+  62:
     requireLevel: 1
     resultItem: 月炎之锋
     requireItem:
     - 彗星陨刃
     - 夜明锭:5
     recipeCategory: WEAPON_MELEE
-  '63':
+  63:
     requireLevel: 1
     resultItem: 星河之刃
     requireItem:
@@ -6241,20 +6241,20 @@ TINKER_WORKBENCH:
     - 星系异石:5
     - 神圣晶石:10
     recipeCategory: WEAPON_MELEE
-  '64':
+  64:
     requireLevel: 1
     resultItem: 格拉克斯
     requireItem:
     - 炼狱
     - 龙蒿锭:5
     recipeCategory: WEAPON_MELEE
-  '65':
+  65:
     requireLevel: 1
     resultItem: 猎命镰刀
     requireItem:
     - 龙蒿锭:15
     recipeCategory: WEAPON_MELEE
-  '66':
+  66:
     requireLevel: 1
     resultItem: 不洁巨剑
     requireItem:
@@ -6262,7 +6262,7 @@ TINKER_WORKBENCH:
     - 灾劫核心
     - 龙蒿锭:15
     recipeCategory: WEAPON_MELEE
-  '67':
+  67:
     requireLevel: 1
     resultItem: 泰拉阔剑
     requireItem:
@@ -6271,13 +6271,13 @@ TINKER_WORKBENCH:
     - 泰拉之刃
     - 地狱龙锋
     recipeCategory: WEAPON_MELEE
-  '68':
+  68:
     requireLevel: 1
     resultItem: 血石斩切刃
     requireItem:
     - 血石核心:5
     recipeCategory: WEAPON_MELEE
-  '69':
+  69:
     requireLevel: 1
     resultItem: 末晓之殇
     requireItem:
@@ -6286,7 +6286,7 @@ TINKER_WORKBENCH:
     - 猎魂鲨牙:5
     - 毁灭之灵:3
     recipeCategory: WEAPON_MELEE
-  '70':
+  70:
     requireLevel: 1
     resultItem: 海神之馈赠
     requireItem:
@@ -6294,13 +6294,13 @@ TINKER_WORKBENCH:
     - 毁灭之灵:5
     - 猎魂鲨牙:6
     recipeCategory: WEAPON_MELEE
-  '71':
+  71:
     requireLevel: 1
     resultItem: 幻星矛
     requireItem:
     - 炫星锭:8
     recipeCategory: WEAPON_MELEE
-  '72':
+  72:
     requireLevel: 1
     resultItem: 元素长枪
     requireItem:
@@ -6309,7 +6309,7 @@ TINKER_WORKBENCH:
     - 星系异石:5
     - 夜明锭:5
     recipeCategory: WEAPON_MELEE
-  '73':
+  73:
     requireLevel: 1
     resultItem: 元素短剑
     requireItem:
@@ -6318,7 +6318,7 @@ TINKER_WORKBENCH:
     - 星光
     - 夜明锭:5
     recipeCategory: WEAPON_MELEE
-  '74':
+  74:
     requireLevel: 1
     resultItem: 伽利略短剑
     requireItem:
@@ -6326,7 +6326,7 @@ TINKER_WORKBENCH:
     - 毁灭之灵:5
     - 起源之簇:15
     recipeCategory: WEAPON_MELEE
-  '75':
+  75:
     requireLevel: 1
     resultItem: 雷姆的复仇
     requireItem:
@@ -6336,7 +6336,7 @@ TINKER_WORKBENCH:
     - 夜明锭:5
     - 流明晶:10
     recipeCategory: WEAPON_MELEE
-  '76':
+  76:
     requireLevel: 1
     resultItem: 晨星链刃
     requireItem:
@@ -6345,7 +6345,7 @@ TINKER_WORKBENCH:
     - 神圣晶石:6
     - 日耀喷发剑
     recipeCategory: WEAPON_MELEE
-  '77':
+  77:
     requireLevel: 1
     resultItem: 脉冲龙链枷
     requireItem:
@@ -6354,7 +6354,7 @@ TINKER_WORKBENCH:
     - 龙蒿锭:8
     - 夜明锭:4
     recipeCategory: WEAPON_MELEE
-  '78':
+  78:
     requireLevel: 1
     resultItem: 新月链刃
     requireItem:
@@ -6362,13 +6362,13 @@ TINKER_WORKBENCH:
     - 毁灭之灵:3
     - 起源之簇:16
     recipeCategory: WEAPON_MELEE
-  '79':
+  79:
     requireLevel: 1
     resultItem: 裂魔
     requireItem:
     - 血石核心:4
     recipeCategory: WEAPON_MELEE
-  '80':
+  80:
     requireLevel: 1
     resultItem: 元素方舟
     requireItem:
@@ -6377,7 +6377,7 @@ TINKER_WORKBENCH:
     - 生命合金:5
     - 远古方舟
     recipeCategory: WEAPON_MELEE
-  '81':
+  81:
     requireLevel: 1
     resultItem: 死神擢升
     requireItem:
@@ -6386,7 +6386,7 @@ TINKER_WORKBENCH:
     - 扭曲虚空
     - 暗影之魂:15
     recipeCategory: WEAPON_MELEE
-  '82':
+  82:
     requireLevel: 1
     resultItem: 真·环境之刃[兵匠之傲]
     requireItem:
@@ -6395,13 +6395,13 @@ TINKER_WORKBENCH:
     - 生命合金:3
     - 炫星锭:3
     recipeCategory: WEAPON_MELEE
-  '83':
+  83:
     requireLevel: 1
     resultItem: 幻星弓
     requireItem:
     - 炫星锭:7
     recipeCategory: WEAPON_ARROW
-  '84':
+  84:
     requireLevel: 1
     resultItem: 湮灭千星
     requireItem:
@@ -6411,7 +6411,7 @@ TINKER_WORKBENCH:
     - 代达罗斯风暴弓
     - 生命合金:5
     recipeCategory: WEAPON_ARROW
-  '85':
+  85:
     requireLevel: 1
     resultItem: 灵星寂灭
     requireItem:
@@ -6421,26 +6421,26 @@ TINKER_WORKBENCH:
     - 夜明锭:5
     - 灾厄尘:5
     recipeCategory: WEAPON_ARROW
-  '86':
+  86:
     requireLevel: 1
     resultItem: 发条弓
     requireItem:
     - 气泵枪
     - 夜明锭:5
     recipeCategory: WEAPON_ARROW
-  '87':
+  87:
     requireLevel: 1
     resultItem: 荆棘藤
     requireItem:
     - 龙蒿锭:12
     recipeCategory: WEAPON_ARROW
-  '88':
+  88:
     requireLevel: 1
     resultItem: 血陨
     requireItem:
     - 血石核心:5
     recipeCategory: WEAPON_ARROW
-  '89':
+  89:
     requireLevel: 1
     resultItem: 幽漩风暴
     requireItem:
@@ -6449,7 +6449,7 @@ TINKER_WORKBENCH:
     - 神圣晶石:20
     - 虚空石:64
     recipeCategory: WEAPON_ARROW
-  '90':
+  90:
     requireLevel: 1
     resultItem: 季风
     requireItem:
@@ -6458,14 +6458,14 @@ TINKER_WORKBENCH:
     - 猎魂鲨牙:6
     - 深渊细胞:10
     recipeCategory: WEAPON_ARROW
-  '91':
+  91:
     requireLevel: 1
     resultItem: 电话会议
     requireItem:
     - 战术霰弹枪
     - 星璇碎片:12
     recipeCategory: WEAPON_BULLET
-  '92':
+  92:
     requireLevel: 1
     resultItem: 蘑菇狙击枪
     requireItem:
@@ -6473,20 +6473,20 @@ TINKER_WORKBENCH:
     - 真菌枪
     - 星尘碎片:6
     recipeCategory: WEAPON_BULLET
-  '93':
+  93:
     requireLevel: 1
     resultItem: 幻星冲击炮
     requireItem:
     - 炫星锭:6
     recipeCategory: WEAPON_BULLET
-  '94':
+  94:
     requireLevel: 1
     resultItem: 散播者
     requireItem:
     - 电话会议
     - 夜明锭:5
     recipeCategory: WEAPON_BULLET
-  '95':
+  95:
     requireLevel: 1
     resultItem: 玛瑙链炮
     requireItem:
@@ -6494,7 +6494,7 @@ TINKER_WORKBENCH:
     - 链式机枪
     - 夜明锭:5
     recipeCategory: WEAPON_BULLET
-  '96':
+  96:
     requireLevel: 1
     resultItem: 解离者
     requireItem:
@@ -6502,7 +6502,7 @@ TINKER_WORKBENCH:
     - 满弹霰弹枪
     - 夜明锭:5
     recipeCategory: WEAPON_BULLET
-  '97':
+  97:
     requireLevel: 1
     resultItem: 极光
     requireItem:
@@ -6511,7 +6511,7 @@ TINKER_WORKBENCH:
     - 星尘:50
     - 蘑菇狙击枪
     recipeCategory: WEAPON_BULLET
-  '98':
+  98:
     requireLevel: 1
     resultItem: 天使圣火炮
     requireItem:
@@ -6520,7 +6520,7 @@ TINKER_WORKBENCH:
     - 神圣晶石:15
     - 日光核心:7
     recipeCategory: WEAPON_BULLET
-  '99':
+  99:
     requireLevel: 1
     resultItem: 海龙
     requireItem:
@@ -6529,13 +6529,13 @@ TINKER_WORKBENCH:
     - 海棱晶:10
     - 巨舰鲨
     recipeCategory: WEAPON_BULLET
-  '100':
+  100:
     requireLevel: 1
     resultItem: 深红手炮
     requireItem:
     - 血石核心:4
     recipeCategory: WEAPON_BULLET
-  '101':
+  101:
     requireLevel: 1
     resultItem: Dodu的手炮
     requireItem:
@@ -6543,7 +6543,7 @@ TINKER_WORKBENCH:
     - 毁灭之灵:5
     - 夜明锭:15
     recipeCategory: WEAPON_BULLET
-  '102':
+  102:
     requireLevel: 1
     resultItem: 天蝎座
     requireItem:
@@ -6551,13 +6551,13 @@ TINKER_WORKBENCH:
     - 星云碎片:6
     - 纳米机器人:96
     recipeCategory: WEAPON_ROCKET
-  '103':
+  103:
     requireLevel: 1
     resultItem: 神之风箱
     requireItem:
     - 冥思构造体:12
     recipeCategory: WEAPON_ARROW
-  '104':
+  104:
     requireLevel: 1
     resultItem: 元素喷射器
     requireItem:
@@ -6568,13 +6568,13 @@ TINKER_WORKBENCH:
     - 混乱之息
     - 夜明锭:5
     recipeCategory: WEAPON_ARROW
-  '105':
+  105:
     requireLevel: 1
     resultItem: 血祸沸炉
     requireItem:
     - 血石核心:6
     recipeCategory: WEAPON_ARROW
-  '106':
+  106:
     requireLevel: 1
     resultItem: 哈雷彗星炮
     requireItem:
@@ -6582,7 +6582,7 @@ TINKER_WORKBENCH:
     - 毁灭之灵:4
     - 起源之簇:12
     recipeCategory: WEAPON_ARROW
-  '107':
+  107:
     requireLevel: 1
     resultItem: 重型激光步枪
     requireItem:
@@ -6591,7 +6591,7 @@ TINKER_WORKBENCH:
     - 龙蒿锭:8
     - 夜明锭:4
     recipeCategory: WEAPON_BULLET
-  '108':
+  108:
     requireLevel: 1
     resultItem: 自由之星
     requireItem:
@@ -6600,13 +6600,13 @@ TINKER_WORKBENCH:
     - 龙蒿锭:8
     - 夜明锭:4
     recipeCategory: WEAPON_BULLET
-  '109':
+  109:
     requireLevel: 1
     resultItem: 毁灭之星
     requireItem:
     - 冥思构造体:10
     recipeCategory: WEAPON_ROGUE
-  '110':
+  110:
     requireLevel: 1
     resultItem: 震波炸弹
     requireItem:
@@ -6615,14 +6615,14 @@ TINKER_WORKBENCH:
     - 龙蒿锭:8
     - 夜明锭:4
     recipeCategory: WEAPON_ROGUE
-  '111':
+  111:
     requireLevel: 1
     resultItem: 秘封奇点
     requireItem:
     - 瓶中尘
     - 暗离子体:3
     recipeCategory: WEAPON_ROGUE
-  '112':
+  112:
     requireLevel: 1
     resultItem: 元素飞盘
     requireItem:
@@ -6631,7 +6631,7 @@ TINKER_WORKBENCH:
     - 星系异石:5
     - 生命合金:5
     recipeCategory: WEAPON_ROGUE
-  '113':
+  113:
     requireLevel: 1
     resultItem: 光辉星剑
     requireItem:
@@ -6640,26 +6640,26 @@ TINKER_WORKBENCH:
     - 星尘:15
     - 坠星:10
     recipeCategory: WEAPON_ROGUE
-  '114':
+  114:
     requireLevel: 1
     resultItem: 月明苦无:320
     requireItem:
     - 夜明锭:5
     recipeCategory: WEAPON_ROGUE
-  '115':
+  115:
     requireLevel: 1
     resultItem: 裂阳
     requireItem:
     - 光辉星剑
     - 神圣晶石:6
     recipeCategory: WEAPON_ROGUE
-  '116':
+  116:
     requireLevel: 1
     resultItem: 龙蒿投镖:320
     requireItem:
     - 龙蒿锭:5
     recipeCategory: WEAPON_ROGUE
-  '117':
+  117:
     requireLevel: 1
     resultItem: 雷劫
     requireItem:
@@ -6668,7 +6668,7 @@ TINKER_WORKBENCH:
     - 浊火精华:15
     - 日光核心:5
     recipeCategory: WEAPON_ROGUE
-  '118':
+  118:
     requireLevel: 1
     resultItem: 时空交叉刃
     requireItem:
@@ -6677,7 +6677,7 @@ TINKER_WORKBENCH:
     - 毁灭之灵:5
     - 灵质:20
     recipeCategory: WEAPON_ROGUE
-  '119':
+  119:
     requireLevel: 1
     resultItem: 遗忘之颚
     requireItem:
@@ -6686,13 +6686,13 @@ TINKER_WORKBENCH:
     - 毁灭之灵:2
     - 流明晶:15
     recipeCategory: WEAPON_ROGUE
-  '120':
+  120:
     requireLevel: 1
     resultItem: 半影裂片:128
     requireItem:
     - 冥思构造体:2
     recipeCategory: WEAPON_ROGUE
-  '121':
+  121:
     requireLevel: 1
     resultItem: 渎神投矛
     requireItem:
@@ -6700,7 +6700,7 @@ TINKER_WORKBENCH:
     - 神圣晶石:4
     - 浊火精华:25
     recipeCategory: WEAPON_ROGUE
-  '122':
+  122:
     requireLevel: 1
     resultItem: 裂世投矛
     requireItem:
@@ -6709,7 +6709,7 @@ TINKER_WORKBENCH:
     - 扭曲虚空
     - 暗离子体
     recipeCategory: WEAPON_ROGUE
-  '123':
+  123:
     requireLevel: 1
     resultItem: 暗夜凝视
     requireItem:
@@ -6718,7 +6718,7 @@ TINKER_WORKBENCH:
     - 起源之簇:12
     - 流明晶:7
     recipeCategory: WEAPON_ROGUE
-  '124':
+  124:
     requireLevel: 1
     resultItem: 地底太阳
     requireItem:
@@ -6729,34 +6729,34 @@ TINKER_WORKBENCH:
     - 夜明锭:10
     - 狱炎锭:10
     recipeCategory: WEAPON_ROGUE
-  '125':
+  125:
     requireLevel: 1
     resultItem: 血沫重斧
     requireItem:
     - 硫火飞爪
     - 血石核心:12
     recipeCategory: WEAPON_ROGUE
-  '126':
+  126:
     requireLevel: 1
     resultItem: 玄法百枝莲
     requireItem:
     - 烁兰
     - 星云碎片:12
     recipeCategory: WEAPON_MAGIC
-  '127':
+  127:
     requireLevel: 1
     resultItem: 幻星法杖
     requireItem:
     - 炫星锭:6
     recipeCategory: WEAPON_MAGIC
-  '128':
+  128:
     requireLevel: 1
     resultItem: 行星法杖
     requireItem:
     - 维苏威阿斯
     - 夜明锭:5
     recipeCategory: WEAPON_MAGIC
-  '129':
+  129:
     requireLevel: 1
     resultItem: 元素射线
     requireItem:
@@ -6765,7 +6765,7 @@ TINKER_WORKBENCH:
     - 夜明锭:5
     - 生命合金:5
     recipeCategory: WEAPON_MAGIC
-  '130':
+  130:
     requireLevel: 1
     resultItem: 终结裂空戟
     requireItem:
@@ -6774,7 +6774,7 @@ TINKER_WORKBENCH:
     - 星系异石:5
     - 夜明锭:5
     recipeCategory: WEAPON_MAGIC
-  '131':
+  131:
     requireLevel: 1
     resultItem: 神圣天罚
     requireItem:
@@ -6783,7 +6783,7 @@ TINKER_WORKBENCH:
     - 神圣晶石:8
     - 浊火精华:10
     recipeCategory: WEAPON_MAGIC
-  '132':
+  132:
     requireLevel: 1
     resultItem: 荆棘烁兰
     requireItem:
@@ -6791,7 +6791,7 @@ TINKER_WORKBENCH:
     - 龙蒿锭:10
     - 浊火精华:10
     recipeCategory: WEAPON_MAGIC
-  '133':
+  133:
     requireLevel: 1
     resultItem: 王子
     requireItem:
@@ -6799,7 +6799,7 @@ TINKER_WORKBENCH:
     - 神圣晶石:15
     - 浊火精华:10
     recipeCategory: WEAPON_MAGIC
-  '134':
+  134:
     requireLevel: 1
     resultItem: 槲叶暴风
     requireItem:
@@ -6808,19 +6808,19 @@ TINKER_WORKBENCH:
     - 龙蒿锭:7
     - 暗离子体
     recipeCategory: WEAPON_MAGIC
-  '135':
+  135:
     requireLevel: 1
     resultItem: 猩红烈焰
     requireItem:
     - 血石核心:5
     recipeCategory: WEAPON_MAGIC
-  '136':
+  136:
     requireLevel: 1
     resultItem: 心泵血杖
     requireItem:
     - 血石核心:4
     recipeCategory: WEAPON_MAGIC
-  '137':
+  137:
     requireLevel: 1
     resultItem: 磁场之融
     requireItem:
@@ -6828,7 +6828,7 @@ TINKER_WORKBENCH:
     - 磁球
     - 暗离子体
     recipeCategory: WEAPON_MAGIC
-  '138':
+  138:
     requireLevel: 1
     resultItem: 幻象之怒
     requireItem:
@@ -6836,7 +6836,7 @@ TINKER_WORKBENCH:
     - 暗离子体
     - 毁灭之灵:2
     recipeCategory: WEAPON_MAGIC
-  '139':
+  139:
     requireLevel: 1
     resultItem: 影流法杖
     requireItem:
@@ -6844,7 +6844,7 @@ TINKER_WORKBENCH:
     - 装甲外壳:3
     - 毁灭之灵:2
     recipeCategory: WEAPON_MAGIC
-  '140':
+  140:
     requireLevel: 1
     resultItem: 金星三叉戟
     requireItem:
@@ -6852,7 +6852,7 @@ TINKER_WORKBENCH:
     - 扭曲虚空
     - 毁灭之灵:2
     recipeCategory: WEAPON_MAGIC
-  '141':
+  141:
     requireLevel: 1
     resultItem: 星龙破空杖
     requireItem:
@@ -6861,7 +6861,7 @@ TINKER_WORKBENCH:
     - 毁灭之灵:5
     - 起源之簇:10
     recipeCategory: WEAPON_MAGIC
-  '142':
+  142:
     requireLevel: 1
     resultItem: 星云法师圣杖
     requireItem:
@@ -6869,7 +6869,7 @@ TINKER_WORKBENCH:
     - 星云烈焰
     - 宇宙锭:8
     recipeCategory: WEAPON_MAGIC
-  '143':
+  143:
     requireLevel: 1
     resultItem: 拉扎尔射线
     requireItem:
@@ -6877,7 +6877,7 @@ TINKER_WORKBENCH:
     - 太空枪
     - 日耀碎片:6
     recipeCategory: WEAPON_MAGIC
-  '144':
+  144:
     requireLevel: 1
     resultItem: 泡沫冲锋枪
     requireItem:
@@ -6885,14 +6885,14 @@ TINKER_WORKBENCH:
     - 夜明锭:5
     - 海棱晶:15
     recipeCategory: WEAPON_MAGIC
-  '145':
+  145:
     requireLevel: 1
     resultItem: 凋亡射线
     requireItem:
     - 离子冲击波
     - 夜明锭:5
     recipeCategory: WEAPON_MAGIC
-  '146':
+  146:
     requireLevel: 1
     resultItem: 等离子液铸器
     requireItem:
@@ -6901,21 +6901,21 @@ TINKER_WORKBENCH:
     - 龙蒿锭:8
     - 夜明锭:4
     recipeCategory: WEAPON_MAGIC
-  '147':
+  147:
     requireLevel: 1
     resultItem: 等离子步枪
     requireItem:
     - 激光步枪
     - 龙蒿锭:7
     recipeCategory: WEAPON_MAGIC
-  '148':
+  148:
     requireLevel: 1
     resultItem: 以太之低语
     requireItem:
     - 拉扎尔射线
     - 扭曲虚空:3
     recipeCategory: WEAPON_MAGIC
-  '149':
+  149:
     requireLevel: 1
     resultItem: 寂虚之光
     requireItem:
@@ -6924,7 +6924,7 @@ TINKER_WORKBENCH:
     - 毁灭之灵:20
     - 神圣晶石:30
     recipeCategory: WEAPON_MAGIC
-  '150':
+  150:
     requireLevel: 1
     resultItem: 战术瘟疫引擎
     requireItem:
@@ -6932,7 +6932,7 @@ TINKER_WORKBENCH:
     - 燃料电池组
     - 夜明锭:5
     recipeCategory: WEAPON_SUMMON
-  '151':
+  151:
     requireLevel: 1
     resultItem: 元素之斧
     requireItem:
@@ -6942,7 +6942,7 @@ TINKER_WORKBENCH:
     - 夜明锭:5
     - 星系异石:5
     recipeCategory: WEAPON_SUMMON
-  '152':
+  152:
     requireLevel: 1
     resultItem: 告死之花
     requireItem:
@@ -6951,14 +6951,14 @@ TINKER_WORKBENCH:
     - 夜明锭:5
     - 星系异石:5
     recipeCategory: WEAPON_SUMMON
-  '153':
+  153:
     requireLevel: 1
     resultItem: 葱茏之锋
     requireItem:
     - 泰拉棱镜
     - 龙蒿锭:15
     recipeCategory: WEAPON_SUMMON
-  '154':
+  154:
     requireLevel: 1
     resultItem: 蛇眼
     requireItem:
@@ -6967,7 +6967,7 @@ TINKER_WORKBENCH:
     - 龙蒿锭:8
     - 夜明锭:4
     recipeCategory: WEAPON_SUMMON
-  '155':
+  155:
     requireLevel: 1
     resultItem: 天龙，群星的君王
     requireItem:
@@ -6976,13 +6976,13 @@ TINKER_WORKBENCH:
     - 暗黑碎块
     - 扭曲虚空:3
     recipeCategory: WEAPON_SUMMON
-  '156':
+  156:
     requireLevel: 1
     resultItem: 龙血弃族
     requireItem:
     - 血石核心:12
     recipeCategory: WEAPON_SUMMON
-  '157':
+  157:
     requireLevel: 1
     resultItem: 天狼星
     requireItem:
@@ -6991,7 +6991,7 @@ TINKER_WORKBENCH:
     - 起源之簇:12
     - 太阳神法杖
     recipeCategory: WEAPON_SUMMON
-  '158':
+  158:
     requireLevel: 1
     resultItem: 创世镐
     requireItem:
@@ -7002,83 +7002,83 @@ TINKER_WORKBENCH:
     - 星云碎片
     - 星尘碎片
     recipeCategory: TOOL
-  '159':
+  159:
     requireLevel: 1
     resultItem: 繁花镐
     requireItem:
     - 龙蒿锭:7
     recipeCategory: TOOL
-  '160':
+  160:
     requireLevel: 1
     resultItem: 星幻头盔
     requireItem:
     - 炫星锭:8
     - 陨星锭:6
     recipeCategory: ARMOR
-  '161':
+  161:
     requireLevel: 1
     resultItem: 星幻胸甲
     requireItem:
     - 炫星锭:12
     - 陨星锭:9
     recipeCategory: ARMOR
-  '162':
+  162:
     requireLevel: 1
     resultItem: 星幻护胫
     requireItem:
     - 炫星锭:10
     - 陨星锭:8
     recipeCategory: ARMOR
-  '163':
+  163:
     requireLevel: 1
     resultItem: 龙蒿战盔
     requireItem:
     - 龙蒿锭:7
     - 神圣晶石:6
     recipeCategory: ARMOR
-  '164':
+  164:
     requireLevel: 1
     resultItem: 龙蒿兜帽
     requireItem:
     - 龙蒿锭:7
     - 神圣晶石:6
     recipeCategory: ARMOR
-  '165':
+  165:
     requireLevel: 1
     resultItem: 龙蒿头盔
     requireItem:
     - 龙蒿锭:7
     - 神圣晶石:6
     recipeCategory: ARMOR
-  '166':
+  166:
     requireLevel: 1
     resultItem: 龙蒿面具
     requireItem:
     - 龙蒿锭:7
     - 神圣晶石:6
     recipeCategory: ARMOR
-  '167':
+  167:
     requireLevel: 1
     resultItem: 龙蒿角盔
     requireItem:
     - 龙蒿锭:7
     - 神圣晶石:6
     recipeCategory: ARMOR
-  '168':
+  168:
     requireLevel: 1
     resultItem: 龙蒿胸甲
     requireItem:
     - 龙蒿锭:15
     - 神圣晶石:18
     recipeCategory: ARMOR
-  '169':
+  169:
     requireLevel: 1
     resultItem: 龙蒿护胫
     requireItem:
     - 龙蒿锭:11
     - 神圣晶石:12
     recipeCategory: ARMOR
-  '170':
+  170:
     requireLevel: 1
     resultItem: 光棱头盔
     requireItem:
@@ -7087,7 +7087,7 @@ TINKER_WORKBENCH:
     - 神圣晶石:4
     - 纳米机器人:64
     recipeCategory: ARMOR
-  '171':
+  171:
     requireLevel: 1
     resultItem: 光棱斗篷
     requireItem:
@@ -7096,7 +7096,7 @@ TINKER_WORKBENCH:
     - 神圣晶石:8
     - 纳米机器人:64
     recipeCategory: ARMOR
-  '172':
+  172:
     requireLevel: 1
     resultItem: 光棱护胫
     requireItem:
@@ -7105,56 +7105,56 @@ TINKER_WORKBENCH:
     - 神圣晶石:6
     - 纳米机器人:64
     recipeCategory: ARMOR
-  '173':
+  173:
     requireLevel: 1
     resultItem: 血碾溃阵盔
     requireItem:
     - 血石核心:11
     - 毁灭之灵:2
     recipeCategory: ARMOR
-  '174':
+  174:
     requireLevel: 1
     resultItem: 血弑曲角盔
     requireItem:
     - 血石核心:11
     - 毁灭之灵:2
     recipeCategory: ARMOR
-  '175':
+  175:
     requireLevel: 1
     resultItem: 血饮魔精盔
     requireItem:
     - 血石核心:11
     - 毁灭之灵:2
     recipeCategory: ARMOR
-  '176':
+  176:
     requireLevel: 1
     resultItem: 血魇九头盔
     requireItem:
     - 血石核心:11
     - 毁灭之灵:2
     recipeCategory: ARMOR
-  '177':
+  177:
     requireLevel: 1
     resultItem: 血戮狂龙盔
     requireItem:
     - 血石核心:11
     - 毁灭之灵:2
     recipeCategory: ARMOR
-  '178':
+  178:
     requireLevel: 1
     resultItem: 血炎铠甲
     requireItem:
     - 血石核心:16
     - 毁灭之灵:4
     recipeCategory: ARMOR
-  '179':
+  179:
     requireLevel: 1
     resultItem: 血炎护胫
     requireItem:
     - 血石核心:13
     - 毁灭之灵:3
     recipeCategory: ARMOR
-  '180':
+  180:
     requireLevel: 1
     resultItem: 蓝色欧米茄头盔
     requireItem:
@@ -7162,7 +7162,7 @@ TINKER_WORKBENCH:
     - 猎魂鲨牙:8
     - 深渊细胞:12
     recipeCategory: ARMOR
-  '181':
+  181:
     requireLevel: 1
     resultItem: 蓝色欧米茄胸甲
     requireItem:
@@ -7170,7 +7170,7 @@ TINKER_WORKBENCH:
     - 猎魂鲨牙:12
     - 深渊细胞:18
     recipeCategory: ARMOR
-  '182':
+  182:
     requireLevel: 1
     resultItem: 蓝色欧米茄触手
     requireItem:
@@ -7178,14 +7178,14 @@ TINKER_WORKBENCH:
     - 猎魂鲨牙:10
     - 深渊细胞:15
     recipeCategory: ARMOR
-  '183':
+  183:
     requireLevel: 1
     resultItem: 炫星锭
     requireItem:
     - 炫星矿:2
     - 星尘:3
     recipeCategory: MATERIAL
-  '184':
+  184:
     requireLevel: 1
     resultItem: 星系异石
     requireItem:
@@ -7194,14 +7194,14 @@ TINKER_WORKBENCH:
     - 星尘碎片
     - 日耀碎片
     recipeCategory: MATERIAL
-  '185':
+  185:
     requireLevel: 1
     resultItem: 冥思构造体:3
     requireItem:
     - 星尘:3
     - 冥思溶剂:6
     recipeCategory: MATERIAL
-  '186':
+  186:
     requireLevel: 1
     resultItem: 化神魂精
     requireItem:
@@ -7210,7 +7210,7 @@ TINKER_WORKBENCH:
     - 恒温能量:5
     - 日蚀之阴碎片:2
     recipeCategory: MATERIAL
-  '187':
+  187:
     requireLevel: 1
     resultItem: 旧神浆果
     requireItem:
@@ -7219,7 +7219,7 @@ TINKER_WORKBENCH:
     - 神圣晶石:10
     - 浊火精华:20
     recipeCategory: CONSUMABLE_PERMANENT
-  '188':
+  188:
     requireLevel: 1
     resultItem: 飘渺之核
     requireItem:
@@ -7227,14 +7227,14 @@ TINKER_WORKBENCH:
     - 星云碎片:20
     - 坠星:20
     recipeCategory: CONSUMABLE_PERMANENT
-  '189':
+  189:
     requireLevel: 1
     resultItem: 幻影之心
     requireItem:
     - 毁灭之灵:5
     - 灵质:25
     recipeCategory: CONSUMABLE_PERMANENT
-  '190':
+  190:
     requireLevel: 1
     resultItem: 星宇砧
     requireItem:
@@ -7252,7 +7252,7 @@ TINKER_WORKBENCH:
     FURNACE: 3
     ANVIL: 3
     远古操纵机: 1
-  '1':
+  1:
     requireLevel: 1
     resultItem: 星流之刃
     requireItem:
@@ -7265,7 +7265,7 @@ TINKER_WORKBENCH:
     - 破灭魔王剑
     - 奇迹物质
     recipeCategory: WEAPON_MELEE
-  '2':
+  2:
     requireLevel: 1
     resultItem: 无限大地
     requireItem:
@@ -7273,7 +7273,7 @@ TINKER_WORKBENCH:
     - 星河之刃
     - 魔影锭:5
     recipeCategory: WEAPON_MELEE
-  '3':
+  3:
     requireLevel: 1
     resultItem: 绚辉圣剑
     requireItem:
@@ -7282,7 +7282,7 @@ TINKER_WORKBENCH:
     - 化神魂精:5
     - 携序之剑
     recipeCategory: WEAPON_MELEE
-  '4':
+  4:
     requireLevel: 1
     resultItem: 阿撒托斯
     requireItem:
@@ -7290,7 +7290,7 @@ TINKER_WORKBENCH:
     - 魔影锭:5
     - 灾劫核心:2
     recipeCategory: WEAPON_MELEE
-  '5':
+  5:
     requireLevel: 1
     resultItem: 天堂之风
     requireItem:
@@ -7303,7 +7303,7 @@ TINKER_WORKBENCH:
     - 湮灭千星
     - 奇迹物质
     recipeCategory: WEAPON_ARROW
-  '6':
+  6:
     requireLevel: 1
     resultItem: 瘟疫
     requireItem:
@@ -7312,7 +7312,7 @@ TINKER_WORKBENCH:
     - 瘟疫细胞罐:20
     - 瘟疫装甲镀层:5
     recipeCategory: WEAPON_ARROW
-  '7':
+  7:
     requireLevel: 1
     resultItem: 太虚星龙炮
     requireItem:
@@ -7320,7 +7320,7 @@ TINKER_WORKBENCH:
     - 魔影锭:5
     - 恐惧之魂:30
     recipeCategory: WEAPON_BULLET
-  '8':
+  8:
     requireLevel: 1
     resultItem: 月神Prime
     requireItem:
@@ -7328,7 +7328,7 @@ TINKER_WORKBENCH:
     - 魔影锭:5
     - 迷你加特林
     recipeCategory: WEAPON_BULLET
-  '9':
+  9:
     requireLevel: 1
     resultItem: 磁极异变
     requireItem:
@@ -7337,7 +7337,7 @@ TINKER_WORKBENCH:
     - 集束火箭发射器
     - 奇迹物质
     recipeCategory: WEAPON_ROCKET
-  '10':
+  10:
     requireLevel: 1
     resultItem: 星火解离者
     requireItem:
@@ -7347,7 +7347,7 @@ TINKER_WORKBENCH:
     - 哈雷彗星炮
     - 奇迹物质
     recipeCategory: WEAPON_ARROW
-  '11':
+  11:
     requireLevel: 1
     resultItem: 超新星
     requireItem:
@@ -7358,7 +7358,7 @@ TINKER_WORKBENCH:
     - 半影飞弹
     - 奇迹物质
     recipeCategory: WEAPON_ROGUE
-  '12':
+  12:
     requireLevel: 1
     resultItem: 星神之杀
     requireItem:
@@ -7370,7 +7370,7 @@ TINKER_WORKBENCH:
     - 附魔飞斧
     - 奇迹物质
     recipeCategory: WEAPON_ROGUE
-  '13':
+  13:
     requireLevel: 1
     resultItem: 纳米黑死神
     requireItem:
@@ -7382,7 +7382,7 @@ TINKER_WORKBENCH:
     - 瘟疫细胞罐:20
     - 纳米机器人:320
     recipeCategory: WEAPON_ROGUE
-  '14':
+  14:
     requireLevel: 1
     resultItem: 绯红恶魔
     requireItem:
@@ -7395,7 +7395,7 @@ TINKER_WORKBENCH:
     - 血石核心:15
     - 暗影之魂:15
     recipeCategory: WEAPON_ROGUE
-  '15':
+  15:
     requireLevel: 1
     resultItem: 耀界之光
     requireItem:
@@ -7405,14 +7405,14 @@ TINKER_WORKBENCH:
     - 影流法杖
     - 奇迹物质
     recipeCategory: WEAPON_MAGIC
-  '16':
+  16:
     requireLevel: 1
     resultItem: 绝学法杖
     requireItem:
     - 魔影锭:5
     - 灵质:10
     recipeCategory: WEAPON_MAGIC
-  '17':
+  17:
     requireLevel: 1
     resultItem: 归元漩涡
     requireItem:
@@ -7422,7 +7422,7 @@ TINKER_WORKBENCH:
     - 氦闪
     - 奇迹物质
     recipeCategory: WEAPON_MAGIC
-  '18':
+  18:
     requireLevel: 1
     resultItem: 光之舞
     requireItem:
@@ -7431,7 +7431,7 @@ TINKER_WORKBENCH:
     - 月之耀斑
     - 魔影锭:5
     recipeCategory: WEAPON_MAGIC
-  '19':
+  19:
     requireLevel: 1
     resultItem: 归虚之灵
     requireItem:
@@ -7441,7 +7441,7 @@ TINKER_WORKBENCH:
     - 乌贼之哀歌
     - 奇迹物质
     recipeCategory: WEAPON_SUMMON
-  '20':
+  20:
     requireLevel: 1
     resultItem: 源生寒晶
     requireItem:
@@ -7451,7 +7451,7 @@ TINKER_WORKBENCH:
     - 魔影锭:5
     - 冰川核心:15
     recipeCategory: WEAPON_SUMMON
-  '21':
+  21:
     requireLevel: 1
     resultItem: 光阴流时伞
     requireItem:
@@ -7462,7 +7462,7 @@ TINKER_WORKBENCH:
     - 极昼信标
     - 魔影锭:5
     recipeCategory: WEAPON_SUMMON
-  '22':
+  22:
     requireLevel: 1
     resultItem: 奇迹物质
     requireItem:
@@ -7473,7 +7473,7 @@ TINKER_WORKBENCH:
     - 化神魂精
     - 星系异石:3
     recipeCategory: MATERIAL
-  '23':
+  23:
     requireLevel: 1
     resultItem: 魔影锭
     requireItem:
@@ -7488,7 +7488,7 @@ TINKER_WORKBENCH:
     - 星流棱晶
     - 湮灭余烬
     recipeCategory: MATERIAL
-  '24':
+  24:
     requireLevel: 1
     resultItem: 天钻头饰
     requireItem:
@@ -7496,7 +7496,7 @@ TINKER_WORKBENCH:
     - 星系异石:3
     - 灾劫核心:2
     recipeCategory: ARMOR
-  '25':
+  25:
     requireLevel: 1
     resultItem: 天钻胸甲
     requireItem:
@@ -7504,7 +7504,7 @@ TINKER_WORKBENCH:
     - 星系异石:5
     - 灾劫核心:2
     recipeCategory: ARMOR
-  '26':
+  26:
     requireLevel: 1
     resultItem: 天钻战裙
     requireItem:
@@ -7512,7 +7512,7 @@ TINKER_WORKBENCH:
     - 星系异石:4
     - 灾劫核心:2
     recipeCategory: ARMOR
-  '27':
+  27:
     requireLevel: 1
     resultItem: 魔影头盔
     requireItem:
@@ -7520,7 +7520,7 @@ TINKER_WORKBENCH:
     - 晶状体
     - 湮灭余烬
     recipeCategory: ARMOR
-  '28':
+  28:
     requireLevel: 1
     resultItem: 魔影装甲
     requireItem:
@@ -7529,7 +7529,7 @@ TINKER_WORKBENCH:
     - 金锭
     - 湮灭余烬
     recipeCategory: ARMOR
-  '29':
+  29:
     requireLevel: 1
     resultItem: 魔影护胫
     requireItem:

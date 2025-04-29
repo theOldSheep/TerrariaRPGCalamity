@@ -17,10 +17,7 @@ import terraria.util.ItemUseHelper;
 import terraria.util.PlayerHelper;
 import terraria.util.PlayerPOVHelper;
 
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class PlayerKeyToggleListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
@@ -56,21 +53,31 @@ public class PlayerKeyToggleListener implements Listener {
             return;
         }
 
-        // WASD
-        if (keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_W)) ||
+        // WASD double-click dash
+        if (Setting.getOptionBool(ply, Setting.Options.ENABLE_DOUBLE_CLICK_DASH) && (
+                keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_W)) ||
                 keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_A)) ||
                 keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_S)) ||
-                keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_D))) {
+                keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_D))) ) {
             long lastChargeTime = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS).asLong();
             long currTimeInMS = Calendar.getInstance().getTimeInMillis();
             String lastChargeDir = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_DIRECTION).asString();
             if (currTimeInMS - lastChargeTime < 200 && lastChargeDir.equals(keyPressed)) {
-                // handle player charge
-                double chargeYaw = PlayerHelper.getPlayerMoveYaw(ply, keyPressed);
+                // try to dash in the double-tapped direction
+                Collection<String> cgDir = new ArrayList<>();
+                cgDir.add(keyPressed);
+                double chargeYaw = PlayerHelper.getPlayerMoveYaw(ply, cgDir);
                 PlayerHelper.handleDash(ply, chargeYaw, 0);
             }
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS, currTimeInMS);
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_DIRECTION, keyPressed);
+        }
+        // Hotkey dash
+        if (keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_DASH)) ) {
+            double chargeYaw = PlayerHelper.getPlayerMoveYaw(ply);
+            // default to forward if not moving
+            if (chargeYaw > 1e5) chargeYaw = ply.getLocation().getYaw();
+            PlayerHelper.handleDash(ply, chargeYaw, 0);
         }
         // SPACE
         if (keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_SPACE))) {

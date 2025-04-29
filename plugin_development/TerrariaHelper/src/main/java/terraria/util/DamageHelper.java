@@ -1159,6 +1159,9 @@ public class DamageHelper {
 
         public DamageInfoBus(Entity damager, LivingEntity victim, DamageReason damageReason, String debuffType, double initialDmg) {
             this.damager = damager;
+            if (! (getDamageSource(damager) instanceof LivingEntity)) {
+                TerrariaHelper.LOGGER.log(Level.SEVERE, "Damage Info Bus init: damager's source not living entity " + damager + " | " + damager.getCustomName());
+            }
             this.damageSource = (LivingEntity) getDamageSource(damager);
             this.victim = victim;
             this.damageReason = damageReason;

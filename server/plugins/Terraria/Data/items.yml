@@ -1956,9 +1956,6 @@
   - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
-  attributes:
-    damageMulti: 0.05
-    crit: 5
   worth: 4800000
   rarity: 5
 极寒之魂:
@@ -1968,11 +1965,6 @@
   - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
-  - §r近战和远程攻击造成霜火减益
-  attributes:
-    damageMulti: 0.07
-    buffInflictMelee: 霜火|40|1
-    buffInflictRanged: 霜火|40|1
   worth: 4800000
   rarity: 5
 气球之母:
@@ -2001,8 +1993,6 @@
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   - §r“由深渊的怒火驱动”
-  attributes:
-    damageMulti: 0.05
   worth: 12000000
   rarity: 8
 逸界之翼:
@@ -2012,9 +2002,6 @@
   - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
-  attributes:
-    damageMulti: 0.03
-    crit: 3
   worth: 16000000
   rarity: 10
 天界翼靴:
@@ -2037,9 +2024,6 @@
   - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
-  attributes:
-    defence: 15
-    regen: 2
   worth: 24000000
   rarity: 12
 极乐之翼:
@@ -2074,8 +2058,7 @@
   - §r飞行时间结束后按住空格缓降
   - §r“纯粹的自然之力”
   attributes:
-    defence: 20
-    regen: 3
+    speedMulti: 0.15
   worth: 28000000
   rarity: 14
 Drew之翼:
@@ -2086,6 +2069,8 @@ Drew之翼:
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
   - §r“山猪今天喝醉没”
+  attributes:
+    speedMulti: 0.175
   worth: 30000000
   rarity: 15
 炽天使翼靴:
@@ -2106,7 +2091,7 @@ Drew之翼:
   - §r[饰品]
   attributes:
     maxHealth: 40
-    maxMana: 20
+    manaUseMulti: -0.05
     speedMulti: 0.1
     regen: 2
   worth: 4800000
@@ -2124,7 +2109,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    maxMana: 20
+    manaUseMulti: -0.05
   worth: 200000
   rarity: 1
 阳炎战旗:
@@ -2245,7 +2230,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   - §r在按下快速回蓝键[默认为J]或触发魔力花时直接恢复170点魔力
-  - §r作为代价，玩家会损耗50点生命值
+  - §r作为代价，玩家会损耗30点生命值
   - §r此效果依旧会正常造成魔力疾病
   attributes:
     maxHealth: 22
@@ -2257,7 +2242,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   - §r▣算作特殊魔力装置
-  - §r高于50%总魔力时，减少6点生命恢复速度
+  - §r高于50%总魔力时，减少3点生命恢复速度
   - §r造成魔法伤害时触发治疗效果
   - §r伤害越高治疗效果越强；魔力越少治疗效果越弱
   attributes:
@@ -2291,7 +2276,7 @@ Drew之翼:
   - §r手持魔法武器时对敌人造成魔法伤害则触发以下效果：
   - §r尝试额外消耗2点魔力，若成功则使本次暴击前伤害增加100点
   attributes:
-    regen: -6
+    regen: -2
     maxMana: 60
   worth: 22000000
   rarity: 11
@@ -2474,7 +2459,7 @@ Drew之翼:
   - §#C61B40“女巫是罪人，自己的罪人，她将自己拖入无尽的因果苦海。
   - §#C61B40念想中的恶魔一直安静着，等待着，直到终结。”
   attributes:
-    damageSummonMulti: 0.25
+    damageSummonMulti: 0.2
     buffInflictSummon: 孱弱巫咒|40|1
   worth: 40000000
   rarity: 16
@@ -2746,7 +2731,7 @@ Drew之翼:
   - §r[饰品]
   - §r盗贼攻击造成龙焰减益
   attributes:
-    critRogue: 1
+    critRogue: 10
     damageRogueMulti: 0.1
     buffInflictRogue: 龙焰|100|1
   worth: 30000000
@@ -2778,6 +2763,7 @@ Drew之翼:
   - §r[饰品]
   - §r你的任何攻击都会附带硫磺火减益
   attributes:
+    damageMulti: 0.1
     buffInflict: 硫磺火|80|1
   worth: 4800000
   rarity: 5
@@ -3153,6 +3139,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
+    damageTakenMulti: -0.05
     buffImmune: 硫磺火
   worth: 4800000
   rarity: 5
@@ -9307,9 +9294,10 @@ Dodu的手炮:
 憎恶血刃:
   item: DIAMOND_SWORD
   lore:
-  - §r命中时恢复5点生命值
-  - §r潜伏攻击恢复量为100点
-  - §r潜伏攻击会使你失去30%的当前生命值
+  - §r普通攻击命中时恢复 10 点生命值
+  - §r潜伏攻击命中时恢复 180 点生命值
+  - §r普通攻击会使你失去 10 生命值
+  - §r潜伏攻击会使你失去 30% 当前生命值
   - §r失去生命值的40%会附加到基础伤害中
   - §r“似乎随时间的流逝而逐渐崩解”
   attributes:
@@ -9425,10 +9413,12 @@ Dodu的手炮:
 牺牲:
   item: DIAMOND_SWORD
   lore:
-  - §r丢出一把牺牲之匕并为你回复5点生命值
-  - §r潜伏攻击会使你失去20%的当前生命值
+  - §r丢出一把牺牲之匕
+  - §r普通攻击会使你失去 15 生命值
+  - §r潜伏攻击会使你失去 20% 当前生命值
   - §r失去生命值的75%会附加到基础伤害中
-  - §r潜伏攻击命中时为你恢复10%已损失生命值
+  - §r普通攻击命中时为你恢复 15 生命值
+  - §r潜伏攻击命中时为你恢复 15% 已损失生命值
   attributes:
     damage: 600
     damageStealth: 300
@@ -9722,7 +9712,7 @@ Dodu的手炮:
     knockback: 1
     useTime: 17
   worth: 4000
-  rarity: 4
+  rarity: 3
 神经系统紊乱装置:
   item: DIAMOND_SWORD
   lore:
@@ -16355,11 +16345,10 @@ Dodu的手炮:
   - §a8分钟持续时间
   worth: 20000
   rarity: 1
-箭术药水:
+射术药水:
   item: CLAY_BALL
   lore:
-  - §a+20% 箭矢速度
-  - §a+5% 箭矢伤害
+  - §a+5% 远程伤害
   - §a8分钟持续时间
   worth: 20000
   rarity: 1
@@ -16421,10 +16410,10 @@ Dodu的手炮:
   - §a4分钟持续时间
   worth: 20000
   rarity: 1
-魔力再生药水:
+魔力掌控药水:
   item: CLAY_BALL
   lore:
-  - §a魔力再生速度提高
+  - §a-10% 魔力消耗
   - §a8分钟持续时间
   worth: 20000
   rarity: 1
@@ -16614,14 +16603,15 @@ Dodu的手炮:
 恢复药水:
   item: CLAY_BALL
   lore:
-  - §r使用恢复160生命值
+  - §r使用时造成的耐药效果较轻
+  - §r使用恢复175生命值
   - §r使用恢复80法力值
   worth: 30000
   rarity: 1
 星舰电池:
   item: CLAY_BALL
   lore:
-  - §r获得魔力再生及魔能增益
+  - §r获得魔力掌控及魔能增益
   worth: 900000
   rarity: 7
 生命水晶:
@@ -17107,10 +17097,6 @@ Dodu的手炮:
   - §7▷ 钩爪：放置在副手，按钩爪按键[默认为F]射出钩爪，按跳跃键收回钩爪
   worth: 10000000
   rarity: 4
-冰冻火把:
-  item: TORCH
-  worth: 1200
-  rarity: 0
 矿车:
   item: IRON_INGOT
   lore:
