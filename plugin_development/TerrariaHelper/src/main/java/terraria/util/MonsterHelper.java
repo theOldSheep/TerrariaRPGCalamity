@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.event.celestialPillar.CelestialPillar;
 import terraria.entity.monster.*;
@@ -23,24 +24,42 @@ import java.util.logging.Level;
 public class MonsterHelper {
     // prevent spawning next to any player
     public static final double NO_MONSTER_SPAWN_RADIUS = 16d;
+    // after this duration with no activity against the unique entity it can be overridden
+    public static final int UNIQUE_MONSTER_INACTIVITY_TIMEOUT = 200 * 1000;
+
     public static class UniqueMonsterInfo {
         Entity uniqueMonster;
-        long spawnedTime;
+        long lastActivity;
         public UniqueMonsterInfo(Entity monster) {
             this.uniqueMonster = monster;
-            spawnedTime = Calendar.getInstance().getTimeInMillis();
+            touch();
+        }
+        public void touch() {
+            lastActivity = Calendar.getInstance().getTimeInMillis();
+        }
+        public boolean isTimeout() {
+            return lastActivity + UNIQUE_MONSTER_INACTIVITY_TIMEOUT < Calendar.getInstance().getTimeInMillis();
         }
     }
-    public static HashMap<String, UniqueMonsterInfo> uniqueMonsters = new HashMap<>();
+    public static HashMap<String, UniqueMonsterInfo> UNIQUE_MONSTERS = new HashMap<>();
+
     private static boolean naturalMobSpawnType(Player ply, String spawnType) {
         // determine the monster spawning location
         WorldHelper.HeightLayer heightLayer = WorldHelper.HeightLayer.getHeightLayer(ply.getLocation());
         Location spawnLoc;
         int adjustHeight;
-        if (heightLayer == WorldHelper.HeightLayer.SURFACE) {
+        // initial spawn attempt location & adjustment settings
+        if (spawnType.equals(WorldHelper.BiomeType.TEMPLE.toString().toLowerCase())) {
+            Vector offset = MathHelper.vectorFromYawPitch_approx(Math.random() * 360, 0);
+            offset.multiply(NO_MONSTER_SPAWN_RADIUS + 0.5);
+            spawnLoc = ply.getLocation().add(offset);
+            adjustHeight = 24;
+        }
+        else if (heightLayer == WorldHelper.HeightLayer.SURFACE) {
             spawnLoc = ply.getLocation().add(Math.random() * 96 - 48, Math.random() * 32 - 16, Math.random() * 96 - 48);
             adjustHeight = 32;
-        } else {
+        }
+        else {
             spawnLoc = ply.getLocation().add(Math.random() * 64 - 32, Math.random() * 40 - 20, Math.random() * 64 - 32);
             adjustHeight = 24;
         }
@@ -226,11 +245,9 @@ public class MonsterHelper {
             return null;
         // get monster info
         ConfigurationSection mobInfoSection = TerrariaHelper.mobSpawningConfig.getConfigurationSection("mobInfo." + type);
-        boolean unique = mobInfoSection.getBoolean("unique", false);
-        if (unique && uniqueMonsters.containsKey(type)) {
-            UniqueMonsterInfo currMonster = uniqueMonsters.get(type);
-            // timeout after 2.5 minutes (150 seconds or 150 000 ms)
-            if (currMonster.spawnedTime < Calendar.getInstance().getTimeInMillis() - 150000)
+        if (UNIQUE_MONSTERS.containsKey(type)) {
+            UniqueMonsterInfo currMonster = UNIQUE_MONSTERS.get(type);
+            if (currMonster.isTimeout())
                 currMonster.uniqueMonster.remove();
             else if (!currMonster.uniqueMonster.isDead())
                 return null;
@@ -315,8 +332,9 @@ public class MonsterHelper {
         // set parent type
         EntityHelper.setMetadata(entity, EntityHelper.MetadataName.MONSTER_PARENT_TYPE, type);
         // unique monster cache
+        boolean unique = mobInfoSection.getBoolean("unique", false);
         if (unique) {
-            uniqueMonsters.put(type, new UniqueMonsterInfo(entity) );
+            UNIQUE_MONSTERS.put(type, new UniqueMonsterInfo(entity) );
         }
         return entity;
     }

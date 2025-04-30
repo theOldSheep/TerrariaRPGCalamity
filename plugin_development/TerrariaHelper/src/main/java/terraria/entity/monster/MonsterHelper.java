@@ -3,6 +3,7 @@ package terraria.entity.monster;
 
 import net.minecraft.server.v1_12_R1.*;
 import net.minecraft.server.v1_12_R1.Entity;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -25,6 +26,9 @@ import terraria.util.MathHelper;
 import java.util.*;
 
 public class MonsterHelper {
+    public static final double TARGET_RADIUS = 96;
+    public static final double TARGET_RADIUS_SQR = TARGET_RADIUS * TARGET_RADIUS;
+
     // initializes monster size, attribute, disguise etc.
     private static class MonsterStatsMulti {
         public double
@@ -230,8 +234,9 @@ public class MonsterHelper {
                 health *= targets.size();
             } else {
                 int totalPlyNearby = 0;
-                for (org.bukkit.entity.Entity e : bukkitMonster.getNearbyEntities(96, 96, 96)) {
-                    if (e instanceof Player) totalPlyNearby ++;
+                for (Player p : bukkitMonster.getWorld().getPlayers()) {
+                    if (p.getLocation().distanceSquared(bukkitMonster.getLocation()) < TARGET_RADIUS_SQR)
+                        totalPlyNearby ++;
                 }
                 health *= Math.max(totalPlyNearby, 1);
             }
@@ -256,6 +261,7 @@ public class MonsterHelper {
             case "秃鹰":
             case "恶魔之眼":
             case "噬魂怪":
+            case "肉后噬魂怪":
             case "恶魔":
             case "巫毒恶魔":
             case "红恶魔":
@@ -571,9 +577,9 @@ public class MonsterHelper {
                         targetNMS.getWorld() != monster.getWorld()) {
             monster.ticksLived = Math.max(monster.ticksLived, 9999);
         }
-        // distance > 96
+        // distance > limit
         else if (
-                target.getLocation().distanceSquared(monsterBkt.getLocation()) > 9216) {
+                target.getLocation().distanceSquared(monsterBkt.getLocation()) > TARGET_RADIUS_SQR) {
             monster.ticksLived = Math.max(monster.ticksLived, 150);
         }
         // reset ticks out of combat when target can be seen
@@ -602,12 +608,13 @@ public class MonsterHelper {
                 default:
                     if (monster.ticksLived >= 200) {
                         // find possible target
-                        double targetAttemptRadius = 96;
-                        double newTargetDistSqr = 9216;
-                        for (org.bukkit.entity.Entity checkEntity : monsterBkt.getNearbyEntities(targetAttemptRadius, targetAttemptRadius, targetAttemptRadius)) {
-                            if (checkEntity instanceof Player) {
-                                Player checkPlayer = (Player) checkEntity;
+                        double newTargetDistSqr = TARGET_RADIUS_SQR;
+                        for (Player checkPlayer : monsterBkt.getWorld().getPlayers()) {
                                 if (PlayerHelper.isProperlyPlaying(checkPlayer)) {
+                                    // game progression
+                                    if (PlayerHelper.getGameProgress(target).ordinal() > PlayerHelper.getGameProgress(checkPlayer).ordinal())
+                                        continue;
+                                    // distance
                                     double currDistSqr = monsterBkt.getLocation().distanceSquared(checkPlayer.getLocation());
                                     if (currDistSqr > newTargetDistSqr) continue;
                                     if (monster.hasLineOfSight(((CraftPlayer) checkPlayer).getHandle())) {
@@ -615,7 +622,6 @@ public class MonsterHelper {
                                         newTargetDistSqr = currDistSqr;
                                     }
                                 }
-                            }
                         }
                         if (newTarget == null) {
                             // target's monster spawned amount is tweaked in die()
@@ -1048,7 +1054,8 @@ public class MonsterHelper {
                     }
                     break;
                 }
-                case "蛤": {
+                case "蛤":
+                case "肉后蛤": {
                     if (monster.getHealth() > 0) {
                         // hop towards target if damaged
                         if (monster.getHealth() + 1e-5 < monster.getMaxHealth()
@@ -1367,6 +1374,7 @@ public class MonsterHelper {
                 case "恶魔之眼":
                 case "妖精":
                 case "噬魂怪":
+                case "肉后噬魂怪":
                 case "地狱蝙蝠":
                 case "丛林蝙蝠":
                 case "恶魔":
@@ -1396,6 +1404,7 @@ public class MonsterHelper {
                         }
                         switch (type) {
                             case "噬魂怪":
+                            case "肉后噬魂怪":
                             case "雪花怪":
                                 if (indexAI % 60 == 45) {
                                     acc = target.getEyeLocation().subtract(monsterBkt.getEyeLocation()).toVector();

@@ -925,17 +925,28 @@ public class DamageHelper {
             }
             else {
                 float soundVolume = 3f;
-                // register damage dealt; bosses have louder damage sound
-                if (damageTakerTags.contains("isBOSS") && damageSource instanceof Player) {
-                    soundVolume = 8f;
-                    MetadataValue temp = EntityHelper.getMetadata(damageTaker, EntityHelper.MetadataName.BOSS_TARGET_MAP);
-                    if (temp != null) {
-                        HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targets =
-                                (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) temp.value();
-                        Player ply = (Player) damageSource;
-                        UUID plyID = ply.getUniqueId();
-                        if (targets.containsKey(plyID))
-                            targets.get(plyID).addDamageDealt(dmg);
+                // register damage dealt
+                if (damageSource instanceof Player) {
+                    MetadataValue typeData = EntityHelper.getMetadata(victim, EntityHelper.MetadataName.MONSTER_PARENT_TYPE);
+                    String type = typeData == null ? null : typeData.asString();
+                    // record dmg dealt to bosses
+                    if (damageTakerTags.contains("isBOSS")) {
+                        // bosses have louder damage sound
+                        soundVolume = 8f;
+                        MetadataValue temp = EntityHelper.getMetadata(damageTaker, EntityHelper.MetadataName.BOSS_TARGET_MAP);
+                        if (temp != null) {
+                            HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targets =
+                                    (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) temp.value();
+                            Player ply = (Player) damageSource;
+                            UUID plyID = ply.getUniqueId();
+                            if (targets.containsKey(plyID))
+                                targets.get(plyID).addDamageDealt(dmg);
+                        }
+                    }
+                    // "touch" last-action time for unique monster entities
+                    else if (MonsterHelper.UNIQUE_MONSTERS.containsKey(type)) {
+                        MonsterHelper.UniqueMonsterInfo currMonster = MonsterHelper.UNIQUE_MONSTERS.get(type);
+                        currMonster.touch();
                     }
                 }
                 String sound = null;
@@ -1550,20 +1561,9 @@ public class DamageHelper {
     public static void handleDeath(Entity v, Entity dPly, Entity d, DamageType damageType, DamageReason damageReason, String debuffType) {
         if (v instanceof Player) {
             Player vPly = (Player) v;
+            int respawnTime = PlayerHelper.getReviveTicks(vPly);
             // prevent spectator getting in a wall & prevent speed remaining after revive
             EntityMovementHelper.setVelocity(vPly, new Vector());
-            // respawn time, default to 5 seconds and increases if boss is alive
-            int respawnTime = 5;
-            for (ArrayList<LivingEntity> bossList : BossHelper.bossMap.values()) {
-                HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targets =
-                        (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>)
-                                EntityHelper.getMetadata(bossList.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
-                // if the current boss has the player as target, 15 seconds respawn time for each player, up to 1 minute
-                if (targets.containsKey(vPly.getUniqueId())) {
-                    // note: max would take the longest respawn time across all active bosses
-                    respawnTime = Math.max(respawnTime, Math.min(targets.size() * 15, 60));
-                }
-            }
             // drop money
             long moneyDrop = (long) Math.floor(PlayerHelper.getMoney(vPly) / 100);
             moneyDrop = (long) Math.ceil(moneyDrop * 0.75);
@@ -1590,7 +1590,7 @@ public class DamageHelper {
             String deathTitle = "你死了！";
             if ( ItemHelper.splitItemName( vPly.getInventory().getItemInMainHand() )[1].equals("雷姆的复仇") )
                 deathTitle = "感谢款待！";
-            vPly.sendTitle("§c§l" + deathTitle, moneyMsg, 0, respawnTime * 20, 0);
+            vPly.sendTitle("§c§l" + deathTitle, moneyMsg, 0, respawnTime, 0);
             sendDeathMessage(d, v, damageType, damageReason, debuffType);
             // remove vanilla potion effects except for mining fatigue
             // terraria potion effects are removed in their threads
@@ -1604,7 +1604,7 @@ public class DamageHelper {
             double respawnHealth = Math.max(400, maxHealth / 2);
             // make sure the new health do not exceed maximum health
             vPly.setHealth(Math.min(respawnHealth, maxHealth) );
-            EntityHelper.setMetadata(vPly, EntityHelper.MetadataName.RESPAWN_COUNTDOWN, respawnTime * 20);
+            EntityHelper.setMetadata(vPly, EntityHelper.MetadataName.RESPAWN_COUNTDOWN, respawnTime);
             vPly.setGameMode(GameMode.SPECTATOR);
             vPly.setFlySpeed(0);
             vPly.setFallDistance(0);

@@ -1947,7 +1947,7 @@ mobInfo:
         name: "腐化囊"
         monsterType: "SLIME"
         slimeSize: 3
-        spawnLocationType: AIR
+        spawnLocationType: GROUND
         unique: true
         variants:
             default1:

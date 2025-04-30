@@ -424,11 +424,20 @@ public class StructurePopulator extends BlockPopulator {
             }
             // arrays of [fwd, up, sideMin, sideMax]
             int[][] positions = {
-                    {20, 63, -1, 1},
-                    {21, 60, 0, 0}, {21, 61, 0, 0}, {21, 62, -1, 1}, {21, 63, -2, 2},
-                    {22, 60, 0, 0}, {22, 61, -1, 1}, {22, 62, -2, 2},
-                    {23, 60, -2, 2}, {23, 61, -3, 3},
-                    {24, 60, -3, 3},
+                    // the possible connection section might be solid; pierce through it.
+                    {26, 48, -1, 1}, {26, 49, -1, 1}, {26, 50, -1, 1},
+                    {27, 48, -1, 1}, {27, 49, -1, 1}, {27, 50, -1, 1},
+                    {28, 48, -1, 1}, {28, 49, -1, 1}, {28, 50, -1, 1},
+                    // thin corridor
+                    {29, 48, 0, 0}, {29, 49, 0, 0},
+                    {30, 48, 0, 0}, {30, 49, 0, 0},
+                    {31, 48, 0, 0}, {31, 49, 0, 0},
+                    {32, 48, 0, 0}, {32, 49, 0, 0},
+                    // external, decorative opening
+                    {33, 48, 0, 0}, {33, 49, 0, 0}, {33, 50, -1, 1}, {33, 51, -2, 2},
+                    {34, 48, 0, 0}, {34, 49, -1, 1}, {34, 50, -2, 2},
+                    {35, 48, -2, 2}, {35, 49, -3, 3},
+                    {36, 48, -3, 3},
             };
             lastXOffset = fwd.getX() * 20;
             lastZOffset = fwd.getZ() * 20;
@@ -443,27 +452,8 @@ public class StructurePopulator extends BlockPopulator {
                 }
             }
         }
-        // two top levels
-        int levelY = 60, mazeRadius = 10;
-        for (int i = 0; i < 2; i ++) {
-            int newXOffset = (int) lastXOffset, newZOffset = (int) lastZOffset;
-            while ( (Math.abs(newXOffset - lastXOffset) < 6 && Math.abs(newZOffset - lastZOffset) < 6) ||
-                    (newXOffset % 6 < 3 || newZOffset % 6 < 3)) {
-                newXOffset = rdm.nextInt(mazeRadius + 1) * 2 - mazeRadius;
-                newZOffset = rdm.nextInt(mazeRadius + 1) * 2 - mazeRadius;
-            }
-            // place the hole
-            for (int j = 1; j <= 4; j ++)
-                structure.planRegisterSingleBlock(baseBlk.getRelative(newXOffset, levelY - j, newZOffset), false, true);
-            // setup for next iteration
-            lastXOffset = newXOffset;
-            lastZOffset = newZOffset;
-            levelY -= 4;
-//            mazeRadius += 2;
-        }
-        // bottom 3 levels
-        levelY = 48;
-        mazeRadius = 9;
+        // maze levels
+        int levelY = 48, mazeRadius = 7;
         for (int i = 0; i < 2; i ++) {
             int newXOffset = (int) lastXOffset, newZOffset = (int) lastZOffset;
             while ( Math.abs(newXOffset - lastXOffset) < 16 && Math.abs(newZOffset - lastZOffset) < 16) {
@@ -542,23 +532,13 @@ public class StructurePopulator extends BlockPopulator {
                 structure.planRegisterBlockPlane(wld, blockX, startY + i, blockZ, 36, false, true);
             structure.planSetBlocks();
         }
-        for (int i = 28; i < 64; i ++) {
+        for (int i = 28; i < 54; i ++) {
             structure.planRegisterBlockPlane(wld, blockX, startY + i, blockZ, 84-i, true, true);
             structure.planSetBlocks();
         }
         // the maze
         MazeGeneratorPrim mazeGen = new MazeGeneratorPrim();
-        // the top levels
-        {
-            int topLevelY = startY + 60, topMazeRad = 20;
-            for (int i = 0; i < 2; i++) {
-                buildLizardMaze(structure, wld, new StructPosInfo(blockX, topLevelY, blockZ),
-                        topMazeRad, mazeGen, 2, 1);
-                topLevelY -= 4;
-//                topMazeRad += 2;
-            }
-        }
-        // the bottom levels
+        // the maze
         {
             int bottomLevelY = startY + 48, bottomMazeRad = 9;
             for (int i = 0; i < 3; i++) {

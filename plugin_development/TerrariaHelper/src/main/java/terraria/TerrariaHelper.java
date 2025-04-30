@@ -83,6 +83,12 @@ public class TerrariaHelper extends JavaPlugin {
             @Override
             public String onPlaceholderRequest(Player ply, String params) {
                 switch (params) {
+                    case "stealth": {
+                        return (int) (EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble() / PlayerHelper.getMaxStealth(ply) * 100) + "";
+                    }
+                    case "def_dmg": {
+                        return (int) (EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble() / PlayerHelper.getMaxStealth(ply)) + "";
+                    }
                     case "oxygen": {
                         return ((double) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR).asInt() / PlayerHelper.PLAYER_MAX_OXYGEN) + "";
                     }

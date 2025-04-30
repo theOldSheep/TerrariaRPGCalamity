@@ -1739,25 +1739,29 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         boolean debugMessage = false;
         int delay = 2;
         double perTickMulti = (double)delay / 20;
-        // every 4 ticks (1/5 second)
+        // every 2 ticks (1/10 second)
         Bukkit.getScheduler().runTaskTimer(TerrariaHelper.getInstance(), () -> {
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 if (ply.getScoreboardTags().contains("unauthorized")) continue;
                 try {
                     MetadataValue respawnCD = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.RESPAWN_COUNTDOWN);
+                    // respawn countdown & revive
                     if (respawnCD != null) {
                         int ticksRemaining = respawnCD.asInt();
                         ticksRemaining -= delay;
+                        ticksRemaining = Math.min(ticksRemaining, getReviveTicks(ply));
                         if (ticksRemaining > 0) {
                             ply.setGameMode(GameMode.SPECTATOR);
                             ply.setFlySpeed(0);
                             ply.setFallDistance(0);
-                            sendActionBar(ply, "§a重生倒计时： " + ticksRemaining / 20);
+                            // update action bar only when needed
+                            if ((ticksRemaining + delay) / 20 != ticksRemaining / 20) sendActionBar(ply, "§a重生倒计时： " + ticksRemaining / 20);
                             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.RESPAWN_COUNTDOWN, ticksRemaining);
                         } else {
                             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.RESPAWN_COUNTDOWN, null);
                             ply.setGameMode(GameMode.SURVIVAL);
                             ply.teleport(getSpawnLocation(ply), PlayerTeleportEvent.TeleportCause.PLUGIN);
+                            ply.sendTitle("", "", 0, 0, 0);
                             sendActionBar(ply, "");
                             // reset minion index, sentry index etc.
                             initPlayerStats(ply, false);
@@ -1974,6 +1978,28 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         }, 0, 20);
     }
     // others
+    public static int getReviveTicks(Player ply) {
+        // respawn time, default to 5 seconds and increases if boss is alive
+        int respawnTime = 5;
+        for (ArrayList<LivingEntity> bossList : BossHelper.bossMap.values()) {
+            HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targets =
+                    (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>)
+                            EntityHelper.getMetadata(bossList.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
+            // if the current boss has the player as target, 15 seconds respawn time for each player, up to 1 minute
+            if (targets.containsKey(ply.getUniqueId())) {
+                // note: max would take the longest respawn time across all active bosses
+                respawnTime = Math.max(respawnTime, Math.min(targets.size() * 15, 60));
+            }
+        }
+        return respawnTime * 20;
+    }
+    public static double getDefenceDamage(Player ply) {
+        HashMap<String, Integer> plyEffects = EntityHelper.getEffectMap(ply);
+        double result = 0;
+        result += plyEffects.getOrDefault("防御损毁", 0);
+        result += plyEffects.getOrDefault("血炎防御损毁", 0);
+        return result;
+    }
     public static void initPlayerStats(Player ply, boolean joinOrRespawn) {
         // metadata and scoreboard tag
         EntityHelper.initEntityMetadata(ply);
@@ -2103,14 +2129,6 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                         AttributeHelper.tweakAttribute(ply, newAttrMap, "damageMagicMulti",
                                 ((double)-ticksRemaining / 800) + "", true);
                         break;
-                    case "防御损毁":
-                        // -1 defence per tick
-                        AttributeHelper.tweakAttribute(ply, newAttrMap, "defence", ticksRemaining + "", false);
-                        break;
-                    case "血炎防御损毁":
-                        // -1 defence per tick
-                        AttributeHelper.tweakAttribute(ply, newAttrMap, "defence", ticksRemaining + "", false);
-                        break;
                     default: {
                         String attributesPath = "effects." + effect + ".attributes";
                         ConfigurationSection effectSection = TerrariaHelper.buffConfig.getConfigurationSection(attributesPath);
@@ -2137,6 +2155,9 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     }
                 }
             }
+            // defence damage
+            AttributeHelper.tweakAttribute(ply, newAttrMap, "defence", getDefenceDamage(ply) + "", false);
+
             PlayerInventory plyInv = ply.getInventory();
             ItemStack plyTool = plyInv.getItemInMainHand();
             // weapon
