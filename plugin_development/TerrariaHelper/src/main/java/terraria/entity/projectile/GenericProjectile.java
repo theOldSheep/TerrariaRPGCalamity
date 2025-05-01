@@ -696,7 +696,7 @@ public class GenericProjectile extends EntityPotion {
                                 DamageHelper.checkCanDamage(owner, ((LivingEntity) targetCache.value()), true))
                             targetLoc = ((LivingEntity) targetCache.value()).getEyeLocation();
                         else
-                            targetLoc = ItemUseHelper.getPlayerTargetLoc(new ItemUseHelper.PlyTargetLocInfo(owner, new AimHelper.AimHelperOptions().setAimMode(true).setTicksTotal(0), true));
+                            targetLoc = AimHelper.getPlayerTargetLoc(new AimHelper.PlyTargetLocInfo(owner, new AimHelper.AimHelperOptions().setAimMode(true).setTicksTotal(0), true));
                         // move towards the owner's target
                         Vector dir = targetLoc.subtract(bukkitEntity.getLocation()).toVector();
                         terraria.util.MathHelper.setVectorLength(dir, speed);

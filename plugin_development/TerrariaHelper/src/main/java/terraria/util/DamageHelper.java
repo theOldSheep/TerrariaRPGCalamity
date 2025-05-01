@@ -598,7 +598,7 @@ public class DamageHelper {
 
                                     String projType = "小熔岩火球";
                                     double projSpd = 1.75;
-                                    org.bukkit.util.Vector aimDir = ItemUseHelper.getPlayerAimDir(dPly, dPly.getEyeLocation(),
+                                    org.bukkit.util.Vector aimDir = AimHelper.getPlayerAimDir(dPly, dPly.getEyeLocation(),
                                             projSpd, projType, false, 0);
                                     double aimYaw = MathHelper.getVectorYaw(aimDir);
                                     double aimPitch = MathHelper.getVectorPitch(aimDir);

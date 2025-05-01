@@ -1,13 +1,13 @@
 package terraria.util;
 
-import net.minecraft.server.v1_12_R1.AxisAlignedBB;
-import net.minecraft.server.v1_12_R1.EntityLiving;
-import net.minecraft.server.v1_12_R1.MovingObjectPosition;
+import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Minecart;
@@ -16,6 +16,9 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
+import terraria.gameplay.Setting;
+
+import java.util.Set;
 
 public class AimHelper {
     public static class AimHelperOptions {
@@ -276,5 +279,254 @@ public class AimHelper {
         if (source instanceof LivingEntity)
             shootLoc = ((LivingEntity) source).getEyeLocation();
         return helperAimEntity(shootLoc, target, aimHelperOption);
+    }
+
+
+    // smart aiming: helps the player to aim with a non-homing weapon in a 3-dimension world
+
+    /**
+     * Gets the player's aiming direction, accounting for aim helper.
+     * @param ply player
+     * @param startShootLoc shoot location
+     * @param projectileSpeed projectile speed
+     * @param projectileType projectile type
+     * @param tickOffsetOrSpeed whether to use a fixed tick offset or projectile speed
+     * @param tickOffset the fixed tick offset, if applicable
+     * @return the aim direction
+     */
+    public static Vector getPlayerAimDir(Player ply, Location startShootLoc, double projectileSpeed, String projectileType,
+                                         boolean tickOffsetOrSpeed, int tickOffset) {
+        // default to acceleration-aim mode
+        AimHelper.AimHelperOptions aimHelperOptions = new AimHelper.AimHelperOptions(projectileType)
+                .setAccelerationMode(Setting.getOptionBool(ply, Setting.Options.AIM_HELPER_ACCELERATION))
+                .setAimMode(tickOffsetOrSpeed)
+                .setTicksTotal(tickOffset)
+                .setProjectileSpeed(projectileSpeed);
+        // get targeted location
+        Location targetLoc = getPlayerTargetLoc(new PlyTargetLocInfo(ply, aimHelperOptions, true));
+        // send the new direction
+        Vector dir = targetLoc.subtract(startShootLoc).toVector();
+        if (dir.lengthSquared() < 1e-5)
+            dir = new Vector(1, 0, 0);
+        return dir;
+    }
+
+    /**
+     * trace dist: distance to trace into a block/entity
+     * enlarge radius: max error distance allowed to target an entity that is not directly in line of sight
+     * strict mode: do not target critters and entities that are strictly speaking, non-enemy
+     */
+    public static class PlyTargetLocInfo {
+        Player ply = null;
+        AimHelper.AimHelperOptions aimHelperInfo = null;
+        double traceDist, entityEnlargeRadius, blockDist = 0;
+        boolean strictMode = true;
+        // constructors
+        public PlyTargetLocInfo(Player ply, AimHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
+            this.ply = ply;
+            initPlyPreferences(ply);
+            this.aimHelperInfo = aimHelperInfo;
+            this.strictMode = strictMode;
+        }
+        public PlyTargetLocInfo(Player ply, double blockDist, AimHelper.AimHelperOptions aimHelperInfo, boolean strictMode) {
+            this.ply = ply;
+            initPlyPreferences(ply);
+            this.blockDist = blockDist;
+            this.aimHelperInfo = aimHelperInfo;
+            this.strictMode = strictMode;
+        }
+        void initPlyPreferences(Player ply) {
+            this.traceDist = Setting.getOptionDouble(ply, Setting.Options.AIM_HELPER_DISTANCE);
+            this.entityEnlargeRadius = Setting.getOptionDouble(ply, Setting.Options.AIM_HELPER_RADIUS);
+        }
+        // setters
+        public PlyTargetLocInfo setPly(Player ply) {
+            this.ply = ply;
+            return this;
+        }
+        public PlyTargetLocInfo setAimHelper(AimHelper.AimHelperOptions aimHelperInfo) {
+            this.aimHelperInfo = aimHelperInfo;
+            return this;
+        }
+        public PlyTargetLocInfo setTraceDist(double traceDist) {
+            this.traceDist = traceDist;
+            return this;
+        }
+        public PlyTargetLocInfo setEntityEnlargeRadius(double entityEnlargeRadius) {
+            this.entityEnlargeRadius = entityEnlargeRadius;
+            return this;
+        }
+        public PlyTargetLocInfo setBlockDist(double blockDist) {
+            this.blockDist = blockDist;
+            return this;
+        }
+        public PlyTargetLocInfo setStrictMode(boolean strictMode) {
+            this.strictMode = strictMode;
+            return this;
+        }
+    }
+
+    /**
+     * Gets the player's targeted location with the specified target location info
+     * @param targetLocInfo the target location info, containing context & settings such as aim helper
+     * @return the targeted location
+     */
+    public static Location getPlayerTargetLoc(PlyTargetLocInfo targetLocInfo) {
+        Player ply = targetLocInfo.ply;
+        AimHelper.AimHelperOptions aimHelperInfo = targetLocInfo.aimHelperInfo;
+        double traceDist = targetLocInfo.traceDist;
+        double blockDist = targetLocInfo.blockDist;
+        double entityEnlargeRadius = targetLocInfo.entityEnlargeRadius;
+        boolean strictMode = targetLocInfo.strictMode;
+
+        Vector lookDir = ply.getEyeLocation().getDirection();
+        World plyWorld = ply.getWorld();
+        // init target location
+        Location targetLoc = ply.getEyeLocation().add(lookDir.clone().multiply(traceDist));
+
+        Vector eyeLoc = ply.getEyeLocation().toVector();
+        Vector endLoc = eyeLoc.clone().add(lookDir.clone().multiply(traceDist));
+        // the block the player is looking at, if near enough
+        {
+            MovingObjectPosition rayTraceResult = HitEntityInfo.rayTraceBlocks(
+                    plyWorld,
+                    eyeLoc.clone(),
+                    endLoc);
+            if (rayTraceResult != null) {
+                endLoc = MathHelper.toBukkitVector(rayTraceResult.pos);
+                if (blockDist > 0d) {
+                    Vector blockDistOffset = endLoc.clone().subtract(ply.getEyeLocation().toVector());
+                    blockDistOffset.normalize().multiply(blockDist);
+                    endLoc.subtract(blockDistOffset);
+                }
+                targetLoc = endLoc.toLocation(plyWorld);
+            }
+        }
+
+        // the enemy the player is looking at, if applicable
+        Vector traceStart = eyeLoc.clone();
+        Vector traceEnd = endLoc.clone();
+        Set<HitEntityInfo> hits = HitEntityInfo.getEntitiesHit(
+                plyWorld, traceStart, traceEnd,
+                entityEnlargeRadius,
+                (net.minecraft.server.v1_12_R1.Entity target) ->
+                        DamageHelper.checkCanDamage(ply, target.getBukkitEntity(), strictMode) &&
+                                ply.hasLineOfSight(target.getBukkitEntity()));
+        // find the entity closest to the cursor
+        Entity hitEntity = null;
+        double shortestEnlargeDistSqr = 1e9, shortestDistSqr = 1e9;
+        Location rayInfo = ply.getLocation();
+        for (HitEntityInfo hitInfo : hits) {
+            // prioritize entities requiring less enlargement
+            double currEnlargementSqr = refineRayDistSqrToAABB(
+                    rayInfo, hitInfo.getHitEntity().getBoundingBox(),
+                    hitInfo.getHitLocation().pos);
+            if (currEnlargementSqr > shortestEnlargeDistSqr)
+                continue;
+
+            Entity currEntity = hitInfo.getHitEntity().getBukkitEntity();
+            double currDistSqr = eyeLoc.distanceSquared( currEntity.getLocation().toVector() );
+            // resolve all entities with 0d enlargement (no precision issue); return the closest
+            if (currEnlargementSqr == shortestEnlargeDistSqr && currDistSqr > shortestDistSqr) {
+                continue;
+            }
+            shortestEnlargeDistSqr = currEnlargementSqr;
+            shortestDistSqr = currDistSqr;
+            hitEntity = currEntity;
+        }
+
+        // get the appropriate aim location if roughly looking at an enemy
+        if (hitEntity != null) {
+            targetLoc = AimHelper.helperAimEntity(ply, hitEntity, aimHelperInfo);
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE, hitEntity);
+        }
+        // add random offset to "looking location", consistent with aim helper's setting, if entity is not found
+        else {
+            double randomOffset = aimHelperInfo.randomOffsetRadius, randomOffsetHalved = randomOffset / 2d;
+            targetLoc.add(Math.random() * randomOffset - randomOffsetHalved,
+                    Math.random() * randomOffset - randomOffsetHalved,
+                    Math.random() * randomOffset - randomOffsetHalved);
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE, targetLoc.clone());
+        }
+        return targetLoc;
+    }
+
+    /**
+     * Get the player's cached target location (up to last aimed entity);
+     * DOES NOT GENERATE a new target location when needed; this would be strictly according to the last aimed position.
+     * @param ply the player
+     * @param aimHelperInfo the aim info used to aim at the entity
+     * @return the cached target location
+     */
+    public static Location getPlayerCachedTargetLoc(Player ply, AimHelper.AimHelperOptions aimHelperInfo) {
+        MetadataValue metadataValue = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE);
+        if (metadataValue == null)
+            return ply.getEyeLocation();
+        // if a location is cached
+        if (metadataValue.value() instanceof Location)
+            return ((Location) metadataValue.value()).clone();
+        // otherwise, this must be an entity cached
+        Entity targetEntity = (Entity) metadataValue.value();
+        // if the entity is below bedrock layer (usually boss AI phase that should not be targeted)
+        if (targetEntity.getLocation().getY() < 0d)
+            return ply.getEyeLocation();
+        return AimHelper.helperAimEntity(ply, targetEntity, aimHelperInfo);
+    }
+
+    /**
+     * Refines the collision info derived from the expanded AABB and
+     * returns the player's ray of vision's min distance squared from the original AABB
+     * @param rayInfo the ray info, i.e. starting location with the correct direction
+     * @param bb the original AxisAlignedBB
+     * @param coll the collision derived from expanded bb
+     * @return the ray's min distance squared from the original AABB
+     */
+    public static double refineRayDistSqrToAABB(Location rayInfo, AxisAlignedBB bb, Vec3D coll) {
+        double[][] xyz = {
+                {bb.a, bb.d},
+                {bb.b, bb.e},
+                {bb.c, bb.f}, };
+        // case 1 - if the ray would bang on with the original AABB
+        Vector dir = rayInfo.getDirection();
+        double[] collLoc = {coll.x, coll.y, coll.z};
+        double[] dirDeltas = {dir.getX(), dir.getY(), dir.getZ()};
+        for (int i = 0; i < 3; i ++) {
+            // no delta value in this direction, skip
+            if (Math.abs(dirDeltas[i]) < 1e-5) continue;
+            // try the two faces of the AABB on this direction
+            for (double targetAxisVal : xyz[i]) {
+                double step = (targetAxisVal - collLoc[i]) / dirDeltas[i];
+                // see if there is "collision position" on the original bb
+                boolean isOnFace = true;
+                for (int j = 0; j < 3; j++) {
+                    if (i == j) continue;
+                    double axisLoc = collLoc[j] + dirDeltas[j] * step;
+                    // in this axis component, start <= curr <= end; otherwise this is invalid
+                    if (axisLoc < xyz[j][0] - 1e-5 || xyz[j][1] + 1e-5 < axisLoc) {
+                        isOnFace = false;
+                        break;
+                    }
+                }
+                // on AABB's face - distance is 0
+                if (isOnFace) return 0d;
+            }
+        }
+        // case 2 - the ray would not collide with the original AABB, its distance can be approximated by min(vertex's distance to the ray)
+        double minDistSqr = 1e9;
+        for (double x : xyz[0]) {
+            for (double y : xyz[1]) {
+                for (double z : xyz[2]) {
+                    // offset = ray start -> vertex
+                    Vector offset = new Vector(x, y, z).subtract(rayInfo.toVector());
+                    Vector dirComponent = MathHelper.vectorProjection(dir, offset);
+                    // if offset is in the same direction as the line of sight ray, remove it
+                    if (dirComponent.dot(dir) > 0) {
+                        offset.subtract(dirComponent);
+                    }
+                    minDistSqr = Math.min(minDistSqr, offset.lengthSquared());
+                }
+            }
+        }
+        return minDistSqr;
     }
 }

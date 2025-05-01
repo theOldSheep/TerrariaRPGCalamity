@@ -136,7 +136,7 @@ public class Flail extends GenericProjectile {
                             .setProjectileSpeed(speed);
                     Vector newVelocity = MathHelper.getDirection(
                             owner.getEyeLocation(),
-                            ItemUseHelper.getPlayerTargetLoc(new ItemUseHelper.PlyTargetLocInfo(owner, aimHelper, true)
+                            AimHelper.getPlayerTargetLoc(new AimHelper.PlyTargetLocInfo(owner, aimHelper, true)
                                     .setTraceDist(maxDist)),
                             speed);
                     newVelocity.normalize();

@@ -127,7 +127,7 @@ public class ArrowHitListener implements Listener {
                     double projSpd = projectile.getVelocity().length();
                     String projType = "弑神折返弹";
                     Location fireLoc = shooter.getEyeLocation().add(MathHelper.randomVector().multiply(3.5));
-                    Vector velocity = ItemUseHelper.getPlayerAimDir(
+                    Vector velocity = AimHelper.getPlayerAimDir(
                             ply, fireLoc, projSpd, projType, false, 0);
                     MathHelper.setVectorLength(velocity, projSpd);
 

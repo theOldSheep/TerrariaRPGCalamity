@@ -1,6 +1,8 @@
 package terraria.util;
 
+import net.minecraft.server.v1_12_R1.AxisAlignedBB;
 import net.minecraft.server.v1_12_R1.Vec3D;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
@@ -252,24 +254,6 @@ public class MathHelper {
         Vector fwdDir = targetLoc.subtract(shootLoc).toVector();
         return getEvenlySpacedProjectileDirections(projectileIntervalDegree, spreadAngleDegree, fwdDir, length);
     }
-    public static <T> T selectWeighedRandom(HashMap<T, Double> weighedMap, T defaultVal) {
-        double total = 0;
-        for (double curr : weighedMap.values()) total += curr;
-        if (total == 0) {
-            return defaultVal;
-        }
-        double rdm = Math.random() * total;
-        for (T curr : weighedMap.keySet()) {
-            double currWeight = weighedMap.get(curr);
-            if (rdm <= currWeight) return curr;
-            rdm -= currWeight;
-        }
-        // this is technically never reachable. It is here to prevent IDE reporting an error.
-        return defaultVal;
-    }
-    public static String selectWeighedRandom(HashMap<String, Double> weighedMap) {
-        return selectWeighedRandom(weighedMap, "");
-    }
     public static double getAngleRadian(Vector v1, Vector v2) {
         double dot = v1.dot(v2) / Math.sqrt(v1.lengthSquared() * v2.lengthSquared());
         // precision issue: sometimes its absolute value is slightly higher than 1, producing NaN
@@ -358,12 +342,6 @@ public class MathHelper {
 
         return rotateAroundAxisRadian(start, axis, maxAngleRadian);
     }
-    public static Vec3D toNMSVector(Vector vec) {
-        return new Vec3D(vec.getX(), vec.getY(), vec.getZ());
-    }
-    public static Vector toBukkitVector(Vec3D vec) {
-        return new Vector(vec.x, vec.y, vec.z);
-    }
     public static Vector getDirection(Location initialLoc, Location finalLoc, double length) {
         return getDirection(initialLoc, finalLoc, length, false);
     }
@@ -381,6 +359,33 @@ public class MathHelper {
             return new Vector(0, length, 0);
         dir.multiply(length / len);
         return dir;
+    }
+
+    public static Vec3D toNMSVector(Vector vec) {
+        return new Vec3D(vec.getX(), vec.getY(), vec.getZ());
+    }
+    public static Vector toBukkitVector(Vec3D vec) {
+        return new Vector(vec.x, vec.y, vec.z);
+    }
+
+    // other helper functions
+    public static <T> T selectWeighedRandom(HashMap<T, Double> weighedMap, T defaultVal) {
+        double total = 0;
+        for (double curr : weighedMap.values()) total += curr;
+        if (total == 0) {
+            return defaultVal;
+        }
+        double rdm = Math.random() * total;
+        for (T curr : weighedMap.keySet()) {
+            double currWeight = weighedMap.get(curr);
+            if (rdm <= currWeight) return curr;
+            rdm -= currWeight;
+        }
+        // this is technically never reachable. It is here to prevent IDE reporting an error.
+        return defaultVal;
+    }
+    public static String selectWeighedRandom(HashMap<String, Double> weighedMap) {
+        return selectWeighedRandom(weighedMap, "");
     }
 
     // creates the non-zero cross product: if the two vectors are collinear, return a random one that is orthogonal to them. DOES NOT NORMALIZE.

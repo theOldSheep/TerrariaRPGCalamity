@@ -52,7 +52,7 @@ public class Setting {
         ENABLE_DOUBLE_CLICK_DASH("是否允许双击一个方向进行冲刺（不影响冲刺按键），默认值为<def>", true),
         AIM_HELPER_ACCELERATION("辅助瞄准功能是否考虑敌人加速度，默认值为<def>", true),
         AIM_HELPER_DISTANCE("辅助瞄准功能索敌最大距离（单位：格）；取值范围<min>~<max>，默认值为<def>", 32d, 96d, 96d),
-        AIM_HELPER_RADIUS("辅助瞄准功能索敌最大范围（单位：格）；取值范围<min>~<max>，默认值为<def>", 0d, 15d, 5d),
+        AIM_HELPER_RADIUS("辅助瞄准功能索敌最大范围（单位：格）；取值范围<min>~<max>，默认值为<def>", 0d, 32d, 8d),
         DEFAULT_AUTO_SWING("对于未注明是否自动挥舞的武器是否开启自动挥舞，默认值为<def>", true),
         DPS_DURATION("DPS计算时长；设置为较长时间可能会使计算更精准。取值范围<min>~<max>，默认值为<def>", 1, 10, 3),
         MINION_RETARGET_THRESHOLD("仆从因护主重新锁敌的最小距离差（单位：格）；取值范围<min>~<max>，默认值为<def>", 0d, 16d, 5d),

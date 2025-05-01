@@ -125,7 +125,7 @@ public class CraftingListener implements Listener {
         ItemStack resultItem = ItemHelper.getItemFromDescription(resultItemType, true);
         // upper cap the total amount of result item to 4800 if the player would like to craft as many as possible
         if (shouldCraftAll) amountToCraft = Math.min(4800 / resultItem.getAmount(), amountToCraft);
-        // set max amount crafted if the player would like to craft only one
+            // set max amount crafted if the player would like to craft only one
         else amountToCraft = 1;
         // removes all ingredients required
         for (String itemType : ingredients.keySet()) {
