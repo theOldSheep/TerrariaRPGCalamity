@@ -1,4 +1,3 @@
-
 match: "hud"
 priority: 2
 updateInterval: 100

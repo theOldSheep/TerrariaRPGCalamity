@@ -2316,6 +2316,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                 List<String> accessoryList = new ArrayList<>(7);
                 int accessoryAmount = getAccessoryAmount(ply);
                 boolean hasSwitchable = false;
+                String switchableDisplayName = null;
                 // setup accessory list
                 for (int idx = 1; idx <= accessoryAmount; idx ++) {
                     ItemStack currAcc = DragoncoreHelper.getSlotItem(ply, "accessory" + idx);
@@ -2327,9 +2328,17 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                         if (hasSwitchable)
                             continue;
                         hasSwitchable = true;
-                        regen += TerrariaHelper.itemConfig.getDouble(currAccType + "." +
-                                (ply.getScoreboardTags().contains(TAG_SWITCHED_SWITCHABLE_ACCESSORY) ? "attributesFormII" : "attributesFormI") +
-                                ".regen", 0);
+                        StringBuilder accRegenKey = new StringBuilder(currAccType + ".");
+                        if (ply.getScoreboardTags().contains(TAG_SWITCHED_SWITCHABLE_ACCESSORY)) {
+                            accRegenKey.append("attributesFormII");
+                            switchableDisplayName = currAccType + "II";
+                        }
+                        else {
+                            accRegenKey.append("attributesFormI");
+                            switchableDisplayName = currAccType + "I";
+                        }
+                        accRegenKey.append(".regen");
+                        regen += TerrariaHelper.itemConfig.getDouble(accRegenKey.toString(), 0);
                     }
                     // special accessory activation restrictions and conditional attributes
                     switch (currAccType) {
@@ -2563,10 +2572,13 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     accessories.add(currAccType);
                     accessoryList.add(currAccType);
                 }
-                if (hasSwitchable)
+                if (hasSwitchable) {
                     ply.addScoreboardTag(TAG_HAS_SWITCHABLE_ACCESSORY);
-                else
+                }
+                else {
                     ply.removeScoreboardTag(TAG_HAS_SWITCHABLE_ACCESSORY);
+                }
+                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORY_SWITCHABLE_DISPLAY, switchableDisplayName);
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES, accessories);
                 EntityHelper.setMetadata(ply, EntityHelper.MetadataName.ACCESSORIES_LIST, accessoryList);
             }

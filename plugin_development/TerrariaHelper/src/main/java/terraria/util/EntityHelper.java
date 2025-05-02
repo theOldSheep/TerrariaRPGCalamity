@@ -76,6 +76,7 @@ public class EntityHelper {
         ACCESSORIES("accessory"),
         ACCESSORIES_FLIGHT_BACKUP("accessoryThrust"),
         ACCESSORIES_LIST("accessoryList"),
+        ACCESSORY_SWITCHABLE_DISPLAY("accSwtDspl"),
         ARMOR_SET("armorSet"),
         ATTRIBUTE_MAP("attrMap"),
         BLOCK_BREAK_PROGRESS("breakProgress"),
@@ -163,8 +164,7 @@ public class EntityHelper {
         REGEN_TIME("regenTime"),
         RESPAWN_COUNTDOWN("respawnCD"),
         SPAWN_IN_EVENT("spawnEvent"),
-        SUCK_TARGET("suckTarget"),
-        ;
+        SUCK_TARGET("suckTarget");
         // fields
         String metadataName;
         // constructors

@@ -1,0 +1,86 @@
+match: "hud"
+updateInterval: 100
+Functions:
+  open:  |-
+    方法.异步执行方法('更新s变量');
+    方法.异步执行方法('更新su变量');
+    方法.异步执行方法('更新d变量');
+  
+  # 设置玩家显示的血量
+  preRender: |-
+    界面变量.adjusted_size_factor = 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size');
+    界面变量.scale_factor = 0.5 * 界面变量.adjusted_size_factor;
+    界面变量.stl_x = 方法.取屏幕宽度() - (135 * 界面变量.adjusted_size_factor);
+    界面变量.stl_y = 30 * 界面变量.adjusted_size_factor;
+    界面变量.stl_w = 52 * 界面变量.scale_factor;
+    界面变量.stl_h = 26 * 界面变量.scale_factor;
+    界面变量.stl_bar_offset_x = 8 * 界面变量.scale_factor;
+    界面变量.stl_bar_offset_y = 14 * 界面变量.scale_factor;
+    界面变量.stl_bar_spr_w = 36 * 界面变量.scale_factor;
+    界面变量.stl_bar_spr_h = 4 * 界面变量.scale_factor;
+    界面变量.stealthProgress = 方法.到整数(方法.取变量('terraria_stealth'));
+    界面变量.stealthDisplayed = 界面变量.stealthProgress > -1;
+    界面变量.stealthReady = 界面变量.stealthProgress >= 方法.到整数(方法.取变量('terraria_stealth_use'));
+    界面变量.stealthProgress = 界面变量.stealthProgress / 100;
+    界面变量.def_x = 界面变量.stl_x;
+    界面变量.def_y = 界面变量.stl_y + (界面变量.stealthDisplayed ? (30 * 界面变量.scale_factor) : 0);
+    界面变量.def_w = 51 * 界面变量.scale_factor;
+    界面变量.def_h = 26 * 界面变量.scale_factor;
+    界面变量.def_bar_offset_x = 3 * 界面变量.scale_factor;
+    界面变量.def_bar_offset_y = 14 * 界面变量.scale_factor;
+    界面变量.def_bar_spr_w = 45 * 界面变量.scale_factor;
+    界面变量.def_bar_spr_h = 4 * 界面变量.scale_factor;
+    界面变量.defDmg = 方法.到整数(方法.取变量('terraria_def_dmg'));
+    界面变量.defProgress = 1 - (界面变量.defDmg / 100);
+    界面变量.defDisplayed = 界面变量.defDmg > 0;
+  更新su变量: |-
+    方法.更新变量值('terraria_stealth_use');
+    方法.延时(界面变量.1500);
+    方法.异步执行方法('更新su变量');
+  更新s变量: |-
+    方法.更新变量值('terraria_stealth');
+    界面变量.delay = 500;
+    if (方法.取变量('terraria_stealth') != "-1") 界面变量.delay = 100;
+    方法.延时(界面变量.delay);
+    方法.异步执行方法('更新s变量');
+  更新d变量: |-
+    方法.更新变量值('terraria_def_dmg');
+    界面变量.delay = 500;
+    if (方法.取变量('terraria_def_dmg') != "0") 界面变量.delay = 100;
+    方法.延时(界面变量.delay);
+    方法.异步执行方法('更新d变量');
+
+
+stealth_bar_texture:
+  x: "界面变量.stl_x"
+  y: "界面变量.stl_y"
+  width: "界面变量.stl_w"
+  height: "界面变量.stl_h"
+  texture: "'hud/stealth_bar.png'"
+  visible: "界面变量.stealthDisplayed"
+stealth_progress_texture:
+  x: "界面变量.stl_x + 界面变量.stl_bar_offset_x"
+  y: "界面变量.stl_y + 界面变量.stl_bar_offset_y"
+  textureWidth: 界面变量.stl_bar_spr_w
+  textureHeight: 界面变量.stl_bar_spr_h
+  width: "界面变量.stl_bar_spr_w * 界面变量.stealthProgress"
+  height: "界面变量.stl_bar_spr_h"
+  texture: "界面变量.stealthReady ? 'hud/stealth_progress_ready.png' : 'hud/stealth_progress.png'"
+  visible: "界面变量.stealthDisplayed"
+
+def_bar_texture:
+  x: "界面变量.def_x"
+  y: "界面变量.def_y"
+  width: "界面变量.def_w"
+  height: "界面变量.def_h"
+  texture: "'hud/def_bar.png'"
+  visible: "界面变量.defDisplayed"
+def_progress_texture:
+  x: "界面变量.def_x + 界面变量.def_bar_offset_x"
+  y: "界面变量.def_y + 界面变量.def_bar_offset_y"
+  textureWidth: 界面变量.def_bar_spr_w
+  textureHeight: 界面变量.def_bar_spr_h
+  width: "界面变量.def_bar_spr_w * 界面变量.defProgress"
+  height: "界面变量.def_bar_spr_h"
+  texture: "'hud/def_progress.png'"
+  visible: "界面变量.defDisplayed"
