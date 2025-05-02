@@ -1,10 +1,12 @@
 package terraria;
 
+import com.sun.org.apache.bcel.internal.generic.SWITCH;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.PlaceholderHook;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import terraria.entity.CustomEntities;
 import terraria.event.listener.*;
@@ -84,10 +86,9 @@ public class TerrariaHelper extends JavaPlugin {
             public String onPlaceholderRequest(Player ply, String params) {
                 switch (params) {
                     case "stealth": {
-                        return (int) (EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble() / PlayerHelper.getMaxStealth(ply) * 100) + "";
-                    }
-                    case "def_dmg": {
-                        return (int) (EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble() / PlayerHelper.getMaxStealth(ply)) + "";
+                        double maxStealth = PlayerHelper.getMaxStealth(ply);
+                        if (maxStealth < 1) return "-1";
+                        return (int) (EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble() / maxStealth * 100) + "";
                     }
                     case "oxygen": {
                         return ((double) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR).asInt() / PlayerHelper.PLAYER_MAX_OXYGEN) + "";
@@ -107,6 +108,14 @@ public class TerrariaHelper extends JavaPlugin {
                     case "effects": {
                         StringBuilder result = new StringBuilder();
                         String separator = "~";
+                        // switchable accessory
+                        MetadataValue switchableName = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.ACCESSORY_SWITCHABLE_DISPLAY);
+                        if (switchableName != null) {
+                            result.append(switchableName.asString()).append(separator)
+                                    .append(" ").append(separator)
+                                    .append(210);
+                        }
+                        // effects
                         HashMap<String, Integer> effectMap = (HashMap<String, Integer>) EntityHelper.getEffectMap(ply).clone();
                         Set<String> effects = effectMap.keySet();
                         for (String effectDisplayName : effects) {
@@ -167,8 +176,15 @@ public class TerrariaHelper extends JavaPlugin {
                 switch (params) {
                     case "defence":
                         return (int)Math.round(attrMap.getOrDefault("defence", 0d) * attrMap.getOrDefault("defenceMulti", 1d)) + "";
+                    case "def_dmg": {
+                        double def = attrMap.getOrDefault("defence", 0d);
+                        double defDmg = PlayerHelper.getDefenceDamage(ply);
+                        return (int) (defDmg * 100 / (def + defDmg) ) + "";
+                    }
                     case "max_mana":
                         return (int)Math.round(attrMap.getOrDefault("maxMana", 20d)) + "";
+                    case "stealth_use":
+                        return (int)Math.round(attrMap.getOrDefault("stealthConsumptionMulti", 1d) * 100) + "";
                     default:
                         Bukkit.broadcastMessage("UNHANDLED PLACEHOLDER " + params);
                         return "哒哒哒哒嘀哒哒，我不道啊";

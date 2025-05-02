@@ -2673,11 +2673,10 @@ Drew之翼:
   - §r[饰品]
   - §r▣算作潜伏增幅饰品
   attributes:
-    stealthLimit: 15
     stealthRegenMulti: 0.05
     stealthConsumptionMulti: -0.5
-    damageRogueMulti: 0.06
-    critRogue: 6
+    damageRogueMulti: 0.07
+    critRogue: 7
   worth: 16000000
   rarity: 9
 月长石头冠:
@@ -2710,9 +2709,8 @@ Drew之翼:
   - §r闪避攻击时会使你回满潜行值
   - §r“光无法到达海洋深处”
   attributes:
-    stealthLimit: 20
-    damageRogueMulti: 0.06
-    critRogue: 6
+    damageRogueMulti: 0.08
+    critRogue: 8
     stealthRegenMulti: 0.2
     stealthConsumptionMulti: -0.5
   worth: 28000000

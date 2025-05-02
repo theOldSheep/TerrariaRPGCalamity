@@ -1,4 +1,5 @@
 match: "hud"
+updateInterval: 50
 Functions:
   preRender: |-
     界面变量.inactive_size = 方法.取屏幕宽度() * 16 / 方法.取变量('adjusted_scr_size');

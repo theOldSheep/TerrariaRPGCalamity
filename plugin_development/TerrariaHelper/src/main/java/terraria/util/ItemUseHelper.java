@@ -4009,9 +4009,7 @@ public class ItemUseHelper {
         double currStealth = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble();
         double maxStealth = PlayerHelper.getMaxStealth(ply);
         double stealthConsumption = maxStealth * attrMap.getOrDefault("stealthConsumptionMulti", 1d) - 1e-9;
-        boolean armorSupportStealth = TerrariaHelper.armorSetConfig.contains(
-                "sets." + PlayerHelper.getArmorSet(ply) + ".attributes.stealthLimit");
-        boolean isStealth = armorSupportStealth && currStealth >= stealthConsumption;
+        boolean isStealth = maxStealth > 0 && currStealth >= stealthConsumption;
         currStealth = Math.max(0, currStealth - stealthConsumption);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH, currStealth);
         // this effect only lasts for one hit

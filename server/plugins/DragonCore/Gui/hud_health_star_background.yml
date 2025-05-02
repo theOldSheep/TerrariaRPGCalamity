@@ -55,7 +55,6 @@ Functions:
     方法.延时(1000);
     方法.异步执行方法('更新hud变量2');
 
-
 # star
 star1_background_texture:
   x: "界面变量.star_x"
