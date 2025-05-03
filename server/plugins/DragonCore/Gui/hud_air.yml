@@ -1,5 +1,8 @@
 match: "hud"
 Functions:
+  open:  |-
+    方法.异步执行方法('更新hud变量');
+    界面变量.oxygen_display_edge = 方法.floor(10.0);
   preRender: |-
     界面变量.bubble_size = 方法.取屏幕宽度() * 16 / 方法.取变量('adjusted_scr_size');
     界面变量.bubble_size_empty = 界面变量.bubble_size * 0.65;
@@ -11,6 +14,14 @@ Functions:
     界面变量.oxygen_display_edge = 方法.floor(界面变量.oxygen);
     界面变量.oxygen_rmd = 方法.mod(界面变量.oxygen, 1);
     界面变量.oxygen_rmd_size = 方法.lerp(界面变量.bubble_size_empty, 界面变量.bubble_size, 界面变量.oxygen_rmd);
+  更新hud变量: |-
+    方法.更新变量值('terraria_oxygen');
+    界面变量.delay = 1000;
+    if (方法.floor(界面变量.oxygen_display_edge) != 10) {
+      界面变量.delay = 100;
+    }
+    方法.延时(界面变量.delay);
+    方法.异步执行方法('更新hud变量');
 
 
 bubble1_texture:
