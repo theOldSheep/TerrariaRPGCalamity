@@ -40,13 +40,17 @@ Functions:
   更新s变量: |-
     方法.更新变量值('terraria_stealth');
     界面变量.delay = 500;
-    if (方法.取变量('terraria_stealth') != "-1") 界面变量.delay = 100;
+    if (方法.取变量('terraria_stealth') != "-1") {
+      界面变量.delay = 100;
+    }
     方法.延时(界面变量.delay);
     方法.异步执行方法('更新s变量');
   更新d变量: |-
     方法.更新变量值('terraria_def_dmg');
     界面变量.delay = 500;
-    if (方法.取变量('terraria_def_dmg') != "0") 界面变量.delay = 100;
+    if (方法.取变量('terraria_def_dmg') != "0") {
+      界面变量.delay = 100;
+    }
     方法.延时(界面变量.delay);
     方法.异步执行方法('更新d变量');
 
