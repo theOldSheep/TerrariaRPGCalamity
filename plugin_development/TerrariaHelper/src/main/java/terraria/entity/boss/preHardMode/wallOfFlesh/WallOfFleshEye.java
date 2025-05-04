@@ -57,11 +57,7 @@ public class WallOfFleshEye extends EntitySlime {
         }
         velocity.multiply(laserSpeeds[threatLevel] / velLen);
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, velocity, threatLevel == 0 ? laser_attrMap : death_laser_attrMap, "--");
-        shootInfo.projectileName = "激光";
-        shootInfo.properties.put("liveTime", 100);
-        shootInfo.properties.put("gravity", 0d);
-        shootInfo.properties.put("blockHitAction", "thru");
+                bukkitEntity, velocity, threatLevel == 0 ? laser_attrMap : death_laser_attrMap, "血肉激光");
         EntityHelper.spawnProjectile(shootInfo);
     }
     private void AI() {

@@ -255,19 +255,8 @@ public class SkeletronPrimeHand extends EntitySlime {
         {
             shootInfoLaser = new EntityHelper.ProjectileShootInfo(
                     bukkitEntity, new Vector(), SkeletronPrimeHead.attrMapRocket, DamageHelper.DamageType.MAGIC, "死亡激光");
-            shootInfoLaser.properties.put("liveTime", 40);
             shootInfoRocket = new EntityHelper.ProjectileShootInfo(
-                    bukkitEntity, new Vector(), SkeletronPrimeHead.attrMapRocket, DamageHelper.DamageType.ROCKET, "红烟花火箭");
-            shootInfoRocket.properties.put("homing", true);
-            shootInfoRocket.properties.put("homingMethod", 2);
-            shootInfoRocket.properties.put("homingRadius", 128d);
-            shootInfoRocket.properties.put("homingSharpTurning", false);
-            shootInfoRocket.properties.put("homingAbility", 0.35d);
-            shootInfoRocket.properties.put("noHomingTicks", 10);
-            shootInfoRocket.properties.put("maxHomingTicks", 15);
-            shootInfoRocket.properties.put("homingEndSpeedMultiplier", 5d);
-            shootInfoRocket.properties.put("liveTime", 22);
-            shootInfoRocket.properties.put("gravity", 0d);
+                    bukkitEntity, new Vector(), SkeletronPrimeHead.attrMapRocket, DamageHelper.DamageType.ROCKET, "机械炮火箭");
         }
     }
 

@@ -120,6 +120,7 @@ public class Apollo extends EntitySlime {
         shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc,
                 target.getEyeLocation().add(MathHelper.randomVector().multiply(5)),
                 rocketOrPlasma ? 1.25 : 1.35);
+        shootInfo.setLockedTarget(target);
         EntityHelper.spawnProjectile(shootInfo);
     }
     private Vector getDashDirection(boolean aimedOrDirect) {

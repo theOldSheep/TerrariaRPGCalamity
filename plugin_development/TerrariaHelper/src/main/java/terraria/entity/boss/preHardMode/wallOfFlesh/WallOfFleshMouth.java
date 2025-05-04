@@ -49,16 +49,8 @@ public class WallOfFleshMouth extends EntitySlime {
         }
         velocity.multiply(1 / velLen);
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, velocity, demon_scythe_attrMap, "--");
-        shootInfo.projectileName = "恶魔之镰";
-        shootInfo.properties.put("homing", true);
-        shootInfo.properties.put("homingMethod", 2);
-        shootInfo.properties.put("homingRadius", 24d);
-        shootInfo.properties.put("homingSharpTurning", false);
-        shootInfo.properties.put("homingAbility", 1d);
-        shootInfo.properties.put("liveTime", 100);
-        shootInfo.properties.put("gravity", 0d);
-        shootInfo.properties.put("projectileSize", 0.25);
+                bukkitEntity, velocity, demon_scythe_attrMap, "血肉之镰");
+        shootInfo.setLockedTarget(target);
         EntityHelper.spawnProjectile(shootInfo);
     }
     private void spawnHungry() {

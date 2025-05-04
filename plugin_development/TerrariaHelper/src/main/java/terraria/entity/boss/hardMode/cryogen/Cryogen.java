@@ -39,13 +39,25 @@ public class Cryogen extends EntitySlime {
         attrMapIceBomb.put("damage", 420d);
         attrMapIceBomb.put("knockback", 4d);
     }
-    public EntityHelper.ProjectileShootInfo psiBlast, psiBomb;
+    public EntityHelper.ProjectileShootInfo psiBlast, psiHomingBlast, psiBomb;
     CryogenShield shield = null;
     Location teleportLoc = null;
     Vector dashVelocity = new Vector();
     boolean invincible = false;
     int indexAI = -40, phaseAI = 1, shieldIndex = 0, iceBombIndex = 0;
     static final int ICE_BLAST_REGULAR = 11, ICE_BLAST_BEFORE_DASH = 17, ICE_BLAST_TIER_5 = 2, ICE_BLAST_TIER_6 = 4;
+
+    private void shootHomingIceBlasts(int amount) {
+        psiHomingBlast.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
+        psiHomingBlast.setLockedTarget(target);
+        int amountArcs = phaseAI >= 5 ? 2 : 3;
+        double projectileSpeed = phaseAI >= 5 ? 0.75 : 1.5;
+        for (Vector velocity : MathHelper.getCircularProjectileDirections(
+                amount, amountArcs, 75, target, psiHomingBlast.shootLoc, projectileSpeed)) {
+            psiHomingBlast.velocity = velocity;
+            EntityHelper.spawnProjectile(psiHomingBlast);
+        }
+    }
     private void shootIceBlasts(int amount) {
         psiBlast.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         int amountArcs = phaseAI >= 5 ? 2 : 3;
@@ -91,13 +103,6 @@ public class Cryogen extends EntitySlime {
                 assert Math.abs(1 - attrMap.get("damageTakenMulti")) > 1e-3;
                 // Defence: 12 -> 0
                 AttributeHelper.tweakAttribute(attrMap, "defence", "12", false);
-                break;
-            case 5:
-                psiBlast.properties.put("homing", true);
-                psiBlast.properties.put("homingMethod", 2);
-                psiBlast.properties.put("homingRadius", 32d);
-                psiBlast.properties.put("homingSharpTurning", false);
-                psiBlast.properties.put("homingAbility", 0.6d);
                 break;
         }
         indexAI = -30;
@@ -343,7 +348,7 @@ public class Cryogen extends EntitySlime {
                                 case 70:
                                 case 95:
                                     dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 2.25);
-                                    shootIceBlasts(ICE_BLAST_TIER_5);
+                                    shootHomingIceBlasts(ICE_BLAST_TIER_5);
                                     break;
                                 // a new AI cycle
                                 case 120:
@@ -382,7 +387,7 @@ public class Cryogen extends EntitySlime {
                                 case 50:
                                 case 70:
                                     dashVelocity = MathHelper.getDirection(bukkitEntity.getLocation(), target.getLocation(), 1.75);
-                                    shootIceBlasts(ICE_BLAST_TIER_6);
+                                    shootHomingIceBlasts(ICE_BLAST_TIER_6);
                                     break;
                                 // a new AI cycle
                                 case 100:
@@ -504,6 +509,8 @@ public class Cryogen extends EntitySlime {
         {
             psiBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapIceBlast,
                     DamageHelper.DamageType.MAGIC, "冰霜爆");
+            psiHomingBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapIceBlast,
+                    DamageHelper.DamageType.MAGIC, "追踪冰霜爆");
             psiBomb = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapIceBomb,
                     DamageHelper.DamageType.MAGIC, "冰霜炸弹");
         }

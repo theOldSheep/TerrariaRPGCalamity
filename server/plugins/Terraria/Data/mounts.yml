@@ -45,10 +45,10 @@
   gravity: false
   horSpdMax: 0.85
   verSpdMax: 0.85
-  horAcc: 0.275
-  verAcc: 0.275
+  horAcc: 0.1
+  verAcc: 0.1
   stepHeight: 0.55
-  velIdleDecayMulti: 0.6
+  velIdleDecayMulti: 0.9
   flightDuration: 999999
   speedMultiWater: 0.6
   speedMultiGround: 1
@@ -58,10 +58,10 @@
   gravity: false
   horSpdMax: 1
   verSpdMax: 1
-  horAcc: 0.3
-  verAcc: 0.3
+  horAcc: 0.1
+  verAcc: 0.1
   stepHeight: 0.55
-  velIdleDecayMulti: 0.75
+  velIdleDecayMulti: 0.85
   flightDuration: 999999
   speedMultiWater: 1
   speedMultiGround: 0.1
@@ -69,12 +69,12 @@
   type: 星流飞椅
   slimeSize: 2
   gravity: false
-  horSpdMax: 1.2
-  verSpdMax: 1.2
-  horAcc: 2
-  verAcc: 2
+  horSpdMax: 1.35
+  verSpdMax: 1.35
+  horAcc: 0.15
+  verAcc: 0.15
   stepHeight: 0.55
-  velIdleDecayMulti: 0
+  velIdleDecayMulti: 0.75
   flightDuration: 999999
   speedMultiWater: 1
   speedMultiGround: 1

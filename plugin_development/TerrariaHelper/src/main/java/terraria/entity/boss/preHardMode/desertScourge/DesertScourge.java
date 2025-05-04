@@ -302,10 +302,7 @@ public class DesertScourge extends EntitySlime {
             this.persistent = true;
             // projectile info
             projectileProperty = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMap,
-                    DamageHelper.DamageType.ARROW, "--");
-                projectileProperty.projectileName = "沙尘暴弹幕";
-            projectileProperty.properties.put("projectileSize", 0.5);
-            projectileProperty.properties.put("penetration", 9);
+                    DamageHelper.DamageType.ARROW, "灾虫沙尘暴");
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
             if (segmentIndex + 1 < TOTAL_LENGTH)

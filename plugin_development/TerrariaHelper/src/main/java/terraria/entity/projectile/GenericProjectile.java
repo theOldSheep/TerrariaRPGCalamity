@@ -22,15 +22,16 @@ import terraria.util.*;
 import java.util.*;
 
 public class GenericProjectile extends EntityPotion {
-    private static final double distFromBlock = 1e-5, distCheckOnGround = 1e-1;
+    private static final double VANILLA_GRAVITY = 0.05, VANILLA_DRAG = 0.99;
+    private static final double DIST_FROM_BLOCK = 1e-5, DIST_CHECK_ON_GROUND = 1e-1;
     public static final int DESTROY_HIT_BLOCK = 0, DESTROY_HIT_ENTITY = 1, DESTROY_TIME_OUT = 2;
     private static final int VELOCITY_UPDATE_INTERVAL_NORMAL = TerrariaHelper.optimizationConfig.getInt("optimization.projVelUpdItvNormal", 10);
-    private static final int VELOCITY_UPDATE_INTERVAL_HOMING = TerrariaHelper.optimizationConfig.getInt("optimization.projVelUpdItvHoming", 5);
     private static final int VELOCITY_UPDATE_INTERVAL_ACCELERATION = TerrariaHelper.optimizationConfig.getInt("optimization.projVelUpdItvAcceleration", 3);
     private static final double VELOCITY_UPDATE_DIST = TerrariaHelper.optimizationConfig.getDouble("optimization.projectileVelocityUpdateDistance", 96d);
 
     // projectile info
-    public String projectileType, projectileItemName, blockHitAction = "die", spawnSound = "", trailColor = null;
+    public String projectileType, projectileItemName, blockHitAction = "die", spawnSound = "",
+            trailColor = null, velocityUpdateRule = "Default";
     public int homingMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200,
             noHomingTicks = 0, noGravityTicks = 5, maxHomingTicks = 999999, minimumDamageTicks = 0,
             penetration = 0, trailLingerTime = 10, worldSpriteUpdateInterval = 1;
@@ -46,7 +47,7 @@ public class GenericProjectile extends EntityPotion {
 
     // projectile variables
     public int worldSpriteIdx = 0;
-    public int velocityUpdateIndex = 0;
+    public double velocityUpdateProg = 0;
     public double speed;
     public boolean lastOnGround = false;
     public HashSet<org.bukkit.entity.Entity> damageCD;
@@ -82,6 +83,7 @@ public class GenericProjectile extends EntityPotion {
             this.blockHitAction = (String) properties.getOrDefault("blockHitAction", this.blockHitAction);
             this.spawnSound = (String) properties.getOrDefault("spawnSound", this.spawnSound);
             this.trailColor = (String) properties.getOrDefault("trailColor", this.trailColor);
+            this.velocityUpdateRule = (String) properties.getOrDefault("velocityUpdateRule", this.velocityUpdateRule);
             // multiple trail color: select one at random
             if (this.trailColor != null && this.trailColor.contains(";")) {
                 String[] candidates = this.trailColor.split(";");
@@ -718,17 +720,20 @@ public class GenericProjectile extends EntityPotion {
                 }
                 break;
             }
-            case "冲击波1":
+            case "冲击波1": {
+                // after 15 ticks, the radius is 30 + 1 = 31, total size = 62
+                projectileRadius += 2;
+                break;
+            }
             case "冲击波2": {
-                // after 30 ticks, the radius is 30 + 1 = 31, total size = 62
+                // after 10 ticks, the radius is 10 + 1 = 11, total size = 22
                 projectileRadius += 1;
-                attrMap.put("damage", attrMap.getOrDefault("damage", 10d) * 0.95);
                 break;
             }
             case "超新星大爆炸": {
-                // after 6 ticks, the radius is 5 + 30 = 35, total size = 70
-                if (ticksLived <= 6) {
-                    projectileRadius += 5;
+                // after 8 ticks, the radius is 5 + 32 = 37, total size = 74
+                if (ticksLived <= 8) {
+                    projectileRadius += 4;
                 }
                 break;
             }
@@ -854,7 +859,7 @@ public class GenericProjectile extends EntityPotion {
             // only bouncing and sliding projectiles should consider on ground cases (prevent glitch etc.)
             case "bounce":
             case "slide": {
-                double distCheck = distCheckOnGround * (gravity > 0 ? -1 : 1);
+                double distCheck = DIST_CHECK_ON_GROUND * (gravity > 0 ? -1 : 1);
                 Vec3D checkLocInitial = new Vec3D(this.locX, this.locY, this.locZ);
                 Vec3D checkLocTerminal = new Vec3D(this.locX, this.locY + distCheck, this.locZ);
                 MovingObjectPosition onGroundResult = HitEntityInfo.rayTraceBlocks(this.world, checkLocInitial, checkLocTerminal);
@@ -913,7 +918,6 @@ public class GenericProjectile extends EntityPotion {
         Vec3D initialLoc = new Vec3D(this.locX, this.locY, this.locZ);
         Vec3D futureLoc = new Vec3D(this.locX, this.locY, this.locZ);
         Vector velocity = new Vector(this.motX, this.motY, this.motZ);
-        this.setNoGravity(true);
         if (shouldMove) {
             if (homing)
                 optimizeHomingTarget(initialLoc);
@@ -930,6 +934,9 @@ public class GenericProjectile extends EntityPotion {
                 }
                 // gravity if not on ground
                 else if (this.ticksLived >= noGravityTicks) {
+                    // flag vanilla gravity to client
+                    boolean isVanillaGrav = Math.abs(gravity - VANILLA_GRAVITY) < 1e-5;
+                    this.setNoGravity(!isVanillaGrav);
                     velocity.subtract( new Vector(0, gravity, 0) );
                 }
                 // regulate velocity
@@ -959,8 +966,8 @@ public class GenericProjectile extends EntityPotion {
                                     movingobjectposition.pos.y - this.locY,
                                     movingobjectposition.pos.z - this.locZ);
                             double dist = travelled.length();
-                            if (dist > distFromBlock) {
-                                travelled.multiply((dist - distFromBlock) / dist);
+                            if (dist > DIST_FROM_BLOCK) {
+                                travelled.multiply((dist - DIST_FROM_BLOCK) / dist);
                             } else {
                                 travelled.multiply(0);
                             }
@@ -1096,7 +1103,7 @@ public class GenericProjectile extends EntityPotion {
                                     movingobjectposition.pos.z - this.locZ);
                             double dist = travelled.length();
                             if (dist > 0)
-                                travelled.multiply((dist + distFromBlock) / dist);
+                                travelled.multiply((dist + DIST_FROM_BLOCK) / dist);
                             futureLoc = new Vec3D(this.locX + travelled.getX(), this.locY + travelled.getY(), this.locZ + travelled.getZ());
                             break;
                         default:
@@ -1162,17 +1169,20 @@ public class GenericProjectile extends EntityPotion {
         extraTicking();
 
         // updates the velocity to prevent client glitch
-        if (!impulse && ++velocityUpdateIndex >= getVelocityUpdateInterval()) {
-            velocityUpdateIndex = 0;
+        if (!impulse) {
+            velocityUpdateProg += getVelocityUpdateProg();
+            if (velocityUpdateProg >= 1) {
+                velocityUpdateProg -= 1;
 
-            PacketPlayOutEntityVelocity packet = new PacketPlayOutEntityVelocity(this);
-            double distSqrMax = VELOCITY_UPDATE_DIST * VELOCITY_UPDATE_DIST;
-            for (Player ply : Bukkit.getOnlinePlayers()) {
-                if (ply.getWorld() != bukkitEntity.getWorld())
-                    continue;
-                if (ply.getLocation().distanceSquared(bukkitEntity.getLocation()) > distSqrMax)
-                    continue;
-                ((CraftPlayer) ply).getHandle().playerConnection.sendPacket(packet);
+                PacketPlayOutEntityVelocity packet = new PacketPlayOutEntityVelocity(this);
+                double distSqrMax = VELOCITY_UPDATE_DIST * VELOCITY_UPDATE_DIST;
+                for (Player ply : Bukkit.getOnlinePlayers()) {
+                    if (ply.getWorld() != bukkitEntity.getWorld())
+                        continue;
+                    if (ply.getLocation().distanceSquared(bukkitEntity.getLocation()) > distSqrMax)
+                        continue;
+                    ((CraftPlayer) ply).getHandle().playerConnection.sendPacket(packet);
+                }
             }
         }
 
@@ -1181,18 +1191,39 @@ public class GenericProjectile extends EntityPotion {
         // timing
         this.world.methodProfiler.b();
     }
-    // handles the velocity update interval
-    protected int getVelocityUpdateInterval() {
+    // handles the velocity update progress
+    protected double getVelocityUpdateProg() {
         // no extra velocity synchronization for almost stationary projectile
         if (bukkitEntity.getVelocity().lengthSquared() < 0.01)
-            return 999999;
+            return 0d;
+        double update = 0d;
+        // velocity update - default
+        if (velocityUpdateRule.equals("Default")) {
+            // gravity rule is the same as vanilla
+            boolean vanillaGrav = Math.abs(gravity) < 1e-5 || Math.abs(gravity - VANILLA_GRAVITY) < 1e-5;
+            // vanilla acceleration
+            boolean vanillaAcc = Math.abs(speedMultiPerTick - VANILLA_DRAG) < 1e-5;
+            // normal acceleration - i.e. 1
+            boolean accNormal = Math.abs(speedMultiPerTick - 1) < 1e-5;
+            // if acceleration is adversarial to the client
+            boolean accHigh = !(vanillaAcc || accNormal);
+            // adversarial gravity acceleration
+            if (!vanillaGrav) accHigh = true;
 
-        int result = VELOCITY_UPDATE_INTERVAL_NORMAL;
-        if (homing && homingTarget != null)
-            result = Math.min(result, VELOCITY_UPDATE_INTERVAL_HOMING);
-        if ((this.au() || this.inWater) || Math.abs(this.speedMultiPerTick - 1) > 1e-9)
-            result = Math.min(result, VELOCITY_UPDATE_INTERVAL_ACCELERATION);
-        return result;
+            if (homing && homingTarget != null)
+                accHigh = true;
+            if (this.au() || this.inWater)
+                accHigh = true;
+
+            if (accHigh) update = 1d / VELOCITY_UPDATE_INTERVAL_ACCELERATION;
+            else if (accNormal) update = 1d / VELOCITY_UPDATE_INTERVAL_NORMAL;
+        }
+        // custom
+        else {
+            update = 1d / TerrariaHelper.optimizationConfig.getInt("optimization." + velocityUpdateRule, VELOCITY_UPDATE_INTERVAL_NORMAL);
+        }
+
+        return update;
     }
     // optimizes the homing target
     protected void optimizeHomingTarget(Vec3D initialLoc) {

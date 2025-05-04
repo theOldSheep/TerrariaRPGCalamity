@@ -205,8 +205,7 @@ public class TerrariaNPC extends EntityVillager {
             }
             // attack final target
             if (finalTarget != null) {
-                EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMap, "");
-                shootInfo.properties.put("liveTime", 80);
+                String projType = null;
                 double projectileSpd = 1;
                 switch (NPCType) {
                     case BLOCK_SELLER: {
@@ -218,58 +217,39 @@ public class TerrariaNPC extends EntityVillager {
                         return;
                     }
                     case GUIDE: {
-                        shootInfo.projectileName = "木箭";
+                        projType = "木箭";
                         projectileSpd = 2;
                         break;
                     }
                     case ANGLER: {
-                        shootInfo.projectileName = "木箭";
+                        projType = "木箭";
                         projectileSpd = 1.5;
                         break;
                     }
                     case CLOTHIER: {
-                        shootInfo.projectileName = "骷髅头";
+                        projType = "骷髅头";
                         projectileSpd = 1.25;
-                        shootInfo.properties.put("gravity", 0d);
-                        shootInfo.properties.put("penetration", 2);
                         break;
                     }
                     case ARMS_DEALER: {
-                        shootInfo.projectileName = "火枪子弹";
+                        projType = "火枪子弹";
                         projectileSpd = 2.5;
-                        shootInfo.properties.put("gravity", 0d);
                         break;
                     }
                     case GOBLIN_TINKERER: {
-                        shootInfo.projectileName = "尖刺球";
+                        projType = "尖刺球";
                         projectileSpd = 0.4;
-                        shootInfo.properties.put("noGravityTicks", 0);
-                        shootInfo.properties.put("penetration", 9);
-                        shootInfo.properties.put("blockHitAction", "bounce");
-                        shootInfo.properties.put("bounce", 999999);
-                        shootInfo.properties.put("frictionFactor", 0.5);
-                        shootInfo.properties.put("liveTime", 240);
                         break;
                     }
                     case DEMOLITIONIST: {
-                        shootInfo.projectileName = "手榴弹";
+                        projType = "手榴弹";
                         projectileSpd = 0.75;
-                        shootInfo.properties.put("noGravityTicks", 0);
-                        shootInfo.properties.put("blockHitAction", "bounce");
-                        shootInfo.properties.put("bounce", 999999);
-                        shootInfo.properties.put("frictionFactor", 0.5);
-                        shootInfo.properties.put("isGrenade", true);
-                        shootInfo.properties.put("blastRadius", 2.75);
-                        shootInfo.properties.put("liveTime", 40);
                         break;
                     }
                 }
                 // help aim enemy
-                AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions();
-                aimHelper.setAccelerationMode(true)
-                        .setProjectileSpeed(projectileSpd)
-                        .setProjectileGravity((double) shootInfo.properties.getOrDefault("gravity", 0.05))
-                        .setNoGravityTicks((int) shootInfo.properties.getOrDefault("noGravityTicks", 5));
+                AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions(projType);
+                EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMap, projType);
                 Location aimLoc = AimHelper.helperAimEntity(shootInfo.shootLoc, finalTarget, aimHelper);
                 shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, aimLoc, projectileSpd);
 

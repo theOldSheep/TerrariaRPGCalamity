@@ -80,6 +80,7 @@ public class Spazmatism extends EntitySlime {
         shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         shootInfo.velocity = MathHelper.getDirection(
                 shootInfo.shootLoc, target.getEyeLocation(), flameSpeed);
+        shootInfo.setLockedTarget(target);
         EntityHelper.spawnProjectile(shootInfo);
     }
     private void attackAI() {
@@ -324,39 +325,9 @@ public class Spazmatism extends EntitySlime {
         }
         // shoot info's
         {
-            shootInfoCursedFlame = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapCursedFlame, "");
-            shootInfoCursedFlame.projectileName = "咒火球";
-            shootInfoCursedFlame.properties.put("liveTime", 100);
-            shootInfoCursedFlame.properties.put("penetration", 99);
-            shootInfoCursedFlame.properties.put("gravity", 0d);
-            shootInfoCursedFlame.properties.put("blockHitAction", "thru");
-            shootInfoCursedFlame.properties.put("trailColor", "160|255|160");
-            shootInfoCursedFlame.properties.put("trailStepSize", 1d);
-            shootInfoCursedFlame.properties.put("trailLingerTime", 3);
-            shootInfoFlameThrower = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFlameThrower, "");
-            shootInfoFlameThrower.projectileName = "咒火球";
-            shootInfoFlameThrower.properties.put("liveTime", 40);
-            shootInfoFlameThrower.properties.put("penetration", 99);
-            shootInfoFlameThrower.properties.put("gravity", 0d);
-            shootInfoFlameThrower.properties.put("projectileSize", 0.25d);
-            shootInfoFlameThrower.properties.put("blockHitAction", "thru");
-            shootInfoFlameThrower.properties.put("trailColor", "160|255|160");
-            shootInfoCursedFlame.properties.put("trailStepSize", 0.75);
-            shootInfoFlameThrower.properties.put("trailLingerTime", 10);
-            shootInfoHomingFlame = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHomingFlame, "");
-            shootInfoHomingFlame.projectileName = "咒火球";
-            shootInfoHomingFlame.properties.put("liveTime", 100);
-            shootInfoHomingFlame.properties.put("gravity", 0d);
-            shootInfoHomingFlame.properties.put("blockHitAction", "thru");
-            shootInfoCursedFlame.properties.put("trailColor", "160|255|160");
-            shootInfoCursedFlame.properties.put("trailLingerTime", 2);
-            shootInfoHomingFlame.properties.put("homing", true);
-            shootInfoHomingFlame.properties.put("homingMethod", 2);
-            shootInfoHomingFlame.properties.put("homingRadius", 32d);
-            shootInfoHomingFlame.properties.put("homingSharpTurning", false);
-            shootInfoHomingFlame.properties.put("homingAbility", 0.5);
-            shootInfoHomingFlame.properties.put("noHomingTicks", 15);
-            shootInfoHomingFlame.properties.put("maxHomingTicks", 30);
+            shootInfoCursedFlame = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapCursedFlame, "魔眼咒火球");
+            shootInfoFlameThrower = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapFlameThrower, "魔眼诅咒焰");
+            shootInfoHomingFlame = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHomingFlame, "魔眼追踪咒火球");
         }
     }
 

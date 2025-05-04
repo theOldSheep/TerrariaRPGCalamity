@@ -1877,7 +1877,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                         // stealth regen
                         if (! usingItem) {
                             double stealthMax = getMaxStealth(ply);
-                            double stealthRegen = stealthMax * delay / 80 * attrMap.getOrDefault("stealthRegenMulti", 0d);
+                            double stealthRegen = stealthMax * delay / 80 * attrMap.getOrDefault("stealthRegenMulti", 1d);
                             restoreStealth(ply, stealthRegen);
                         }
                     }
@@ -1992,6 +1992,10 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             }
         }
         return respawnTime * 20;
+    }
+    public static double getEnergyShielding(Player ply) {
+        HashMap<String, Integer> plyEffects = EntityHelper.getEffectMap(ply);
+        return plyEffects.getOrDefault("保护矩阵", 0) * 0.5d;
     }
     public static double getDefenceDamage(Player ply) {
         HashMap<String, Integer> plyEffects = EntityHelper.getEffectMap(ply);
@@ -2987,6 +2991,10 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     ply.playSound(ply.getLocation(), Sound.BLOCK_NOTE_PLING, SoundCategory.PLAYERS,2, 2);
             }
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH, stealth);
+        }
+        // clip stealth to its maximum
+        else if (stealth > stealthMax) {
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH, stealthMax);
         }
     }
     public static void sendActionBar(Player player, String message) {

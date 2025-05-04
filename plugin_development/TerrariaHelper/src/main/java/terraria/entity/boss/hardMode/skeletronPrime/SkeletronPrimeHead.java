@@ -54,12 +54,14 @@ public class SkeletronPrimeHead extends EntitySlime {
         shootInfoSkull.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         shootInfoSkull.velocity = MathHelper.getDirection(
                 shootInfoSkull.shootLoc, target.getEyeLocation(), 1);
+        shootInfoSkull.setLockedTarget(target);
         EntityHelper.spawnProjectile(shootInfoSkull);
     }
     private void shootRocket() {
         shootInfoRocket.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         shootInfoRocket.velocity = MathHelper.getDirection(
                 shootInfoRocket.shootLoc, target.getEyeLocation(), 1.5);
+        shootInfoRocket.setLockedTarget(target);
         EntityHelper.spawnProjectile(shootInfoRocket);
     }
     private void shootLaser() {
@@ -280,33 +282,11 @@ public class SkeletronPrimeHead extends EntitySlime {
         // shoot info
         {
             shootInfoSkull = new EntityHelper.ProjectileShootInfo(
-                    bukkitEntity, new Vector(), attrMapSkull, DamageHelper.DamageType.MAGIC, "");
-            shootInfoSkull.projectileName = "诅咒头";
-            shootInfoSkull.properties.put("homing", true);
-            shootInfoSkull.properties.put("homingMethod", 2);
-            shootInfoSkull.properties.put("homingRadius", 24d);
-            shootInfoSkull.properties.put("homingSharpTurning", false);
-            shootInfoSkull.properties.put("homingAbility", 0.5);
-            shootInfoSkull.properties.put("noHomingTicks", 10);
-            shootInfoSkull.properties.put("maxHomingTicks", 60);
-            shootInfoSkull.properties.put("liveTime", 80);
-            shootInfoSkull.properties.put("gravity", 0d);
-            shootInfoSkull.properties.put("blockHitAction", "thru");
+                    bukkitEntity, new Vector(), attrMapSkull, DamageHelper.DamageType.MAGIC, "机械诅咒头");
             shootInfoLaser = new EntityHelper.ProjectileShootInfo(
                     bukkitEntity, new Vector(), attrMapRocket, DamageHelper.DamageType.MAGIC, "死亡激光");
             shootInfoRocket = new EntityHelper.ProjectileShootInfo(
-                    bukkitEntity, new Vector(), attrMapRocket, DamageHelper.DamageType.ROCKET, "");
-            shootInfoRocket.projectileName = "红烟花火箭";
-            shootInfoRocket.properties.put("homing", true);
-            shootInfoRocket.properties.put("homingMethod", 2);
-            shootInfoRocket.properties.put("homingRadius", 32d);
-            shootInfoRocket.properties.put("homingSharpTurning", false);
-            shootInfoRocket.properties.put("homingAbility", 0.35);
-            shootInfoRocket.properties.put("noHomingTicks", 10);
-            shootInfoRocket.properties.put("maxHomingTicks", 40);
-            shootInfoRocket.properties.put("liveTime", 80);
-            shootInfoRocket.properties.put("gravity", 0d);
-            shootInfoRocket.properties.put("blockHitAction", "thru");
+                    bukkitEntity, new Vector(), attrMapRocket, DamageHelper.DamageType.ROCKET, "机械红烟花火箭");
         }
     }
 

@@ -217,13 +217,9 @@ public class Crabulon extends EntitySlime {
         // init projectile shoot info
         {
             psiSpore = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSpore,
-                    DamageHelper.DamageType.ARROW, "-");
-            psiSpore.projectileName = "孢子";
+                    DamageHelper.DamageType.ARROW, "菌生蟹孢子");
             psiShroom = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapShroom,
-                    DamageHelper.DamageType.ARROW, "-");
-            psiShroom.projectileName = "孢子";
-            psiShroom.properties.put("gravity", 0.01);
-            psiShroom.properties.put("blockHitAction", "thru");
+                    DamageHelper.DamageType.ARROW, "菌生蟹蘑菇");
         }
         // init boss bar
         bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],

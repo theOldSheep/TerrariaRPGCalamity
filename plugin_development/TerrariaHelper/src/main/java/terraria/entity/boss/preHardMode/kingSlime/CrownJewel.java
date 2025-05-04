@@ -32,10 +32,7 @@ public class CrownJewel extends EntitySlime {
     private void shootProjectiles() {
         if (target == null) return;
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, new Vector(), attrMap, "--");
-        shootInfo.projectileName = "殷红弹幕";
-        shootInfo.properties.put("gravity", 0d);
-        shootInfo.properties.put("blockHitAction", "thru");
+                bukkitEntity, new Vector(), attrMap, "殷红弹幕");
         for (int i = 0; i < 3; i ++) {
             Location targetedLoc = target.getEyeLocation().add(
                     Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1);

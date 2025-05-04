@@ -845,7 +845,6 @@ public class MonsterHelper {
                                     Vector velocity = MathHelper.getDirection(monsterBkt.getEyeLocation(), targetLoc, 1);
                                     EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                                             monsterBkt, velocity, AttributeHelper.getAttrMap(monsterBkt), "鸟妖羽毛");
-                                    shootInfo.properties.put("penetration", 10);
                                     EntityHelper.spawnProjectile(shootInfo);
                             }
                         }

@@ -471,8 +471,7 @@ public class AstrumDeus extends EntitySlime {
             projectilePropertyLaserBlue = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapLaser,
                     DamageHelper.DamageType.ARROW, "星幻激光");
             projectilePropertyLaserOrange = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapLaser,
-                    DamageHelper.DamageType.ARROW, "星幻激光");
-            projectilePropertyLaserOrange.properties.put("trailColor", "255|255|0");
+                    DamageHelper.DamageType.ARROW, "橙星幻激光");
             projectilePropertyMine = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapMine,
                     DamageHelper.DamageType.ARROW, "幻星雷");
             // segment settings

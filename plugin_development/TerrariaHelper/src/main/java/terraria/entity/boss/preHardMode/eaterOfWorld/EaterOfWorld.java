@@ -145,7 +145,7 @@ public class EaterOfWorld extends EntitySlime {
             velocity.normalize();
             projectileProperty.shootLoc = shootLoc;
             projectileProperty.velocity = velocity;
-            Entity projectile = EntityHelper.spawnProjectile(projectileProperty);
+            EntityHelper.spawnProjectile(projectileProperty);
         }
     }
     private void AI() {
@@ -327,7 +327,6 @@ public class EaterOfWorld extends EntitySlime {
             // projectile info
             projectileProperty = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSpit,
                     DamageHelper.DamageType.ARROW, "魔唾液");
-            projectileProperty.properties.put("penetration", 9);
             // next segment
             if (index + 1 < TOTAL_LENGTH)
                 new EaterOfWorld(summonedPlayer, bossParts, index + 1);

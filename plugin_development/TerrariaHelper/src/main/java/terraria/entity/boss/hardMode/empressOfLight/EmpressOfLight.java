@@ -262,7 +262,6 @@ public class EmpressOfLight extends EntitySlime {
             shootInfoPrismaticBolt.velocity = MathHelper.getDirection(shootInfoPrismaticBolt.shootLoc, targetLoc, SPEED_PRISMATIC_BOLT);
         }
         shootInfoPrismaticBolt.setLockedTarget(target);
-        shootInfoPrismaticBolt.properties.put("trailColor", particleColor[(int) (Math.random() * particleColor.length)]);
         EntityHelper.spawnProjectile(shootInfoPrismaticBolt);
     }
     private void AIPhaseCharge() {

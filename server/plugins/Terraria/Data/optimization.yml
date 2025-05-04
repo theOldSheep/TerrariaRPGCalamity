@@ -28,9 +28,8 @@ worldGen:
     outputFolder: worldGenDebug
 optimization:
   projVelUpdItvNormal: 10
-  projVelUpdItvHoming: 5
   projVelUpdItvAcceleration: 5
-  projVelUpdItvDragonFireball: 3
+  projVelUpdItvBossAcc: 3
   projectileVelocityUpdateDistance: 96
   globalParticleDensity: 1.0
   dmgHologramInterval: 1

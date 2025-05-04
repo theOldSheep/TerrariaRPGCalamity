@@ -4695,31 +4695,12 @@ public class ItemUseHelper {
                         yaw = MathHelper.getVectorYaw(fireDir) + Math.random() * 10 - 5;
                         pitch = MathHelper.getVectorPitch(fireDir) + Math.random() * 10 - 5;
                         Consumer<Location> onHitFunction = (Location location) -> {
-                            // bouncing ray
-                            if (Math.random() < 0.5) {
-                                double extraRayYaw = Math.random() * 360, extraRayPitch = 60 + Math.random() * 30;
-                                double extraRayLength = 40;
-                                Location shootLoc = location.clone().subtract(
-                                        MathHelper.vectorFromYawPitch_approx(extraRayYaw, extraRayPitch).multiply(16));
-                                GenericHelper.StrikeLineOptions strikeLineOptions = new GenericHelper.StrikeLineOptions()
-                                        .setThruWall(false)
-                                        .setBounceWhenHitBlock(true)
-                                        .setParticleIntensityMulti(0.2)
-                                        .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
-                                            EntityHelper.applyEffect(hitEntity, "超位崩解", 100);
-                                        });
-                                GenericHelper.handleStrikeLine(ply, shootLoc, extraRayYaw, extraRayPitch, extraRayLength,
-                                        0.5, itemType, "RAINBOW",
-                                        new HashSet<>(), attrMap, strikeLineOptions);
-                            }
-                            // 8 homing projectiles
-                            else {
-                                EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                                        ply, location, new Vector(), attrMap, DamageHelper.DamageType.MAGIC, "耀界之光能量体");
-                                for (int i = 0; i < 8; i ++) {
-                                    shootInfo.velocity = MathHelper.randomVector().multiply(2);
-                                    EntityHelper.spawnProjectile(shootInfo);
-                                }
+                            // homing projectiles
+                            EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
+                                    ply, location, new Vector(), attrMap, DamageHelper.DamageType.MAGIC, "耀界之光能量体");
+                            for (int i = 0; i < 2; i ++) {
+                                shootInfo.velocity = MathHelper.randomVector().multiply(2.5);
+                                EntityHelper.spawnProjectile(shootInfo);
                             }
                         };
                         strikeInfo

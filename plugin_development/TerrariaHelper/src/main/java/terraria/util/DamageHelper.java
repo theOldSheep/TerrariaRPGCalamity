@@ -884,7 +884,7 @@ public class DamageHelper {
                     }
                     // "vanilla" behavior of defence-damage
                     else {
-                        int duration = (int) ( Math.min(def, originalDmg * 0.05 + def * 0.15 ) );
+                        int duration = (int) ( Math.min(def, originalDmg * 0.05 + def * 0.05 ) );
                         EntityHelper.applyEffect(victim, "防御损毁", duration);
                         EntityHelper.applyEffect(victim, "防御修补冷却", 100);
                     }
@@ -1030,13 +1030,15 @@ public class DamageHelper {
                     }
                 }
                 // apply (de)buff(s) to victim
+                double statusDurationMulti = damageInfoBus.victimAttrMap.getOrDefault("damageTakenMulti", 1d);
                 for (String buff : buffInflict) {
                     String[] buffInfo = buff.split("\\|");
                     double chance;
                     try {
                         chance = Double.parseDouble(buffInfo[2]);
                         if (Math.random() < chance)
-                            EntityHelper.applyEffect(damageInfoBus.victim, buffInfo[0], Integer.parseInt(buffInfo[1]));
+                            EntityHelper.applyEffect(damageInfoBus.victim, buffInfo[0],
+                                    (int) (statusDurationMulti * Integer.parseInt(buffInfo[1])) );
                     } catch (Exception ignored) {
                     }
                 }

@@ -55,29 +55,15 @@ public class SkeletronHead extends EntitySlime {
         }
         velocity.multiply(1.75 / velLen);
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, velocity, skull_attrMap, DamageHelper.DamageType.MAGIC, "--");
-        shootInfo.projectileName = "诅咒头";
-        shootInfo.properties.put("homing", true);
-        shootInfo.properties.put("homingMethod", 2);
-        shootInfo.properties.put("homingRadius", 24d);
-        shootInfo.properties.put("homingSharpTurning", false);
-        shootInfo.properties.put("homingAbility", 0.5);
-        shootInfo.properties.put("noHomingTicks", 10);
-        shootInfo.properties.put("maxHomingTicks", 40);
-        shootInfo.properties.put("liveTime", 80);
-        shootInfo.properties.put("gravity", 0d);
-        shootInfo.properties.put("blockHitAction", "thru");
+                bukkitEntity, velocity, skull_attrMap, DamageHelper.DamageType.MAGIC, "骷髅王诅咒头");
+        shootInfo.setLockedTarget(target);
         EntityHelper.spawnProjectile(shootInfo);
     }
     private void spitShadowFlame() {
         if (target == null) return;
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
-                bukkitEntity, new Vector(), skull_attrMap, DamageHelper.DamageType.MAGIC, "--");
-        shootInfo.projectileName = "骷髅头";
-        shootInfo.properties.put("gravity", 0d);
-        shootInfo.properties.put("homing", false);
-        shootInfo.properties.put("trailColor", null);
-        shootInfo.properties.put("blockHitAction", "thru");
+                bukkitEntity, new Vector(), skull_attrMap, DamageHelper.DamageType.MAGIC, "骷髅王暗影焰");
+        shootInfo.setLockedTarget(target);
         for (Vector velocity : MathHelper.getCircularProjectileDirections(5, 4, 90, target, shootInfo.shootLoc, 1.5)) {
             shootInfo.velocity = velocity;
             EntityHelper.spawnProjectile(shootInfo);

@@ -1,6 +1,5 @@
 package terraria;
 
-import com.sun.org.apache.bcel.internal.generic.SWITCH;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.PlaceholderHook;
 import org.bukkit.Bukkit;
@@ -85,6 +84,9 @@ public class TerrariaHelper extends JavaPlugin {
             @Override
             public String onPlaceholderRequest(Player ply, String params) {
                 switch (params) {
+                    case "energy_shield": {
+                        return (int) PlayerHelper.getEnergyShielding(ply) + "";
+                    }
                     case "stealth": {
                         double maxStealth = PlayerHelper.getMaxStealth(ply);
                         if (maxStealth < 1) return "-1";

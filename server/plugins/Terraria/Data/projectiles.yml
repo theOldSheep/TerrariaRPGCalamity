@@ -96,8 +96,8 @@
     worldSpriteMode: false
     # 世界贴图更新的间隔，默认1刻（1/20秒）；世界中的贴图物品名为"弹射物名_1", "弹射物名_2"...以此类推
     worldSpriteUpdateInterval: 1
-    # 向客户端同步速度的间隔，默认间隔和玩家距离都在setting.yml的优化部分中
-    velocityUpdateInterval: -1
+    # 向客户端同步速度的设置；默认为Default（根据弹幕的情况自动设定同步间隔）；若为其他值，将使用optimization.yml中对应值
+    velocityUpdateRule: Default
     # 攻击造成的buff，格式为  buff名|buff时长（单位：帧）|几率。可不写
     buffInflict:
         - "霜火|100|0.35"
@@ -199,6 +199,26 @@
     noHomingTicks: 3
     blockHitAction: thru
     liveTime: 60
+殷红弹幕:
+    gravity: 0
+    speedMultiPerTick: 0.99
+    blockHitAction: thru
+    liveTime: 60
+灾虫沙尘暴:
+    projDisguiseName: 沙尘暴弹幕
+    projectileSize: 0.5
+    penetration: 9
+菌生蟹孢子:
+    projDisguiseName: 孢子
+菌生蟹蘑菇:
+    projDisguiseName: 孢子
+    gravity: 0.02
+    blockHitAction: thru
+魔唾液:
+    gravity: 0
+    speedMultiPerTick: 0.99
+    projectileSize: 0.5
+    penetration: 9
 腐蚀之云:
     gravity: 0
     penetration: 99999
@@ -221,11 +241,29 @@
     noGravityTicks: 99999
     buffInflict:
         - "咒火|100|1"
+骷髅王诅咒头:
+    projDisguiseName: 诅咒头
+    homing: true
+    homingMethod: 2
+    homingRadius: 24
+    homingSharpTurning: false
+    homingAbility: 0.5
+    noHomingTicks: 10
+    maxHomingTicks: 40
+    liveTime: 80
+    gravity: 0
+    blockHitAction: thru
+骷髅王暗影焰:
+    projDisguiseName: 骷髅头
+    gravity: 0
+    blockHitAction: thru
+    liveTime: 80
 黑檀深渊之球:
     penetration: 99999
     blockHitAction: thru
     projectileSize: 1
     gravity: 0
+    speedMultiPerTick: 0.99
     buffInflict:
         - "扭曲|60|0.3"
         - "缓慢|100|1"
@@ -234,14 +272,62 @@
     blockHitAction: thru
     projectileSize: 1
     gravity: 0
+    speedMultiPerTick: 0.99
     buffInflict:
         - "扭曲|60|0.3"
         - "流血|160|1"
+血肉之镰:
+    projDisguiseName: 恶魔之镰
+    velocityUpdateRule: projVelUpdItvBossAcc
+    homing: true
+    homingMethod: 2
+    homingRadius: 24
+    homingSharpTurning: false
+    homingAbility: 0.5
+    liveTime: 100
+    gravity: 0
+    projectileSize: 1
+血肉激光:
+    projDisguiseName: 激光
+    liveTime: 100
+    gravity: 0
+    blockHitAction: thru
 挥发明胶:
     penetration: 99999
     blockHitAction: bounce
     bounce: 6
     projectileSize: 2
+魔眼咒火球:
+    projDisguiseName: 咒火球
+    liveTime: 100
+    penetration: 99
+    gravity: 0
+    blockHitAction: thru
+    trailColor: 160|255|160
+    trailIntensityMulti: 0.1
+魔眼诅咒焰:
+    projDisguiseName: 咒火球
+    liveTime: 40
+    penetration: 999999
+    gravity: 0
+    projectileSize: 1
+    blockHitAction: thru
+    trailColor: 160|255|160
+    trailIntensityMulti: 0.1
+魔眼追踪咒火球:
+    projDisguiseName: 咒火球
+    liveTime: 100
+    gravity: 0
+    blockHitAction: thru
+    trailColor: 160|255|160
+    trailIntensityMulti: 0.1
+    homing: true
+    homingMethod: 2
+    homingRadius: 32
+    homingSharpTurning: false
+    homingAbility: 0.5
+    noHomingTicks: 15
+    maxHomingTicks: 40
 冰霜爆:
     penetration: 99999
     blockHitAction: thru
@@ -249,6 +335,22 @@
     liveTime: 100
     gravity: 0
     noHomingTicks: 10
+    buffInflict:
+        - "霜火|40|1"
+        - "冷冻|30|1"
+追踪冰霜爆:
+    projDisguiseName: 冰霜爆
+    penetration: 99999
+    blockHitAction: thru
+    projectileSize: 1
+    liveTime: 100
+    gravity: 0
+    noHomingTicks: 10
+    homing: true
+    homingMethod: 2
+    homingRadius: 32
+    homingSharpTurning: false
+    homingAbility: 0.6
     buffInflict:
         - "霜火|40|1"
         - "冷冻|30|1"
@@ -324,6 +426,7 @@
     penetration: 99999
     liveTime: 100
     gravity: 0
+    speedMultiPerTick: 0.99
     blockHitAction: thru
     buffInflict:
         - "燃烧|80|1"
@@ -334,6 +437,7 @@
     penetration: 99999
     liveTime: 100
     gravity: 0
+    speedMultiPerTick: 0.99
     blockHitAction: thru
     buffInflict:
         - "咒火|60|1"
@@ -344,6 +448,7 @@
     penetration: 99999
     liveTime: 100
     gravity: 0
+    speedMultiPerTick: 0.99
     blockHitAction: thru
     buffInflict:
         - "带电|40|1"
@@ -359,6 +464,7 @@
     blockHitAction: thru
     liveTime: 100
     gravity: 0
+    speedMultiPerTick: 0.99
     buffInflict:
         - "硫磺火|60|1"
 灾厄飞弹:
@@ -368,6 +474,7 @@
     blockHitAction: thru
     liveTime: 100
     gravity: 0
+    speedMultiPerTick: 0.99
     buffInflict:
         - "孱弱巫咒|40|1"
 炼狱硫火球:
@@ -395,6 +502,7 @@
     blockHitAction: thru
     liveTime: 80
     gravity: 0
+    speedMultiPerTick: 0.99
     buffInflict:
         - "孱弱巫咒|60|1"
 无际裂变:
@@ -415,72 +523,6 @@
         damageMulti: 0.6
         name: 灾厄飞弹
         velocity: 0.5
-深渊炙炎:
-    penetration: 99999
-    blockHitAction: thru
-    gravity: 0
-    projectileSize: 3
-    homing: true
-    homingMethod: 2
-    homingRadius: 128
-    homingSharpTurning: false
-    homingAbility: 6
-    buffInflict:
-        - "硫磺火|100|1"
-        - "孱弱巫咒|100|1"
-    clusterBomb:
-        amount: 16
-        damageMulti: 0.75
-        name: 灾厄飞弹
-        velocity: 0.5
-深渊炙炎弹:
-    blockHitAction: thru
-    gravity: 0
-    projectileSize: 3
-    homing: true
-    homingMethod: 2
-    homingRadius: 128
-    homingSharpTurning: false
-    homingAbility: 6
-    buffInflict:
-        - "硫磺火|60|1"
-        - "孱弱巫咒|60|1"
-    clusterBomb:
-        amount: 30
-        type: spread
-        damageMulti: 0.9
-        name: 灾厄飞弹
-        velocity: 1.25
-深渊炙颅:
-    penetration: 99999
-    projectileSize: 1
-    blockHitAction: thru
-    liveTime: 80
-    gravity: 0
-    buffInflict:
-        - "孱弱巫咒|60|1"
-硫火碎魂拳:
-    penetration: 99999
-    projectileSize: 2
-    blockHitAction: thru
-    liveTime: 80
-    gravity: 0
-    buffInflict:
-        - "孱弱巫咒|60|1"
-斩魂幻锋:
-    penetration: 99999
-    projectileSize: 2
-    blockHitAction: thru
-    liveTime: 80
-    gravity: 0
-    homing: true
-    maxHomingTicks: 20
-    homingRadius: 128
-    homingAbility: 0
-    speedMultiPerTick: 10
-    maxSpeed: 2.5
-    buffInflict:
-        - "孱弱巫咒|60|1"
 硫磺火球:
     penetration: 99999
     blockHitAction: thru
@@ -501,6 +543,48 @@
     trailLingerTime: 10
     buffInflict:
         - "硫磺火|60|1"
+机械诅咒头:
+    projDisguiseName: 诅咒头
+    homing: true
+    homingMethod: 2
+    homingRadius: 24
+    homingSharpTurning: false
+    homingAbility: 0.5
+    noHomingTicks: 10
+    maxHomingTicks: 60
+    liveTime: 80
+    gravity: 0
+    blockHitAction: thru
+机械炮火箭:
+    projDisguiseName: 红烟花火箭
+    velocityUpdateRule: projVelUpdItvBossAcc
+    homing: true
+    homingMethod: 2
+    homingRadius: 128
+    homingSharpTurning: false
+    homingAbility: 7.5
+    noHomingTicks: 10
+    maxHomingTicks: 15
+    homingEndSpeedMultiplier: 5
+    liveTime: 22
+    gravity: 0
+    isGrenade: true
+    blastRadius: 5
+机械红烟花火箭:
+    projDisguiseName: 红烟花火箭
+    velocityUpdateRule: projVelUpdItvBossAcc
+    homing: true
+    homingMethod: 2
+    homingRadius: 32
+    homingSharpTurning: false
+    homingAbility: 1
+    noHomingTicks: 10
+    maxHomingTicks: 30
+    liveTime: 80
+    gravity: 0
+    blockHitAction: thru
+    isGrenade: true
+    blastRadius: 3
 种子:
     penetration: 99999
     blockHitAction: thru
@@ -520,6 +604,17 @@
     penetration: 99999
     blockHitAction: thru
     liveTime: 40
+    gravity: 0
+    projectileSize: 1
+    speedMultiPerTick: 0.9
+    canBeReflected: false
+    buffInflict:
+        - "中毒|160|1"
+世纪之花孢子云:
+    projDisguiseName: 孢子云
+    penetration: 99999
+    blockHitAction: thru
+    liveTime: 300
     gravity: 0
     projectileSize: 1
     speedMultiPerTick: 0.9
@@ -575,9 +670,20 @@
 星幻激光:
     penetration: 99999
     gravity: 0
+    speedMultiPerTick: 0.99
     liveTime: 80
     blockHitAction: thru
     trailColor: 0|255|255
+    buffInflict:
+        - "幻星感染|40|1"
+橙星幻激光:
+    projDisguiseName: 星幻激光
+    penetration: 99999
+    gravity: 0
+    speedMultiPerTick: 0.99
+    liveTime: 80
+    blockHitAction: thru
+    trailColor: 255|255|0
     buffInflict:
         - "幻星感染|40|1"
 星幻凝晶:
@@ -796,6 +902,7 @@
     projectileSize: 1
     liveTime: 60
     gravity: 0
+    speedMultiPerTick: 0.99
     buffInflict:
         - "神圣之火|40|1"
 神圣之矛:
@@ -810,6 +917,7 @@
     projectileSize: 1
     liveTime: 60
     gravity: 0
+    speedMultiPerTick: 0.99
     buffInflict:
         - "扭曲|30|1"
 无限灯笼:
@@ -835,6 +943,7 @@
     noHomingTicks: 40
     maxHomingTicks: 41
     homingEndSpeedMultiplier: 2
+    speedMultiPerTick: 0.99
     buffInflict:
         - "死亡低语|80|1"
 幽花子母弹:
@@ -850,6 +959,7 @@
     liveTime: 80
     penetration: 999999
     gravity: 0
+    speedMultiPerTick: 0.99
     buffInflict:
         - "夜魇|25|1"
 遗爵鲨牙刺球:
@@ -914,6 +1024,7 @@
     liveTime: 100
     gravity: 0
     blockHitAction: thru
+    velocityUpdateRule: projVelUpdItvBossAcc
     buffInflict:
         - "龙焰|50|1"
 追踪灼焱余烬:
@@ -939,18 +1050,20 @@
     homingAbility: 6
     homingRadius: 96
 橙色星流脉冲激光:
+    velocityUpdateRule: projVelUpdItvBossAcc
     projectileSize: 0.5
     liveTime: 60
     penetration: 999999
     gravity: 0
     blockHitAction: thru
-    speedMultiPerTick: 1.1
+    speedMultiPerTick: 0.99
     maxSpeed: 3.5
 红色星流脉冲激光:
     projectileSize: 0.5
     liveTime: 60
     penetration: 999999
     gravity: 0
+    speedMultiPerTick: 0.99
     blockHitAction: thru
 巨大挥发性等离子光球:
     projectileSize: 3
@@ -975,6 +1088,7 @@
     homingSharpTurning: false
     homingAbility: 4
 高爆等离子火箭:
+    velocityUpdateRule: projVelUpdItvBossAcc
     projectileSize: 1.5
     liveTime: 80
     gravity: 0
@@ -994,6 +1108,7 @@
     gravity: 0
     blockHitAction: thru
     minimumDamageTicks: 100
+    speedMultiPerTick: 0.99
     spawnProjectiles:
         interval: 10
         offset: 8
@@ -1010,6 +1125,7 @@
     buffInflict:
         - "带电|80|1"
 星流高斯核弹:
+    velocityUpdateRule: projVelUpdItvBossAcc
     gravity: 0
     liveTime: 60
     projectileSize: 1.5
@@ -1025,6 +1141,77 @@
         damageMulti: 1
         name: 冲击波1
         velocity: 0
+深渊炙炎:
+    velocityUpdateRule: projVelUpdItvBossAcc
+    penetration: 99999
+    blockHitAction: thru
+    gravity: 0
+    projectileSize: 3
+    homing: true
+    homingMethod: 2
+    homingRadius: 128
+    homingSharpTurning: false
+    homingAbility: 6
+    buffInflict:
+        - "硫磺火|100|1"
+        - "孱弱巫咒|100|1"
+    clusterBomb:
+        amount: 16
+        damageMulti: 0.75
+        name: 灾厄飞弹
+        velocity: 0.5
+深渊炙炎弹:
+    velocityUpdateRule: projVelUpdItvBossAcc
+    blockHitAction: thru
+    gravity: 0
+    projectileSize: 3
+    homing: true
+    homingMethod: 2
+    homingRadius: 128
+    homingSharpTurning: false
+    homingAbility: 6
+    buffInflict:
+        - "硫磺火|60|1"
+        - "孱弱巫咒|60|1"
+    clusterBomb:
+        amount: 30
+        type: spread
+        damageMulti: 0.9
+        name: 灾厄飞弹
+        velocity: 1.25
+深渊炙颅:
+    penetration: 99999
+    projectileSize: 1
+    blockHitAction: thru
+    liveTime: 80
+    gravity: 0
+    speedMultiPerTick: 0.99
+    buffInflict:
+        - "孱弱巫咒|60|1"
+硫火碎魂拳:
+    penetration: 99999
+    projectileSize: 2
+    blockHitAction: thru
+    liveTime: 80
+    gravity: 0
+    speedMultiPerTick: 0.99
+    buffInflict:
+        - "孱弱巫咒|60|1"
+斩魂幻锋:
+    penetration: 99999
+    projectileSize: 2
+    blockHitAction: thru
+    liveTime: 80
+    gravity: 0
+    speedMultiPerTick: 0.99
+    homing: true
+    maxHomingTicks: 20
+    homingRadius: 128
+    homingAbility: 0
+    speedMultiPerTick: 10
+    maxSpeed: 2.5
+    buffInflict:
+        - "孱弱巫咒|60|1"
 毒刺:
     gravity: 0
     liveTime: 80
@@ -1193,7 +1380,7 @@
         velocity: 0
 冲击波1:
     gravity: 0
-    liveTime: 30
+    liveTime: 15
     enemyInvincibilityFrame: 1
     penetration: 999999
     blockHitAction: thru
@@ -1677,10 +1864,10 @@
     gravity: 0
     blockHitAction: thru
     penetration: 999999
-    liveTime: 24
+    liveTime: 12
     enemyInvincibilityFrame: 100
     worldSpriteMode: true
-    worldSpriteUpdateInterval: 4
+    worldSpriteUpdateInterval: 2
     spawnSound: item.largeWeaponFire
 鱼骨回旋镖:
     projectileSize: 0.5
@@ -4738,6 +4925,7 @@ TNT:
     liveTime: 75
     projectileSize: 4
     noGravityTicks: 0
+    speedMultiPerTick: 0.99
     blockHitAction: thru
     buffInflict:
         - "冷冻|60|1"
@@ -6661,6 +6849,7 @@ TNT:
     trailStepSize: 0.35
 激光:
     gravity: 0
+    speedMultiPerTick: 0.99
     liveTime: 600
     penetration: 2
     spawnSound: item.genericLaser
@@ -7275,7 +7464,7 @@ TNT:
     minimumDamageTicks: 2
     noHomingTicks: 2
     trailColor: RAINBOW
-    trailIntensityMulti: 0.35
+    trailIntensityMulti: 0.5
     buffInflict:
         - "超位崩解|100|1"
 狞桀:

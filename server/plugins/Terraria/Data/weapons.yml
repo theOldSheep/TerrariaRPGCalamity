@@ -4242,7 +4242,7 @@ Dodu的手炮:
   autoSwing: true
 耀界之光:
   type: MAGIC_SPECIAL
-  fireRounds: 8
+  fireRounds: 3
   autoSwing: true
   useSound: item.genericLaser
 狞桀:

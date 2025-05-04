@@ -295,8 +295,7 @@ public class Plantera extends EntitySlime {
             shootInfoThornBall = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapThornBall,
                     DamageHelper.DamageType.ARROW, "刺球");
             shootInfoSporeGas = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapSporeGas,
-                    DamageHelper.DamageType.MAGIC, "孢子云");
-            shootInfoSporeGas.properties.put("liveTime", 300);
+                    DamageHelper.DamageType.MAGIC, "世纪之花孢子云");
         }
     }
 

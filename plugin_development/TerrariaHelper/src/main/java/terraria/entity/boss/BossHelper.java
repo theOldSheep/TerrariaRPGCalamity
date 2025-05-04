@@ -102,35 +102,36 @@ public class BossHelper {
             else currDynamicDM = 0.9d; // has 10% DR at the beginning ("prior" assumption about player's DPS build).
             // dynamic DR only applies when the current time elapsed is within the expected time to defeat the boss
             if (ticksLived < targetTime && ticksLived > 1) {
+                // update DM if health is not full/empty
                 if (healthRatio > 0.000001 && healthRatio < 0.999999) {
-                    double damageRatioPotentialBeforeDDM = (1 - healthRatio) / currDynamicDM;
+                    // corrected DPS = expected DPS + (raw DPS - expected DPS) * x
+                    // corrected DPS = expected DPS * (1-x) + raw DPS * x
+                    // dynamic DM = corrected / raw = expected / raw * (1-x) + x
+                    // raw DPS * dynamic DM = corrected DPS = (max health - curr health) / time elapsed
+                    // raw DPS = (max health - curr health) / (time elapsed * dynamic DM)
+                    // dynamic DM = (max health / expected time) / ((max health - curr health) / (time elapsed * DM)) * (1-x) + x
+                    // dynamic DM = (max health * time elapsed * DM) / (expected time * (max health - curr health)) * (1-x) + x
+                    // dynamic DM = DM/((max health - curr health) / max health) * (time elapsed / expected time) * (1-x) + x
+                    // DM/(1 - health ratio) * (time elapsed / expected time) * (1-x) + x
+
+                    double x = 0.5;
                     double timeElapsedRatio = ticksLived / targetTime;
-                    // actual DPS * dynamic DM = expected DPS = max health / expected time
-                    // (actual damage / time elapsed) * dynamic DM = max health / expected time
-                    // (actual damage / max health) * dynamic DM / time elapsed = 1 / expected time
-                    // dynamic DM = time elapsed / expected time * max health / actual damage
-                    // dynamic DM = time elapsed / expected time * max health / (damage dealt / dynamic DM)
-                    // dynamic DM = time elapsed / expected time *  dynamic DM * max health / recorded damage dealt
-                    // dynamic DM = time elapsed / expected time /  ( (recorded damage dealt / max health) / dynamic DM)
-                    // dynamic DM = time elapsed / expected time /  ( (1 - health ratio) / dynamic DM)
-                    // dynamic DM = time elapsed ratio / damageRatioPotentialBeforeDDM
-                    dynamicDamageMultiplier = timeElapsedRatio / damageRatioPotentialBeforeDDM;
+                    double factor = timeElapsedRatio / (1 - healthRatio) * (1-x);
+                    dynamicDamageMultiplier = currDynamicDM * factor + x;
                     // gradually change the damage multiplier
                     dynamicDamageMultiplier = dynamicDamageMultiplier * 0.1 + currDynamicDM * 0.9;
 
-                    // dynamic damage multiplier can not increase player damage or decrease damage excessively
+                    // dynamic damage multiplier can not increase player damage
                     dynamicDamageMultiplier = Math.min(dynamicDamageMultiplier, 1d);
-                    // 1/0.7 ~= 1.4; player needs to build 1.4 times DPS than expected to outrun dynamic DR
-                    dynamicDamageMultiplier = Math.max(dynamicDamageMultiplier, 0.7d);
                 }
+                // if full/empty health DM does not change
                 else
                     dynamicDamageMultiplier = currDynamicDM;
             }
             // once exceeding targeted defeat time, dynamic DR multiplier linearly increases to 1
             else {
-                dynamicDamageMultiplier = Math.min(currDynamicDM + 0.005, 1);
+                dynamicDamageMultiplier = Math.min(currDynamicDM + 0.002, 1);
             }
-//            Bukkit.broadcastMessage("Dynamic DR multi: " + dynamicDamageMultiplier + ", time: " + ticksLived + "/" + targetTime + ", health: " + healthInfo[0] + "/" + healthInfo[1]);
         }
         for (LivingEntity bossPart : bossParts) {
             EntityHelper.setMetadata(bossPart, EntityHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION, dynamicDamageMultiplier);

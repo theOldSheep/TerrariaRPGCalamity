@@ -847,7 +847,7 @@ public class EntityHelper {
                     }
                     // strings
                     {
-                        keys = new String[]{"blockHitAction", "trailColor", "spawnSound"};
+                        keys = new String[]{"blockHitAction", "trailColor", "spawnSound", "velocityUpdateRule"};
                         for (String key : keys) {
                             if (section.contains(key))
                                 this.properties.put(key, section.getString(key));
