@@ -57,6 +57,7 @@ public class GenericProjectile extends EntityPotion {
     public Entity homingTarget = null;
     protected Entity lockedTarget = null;
     Location lastTrailDisplayLocation = null;
+    BlockPosition stickBlockLocation = null;
     // extra projectile variables
     public ConfigurationSection extraProjectileConfigSection;
     int extraProjectileSpawnInterval;
@@ -869,7 +870,7 @@ public class GenericProjectile extends EntityPotion {
         }
 
 //        Bukkit.broadcastMessage(this.locX + ", " + this.locY + ", " + this.locZ + "||" + this.motX + ", " + this.motY + ", " + this.motZ);
-//        Bukkit.broadcastMessage(this.onGround + ", " + ticksLived + "/" + liveTime);
+//        Bukkit.broadcastMessage(this.onGround + ", " + this.inGround + ", " + ticksLived + "/" + liveTime);
         this.I = this.J;
         this.lastX = this.locX;
         this.lastY = this.locY;
@@ -907,7 +908,7 @@ public class GenericProjectile extends EntityPotion {
                     destroyWithReason(DESTROY_HIT_BLOCK);
                     return;
                 case "stick":
-                    if (this.world.getType(new BlockPosition(this.locX, this.locY, this.locZ)).getMaterial().isSolid())
+                    if (stickBlockLocation != null && this.world.getType(stickBlockLocation).getMaterial().isSolid())
                         shouldMove = false;
                     else
                         this.inGround = false;
@@ -934,11 +935,15 @@ public class GenericProjectile extends EntityPotion {
                     velocity.multiply(1 - frictionFactor);
                 }
                 // gravity if not on ground
-                else if (this.ticksLived >= noGravityTicks) {
+                if (this.ticksLived >= noGravityTicks && !(this.onGround || this.inGround)) {
                     // flag vanilla gravity to client
                     boolean isVanillaGrav = Math.abs(gravity - VANILLA_GRAVITY) < 1e-5;
                     this.setNoGravity(!isVanillaGrav);
-                    velocity.subtract( new Vector(0, gravity, 0) );
+                    velocity.subtract(new Vector(0, gravity, 0));
+                }
+                // otherwise flag no gravity
+                else {
+                    this.setNoGravity(true);
                 }
                 // regulate velocity
                 velocity.multiply(speedMultiPerTick);
@@ -958,6 +963,8 @@ public class GenericProjectile extends EntityPotion {
                     // gravity turns on after bouncing
                     this.noGravityTicks = this.ticksLived - 1;
                     this.inGround = true;
+                    // clone the future location
+                    Vec3D unprocessedFutureLoc = futureLoc.a(1d);
                     switch (blockHitAction) {
                         case "bounce":
                         case "slide": {
@@ -1098,17 +1105,24 @@ public class GenericProjectile extends EntityPotion {
                             break;
                         // stick: it is supposed to get stuck in the wall
                         case "stick":
+                            stickBlockLocation = movingobjectposition.a();
                             velocity.multiply(0);
                             Vector travelled = new Vector(movingobjectposition.pos.x - this.locX,
                                     movingobjectposition.pos.y - this.locY,
                                     movingobjectposition.pos.z - this.locZ);
                             double dist = travelled.length();
                             if (dist > 0)
-                                travelled.multiply((dist + DIST_FROM_BLOCK) / dist);
+                                travelled.multiply((dist - DIST_FROM_BLOCK) / dist);
                             futureLoc = new Vec3D(this.locX + travelled.getX(), this.locY + travelled.getY(), this.locZ + travelled.getZ());
+                            // inform the client side
+                            setNoGravity(true);
                             break;
                         default:
                             futureLoc = movingobjectposition.pos;
+                    }
+                    // if hitting the ground changes its motion, schedule velocity synchronization
+                    if (unprocessedFutureLoc.distanceSquared(futureLoc) > 1e-5) {
+                        impulse = true;
                     }
                 }
             }
@@ -1169,21 +1183,23 @@ public class GenericProjectile extends EntityPotion {
         // extra ticking
         extraTicking();
 
-        // updates the velocity to prevent client glitch
-        if (!impulse) {
+        // updates of the velocity to prevent client glitch
+        if (impulse) {
+            velocityUpdateProg = 1;
+        } else {
             velocityUpdateProg += getVelocityUpdateProg();
-            if (velocityUpdateProg >= 1) {
-                velocityUpdateProg -= 1;
+        }
+        if (velocityUpdateProg >= 1) {
+            velocityUpdateProg -= 1;
 
-                PacketPlayOutEntityVelocity packet = new PacketPlayOutEntityVelocity(this);
-                double distSqrMax = VELOCITY_UPDATE_DIST * VELOCITY_UPDATE_DIST;
-                for (Player ply : Bukkit.getOnlinePlayers()) {
-                    if (ply.getWorld() != bukkitEntity.getWorld())
-                        continue;
-                    if (ply.getLocation().distanceSquared(bukkitEntity.getLocation()) > distSqrMax)
-                        continue;
-                    ((CraftPlayer) ply).getHandle().playerConnection.sendPacket(packet);
-                }
+            PacketPlayOutEntityVelocity packet = new PacketPlayOutEntityVelocity(this);
+            double distSqrMax = VELOCITY_UPDATE_DIST * VELOCITY_UPDATE_DIST;
+            for (Player ply : Bukkit.getOnlinePlayers()) {
+                if (ply.getWorld() != bukkitEntity.getWorld())
+                    continue;
+                if (ply.getLocation().distanceSquared(bukkitEntity.getLocation()) > distSqrMax)
+                    continue;
+                ((CraftPlayer) ply).getHandle().playerConnection.sendPacket(packet);
             }
         }
 
