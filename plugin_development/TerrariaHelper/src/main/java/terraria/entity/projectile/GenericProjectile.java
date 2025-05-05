@@ -24,6 +24,7 @@ import java.util.*;
 public class GenericProjectile extends EntityPotion {
     private static final double VANILLA_GRAVITY = 0.05, VANILLA_DRAG = 0.99;
     private static final double DIST_FROM_BLOCK = 1e-5, DIST_CHECK_ON_GROUND = 1e-1;
+    private static final double SEND_VELOCITY_THRESHOLD = 3.9;
     public static final int DESTROY_HIT_BLOCK = 0, DESTROY_HIT_ENTITY = 1, DESTROY_TIME_OUT = 2;
     private static final int VELOCITY_UPDATE_INTERVAL_NORMAL = TerrariaHelper.optimizationConfig.getInt("optimization.projVelUpdItvNormal", 10);
     private static final int VELOCITY_UPDATE_INTERVAL_ACCELERATION = TerrariaHelper.optimizationConfig.getInt("optimization.projVelUpdItvAcceleration", 3);
@@ -212,7 +213,7 @@ public class GenericProjectile extends EntityPotion {
         bukkitEntity = (org.bukkit.entity.Projectile) getBukkitEntity();
         // other properties
         if (shooter != null)
-           bukkitEntity.setShooter(shooter);
+            bukkitEntity.setShooter(shooter);
         this.lockedTarget = lockedTarget;
 
         this.attrMap = (HashMap<String, Double>) attrMap.clone();
@@ -231,7 +232,7 @@ public class GenericProjectile extends EntityPotion {
                     // important: do not remove again if already destroyed. This would trigger on-death effects twice.
                     if (this.isAlive())
                         this.die();
-        }, liveTime), 1);
+                }, liveTime), 1);
     }
 
     // Note: -1e5 is the threshold to be even considered
@@ -542,7 +543,7 @@ public class GenericProjectile extends EntityPotion {
                 // once a target is spotted, do not rotate ever again.
                 if (homingTarget != null)
                     noHomingTicks = 0;
-                // only spin if no target is ever spotted
+                    // only spin if no target is ever spotted
                 else if (ticksLived <= 64 && noHomingTicks != 0) {
                     // get angle and radius
                     double angle, radius;
@@ -555,7 +556,7 @@ public class GenericProjectile extends EntityPotion {
                             // 90 deg and 270( = -90) deg
                             if (motX < 1e-5 && motX > -1e-5)
                                 angle = motZ > 0 ? Math.PI / 2 : Math.PI / -2;
-                            // otherwise, use arc tan.
+                                // otherwise, use arc tan.
                             else {
                                 angle = Math.atan(motZ / motX);
                                 if (motZ < 0)
@@ -927,7 +928,7 @@ public class GenericProjectile extends EntityPotion {
             // tweak speed: handle homing or tweak by per tick speed decay and gravity
             if (homing && homingTarget != null)
                 homingTick(velocity);
-            // not homing into enemies
+                // not homing into enemies
             else {
                 extraMovingTick();
                 // friction if on ground
@@ -1184,22 +1185,38 @@ public class GenericProjectile extends EntityPotion {
         extraTicking();
 
         // updates of the velocity to prevent client glitch
-        if (impulse) {
+        if (impulse || velocityChanged) {
             velocityUpdateProg = 1;
+            impulse = false;
+            velocityChanged = false;
         } else {
             velocityUpdateProg += getVelocityUpdateProg();
         }
         if (velocityUpdateProg >= 1) {
             velocityUpdateProg -= 1;
 
-            PacketPlayOutEntityVelocity packet = new PacketPlayOutEntityVelocity(this);
+            // send velocity info
+            Vector velSend = bukkitEntity.getVelocity();
+            double maxComponent = Math.max( Math.max( Math.abs(velSend.getX()), Math.abs(velSend.getY()) ), Math.abs(velSend.getZ()) );
+            ArrayList<Packet<?>> packets = new ArrayList<>();
+            // tweak velocity sent & send position if needed
+            if (maxComponent > SEND_VELOCITY_THRESHOLD) {
+                velSend.multiply(SEND_VELOCITY_THRESHOLD / maxComponent);
+            }
+            packets.add( new PacketPlayOutEntityVelocity(this.getId(), velSend.getX(), velSend.getY(), velSend.getZ()) );
+            // if the velocity is way too quick, update its position as well
+            if (maxComponent > SEND_VELOCITY_THRESHOLD * 2) {
+                packets.add( new PacketPlayOutEntityTeleport(this) );
+            }
+            // send packets
             double distSqrMax = VELOCITY_UPDATE_DIST * VELOCITY_UPDATE_DIST;
             for (Player ply : Bukkit.getOnlinePlayers()) {
                 if (ply.getWorld() != bukkitEntity.getWorld())
                     continue;
                 if (ply.getLocation().distanceSquared(bukkitEntity.getLocation()) > distSqrMax)
                     continue;
-                ((CraftPlayer) ply).getHandle().playerConnection.sendPacket(packet);
+                for (Packet<?> packet : packets)
+                    ((CraftPlayer) ply).getHandle().playerConnection.sendPacket(packet);
             }
         }
 
@@ -1314,7 +1331,7 @@ public class GenericProjectile extends EntityPotion {
             Vector toTarget = terraria.util.MathHelper.getDirection(
                     bukkitEntity.getLocation(), homingTarget.getBukkitEntity().getLocation(), 1d);
             terraria.util.MathHelper.setVectorLength(velocity, 1d); // Current direction (velocity)
-            
+
             Vector newVelocity = terraria.util.MathHelper.rotationInterpolateDegree(velocity, toTarget, homingAbility);
             // update on velocity itself, do not override its reference.
             velocity.zero().add(newVelocity).multiply(this.speed);

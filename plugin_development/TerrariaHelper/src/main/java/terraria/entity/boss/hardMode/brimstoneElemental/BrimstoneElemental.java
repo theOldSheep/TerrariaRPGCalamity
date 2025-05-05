@@ -1,6 +1,7 @@
 package terraria.entity.boss.hardMode.brimstoneElemental;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
@@ -24,6 +25,7 @@ public class BrimstoneElemental extends EntitySlime {
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.BRIMSTONE_CRAG;
     public static final double BASIC_HEALTH = 118080 * 2, BASIC_HEALTH_BR = 1872000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
+    public static final double BULLET_HELL_IMMEDIATE_START_DIST_SQR = 32 * 32;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
@@ -45,13 +47,11 @@ public class BrimstoneElemental extends EntitySlime {
                 .setStepsize(2)
                 .setVanillaParticle(false)
                 .setParticleColor("b/brmh")
-                .setParticleColor("255|100|150")
                 .setTicksLinger(1);
         rayParticleOption = new GenericHelper.ParticleLineOptions()
                 .setWidth(0.25)
                 .setVanillaParticle(false)
                 .setParticleColor("b/brm")
-                .setParticleColor("255|50|50")
                 .setTicksLinger(20);
 
         rayOption = new GenericHelper.StrikeLineOptions()
@@ -206,6 +206,10 @@ public class BrimstoneElemental extends EntitySlime {
                         motX *= acc;
                         motY *= acc;
                         motZ *= acc;
+                        // when far away enough, immediately start shooting projectiles
+                        if (indexAI < 0 && bukkitEntity.getLocation().distanceSquared(target.getLocation()) > BULLET_HELL_IMMEDIATE_START_DIST_SQR) {
+                            indexAI = 0;
+                        }
                         // shoot barrages of brimstone hell blast
                         if (indexAI >= 0) {
                             int shootInterval = 15;
@@ -350,7 +354,7 @@ public class BrimstoneElemental extends EntitySlime {
             psiFireball = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball,
                     DamageHelper.DamageType.MAGIC, "炼狱硫火球");
             psiHellBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapHellFireball,
-                    DamageHelper.DamageType.MAGIC, "灾厄亡魂");
+                    DamageHelper.DamageType.MAGIC, "硫火亡魂");
         }
     }
 

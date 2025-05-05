@@ -482,7 +482,7 @@ public class Yharon extends EntitySlime {
             if (ply == null)
                 continue;
             DragoncoreHelper.displaySnowStormParticle(ply,
-                    new DragoncoreHelper.DragonCoreParticleInfo("boss/yharon", spawnPosition),
+                    new DragoncoreHelper.DragonCoreParticleInfo("b/yrn", spawnPosition),
                     PARTICLE_INTERVAL);
         }
     }

@@ -181,7 +181,9 @@ public class RotatingRingProjectile extends GenericProjectile {
             // Update the velocity
             Vector position = ringProperties.getCenterLocation().toVector().add(offsetDirection);
             Vector velocity = position.clone().subtract(bukkitEntity.getLocation().toVector());
-            bukkitEntity.setVelocity(velocity);
+            motX = velocity.getX();
+            motY = velocity.getY();
+            motZ = velocity.getZ();
         }
 
         // Call the superclass's B_ method

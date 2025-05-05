@@ -2167,7 +2167,6 @@ Drew之翼:
   - §r[饰品]
   - §r远程伤害造成带电减益
   attributes:
-    speedMulti: 0.1
     damageRangedMulti: 0.1
     critRanged: 5
     buffInflictRanged: 带电|40|0

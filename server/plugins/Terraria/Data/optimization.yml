@@ -30,6 +30,7 @@ optimization:
   projVelUpdItvNormal: 10
   projVelUpdItvAcceleration: 5
   projVelUpdItvBossAcc: 3
+  projVelUpdItvEveryTick: 1
   projectileVelocityUpdateDistance: 96
   globalParticleDensity: 1.0
   dmgHologramInterval: 1

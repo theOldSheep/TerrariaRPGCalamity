@@ -496,7 +496,7 @@
     gravity: 0
     buffInflict:
         - "硫磺火|100|1"
-灾厄亡魂:
+硫火亡魂:
     projDisguiseName: 深渊亡魂
     penetration: 99999
     projectileSize: 1.5
@@ -504,6 +504,7 @@
     liveTime: 80
     gravity: 0
     speedMultiPerTick: 0.99
+    velocityUpdateRule: projVelUpdItvEveryTick
     buffInflict:
         - "孱弱巫咒|60|1"
 无际裂变:
@@ -1140,6 +1141,16 @@
         damageMulti: 1
         name: 冲击波1
         velocity: 0
+灾厄亡魂:
+    projDisguiseName: 深渊亡魂
+    penetration: 99999
+    projectileSize: 1.5
+    blockHitAction: thru
+    liveTime: 80
+    gravity: 0
+    speedMultiPerTick: 0.99
+    buffInflict:
+        - "孱弱巫咒|60|1"
 深渊炙炎:
     velocityUpdateRule: projVelUpdItvBossAcc
     penetration: 99999

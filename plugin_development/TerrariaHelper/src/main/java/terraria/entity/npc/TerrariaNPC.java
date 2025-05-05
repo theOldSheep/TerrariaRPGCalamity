@@ -1,6 +1,7 @@
 package terraria.entity.npc;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
@@ -140,8 +141,9 @@ public class TerrariaNPC extends EntityVillager {
                 break;
             // nitwit
             case ANGLER:
-                setAge(0);
                 setProfession(5);
+                setAgeRaw(0);
+                ageLocked = true;
                 break;
         }
     }
@@ -152,6 +154,7 @@ public class TerrariaNPC extends EntityVillager {
         switch (NPCType) {
             case GUIDE:
             case ANGLER:
+            case BANDIT:
             {
                 shootInterval = 8;
                 break;
@@ -167,12 +170,12 @@ public class TerrariaNPC extends EntityVillager {
                 break;
             }
             case BLOCK_SELLER:
-            case GOBLIN_TINKERER:
             {
                 shootInterval = 12;
                 break;
             }
             case DEMOLITIONIST:
+            case GOBLIN_TINKERER:
             {
                 shootInterval = 20;
                 break;
@@ -226,6 +229,11 @@ public class TerrariaNPC extends EntityVillager {
                         projectileSpd = 1.5;
                         break;
                     }
+                    case BANDIT: {
+                        projType = "钨钢飞刀";
+                        projectileSpd = 2.25;
+                        break;
+                    }
                     case CLOTHIER: {
                         projType = "骷髅头";
                         projectileSpd = 1.25;
@@ -238,17 +246,18 @@ public class TerrariaNPC extends EntityVillager {
                     }
                     case GOBLIN_TINKERER: {
                         projType = "尖刺球";
-                        projectileSpd = 0.4;
+                        projectileSpd = 0.75;
                         break;
                     }
                     case DEMOLITIONIST: {
                         projType = "手榴弹";
-                        projectileSpd = 0.75;
+                        projectileSpd = 1.25;
                         break;
                     }
                 }
                 // help aim enemy
-                AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions(projType);
+                AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions(projType)
+                        .setProjectileSpeed(projectileSpd);
                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMap, projType);
                 Location aimLoc = AimHelper.helperAimEntity(shootInfo.shootLoc, finalTarget, aimHelper);
                 shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, aimLoc, projectileSpd);

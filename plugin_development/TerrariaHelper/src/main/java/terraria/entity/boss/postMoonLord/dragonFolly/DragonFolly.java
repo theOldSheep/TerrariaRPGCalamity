@@ -213,7 +213,7 @@ public class DragonFolly extends EntitySlime {
             if (ply == null)
                 continue;
             DragoncoreHelper.displaySnowStormParticle(ply,
-                    new DragoncoreHelper.DragonCoreParticleInfo("boss/dragonfolly", spawnPosition),
+                    new DragoncoreHelper.DragonCoreParticleInfo("b/dfl", spawnPosition),
                     PARTICLE_INTERVAL);
         }
     }
