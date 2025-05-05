@@ -1,0 +1,29 @@
+b - boss
+	ars - ares final laser
+	atm - artemis final laser
+	brm - brimstone laser
+	brmh - brimstone laser hint
+	dfl - dragonfolly
+	dvt - DoG trail windup
+	eld - empress lance - day
+	eln - empress lance - night
+	elwd - empress lance windup day
+	elwn - empress lance windup night
+	gdn - guardian laser
+	mdr - moonlord death ray (true eye of cthulhu)
+	mdrm - moonlord death ray (major)
+	pvd - providence laser
+	tnt - thanatos
+	yrn - yharon
+p - potion
+	bl - bleeding
+	bn - burning
+	ci - cursed inferno
+	em - elemental mix
+	fb - forstburn
+	gi - god slayer inferno
+	hf - hallow fire
+	mb - miracle blight
+	sf - shadow flame
+t - trail
+	bls - blue lasers (ares' lightning sphere, rogue weapon's thunderbolts)

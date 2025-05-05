@@ -80,10 +80,9 @@ public class Thanatos extends EntitySlime {
                 .setParticleInfo(
                         new GenericHelper.ParticleLineOptions()
                                 .setVanillaParticle(false)
-                                .setParticleChar("boss/thanatos_final_laser")
+                                .setParticleColor("b/tnt")
                                 .setTicksLinger(1)
-                                .setIntensityMulti(0.5)
-                                .setParticleColor("255|255|255", "63|105|249"));
+                                .setIntensityMulti(0.5));
     }
     static final EntityMovementHelper.WormSegmentMovementOptions followOption = new EntityMovementHelper.WormSegmentMovementOptions()
             .setStraighteningMultiplier(-0.1)

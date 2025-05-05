@@ -102,61 +102,62 @@ effects:
     isBuff: false
     damageInterval: 4
     damage: 1
-    snowStormParticle: burning
+    snowStormParticle: p/bn
     tooltip: 缓慢损失生命值
   霜火:
     isBuff: false
     damageInterval: 4
     damage: 2
-    snowStormParticle: frostburn
+    snowStormParticle: p/fb
     tooltip: 不是特别烫就是特别冻。反正都是特别特别痛
   狱炎:
     isBuff: false
     damageInterval: 4
     damage: 6
     damageMonster: 12
-    snowStormParticle: burning
+    snowStormParticle: p/bn
     tooltip: 缓慢损失生命值
   咒火:
     isBuff: false
     damageInterval: 5
     damage: 3
     damageMonster: 12
-    snowStormParticle: cursed_inferno
+    snowStormParticle: p/ci
     tooltip: 正在损失生命值
   暗影焰:
     isBuff: false
     damageInterval: 4
     damage: 3
     damageMonster: 12
-    snowStormParticle: shadowflame
+    snowStormParticle: p/sf
     tooltip: 正在损失生命值
   带电:
     isBuff: false
     damageInterval: 4
     damage: 6
     damageMonster: 15
+    snowStormParticle: p/fb
     tooltip: 极速损失生命值
   破晓:
     isBuff: false
     damageInterval: 5
     damage: 10
     damageMonster: 25
-    snowStormParticle: burning
+    snowStormParticle: p/bn
     tooltip: 被日耀射线焚烧
   血液沸腾:
     isBuff: false
     damageInterval: 10
     damage: 5
     damageMonster: 100
-    snowStormParticle: bleeding
+    snowStormParticle: p/bl
     tooltip: 你的血液沸腾了
   硫磺火:
     isBuff: false
     damageInterval: 5
     damage: 4
     damageMonster: 15
-    snowStormParticle: burning
+    snowStormParticle: p/bn
     tooltip: 被漆黑的火焰吞噬
   辐射:
     isBuff: false
@@ -178,7 +179,7 @@ effects:
       defence: -40
       damageTakenMulti: 0.1
       flightTimeMulti: -0.25
-    snowStormParticle: shadowflame
+    snowStormParticle: p/sf
     tooltip: 你很虚弱
   幻星感染:
     isBuff: false
@@ -206,7 +207,7 @@ effects:
     damageMonster: 100
     attributes:
       regenMulti: -1
-    snowStormParticle: hallow_fire
+    snowStormParticle: p/hf
     tooltip: 神圣之光正将你焚化
   夜魇:
     isBuff: false
@@ -215,7 +216,7 @@ effects:
     damageMonster: 100
     attributes:
       regenMulti: -1
-    snowStormParticle: shadowflame
+    snowStormParticle: p/sf
     tooltip: 被月之射线瓦解
   元素谐鸣:
     isBuff: false
@@ -224,13 +225,13 @@ effects:
     damageMonster: 80
     attributes:
       regenMulti: -1
-    snowStormParticle: elemental_mix
+    snowStormParticle: p/em
     tooltip: 美妙的元素交响乐正在活剥你
   圣狱神火:
     isBuff: false
     damageInterval: 5
     damage: 10
-    snowStormParticle: hallow_fire
+    snowStormParticle: p/hf
     tooltip: 你离亵渎天神太远了！
   硫磺海剧毒:
     isBuff: false
@@ -256,7 +257,7 @@ effects:
     damageMonster: 150
     attributes:
       regenMulti: -1
-    snowStormParticle: god_slayer_inferno
+    snowStormParticle: p/gi
     tooltip: 你的血肉在燃烧
   龙焰:
     isBuff: false
@@ -265,7 +266,7 @@ effects:
     damageMonster: 200
     attributes:
       regenMulti: -1
-    snowStormParticle: burning
+    snowStormParticle: p/bn
     tooltip: 被咆哮的火焰吞没
   超位崩解:
     isBuff: false
@@ -274,19 +275,19 @@ effects:
     damageMonster: 250
     attributes:
       regenMulti: -1
-    snowStormParticle: miracle_blight
+    snowStormParticle: p/mb
     tooltip: 星流共振撕碎了组成你身体的物质
   解离:
     isBuff: false
     damageInterval: 5
     damage: 25
-    snowStormParticle: bleeding
+    snowStormParticle: p/bl
     tooltip: 有人造了十把三尖匕首……
   流血:
     isBuff: false
     attributes:
       regenMulti: -1
-    snowStormParticle: bleeding
+    snowStormParticle: p/bl
     tooltip: 无法再生生命
   缓慢:
     isBuff: false
@@ -527,7 +528,7 @@ effects:
     isBuff: false
     damageInterval: 1
     damage: 10
-    snowStormParticle: bleeding
+    snowStormParticle: p/bl
     tooltip: 血神短暂允诺于你的生命正在消散……
   伤害星云:
     isBuff: true
@@ -565,11 +566,11 @@ effects:
     tooltip: 每秒被动和闲置魔力再生增加 15
   魔力烧蚀:
     isBuff: false
-    snowStormParticle: burning
+    snowStormParticle: p/bn
     tooltip: 过多的魔力正在烧蚀你的身心
   魔力熔蚀:
     isBuff: false
-    snowStormParticle: burning
+    snowStormParticle: p/bn
     tooltip: 你的生命正在升华为魔力
   灵魂恢复:
     isBuff: true
@@ -655,7 +656,7 @@ effects:
         regen: -60
     buffOnTimeout: 硫火狂怒冷却
     buffOnTimeoutDuration: 600
-    snowStormParticle: bleeding
+    snowStormParticle: p/bl
     tooltip: 以生命为代价，黑魔法大大增强了你的力量
   硫火狂怒冷却:
     isBuff: false

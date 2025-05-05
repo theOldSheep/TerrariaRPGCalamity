@@ -4417,7 +4417,7 @@ public class ItemUseHelper {
                                 .setLingerTime(6)
                                 .setLingerDelay(5)
                                 .setThruWall(true)
-                                .setVanillaParticle(false);
+                                .setVanillaParticle(true);
                         GenericHelper.handleStrikeLightning(ply, startLoc, yaw, pitch, length, 4,  width, 1, 3, particleColor,
                                 damageExceptions, attrMap, strikeInfo);
                         // prevent redundant strike
@@ -4583,7 +4583,7 @@ public class ItemUseHelper {
                                 .setDamageCD(4)
                                 .setLingerTime(5)
                                 .setLingerDelay(5)
-                                .setVanillaParticle(false);
+                                .setVanillaParticle(true);
                         // particle must not block the vision
                         startLoc.add(fireDir);
                         GenericHelper.handleStrikeLightning(ply, startLoc, yaw, pitch, length,

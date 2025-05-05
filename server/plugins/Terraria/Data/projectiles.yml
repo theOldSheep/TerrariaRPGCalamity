@@ -80,7 +80,7 @@
     bouncePenetrationBonded: false
     # 弹跳时速度乘的倍数，不写则视为1。仅在blockHitAction: bounce时有作用。
     bounceVelocityMulti: 1.0
-    # 轨迹的颜色(R|G|B)，可不写。为RAINBOW时将变为彩虹轨迹；用";"分割多个随机颜色
+    # 轨迹的颜色(原版：R|G|B；暴雪：路径)，可不写。使用原版粒子且为RAINBOW时将变为彩虹轨迹；用";"分割多个随机颜色
     trailColor: 255|125|125
     # 轨迹大小（单位：格）。不写则默认为弹射物直径。
     trailSize: -1.0
@@ -90,7 +90,8 @@
     trailLingerTime: 10
     # 轨迹粒子数量乘数。不写则视为1。
     trailIntensityMulti: 1
-    # 轨迹是否使用原版MC的粒子效果（原版粒子效果无法控制持续时间，颜色会略有偏差，观感略差但性能影响较小）。不写则视为true。
+    # 轨迹是否使用原版MC的粒子效果（原版粒子效果无法控制持续时间，颜色会略有偏差，观感略差，性能影响较大）。
+    # 否则使用暴雪粒子（需制作对应客户端文件）。不写则视为true。
     trailVanillaParticle: true
     # 贴图使用药水瓶还是在世界中显示物品贴图（爆炸动画类在原地的弹射物较为适合）？默认为false
     worldSpriteMode: false
@@ -762,10 +763,8 @@
     gravity: 0
     liveTime: 75
     blockHitAction: thru
-    trailColor: 255|0|0
-    trailSize: 0.15
-    trailStepSize: 0.75
     trailVanillaParticle: false
+    trailColor: 255|0|0
     homing: true
     homingMethod: 2
     homingRadius: 64
@@ -1120,8 +1119,8 @@
     gravity: 0
     liveTime: 1
     blockHitAction: thru
-    trailColor: 138|227|237
-    trailIntensityMulti: 2
+    trailVanillaParticle: false
+    trailColor: t/bls
     buffInflict:
         - "带电|80|1"
 星流高斯核弹:
@@ -2613,8 +2612,8 @@
     penetration: 999999
     projectileSize: 2
     liveTime: 1
-    trailColor: 142|254|254
-    trailSize: 0.1
+    trailVanillaParticle: false
+    trailColor: t/bls
     trailIntensityMulti: 2
     buffInflict:
         - "带电|200|1"
@@ -3330,8 +3329,8 @@
 神经系统紊乱电弧:
     gravity: 0
     liveTime: 1
-    trailColor: 138|227|237
-    trailIntensityMulti: 0.75
+    trailVanillaParticle: false
+    trailColor: t/bls
     blockHitAction: thru
     buffInflict:
         - "带电|40|1"
@@ -3770,8 +3769,8 @@
     blockHitAction: thru
     projectileSize: 1
     liveTime: 1
-    trailColor: 186|255|228
-    trailIntensityMulti: 2
+    trailVanillaParticle: false
+    trailColor: t/bls
     buffInflict:
         - "带电|200|1"
 遗忘之颚:
@@ -4234,8 +4233,8 @@
     gravity: 0
     liveTime: 1
     blockHitAction: thru
-    trailColor: 138|227|237
-    trailIntensityMulti: 2
+    trailVanillaParticle: false
+    trailColor: t/bls
     buffInflict:
         - "带电|100|1"
 阿瑞斯外骨骼热能激光:
@@ -7627,14 +7626,16 @@ TNT:
     liveTime: 1
     isGrenade: true
     blastRadius: 2.5
-    trailColor: 96|255|255
+    trailVanillaParticle: false
+    trailColor: t/bls
 特斯拉强电束:
     gravity: 0
     projectileSize: 1
     liveTime: 100
     isGrenade: true
     blastRadius: 3
-    trailColor: 96|255|255
+    trailVanillaParticle: false
+    trailColor: t/bls
     spawnProjectiles:
         interval: 1
         offset: 32

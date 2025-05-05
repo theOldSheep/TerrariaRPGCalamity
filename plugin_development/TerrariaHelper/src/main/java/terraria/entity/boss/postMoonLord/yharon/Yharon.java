@@ -481,8 +481,8 @@ public class Yharon extends EntitySlime {
             Player ply = Bukkit.getPlayer(uid);
             if (ply == null)
                 continue;
-            DragoncoreHelper.displayBlizzardParticle(ply,
-                    new DragoncoreHelper.DragonCoreParticleInfo("yharon", spawnPosition),
+            DragoncoreHelper.displaySnowStormParticle(ply,
+                    new DragoncoreHelper.DragonCoreParticleInfo("boss/yharon", spawnPosition),
                     PARTICLE_INTERVAL);
         }
     }

@@ -577,7 +577,7 @@ public class EmpressOfLight extends EntitySlime {
         }
         // particle and strike options
         {
-            String particleSuffix = summonedDuringDay ? "_day" : "_night";
+            String particleSuffix = summonedDuringDay ? "d" : "n";
             particleLineOptionsSunDance = new GenericHelper.ParticleLineOptions()
                     .setVanillaParticle(false)
                     .setParticleColor(particleColor)
@@ -596,16 +596,14 @@ public class EmpressOfLight extends EntitySlime {
                     .setThruWall(true);
             particleLineOptionsLance = new GenericHelper.ParticleLineOptions()
                     .setVanillaParticle(false)
-                    .setParticleChar("boss/empress_lance" + particleSuffix)
-                    .setParticleColor(particleColor)
+                    .setParticleColor("b/el" + particleSuffix)
                     .setTicksLinger(1);
             strikeLineOptionsLance = new GenericHelper.StrikeLineOptions()
                     .setParticleInfo(particleLineOptionsLance)
                     .setThruWall(true);
             particleLineOptionsLanceWindup = new GenericHelper.ParticleLineOptions()
                     .setVanillaParticle(false)
-                    .setParticleChar("boss/empress_lance_windup" + particleSuffix)
-                    .setParticleColor(particleColor)
+                    .setParticleColor("b/elw" + particleSuffix)
                     .setTicksLinger(20)
                     .setLength(24)
                     .setWidth(0.1)

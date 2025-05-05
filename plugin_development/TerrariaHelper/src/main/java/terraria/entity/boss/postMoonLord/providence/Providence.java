@@ -79,9 +79,8 @@ public class Providence extends EntitySlime {
                 .setParticleInfo(
                         new GenericHelper.ParticleLineOptions()
                                 .setVanillaParticle(false)
-                                .setParticleChar("boss/providence_laser")
-                                .setTicksLinger(1)
-                                .setParticleColor("255|255|150"));
+                                .setParticleColor("b/pvd")
+                                .setTicksLinger(1));
 
         aimBomb = new AimHelper.AimHelperOptions()
                 .setAccelerationMode(true)

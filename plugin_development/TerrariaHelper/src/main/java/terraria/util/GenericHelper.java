@@ -25,18 +25,19 @@ public class GenericHelper {
     public static class ParticleLineOptions {
         boolean particleOrItem;
         boolean vanillaParticle;
+        // if using snowstorm (not vanilla), should we use the particle in a raw way?
+        boolean snowStormRawUse;
         ItemStack spriteItem;
         Vector rightOrthogonalDir;
         double length, width, stepsize, intensityMulti;
         float alpha;
         int ticksLinger;
-        // Not using vanilla - if char is single char, it is the char rendered; otherwise it is snowstorm particle name.
-        String particleChar;
         ArrayList<String> particleColor;
         ArrayList<Color> particleColorObjects;
         public ParticleLineOptions() {
             particleOrItem = true;
             vanillaParticle = true;
+            snowStormRawUse = true;
             spriteItem = null;
             rightOrthogonalDir = null;
             length = 1;
@@ -44,25 +45,30 @@ public class GenericHelper {
             stepsize = width;
             intensityMulti = 1;
             ticksLinger = 5;
-            particleChar = "█";
             particleColor = new ArrayList<>();
             setParticleColor("255|255|255");
             alpha = 0.5f;
         }
         public ParticleLineOptions clone() {
             ParticleLineOptions result = new ParticleLineOptions();
+            if (result.spriteItem != null) {
+                result.setSpriteItem(spriteItem.clone());
+            }
+            if (result.rightOrthogonalDir != null) {
+                result.setRightOrthogonalDir(rightOrthogonalDir.clone());
+            }
+            if (result.particleColor != null) {
+                result.setParticleColor(particleColor);
+            }
             result.setParticleOrItem(particleOrItem)
                     .setVanillaParticle(vanillaParticle)
-                    .setSpriteItem(spriteItem.clone())
-                    .setRightOrthogonalDir(rightOrthogonalDir.clone())
+                    .setSnowStormRawUse(snowStormRawUse)
                     .setLength(length)
                     .setWidth(width, false)
                     .setStepsize(stepsize)
                     .setIntensityMulti(intensityMulti)
                     .setTicksLinger(ticksLinger)
-                    .setAlpha(alpha)
-                    .setParticleChar(particleChar)
-                    .setParticleColor((ArrayList<String>) particleColor.clone());
+                    .setAlpha(alpha);
             return result;
         }
         public ParticleLineOptions setParticleOrItem(boolean particleOrItem) {
@@ -116,8 +122,8 @@ public class GenericHelper {
             this.alpha = alpha;
             return this;
         }
-        public ParticleLineOptions setParticleChar(String particleChar) {
-            this.particleChar = particleChar;
+        public ParticleLineOptions setSnowStormRawUse(boolean snowStormRawUse) {
+            this.snowStormRawUse = snowStormRawUse;
             return this;
         }
         public ParticleLineOptions setParticleColor(String... particleColor) {
@@ -361,12 +367,16 @@ public class GenericHelper {
         return Math.max(distX, distZ);
     }
     public static void handleParticleLine(Vector vector, Location startLoc, ParticleLineOptions options) {
-        if (options.particleOrItem)
-            handleParticleLine_particle(vector, startLoc, options);
+        if (options.particleOrItem) {
+            if (options.vanillaParticle)
+                handleVanillaParticleLine(vector, startLoc, options);
+            else
+                handleSnowStormParticleLine(vector, startLoc, options);
+        }
         else
-            handleParticleLine_item(vector, startLoc, options);
+            handleItemParticleLine(vector, startLoc, options);
     }
-    public static void handleParticleLine_item(Vector vector, Location startLoc, ParticleLineOptions options) {
+    public static void handleItemParticleLine(Vector vector, Location startLoc, ParticleLineOptions options) {
         displayHoloItem(startLoc, options.spriteItem, options.ticksLinger, (float) options.length, vector, options.rightOrthogonalDir);
     }
     // color helper functions
@@ -376,6 +386,9 @@ public class GenericHelper {
     // Parse color from R|G|B
     public static Color getColorFromString(String colorString) {
         String[] info = colorString.split("\\|");
+        if (info.length != 3) {
+            return Color.AQUA;
+        }
         return Color.fromRGB(Integer.parseInt(info[0]), Integer.parseInt(info[1]), Integer.parseInt(info[2]));
     }
     // Parse color list from a list of strings, used in particle display
@@ -431,12 +444,7 @@ public class GenericHelper {
         return Color.fromRGB(r, g, b);
     }
     // Display particle line
-    public static void handleParticleLine_particle(Vector vector, Location startLoc, ParticleLineOptions options) {
-        String particleCharacter = options.particleChar;
-        if (particleCharacter.length() > 1 && (! particleCharacter.startsWith("§")) ) {
-            handleParticleLine_snowstorm(vector, startLoc, options);
-            return;
-        }
+    public static void handleVanillaParticleLine(Vector vector, Location startLoc, ParticleLineOptions options) {
         // variables copied from options
         double length = options.length;
         double width = options.width;
@@ -455,50 +463,63 @@ public class GenericHelper {
             Color currentColor = options.particleColor.get(0).equals("RAINBOW") ?
                     getRainbowColor(2500) : getInterpolateColor((double) i / (loopTime + 1), allColors);
             // spawn "particles"
-            if (options.vanillaParticle) {
-                double particleEstDist = (stepsize + width) / 2;
-                // basically, max(estimated dist, estimated dist^2) * intensityMulti
-                double particleAmountRaw = options.intensityMulti *
-                        (particleEstDist < 1 ? particleEstDist : particleEstDist * particleEstDist );
-                double rVal = (currentColor.getRed() / 255d) - 1;
-                double gVal = (currentColor.getGreen() / 255d);
-                double bVal = (currentColor.getBlue() / 255d);
-                // spawn particles for each player
-                for (Player ply : startLoc.getWorld().getPlayers()) {
-                    int particleAmount = MathHelper.randomRound(
-                            particleAmountRaw * GLOBAL_PARTICLE_DENSITY *
-                                    Setting.getOptionDouble(ply, Setting.Options.PARTICLE_DENSITY_MULTI));
-                    for (int spawnIdx = 0; spawnIdx < particleAmount; spawnIdx ++) {
-                        Location currParticleLoc = currLoc.clone().add(
-                                Math.random() * width * 2 - width,
-                                Math.random() * width * 2 - width,
-                                Math.random() * width * 2 - width);
-                        ply.spawnParticle(Particle.REDSTONE, currParticleLoc, 0, rVal, gVal, bVal);
-                    }
+            double particleEstDist = (stepsize + width) / 2;
+            // basically, max(estimated dist, estimated dist^2) * intensityMulti
+            double particleAmountRaw = options.intensityMulti *
+                    (particleEstDist < 1 ? particleEstDist : particleEstDist * particleEstDist );
+            double rVal = (currentColor.getRed() / 255d) - 1;
+            double gVal = (currentColor.getGreen() / 255d);
+            double bVal = (currentColor.getBlue() / 255d);
+            // spawn particles for each player
+            for (Player ply : startLoc.getWorld().getPlayers()) {
+                int particleAmount = MathHelper.randomRound(
+                        particleAmountRaw * GLOBAL_PARTICLE_DENSITY *
+                                Setting.getOptionDouble(ply, Setting.Options.PARTICLE_DENSITY_MULTI));
+                for (int spawnIdx = 0; spawnIdx < particleAmount; spawnIdx ++) {
+                    Location currParticleLoc = currLoc.clone().add(
+                            Math.random() * width * 2 - width,
+                            Math.random() * width * 2 - width,
+                            Math.random() * width * 2 - width);
+                    ply.spawnParticle(Particle.REDSTONE, currParticleLoc, 0, rVal, gVal, bVal);
                 }
-            }
-            else {
-                String rCode = Integer.toHexString(currentColor.getRed()),
-                        gCode = Integer.toHexString(currentColor.getGreen()),
-                        bCode = Integer.toHexString(currentColor.getBlue());
-                if (rCode.length() == 1) rCode = "0" + rCode;
-                if (gCode.length() == 1) gCode = "0" + gCode;
-                if (bCode.length() == 1) bCode = "0" + bCode;
-                String colorCode = rCode + gCode + bCode;
-                displayHoloText(currLoc, "§#" + colorCode + particleCharacter, ticksLinger, (float) width, (float) width, alpha);
             }
             // add vector to location
             currLoc.add(dVec);
         }
     }
-    // Handle snowstorm particle
-    public static void handleParticleLine_snowstorm(Vector vector, Location startLoc, ParticleLineOptions options) {
+    // Display particle line
+    public static void handleSnowStormParticleLine(Vector vector, Location startLoc, ParticleLineOptions options) {
+        if (options.snowStormRawUse) {
+            handleSingleSnowstormParticleLine(vector, startLoc, options);
+            return;
+        }
         // variables copied from options
         double length = options.length;
-        double width = options.width;
-        double stepsize = options.stepsize;
+        length = Math.max(Math.min(length, 64d), 0.5d);
+        int intSection, decSection = 0;
+        if (length < 5) {
+            intSection = (int) length;
+            decSection = (int) ((length - intSection) * 2);
+        }
+        else if (length < 16) {
+            intSection = (int) Math.round(length);
+        }
+        else {
+            intSection = ((int) Math.round(length / 2)) * 2;
+        }
+        // calculate the particle to use
+        ParticleLineOptions strikeOption = options.clone();
+        String col = strikeOption.particleColor.get(0) + "/" + intSection;
+        if (decSection != 0) col += "_" + decSection;
+        strikeOption.setParticleColor( col );
+        // finally show the particle line
+        handleSingleSnowstormParticleLine(vector, startLoc, strikeOption);
+    }
+    // Handle snowstorm particle
+    public static void handleSingleSnowstormParticleLine(Vector vector, Location startLoc, ParticleLineOptions options) {
+        // variables copied from options
         int ticksLinger = options.ticksLinger;
-        String particleName = options.particleChar;
+        String particleName = options.particleColor.get(0);
 
         DragoncoreHelper.DragonCoreParticleInfo particleInfo = new DragoncoreHelper.DragonCoreParticleInfo(particleName, startLoc);
 
@@ -506,7 +527,7 @@ public class GenericHelper {
         double rotateZ = (float) MathHelper.getVectorPitch(vector);
         particleInfo.setRotationalInfo(String.format("0,%f,%f", rotateY, rotateZ));
 
-        DragoncoreHelper.displayBlizzardParticle(particleInfo, ticksLinger);
+        DragoncoreHelper.displaySnowStormParticle(particleInfo, ticksLinger);
     }
 
     // helper function for handle strike line. This only handles damage.

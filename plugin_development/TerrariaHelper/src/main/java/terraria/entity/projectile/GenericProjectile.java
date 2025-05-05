@@ -30,8 +30,8 @@ public class GenericProjectile extends EntityPotion {
     private static final double VELOCITY_UPDATE_DIST = TerrariaHelper.optimizationConfig.getDouble("optimization.projectileVelocityUpdateDistance", 96d);
 
     // projectile info
-    public String projectileType, projectileItemName, blockHitAction = "die", spawnSound = "",
-            trailColor = null, velocityUpdateRule = "Default";
+    public String projectileType, projectileItemName;
+    String blockHitAction = "die", spawnSound = "", trailColor = null, velocityUpdateRule = "Default";
     public int homingMethod = 1, bounce = 0, enemyInvincibilityFrame = 5, liveTime = 200,
             noHomingTicks = 0, noGravityTicks = 5, maxHomingTicks = 999999, minimumDamageTicks = 0,
             penetration = 0, trailLingerTime = 10, worldSpriteUpdateInterval = 1;
@@ -777,6 +777,7 @@ public class GenericProjectile extends EntityPotion {
                 GenericHelper.handleParticleLine(displayDir, lastTrailDisplayLocation,
                         new GenericHelper.ParticleLineOptions()
                                 .setVanillaParticle(trailVanillaParticle)
+                                .setSnowStormRawUse(false)
                                 .setLength(newDirLen)
                                 .setWidth(trailSize, false)
                                 .setStepsize(trailStepSize)

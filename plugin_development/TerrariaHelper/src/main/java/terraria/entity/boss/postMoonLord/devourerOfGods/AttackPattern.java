@@ -1,7 +1,6 @@
 package terraria.entity.boss.postMoonLord.devourerOfGods;
 
 import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -9,7 +8,6 @@ import org.bukkit.util.Vector;
 import terraria.util.EntityHelper;
 import terraria.util.GenericHelper;
 import terraria.util.MathHelper;
-import terraria.util.WorldHelper;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -21,10 +19,10 @@ abstract class AttackPattern {
     public abstract void scheduleProjectiles(JavaPlugin plugin, Player player, EntityHelper.ProjectileShootInfo shootInfo, double projectileSpeed);
     // Helper method to display trajectory particle effect
     protected void displayTrajectory(Location startLoc, Vector particleOffset) {
-        GenericHelper.handleParticleLine_snowstorm(particleOffset, startLoc,
+        GenericHelper.handleSingleSnowstormParticleLine(particleOffset, startLoc,
                 new GenericHelper.ParticleLineOptions()
                         .setVanillaParticle(false)
-                        .setParticleChar("boss/devourer_trail_windup")
+                        .setParticleColor("b/dvt")
                         .setTicksLinger(20));
     }
     // Helper method to handle the projectile spawning

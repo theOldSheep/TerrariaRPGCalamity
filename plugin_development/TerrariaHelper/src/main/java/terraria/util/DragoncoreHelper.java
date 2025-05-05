@@ -9,9 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import terraria.TerrariaHelper;
 
-import javax.swing.plaf.TableHeaderUI;
 import java.util.UUID;
 import java.util.function.Predicate;
 
@@ -64,16 +62,16 @@ public class DragoncoreHelper {
         }
     }
 
-    public static void displayBlizzardParticle(DragonCoreParticleInfo particleInfo, int duration) {
-        displayBlizzardParticle((p)->true, particleInfo, duration);
+    public static void displaySnowStormParticle(DragonCoreParticleInfo particleInfo, int duration) {
+        displaySnowStormParticle((p)->true, particleInfo, duration);
     }
-    public static void displayBlizzardParticle(Predicate<Player> validation, DragonCoreParticleInfo particleInfo, int duration) {
+    public static void displaySnowStormParticle(Predicate<Player> validation, DragonCoreParticleInfo particleInfo, int duration) {
         for (Player ply : Bukkit.getOnlinePlayers()) {
             if (validation.test(ply))
-                displayBlizzardParticle(ply, particleInfo, duration);
+                displaySnowStormParticle(ply, particleInfo, duration);
         }
     }
-    public static void displayBlizzardParticle(Player ply, DragonCoreParticleInfo particleInfo, int duration) {
+    public static void displaySnowStormParticle(Player ply, DragonCoreParticleInfo particleInfo, int duration) {
         PacketSender.addParticle(ply, particleInfo.name, particleInfo.uidInfo, particleInfo.positionalInfo, particleInfo.rotationalInfo, duration);
     }
     public static void moveCamera(Player ply, double distance, int fadeInMillis, int sustainMillis, int fadeOutMillis) {
