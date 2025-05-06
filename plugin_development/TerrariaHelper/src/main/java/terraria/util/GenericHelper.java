@@ -143,7 +143,7 @@ public class GenericHelper {
         }
     }
     public static class StrikeLineOptions {
-        boolean displayParticle, bounceWhenHitBlock, thruWall, vanillaParticle;
+        boolean displayParticle, bounceWhenHitBlock, thruWall, vanillaParticle, snowStormRawUse;
         int damageCD, lingerTime, lingerDelay, maxTargetHit;
         double damage, decayCoef, particleIntensityMulti, whipBonusCrit, whipBonusDamage;
         ParticleLineOptions particleInfo;
@@ -157,6 +157,7 @@ public class GenericHelper {
             bounceWhenHitBlock = false;
             thruWall = true;
             vanillaParticle = true;
+            snowStormRawUse = true;
 
             damageCD = 10;
             lingerTime = 1;
@@ -185,6 +186,7 @@ public class GenericHelper {
                     .setBounceWhenHitBlock(bounceWhenHitBlock)
                     .setThruWall(thruWall)
                     .setVanillaParticle(vanillaParticle)
+                    .setSnowStormRawUse(snowStormRawUse)
                     // ints
                     .setDamageCD(damageCD)
                     .setLingerTime(lingerTime)
@@ -219,6 +221,10 @@ public class GenericHelper {
         }
         public StrikeLineOptions setVanillaParticle(boolean vanillaParticle) {
             this.vanillaParticle = vanillaParticle;
+            return this;
+        }
+        public StrikeLineOptions setSnowStormRawUse(boolean snowStormRawUse) {
+            this.snowStormRawUse = snowStormRawUse;
             return this;
         }
         // int setters
@@ -525,7 +531,7 @@ public class GenericHelper {
 
         double rotateY = -(float) MathHelper.getVectorYaw(vector) + 90;
         double rotateZ = (float) MathHelper.getVectorPitch(vector);
-        particleInfo.setRotationalInfo(String.format("0,%f,%f", rotateY, rotateZ));
+        particleInfo.setRotationalInfo(String.format("0,%.1f,%.1f", rotateY, rotateZ));
 
         DragoncoreHelper.displaySnowStormParticle(particleInfo, ticksLinger);
     }
@@ -619,6 +625,7 @@ public class GenericHelper {
                     .setAlpha(0.5f)
                     .setIntensityMulti(advanced.particleIntensityMulti)
                     .setVanillaParticle(advanced.vanillaParticle)
+                    .setSnowStormRawUse(advanced.snowStormRawUse)
                     .setTicksLinger(lingerTime > 1 ? (lingerTime - 1) * lingerDelay : lingerDelay);
         }
         // find terminal location ( hit block etc. )

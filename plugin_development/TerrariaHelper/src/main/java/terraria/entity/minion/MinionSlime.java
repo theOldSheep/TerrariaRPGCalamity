@@ -203,7 +203,7 @@ public class MinionSlime extends EntitySlime {
                 new MinionHusk(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                         this.sentryOrMinion, true,
                         "葱茏之锋", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
-                String[] meleeExtraMinions = {"泰拉棱镜", "泰拉棱镜", "元素斧头", "耀目圣刃", "灭兆渡鸦"},
+                String[] meleeExtraMinions = {"耀目圣刃", "灭兆渡鸦"},
                         rangedExtraMinions = {"宇宙炮艇", "极昼飞行物"};
                 for (String minion : meleeExtraMinions)
                     new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
@@ -340,17 +340,11 @@ public class MinionSlime extends EntitySlime {
                         new GenericHelper.StrikeLineOptions()
                                 .setDamageCD(damageInvincibilityTicks)
                                 .setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                        .setVanillaParticle(true)
-                                        .setWidth(0.2)
-                                        .setLength(3)
-                                        .setTicksLinger(2)
-                                        .setParticleColor(
-                                                "255|0|0",
-                                                "255|255|0",
-                                                "0|255|0",
-                                                "0|255|255",
-                                                "0|0|255",
-                                                "255|0|255"));
+                                        .setVanillaParticle(false)
+                                        .setWidth(0.25)
+                                        .setLength(4)
+                                        .setTicksLinger(1)
+                                        .setParticleColor("m/trp"));
                 extraVariables.put("strikeLineOption", strikeLineOption);
                 noclip = true;
                 setNoGravity(true);
@@ -361,11 +355,12 @@ public class MinionSlime extends EntitySlime {
                         new GenericHelper.StrikeLineOptions()
                                 .setDamageCD(damageInvincibilityTicks)
                                 .setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                        .setVanillaParticle(true)
+                                        .setVanillaParticle(false)
+                                        .setSnowStormRawUse(false)
                                         .setWidth(0.2)
                                         .setLength(6)
                                         .setTicksLinger(2)
-                                        .setParticleColor("121|216|223"));
+                                        .setParticleColor("t/bls"));
                 extraVariables.put("sLO", strikeLineOption);
                 noclip = true;
                 setNoGravity(true);
@@ -446,11 +441,12 @@ public class MinionSlime extends EntitySlime {
                         new GenericHelper.StrikeLineOptions()
                                 .setDamageCD(1)
                                 .setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                        .setVanillaParticle(true)
+                                        .setVanillaParticle(false)
+                                        .setSnowStormRawUse(false)
                                         .setWidth(0.2)
                                         .setLength(64)
                                         .setTicksLinger(2)
-                                        .setParticleColor("249|105|63"));
+                                        .setParticleColor("t/rls"));
                 extraVariables.put("sLO", strikeLineOption);
                 // reset cannon types to default
                 PlayerHelper.initAresExoskeletonConfig(owner, true);
@@ -472,11 +468,12 @@ public class MinionSlime extends EntitySlime {
                         new GenericHelper.StrikeLineOptions()
                                 .setDamageCD(1)
                                 .setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                        .setVanillaParticle(true)
+                                        .setVanillaParticle(false)
+                                        .setSnowStormRawUse(false)
                                         .setWidth(0.25)
                                         .setLength(64)
                                         .setTicksLinger(2)
-                                        .setParticleColor("116|231|230"))
+                                        .setParticleColor("t/bls"))
                                 .setDamagedFunction((strikeNum, entityHit, hitLoc) -> {
                                     EntityHelper.applyEffect(entityHit, "夜魇", 100);
                                 });
@@ -706,7 +703,7 @@ public class MinionSlime extends EntitySlime {
                             Vector laserDir = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), 1);
                             GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(),
                                     MathHelper.getVectorYaw(laserDir), MathHelper.getVectorPitch(laserDir), 6.0, 0.2,
-                                    "", "0|0|0", damageCD, (HashMap<String, Double>) attrMap.clone(),
+                                    "", "t/bls", damageCD, (HashMap<String, Double>) attrMap.clone(),
                                     (GenericHelper.StrikeLineOptions) extraVariables.get("sLO"));
                         }
                         // repeat AI cycle
@@ -1906,7 +1903,9 @@ public class MinionSlime extends EntitySlime {
                         }
                         GenericHelper.handleParticleLine(trailVec, destination,
                                 new GenericHelper.ParticleLineOptions()
-                                        .setParticleColor("102|204|255")
+                                        .setVanillaParticle(false)
+                                        .setSnowStormRawUse(false)
+                                        .setParticleColor("t/bls")
                                         .setLength(particleLineLength));
                         MinionHelper.attemptTeleport(minionBukkit, destination);
                         amountFired ++;
@@ -2221,14 +2220,17 @@ public class MinionSlime extends EntitySlime {
                 }
                 // strike the target if it comes close
                 if (!targetIsOwner && index % 10 == 0 &&
-                        target.getLocation().distanceSquared(bukkitEntity.getLocation()) < 100) {
+                        target.getLocation().distanceSquared(bukkitEntity.getLocation()) < 400) {
                     Vector strikeDir = MathHelper.getDirection(
                             minionBukkit.getEyeLocation(), target.getEyeLocation(), 1);
                     GenericHelper.StrikeLineOptions strikeOption = new GenericHelper.StrikeLineOptions()
-                            .setDecayCoef(0.6);
+                            .setVanillaParticle(false)
+                            .setSnowStormRawUse(false)
+                            .setDamageCD(5)
+                            .setLingerDelay(1);
                     GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(),
                             MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
-                            10, 0.1, 0.75, "", "100|30|50",
+                            20, 0.25, "", "t/rls",
                             new ArrayList<>(), attrMap, strikeOption);
                 }
                 break;
@@ -2310,7 +2312,7 @@ public class MinionSlime extends EntitySlime {
                 currPitch = newDir[1];
                 // handle strike
                 GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(), currYaw, currPitch, 3.0, 0.2,
-                        "", "0|0|0", damageCD, (HashMap<String, Double>) attrMap.clone(),
+                        "", "m/trp", damageCD, (HashMap<String, Double>) attrMap.clone(),
                         (GenericHelper.StrikeLineOptions) extraVariables.get("strikeLineOption"));
                 extraVariables.put("yaw", currYaw);
                 extraVariables.put("pitch", currPitch);
@@ -2411,6 +2413,8 @@ public class MinionSlime extends EntitySlime {
                     double length = strikeDir.length();
                     if (length < 32) {
                         GenericHelper.StrikeLineOptions strikeOption = new GenericHelper.StrikeLineOptions()
+                                .setVanillaParticle(false)
+                                .setSnowStormRawUse(false)
                                 .setMaxTargetHit(1)
                                 .setDamagedFunction((strikeNum, entityHit, hitLoc) -> {
                                     ArrayList<Entity> exceptions = new ArrayList<>();
@@ -2419,7 +2423,7 @@ public class MinionSlime extends EntitySlime {
                                 });
                         GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(),
                                 MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
-                                length, 0.1, 0.5, "", "163|244|255",
+                                length, 0.1, 0.5, "", "t/bls",
                                 new ArrayList<>(), attrMap, strikeOption);
                     }
                 }
@@ -2459,10 +2463,12 @@ public class MinionSlime extends EntitySlime {
                     double length = strikeDir.length();
                     if (length < 48) {
                         GenericHelper.StrikeLineOptions strikeOption = new GenericHelper.StrikeLineOptions()
+                                .setVanillaParticle(false)
+                                .setSnowStormRawUse(false)
                                 .setMaxTargetHit(2);
                         GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(),
                                 MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
-                                length, 0.5, "", "255|200|0",
+                                length, 0.5, "", "t/ols",
                                 new ArrayList<>(), attrMap, strikeOption);
                     }
                 }
@@ -2523,10 +2529,12 @@ public class MinionSlime extends EntitySlime {
                     Vector strikeDir = MathHelper.getDirection(
                             minionBukkit.getEyeLocation(), target.getEyeLocation(), 1);
                     GenericHelper.StrikeLineOptions strikeOption = new GenericHelper.StrikeLineOptions()
+                            .setVanillaParticle(false)
+                            .setSnowStormRawUse(false)
                             .setDecayCoef(0.5);
                     GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(),
                             MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
-                            48, 0.1, 0.5, "", "165|45|35",
+                            48, 0.1, 0.5, "", "t/rls",
                             new ArrayList<>(), attrMap, strikeOption);
                 }
                 break;
@@ -2542,10 +2550,12 @@ public class MinionSlime extends EntitySlime {
                     double length = strikeDir.length();
                     if (length < 48) {
                         GenericHelper.StrikeLineOptions strikeOption = new GenericHelper.StrikeLineOptions()
+                                .setVanillaParticle(false)
+                                .setSnowStormRawUse(false)
                                 .setMaxTargetHit(2);
                         GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(),
                                 MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
-                                length, 0.1, 0.5, "", "255|225|122",
+                                length, 0.1, 0.5, "", "t/ols",
                                 new ArrayList<>(), attrMap, strikeOption);
                     }
                 }
@@ -2562,10 +2572,12 @@ public class MinionSlime extends EntitySlime {
                     double length = strikeDir.length();
                     if (length < 64) {
                         GenericHelper.StrikeLineOptions strikeOption = new GenericHelper.StrikeLineOptions()
+                                .setVanillaParticle(false)
+                                .setSnowStormRawUse(false)
                                 .setMaxTargetHit(2);
                         GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(),
                                 MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
-                                length, 0.1, 0.5, "", "255|225|122",
+                                length, 0.1, 0.5, "", "t/ols",
                                 new ArrayList<>(), attrMap, strikeOption);
                     }
                 }
@@ -2582,12 +2594,14 @@ public class MinionSlime extends EntitySlime {
                     double length = strikeDir.length();
                     if (length < 80) {
                         GenericHelper.StrikeLineOptions strikeOption = new GenericHelper.StrikeLineOptions()
+                                .setVanillaParticle(false)
+                                .setSnowStormRawUse(false)
                                 .setDamagedFunction( (Integer hitIdx, Entity hitEntity, Location hitLoc) ->
                                         EntityHelper.applyEffect(hitEntity, "夜魇", 60) )
                                 .setMaxTargetHit(1);
                         GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(),
                                 MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
-                                80, 0.25, 0.25, "", "150|255|255",
+                                80, 0.25, 0.25, "", "t/dbls",
                                 new ArrayList<>(), attrMap, strikeOption);
                     }
                 }
@@ -2737,7 +2751,7 @@ public class MinionSlime extends EntitySlime {
                                         Vector laserDir = MathHelper.getDirection(shootLoc, target.getEyeLocation(), 1);
                                         GenericHelper.handleStrikeLine(minionBukkit, shootLoc,
                                                 MathHelper.getVectorYaw(laserDir), MathHelper.getVectorPitch(laserDir), 64.0, 0.2,
-                                                "", "0|0|0", damageCD, (HashMap<String, Double>) attrMap.clone(),
+                                                "", "t/rls", damageCD, (HashMap<String, Double>) attrMap.clone(),
                                                 (GenericHelper.StrikeLineOptions) extraVariables.get("sLO"));
                                     }
                                 }
@@ -2822,7 +2836,7 @@ public class MinionSlime extends EntitySlime {
                                 Vector laserDir = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), 1);
                                 GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(),
                                         MathHelper.getVectorYaw(laserDir), MathHelper.getVectorPitch(laserDir), 64.0, 0.25,
-                                        "", "0|0|0", damageCD, (HashMap<String, Double>) attrMap.clone(),
+                                        "", "t/bls", damageCD, (HashMap<String, Double>) attrMap.clone(),
                                         (GenericHelper.StrikeLineOptions) extraVariables.get("sLO"));
                             }
                             break;
@@ -2922,12 +2936,11 @@ public class MinionSlime extends EntitySlime {
                         if (length < 40) {
                             GenericHelper.StrikeLineOptions strikeOption = new GenericHelper.StrikeLineOptions()
                                     .setMaxTargetHit(1)
-                                    .setParticleInfo(new GenericHelper.ParticleLineOptions()
-                                            .setParticleColor("164|255|255", "243|136|248")
-                                            .setTicksLinger(8));
+                                    .setVanillaParticle(false)
+                                    .setSnowStormRawUse(false);
                             GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(),
                                     MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
-                                    length, 0.1, 0.5, "", "164|255|255",
+                                    length, 0.1, 0.5, "", "t/rls",
                                     new ArrayList<>(), attrMap, strikeOption);
                         }
                     }
@@ -2949,15 +2962,14 @@ public class MinionSlime extends EntitySlime {
                     }
                     // new locations
                     if (!targetIsOwner) {
-                        String color = colors.get( (int) (Math.random() * colors.size()) );
                         Location predictedLoc = AimHelper.helperAimEntity(bukkitEntity, target,
                                 new AimHelper.AimHelperOptions()
                                         .setAimMode(true)
                                         .setTicksTotal(10));
                         GenericHelper.ParticleLineOptions particleInfo = new GenericHelper.ParticleLineOptions()
-                                .setWidth(0.25)
-                                .setStepsize(0.6)
-                                .setParticleColor(color)
+                                .setVanillaParticle(false)
+                                .setSnowStormRawUse(false)
+                                .setParticleColor("t/rbws")
                                 .setTicksLinger(10);
                         for (int i = (int) (Math.random() * 3); i < 5; i ++) {
                             Vector offset = MathHelper.randomVector();
@@ -2988,10 +3000,12 @@ public class MinionSlime extends EntitySlime {
                         double pitch = (double) extraVariables.get("p");
                         ArrayList<Entity> damageExceptions = (ArrayList<Entity>) extraVariables.get("dmgCDs");
                         GenericHelper.handleStrikeLine(minionBukkit, minionBukkit.getEyeLocation(), yaw, pitch,
-                                64, 1.5, "", "0|225|125",
+                                64, 1.5, "", "t/bls",
                                 damageExceptions, attrMap,
                                 new GenericHelper.StrikeLineOptions()
                                         .setThruWall(false)
+                                        .setVanillaParticle(false)
+                                        .setSnowStormRawUse(false)
                                         .setDamageCD(5)
                                         .setLingerDelay(1));
                         pitch--;

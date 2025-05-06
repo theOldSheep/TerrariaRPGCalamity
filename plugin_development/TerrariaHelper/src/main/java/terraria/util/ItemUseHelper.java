@@ -4410,14 +4410,15 @@ public class ItemUseHelper {
                 switch (itemType) {
                     case "爆裂藤蔓": {
                         length = 24;
-                        particleColor = "103|78|50";
+                        particleColor = "t/ntb";
                         width = 0.5;
                         strikeInfo
                                 .setDamageCD(4)
                                 .setLingerTime(6)
                                 .setLingerDelay(5)
                                 .setThruWall(true)
-                                .setVanillaParticle(true);
+                                .setVanillaParticle(false)
+                                .setSnowStormRawUse(false);
                         GenericHelper.handleStrikeLightning(ply, startLoc, yaw, pitch, length, 4,  width, 1, 3, particleColor,
                                 damageExceptions, attrMap, strikeInfo);
                         // prevent redundant strike
@@ -4578,12 +4579,13 @@ public class ItemUseHelper {
                     case "亚特兰蒂斯": {
                         length = 24;
                         width = 0.5;
-                        particleColor = "119|145|197";
+                        particleColor = "t/atl";
                         strikeInfo
                                 .setDamageCD(4)
                                 .setLingerTime(5)
                                 .setLingerDelay(5)
-                                .setVanillaParticle(true);
+                                .setVanillaParticle(false)
+                                .setSnowStormRawUse(false);
                         // particle must not block the vision
                         startLoc.add(fireDir);
                         GenericHelper.handleStrikeLightning(ply, startLoc, yaw, pitch, length,

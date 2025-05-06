@@ -21,7 +21,7 @@ for filename in os.listdir():
                     if (i >= 5 and j != 0):
                         continue
                     # save file
-                    trail_len = (i + 0.5 * j) / 2
+                    trail_len = i + 0.5 * j
                     if (trail_len < 1e-9):
                         continue
                     save_name = f"{dir_name}/{i}"

@@ -12704,7 +12704,7 @@ Dodu的手炮:
 淬焰之升华:
   item: DIAMOND_SWORD
   lore:
-  - §r召唤熔火古刀为你而战
+  - §r召唤环绕在你身边的熔火古刀为你而战
   attributes:
     damage: 83
     damageType: Summon
@@ -13265,8 +13265,6 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r召唤一把光阴流时伞，号令多种仆从协助你作战：
-  - §r泰拉棱镜x2
-  - §r元素斧头
   - §r耀目圣刃
   - §r葱茏之锋
   - §r灭兆渡鸦
