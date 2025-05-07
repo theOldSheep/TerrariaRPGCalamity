@@ -30,8 +30,23 @@ p - potion
 t - trail
 	atl - atlantis
 	ntb - nettle burst
+	oll - orange large lasers
+	rll - red large lasers
 	bls - blue lasers
 	dbls - dark blue lasers
+	lls - lime lasers
 	ols - orange lasers
 	rls - red lasers
-	rbws - rinbow (single color each time)
+	gls - green lasers
+	pls - purple lasers
+	pkls - pink lasers
+	rbws - rinbow (laser style)
+	rt - red trail (narrower than lasers)
+	ot - orange trail (narrower than lasers)
+	dgt - dark green trail (narrower than lasers)
+	gt - green trail (narrower than lasers)
+	bt - blue trail (narrower than lasers)
+	pt - purple trail (narrower than lasers)
+	pkt - pink trail (narrower than lasers)
+	yt - yellow trail (narrower than lasers)
+	rbwt - rinbow (trail style)

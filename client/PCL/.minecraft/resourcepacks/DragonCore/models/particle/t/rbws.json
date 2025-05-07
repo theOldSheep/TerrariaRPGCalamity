@@ -2,7 +2,7 @@
 	"format_version": "1.10.0",
 	"particle_effect": {
 		"description": {
-			"identifier": "snowstorm:rainbow_single",
+			"identifier": "snowstorm:rainbow_laser",
 			"basic_render_parameters": {
 				"material": "particles_blend",
 				"texture": "textures/particle/particles"
@@ -50,17 +50,18 @@
 					"uv_size": [8, 8]
 				}
 			},
+			"minecraft:particle_appearance_lighting": {},
 			"minecraft:particle_appearance_tinting": {
 				"color": {
 					"interpolant": "variable.rainbow",
 					"gradient": {
-						"0.0": "#ffd71c1c",
-						"0.16": "#ffffdf00",
-						"0.33": "#ff08ff00",
-						"0.5": "#ff00ffff",
-						"0.67": "#ff0000ff",
-						"0.83": "#ffff00ff",
-						"1.0": "#ffe21111"
+						"0.0": "#%OPACITY_HEX%d71c1c",
+						"0.16": "#%OPACITY_HEX%ffdf00",
+						"0.33": "#%OPACITY_HEX%08ff00",
+						"0.5": "#%OPACITY_HEX%00ffff",
+						"0.67": "#%OPACITY_HEX%0000ff",
+						"0.83": "#%OPACITY_HEX%ff00ff",
+						"1.0": "#%OPACITY_HEX%e21111"
 					}
 				}
 			}

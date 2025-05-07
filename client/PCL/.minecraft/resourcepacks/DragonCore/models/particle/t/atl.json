@@ -42,8 +42,9 @@
 					"uv_size": [8, 8]
 				}
 			},
+			"minecraft:particle_appearance_lighting": {},
 			"minecraft:particle_appearance_tinting": {
-				"color": ["variable.r", "variable.g", "variable.b", 0.5]
+				"color": ["variable.r", "variable.g", "variable.b", "%OPACITY%"]
 			}
 		}
 	}

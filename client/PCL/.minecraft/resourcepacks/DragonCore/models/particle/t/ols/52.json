@@ -10,7 +10,7 @@
 		},
 		"components": {
 			"minecraft:emitter_initialization": {
-				"creation_expression": "variable.len = 52.0;variable.r = 255 / 255;variable.g = 200 / 255;variable.b = 0 / 255;variable.s = 0.5;"
+				"creation_expression": "variable.len = 52.0;variable.r = 255 / 255;variable.g = 150 / 255;variable.b = 0 / 255;variable.s = 0.5;"
 			},
 			"minecraft:emitter_local_space": {
 				"position": true,
@@ -18,7 +18,7 @@
 			},
 			"minecraft:emitter_rate_steady": {
 				"spawn_rate": "variable.len * 20",
-				"max_particles": "variable.len * 2"
+				"max_particles": "1 * variable.len * 2"
 			},
 			"minecraft:emitter_lifetime_looping": {
 				"active_time": 999999,
@@ -42,8 +42,9 @@
 					"uv_size": [8, 8]
 				}
 			},
+			"minecraft:particle_appearance_lighting": {},
 			"minecraft:particle_appearance_tinting": {
-				"color": ["variable.r", "variable.g", "variable.b", 0.5]
+				"color": ["variable.r", "variable.g", "variable.b", "0.5"]
 			}
 		}
 	}
