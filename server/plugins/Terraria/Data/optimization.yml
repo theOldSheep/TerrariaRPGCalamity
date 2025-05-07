@@ -33,8 +33,8 @@ optimization:
   projVelUpdItvEveryTick: 1
   projectileVelocityUpdateDistance: 96
   globalParticleDensity: 1.0
-  dmgHologramInterval: 1
-  dpsDisplayInterval: 1
+  dmgHologramInterval: 2
+  dpsDisplayInterval: 2
 tickCompensationSetting:
   bufferThreshold: 3
   bufferThresholdMax: 4

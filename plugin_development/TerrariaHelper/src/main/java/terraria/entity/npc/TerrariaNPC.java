@@ -30,6 +30,7 @@ public class TerrariaNPC extends EntityVillager {
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
         initTypeInfo(type);
     }
+
     protected void initTypeInfo(NPCHelper.NPCType type) {
         // navigation
         this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(72);

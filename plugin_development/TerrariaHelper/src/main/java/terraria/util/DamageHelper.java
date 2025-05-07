@@ -25,8 +25,6 @@ import java.util.logging.Level;
 public class DamageHelper {
     public static final HashMap<String, DamageType> DAMAGE_TYPE_INTERNAL_NAME_MAPPING = new HashMap<>(30);
     private static final ArrayList<Consumer<DamageInfoBus>> DMG_CALLBACK_PIPELINE = new ArrayList();
-    public static final int DMG_HOLOGRAM_INTERVAL = TerrariaHelper.optimizationConfig.getInt("optimization.dmgHologramInterval", 5);
-    public static final int DPS_DISPLAY_INTERVAL = TerrariaHelper.optimizationConfig.getInt("optimization.dpsDisplayInterval", 3);
 
     // Initialize damage callbacks.
     static {
@@ -1073,8 +1071,8 @@ public class DamageHelper {
                     hologramInfo = "Debuff_" + damageInfoBus.debuffType;
                 else
                     hologramInfo = damageType.toString();
-                GenericHelper.displayHolo(victim, dmg, damageInfoBus.didCrit(), hologramInfo);
-                EntityHelper.handleEntityTemporaryScoreboardTag(victim, throttlingTag, DMG_HOLOGRAM_INTERVAL);
+                DmgDisplayThrottling.getDmgHoloThrottle(victim).accept(
+                        new DmgDisplayThrottling.DmgHologramContext(dmg, damageInfoBus.didCrit, hologramInfo));
             }
 
             // track DPS for the damager player
@@ -1959,16 +1957,13 @@ public class DamageHelper {
             int secInterval = Setting.getOptionInt(src, Setting.Options.DPS_DURATION);
             if (! src.getScoreboardTags().contains(throttlingTag)) {
                 double dps = dmgTotal / secInterval;
-                PlayerHelper.sendActionBar(src,
-                        String.format("§r%s §6[§a%.0f§6/§a%.0f§6] §b(-%.0f) §6[§a%d秒内%d次共%.0f§d|§a%.1f§dDPS§6]",
-                                victimName, health, maxHealth, dmg, secInterval, hits, dmgTotal, dps));
-                EntityHelper.handleEntityTemporaryScoreboardTag(src, throttlingTag, DPS_DISPLAY_INTERVAL);
+                String msg = String.format("§r%s §6[§a%.0f§6/§a%.0f§6] §b(-%.0f) §6[§a%d秒内%d次共%.0f§d|§a%.1f§dDPS§6]",
+                        victimName, health, maxHealth, dmg, secInterval, hits, dmgTotal, dps);
+                DmgDisplayThrottling.getDpsDisplayThrottle(src).accept(new DmgDisplayThrottling.DpsDisplayContext(msg));
             }
             // plan to remove the info
             Bukkit.getScheduler().runTaskLater(TerrariaHelper.getInstance(),
                     () -> trackDPS(src, victimName, currVer, health, maxHealth, dmg, false), secInterval * 20L);
         }
     }
-
-
 }

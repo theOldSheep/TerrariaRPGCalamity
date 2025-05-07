@@ -90,6 +90,7 @@ terraria\util\AimHelper.class
 terraria\worldgen\overworld\OverworldBiomeGenerator$2.class
 terraria\util\PlayerHelper$1.class
 terraria\entity\boss\postMoonLord\exoMechs\AresArm$ArmAttackPattern.class
+terraria\util\DmgDisplayThrottling.class
 terraria\entity\boss\hardMode\dukeFishron\Sharkron.class
 terraria\entity\boss\hardMode\moonLord\MoonLord.class
 terraria\entity\boss\hardMode\thePlaguebringerGoliath\PlagueHomingMissile.class
@@ -248,6 +249,7 @@ terraria\util\DamageHelper$DamageReason.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticCultist.class
 terraria\entity\boss\postMoonLord\theOldDuke\TheOldDuke.class
 terraria\entity\boss\postMoonLord\ceaselessVoid\CeaselessVoid.class
+terraria\util\DmgDisplayThrottling$DpsDisplayContext.class
 terraria\entity\boss\hardMode\astrumDeus\AstrumDeus.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHead.class
 terraria\entity\others\PlayerTornado.class
@@ -301,6 +303,7 @@ terraria\entity\others\Critter.class
 terraria\entity\boss\event\headlessHorseman\HeadlessHorseman.class
 terraria\util\DragoncoreHelper$SlotCallback.class
 terraria\gameplay\SettingCommandExecutor.class
+terraria\util\DmgDisplayThrottling$DmgHologramContext.class
 terraria\entity\boss\BossHelper.class
 terraria\entity\boss\postMoonLord\devourerOfGods\DevourerOfGods$Wormhole.class
 terraria\util\WorldHelper$WaterRegionType.class

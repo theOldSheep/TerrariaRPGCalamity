@@ -164,7 +164,9 @@ public class EntityHelper {
         REGEN_TIME("regenTime"),
         RESPAWN_COUNTDOWN("respawnCD"),
         SPAWN_IN_EVENT("spawnEvent"),
-        SUCK_TARGET("suckTarget");
+        SUCK_TARGET("suckTarget"),
+        THROTTLE_DMG_HOLOGRAM("tDHl"),
+        THROTTLE_DPS_ACTION_BAR("tDPS");
         // fields
         String metadataName;
         // constructors

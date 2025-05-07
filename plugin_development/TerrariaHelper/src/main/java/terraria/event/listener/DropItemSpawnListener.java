@@ -14,6 +14,8 @@ import terraria.TerrariaHelper;
 import terraria.entity.others.TerrariaDroppedItem;
 import terraria.util.ItemHelper;
 
+import java.util.HashSet;
+
 public class DropItemSpawnListener implements Listener {
     @EventHandler
     public void onDroppedItemSpawn(ItemSpawnEvent e) {
@@ -31,13 +33,23 @@ public class DropItemSpawnListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onChunkLoad(ChunkLoadEvent e) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
-            for (Entity entity : e.getChunk().getEntities())
+            // remove temporary scoreboard tags
+            HashSet<String> tagRemove = new HashSet<>();
+            for (Entity entity : e.getChunk().getEntities()) {
+                for (String s : entity.getScoreboardTags()) {
+                    if (s.startsWith("temp")) tagRemove.add(s);
+                }
+                for (String s : tagRemove) entity.removeScoreboardTag(s);
+            }
+            // cast dropped item to Terraria equivalent
+            for (Entity entity : e.getChunk().getEntities()) {
                 if (entity instanceof Item) {
                     Item droppedItem = (Item) entity;
                     Item newItem = ItemHelper.dropItem(droppedItem.getLocation(), droppedItem.getItemStack());
                     if (newItem != null) newItem.setVelocity(droppedItem.getVelocity());
                     droppedItem.remove();
                 }
+            }
         }, 1);
     }
 }
