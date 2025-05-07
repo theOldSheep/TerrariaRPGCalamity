@@ -41,8 +41,8 @@
     healOnHit: 0
     # 弹射物的碰撞箱直径，不写视为0.25
     projectileSize: 0.25
-    # 每帧速度乘以这个数字，例如1.25则为每帧加速25%，不写则视为1
-    speedMultiPerTick: 1.0
+    # 每帧速度乘以这个数字，例如1.25则为每帧加速25%，不写则视为0.99
+    speedMultiPerTick: 0.99
     # 最大速度（单位：格/帧），防止恶魔锄刀类武器的速度突破天际，不写则视为100
     maxSpeed: 100
     # 弹幕产生时播放的音效，默认为""(无)
@@ -201,8 +201,7 @@
     blockHitAction: thru
     liveTime: 60
 殷红弹幕:
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     blockHitAction: thru
     liveTime: 60
 灾虫沙尘暴:
@@ -216,8 +215,7 @@
     gravity: 0.02
     blockHitAction: thru
 魔唾液:
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     projectileSize: 0.5
     penetration: 9
 腐蚀之云:
@@ -263,8 +261,7 @@
     penetration: 99999
     blockHitAction: thru
     projectileSize: 1
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     buffInflict:
         - "扭曲|60|0.3"
         - "缓慢|100|1"
@@ -272,8 +269,7 @@
     penetration: 99999
     blockHitAction: thru
     projectileSize: 1
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     buffInflict:
         - "扭曲|60|0.3"
         - "流血|160|1"
@@ -304,8 +300,8 @@
     penetration: 99
     gravity: 0
     blockHitAction: thru
-    trailColor: 160|255|160
-    trailIntensityMulti: 0.1
+    trailVanillaParticle: false
+    trailColor: t/lt
 魔眼诅咒焰:
     projDisguiseName: 咒火球
     liveTime: 40
@@ -313,15 +309,13 @@
     gravity: 0
     projectileSize: 1
     blockHitAction: thru
-    trailColor: 160|255|160
-    trailIntensityMulti: 0.1
+    trailVanillaParticle: false
+    trailColor: t/lls
 魔眼追踪咒火球:
     projDisguiseName: 咒火球
     liveTime: 100
     gravity: 0
     blockHitAction: thru
-    trailColor: 160|255|160
-    trailIntensityMulti: 0.1
     homing: true
     homingMethod: 2
     homingRadius: 32
@@ -329,6 +323,8 @@
     homingAbility: 0.5
     noHomingTicks: 15
     maxHomingTicks: 40
+    trailVanillaParticle: false
+    trailColor: t/lt
 冰霜爆:
     penetration: 99999
     blockHitAction: thru
@@ -420,42 +416,29 @@
     homingAbility: 18
     noHomingTicks: 5
     maxHomingTicks: 30
-    trailColor: 255|0|0
-    trailSize: 0.15
-    trailStepSize: 1
+    trailVanillaParticle: false
+    trailColor: t/rt
 死亡激光:
     penetration: 99999
     liveTime: 100
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     blockHitAction: thru
     buffInflict:
         - "燃烧|80|1"
-    trailColor: 255|0|0
-    trailSize: 0.15
-    trailStepSize: 1
 诅咒激光:
     penetration: 99999
     liveTime: 100
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     blockHitAction: thru
     buffInflict:
         - "咒火|60|1"
-    trailColor: 200|255|0
-    trailSize: 0.15
-    trailStepSize: 1
 电击激光:
     penetration: 99999
     liveTime: 100
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     blockHitAction: thru
     buffInflict:
         - "带电|40|1"
-    trailColor: 0|255|200
-    trailSize: 0.15
-    trailStepSize: 1
 咒火球:
     buffInflict:
         - "咒火|100|1"
@@ -464,8 +447,7 @@
     projectileSize: 0.5
     blockHitAction: thru
     liveTime: 100
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     buffInflict:
         - "硫磺火|60|1"
 灾厄飞弹:
@@ -474,8 +456,7 @@
     projectileSize: 0.5
     blockHitAction: thru
     liveTime: 100
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     buffInflict:
         - "孱弱巫咒|40|1"
 炼狱硫火球:
@@ -502,8 +483,7 @@
     projectileSize: 1.5
     blockHitAction: thru
     liveTime: 80
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     velocityUpdateRule: projVelUpdItvEveryTick
     buffInflict:
         - "孱弱巫咒|60|1"
@@ -530,9 +510,8 @@
     blockHitAction: thru
     liveTime: 80
     gravity: 0
-    trailColor: 255|46|46
-    trailSize: 0.2
-    trailStepSize: 1
+    trailVanillaParticle: false
+    trailColor: t/rt
     buffInflict:
         - "硫磺火|60|1"
 硫火喷射:
@@ -541,8 +520,8 @@
     liveTime: 40
     gravity: 0
     projectileSize: 2
-    trailColor: 255|46|46
-    trailLingerTime: 10
+    trailVanillaParticle: false
+    trailColor: t/rll
     buffInflict:
         - "硫磺火|60|1"
 机械诅咒头:
@@ -655,8 +634,7 @@
 爆炸泡泡:
     blockHitAction: thru
     gravity: 0
-    projectileSize: 2
-    speedMultiPerTick: 0.99
+    projectileSize: 20
     homing: true
     homingMethod: 2
     homingRadius: 64
@@ -671,21 +649,21 @@
         - "碎甲|100|1"
 星幻激光:
     penetration: 99999
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     liveTime: 80
     blockHitAction: thru
-    trailColor: 0|255|255
+    trailVanillaParticle: false
+    trailColor: t/bt
     buffInflict:
         - "幻星感染|40|1"
 橙星幻激光:
     projDisguiseName: 星幻激光
     penetration: 99999
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     liveTime: 80
     blockHitAction: thru
-    trailColor: 255|255|0
+    trailVanillaParticle: false
+    trailColor: t/ot
     buffInflict:
         - "幻星感染|40|1"
 星幻凝晶:
@@ -710,8 +688,8 @@
     gravity: 0
     buffInflict:
         - "燃烧|140|1"
-    trailColor: 255|50|50
-    trailIntensityMulti: 1.5
+    trailVanillaParticle: false
+    trailColor: t/rt
 爆裂火球:
     penetration: 99999
     projectileSize: 2
@@ -722,21 +700,24 @@
     blastDuration: 80
     buffInflict:
         - "燃烧|280|1"
-    trailColor: 255|50|50
+    trailVanillaParticle: false
+    trailColor: t/rt
 石巨人激光:
     penetration: 99999
     gravity: 0
     liveTime: 80
     blockHitAction: thru
-    trailColor: 255|200|50
+    trailVanillaParticle: false
+    trailColor: t/ot
 歌莉娅瘟疫导弹:
     penetration: 99999
     gravity: 0
     liveTime: 40
     blockHitAction: thru
-    trailColor: 50|255|150
     isGrenade: true
     blastRadius: 3.5
+    trailVanillaParticle: false
+    trailColor: t/dgt
     buffInflict:
         - "瘟疫|60|1"
 瘟疫火箭:
@@ -744,9 +725,10 @@
     gravity: 0
     liveTime: 30
     blockHitAction: thru
-    trailColor: 50|255|150
     isGrenade: true
     blastRadius: 3.5
+    trailVanillaParticle: false
+    trailColor: t/dgt
     buffInflict:
         - "瘟疫|80|1"
 瘟疫核弹:
@@ -754,9 +736,10 @@
     gravity: 0
     liveTime: 15
     blockHitAction: thru
-    trailColor: 50|255|150
     isGrenade: true
     blastRadius: 5
+    trailVanillaParticle: false
+    trailColor: t/dgt
     buffInflict:
         - "瘟疫|300|1"
 水晶矢:
@@ -764,8 +747,6 @@
     gravity: 0
     liveTime: 75
     blockHitAction: thru
-    trailVanillaParticle: false
-    trailColor: 255|0|0
     homing: true
     homingMethod: 2
     homingRadius: 64
@@ -773,6 +754,8 @@
     homingAbility: 18
     noHomingTicks: 10
     maxHomingTicks: 45
+    trailVanillaParticle: false
+    trailColor: t/rbwt
     buffInflict:
         - "神圣之火|20|1"
         - "夜魇|20|1"
@@ -820,7 +803,6 @@
         - "幻星感染|60|1"
 幻影眼:
     blockHitAction: thru
-    trailColor: 100|255|255
     isGrenade: true
     blastRadius: 4
     liveTime: 100
@@ -851,8 +833,7 @@
     liveTime: 400
     gravity: 0
     penetration: 999999
-    minimumDamageTicks: 5
-    speedMultiPerTick: 0.99
+    minimumDamageTicks: 50
     spawnProjectiles:
         interval: 8
         offset: 1.0
@@ -901,8 +882,7 @@
     blockHitAction: thru
     projectileSize: 1
     liveTime: 60
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     buffInflict:
         - "神圣之火|40|1"
 神圣之矛:
@@ -916,8 +896,7 @@
     blockHitAction: thru
     projectileSize: 1
     liveTime: 60
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     buffInflict:
         - "扭曲|30|1"
 无限灯笼:
@@ -942,8 +921,7 @@
     homingAbility: 999
     noHomingTicks: 40
     maxHomingTicks: 41
-    homingEndSpeedMultiplier: 2
-    speedMultiPerTick: 0.99
+    homingEndSpeedMultiplier: 20
     buffInflict:
         - "死亡低语|80|1"
 幽花子母弹:
@@ -958,8 +936,7 @@
     projectileSize: 1.5
     liveTime: 80
     penetration: 999999
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     buffInflict:
         - "夜魇|25|1"
 遗爵鲨牙刺球:
@@ -1055,15 +1032,13 @@
     liveTime: 60
     penetration: 999999
     gravity: 0
-    blockHitAction: thru
-    speedMultiPerTick: 0.99
+    blockHitAction: thru0
     maxSpeed: 3.5
 红色星流脉冲激光:
     projectileSize: 0.5
     liveTime: 60
     penetration: 999999
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     blockHitAction: thru
 巨大挥发性等离子光球:
     projectileSize: 3
@@ -1107,8 +1082,7 @@
     liveTime: 100
     gravity: 0
     blockHitAction: thru
-    minimumDamageTicks: 100
-    speedMultiPerTick: 0.99
+    minimumDamageTicks: 1000
     spawnProjectiles:
         interval: 10
         offset: 8
@@ -1147,8 +1121,7 @@
     projectileSize: 1.5
     blockHitAction: thru
     liveTime: 80
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     buffInflict:
         - "孱弱巫咒|60|1"
 深渊炙炎:
@@ -1194,8 +1167,7 @@
     projectileSize: 1
     blockHitAction: thru
     liveTime: 80
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     buffInflict:
         - "孱弱巫咒|60|1"
 硫火碎魂拳:
@@ -1203,8 +1175,7 @@
     projectileSize: 2
     blockHitAction: thru
     liveTime: 80
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     buffInflict:
         - "孱弱巫咒|60|1"
 斩魂幻锋:
@@ -1212,8 +1183,7 @@
     projectileSize: 2
     blockHitAction: thru
     liveTime: 80
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     homing: true
     maxHomingTicks: 20
     homingRadius: 128
@@ -1269,8 +1239,8 @@
 高压气泡流:
     gravity: 0
     liveTime: 15
-    trailColor: 66|103|199
-    trailStepSize: 0.35
+    trailVanillaParticle: false
+    trailColor: t/bt
 风暴冲击波:
     gravity: 0
     projectileSize: 2
@@ -1304,8 +1274,8 @@
     gravity: 0
     projectileSize: 2
     liveTime: 50
-    trailColor: 25|59|134
-    trailLingerTime: 4
+    trailVanillaParticle: false
+    trailColor: t/rt
     buffInflict:
         - "霜火|60|1"
 不稳定物质:
@@ -1313,16 +1283,30 @@
     blockHitAction: bounce
     bounce: 1
     penetration: 999999
-    trailColor: 191|255|223
-    trailStepSize: 0.75
+    trailVanillaParticle: false
+    trailColor: t/bt
+粉色粒子光束:
+    gravity: 0
+    projectileSize: 1.5
+    penetration: 999999
+    liveTime: 1
+    trailVanillaParticle: false
+    trailColor: t/rt
+蓝色粒子光束:
+    gravity: 0
+    projectileSize: 1.5
+    penetration: 999999
+    liveTime: 1
+    trailVanillaParticle: false
+    trailColor: t/bt
 蓝色高斯粒子束:
     gravity: 0
     projectileSize: 1.5
     isGrenade: true
     blastRadius: 5
     blastDuration: 18
-    trailColor: 82|255|255
-    trailStepSize: 0.65
+    trailVanillaParticle: false
+    trailColor: t/bls
 重型激光步枪光束:
     gravity: 0
     liveTime: 2
@@ -1331,7 +1315,8 @@
     projectileSize: 0.5
     isGrenade: true
     blastRadius: 2.75
-    trailColor: 255|76|19
+    trailVanillaParticle: false
+    trailColor: t/rls
 自由之星能量球:
     gravity: 0
     liveTime: 100
@@ -1355,9 +1340,9 @@
     liveTime: 100
     projectileSize: 1
     homing: true
-    homingRadius: 24
-    speedMultiPerTick: 0.99
-    trailColor: 129|255|85
+    homingRadius: 240
+    trailVanillaParticle: false
+    trailColor: t/gt
     buffInflict:
         - "硫磺海剧毒|40|1"
 脉冲步枪电弧:
@@ -1370,7 +1355,8 @@
     homingAbility: 6.5
     homingRadius: 24
     noHomingTicks: 999999
-    trailColor: 159|96|255
+    trailVanillaParticle: false
+    trailColor: t/pls
 异象纳米离子束:
     gravity: 0
     liveTime: 2
@@ -1378,7 +1364,8 @@
     speedMultiPerTick: 999
     maxSpeed: 80
     projectileSize: 1.5
-    trailColor: 215|25|0
+    trailVanillaParticle: false
+    trailColor: t/rt
 异象纳米裂变炸弹:
     gravity: 0
     liveTime: 100
@@ -1411,22 +1398,6 @@
     worldSpriteUpdateInterval: 1
     spawnSound: item.giantExplosion
     spawnSoundVolume: 10
-粉色粒子光束:
-    gravity: 0
-    projectileSize: 1.5
-    penetration: 999999
-    liveTime: 1
-    trailColor: 255|175|217
-    trailLingerTime: 15
-    trailIntensityMulti: 0.5
-蓝色粒子光束:
-    gravity: 0
-    projectileSize: 1.5
-    penetration: 999999
-    liveTime: 1
-    trailColor: 161|219|249
-    trailLingerTime: 15
-    trailIntensityMulti: 0.5
 玛瑙能量:
     gravity: 0
     isGrenade: true
@@ -1612,8 +1583,7 @@
         name: 瓶中沙尘
         velocity: 0.15
 瓶中沙尘:
-    projectileSize: 0.75
-    speedMultiPerTick: 0.99
+    projectileSize: 0.750
     gravity: 0
     liveTime: 30
     penetration: 1
@@ -1925,8 +1895,8 @@
     liveTime: 1
     gravity: 0
     blockHitAction: thru
-    trailColor: 228|167|176
-    trailLingerTime: 5
+    trailVanillaParticle: false
+    trailColor: t/rt
 附魔飞斧:
     projectileSize: 1
     gravity: 0
@@ -2322,8 +2292,8 @@
     projectileSize: 0.5
     penetration: 999999
     liveTime: 1
-    trailColor: 171|152|236
-    trailIntensityMulti: 0.75
+    trailVanillaParticle: false
+    trailColor: t/pkt;t/bt
     buffInflict:
         - "弑神怒焰|40|1"
 动能寻迹镖:
@@ -2868,8 +2838,8 @@
 炽天使光束:
     blockHitAction: thru
     liveTime: 1
-    trailColor: 255|255|189
-    trailIntensityMulti: 2
+    trailVanillaParticle: false
+    trailColor: t/yt
 牺牲:
     blockHitAction: thru
     liveTime: 30
@@ -2948,7 +2918,8 @@
     homingRadius: 20
     noHomingTicks: 3
     minimumDamageTicks: 3
-    trailColor: 31|251|255
+    trailVanillaParticle: false
+    trailColor: t/bt
 水晶穿刺者:
     liveTime: 60
     projectileSize: 2
@@ -3936,8 +3907,8 @@
     maxHomingTicks: 20
     homingEndSpeedMultiplier: 7.5
     blockHitAction: thru
-    trailColor: "0|200|0"
-    trailStepSize: 0.75
+    trailVanillaParticle: false
+    trailColor: t/dgt
     buffInflict:
         - "中毒|80|1"
 黑鹰子弹:
@@ -3948,8 +3919,8 @@
     liveTime: 60
     penetration: 1
     blockHitAction: thru
-    trailColor: "255|100|0"
-    trailIntensityMulti: 0.35
+    trailVanillaParticle: false
+    trailColor: t/ot
     buffInflict:
         - "剧毒|40|0.25"
         - "狱炎|40|0.25"
@@ -3989,10 +3960,9 @@
     liveTime: 15
     gravity: 0
     projectileSize: 2
-    trailColor: 150|0|0
-    trailSize: 0.2
-    trailStepSize: 0.75
-    trailLingerTime: 10
+    trailVanillaParticle: false
+    trailColor: t/rll
+    trailLingerTime: 3
     buffInflict:
         - "硫磺火|60|1"
 微型沙鲨:
@@ -4018,9 +3988,8 @@
     gravity: 0
     homing: true
     blockHitAction: thru
-    trailColor: "233|52|115"
-    trailSize: 0.1
-    trailStepSize: 0.75
+    trailVanillaParticle: false
+    trailColor: t/rt
 爆炸导弹:
     liveTime: 60
     gravity: 0
@@ -4047,7 +4016,8 @@
     projectileSize: 0.5
     homingRadius: 64
     blockHitAction: thru
-    trailColor: "0|100|50"
+    trailVanillaParticle: false
+    trailColor: t/dgt
     buffInflict:
         - "瘟疫|60|1"
     clusterBomb:
@@ -4064,8 +4034,8 @@
     blockHitAction: thru
     minimumDamageTicks: 5
     liveTime: 60
-    trailColor: "100|255|100"
-    trailStepSize: 0.65
+    trailVanillaParticle: false
+    trailColor: t/dgt
     buffInflict:
         - "瘟疫|60|1"
 紫蓝色小球:
@@ -4081,7 +4051,8 @@
     projectileSize: 0.5
     homingRadius: 64
     blockHitAction: thru
-    trailColor: RAINBOW
+    trailVanillaParticle: false
+    trailColor: t/rbwt
     buffInflict:
         - "元素谐鸣|30|1"
 蛇眼光电矢:
@@ -4089,8 +4060,8 @@
     liveTime: 20
     projectileSize: 1
     blockHitAction: thru
-    trailColor: 7|199|200
-    trailSize: 0.25
+    trailVanillaParticle: false
+    trailColor: t/rt
     penetration: 999999
 蛇眼反弹光电矢:
     gravity: 0
@@ -4101,8 +4072,8 @@
     homingRadius: 20
     isGrenade: true
     blastRadius: 2.75
-    trailColor: 255|255|255
-    trailSize: 0.25
+    trailVanillaParticle: false
+    trailColor: t/bt
 宇宙灯笼光束:
     gravity: 0
     liveTime: 80
@@ -4133,7 +4104,9 @@
     blockHitAction: thru
     projectileSize: 1.5
     penetration: 999999
-    trailColor: 157|36|43
+    trailVanillaParticle: false
+    trailColor: t/rll
+    trailLingerTime: 3
     buffInflict:
         - "血液沸腾|60|1"
 追踪墨汁:
@@ -4274,7 +4247,8 @@
     homing: true
     homingRadius: 32
     homingAbility: 5
-    trailColor: RAINBOW
+    trailVanillaParticle: false
+    trailColor: t/rbwt
     buffInflict:
         - "超位崩解|100|1"
 归墟爆破之星:
@@ -4386,26 +4360,26 @@
     gravity: 0
     isGrenade: true
     blastRadius: 5
-    trailColor: "255|0|0"
-    trailStepSize: 0.75
+    trailVanillaParticle: false
+    trailColor: t/rt
 绿烟花火箭:
     gravity: 0
     isGrenade: true
     blastRadius: 5
-    trailColor: "0|255|0"
-    trailStepSize: 0.75
+    trailVanillaParticle: false
+    trailColor: t/gt
 蓝烟花火箭:
     gravity: 0
     isGrenade: true
     blastRadius: 5
-    trailColor: "0|0|255"
-    trailStepSize: 0.75
+    trailVanillaParticle: false
+    trailColor: t/bt
 黄烟花火箭:
     gravity: 0
     isGrenade: true
     blastRadius: 5
-    trailColor: "255|255|0"
-    trailStepSize: 0.75
+    trailVanillaParticle: false
+    trailColor: t/ot
 初级榴弹:
     noGravityTicks: 0
     liveTime: 75
@@ -4500,9 +4474,8 @@
     projectileSize: 0.5
     isGrenade: true
     blastRadius: 1
-    trailColor: 255|187|174
-    trailSize: 0.1
-    trailStepSize: 1
+    trailVanillaParticle: false
+    trailColor: t/dgt
     clusterBomb:
         amount: 10
         name: 蜜蜂
@@ -4514,9 +4487,8 @@
     gravity: 0
     isGrenade: true
     blastRadius: 4
-    trailColor: 255|187|174
-    trailSize: 0.1
-    trailStepSize: 1
+    trailVanillaParticle: false
+    trailColor: t/dgt
     clusterBomb:
         amount: 5
         name: 瘟疫蜜蜂
@@ -4527,9 +4499,8 @@
     projectileSize: 0.5
     isGrenade: true
     blastRadius: 2
-    trailColor: 255|187|174
-    trailSize: 0.1
-    trailStepSize: 1
+    trailVanillaParticle: false
+    trailColor: t/dgt
     clusterBomb:
         amount: 2
         name: 瘟疫蜜蜂
@@ -4540,9 +4511,8 @@
     projectileSize: 0.5
     isGrenade: true
     blastRadius: 2
-    trailColor: 255|187|174
-    trailSize: 0.1
-    trailStepSize: 1
+    trailVanillaParticle: false
+    trailColor: t/dgt
     clusterBomb:
         amount: 5
         name: 瘟疫蜜蜂
@@ -4554,18 +4524,16 @@
     homing: true
     isGrenade: true
     blastRadius: 2.5
-    trailColor: 255|187|174
-    trailSize: 0.1
-    trailStepSize: 1
+    trailVanillaParticle: false
+    trailColor: t/bt
 天蝎座大号核弹:
     gravity: 0
     projectileSize: 1.5
     homing: true
     isGrenade: true
     blastRadius: 7.5
-    trailColor: 255|187|174
-    trailSize: 0.1
-    trailStepSize: 1
+    trailVanillaParticle: false
+    trailColor: t/bt
 圣火火箭:
     gravity: 0
     projectileSize: 0.75
@@ -4612,9 +4580,8 @@
     liveTime: 20
     isGrenade: true
     blastRadius: 10
-    trailColor: 255|129|16
-    trailSize: 0.25
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/rt
     buffInflict:
         - "龙焰|100|1"
 嘉登火箭:
@@ -4626,9 +4593,8 @@
     homingRadius: 24
     homingAbility: 6.5
     blastRadius: 2.75
-    trailColor: 87|255|51
-    trailSize: 0.25
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/gt
     buffInflict:
         - "超位崩解|100|1"
     clusterBomb:
@@ -4641,8 +4607,8 @@
     projectileSize: 1.5
     penetration: 999999
     blockHitAction: thru
-    trailColor: 5|255|197
-    trailIntensityMulti: 2
+    trailVanillaParticle: false
+    trailColor: t/rbwt
     buffInflict:
         - "超位崩解|100|1"
 手榴弹:
@@ -4733,9 +4699,9 @@ TNT:
     liveTime: 10
     projectileSize: 1.5
     penetration: 999999
-    trailColor: 112|252|255
+    trailVanillaParticle: false
+    trailColor: t/bls
     trailLingerTime: 4
-    trailIntensityMulti: 0.75
     buffInflict:
         - "燃烧|400|1"
         - "霜火|400|1"
@@ -4743,16 +4709,17 @@ TNT:
     gravity: 0
     liveTime: 5
     penetration: 999999
-    trailColor: 255|207|139
+    trailVanillaParticle: false
+    trailColor: t/ols
     trailLingerTime: 6
-    trailIntensityMulti: 2
     buffInflict:
         - "燃烧|40|1"
 影流火焰:
     gravity: 0
     liveTime: 8
     penetration: 999999
-    trailColor: 60|69|103
+    trailVanillaParticle: false
+    trailColor: t/pls
     trailLingerTime: 6
     trailIntensityMulti: 2
 反弹凝胶:
@@ -4762,33 +4729,33 @@ TNT:
     bounce: 2
     liveTime: 150
     penetration: 999999
-    trailColor: 236|255|255
+    trailVanillaParticle: false
+    trailColor: t/bt
     trailLingerTime: 6
-    trailIntensityMulti: 1
 蓝焰:
     gravity: 0
     projectileSize: 1
     liveTime: 10
     penetration: 999999
-    trailColor: 133|226|255
+    trailVanillaParticle: false
+    trailColor: t/bls
     trailLingerTime: 6
-    trailIntensityMulti: 1
 粉焰:
     gravity: 0
     projectileSize: 1
     liveTime: 10
     penetration: 999999
-    trailColor: 255|143|255
+    trailVanillaParticle: false
+    trailColor: t/rls
     trailLingerTime: 6
-    trailIntensityMulti: 1
 泰拉火焰:
     gravity: 0
     projectileSize: 1
     liveTime: 12
     penetration: 999999
-    trailColor: 191|255|223
+    trailVanillaParticle: false
+    trailColor: t/gls
     trailLingerTime: 6
-    trailIntensityMulti: 0.75
     buffInflict:
         - "咒火|30|1"
 星辉烈焰:
@@ -4796,9 +4763,9 @@ TNT:
     projectileSize: 1
     liveTime: 12
     penetration: 999999
-    trailColor: 197|144|123
+    trailVanillaParticle: false
+    trailColor: t/pls
     trailLingerTime: 6
-    trailIntensityMulti: 1
     buffInflict:
         - "幻星感染|80|1"
 瘟疫火焰:
@@ -4806,9 +4773,9 @@ TNT:
     projectileSize: 1
     liveTime: 12
     penetration: 999999
-    trailColor: 122|149|169
+    trailVanillaParticle: false
+    trailColor: t/gls
     trailLingerTime: 6
-    trailIntensityMulti: 1
     buffInflict:
         - "瘟疫|80|1"
 紫绿色火焰:
@@ -4816,26 +4783,26 @@ TNT:
     projectileSize: 1
     liveTime: 15
     penetration: 999999
-    trailColor: 168|94|213
+    trailVanillaParticle: false
+    trailColor: t/pls
     trailLingerTime: 6
-    trailIntensityMulti: 1
 元素彩虹烈焰:
     gravity: 0
     projectileSize: 1.5
     liveTime: 15
     penetration: 1
-    trailColor: 255|0|0;255|255|0;100|255|100;0|255|255;255|0|255
+    trailVanillaParticle: false
+    trailColor: t/rls;t/ols;t/gls;t/bls;t/pls
     trailLingerTime: 6
-    trailIntensityMulti: 0.75
     buffInflict:
         - "元素谐鸣|80|1"
 纯元烈焰:
     gravity: 0
     projectileSize: 1.5
     liveTime: 8
-    trailColor: 255|255|196
+    trailVanillaParticle: false
+    trailColor: t/ols
     trailLingerTime: 6
-    trailIntensityMulti: 0.5
     buffInflict:
         - "神圣之火|80|1"
 余晖烈焰:
@@ -4845,9 +4812,9 @@ TNT:
     blockHitAction: thru
     penetration: 999999
     liveTime: 30
-    trailColor: 255|255|196
+    trailVanillaParticle: false
+    trailColor: t/oll
     trailLingerTime: 6
-    trailIntensityMulti: 0.5
     buffInflict:
         - "神圣之火|80|1"
 生命血火:
@@ -4855,9 +4822,9 @@ TNT:
     healOnHit: 1
     projectileSize: 1.5
     liveTime: 12
-    trailColor: 133|9|11
+    trailVanillaParticle: false
+    trailColor: t/rls
     trailLingerTime: 6
-    trailIntensityMulti: 0.5
     buffInflict:
         - "血液沸腾|80|1"
 燃烧哈雷彗星:
@@ -4865,9 +4832,9 @@ TNT:
     projectileSize: 1.5
     penetration: 9
     liveTime: 10
-    trailColor: 13|78|167
+    trailVanillaParticle: false
+    trailColor: t/dbls
     trailLingerTime: 6
-    trailIntensityMulti: 1
     buffInflict:
         - "夜魇|80|1"
 弑神火焰:
@@ -4875,9 +4842,9 @@ TNT:
     projectileSize: 1.5
     penetration: 1
     liveTime: 10
-    trailColor: 235|146|255
+    trailVanillaParticle: false
+    trailColor: t/pkls
     trailLingerTime: 6
-    trailIntensityMulti: 0.5
     buffInflict:
         - "弑神怒焰|80|1"
 星流火星:
@@ -4885,9 +4852,9 @@ TNT:
     projectileSize: 1.5
     penetration: 2
     liveTime: 10
-    trailColor: 106|255|76;255|150|0;100|255|100;100|100|255
+    trailVanillaParticle: false
+    trailColor: t/rls;t/ols;t/gls;t/bls;t/pls
     trailLingerTime: 6
-    trailIntensityMulti: 0.35
     buffInflict:
         - "超位崩解|100|1"
 追踪星流火星:
@@ -4899,9 +4866,9 @@ TNT:
     homing: true
     homingAbility: 10
     homingRadius: 24
-    trailColor: 106|255|76;255|150|0;100|255|100;100|100|255
+    trailVanillaParticle: false
+    trailColor: t/rls;t/ols;t/gls;t/bls;t/pls
     trailLingerTime: 6
-    trailIntensityMulti: 0.35
     buffInflict:
         - "超位崩解|100|1"
 追踪星焱:
@@ -4913,7 +4880,8 @@ TNT:
     homing: true
     homingAbility: 6
     homingRadius: 24
-    trailColor: 255|255|255
+    trailVanillaParticle: false
+    trailColor: t/bls
     buffInflict:
         - "超位崩解|100|1"
 烈焰木:
@@ -4934,8 +4902,7 @@ TNT:
     penetration: 999999
     liveTime: 75
     projectileSize: 4
-    noGravityTicks: 0
-    speedMultiPerTick: 0.99
+    noGravityTicks: 00
     blockHitAction: thru
     buffInflict:
         - "冷冻|60|1"
@@ -5088,16 +5055,12 @@ TNT:
     homing: true
     noHomingTicks: 6
     liveTime: 20
-    trailColor: 27|157|232
-    trailSize: 0.1
-    trailLingerTime: 8
-    trailStepSize: 0.75
+    trailVanillaParticle: false
+    trailColor: t/bt
 真菌弹:
     gravity: 0
-    trailColor: 27|157|232
-    trailSize: 0.1
-    trailLingerTime: 8
-    trailStepSize: 1
+    trailVanillaParticle: false
+    trailColor: t/bt
     clusterBomb:
         amount: 3
         name: 小孢子
@@ -5111,12 +5074,6 @@ TNT:
     isGrenade: true
     blastRadius: 0.75
     blastOnContactBlock: true
-追踪蓝晶碎片:
-    gravity: 0.01
-    liveTime: 50
-    homing: true
-    noHomingTicks: 6
-    liveTime: 20
 蓝晶碎片:
     gravity: 0.01
     liveTime: 100
@@ -5125,52 +5082,51 @@ TNT:
         name: 追踪蓝晶碎片
         velocity: 0.5
         damageMulti: 0.25
+追踪蓝晶碎片:
+    gravity: 0.01
+    liveTime: 50
+    homing: true
+    noHomingTicks: 6
+    liveTime: 20
+能量弹:
+    gravity: 0.01
+    liveTime: 100
+    trailVanillaParticle: false
+    trailColor: t/bt
+    clusterBomb:
+        amount: 3
+        name: 追踪能量弹
+        velocity: 0.5
+        damageMulti: 0.5
 追踪能量弹:
     gravity: 0.01
     liveTime: 30
     homing: true
     noHomingTicks: 6
     liveTime: 20
-    trailColor: 53|255|255
-    trailSize: 0.1
-    trailLingerTime: 8
-    trailStepSize: 0.75
-能量弹:
-    gravity: 0.01
-    liveTime: 100
-    trailColor: 53|255|255
-    trailSize: 0.1
-    trailLingerTime: 8
-    trailStepSize: 1
-    clusterBomb:
-        amount: 3
-        name: 追踪能量弹
-        velocity: 0.5
-        damageMulti: 0.5
+    trailVanillaParticle: false
+    trailColor: t/bt
 巨舰水流:
     gravity: 0
     liveTime: 50
     penetration: 1
-    trailColor: 69|92|211
+    trailVanillaParticle: false
+    trailColor: t/bt
 麦格纳冲击波:
     arrowOrPotion: true
     projectileSize: 2
     gravity: 0
 海水冲击波:
     gravity: 0
-    trailColor: 67|207|130
-    trailSize: 0.1
-    trailLingerTime: 5
-    trailStepSize: 0.75
+    trailVanillaParticle: false
+    trailColor: t/gt
     buffInflict:
         - "剧毒|40|0.3333"
 瘟疫子弹:
     gravity: 0
     liveTime: 100
-    trailColor: 102|255|72
-    trailSize: 0.1
-    trailLingerTime: 5
-    trailStepSize: 1
+    trailVanillaParticle: false
+    trailColor: t/dgt
     buffInflict:
         - "瘟疫|60|1"
     clusterBomb:
@@ -5184,7 +5140,8 @@ TNT:
     liveTime: 100
     isGrenade: true
     blastRadius: 1
-    trailColor: 0|150|0
+    trailVanillaParticle: false
+    trailColor: t/gt
     homing: true
     homingRadius: 24
 追踪蘑菇:
@@ -5218,9 +5175,8 @@ TNT:
     gravity: 0
     projectileSize: 0.5
     liveTime: 20
-    trailColor: 87|255|255
-    trailSize: 0.1
-    trailStepSize: 1
+    trailVanillaParticle: false
+    trailColor: t/ot
     buffInflict:
         - "死亡标记|140|1"
 海龙追踪火箭:
@@ -5270,7 +5226,8 @@ TNT:
     gravity: 0
     projectileSize: 0.5
     liveTime: 20
-    trailColor: 220|213|47
+    trailVanillaParticle: false
+    trailColor: t/ot
     buffInflict:
         - "死亡标记|100|1"
     clusterBomb:
@@ -5284,7 +5241,8 @@ TNT:
 .50狙击分裂弹:
     gravity: 0
     liveTime: 5
-    trailColor: 220|213|47
+    trailVanillaParticle: false
+    trailColor: t/ot
 龙息弹:
     gravity: 0
     liveTime: 100
@@ -5296,7 +5254,8 @@ TNT:
     gravity: 0
     projectileSize: 0.5
     liveTime: 20
-    trailColor: 220|213|47
+    trailVanillaParticle: false
+    trailColor: t/ot
     buffInflict:
         - "死亡标记|100|1"
     clusterBomb:
@@ -5310,15 +5269,16 @@ TNT:
 .70狙击分裂弹:
     gravity: 0
     liveTime: 5
-    trailColor: 220|213|47
+    trailVanillaParticle: false
+    trailColor: t/ot
 煌晖御流激光:
     gravity: 0
     projectileSize: 2
     speedMultiPerTick: 9999
     maxSpeed: 64
     liveTime: 2
-    trailColor: 255|255|255
-    trailIntensityMulti: 0.5
+    trailVanillaParticle: false
+    trailColor: t/gt
     buffInflict:
         - "超位崩解|100|1"
     clusterBomb:
@@ -5331,8 +5291,8 @@ TNT:
     blockHitAction: thru
     projectileSize: 1
     liveTime: 60
-    trailColor: 255|255|82
-    trailIntensityMulti: 0.5
+    trailVanillaParticle: false
+    trailColor: t/bt
     clusterBomb:
         amount: 3
         damageMulti: 1
@@ -5349,14 +5309,14 @@ TNT:
     homingRadius: 24
     homingAbility: 5.5
     noHomingTicks: 3
-    trailColor: 167|255|255
-    trailIntensityMulti: 0.5
+    trailVanillaParticle: false
+    trailColor: t/bt
 月神高速弹:
     gravity: 0
     liveTime: 20
     penetration: 2
-    trailColor: 220|213|47
-    trailIntensityMulti: 0.2
+    trailVanillaParticle: false
+    trailColor: t/rt
     buffInflict:
         - "解离|1000|1"
 永夜光束:
@@ -5494,7 +5454,8 @@ TNT:
     homingRadius: 16
     gravity: 0
     liveTime: 30
-    trailColor: 255|255|113
+    trailVanillaParticle: false
+    trailColor: t/ot
     buffInflict:
         - "破晓|60|1"
 龙魂破花瓣:
@@ -5540,9 +5501,8 @@ TNT:
     noGravityTicks: 10
     liveTime: 50
     penetration: 1
-    trailColor: 69|92|211
-    trailSize: 0.15
-    trailStepSize: 0.75
+    trailVanillaParticle: false
+    trailColor: t/bt
 空旋:
     spawnProjectiles:
         interval: 10
@@ -5572,9 +5532,8 @@ TNT:
 炼狱死光:
     gravity: 0
     liveTime: 40
-    trailColor: 255|55|85
-    trailLingerTime: 5
-    trailStepSize: 0.65
+    trailVanillaParticle: false
+    trailColor: t/rt
     buffInflict:
         - "硫磺火|20|1"
 遗殇:
@@ -5646,9 +5605,8 @@ TNT:
 混沌射线分支:
     gravity: 0
     liveTime: 1
-    trailColor: 252|109|202
-    trailLingerTime: 5
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/pkt
     buffInflict:
         - "弑神怒焰|20|1"
 神谕:
@@ -5663,9 +5621,8 @@ TNT:
     blockHitAction: thru
     gravity: 0
     liveTime: 1
-    trailColor: 224|67|98
-    trailLingerTime: 5
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/ot
 阿撒托斯:
     spawnProjectiles:
         interval: 2
@@ -5691,15 +5648,13 @@ TNT:
 寰宇之球死亡射线:
     gravity: 0
     liveTime: 1
-    trailColor: 255|171|254
-    trailLingerTime: 5
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/pt
 凝胶束:
     gravity: 0
     liveTime: 50
-    trailColor: 102|248|255
-    trailSize: 0.15
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/bt
 彩虹猫之刃:
     projectileSize: 0.5
     blockHitAction: bounce
@@ -5712,9 +5667,6 @@ TNT:
 水之剑气:
     gravity: 0
     projectileSize: 0.5
-    trailColor: "148|255|255"
-    trailSize: 0.1
-    trailStepSize: 0.5
     liveTime: 60
 阴暗球:
     noGravityTicks: 0
@@ -5762,10 +5714,6 @@ TNT:
     bounce: 2
     penetration: 2
     gravity: 0
-    trailColor: 10|118|77
-    trailSize: 0.25
-    trailStepSize: 0.5
-    trailLingerTime: 5
     buffInflict:
         - "剧毒|30|1"
 风暴剑气:
@@ -5780,9 +5728,8 @@ TNT:
     noHomingTicks: 5
     gravity: 0
     liveTime: 30
-    trailColor: 255|51|109
-    trailStepSize: 0.5
-    trailLingerTime: 6
+    trailVanillaParticle: false
+    trailColor: t/rt
 夜之星光:
     projectileSize: 1
     gravity: 0
@@ -5805,11 +5752,10 @@ TNT:
     liveTime: 60
     isGrenade: true
     blastRadius: 1.75
+    trailVanillaParticle: false
+    trailColor: t/rt
     buffInflict:
         - "狱炎|40|1"
-    trailColor: 233|15|50
-    trailStepSize: 0.5
-    trailLingerTime: 6
 硫磺火间歇泉:
     noGravityTicks: 0
     projectileSize: 0.5
@@ -5817,10 +5763,10 @@ TNT:
     blockHitAction: stick
     penetration: 999999
     minimumDamageTicks: 5
+    trailVanillaParticle: false
+    trailColor: t/rt
     buffInflict:
         - "硫磺火|60|1"
-    trailColor: 255|56|35
-    trailLingerTime: 6
 硫火之刃:
     noGravityTicks: 20
     liveTime: 60
@@ -5908,8 +5854,8 @@ TNT:
     projectileSize: 0.5
     liveTime: 65
     minimumDamageTicks: 5
-    trailColor: 255|149|255
-    trailLingerTime: 6
+    trailVanillaParticle: false
+    trailColor: t/pt
 利维坦毒牙:
     gravity: 0
     projectileSize: 0.75
@@ -5920,31 +5866,28 @@ TNT:
     gravity: 0
     liveTime: 50
     projectileSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/ot
     clusterBomb:
         amount: 3
         damageMulti: 0.5
         name: 小火花
         velocity: 0.6
-    trailColor: 255|255|113
-    trailLingerTime: 6
 大熔岩火球:
     gravity: 0
     liveTime: 35
     projectileSize: 0.75
     speedMultiPerTick: 0.98
-    trailColor: 78|27|62
-    trailStepSize: 0.5
-    trailLingerTime: 12
+    trailVanillaParticle: false
+    trailColor: t/rt
     buffInflict:
         - "狱炎|60|1"
 小熔岩火球:
     gravity: 0
     liveTime: 35
-    projectileSize: 0.5
-    speedMultiPerTick: 0.99
-    trailColor: 78|27|62
-    trailStepSize: 0.5
-    trailLingerTime: 8
+    projectileSize: 0.50
+    trailVanillaParticle: false
+    trailColor: t/rt
     buffInflict:
         - "狱炎|40|1"
 灵魂镰刀:
@@ -5964,9 +5907,8 @@ TNT:
     projectileSize: 3
     penetration: 999999
     liveTime: 15
-    trailColor: 56|208|152
-    trailSize: 0.2
-    trailStepSize: 0.75
+    trailVanillaParticle: false
+    trailColor: t/dgt
     buffInflict:
         - "瘟疫|40|1"
 蓝焰火花:
@@ -5975,26 +5917,22 @@ TNT:
     homingRadius: 32
     blockHitAction: thru
     liveTime: 60
-    trailColor: 148|255|255
-    trailSize: 0.2
-    trailStepSize: 0.75
+    trailVanillaParticle: false
+    trailColor: t/bt
 熵离子球:
     gravity: 0
     homing: true
     homingRadius: 16
     noHomingTicks: 10
-    trailColor: 144|35|255
-    trailSize: 0.2
-    trailStepSize: 0.5
-    trailLingerTime: 5
+    trailVanillaParticle: false
+    trailColor: t/pt
 追踪火球:
     homing: true
     homingRadius: 24
     minimumDamageTicks: 5
     noHomingTicks: 5
-    trailColor: 255|137|17
-    trailSize: 0.15
-    trailStepSize: 0.4
+    trailVanillaParticle: false
+    trailColor: t/ot
 燃烧头骨:
     homing: true
     homingRadius: 32
@@ -6002,9 +5940,8 @@ TNT:
     minimumDamageTicks: 1
     blockHitAction: thru
     projectileSize: 1
-    trailColor: 255|137|17
-    trailSize: 0.2
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/ot
     clusterBomb:
         amount: 3
         damageMulti: 0.5
@@ -6019,23 +5956,20 @@ TNT:
     buffInflict:
         - "狱炎|60|1"
         - "霜火|40|1"
-    trailColor: 71|121|253
-    trailStepSize: 0.5
-    trailLingerTime: 6
+    trailVanillaParticle: false
+    trailColor: t/pt
 制裁大剑分裂剑气:
     gravity: 0
     liveTime: 40
     homing: true
-    trailColor: 255|255|255
-    trailStepSize: 0.5
-    trailLingerTime: 6
+    trailVanillaParticle: false
+    trailColor: t/bt
 制裁大剑剑气:
     gravity: 0
     projectileSize: 0.5
     liveTime: 60
-    trailColor: 255|255|255
-    trailStepSize: 0.5
-    trailLingerTime: 6
+    trailVanillaParticle: false
+    trailColor: t/bt
     spawnProjectiles:
         interval: 2
         offset: 0.5
@@ -6049,8 +5983,8 @@ TNT:
     projectileSize: 3
     penetration: 999999
     liveTime: 15
-    trailColor: 56|208|152
-    trailIntensityMulti: 0.25
+    trailVanillaParticle: false
+    trailColor: t/dgt
     buffInflict:
         - "瘟疫|40|1"
     spawnProjectiles:
@@ -6064,22 +5998,35 @@ TNT:
     gravity: 0
     projectileSize: 0.75
     liveTime: 100
-    trailColor: 255|150|0
-    trailIntensityMulti: 0.5
+    trailVanillaParticle: false
+    trailColor: t/ot
     buffInflict:
         - "破晓|60|1"
 夜晚剑气:
     gravity: 0
     projectileSize: 0.75
     liveTime: 100
-    trailColor: 0|150|255
-    trailIntensityMulti: 0.5
+    trailVanillaParticle: false
+    trailColor: t/bt
     buffInflict:
         - "夜魇|60|1"
 爆破剑气:
     gravity: 0
     projectileSize: 0.75
     liveTime: 60
+强追踪神圣之火:
+    projDisguiseName: 神圣之火
+    blockHitAction: thru
+    projectileSize: 0.5
+    liveTime: 60
+    gravity: 0
+    homing: true
+    homingMethod: 2
+    homingRadius: 64
+    homingSharpTurning: false
+    homingAbility: 30
+    buffInflict:
+        - "神圣之火|40|1"
 星河陨石:
     gravity: 0
     blockHitAction: thru
@@ -6136,7 +6083,8 @@ TNT:
     projectileSize: 1
     liveTime: 20
     enemyInvincibilityFrame: 1
-    trailColor: 128|255|64
+    trailVanillaParticle: false
+    trailColor: t/gls
     clusterBomb:
         amount: 1
         damageMulti: 1
@@ -6164,9 +6112,8 @@ TNT:
     blockHitAction: thru
     liveTime: 1
     penetration: 999999
-    trailColor: 128|255|64
-    trailIntensityMulti: 1.5
-    trailLingerTime: 5
+    trailVanillaParticle: false
+    trailColor: t/gt
     spawnSound: item.exoblade.beam
     spawnSoundVolume: 2
 镜之刃镜子:
@@ -6180,9 +6127,8 @@ TNT:
     noHomingTicks: 5
     blockHitAction: thru
     projectileSize: 1.5
-    trailColor: 255|137|17
-    trailSize: 0.35
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/ot
     clusterBomb:
         amount: 2
         damageMulti: 0.75
@@ -6242,7 +6188,8 @@ TNT:
     liveTime: 75
     homing: true
     homingRadius: 27.5
-    trailColor: 255|174|255
+    trailVanillaParticle: false
+    trailColor: t/pkt
     buffInflict:
         - "弑神怒焰|100|1"
 精元镰刀:
@@ -6264,16 +6211,14 @@ TNT:
     liveTime: 40
     homing: true
     homingRadius: 32
-    trailColor: 255|255|255
-    trailStepSize: 0.5
-    trailLingerTime: 6
+    trailVanillaParticle: false
+    trailColor: t/bt
 携序之剑剑气:
     gravity: 0
     projectileSize: 0.5
     liveTime: 40
-    trailColor: 255|255|255
-    trailStepSize: 0.5
-    trailLingerTime: 6
+    trailVanillaParticle: false
+    trailColor: t/bt
     spawnProjectiles:
         interval: 3
         offset: 0.5
@@ -6346,9 +6291,9 @@ TNT:
     blockHitAction: thru
     homing: true
     homingRadius: 32
-    liveTime: 100
-    speedMultiPerTick: 0.99
-    trailColor: 128|255|64
+    liveTime: 1000
+    trailVanillaParticle: false
+    trailColor: t/rbwt
     buffInflict:
         - "超位崩解|100|1"
     clusterBomb:
@@ -6378,9 +6323,8 @@ TNT:
     projectileSize: 0.5
     liveTime: 1
     penetration: 999999
-    trailColor: 169|237|101
-    trailIntensityMulti: 2
-    trailLingerTime: 5
+    trailVanillaParticle: false
+    trailColor: t/rbwt
     spawnSound: item.exoblade.beam
     spawnSoundVolume: 3.5
     buffInflict:
@@ -6424,8 +6368,8 @@ TNT:
     gravity: 0
     projectileSize: 3
     liveTime: 40
-    trailColor: 255|0|0
-    trailIntensityMulti: 0.5
+    trailVanillaParticle: false
+    trailColor: t/rt
     buffInflict:
         - "超位崩解|200|1"
 绿色绚辉圣剑光束:
@@ -6435,8 +6379,8 @@ TNT:
     homingRadius: 32
     projectileSize: 3
     liveTime: 50
-    trailColor: 0|255|0
-    trailIntensityMulti: 0.5
+    trailVanillaParticle: false
+    trailColor: t/gt
     buffInflict:
         - "超位崩解|200|1"
 黄色绚辉圣剑光束:
@@ -6446,8 +6390,8 @@ TNT:
     speedMultiPerTick: 1.1
     maxSpeed: 5
     liveTime: 30
-    trailColor: 255|255|0
-    trailIntensityMulti: 0.5
+    trailVanillaParticle: false
+    trailColor: t/ot
     buffInflict:
         - "超位崩解|200|1"
 蓝色绚辉圣剑光束:
@@ -6457,8 +6401,8 @@ TNT:
     bounce: 10
     penetration: 10
     liveTime: 50
-    trailColor: 0|255|255
-    trailIntensityMulti: 0.5
+    trailVanillaParticle: false
+    trailColor: t/bt
     buffInflict:
         - "超位崩解|200|1"
 电火花:
@@ -6468,15 +6412,16 @@ TNT:
     blockHitAction: stick
     penetration: 4
     enemyInvincibilityFrame: 5
-    trailColor: 10|215|255
-    trailLingerTime: 6
+    trailVanillaParticle: false
+    trailColor: t/bt
 元素短剑:
     gravity: 0
     liveTime: 60
     homing: true
     projectileSize: 0.5
     blockHitAction: thru
-    trailColor: RAINBOW
+    trailVanillaParticle: false
+    trailColor: t/rbwt
     buffInflict:
         - "元素谐鸣|40|1"
     clusterBomb:
@@ -6520,7 +6465,8 @@ TNT:
     homingRadius: 32
     projectileSize: 0.5
     blockHitAction: thru
-    trailColor: 255|199|238
+    trailVanillaParticle: false
+    trailColor: t/pkt
     buffInflict:
         - "弑神怒焰|30|1"
     clusterBomb:
@@ -6653,7 +6599,8 @@ TNT:
     projectileSize: 1.5
     minimumDamageTicks: 5
     liveTime: 60
-    trailColor: 240|77|220
+    trailVanillaParticle: false
+    trailColor: t/pt
 摩羯之祈星环:
     gravity: 0
     blockHitAction: thru
@@ -6745,10 +6692,8 @@ TNT:
 能量脉冲:
     gravity: 0
     liveTime: 125
-    trailColor: 242|255|179
-    trailSize: 0.15
-    trailStepSize: 0.5
-    trailLingerTime: 3
+    trailVanillaParticle: false
+    trailColor: t/ot
 绿色元素光束:
     gravity: 0
     liveTime: 15
@@ -6811,9 +6756,8 @@ TNT:
         - "燃烧|100|0.3"
 钻石射线:
     gravity: 0
-    trailColor: 251|250|250
-    trailSize: 0.2
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/bt
     penetration: 1
 骷髅头:
     arrowOrPotion: true
@@ -6822,9 +6766,8 @@ TNT:
     homing: true
     homingRadius: 8
     homingAbility: 2
-    trailColor: 255|190|35
-    trailSize: 0.2
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/ot
 恶魔之镰:
     gravity: 0
     penetration: 5
@@ -6838,15 +6781,15 @@ TNT:
     penetration: 2
 海蓝射线:
     noGravityTicks: 0
-    trailColor: 37|101|238
+    trailVanillaParticle: false
+    trailColor: t/bt
     trailSize: 0.2
     trailStepSize: 0.5
     penetration: 999999
 绿激光:
     gravity: 0
-    trailColor: 168|253|3
-    trailSize: 0.1
-    trailStepSize: 0.35
+    trailVanillaParticle: false
+    trailColor: t/gt
     penetration: 2
 水矢:
     gravity: 0
@@ -6854,12 +6797,10 @@ TNT:
     blockHitAction: bounce
     bounce: 4
     penetration: 9
-    trailColor: 77|151|251
-    trailSize: 0.1
-    trailStepSize: 0.35
+    trailVanillaParticle: false
+    trailColor: t/bt
 激光:
-    gravity: 0
-    speedMultiPerTick: 0.99
+    gravity: 00
     liveTime: 600
     penetration: 2
     spawnSound: item.genericLaser
@@ -6871,7 +6812,8 @@ TNT:
 水晶蛇爆炸水晶:
     gravity: 0
     liveTime: 60
-    trailColor: 249|126|246
+    trailVanillaParticle: false
+    trailColor: t/pkt
     clusterBomb:
         amount: 4
         damageMulti: 0.6
@@ -6880,7 +6822,8 @@ TNT:
 水晶蛇爆炸水晶碎片:
     gravity: 0
     liveTime: 8
-    trailColor: 249|126|246
+    trailVanillaParticle: false
+    trailColor: t/pkt
 树叶:
     arrowOrPotion: true
     liveTime: 40
@@ -6888,16 +6831,17 @@ TNT:
     gravity: 0
     isGrenade: true
     blastRadius: 4.5
+    trailVanillaParticle: false
+    trailColor: t/ot
     buffInflict:
         - "狱炎|400|1"
-    trailColor: 255|125|125
 亡魂:
     gravity: 0
     liveTime: 75
     homing: true
     penetration: 2
-    trailColor: 255|255|255
-    trailStepSize: 0.35
+    trailVanillaParticle: false
+    trailColor: t/bt
 松针:
     arrowOrPotion: true
     noGravityTicks: 15
@@ -6975,12 +6919,12 @@ TNT:
     gravity: 0
     isGrenade: true
     blastRadius: 4.5
-    trailColor: 100|250|250
+    trailVanillaParticle: false
+    trailColor: t/bt
 钨钢光球:
     gravity: 0
-    trailColor: 251|250|250
-    trailSize: 0.1
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/bt
     penetration: 1
 魔法花瓣:
     gravity: 0
@@ -6992,9 +6936,8 @@ TNT:
     projectileSize: 1
     liveTime: 30
     speedMultiPerTick: 0.95
-    trailColor: 101|255|65
-    trailSize: 0.1
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/bt
     clusterBomb:
         amount: 4
         name: 魔法花瓣
@@ -7003,9 +6946,8 @@ TNT:
 海耀弹:
     gravity: 0
     liveTime: 100
-    trailColor: 73|232|255
-    trailSize: 0.1
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/bt
 天蓝羽毛:
     gravity: 0.01
     homing: true
@@ -7033,15 +6975,23 @@ TNT:
         spawnMechanism: BOTTOM
         damageMulti: 1
         speed: 1.0
-        spawnType: 暗影之雨
+        spawnType: 腐蚀之雨
+腐蚀之雨:
+    projDisguiseName: 暗影之雨
+    noGravityTicks: 0
+    homing: true
+    homingRadius: 32
+    noHomingTicks: 4
+    buffInflict:
+        - "暗影焰|100|1"
 暗影射线分支:
     homing: true
     homingAbility: 2
     gravity: 0
     liveTime: 20
     blockHitAction: thru
-    trailColor: 0|0|175
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/pt
 冰晶雪花:
     gravity: 0
     liveTime: 60
@@ -7070,9 +7020,8 @@ TNT:
     liveTime: 40
     homing: true
     noHomingTicks: 4
-    trailColor: 226|202|70
-    trailSize: 0.1
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/pkt
 闪光花朵:
     gravity: 0
     projectileSize: 1
@@ -7081,9 +7030,8 @@ TNT:
     homing: true
     homingRadius: 8
     homingAbility: 2.5
-    trailColor: 226|202|70
-    trailSize: 0.25
-    trailStepSize: 0.65
+    trailVanillaParticle: false
+    trailColor: t/pkt
     clusterBomb:
         amount: 6
         name: 闪光花瓣
@@ -7102,8 +7050,8 @@ TNT:
     gravity: 0
     liveTime: 20
     blockHitAction: thru
-    trailColor: 100|255|150
-    trailStepSize: 0.6
+    trailVanillaParticle: false
+    trailColor: t/gt
 深渊女神标枪:
     gravity: 0
     blockHitAction: thru
@@ -7116,7 +7064,8 @@ TNT:
     gravity: 0
     projectileSize: 0.5
     liveTime: 60
-    trailColor: 165|62|76
+    trailVanillaParticle: false
+    trailColor: t/rt
     clusterBomb:
         amount: 4
         name: 彗星
@@ -7133,26 +7082,24 @@ TNT:
 瘟疫毒牙:
     gravity: 0
     liveTime: 60
-    trailColor: 177|52|199
-    trailSize: 0.1
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/dgt
     buffInflict:
         - "瘟疫|60|1"
 血液:
     gravity: 0
     blockHitAction: thru
     liveTime: 20
-    trailColor: 70|23|23
-    trailSize: 0.1
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/rt
+    trailLingerTime: 2
 玄法花瓣:
     gravity: 0
     liveTime: 40
     homing: true
     noHomingTicks: 3
-    trailColor: 225|90|175
-    trailSize: 0.1
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/pkt
 玄法花朵:
     gravity: 0
     projectileSize: 1
@@ -7161,9 +7108,8 @@ TNT:
     homing: true
     homingRadius: 12
     homingAbility: 2.75
-    trailColor: 225|90|175
-    trailSize: 0.25
-    trailStepSize: 0.65
+    trailVanillaParticle: false
+    trailColor: t/pkt
     clusterBomb:
         amount: 8
         name: 玄法花瓣
@@ -7208,9 +7154,8 @@ TNT:
     homingRadius: 16
     minimumDamageTicks: 5
     noHomingTicks: 3
-    trailColor: 212|80|194
-    trailSize: 0.1
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/pkt
 荆棘烁兰花朵:
     gravity: 0
     projectileSize: 1
@@ -7219,9 +7164,8 @@ TNT:
     homing: true
     homingRadius: 16
     homingAbility: 3
-    trailColor: 212|80|194
-    trailSize: 0.25
-    trailStepSize: 0.65
+    trailVanillaParticle: false
+    trailColor: t/pkt
     clusterBomb:
         amount: 8
         name: 玄法花瓣
@@ -7266,7 +7210,8 @@ TNT:
     gravity: 0
     liveTime: 2
     blockHitAction: thru
-    trailColor: 120|91|255
+    trailVanillaParticle: false
+    trailColor: t/pkt
 命运幽灵魂火:
     gravity: 0
     liveTime: 80
@@ -7278,7 +7223,8 @@ TNT:
     gravity: 0
     liveTime: 40
     projectileSize: 0.5
-    trailColor: 255|255|255
+    trailVanillaParticle: false
+    trailColor: t/bt
     clusterBomb:
         amount: 8
         damageMulti: 0.35
@@ -7300,7 +7246,8 @@ TNT:
     homingRadius: 16
     noHomingTicks: 2
     minimumDamageTicks: 2
-    trailColor: 255|255|255
+    trailVanillaParticle: false
+    trailColor: t/bt
 金星狱炎三叉戟:
     gravity: 0
     liveTime: 50
@@ -7308,7 +7255,8 @@ TNT:
     projectileSize: 1.5
     blastRadius: 6
     blastDuration: 32
-    trailColor: 255|255|137
+    trailVanillaParticle: false
+    trailColor: t/ot
     clusterBomb:
         amount: 8
         damageMulti: 0.15
@@ -7349,8 +7297,8 @@ TNT:
     liveTime: 2
     speedMultiPerTick: 999
     maxSpeed: 32
-    trailColor: 194|148|248;100|200|255
-    trailIntensityMulti: 2
+    trailVanillaParticle: false
+    trailColor: t/pkt;t/bt
     buffInflict:
         - "弑神怒焰|60|1"
 灵魂穿透者主光束:
@@ -7359,8 +7307,8 @@ TNT:
     liveTime: 2
     speedMultiPerTick: 999
     maxSpeed: 64
-    trailColor: 171|152|236
-    trailIntensityMulti: 2
+    trailVanillaParticle: false
+    trailColor: t/pkt
     buffInflict:
         - "弑神怒焰|60|1"
     clusterBomb:
@@ -7379,8 +7327,8 @@ TNT:
     projectileSize: 0.5
     penetration: 999999
     liveTime: 1
-    trailColor: 171|152|236
-    trailIntensityMulti: 1.5
+    trailVanillaParticle: false
+    trailColor: t/pkt
     buffInflict:
         - "弑神怒焰|60|1"
 圣杖星云:
@@ -7393,8 +7341,8 @@ TNT:
     homingRadius: 24
     isGrenade: true
     blastRadius: 4
-    trailColor: 207|91|197
-    trailIntensityMulti: 0.2
+    trailVanillaParticle: false
+    trailColor: t/pkt
     clusterBomb:
         amount: 6
         damageMulti: 0.5
@@ -7414,7 +7362,8 @@ TNT:
     gravity: 0
     liveTime: 30
     projectileSize: 0.75
-    trailColor: 239|193|119
+    trailVanillaParticle: false
+    trailColor: t/ot
     clusterBomb:
         amount: 1
         damageMulti: 0.25
@@ -7464,7 +7413,8 @@ TNT:
     gravity: 0
     liveTime: 2
     blockHitAction: thru
-    trailColor: 6|255|255
+    trailVanillaParticle: false
+    trailColor: t/bt
 耀界之光能量体:
     gravity: 0
     liveTime: 60
@@ -7473,15 +7423,14 @@ TNT:
     homingAbility: 5
     minimumDamageTicks: 2
     noHomingTicks: 2
-    trailColor: RAINBOW
-    trailIntensityMulti: 0.5
+    trailVanillaParticle: false
+    trailColor: t/rt;t/lt;t/gt;t/dgt;t/bt;t/pt;t/pkt;t/ot;
     buffInflict:
         - "超位崩解|100|1"
 狞桀:
     gravity: 0
     liveTime: 20
     projectileSize: 2
-    trailColor: 255|7|10
     clusterBomb:
         amount: 15
         damageMulti: 0.1
@@ -7502,7 +7451,9 @@ TNT:
     penetration: 99999
     liveTime: 40
     projectileSize: 0.5
-    trailColor: 0|100|255;255|100|255
+    trailVanillaParticle: false
+    trailColor: t/pkt;t/bt
+    trailLingerTime: 3
     spawnProjectiles:
         interval: 1
         offset: 24
@@ -7515,7 +7466,9 @@ TNT:
     penetration: 99999
     liveTime: 10
     projectileSize: 0.5
-    trailColor: 0|100|255;255|100|255
+    trailVanillaParticle: false
+    trailColor: t/pkt;t/bt
+    trailLingerTime: 2
 星尘流星:
     homing: true
     homingSharpTurning: false
@@ -7523,8 +7476,8 @@ TNT:
     gravity: 0
     liveTime: 20
     blockHitAction: thru
-    trailColor: 25|200|225
-    trailStepSize: 0.6
+    trailVanillaParticle: false
+    trailColor: t/bt
 粉色脉冲:
     gravity: 0
     blockHitAction: thru
@@ -7534,9 +7487,8 @@ TNT:
     homing: true
     homingRadius: 24
     noHomingTicks: 999999
-    trailColor: 211|111|178
-    trailSize: 0.15
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/pkt
 离子光波:
     arrowOrPotion: true
     gravity: 0
@@ -7549,10 +7501,8 @@ TNT:
     projectileSize: 0.5
     liveTime: 75
     speedMultiPerTick: 1.2
-    trailColor: 255|255|145
-    trailSize: 0.25
-    trailStepSize: 0.5
-    trailLingerTime: 6
+    trailVanillaParticle: false
+    trailColor: t/gt
 紫色泡沫:
     gravity: 0
     projectileSize: 0.5
@@ -7575,25 +7525,22 @@ TNT:
     gravity: 0
     projectileSize: 1
     liveTime: 20
-    trailColor: 245|255|134
+    trailVanillaParticle: false
+    trailColor: t/ot
     isGrenade: true
     blastRadius: 3.5
 等离子步枪弹:
     gravity: 0
     projectileSize: 0.5
     liveTime: 20
-    trailColor: 58|234|24
-雷暴雨额外弹幕:
-    gravity: 0
-    projectileSize: 0.5
-    liveTime: 10
-    trailColor: 71|255|255
-    trailIntensityMulti: 0.5
+    trailVanillaParticle: false
+    trailColor: t/dgt
 雷暴雨:
     gravity: 0
     projectileSize: 0.5
     liveTime: 20
-    trailColor: 71|255|255
+    trailVanillaParticle: false
+    trailColor: t/bt
     clusterBomb:
         amount: 5
         damageMulti: 1
@@ -7601,19 +7548,19 @@ TNT:
         type: star
         fireOnTimeout: false
         velocity: 10
-以太之低语额外弹幕:
+雷暴雨额外弹幕:
     gravity: 0
-    blockHitAction: thru
-    projectileSize: 0.75
-    liveTime: 20
-    trailColor: 255|142|255
-    buffInflict:
-        - "暗影焰|200|1"
+    projectileSize: 0.5
+    liveTime: 10
+    trailVanillaParticle: false
+    trailColor: t/bt
+    trailLingerTime: 3
 以太之低语:
     gravity: 0
     projectileSize: 0.5
     liveTime: 20
-    trailColor: 255|142|255
+    trailVanillaParticle: false
+    trailColor: t/pt
     buffInflict:
         - "暗影焰|200|1"
     clusterBomb:
@@ -7622,6 +7569,15 @@ TNT:
         name: 以太之低语额外弹幕
         fireOnTimeout: false
         velocity: 10
+以太之低语额外弹幕:
+    gravity: 0
+    blockHitAction: thru
+    projectileSize: 0.75
+    liveTime: 20
+    trailVanillaParticle: false
+    trailColor: t/pt
+    buffInflict:
+        - "暗影焰|200|1"
 哀怨之声:
     gravity: 0
     blockHitAction: bounce
@@ -7639,6 +7595,7 @@ TNT:
     blastRadius: 2.5
     trailVanillaParticle: false
     trailColor: t/bls
+    trailLingerTime: 4
 特斯拉强电束:
     gravity: 0
     projectileSize: 1
@@ -7647,6 +7604,7 @@ TNT:
     blastRadius: 3
     trailVanillaParticle: false
     trailColor: t/bls
+    trailLingerTime: 4
     spawnProjectiles:
         interval: 1
         offset: 32
@@ -7660,7 +7618,9 @@ TNT:
     penetration: 1
     projectileSize: 1
     liveTime: 20
-    trailColor: 255|255|172
+    trailVanillaParticle: false
+    trailColor: t/gt
+    trailLingerTime: 3
     buffInflict:
         - "神圣之火|60|1"
 冰矢:
@@ -7670,9 +7630,8 @@ TNT:
     bouncePenetrationBonded: true
     bounce: 1
     penetration: 1
-    trailColor: 91|255|255
-    trailSize: 0.15
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/bt
     buffInflict:
         - "霜火|20|1"
 火矢:
@@ -7682,9 +7641,8 @@ TNT:
     bouncePenetrationBonded: true
     bounce: 3
     penetration: 3
-    trailColor: 255|171|83
-    trailSize: 0.15
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/ot
     buffInflict:
         - "燃烧|60|1"
 黑檀球:
@@ -7703,9 +7661,8 @@ TNT:
     bouncePenetrationBonded: true
     bounce: 4
     penetration: 4
-    trailColor: 255|255|125
-    trailSize: 0.15
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/bt;t/ot
     buffInflict:
         - "狱炎|60|1"
         - "霜火|60|1"
@@ -7739,38 +7696,35 @@ TNT:
     gravity: 0
     blockHitAction: bounce
     bounce: 9
-    liveTime: 60
-    speedMultiPerTick: 0.99
+    liveTime: 600
     buffInflict:
         - "霜火|40|1"
 混乱火球:
     liveTime: 30
     gravity: 0
-    trailColor: 255|7|8
-    trailStepSize: 0.5
     speedMultiPerTick: 1.1
     maxSpeed: 3.5
     isGrenade: true
     blastRadius: 2
     blastDuration: 25
+    trailVanillaParticle: false
+    trailColor: t/rt
     buffInflict:
         - "硫磺火|80|1"
 咒焰流:
     noGravityTicks: 0
-    trailColor: 126|212|45
-    trailSize: 0.1
-    trailStepSize: 0.4
+    trailVanillaParticle: false
+    trailColor: t/lt
     penetration: 999999
     buffInflict:
         - "咒火|100|1"
 天堂之泪:
     gravity: 0
-    trailColor: 24|175|222
-    trailSize: 0.25
-    trailStepSize: 0.75
     penetration: 1
     homing: true
     homingRadius: 10
+    trailVanillaParticle: false
+    trailColor: t/bt
     buffInflict:
         - "神圣之火|60|1"
 始源粉尘:
@@ -7945,7 +7899,8 @@ TNT:
     homingRadius: 48
     homingAbility: 5
     noHomingTicks: 3
-    trailColor: 255|255|100
+    trailVanillaParticle: false
+    trailColor: t/ot
 异端镀金灵魂:
     liveTime: 50
     blockHitAction: thru
@@ -8003,8 +7958,7 @@ TNT:
     bounce: 9
     liveTime: 175
     gravity: 0
-    penetration: 99999
-    speedMultiPerTick: 0.99
+    penetration: 999990
 鬼魂能量球:
     gravity: 0
     projectileSize: 1.5
@@ -8029,7 +7983,8 @@ TNT:
     homing: true
     homingRadius: 16
     noHomingTicks: 5
-    trailColor: 149|255|255;208|132|145
+    trailVanillaParticle: false
+    trailColor: t/rt;t/bt
 小异端诡灵:
     projectileSize: 1.5
     blockHitAction: thru
@@ -8131,10 +8086,6 @@ TNT:
     noGravityTicks: 0
     speedMultiPerTick: 0.9
     blockHitAction: stick
-    trailColor: 255|171|83
-    trailSize: 0.01
-    trailStepSize: 0.2
-    trailLingerTime: 5
     buffInflict:
         - "燃烧|80|1"
 汽油箭:
@@ -8222,9 +8173,8 @@ TNT:
 能量束:
     gravity: 0
     blockHitAction: slide
-    trailColor: 97|255|55
-    trailSize: 0.15
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/gt
 黑翼蝙蝠:
     arrowOrPotion: true
     noGravityTicks: 10
@@ -8243,9 +8193,8 @@ TNT:
 硫火射线:
     gravity: 0
     penetration: 2
-    trailColor: 255|129|183
-    trailSize: 0.25
-    trailStepSize: 0.5
+    trailVanillaParticle: false
+    trailColor: t/rt
     buffInflict:
         - "硫磺火|40|1"
 化石碎片:
@@ -8278,14 +8227,15 @@ TNT:
     homingAbility: 4
     homingRadius: 16
     blockHitAction: thru
-    trailColor: 255|0|0;150|200|255;150|255|150;255|150|200;255|255|0;255|0|255;255|150|50
-    trailIntensityMulti: 0.5
+    trailVanillaParticle: false
+    trailColor: t/rt;t/gt;t/bt;t/pt;t/ot;
     buffInflict:
         - "元素谐鸣|80|1"
 星能之箭:
     gravity: 0
     liveTime: 50
-    trailColor: 176|115|218
+    trailVanillaParticle: false
+    trailColor: t/pt
     spawnProjectiles:
         interval: 10
         offset: 1.0
@@ -8307,8 +8257,8 @@ TNT:
     homing: true
     homingRadius: 20
     homingAbility: 5
-    trailColor: 255|212|16
-    trailIntensityMulti: 0.5
+    trailVanillaParticle: false
+    trailColor: t/ot
 地核燃弧箭:
     gravity: 0
     projectileSize: 0.75
@@ -8339,7 +8289,8 @@ TNT:
     gravity: 0
     projectileSize: 1.5
     liveTime: 50
-    trailColor: 40|248|250
+    trailVanillaParticle: false
+    trailColor: t/bt
     clusterBomb:
         amount: 1
         damageMulti: 1
@@ -8366,8 +8317,8 @@ TNT:
     liveTime: 1
     penetration: 2
     blockHitAction: thru
-    trailColor: 40|248|250
-    trailIntensityMulti: 1.5
+    trailVanillaParticle: false
+    trailColor: t/bt
 台风箭:
     gravity: 0
     liveTime: 75
@@ -8376,7 +8327,8 @@ TNT:
     liveTime: 2
     speedMultiPerTick: 100
     maxSpeed: 48
-    trailColor: 159|255|255;255|188|255
+    trailVanillaParticle: false
+    trailColor: t/pkt;t/bt
 创世之光:
     gravity: 0
     projectileSize: 0.5
@@ -8390,7 +8342,8 @@ TNT:
     liveTime: 2
     speedMultiPerTick: 100
     maxSpeed: 48
-    trailColor: 255|0|0;255|255|0;0|255|0;0|255|255
+    trailVanillaParticle: false
+    trailColor: t/rt;t/ot;t/gt;t/bt
 炎龙崩啸:
     gravity: 0
     projectileSize: 0.75
@@ -8472,9 +8425,8 @@ TNT:
     penetration: 999999
     projectileSize: 3
     liveTime: 1
-    trailColor: 127|255|14
-    trailSize: 0.1
-    trailIntensityMulti: 2
+    trailVanillaParticle: false
+    trailColor: t/gls
     buffInflict:
         - "超位崩解|100|1"
 瘟疫疫毒箭:
@@ -8533,7 +8485,8 @@ TNT:
     homingRadius: 24
     homingAbility: 5
     noHomingTicks: 5
-    trailColor: 91|255|7
+    trailVanillaParticle: false
+    trailColor: t/gt
 血炎灵魂:
     gravity: 0
     blockHitAction: bounce
@@ -8552,14 +8505,16 @@ TNT:
     blockHitAction: thru
     liveTime: 80
     penetration: 999999
-    trailColor: 255|255|255
+    trailVanillaParticle: false
+    trailColor: t/ot
 弑神榴霰弹:
     gravity: 0
     blockHitAction: thru
     liveTime: 40
     isGrenade: true
     blastRadius: 1
-    trailColor: 209|79|255
+    trailVanillaParticle: false
+    trailColor: t/pkt
 始源林海爆炸:
     liveTime: 1
     minimumDamageTicks: 10

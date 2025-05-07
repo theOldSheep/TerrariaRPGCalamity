@@ -51,13 +51,13 @@ public class GenericHelper {
         }
         public ParticleLineOptions clone() {
             ParticleLineOptions result = new ParticleLineOptions();
-            if (result.spriteItem != null) {
+            if (spriteItem != null) {
                 result.setSpriteItem(spriteItem.clone());
             }
-            if (result.rightOrthogonalDir != null) {
+            if (rightOrthogonalDir != null) {
                 result.setRightOrthogonalDir(rightOrthogonalDir.clone());
             }
-            if (result.particleColor != null) {
+            if (particleColor != null) {
                 result.setParticleColor(particleColor);
             }
             result.setParticleOrItem(particleOrItem)

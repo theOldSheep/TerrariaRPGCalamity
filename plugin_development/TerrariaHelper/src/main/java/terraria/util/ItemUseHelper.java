@@ -670,9 +670,11 @@ public class ItemUseHelper {
             }
         }
         List<String> particleColors = weaponSection.getStringList("particleColor");
-        String color = "102|255|255";
+        String color = "255|0|0";
         GenericHelper.StrikeLineOptions strikeLineInfo =
                 new GenericHelper.StrikeLineOptions()
+                        .setVanillaParticle(false)
+                        .setSnowStormRawUse(false)
                         .setThruWall(false);
         switch (interpolateType) {
             // if the player is dealing melee damage, display the player's weapon instead of particle
@@ -699,6 +701,8 @@ public class ItemUseHelper {
                         .setWhipBonusDamage(weaponSection.getDouble("bonusDamage", 0d))
                         .setWhipBonusCrit(weaponSection.getDouble("bonusCrit", 0d))
                         .setParticleInfo(new GenericHelper.ParticleLineOptions()
+                                .setVanillaParticle(false)
+                                .setSnowStormRawUse(false)
                                 .setParticleColor(particleColors)
                                 .setTicksLinger(1));
         }
@@ -1561,7 +1565,6 @@ public class ItemUseHelper {
                 }
                 case "光棱破碎者": {
                     shouldStrike = true;
-                    double strikeRatio = (double) currentIndex / maxIndex;
                     // interpolate yaw and pitch
                     {
                         double interpolateOffset[] = GenericHelper.getDirectionInterpolateOffset(
@@ -1574,23 +1577,13 @@ public class ItemUseHelper {
                     // shoot rainbow instead of normal blade on later swing animation
                     int swingIdx = swingAmount % 32;
                     if (swingIdx > 8) {
-                        double interpolateRatio = ( (swingIdx - 9) + strikeRatio ) / 24.000001d;
-                        ArrayList<Color> rainbowColor = new ArrayList<>();
-                        rainbowColor.add(Color.fromRGB(255, 0, 0));
-                        rainbowColor.add(Color.fromRGB(255, 255, 0));
-                        rainbowColor.add(Color.fromRGB(0, 255, 0));
-                        rainbowColor.add(Color.fromRGB(0, 255, 255));
-                        rainbowColor.add(Color.fromRGB(0, 0, 255));
-                        rainbowColor.add(Color.fromRGB(255, 0, 255));
-                        Color particleColor = GenericHelper.getInterpolateColor(interpolateRatio, rainbowColor);
                         size = 64;
                         strikeRadius = 1.5;
                         strikeLineInfo.particleInfo
                                 .setParticleOrItem(true)
-                                .setParticleColor(
-                                        particleColor.getRed() + "|" + particleColor.getGreen() + "|" + particleColor.getBlue())
-                                .setTicksLinger(1)
-                                .setIntensityMulti(0.2);
+                                .setVanillaParticle(false)
+                                .setSnowStormRawUse(false)
+                                .setParticleColor("t/rbws");
                         strikeLineInfo
                                 .setThruWall(false)
                                 .setDamageCD(15);
@@ -2023,12 +2016,14 @@ public class ItemUseHelper {
                             Vector offsetVec = MathHelper.vectorFromYawPitch_approx(thornYaw, thornPitch);
                             offsetVec.multiply(5);
                             GenericHelper.StrikeLineOptions thornStrikeOption = new GenericHelper.StrikeLineOptions()
+                                    .setVanillaParticle(false)
+                                    .setSnowStormRawUse(false)
                                     .setDamageCD(4)
                                     .setLingerTime(6)
                                     .setLingerDelay(5)
                                     .setThruWall(true);
                             GenericHelper.handleStrikeLightning(ply, hitLoc.subtract(offsetVec), thornYaw, thornPitch,
-                                    12, 3,  0.5, 1, 4, "103|78|50",
+                                    12, 3,  0.5, 1, 4, "t/ntb",
                                     new ArrayList<>(), attrMap, thornStrikeOption);
                         });
                         break;
@@ -2229,7 +2224,7 @@ public class ItemUseHelper {
                                 Vector projVel = MathHelper.vectorFromYawPitch_approx(startYaw + 90 * i, 0);
                                 projVel.multiply(1.5);
                                 EntityHelper.spawnProjectile(ply, hitLoc, projVel, projAttrMap,
-                                        DamageHelper.DamageType.MELEE,"神圣之火");
+                                        DamageHelper.DamageType.MELEE,"强追踪神圣之火");
                             }
                         });
                         break;
@@ -2519,13 +2514,15 @@ public class ItemUseHelper {
                         case "真·环境之刃[缚囚之悼]": {
                             // use particle for this one
                             strikeLineInfo.particleInfo = null;
-                            strikeLineInfo.setLingerDelay(1);
+                            strikeLineInfo.setLingerDelay(2);
                             strikeLength = 2.5 + 15d * progress;
                             Vector bladeOffsetDir = offsetDir.clone().normalize().multiply(strikeLength);
                             Location bladeStrikeInitLoc = startStrikeLoc.clone().add(bladeOffsetDir);
                             GenericHelper.StrikeLineOptions bladeStrikeOption = new GenericHelper.StrikeLineOptions()
+                                    .setVanillaParticle(false)
+                                    .setSnowStormRawUse(false)
                                     .setThruWall(false)
-                                    .setLingerDelay(1);
+                                    .setLingerDelay(2);
 
                             // the blade pulls the player over if it is the final blow
                             if (i + 1 == loopTimes && ply.isSneaking()) {
@@ -2542,7 +2539,7 @@ public class ItemUseHelper {
                             HashMap<String, Double> plyAttrMap = AttributeHelper.getAttrMap(ply);
                             double critRate = plyAttrMap.getOrDefault("crit", 4d);
                             plyAttrMap.put("crit", 100d);
-                            String bladeColor = weaponType.equals("真·环境之刃[缚囚之悼]") ? "255|255|255" : "166|251|46";
+                            String bladeColor = weaponType.equals("真·环境之刃[缚囚之悼]") ? "t/bls" : "t/gls";
                             GenericHelper.handleStrikeLine(ply, bladeStrikeInitLoc, actualYaw, actualPitch,
                                     2.5, strikeRadius, weaponType, bladeColor,
                                     damaged, attrMap, bladeStrikeOption);
@@ -2871,13 +2868,6 @@ public class ItemUseHelper {
                                 projVel.multiply(3);
                                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                                         ply, projVel, projAttrMap, "星流能量矢");
-                                String[] trailColorCandidates = {
-                                        "234|205|134", // orange
-                                        "125|255|255", // light blue
-                                        "189|255|179", // light green
-                                };
-                                shootInfo.properties.put("trailColor",
-                                        trailColorCandidates[ (int) (Math.random() * trailColorCandidates.length) ]);
                                 EntityHelper.spawnProjectile(shootInfo);
                             }
                             break;
@@ -2891,7 +2881,7 @@ public class ItemUseHelper {
                 }
             }
         }
-        // ark of cosmos etc. would depend on currentIndex == maxIndex
+        // ark of cosmos etc. would check that currentIndex == maxIndex, which is the last tick
         if (currentIndex < maxIndex) {
             Vector finalLookDir = lookDir;
             Collection<Entity> finalDamaged = damaged;
@@ -4233,6 +4223,10 @@ public class ItemUseHelper {
                     fireVelocity.normalize();
                     break;
                 }
+                case "腐蚀之雨法杖": {
+                    fireVelocity = ply.getLocation().getDirection();
+                    break;
+                }
                 case "血涌": {
                     AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions()
                             .setAimMode(true)
@@ -4399,7 +4393,9 @@ public class ItemUseHelper {
                 Collection<Entity> damageExceptions;
                 if (damageCD == null) damageExceptions = new HashSet<>();
                 else damageExceptions = damageCD;
-                GenericHelper.StrikeLineOptions strikeInfo = new GenericHelper.StrikeLineOptions();
+                GenericHelper.StrikeLineOptions strikeInfo = new GenericHelper.StrikeLineOptions()
+                        .setVanillaParticle(false)
+                        .setSnowStormRawUse(false);
                 Vector fireDir = targetedLocation.clone().subtract(ply.getEyeLocation()).toVector().normalize();
                 double yaw = MathHelper.getVectorYaw(fireDir),
                         pitch = MathHelper.getVectorPitch(fireDir);
@@ -4427,7 +4423,7 @@ public class ItemUseHelper {
                     }
                     case "高温射线枪": {
                         length = 48;
-                        particleColor = "255|225|0";
+                        particleColor = "t/ols";
                         strikeInfo
                                 .setThruWall(false)
                                 .setMaxTargetHit(1);
@@ -4435,14 +4431,14 @@ public class ItemUseHelper {
                     }
                     case "暗影束法杖": {
                         length = 64;
-                        particleColor = "255|125|255";
+                        particleColor = "t/pls";
                         strikeInfo
                                 .setBounceWhenHitBlock(true);
                         break;
                     }
                     case "影流法杖": {
                         length = 100;
-                        particleColor = "255|125|255";
+                        particleColor = "t/pls";
                         strikeInfo
                                 .setBounceWhenHitBlock(true)
                                 .setMaxTargetHit(6)
@@ -4453,9 +4449,9 @@ public class ItemUseHelper {
                     case "寂虚之光":
                     case "亚利姆水晶": {
                         // do not use "helper aim" results, as diverged beam can not hit in that way.
-                        EntityPlayer plyNMS = ((CraftPlayer) ply).getHandle();
-                        yaw = plyNMS.yaw;
-                        pitch = plyNMS.pitch;
+                        Location plyPos = ply.getLocation();
+                        yaw = plyPos.getYaw();
+                        pitch = plyPos.getPitch();
 
                         double convergeProgress = swingAmount / 25d;
                         length = 40 + 24 * Math.min(convergeProgress, 1);
@@ -4464,17 +4460,16 @@ public class ItemUseHelper {
                         if (convergeProgress < 1) {
                             switch (itemType) {
                                 case "终极棱镜":
-                                    particleColors = new String[]{"255|0|0", "255|165|0", "255|255|0", "0|128|0",
-                                            "0|0|255", "75|0|130", "238|130|238"};
+                                    particleColors = new String[]{"t/rbws"};
                                     fireAmount = 7;
                                     break;
                                 case "寂虚之光":
-                                    particleColor = "0|0|0";
+                                    particleColor = "t/pls";
                                     width = 1;
                                     break;
                                 case "亚利姆水晶":
                                 default:
-                                    particleColors = new String[]{"232|143|90", "116|50|46"};
+                                    particleColors = new String[]{"t/rls", "t/ols"};
                                     fireAmount = 6;
                             }
                             // so that enemies do not get damaged for an unreasonable amount of times
@@ -4484,20 +4479,19 @@ public class ItemUseHelper {
                             double convergenceDamageFactor;
                             switch (itemType) {
                                 case "终极棱镜":
-                                    particleColor = "255|255|255";
+                                    particleColor = "t/bls";
                                     convergenceDamageFactor = 3;
                                     width = 1;
                                     break;
                                 case "寂虚之光":
                                     // after completely converges (or, "diverge" in this case)
                                     if (convergeProgress > 2) {
-                                        particleColors = new String[]{"255|0|0", "255|165|0", "255|255|0", "0|128|0",
-                                                "0|0|255", "75|0|130", "238|130|238"};
+                                        particleColors = new String[]{"t/rbws"};
                                         convergenceDamageFactor = 3;
                                     }
                                     // first phase of divergence
                                     else {
-                                        particleColors = new String[]{"255|255|255"};
+                                        particleColors = new String[]{"t/bls"};
                                         convergenceDamageFactor = 2;
                                     }
                                     fireAmount = 7;
@@ -4505,7 +4499,7 @@ public class ItemUseHelper {
                                     break;
                                 case "亚利姆水晶":
                                 default:
-                                    particleColor = "255|255|175";
+                                    particleColor = "t/ols";
                                     convergenceDamageFactor = 3;
                                     width = 1;
                             }
@@ -4530,7 +4524,7 @@ public class ItemUseHelper {
                     }
                     case "永夜射线": {
                         length = 24;
-                        particleColor = "0|0|175";
+                        particleColor = "t/pls";
                         strikeInfo
                                 .setThruWall(false)
                                 .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
@@ -4548,7 +4542,7 @@ public class ItemUseHelper {
                     }
                     case "女武神权杖": {
                         length = 32;
-                        particleColor = "255|125|255";
+                        particleColor = "t/ols";
                         strikeInfo
                                 .setThruWall(false)
                                 .setDamageCD(3)
@@ -4558,7 +4552,7 @@ public class ItemUseHelper {
                     }
                     case "泰拉射线": {
                         length = 48;
-                        particleColor = "100|255|150";
+                        particleColor = "t/gls";
                         strikeInfo
                                 .setDamageCD(3)
                                 .setLingerTime(5)
@@ -4597,7 +4591,7 @@ public class ItemUseHelper {
                     }
                     case "拉扎尔射线": {
                         length = 48;
-                        particleColor = "255|225|0";
+                        particleColor = "t/ols";
                         strikeInfo
                                 .setThruWall(false)
                                 .setMaxTargetHit(1)
@@ -4616,7 +4610,7 @@ public class ItemUseHelper {
                         switch (fireIndex) {
                             // solar
                             case 1: {
-                                particleColor = "255|100|50";
+                                particleColor = "t/rls";
                                 strikeInfo
                                         .setDamageCD(10)
                                         .setLingerTime(4)
@@ -4631,7 +4625,7 @@ public class ItemUseHelper {
                             }
                             // stardust
                             case 2: {
-                                particleColor = "25|200|225";
+                                particleColor = "t/bls";
                                 strikeInfo
                                         .setDamageCD(10)
                                         .setLingerTime(4)
@@ -4655,7 +4649,7 @@ public class ItemUseHelper {
                                 // this thunder is accurate.
                                 yaw = MathHelper.getVectorYaw(fireDir);
                                 pitch = MathHelper.getVectorPitch(fireDir);
-                                particleColor = "125|255|225";
+                                particleColor = "t/gls";
                                 strikeInfo
                                         .setMaxTargetHit(1)
                                         .setLingerDelay(15)
@@ -4673,7 +4667,7 @@ public class ItemUseHelper {
                             case 4: {
                                 fireDelay = 5;
                                 width *= 2;
-                                particleColor = "225|150|225";
+                                particleColor = "t/pls";
                                 strikeInfo
                                         .setDamageCD(10)
                                         .setLingerTime(4)
@@ -4690,7 +4684,7 @@ public class ItemUseHelper {
                     }
                     case "耀界之光": {
                         length = 80;
-                        particleColor = "RAINBOW";
+                        particleColor = "t/rbwt";
                         startLoc.add(fireDir.clone().multiply(2));
                         startLoc.add(Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2);
                         fireDir = targetedLocation.clone().subtract(startLoc).toVector();
@@ -4719,7 +4713,7 @@ public class ItemUseHelper {
                     }
                     case "心泵血杖": {
                         length = 128;
-                        particleColor = "109|26|27";
+                        particleColor = "t/rls";
                         strikeInfo
                                 .setThruWall(false)
                                 .setBounceWhenHitBlock(true)
@@ -4737,12 +4731,12 @@ public class ItemUseHelper {
                     case "净化激光炮": {
                         length = 64;
                         fireAmount = 3;
-                        particleColor = "255|255|151";
+                        particleColor = "t/ols";
                         strikeInfo
                                 .setMaxTargetHit(2)
                                 .setThruWall(false)
                                 .setDamagedFunction((hitIndex, hitEntity, hitLoc) -> {
-                                    EntityHelper.applyEffect(hitEntity, "神圣之火", 60);
+                                    EntityHelper.applyEffect(hitEntity, "强追踪神圣之火", 60);
                                 });
                         yaw += Math.random() * 2 - 1;
                         pitch += Math.random() * 2 - 1;
@@ -4753,8 +4747,8 @@ public class ItemUseHelper {
                         yaw = plyNMS.yaw;
                         pitch = plyNMS.pitch;
                         length = 64;
-                        width = 0.5;
-                        particleColor = "248|89|118";
+                        width = 0.75;
+                        particleColor = "t/rls";
                         strikeInfo
                                 .setThruWall(false)
                                 .setParticleIntensityMulti(0.5)
@@ -4794,10 +4788,11 @@ public class ItemUseHelper {
                         switch (itemType) {
                             case "诡触之书":
                                 length = 16;
-                                particleColor = "243|144|157";
+                                particleColor = "t/rls";
                                 randomOffset = 12;
                                 fireAmount = 3;
                                 fireDelay = 3;
+                                width = 0.5;
                                 strikeInfo
                                         .setMaxTargetHit(1)
                                         .setThruWall(false)
@@ -4805,10 +4800,11 @@ public class ItemUseHelper {
                                 break;
                             case "命运之手":
                                 length = 24;
-                                particleColor = "131|55|183";
+                                particleColor = "t/pls";
                                 randomOffset = 10;
                                 fireAmount = 4;
                                 fireDelay = 2;
+                                width = 0.65;
                                 strikeInfo
                                         .setMaxTargetHit(1)
                                         .setThruWall(false)
@@ -4816,10 +4812,11 @@ public class ItemUseHelper {
                                 break;
                             case "先兆元素":
                                 length = 32;
-                                particleColor = "RAINBOW";
+                                particleColor = "t/rbws";
                                 randomOffset = 9;
                                 fireAmount = 5;
                                 fireDelay = 1;
+                                width = 0.75;
                                 strikeInfo
                                         .setMaxTargetHit(1)
                                         .setThruWall(true)

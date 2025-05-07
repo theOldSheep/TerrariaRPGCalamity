@@ -215,8 +215,11 @@ public class TerrariaNPC extends EntityVillager {
                         Vector dir = MathHelper.getDirection(((LivingEntity) bukkitEntity).getEyeLocation(), finalTarget.getEyeLocation(), 1d);
                         GenericHelper.handleStrikeLine(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
                                 MathHelper.getVectorYaw(dir), MathHelper.getVectorPitch(dir), 6.0, 0.25,
-                                "", "150|150|0", new ArrayList<>(),
-                                (HashMap<String, Double>) attrMap.clone(), new GenericHelper.StrikeLineOptions());
+                                "", "t/bls", new ArrayList<>(),
+                                (HashMap<String, Double>) attrMap.clone(),
+                                new GenericHelper.StrikeLineOptions()
+                                        .setVanillaParticle(false)
+                                        .setSnowStormRawUse(false));
                         return;
                     }
                     case GUIDE: {

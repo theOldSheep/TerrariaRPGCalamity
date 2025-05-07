@@ -575,7 +575,7 @@ public class DamageHelper {
                                 // cool down (1 second)
                                 EntityHelper.handleEntityTemporaryScoreboardTag(dPly, coolDownTagHealingOrb, 20);
                                 PlayerHelper.createSpectreProjectile(dPly, victim.getLocation().add(0, 1.5d, 0),
-                                        10, true, "96|169|92");
+                                        10, true, "t/lt");
                             }
                             break;
                         }

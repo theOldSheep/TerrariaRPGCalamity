@@ -370,14 +370,6 @@ public class MinionSlime extends EntitySlime {
                 setSize(3, false);
                 noclip = true;
                 setNoGravity(true);
-                ArrayList<String> particleColor = new ArrayList<>(6);
-                particleColor.add("255|0|0");
-                particleColor.add("255|255|0");
-                particleColor.add("0|255|0");
-                particleColor.add("0|255|255");
-                particleColor.add("0|0|255");
-                particleColor.add("255|0|255");
-                extraVariables.put("colors", particleColor);
                 ArrayList<Location> locations = new ArrayList<>();
                 for (int i = 0; i < 10; i ++)
                     locations.add(null);
@@ -2439,6 +2431,8 @@ public class MinionSlime extends EntitySlime {
                             40, false);
                     double length = strikeDir.length();
                     GenericHelper.StrikeLineOptions strikeOption = new GenericHelper.StrikeLineOptions()
+                            .setVanillaParticle(false)
+                            .setSnowStormRawUse(false)
                             .setLingerDelay(3)
                             .setDamagedFunction((strikeNum, entityHit, hitLoc) -> {
                                 ArrayList<Entity> exceptions = new ArrayList<>();
@@ -2447,7 +2441,7 @@ public class MinionSlime extends EntitySlime {
                             });
                     GenericHelper.handleStrikeLightning(minionBukkit, minionBukkit.getEyeLocation(),
                             MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
-                            length, 4, 0.1, 0.5, 0, 1,"255|160|80",
+                            length, 4, 0.1, 0.5, 0, 1,"t/ols",
                             new ArrayList<>(), attrMap, strikeOption);
                 }
                 break;
@@ -3007,7 +3001,7 @@ public class MinionSlime extends EntitySlime {
                                         .setVanillaParticle(false)
                                         .setSnowStormRawUse(false)
                                         .setDamageCD(5)
-                                        .setLingerDelay(1));
+                                        .setLingerDelay(2));
                         pitch--;
                         extraVariables.put("p", pitch);
                         // reset

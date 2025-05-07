@@ -264,12 +264,13 @@ public class MinionHusk extends EntityZombieHusk {
                                 Vector strikeDir = MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(),
                                         1, false);
                                 GenericHelper.StrikeLineOptions strikeOption = new GenericHelper.StrikeLineOptions()
-                                        .setLingerDelay(10);
-                                int greenBlueValue = (int) (Math.random() * 150);
+                                        .setVanillaParticle(false)
+                                        .setSnowStormRawUse(false)
+                                        .setLingerDelay(5);
                                 GenericHelper.handleStrikeLightning(minionBukkit, minionBukkit.getEyeLocation(),
                                         MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
                                         57.5, 6, 0.5, 1,3.5, 2,
-                                        "255|" + greenBlueValue + "|" + greenBlueValue,
+                                        "t/pkt",
                                         new ArrayList<>(), attrMap, strikeOption);
                                 minionBukkit.getWorld().playSound(
                                         minionBukkit.getLocation(), ItemUseHelper.SOUND_BOW_SHOOT, 3, 1);

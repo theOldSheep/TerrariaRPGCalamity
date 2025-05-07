@@ -1019,7 +1019,7 @@
   type: SWING
   autoSwing: true
   particleColor:
-  - 29|51|0
+  - t/pls
 环境之刃[澄澈之纯净]:
   type: SWING
   autoSwing: true
@@ -1042,7 +1042,7 @@
   type: SWING
   autoSwing: true
   particleColor:
-  - 29|51|0
+  - t/pls
 环境之刃[天国之神威]:
   type: SWING
   autoSwing: true
@@ -1086,7 +1086,7 @@
   type: SWING
   autoSwing: true
   particleColor:
-  - 156|205|243
+  - t/bls
 真·环境之刃[变幻之潮]:
   type: STAB
   autoSwing: true
@@ -1394,7 +1394,7 @@
   autoSwing: true
   size: 48
   particleColor:
-  - 255|100|50
+  - t/ols
 海胆链枷:
   type: FLAIL
   reach: 20
@@ -1421,7 +1421,7 @@
   autoSwing: true
   size: 32
   particleColor:
-  - 66|189|181
+  - t/bls
 雷姆的复仇:
   type: FLAIL
   reach: 48
@@ -1432,7 +1432,7 @@
   autoSwing: true
   size: 32
   particleColor:
-  - 255|100|50
+  - t/ols
 脉冲龙链枷:
   type: FLAIL
   reach: 48
@@ -1443,13 +1443,13 @@
   autoSwing: true
   size: 40
   particleColor:
-  - 143|255|227
+  - t/bls
 寒宙弹刃:
   type: WHIP
   autoSwing: true
   size: 48
   particleColor:
-  - 81|159|192
+  - t/bls
 龙魂破:
   type: BOOMERANG
   distance: 48
@@ -1460,7 +1460,7 @@
   autoSwing: true
   size: 48
   particleColor:
-  - 166|240|105
+  - t/rbws
 木弓:
   type: BOW
 铜质短弓:
@@ -1858,6 +1858,12 @@
   shots: 4
   offSet: 17.5
   autoSwing: true
+精金粒子加速器:
+  type: SPECIAL_AMMO
+  ammo: _粉色粒子光束
+  autoSwing: true
+  attributes:
+    projectileSpeed: 320
 高斯来复枪:
   type: SPECIAL_AMMO
   ammo: _蓝色高斯粒子束
@@ -2281,12 +2287,6 @@ P90:
   ammoConversion:
     火枪子弹:
     - 冰锥
-精金粒子加速器:
-  type: SPECIAL_AMMO
-  ammo: _粉色粒子光束
-  autoSwing: true
-  attributes:
-    projectileSpeed: 320
 憎恨:
   type: GUN
   autoSwing: true

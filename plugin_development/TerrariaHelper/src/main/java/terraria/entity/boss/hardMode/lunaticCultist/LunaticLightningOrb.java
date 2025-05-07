@@ -27,8 +27,9 @@ public class LunaticLightningOrb extends EntitySlime {
     static GenericHelper.StrikeLineOptions lightningStrikeOption;
     static {
         lightningParticleOption = new GenericHelper.ParticleLineOptions()
-                .setVanillaParticle(true)
-                .setParticleColor("255|255|255")
+                .setVanillaParticle(false)
+                .setSnowStormRawUse(false)
+                .setParticleColor("t/bt")
                 .setTicksLinger(20);
         lightningStrikeOption = new GenericHelper.StrikeLineOptions()
                 .setParticleInfo(lightningParticleOption)

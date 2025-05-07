@@ -3048,6 +3048,8 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         MathHelper.setVectorLength(currDir, speed);
         GenericHelper.handleParticleLine(currDir, loc,
                 new GenericHelper.ParticleLineOptions()
+                        .setVanillaParticle(false)
+                        .setSnowStormRawUse(false)
                         .setLength(speed)
                         .setWidth(0.2)
                         .setTicksLinger(4)
@@ -3123,12 +3125,12 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     int coolDownTicks;
                     if (armorSet.equals("幽灵吸血套装")) {
                         int projectilePower = (int) Math.min( 200, Math.ceil(dmg * 0.08) );
-                        createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), projectilePower, true, "255|255|255");
+                        createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), projectilePower, true, "t/bt");
                         // 40 health/second = 2 health/tick
                         coolDownTicks = (int) Math.ceil(projectilePower / 2d);
                     } else {
                         int projectilePower = (int) Math.ceil(dmg * 0.5);
-                        createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), projectilePower, false, "255|255|255");
+                        createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), projectilePower, false, "t/bt");
                         // 600 dmg/second = 30 dmg/tick
                         coolDownTicks = (int) Math.ceil(projectilePower / 30d);
                     }
@@ -3160,7 +3162,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                 int projectilePower = (int) Math.min( 50, Math.ceil(dmg * 0.125) );
                 double manaRatio = (double) dPly.getLevel() / getMaxMana(dPly);
                 createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0),
-                        Math.ceil(projectilePower * manaRatio), true, "90|127|197");
+                        Math.ceil(projectilePower * manaRatio), true, "t/ot");
                 // 10 health/second = 0.5 health/tick
                 int coolDownTicks = (int) Math.ceil(projectilePower / 0.5);
                 EntityHelper.handleEntityTemporaryScoreboardTag(dPly, spectreCD, coolDownTicks);

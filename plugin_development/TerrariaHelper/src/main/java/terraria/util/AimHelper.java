@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.entity.projectile.GenericProjectile;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.Setting;
 
@@ -36,14 +37,14 @@ public class AimHelper {
             ConfigurationSection projConfSec = TerrariaHelper.projectileConfig.getConfigurationSection(projectileType);
             if (projConfSec == null) {
                 setProjectileSpeedMax(99d);
-                setProjectileSpeedMulti(1d);
-                setProjectileGravity(0.05);
+                setProjectileSpeedMulti(GenericProjectile.VANILLA_DRAG);
+                setProjectileGravity(GenericProjectile.VANILLA_GRAVITY);
                 setNoGravityTicks(5);
             }
             else {
                 setProjectileSpeedMax(projConfSec.getDouble("maxSpeed", 99d));
-                setProjectileSpeedMulti(projConfSec.getDouble("speedMultiPerTick", 1d));
-                setProjectileGravity(projConfSec.getDouble("gravity", 0.05));
+                setProjectileSpeedMulti(projConfSec.getDouble("speedMultiPerTick", GenericProjectile.VANILLA_DRAG));
+                setProjectileGravity(projConfSec.getDouble("gravity", GenericProjectile.VANILLA_GRAVITY));
                 setNoGravityTicks(projConfSec.getInt("noGravityTicks", 5));
             }
         }

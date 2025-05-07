@@ -22,7 +22,7 @@ import terraria.util.*;
 import java.util.*;
 
 public class GenericProjectile extends EntityPotion {
-    private static final double VANILLA_GRAVITY = 0.05, VANILLA_DRAG = 0.99;
+    public static final double VANILLA_GRAVITY = 0.05, VANILLA_DRAG = 0.99;
     private static final double DIST_FROM_BLOCK = 1e-5, DIST_CHECK_ON_GROUND = 1e-1;
     private static final double SEND_VELOCITY_THRESHOLD = 3.9;
     public static final int DESTROY_HIT_BLOCK = 0, DESTROY_HIT_ENTITY = 1, DESTROY_TIME_OUT = 2;
@@ -38,8 +38,8 @@ public class GenericProjectile extends EntityPotion {
             penetration = 0, trailLingerTime = 10, worldSpriteUpdateInterval = 1;
     public double homingAbility = 4, homingEndSpeedMultiplier = 1, homingRadius = 12, homingRadiusSqr = homingRadius * homingRadius,
             blastRadius = 1.5, bounceVelocityMulti = 1,
-            frictionFactor = 0.05, gravity = 0.05, healOnHit = 0, maxSpeed = 100, projectileRadius = 0.125,
-            spawnSoundPitch = 1, spawnSoundVolume = 1.5, speedMultiPerTick = 1,
+            frictionFactor = 0.05, gravity = VANILLA_GRAVITY, healOnHit = 0, maxSpeed = 100, projectileRadius = 0.125,
+            spawnSoundPitch = 1, spawnSoundVolume = 1.5, speedMultiPerTick = VANILLA_DRAG,
             trailIntensityMulti = 1, trailSize = -1, trailStepSize = -1;
     public boolean arrowOrPotion = false, homing = false, homingSharpTurning = true, homingRetarget = false,
             blastDamageShooter = false, blastOnContactBlock = false, blastOnContactEnemy = false, blastOnTimeout = true,
@@ -686,6 +686,7 @@ public class GenericProjectile extends EntityPotion {
                             this.motX = newVelocity.getX();
                             this.motY = newVelocity.getY();
                             this.motZ = newVelocity.getZ();
+                            this.impulse = true;
                         }
                         // transform into the mature form
                         if (ticksLived >= 280)

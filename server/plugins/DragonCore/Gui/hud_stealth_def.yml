@@ -5,6 +5,8 @@ Functions:
     方法.异步执行方法('更新s变量');
     方法.异步执行方法('更新su变量');
     方法.异步执行方法('更新d变量');
+    界面变量.stealth_tooltip = "潜行值";
+    界面变量.def_tooltip = "防御完整度";
   
   # 设置玩家显示的血量
   preRender: |-
@@ -62,6 +64,7 @@ stealth_bar_texture:
   height: "界面变量.stl_h"
   texture: "'hud/stealth_bar.png'"
   visible: "界面变量.stealthDisplayed"
+  tip: "界面变量.stealth_tooltip"
 stealth_progress_texture:
   x: "界面变量.stl_x + 界面变量.stl_bar_offset_x"
   y: "界面变量.stl_y + 界面变量.stl_bar_offset_y"
@@ -71,6 +74,7 @@ stealth_progress_texture:
   height: "界面变量.stl_bar_spr_h"
   texture: "界面变量.stealthReady ? 'hud/stealth_progress_ready.png' : 'hud/stealth_progress.png'"
   visible: "界面变量.stealthDisplayed"
+  tip: "界面变量.stealth_tooltip"
 
 def_bar_texture:
   x: "界面变量.def_x"
@@ -79,6 +83,7 @@ def_bar_texture:
   height: "界面变量.def_h"
   texture: "'hud/def_bar.png'"
   visible: "界面变量.defDisplayed"
+  tip: "界面变量.def_tooltip"
 def_progress_texture:
   x: "界面变量.def_x + 界面变量.def_bar_offset_x"
   y: "界面变量.def_y + 界面变量.def_bar_offset_y"
@@ -88,3 +93,4 @@ def_progress_texture:
   height: "界面变量.def_bar_spr_h"
   texture: "'hud/def_progress.png'"
   visible: "界面变量.defDisplayed"
+  tip: "界面变量.def_tooltip"

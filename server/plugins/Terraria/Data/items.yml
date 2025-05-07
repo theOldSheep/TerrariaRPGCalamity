@@ -7184,6 +7184,20 @@ Drew之翼:
     useTime: 33
   worth: 4800000
   rarity: 1100
+精金粒子加速器:
+  item: BLAZE_ROD
+  lore:
+  - §r轮流发射两种极性相反的粒子光束
+  - §r被极性相反的粒子光束轮流击中时额外造成一次伤害判定
+  attributes:
+    damage: 212
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 480
+    knockback: 3
+    useTime: 25
+  worth: 7200000
+  rarity: 5
 高斯来复枪:
   item: BLAZE_ROD
   lore:
@@ -7873,20 +7887,6 @@ P90:
     projectileSpeed: 5
     knockback: 3.5
     useTime: 50
-  worth: 7200000
-  rarity: 5
-精金粒子加速器:
-  item: BLAZE_ROD
-  lore:
-  - §r轮流发射两种极性相反的粒子光束
-  - §r被极性相反的粒子光束轮流击中时额外造成一次伤害判定
-  attributes:
-    damage: 212
-    damageType: Bullet
-    crit: 4
-    projectileSpeed: 480
-    knockback: 3
-    useTime: 25
   worth: 7200000
   rarity: 5
 憎恨:
@@ -10661,13 +10661,14 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r召唤出一个阴影云
-  - §r“命中率堪忧”
+  - §r“§m命中率堪忧§r”
+  - §r“追踪，很神奇吧”
   attributes:
     damage: 100
     damageType: Magic
     projectileSpeed: 6
     crit: 4
-    useTime: 24
+    useTime: 60
     manaUse: 10
   worth: 800000
   rarity: 3
