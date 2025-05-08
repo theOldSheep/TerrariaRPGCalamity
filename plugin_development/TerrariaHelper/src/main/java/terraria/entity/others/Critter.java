@@ -75,6 +75,7 @@ public class Critter extends EntitySilverfish {
         MethodProfiler methodProfiler = world != null && world.methodProfiler != null ? world.methodProfiler : null;
         goalSelector = new PathfinderGoalSelector(methodProfiler);
         goalSelector.a(1, new PathfinderGoalRandomStrollLand(this, 1.0));
+        goalSelector.a(1, new PathfinderGoalFloat(this));
         targetSelector = new PathfinderGoalSelector(methodProfiler);
         // initialize idle sound and particle
         idleSound = TerrariaHelper.animalConfig.getString("idleSounds." + type);
@@ -121,9 +122,10 @@ public class Critter extends EntitySilverfish {
                     acceleration = MathHelper.getDirection(nearestPlayer.getLocation(),
                             flyTargetLoc, 10);
                 }
-                // slowly land after far away for 1 second
+                // slowly land after far away for 1 second; swim when needed
                 else if (indexAI > 0) {
-                    acceleration = new Vector(0, -0.2, 0);
+                    Block checkBlock = bukkitEntity.getLocation().getBlock();
+                    acceleration = new Vector(0, checkBlock.getType() == Material.AIR ? -0.2 : 0.05, 0);
                 }
                 // update velocity
                 velocity.multiply(0.9);

@@ -47,8 +47,6 @@ public class NPCHelper {
         NURSE("护士", TerrariaNPCNurse.class),
         // TODO
         BANDIT("强盗", TerrariaNPCBandit.class),
-//        SEA_KING("海王", null),
-//        CALAMITAS("至尊灾厄", null),
         ;
         public final String displayName;
         public final Class<? extends TerrariaNPC> NPCClass;

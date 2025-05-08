@@ -264,9 +264,11 @@ public class NPCListener implements Listener {
     }
 
     private static void refundReforgeCost(Player ply) {
-        ConfigurationSection section = PlayerHelper.getPlayerDataFile(ply);
-        PlayerHelper.setMoney(ply, PlayerHelper.getMoney(ply) + getReforgeRefundAmount(ply));
-        ply.getWorld().playSound(ply.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1f, 1f);
-        section.set(PLY_REFORGE_FUND_KEY, 0d);
+        double refunded = getReforgeRefundAmount(ply);
+        if (refunded > 0) {
+            PlayerHelper.setMoney(ply, PlayerHelper.getMoney(ply) + refunded);
+            ply.getWorld().playSound(ply.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1f, 1f);
+            PlayerHelper.getPlayerDataFile(ply).set(PLY_REFORGE_FUND_KEY, 0d);
+        }
     }
 }

@@ -608,6 +608,7 @@ public class WorldHelper {
         MUSHROOM(Material.RED_MUSHROOM),
         GLOWING_MUSHROOM(Material.BROWN_MUSHROOM),
         JUNGLE_SPORE(Material.RED_ROSE, (byte) 6),
+        NATURES_GIFT(Material.RED_ROSE, (byte) 7),
         BLINK_ROOT(Material.RED_ROSE, (byte) 5),
         DAY_BLOOM(Material.YELLOW_FLOWER),
         DEATH_WEED(Material.RED_ROSE, (byte) 1),
@@ -749,6 +750,9 @@ public class WorldHelper {
                             }
                             else if (Math.random() < 0.15) {
                                 plantType = PlantType.JUNGLE_SPORE;
+                            }
+                            else if (Math.random() < 0.02) {
+                                plantType = PlantType.NATURES_GIFT;
                             }
                             if (Math.random() < CHANCE_BULB) {
                                 plantType = PlantType.SPECIAL_OR_NONE;

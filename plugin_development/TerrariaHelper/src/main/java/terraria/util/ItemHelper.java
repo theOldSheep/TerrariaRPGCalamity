@@ -1,7 +1,5 @@
 package terraria.util;
 
-import de.tr7zw.nbtapi.NBTItem;
-import de.tr7zw.nbtapi.plugin.NBTAPI;
 import lk.vexview.gui.VexGui;
 import lk.vexview.gui.components.*;
 import org.bukkit.*;
@@ -386,9 +384,6 @@ public class ItemHelper {
         return result;
     }
     public static ItemStack regularizeItemDropped(ItemStack item) {
-        return regularizeItemDropped(item, Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE).getSpawnLocation());
-    }
-    public static ItemStack regularizeItemDropped(ItemStack item, Location dropLoc) {
         if (item.getItemMeta().hasDisplayName())
             return item;
         String regularizedItemType = null;
@@ -434,12 +429,6 @@ public class ItemHelper {
                 item.setType(Material.AIR);
                 if (Math.random() < 0.1)
                     regularizedItemType = "草种";
-                if (WorldHelper.BiomeType.getBiome(dropLoc) == WorldHelper.BiomeType.JUNGLE) {
-                    double rdm = Math.random();
-                    if (rdm < 0.025) {
-                        regularizedItemType = "大自然的恩赐";
-                    }
-                }
                 break;
             case CACTUS:
                 regularizedItemType = "仙人掌";
@@ -478,6 +467,9 @@ public class ItemHelper {
                         regularizedItemType = "丛林孢子";
                         itemAmount = MathHelper.randomRound(itemAmount * 2.5);
                         break;
+                    case 7:
+                        regularizedItemType = "大自然的恩赐";
+                        break;
                 }
                 break;
             // these items simply should not be dropped
@@ -493,7 +485,7 @@ public class ItemHelper {
         }
         if (regularizedItemType == null)
             return item;
-        return getItemFromDescription(regularizedItemType + ":" + itemAmount, false);
+        return getItemFromDescription(regularizedItemType + ":" + itemAmount, true);
     }
     public static ItemStack randomPrefix(ItemStack item) {
         String[] itemInfo = splitItemName(item);

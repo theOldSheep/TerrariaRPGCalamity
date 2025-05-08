@@ -6,7 +6,9 @@ import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.util.Vector;
+import terraria.TerrariaHelper;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.logging.Level;
 
 public class TerrariaNPC extends EntityVillager {
     public NPCHelper.NPCType NPCType;
@@ -26,12 +29,13 @@ public class TerrariaNPC extends EntityVillager {
     }
     public TerrariaNPC(World world, NPCHelper.NPCType type) {
         super(world);
+        this.NPCType = type;
         Location spawnLoc = world.getWorld().getHighestBlockAt((int) (Math.random() * 32 - 16), (int) (Math.random() * 32 - 16)).getLocation();
         setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
-        initTypeInfo(type);
+        initTypeInfo();
     }
 
-    protected void initTypeInfo(NPCHelper.NPCType type) {
+    protected void initTypeInfo() {
         // navigation
         this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(72);
         // pathfinders
@@ -50,24 +54,23 @@ public class TerrariaNPC extends EntityVillager {
         this.goalSelector.a(9, new PathfinderGoalLookAtPlayer(this, EntityInsentient.class, 12.0F));
         this.goalSelector.a(11, new PathfinderGoalRandomLookaround(this));
         // other variables and attributes etc.
-        this.NPCType = type;
         this.ageLocked = true;
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.NPC_GUI_VIEWERS, GUIViewers);
-        NPCHelper.NPCMap.put(type, (LivingEntity) bukkitEntity);
-        this.setCustomName(type.displayName);
+        NPCHelper.NPCMap.put(NPCType, (LivingEntity) bukkitEntity);
+        this.setCustomName(NPCType.displayName);
         this.setCustomNameVisible(true);
         this.bukkitEntity.addScoreboardTag("isNPC");
         this.persistent = true;
         // attributes, max health and profession
         attrMap = new HashMap<>();
         attrMap.put("damage", 25d);
-        attrMap.put("damageTakenMulti", 0.75d);
+        attrMap.put("damageTakenMulti", 0.5d);
         attrMap.put("defence", 40d);
         attrMap.put("crit", 4d);
         attrMap.put("invulnerabilityTick", 20d);
         attrMap.put("knockbackResistance", 0.5d);
         // attrMap and damage type
-        switch (type) {
+        switch (NPCType) {
             case GUIDE: {
                 attrMap.put("damage", 30d);
                 DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.ARROW);
@@ -76,6 +79,11 @@ public class TerrariaNPC extends EntityVillager {
             case ANGLER: {
                 attrMap.put("damage", 24d);
                 DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.ARROW);
+                break;
+            }
+            case BANDIT: {
+                attrMap.put("damage", 27.5d);
+                DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.ROGUE);
                 break;
             }
             case BLOCK_SELLER: {
@@ -108,45 +116,55 @@ public class TerrariaNPC extends EntityVillager {
         }
         EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         // health
-        double maxHealth;
-        switch (type) {
-            // TODO
-//            case CALAMITAS:
-//                maxHealth = 50000;
-//                break;
-//            case SEA_KING:
-//                maxHealth = 2500;
-//                break;
-            default:
-                maxHealth = 1000;
-        }
+        double maxHealth = 1000;
         ((LivingEntity) bukkitEntity).getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(maxHealth);
         this.setHealth((float) maxHealth);
+        // profession & age
+        setProfession(getProfession());
+        setAgeRaw(0);
+    }
+
+    @Override
+    public int getAge() {
+        return this.NPCType == NPCHelper.NPCType.ANGLER ? -32767 : 0;
+    }
+    @Override
+    public void setAgeRaw(int i) {
+        int age = this.getAge();
+        this.b = age;
+        super.setAgeRaw(age);
+    }
+
+    @Override
+    public int getProfession() {
+        if (this.NPCType == null) return 0;
         // profession
-        switch (type) {
+        switch (this.NPCType) {
             // librarian/cartographer
             case GUIDE:
             case NURSE:
             case BLOCK_SELLER:
             case CLOTHIER:
-                setProfession(1);
-                break;
-            // cleric
-            case DEMOLITIONIST:
-                setProfession(2);
-                break;
+                return 1;
+            // librarian
+            case BANDIT:
+                return 2;
             // blacksmith
             case ARMS_DEALER:
             case GOBLIN_TINKERER:
-                setProfession(3);
-                break;
+                return 3;
+            // butcher
+            case DEMOLITIONIST:
+                return 4;
             // nitwit
             case ANGLER:
-                setProfession(5);
-                setAgeRaw(0);
-                ageLocked = true;
-                break;
+                return 5;
         }
+        return 0;
+    }
+    @Override
+    public void setProfession(int i) {
+        super.setProfession(this.getProfession());
     }
 
     protected void attackAttempt() {
@@ -192,6 +210,9 @@ public class TerrariaNPC extends EntityVillager {
                     break;
                 case ARMS_DEALER:
                     minDistance = 48 * 48;
+                    break;
+                case GOBLIN_TINKERER:
+                    minDistance = 20 * 20;
                     break;
                 default:
                     minDistance = 32 * 32;
@@ -302,7 +323,7 @@ public class TerrariaNPC extends EntityVillager {
         super.B_();
         // initialize the NPC again if the chunk reloaded
         if (EntityHelper.getMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP) == null)
-            initTypeInfo(NPCType);
+            initTypeInfo();
         // remove duplicate
         if (ticksLived % 5 == 4 && NPCHelper.NPCMap.get(NPCType) != bukkitEntity) {
             die();
