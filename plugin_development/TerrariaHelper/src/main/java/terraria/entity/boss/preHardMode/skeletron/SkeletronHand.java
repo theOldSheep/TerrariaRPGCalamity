@@ -51,7 +51,7 @@ public class SkeletronHand extends EntitySlime {
                 return;
             }
             
-            // if target is valid, attack
+            // if target is valid, attack; recall that index step = 3 ticks, see head's code.
             indexAI = head.indexAI;
             if (lastIndexAI != indexAI) {
                 lastIndexAI = indexAI;
@@ -65,14 +65,24 @@ public class SkeletronHand extends EntitySlime {
                     case 0:
                     case 30:
                     case 70:
+                    // forced reset after aggressive slaps
+                    case 149:
                         // placeholder
                         dVec = new Vector(0, 0, 0);
                         break;
-                    // strike
+                    // strikes
                     case 20:
                     case 60:
+                    // slap aggressively when head is rotating
+                    case 90:
+                    case 100:
+                    case 110:
+                    case 120:
+                    case 130:
+                    case 140:
                         destination = target.getEyeLocation();
                         forceful = true;
+                        dVec = null;
                         break;
                     // horizontal attack windup
                     case 10:
@@ -108,7 +118,7 @@ public class SkeletronHand extends EntitySlime {
                     Vector vHand = destination.subtract(bukkitEntity.getLocation()).toVector();
                     if (forceful) {
                         double vHandLen = vHand.length();
-                        vHand.multiply(Math.max(vHandLen / 12, 2.25d) / vHandLen);
+                        vHand.multiply(Math.max(vHandLen / 20, 2.25d) / vHandLen);
                     }
                     else {
                         vHand.multiply( 1d / 25);
