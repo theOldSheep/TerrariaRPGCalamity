@@ -1321,7 +1321,7 @@
   lore:
   - §r[饰品]
   attributes:
-    armorPenetration: 10
+    armorPenetration: 8
   worth: 1000000
   rarity: 1
 皇家凝胶:
@@ -1554,8 +1554,6 @@
   - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
-  attributes:
-    speedMulti: 0.2
   worth: 8000000
   rarity: 5
 喜庆之翼:
@@ -1565,8 +1563,6 @@
   - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
-  attributes:
-    maxHealth: 80
   worth: 8000000
   rarity: 5
 女皇之翼:
@@ -1594,11 +1590,6 @@
   - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
-  attributes:
-    maxMana: 20
-    damageMagicMulti: 0.05
-    critMagic: 5
-    manaUseMulti: -0.05
   worth: 8000000
   rarity: 10
 星璇之翼:
@@ -1608,9 +1599,6 @@
   - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
-  attributes:
-    damageRangedMulti: 0.05
-    critRanged: 10
   worth: 8000000
   rarity: 10
 日耀之翼:
@@ -1620,9 +1608,6 @@
   - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
-  attributes:
-    damageMeleeMulti: 0.07
-    critMelee: 3
   worth: 8000000
   rarity: 10
 星尘之翼:
@@ -1632,8 +1617,6 @@
   - §r▣算作翅膀
   - §r按住空格短暂飞行
   - §r飞行时间结束后按住空格缓降
-  attributes:
-    damageSummonMulti: 0.1
   worth: 8000000
   rarity: 10
 天界之翼:
@@ -1784,6 +1767,14 @@
   attributes:
     damageRangedMulti: 0.15
   worth: 2000000
+  rarity: 4
+盗贼徽章:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    damageRogueMulti: 0.15
+  worth: 2400000
   rarity: 4
 巫师徽章:
   item: LEASH
@@ -2564,14 +2555,6 @@ Drew之翼:
     stealthRegenMulti: 0.12
   worth: 800000
   rarity: 3
-盗贼徽章:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  attributes:
-    damageRogueMulti: 0.15
-  worth: 2400000
-  rarity: 4
 腐蚀脊椎:
   item: LEASH
   lore:
@@ -3643,6 +3626,8 @@ Drew之翼:
   rarity: 3
 永夜之刃:
   item: DIAMOND_SWORD
+  lore:
+  - §r每隔一次攻击就会发射永夜光束
   attributes:
     damage: 78
     damageType: Melee
@@ -3695,6 +3680,8 @@ Drew之翼:
   rarity: 1
 绝望之刃:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射绝望之光
   attributes:
     damage: 75
     damageType: Melee
@@ -4674,6 +4661,8 @@ Drew之翼:
   rarity: 5
 真·永夜之刃:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射永夜光束
   attributes:
     damage: 286
     damageType: Melee
@@ -4684,6 +4673,8 @@ Drew之翼:
   rarity: 8
 真·圣剑:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射光明光束
   attributes:
     damage: 185
     damageType: Melee
@@ -4694,6 +4685,8 @@ Drew之翼:
   rarity: 8
 泰拉之刃:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射泰拉光束
   attributes:
     damage: 200
     damageType: Melee
@@ -4749,7 +4742,7 @@ Drew之翼:
 死神镰刀:
   item: DIAMOND_SWORD
   lore:
-  - §r§o射出致命镰刀
+  - §r射出致命镰刀
   attributes:
     damage: 200
     damageType: Melee
@@ -4782,6 +4775,8 @@ Drew之翼:
   rarity: 8
 种子弯刀:
   item: DIAMOND_SWORD
+  lore:
+  - §r射出爆裂种子
   attributes:
     damage: 175
     damageType: Melee
@@ -4792,6 +4787,8 @@ Drew之翼:
   rarity: 5
 狂星之怒:
   item: DIAMOND_SWORD
+  lore:
+  - §r狂星之怒从天而降
   attributes:
     damage: 337
     damageType: Melee
@@ -4802,6 +4799,8 @@ Drew之翼:
   rarity: 9
 彩虹猫之刃:
   item: DIAMOND_SWORD
+  lore:
+  - §r发射彩虹弹幕
   attributes:
     damage: 400
     damageType: Melee

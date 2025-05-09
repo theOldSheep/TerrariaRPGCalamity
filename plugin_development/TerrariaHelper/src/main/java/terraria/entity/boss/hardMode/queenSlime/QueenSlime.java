@@ -37,7 +37,6 @@ public class QueenSlime extends EntitySlime {
     static {
         attrMapRegalGel = new HashMap<>();
         attrMapRegalGel.put("damage", 420d);
-        attrMapRegalGel.put("health", 1d);
         attrMapRegalGel.put("healthMax", 1d);
         attrMapRegalGel.put("knockback", 4d);
     }

@@ -94,38 +94,38 @@
 日耀之翼:
     flightTime: 60
     verticalSpeed: 1.4
-    maxAcceleration: 0.225
-    horizontalSpeed: 0.7
-    isWing: true
-星尘之翼:
-    flightTime: 60
-    verticalSpeed: 1.4
-    maxAcceleration: 0.225
-    horizontalSpeed: 0.7
-    isWing: true
-星云之翼:
-    flightTime: 60
-    verticalSpeed: 1.35
     maxAcceleration: 0.2
     horizontalSpeed: 0.65
     isWing: true
 星璇之翼:
     flightTime: 60
-    verticalSpeed: 1.35
+    verticalSpeed: 1.4
     maxAcceleration: 0.2
     horizontalSpeed: 0.65
-    isWing: true
-天界之翼:
-    flightTime: 60
-    verticalSpeed: 1.35
-    maxAcceleration: 0.325
-    horizontalSpeed: 0.75
     isWing: true
 逸界之翼:
     flightTime: 60
     verticalSpeed: 1.4
+    maxAcceleration: 0.2
+    horizontalSpeed: 0.65
+    isWing: true
+星云之翼:
+    flightTime: 60
+    verticalSpeed: 1.35
     maxAcceleration: 0.225
     horizontalSpeed: 0.7
+    isWing: true
+星尘之翼:
+    flightTime: 60
+    verticalSpeed: 1.35
+    maxAcceleration: 0.225
+    horizontalSpeed: 0.7
+    isWing: true
+天界之翼:
+    flightTime: 60
+    verticalSpeed: 1.35
+    maxAcceleration: 0.25
+    horizontalSpeed: 0.75
     isWing: true
 天界翼靴:
     flightTime: 60
@@ -137,38 +137,38 @@
 龙蒿叶之翼:
     flightTime: 85
     verticalSpeed: 1.4
-    maxAcceleration: 0.275
-    horizontalSpeed: 0.8
+    maxAcceleration: 0.25
+    horizontalSpeed: 0.75
     isWing: true
 极乐之翼:
     flightTime: 80
     verticalSpeed: 1.4
-    maxAcceleration: 0.275
-    horizontalSpeed: 0.9
+    maxAcceleration: 0.25
+    horizontalSpeed: 0.8
     isWing: true
 极乐翼靴:
     flightTime: 80
-    verticalSpeed: 1.4
-    maxAcceleration: 0.275
-    horizontalSpeed: 0.9
+    verticalSpeed: 1.45
+    maxAcceleration: 0.25
+    horizontalSpeed: 0.8
     isBoot: true
     isWing: true
 始源林海之翼:
     flightTime: 80
     verticalSpeed: 1.4
-    maxAcceleration: 0.325
-    horizontalSpeed: 0.9
+    maxAcceleration: 0.25
+    horizontalSpeed: 0.85
     isWing: true
 Drew之翼:
     flightTime: 80
-    verticalSpeed: 1.5
-    maxAcceleration: 0.35
-    horizontalSpeed: 1
+    verticalSpeed: 1.45
+    maxAcceleration: 0.25
+    horizontalSpeed: 0.9
     isWing: true
 炽天使翼靴:
     flightTime: 85
     verticalSpeed: 1.5
-    maxAcceleration: 0.35
-    horizontalSpeed: 1
+    maxAcceleration: 0.25
+    horizontalSpeed: 0.9
     isBoot: true
     isWing: true

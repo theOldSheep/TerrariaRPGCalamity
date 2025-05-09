@@ -402,7 +402,6 @@ public class EventAndTime {
                     shootInfo.velocity = velocity;
                     Projectile spawnedFallenStar = EntityHelper.spawnProjectile(shootInfo);
                     spawnedFallenStar.addScoreboardTag("isFallenStar");
-                    spawnedFallenStar.addScoreboardTag("ignoreCanDamageCheck");
                     fallenStars.add(spawnedFallenStar);
                 }
             }

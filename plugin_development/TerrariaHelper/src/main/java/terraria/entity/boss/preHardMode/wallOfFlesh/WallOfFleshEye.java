@@ -29,7 +29,7 @@ public class WallOfFleshEye extends EntitySlime {
     // other variables and AI
     WallOfFleshMouth mouth;
     static int minComboAmount = 3, fullComboAmount = 10;
-    static double[] laserSpeeds = {1.25, 1.5, 2};
+    static double[] laserSpeeds = {1.25, 1.5, 2.25};
     static HashMap<String, Double> laser_attrMap, death_laser_attrMap;
     static {
         laser_attrMap = new HashMap<>();
@@ -41,9 +41,10 @@ public class WallOfFleshEye extends EntitySlime {
     }
     private void shootLaser(int threatLevel) {
         Location targetedLoc = target.getEyeLocation();
-        if (threatLevel == 2) {
+        if (threatLevel >= 1) {
             AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions()
                     .setAimMode(false)
+                    .setAccelerationMode(threatLevel >= 2)
                     .setIntensity(1d)
                     .setProjectileSpeed(laserSpeeds[threatLevel])
                     .setRandomOffsetRadius(2d);

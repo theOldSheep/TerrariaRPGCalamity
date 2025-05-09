@@ -32,7 +32,8 @@ public class SkeletronHand extends EntitySlime {
     int index, indexAI = 0, lastIndexAI = -1;
 
     double horMulti, vertMulti;
-    Vector dVec = null;
+    // a placeholder, this will signal the hands to stay at its idle position
+    Vector dVec = new Vector(0, 0, 0);
     Location destination = null;
     SkeletronHead head;
     private void AI() {
@@ -56,7 +57,7 @@ public class SkeletronHand extends EntitySlime {
                 lastIndexAI = indexAI;
                 int handIdx = indexAI - index * 5;
                 Vector distanceVec = head.getBukkitEntity().getLocation()
-                        .subtract(target.getLocation()).toVector().normalize();
+                        .subtract(target.getEyeLocation()).toVector().normalize();
                 // setup variables
                 boolean forceful = false;
                 switch (handIdx) {
@@ -70,14 +71,14 @@ public class SkeletronHand extends EntitySlime {
                     // strike
                     case 20:
                     case 60:
-                        destination = target.getLocation();
+                        destination = target.getEyeLocation();
                         forceful = true;
                         break;
                     // horizontal attack windup
                     case 10:
-                        destination = target.getLocation().add(
+                        destination = target.getEyeLocation().add(
                                 distanceVec.getZ() * -22 * horMulti,
-                                5,
+                                4,
                                 distanceVec.getX() * 22 * horMulti);
                         dVec = null;
                         break;
@@ -107,7 +108,7 @@ public class SkeletronHand extends EntitySlime {
                     Vector vHand = destination.subtract(bukkitEntity.getLocation()).toVector();
                     if (forceful) {
                         double vHandLen = vHand.length();
-                        vHand.multiply(Math.max(vHandLen / 15, 2d) / vHandLen);
+                        vHand.multiply(Math.max(vHandLen / 12, 2.25d) / vHandLen);
                     }
                     else {
                         vHand.multiply( 1d / 25);

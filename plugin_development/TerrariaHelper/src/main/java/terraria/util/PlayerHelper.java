@@ -2070,6 +2070,10 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_HEALTH_TIER, getPlayerHealthTier(ply));
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_TIER, getPlayerManaTier(ply));
         }
+        // DPS display
+        if (joinOrRespawn) {
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.THROTTLE_DPS_ACTION_BAR, null);
+        }
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.REGEN_TIME, 0d);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_DELAY, 0d);
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_COUNTER, 0d);

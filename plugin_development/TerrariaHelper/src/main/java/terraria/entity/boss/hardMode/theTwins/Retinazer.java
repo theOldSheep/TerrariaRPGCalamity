@@ -53,8 +53,7 @@ public class Retinazer extends EntitySlime {
         attrMapHomingMissile.put("knockback", 4d);
 
         laserAimHelper = new AimHelper.AimHelperOptions()
-                .setProjectileSpeed(SPEED_LASER_3)
-                .setIntensity(0.5);
+                .setProjectileSpeed(SPEED_LASER_3);
     }
     private void changePhase() {
         phaseAI ++;

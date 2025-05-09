@@ -23,6 +23,7 @@ public class TheSlimeGod extends EntitySlime {
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.THE_SLIME_GOD;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
     public static final double BASIC_HEALTH = 4000 * 2, BASIC_HEALTH_BR = 207840 * 2;
+    public static final double BASIC_HEALTH_SLIME = 15552 * 2, BASIC_HEALTH_SLIME_BR = 808080 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -197,9 +198,9 @@ public class TheSlimeGod extends EntitySlime {
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
         // init health and slime size
+        double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
         {
             setSize(4, false);
-            double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
@@ -214,8 +215,8 @@ public class TheSlimeGod extends EntitySlime {
             this.persistent = true;
             shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapProjectile, "血化深渊之球");
             // spawn crimulan and ebonian slime
-            new CrimulanSlime(this);
-            new EbonianSlime(this);
+            new CrimulanSlime(this, BossHelper.accountForBR(BASIC_HEALTH_SLIME_BR, BASIC_HEALTH_SLIME) * healthMulti);
+            new EbonianSlime(this, BossHelper.accountForBR(BASIC_HEALTH_SLIME_BR, BASIC_HEALTH_SLIME) * healthMulti);
         }
     }
 

@@ -18,7 +18,6 @@ public class EbonianSlime extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.THE_SLIME_GOD;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 15552 * 2, BASIC_HEALTH_BR = 808080 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -66,8 +65,23 @@ public class EbonianSlime extends EntitySlime {
     }
     private void AI() {
         // no AI after death
-        if (getHealth() <= 0d)
+        if (getHealth() <= 0f)
             return;
+        // spawn smaller slimes
+        if (getHealth() / getMaxHealth() < 0.75 && slimeSize != SlimeSize.SMALL) {
+            int spawnAmount = 2;
+            double smallerSlimeHealth = getHealth() / spawnAmount;
+            // remove and do not affect the boss bar's displayed health information
+            getAttributeInstance(GenericAttributes.maxHealth).setValue(getMaxHealth() - getHealth());
+            setHealth(0f);
+            die();
+            // spawn smaller slimes
+            for (int i = 0; i < spawnAmount; i++) {
+                new EbonianSlime(owner,
+                        slimeSize == SlimeSize.BIG ? SlimeSize.MIDDLE : SlimeSize.SMALL,
+                        getBukkitEntity(), smallerSlimeHealth);
+            }
+        }
         // AI
         {
             // update target
@@ -140,10 +154,10 @@ public class EbonianSlime extends EntitySlime {
         super.die();
     }
     // a constructor for actual spawning
-    public EbonianSlime(TheSlimeGod owner) {
-        this(owner, SlimeSize.BIG, owner.getBukkitEntity());
+    public EbonianSlime(TheSlimeGod owner, double health) {
+        this(owner, SlimeSize.BIG, owner.getBukkitEntity(), health);
     }
-    public EbonianSlime(TheSlimeGod owner, SlimeSize size, Entity spawner) {
+    public EbonianSlime(TheSlimeGod owner, SlimeSize size, Entity spawner, double health) {
         super( owner.getWorld() );
         this.owner = owner;
         this.slimeSize = size;
@@ -197,21 +211,17 @@ public class EbonianSlime extends EntitySlime {
         }
         // init health and slime size
         {
-            double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             switch (slimeSize) {
                 case BIG:
                     setSize(16, false);
                     break;
                 case MIDDLE:
                     setSize(8, false);
-                    healthMulti *= 0.33;
                     break;
                 case SMALL:
                     setSize(4, false);
-                    healthMulti *= 0.05;
                     break;
             }
-            double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
             setHealth((float) health);
         }
@@ -234,8 +244,9 @@ public class EbonianSlime extends EntitySlime {
                     jumpVelVer = TheSlimeGod.BIG_SLIME_VER_VEL;
                     jumpDelay = TheSlimeGod.BIG_JUMP_DELAY;
                     aimOption
-                            .setIntensity(1d)
-                            .setRandomOffsetRadius(4d);
+                            .setRandomOffsetRadius(4)
+                            .setAccelerationMode(true)
+                            .setIntensity(1d);
                     break;
                 case MIDDLE:
                     projectileAmount = 3;
@@ -243,8 +254,9 @@ public class EbonianSlime extends EntitySlime {
                     jumpVelVer = TheSlimeGod.MID_SLIME_VER_VEL;
                     jumpDelay = TheSlimeGod.MID_JUMP_DELAY;
                     aimOption
-                            .setIntensity(0.9 + Math.random() * 0.2)
-                            .setRandomOffsetRadius(2.5d);
+                            .setRandomOffsetRadius(2)
+                            .setAccelerationMode(true)
+                            .setIntensity(0.9 + Math.random() * 0.2);
                     break;
                 case SMALL:
                     projectileAmount = 1;
@@ -252,31 +264,13 @@ public class EbonianSlime extends EntitySlime {
                     jumpVelVer = TheSlimeGod.SMALL_SLIME_VER_VEL;
                     jumpDelay = TheSlimeGod.SMALL_JUMP_DELAY;
                     aimOption
-                            .setIntensity(0.5 + Math.random())
-                            .setRandomOffsetRadius(1d);
+                            .setIntensity(0.85 + Math.random() * 0.3);
                     break;
             }
             jumpVelVer *= Math.random() * 0.4 + 0.8;
         }
     }
 
-    @Override
-    public void die() {
-        super.die();
-        // spawn smaller slimes
-        switch (slimeSize) {
-            case BIG:
-                for (int i = 0; i < 4; i ++) {
-                    new EbonianSlime(owner, SlimeSize.MIDDLE, getBukkitEntity());
-                }
-                break;
-            case MIDDLE:
-                for (int i = 0; i < 5; i ++) {
-                    new EbonianSlime(owner, SlimeSize.SMALL, getBukkitEntity());
-                }
-                break;
-        }
-    }
     // rewrite AI
     @Override
     public void B_() {
