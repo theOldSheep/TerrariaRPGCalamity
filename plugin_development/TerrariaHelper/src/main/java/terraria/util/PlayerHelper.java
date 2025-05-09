@@ -688,11 +688,11 @@ public class PlayerHelper {
                                             if (accessory.equals("新手版挥发明胶")) {
                                                 v.normalize().multiply(0.5);
                                                 EntityHelper.spawnProjectile(ply, v, attrMapVolatileGelatinJr,
-                                                        DamageHelper.DamageType.ARROW, "挥发明胶");
+                                                        DamageHelper.DamageType.ARROW, "小挥发明胶");
                                             } else {
                                                 v.normalize().multiply(0.6);
                                                 EntityHelper.spawnProjectile(ply, v, attrMapVolatileGelatin,
-                                                        DamageHelper.DamageType.ARROW, "挥发明胶");
+                                                        DamageHelper.DamageType.ARROW, "小挥发明胶");
                                             }
                                         }
                                     }

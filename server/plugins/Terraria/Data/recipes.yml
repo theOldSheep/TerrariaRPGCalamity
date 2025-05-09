@@ -1200,7 +1200,8 @@ ANVIL:
     requireItem:
     - 迷你鲨
     - 非法枪械部件
-    - 力量之魂:15
+    - 秘银锭:10
+    - 力量之魂:5
     recipeCategory: WEAPON_BULLET
   '132':
     requireLevel: 2
@@ -2303,6 +2304,7 @@ ANVIL:
     requireItem:
     - 剑锋之誓约
     - 旧神之誓约
+    - 精金锭:10
     - 恐惧之魂:5
     recipeCategory: WEAPON_MELEE
   '283':
@@ -2311,6 +2313,7 @@ ANVIL:
     requireItem:
     - 纯净之斧
     - 混乱精华:3
+    - 精金锭:8
     - 恐惧之魂:8
     recipeCategory: WEAPON_MELEE
   '284':

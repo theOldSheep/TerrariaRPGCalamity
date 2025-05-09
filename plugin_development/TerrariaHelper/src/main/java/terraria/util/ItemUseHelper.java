@@ -2491,7 +2491,7 @@ public class ItemUseHelper {
                                 HashMap<String, Double> attrMapProj = (HashMap<String, Double>) attrMap.clone();
                                 attrMapProj.put("damage", attrMapProj.get("damage") * 0.4);
                                 EntityHelper.spawnProjectile(ply, offsetDir,
-                                        attrMapProj, "小火花");
+                                        attrMapProj, "炼狱火花");
                             }
                             break;
                         }

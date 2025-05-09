@@ -3390,6 +3390,8 @@ Drew之翼:
   rarity: 4
 精金镐:
   item: DIAMOND_PICKAXE
+  lore:
+  - §r“可挖掘硫火角砾岩”
   attributes:
     damage: 40
     damageType: Melee
@@ -3799,7 +3801,7 @@ Drew之翼:
 真·绝望之刃:
   item: DIAMOND_SWORD
   lore:
-  - §r发出弹射绝望光束
+  - §r发出爆炸绝望光束
   - §r造成酸性毒液减益
   attributes:
     damage: 122
@@ -3832,6 +3834,7 @@ Drew之翼:
     crit: 4
     knockback: 7.25
     useTime: 35
+    buffInflictMelee: 霜火|50|1
   worth: 7200000
   rarity: 5
 巨剑“夜光”:
@@ -3844,6 +3847,7 @@ Drew之翼:
     crit: 4
     knockback: 5
     useTime: 36
+    buffInflictMelee: 霜火|50|1
   worth: 7200000
   rarity: 5
 炎霜之刃:
@@ -3874,7 +3878,7 @@ Drew之翼:
   item: DIAMOND_SWORD
   lore:
   - §r击中敌人时释放硫磺火间歇泉
-  - §r右键会将其像标枪一样掷出，击中敌人时爆炸
+  - §r右键会将其像标枪一样掷出
   attributes:
     damage: 220
     damageType: Melee
@@ -3911,14 +3915,14 @@ Drew之翼:
 炼狱:
   item: DIAMOND_SWORD
   lore:
-  - §r挥动时生成一些火星
+  - §r挥动时生成一些追踪火星
   - §r直接命中敌人时有等同于暴击率的概率造成小爆炸
   attributes:
     damage: 108
     damageType: Melee
     crit: 4
     knockback: 7
-    useTime: 11
+    useTime: 20
   worth: 7200000
   rarity: 5
 硫火鞭:
@@ -4919,6 +4923,7 @@ Drew之翼:
   item: DIAMOND_SWORD
   lore:
   - §r击中敌人时散发电火花
+  - §r挥刺时射出追踪电火花
   attributes:
     damage: 134
     damageType: Melee

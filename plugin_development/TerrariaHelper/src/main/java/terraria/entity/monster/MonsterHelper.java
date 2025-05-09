@@ -952,10 +952,16 @@ public class MonsterHelper {
                                             break;
                                     }
                                     if ((indexAI + 1) % shootInterval == 0) {
+                                        Location aimLoc = target.getEyeLocation();
                                         double shootSpd;
                                         switch (type) {
                                             case "探测怪":
-                                                shootSpd = 2.5;
+                                                shootSpd = 2.25;
+                                                AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions(projectileType)
+                                                        .setProjectileSpeed(shootSpd)
+                                                        .setIntensity(0.8 + Math.random() * 0.4)
+                                                        .setRandomOffsetRadius(2);
+                                                aimLoc = AimHelper.helperAimEntity(monsterBkt, target, aimHelper);
                                                 break;
                                             case "灵魂饮食者":
                                             case "强化灵魂饮食者":
@@ -969,7 +975,7 @@ public class MonsterHelper {
                                                 shootSpd = 1.5;
                                         }
                                         Vector projectileV = MathHelper.getDirection(
-                                                monsterBkt.getEyeLocation(), target.getEyeLocation(), shootSpd);
+                                                monsterBkt.getEyeLocation(), aimLoc, shootSpd);
                                         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                                                 monsterBkt, projectileV, AttributeHelper.getAttrMap(monsterBkt), projectileType);
                                         shootInfo.properties.put("gravity", 0d);
@@ -1558,7 +1564,7 @@ public class MonsterHelper {
                             projVel.multiply(1 / projVelLen);
                             projVel.setY(projVel.getY() + ticksFlight * 0.025);
                             EntityHelper.ProjectileShootInfo projInfo = new EntityHelper.ProjectileShootInfo(
-                                    monsterBkt, projVel, AttributeHelper.getAttrMap(monsterBkt), "挥发明胶");
+                                    monsterBkt, projVel, AttributeHelper.getAttrMap(monsterBkt), "小挥发明胶");
                             projInfo.properties.put("penetration", 1);
                             projInfo.properties.put("blockHitAction", "bounce");
                             projInfo.properties.put("bounce", 5);

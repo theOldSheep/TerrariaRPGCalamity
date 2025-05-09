@@ -241,7 +241,7 @@ REDSTONE_ORE:
   dropItem:
   - 精金矿
 QUARTZ_ORE:
-  powerPickaxe: 150
+  powerPickaxe: 180
   totalProgress: 425
   dropItem:
   - 焦炭矿

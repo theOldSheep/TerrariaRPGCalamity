@@ -2057,9 +2057,10 @@ mobInfo:
         variants:
             default1:
                 attributes:
-                    damage: 240
+                    damage: 288
                     damageType: "Arrow"
                     defence: 40
+                    damageTakenMulti: 0.8
                     knockback: 2
                     knockbackResistance: 0.36
                     health: 900

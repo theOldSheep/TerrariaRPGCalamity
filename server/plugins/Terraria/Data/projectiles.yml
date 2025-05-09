@@ -288,6 +288,7 @@
     projDisguiseName: 激光
     liveTime: 100
     gravity: 0
+    speedMultiPerTick: 1
     blockHitAction: thru
 挥发明胶:
     penetration: 99999
@@ -364,7 +365,6 @@
     penetration: 99999
     blockHitAction: thru
     projectileSize: 1.5
-    speedMultiPerTick: 0.95
     liveTime: 75
     gravity: 0
     buffInflict:
@@ -5715,10 +5715,8 @@ TNT:
     maxSpeed: 3
 绝望光束:
     projectileSize: 0.5
-    blockHitAction: bounce
-    bouncePenetrationBonded: true
-    bounce: 2
-    penetration: 2
+    isGrenade: true
+    blastRadius: 3.5
     gravity: 0
     buffInflict:
         - "剧毒|30|1"
@@ -5776,10 +5774,9 @@ TNT:
 硫火之刃:
     noGravityTicks: 20
     liveTime: 60
-    penetration: 1
     projectileSize: 1
     isGrenade: true
-    blastRadius: 2
+    blastRadius: 1
     blastOnContactEnemy: true
     blastOnContactBlock: false
     buffInflict:
@@ -5797,15 +5794,15 @@ TNT:
     buffInflict:
         - "暗影焰|60|1"
         - "狱炎|30|1"
-追踪硫火刃:
+炼狱火花:
+    projDisguiseName: 小火花
     homing: true
-    homingRadius: 32
-    projectileSize: 0.5
     noHomingTicks: 10
-    gravity: 0
-    liveTime: 50
+    homingRadius: 32
+    blockHitAction: thru
+    liveTime: 60
     buffInflict:
-        - "硫磺火|60|1"
+        - "燃烧|100|0.3"
 硫火刃:
     gravity: 0
     projectileSize: 0.75
@@ -5818,6 +5815,15 @@ TNT:
         damageMulti: 1
         name: 追踪硫火刃
         velocity: 1.25
+追踪硫火刃:
+    homing: true
+    homingRadius: 32
+    projectileSize: 0.5
+    noHomingTicks: 10
+    gravity: 0
+    liveTime: 50
+    buffInflict:
+        - "硫磺火|60|1"
 炽炎幻影刃:
     homing: true
     projectileSize: 0.5
@@ -6420,6 +6426,18 @@ TNT:
     enemyInvincibilityFrame: 5
     trailVanillaParticle: false
     trailColor: t/bt
+    buffInflict:
+        - "带电|20|1"
+潜渊火花:
+    noGravityTicks: 0
+    liveTime: 80
+    homing: true
+    homingAbility: 4
+    homingRadius: 16
+    trailVanillaParticle: false
+    trailColor: t/bt
+    buffInflict:
+        - "带电|40|1"
 元素短剑:
     gravity: 0
     liveTime: 60
@@ -8003,6 +8021,11 @@ TNT:
     liveTime: 999999
     penetration: 999999
     enemyInvincibilityFrame: 1
+小挥发明胶:
+    penetration: 1
+    blockHitAction: bounce
+    bounce: 6
+    projectileSize: 0.5
 孢子球:
     gravity: 0
     blockHitAction: thru

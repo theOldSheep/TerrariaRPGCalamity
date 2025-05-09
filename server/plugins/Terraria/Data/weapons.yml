@@ -404,7 +404,7 @@
 雪崩:
   type: SWING
   autoSwing: true
-  size: 5.5
+  size: 7.5
   projectileInfo:
     interval: 1
     velocity: 1
@@ -415,7 +415,7 @@
   size: 9
   projectileInfo:
     interval: 1
-    velocity: 4.68
+    velocity: 3
     name: 夜之星光
 炎霜之刃:
   type: SWING
@@ -423,7 +423,7 @@
   size: 3
   projectileInfo:
     interval: 1
-    velocity: 2.06
+    velocity: 2
     name: 霜火球
 灾难巨剑:
   type: SWING
@@ -431,7 +431,7 @@
   size: 4.5
   projectileInfo:
     interval: 1
-    velocity: 2.06
+    velocity: 2.25
     name: 灾难巨剑剑气
 硫火之刃:
   type: SWING
@@ -848,7 +848,10 @@
 潜渊震荡者:
   type: STAB
   autoSwing: true
-  size: 3.5
+  size: 3
+  projectileInfo:
+    velocity: 2.25
+    name: 潜渊火花
 卢克雷西亚:
   type: STAB
   autoSwing: true
@@ -858,20 +861,20 @@
   autoSwing: true
   size: 4
   projectileInfo:
-    velocity: 2
+    velocity: 2.5
     name: 元素短剑
 伽利略短剑:
   type: STAB
   autoSwing: true
   size: 6
   projectileInfo:
-    velocity: 2.75
+    velocity: 3
     name: 伽利略新月
 宇宙短剑:
   type: STAB
   autoSwing: true
   projectileInfo:
-    velocity: 3
+    velocity: 3.5
     name: 宇宙之刃
   size: 5
 赤潮矛:
@@ -883,7 +886,7 @@
   size: 3.75
   autoSwing: true
   projectileInfo:
-    velocity: 1
+    velocity: 1.25
     name: 阿米迪亚斯漩涡
 金羽:
   type: STAB
@@ -1260,108 +1263,108 @@
 木制悠悠球:
   type: YOYO
   reach: 16
-  velocity: 1
+  velocity: 1.75
   duration: 80
 抑郁球:
   type: YOYO
   reach: 24
-  velocity: 1.2
+  velocity: 2.25
   duration: 100
 亚马逊悠悠球:
   type: YOYO
   reach: 24
-  velocity: 1.1
+  velocity: 2.25
   duration: 120
 克苏鲁之眼悠悠球:
   type: YOYO
   reach: 40
-  velocity: 1.75
+  velocity: 3.25
   duration: 1200
 泰拉悠悠球:
   type: YOYO
   reach: 48
-  velocity: 2.5
+  velocity: 3.5
   duration: 1200
   recoilPoolMultiplier: 0.6
 烟陨彗星:
   type: YOYO
   reach: 20
-  velocity: 1.25
+  velocity: 2
   duration: 100
 涡旋:
   type: YOYO
   reach: 24
-  velocity: 1.35
+  velocity: 2
   duration: 100
 空旋:
   type: YOYO
   reach: 32
-  velocity: 1.25
+  velocity: 2.5
   duration: 120
 神旨:
   type: YOYO
   reach: 32
-  velocity: 1.5
+  velocity: 2.5
   duration: 120
 阴阳:
   type: YOYO
   reach: 32
-  velocity: 1.5
+  velocity: 2.5
   duration: 150
 烁光:
   type: YOYO
   reach: 36
-  velocity: 1.6
+  velocity: 2.75
   duration: 150
 遗殇:
   type: YOYO
   reach: 40
-  velocity: 1.65
+  velocity: 2.75
   duration: 180
 泥潭:
   type: YOYO
   reach: 40
-  velocity: 1.75
+  velocity: 2.75
   duration: 225
 断层:
   type: YOYO
   reach: 40
-  velocity: 2
+  velocity: 3
   duration: 250
 瘟疫狂潮:
   type: YOYO
   reach: 44
-  velocity: 2.15
+  velocity: 3
   duration: 350
 微波辐照:
   type: YOYO
   reach: 44
-  velocity: 2.25
+  velocity: 3.25
   duration: 400
 日炎:
   type: YOYO
   reach: 48
-  velocity: 2.5
+  velocity: 3.75
   duration: 800
 裂魔:
   type: YOYO
   reach: 56
-  velocity: 2.5
+  velocity: 4
   duration: 700
 混沌射线:
   type: YOYO
   reach: 56
-  velocity: 2.75
+  velocity: 4
   duration: 1500
 神谕:
   type: YOYO
   reach: 56
-  velocity: 3
+  velocity: 4
   duration: 1750
 阿撒托斯:
   type: YOYO
   reach: 64
-  velocity: 2.5
+  velocity: 4
   duration: 1500
 链锤:
   type: FLAIL
