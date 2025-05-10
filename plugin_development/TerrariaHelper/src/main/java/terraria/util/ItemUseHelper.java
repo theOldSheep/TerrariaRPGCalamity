@@ -1709,7 +1709,6 @@ public class ItemUseHelper {
                     }
                     case "高斯短匕":
                     case "誓约与禁忌之刃":
-                    case "炼狱":
                     case "地狱龙锋":
                     case "庇护之刃": {
                         double explodeRad;
@@ -1723,7 +1722,6 @@ public class ItemUseHelper {
                                 explodeDelay = 5;
                                 break;
                             case "誓约与禁忌之刃":
-                            case "炼狱":
                                 explodeRad = 1.5;
                                 explodeRate = (attrMap.getOrDefault("crit", 4d) +
                                         attrMap.getOrDefault("critMelee", 0d) +
@@ -2488,10 +2486,7 @@ public class ItemUseHelper {
                                     i == (int) (loopTimes * 0.525) ||
                                     i == (int) (loopTimes * 0.6)) {
                                 offsetDir.multiply(1.35);
-                                HashMap<String, Double> attrMapProj = (HashMap<String, Double>) attrMap.clone();
-                                attrMapProj.put("damage", attrMapProj.get("damage") * 0.4);
-                                EntityHelper.spawnProjectile(ply, offsetDir,
-                                        attrMapProj, "炼狱火花");
+                                EntityHelper.spawnProjectile(ply, offsetDir, attrMap, "炼狱火花");
                             }
                             break;
                         }

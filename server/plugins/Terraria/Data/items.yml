@@ -3916,7 +3916,6 @@ Drew之翼:
   item: DIAMOND_SWORD
   lore:
   - §r挥动时生成一些追踪火星
-  - §r直接命中敌人时有等同于暴击率的概率造成小爆炸
   attributes:
     damage: 108
     damageType: Melee

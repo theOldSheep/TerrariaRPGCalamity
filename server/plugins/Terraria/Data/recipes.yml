@@ -2304,7 +2304,7 @@ ANVIL:
     requireItem:
     - 剑锋之誓约
     - 旧神之誓约
-    - 精金锭:10
+    - 神圣锭:10
     - 恐惧之魂:5
     recipeCategory: WEAPON_MELEE
   '283':
@@ -2313,7 +2313,7 @@ ANVIL:
     requireItem:
     - 纯净之斧
     - 混乱精华:3
-    - 精金锭:8
+    - 神圣锭:8
     - 恐惧之魂:8
     recipeCategory: WEAPON_MELEE
   '284':

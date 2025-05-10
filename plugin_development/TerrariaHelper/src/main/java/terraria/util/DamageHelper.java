@@ -871,8 +871,8 @@ public class DamageHelper {
                         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                                 () -> EntityHelper.applyEffect(vPly, "神弑者之停息", 600), 5);
                 }
-                // defence-damage style damage reduction POST damage calculation
-                if (isDirectDmg && getDamageSource(damager).getScoreboardTags().contains("isBOSS")) {
+                // defence-damage handled POST damage calculation
+                if (isDirectDmg && PlayerHelper.isTargetedByBOSS(vPly)) {
                     boolean alternative = accessories.contains("血炎晶核") || accessories.contains("血神圣杯");
                     double def = victimAttrMap.getOrDefault("defence", 0d);
                     // alternative: lose more defence but regenerate health while recovering

@@ -38,7 +38,7 @@ public class SkeletronPrimeHand extends EntitySlime {
     private void shootLaser() {
         shootInfoLaser.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
         for (Vector velocity : MathHelper.getCircularProjectileDirections(
-                7, 3, 30, target, shootInfoLaser.shootLoc, 2.25)) {
+                3, 3, 30, target, shootInfoLaser.shootLoc, 2.25)) {
             shootInfoLaser.velocity = velocity;
             EntityHelper.spawnProjectile(shootInfoLaser);
         }
@@ -92,7 +92,7 @@ public class SkeletronPrimeHand extends EntitySlime {
                     Vector moveDir = usualLocation.subtract(bukkitEntity.getLocation()).toVector();
                     moveDir.multiply(0.1);
                     bukkitEntity.setVelocity(moveDir);
-                    int shootInterval = 10 + 5 * head.handsAlive;
+                    int shootInterval = 5 * head.handsAlive;
                     if (indexAI % shootInterval == 0)
                         shootLaser();
                     break;
@@ -138,8 +138,8 @@ public class SkeletronPrimeHand extends EntitySlime {
                     Vector moveDir = usualLocation.subtract(bukkitEntity.getLocation()).toVector();
                     moveDir.multiply(0.1);
                     bukkitEntity.setVelocity(moveDir);
-                    int shootInterval = head.handsAlive * 10;
-                    if (indexAI % (shootInterval * 2) == 0)
+                    int shootInterval = head.handsAlive * 10 - 5;
+                    if (head.handsAlive > 1 && indexAI % (shootInterval * 2) == 0)
                         shootRocket(true);
                     else if (indexAI % shootInterval == 0)
                         shootRocket(false);
