@@ -487,6 +487,15 @@
     velocityUpdateRule: projVelUpdItvEveryTick
     buffInflict:
         - "孱弱巫咒|60|1"
+焰火亡魂:
+    projDisguiseName: 无际裂变
+    penetration: 99999
+    projectileSize: 1.5
+    blockHitAction: thru
+    liveTime: 40
+    gravity: 0
+    buffInflict:
+        - "孱弱巫咒|40|1"
 无际裂变:
     penetration: 99999
     blockHitAction: thru

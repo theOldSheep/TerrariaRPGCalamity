@@ -1,11 +1,13 @@
 package terraria.util;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import net.minecraft.server.v1_12_R1.AxisAlignedBB;
 import net.minecraft.server.v1_12_R1.Vec3D;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
+import org.omg.CORBA.ParameterModeHolder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -280,6 +282,7 @@ public class MathHelper {
         else vec.multiply(Math.sqrt(targetLengthSquared / vec.lengthSquared()));
         return vec;
     }
+    // rotations consistent with DragonCore's world sprite
     public static Vector rotateX(Vector vec, double rotationAngleDegCCW) {
         return rotateX(vec, xsin_degree(rotationAngleDegCCW), xcos_degree(rotationAngleDegCCW));
     }
@@ -307,6 +310,7 @@ public class MathHelper {
         double newZ = vec.getZ();
         return new Vector(newX, newY, newZ);
     }
+
     public static Vector rotateAroundAxisDegree(Vector vec, Vector axis, double angleDegree) {
         return rotateAroundAxisRadian(vec, axis, Math.toRadians(angleDegree));
     }
@@ -327,14 +331,21 @@ public class MathHelper {
         return rotation.interpolate(vec);
     }
     public static Vector rotationInterpolateDegree(Vector start, Vector end, double maxAngleDegree) {
-        return rotationInterpolateRadian(start, end, Math.toRadians(maxAngleDegree));
+        return rotationInterpolateRadian(start, end, null, null, Math.toRadians(maxAngleDegree));
     }
-    public static Vector rotationInterpolateRadian(Vector start, Vector end, double maxAngleRadian) {
+    public static Vector rotationInterpolateRadian(Vector start, Vector end,
+                                                   Vector axisHolder, AtomicDouble rotationRadianHolder, double maxAngleRadian) {
         if (start.lengthSquared() < 1e-9)
             return start;
 
         Vector axis = getNonZeroCrossProd(start, end);
+        if (axisHolder != null) {
+            axisHolder.setX(axis.getX());
+            axisHolder.setY(axis.getY());
+            axisHolder.setZ(axis.getZ());
+        }
         double angle = getAngleRadian(start, end);
+        if (rotationRadianHolder != null) rotationRadianHolder.set(angle);
 
         if (angle < maxAngleRadian) {
             return setVectorLength(end.clone(), start.length());

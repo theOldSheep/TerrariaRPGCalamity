@@ -35,12 +35,15 @@ public class CalamitasClone extends EntitySlime {
     Player target = null;
     // other variables and AI
     static final String BULLET_HELL_WARNING = "§6§l弹幕炼狱开始，请小心躲避！", BROTHER_REBORN = "§6§l兄弟重生!";
-    static final double FINAL_DASH_SPEED = 3, SPEED = 2, BULLET_HELL_RADIUS = 32, DART_SPEED = 0.5, DISPLAY_OFFSET = 32;
+    static final double FINAL_DASH_SPEED = 3, SPEED = 2, DART_SPEED = 0.5,
+                        FIREBALL_SPEED = 3, HELL_BLAST_SPEED = 2;
     static final HashMap<String, Double> attrMapBrimstoneDart, attrMapHellFireball;
-    static final AimHelper.AimHelperOptions dashAimHelper;
+    static final AimHelper.AimHelperOptions dashAimHelper, hellBlastAimHelper;
     static {
         dashAimHelper = new AimHelper.AimHelperOptions()
                 .setProjectileSpeed(FINAL_DASH_SPEED);
+        hellBlastAimHelper = new AimHelper.AimHelperOptions("深渊亡魂")
+                .setProjectileSpeed(HELL_BLAST_SPEED);
 
         attrMapBrimstoneDart = new HashMap<>();
         attrMapBrimstoneDart.put("damage", 352d);
@@ -52,84 +55,22 @@ public class CalamitasClone extends EntitySlime {
     BossProjectilesManager projectilesManager = new BossProjectilesManager();
     public EntityHelper.ProjectileShootInfo psiFireBlast, psiDart, psiFireball, psiHellBlast;
     Vector dashVelocity = new Vector();
-    boolean brothersAlive = false;
-    int indexAI = -40, attackMethod = 1, bulletHellTicksLeft = -1, lastBulletHellDuration = 300, healthLockProgress = 1;
-    HashSet<Entity> bulletHellProjectiles = new HashSet<>();
-    BulletHellProjectile.BulletHellDirectionInfo bulletHellDir = null;
-    // 1: fireball   2: hell blast
-    private void beginBulletHell(int ticksDuration) {
-        lastBulletHellDuration = ticksDuration;
-        bulletHellTicksLeft = ticksDuration;
-        addScoreboardTag("noDamage");
-        Bukkit.broadcastMessage(BULLET_HELL_WARNING);
-        bulletHellDir = new BulletHellProjectile.BulletHellDirectionInfo(target);
-        PlayerPOVHelper.setPOVState(target, true);
-        projectilesManager.killAll();
-    }
-    private void tickBulletHellRotation() {
-        if (ticksLived % 25 == 0) {
-            PlayerPOVHelper.setPOVState(target, true);
-        }
+    int indexAI = -40, attackMethod = 1, healthLockProgress = 1;
+    ICalamitasCloneBH bulletHell = null;
 
-        Location loc = target.getLocation();
-        if (MathHelper.getAngleRadian(bulletHellDir.planeNormal, loc.getDirection()) > 1e-5) {
-            loc.setDirection(bulletHellDir.planeNormal);
-            target.teleport(loc);
-        }
-    }
-    private void spawnBulletHellProjectile(BulletHellProjectile.ProjectileType projectileType, int ticksLive, double speed) {
-        EntityHelper.ProjectileShootInfo shootInfo;
-        switch (projectileType) {
-            case SQUARE_BORDER:
-                shootInfo = psiHellBlast;
-                break;
-            case CIRCUMFERENCE:
-                shootInfo = psiFireBlast;
-                break;
-            default:
-                return;
-        }
-        shootInfo.setLockedTarget(target);
-        BulletHellProjectile projectile = new BulletHellProjectile(shootInfo, projectileType, 32, speed, bulletHellDir);
-        projectilesManager.handleProjectile(projectile.bukkitEntity);
-        projectile.liveTime = ticksLive;
-    }
-    private void handleBulletHell() {
-        bulletHellDir.target = target;
-        // target rotation
-        tickBulletHellRotation();
-        // spawn projectiles
-        if (--bulletHellTicksLeft > 0) {
-            // hell blast
-            boolean secondBulletHell = healthLockProgress == 4;
-            double hellBlastProbability = secondBulletHell ? 0.6 : 0.4;
-            if (Math.random() < hellBlastProbability) {
-                double projectileSpeed = 0.35 + Math.random() * 0.15;
-                int ticksLive = (int) (BULLET_HELL_RADIUS * 3 / projectileSpeed);
-                // spawn projectile
-                spawnBulletHellProjectile(BulletHellProjectile.ProjectileType.SQUARE_BORDER, ticksLive, projectileSpeed);
-            }
-            // fire blasts
-            if (bulletHellTicksLeft % 50 == 0 && secondBulletHell) {
-                spawnBulletHellProjectile(BulletHellProjectile.ProjectileType.CIRCUMFERENCE, 50, 0.75);
-            }
-        }
-        // remove bullet hell projectiles
-        else {
-            projectilesManager.killAll();
-        }
-    }
+    // 1: fireball   2: hell blast
     private void shootProjectile(int type) {
         switch (type) {
             case 1: {
                 psiFireball.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-                psiFireball.velocity = MathHelper.getDirection(psiFireball.shootLoc, target.getEyeLocation(), 2.25);
+                psiFireball.velocity = MathHelper.getDirection(psiFireball.shootLoc, target.getEyeLocation(), FIREBALL_SPEED);
                 projectilesManager.handleProjectile( EntityHelper.spawnProjectile(psiFireball) );
                 break;
             }
             case 2: {
                 psiHellBlast.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
-                psiHellBlast.velocity = MathHelper.getDirection(psiHellBlast.shootLoc, target.getEyeLocation(), 2);
+                psiHellBlast.velocity = MathHelper.getDirection(psiHellBlast.shootLoc,
+                        AimHelper.helperAimEntity(psiHellBlast.shootLoc, target, hellBlastAimHelper), HELL_BLAST_SPEED);
                 projectilesManager.handleProjectile( EntityHelper.spawnProjectile(psiHellBlast) );
                 break;
             }
@@ -157,35 +98,25 @@ public class CalamitasClone extends EntitySlime {
             else {
                 // increase player aggro duration
                 targetMap.get(target.getUniqueId()).addAggressionTick();
-                // calculate brothers alive
-                if (brothersAlive) {
-                    if (bossParts.get(1).isDead() && bossParts.get(2).isDead())
-                        brothersAlive = false;
-                }
-                boolean duringBulletHell = bulletHellTicksLeft > 0 || bulletHellProjectiles.size() > 0;
-                if (duringBulletHell || brothersAlive)
-                    addScoreboardTag("noDamage");
-                else
-                    removeScoreboardTag("noDamage");
+                boolean duringBulletHell = false;
                 // occasionally manage the projectiles
                 if (indexAI % 20 == 0)
                     projectilesManager.dropOutdated();
-                // bullet hell
-                if ( duringBulletHell ) {
-                    // spawn and handle bullet hell projectiles
-                    handleBulletHell();
-                    // on player kill, restore bullet hell duration
-                    if (lastTarget != target)
-                        beginBulletHell(lastBulletHellDuration);
-                    // stay far above the player
-                    bukkitEntity.setVelocity(MathHelper.getDirection(
-                            bukkitEntity.getLocation(), target.getEyeLocation().add(0, 24, 0),
-                            4, true));
-                    // give player some time to react after finishing bullet hell
-                    indexAI = -10;
+                // bullet hell; movement / attack handled within bullet hell.
+                if (bulletHell != null && bulletHell.inProgress()) {
+                    duringBulletHell = true;
+                    bulletHell.tick();
+                    if (! bulletHell.inProgress()) {
+                        bulletHell.finish();
+                        bulletHell = null;
+                        // no attacks for the next 2 seconds out of the bullet hell
+                        indexAI = -40;
+                    }
                 }
-                // normal attack
+                if (duringBulletHell)
+                    addScoreboardTag("noDamage");
                 else {
+                    removeScoreboardTag("noDamage");
                     // get health ratio
                     double healthRatio = getHealth() / getMaxHealth();
                     // health lock and phase switch handling
@@ -193,7 +124,7 @@ public class CalamitasClone extends EntitySlime {
                         // 70%
                         case 1:
                             if (healthRatio < 0.7) {
-                                beginBulletHell(300);
+                                bulletHell = new CalamitasCloneBH1(this);
                                 EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, getMaxHealth() * 0.39);
                                 healthLockProgress = 2;
                             }
@@ -201,35 +132,30 @@ public class CalamitasClone extends EntitySlime {
                         // 40%
                         case 2:
                             if (healthRatio < 0.4) {
-                                new Catastrophe(target, this);
-                                new Cataclysm(target, this);
-                                Bukkit.broadcastMessage(BROTHER_REBORN);
-                                brothersAlive = true;
+                                bulletHell = new CalamitasCloneBH2(this);
                                 EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, getMaxHealth() * 0.09);
-                                addScoreboardTag("noDamage");
                                 healthLockProgress = 3;
                             }
                             break;
                         // 10%
                         case 3:
                             if (healthRatio < 0.1) {
-                                beginBulletHell(400);
+                                bulletHell = new CalamitasCloneBH1(this);
                                 EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, null);
                                 healthLockProgress = 4;
                             }
                             break;
                     }
+
                     if (indexAI >= 0) {
-                        // forced attack methods
-                        if (brothersAlive)
-                            attackMethod = 1;
-                        else if (healthRatio < 0.4)
+                        // forced attack method on low health
+                        if (healthRatio < 0.4)
                             attackMethod = 3;
                         switch (attackMethod) {
                             case 1: {
                                 // set velocity
                                 bukkitEntity.setVelocity( MathHelper.getDirection(
-                                        bukkitEntity.getLocation(), target.getEyeLocation().add(0, 12, 0),
+                                        bukkitEntity.getLocation(), target.getEyeLocation().add(0, 16, 0),
                                         SPEED, true));
                                 // shoot projectile
                                 if (indexAI % 10 == 0) {
@@ -251,7 +177,7 @@ public class CalamitasClone extends EntitySlime {
                                     velLen = 1;
                                     offset = new Vector(1, 0, 0);
                                 }
-                                offset.multiply(12 / velLen);
+                                offset.multiply(24 / velLen);
                                 bukkitEntity.setVelocity( MathHelper.getDirection(
                                         bukkitEntity.getLocation(), target.getEyeLocation().add(offset),
                                         SPEED, true));

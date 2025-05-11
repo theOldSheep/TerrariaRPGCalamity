@@ -12,6 +12,7 @@ terraria\entity\boss\hardMode\queenSlime\QueenSlime$1.class
 terraria\entity\npc\TerrariaNPCClothier.class
 terraria\entity\boss\postMoonLord\stormWeaver\StormWeaver.class
 terraria\entity\boss\BossTemplate.class
+terraria\entity\boss\hardMode\calamitasClone\ICalamitasCloneBH.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticAncientLight.class
 terraria\entity\boss\postMoonLord\polterghast\PolterghastClone.class
 terraria\worldgen\MazeGenerator$CellEdge.class
@@ -41,7 +42,6 @@ terraria\entity\boss\hardMode\calamitasClone\Cataclysm.class
 terraria\util\ItemHelper$1.class
 terraria\entity\boss\preHardMode\desertScourge\DesertNuisance.class
 terraria\entity\boss\hardMode\ravager\RavagerClaw.class
-terraria\entity\boss\hardMode\calamitasClone\CalamitasClone$1.class
 terraria\entity\boss\preHardMode\theSlimeGod\EbonianSlime$1.class
 terraria\util\BossHelper$BossType.class
 terraria\entity\npc\TerrariaNPCBandit.class
@@ -199,6 +199,7 @@ terraria\event\listener\CraftingListener$CraftingFilter.class
 terraria\event\listener\VanillaMechanicListener.class
 terraria\util\BossHelper$1.class
 terraria\util\NPCHelper$NPCType.class
+terraria\entity\boss\hardMode\calamitasClone\CalamitasCloneBH2.class
 terraria\entity\boss\postMoonLord\devourerOfGods\AttackPattern$1.class
 terraria\util\PlayerPOVHelper$1.class
 terraria\entity\boss\postMoonLord\supremeCalamitas\Sepulcher.class
@@ -253,6 +254,7 @@ terraria\util\DmgDisplayThrottling$DpsDisplayContext.class
 terraria\entity\boss\hardMode\astrumDeus\AstrumDeus.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHead.class
 terraria\entity\others\PlayerTornado.class
+terraria\entity\boss\hardMode\calamitasClone\CalamitasCloneBH1.class
 terraria\util\DamageHelper$DamageType.class
 terraria\worldgen\WorldGenHelper.class
 terraria\entity\monster\MonsterSilverfish.class
