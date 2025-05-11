@@ -183,6 +183,7 @@ terraria\entity\boss\hardMode\moonLord\MoonLordBackground.class
 terraria\util\GenericHelper$1.class
 terraria\worldgen\overworld\StructurePopulator$StructPosInfo.class
 terraria\event\listener\ServerStopListener.class
+terraria\entity\boss\hardMode\calamitasClone\CalamitasCloneBH3.class
 terraria\util\WorldHelper$HeightLayer.class
 terraria\worldgen\Interpolate$InterpolatePoint.class
 terraria\worldgen\overworld\OverworldBlockGenericPopulator.class

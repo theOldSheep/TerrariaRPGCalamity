@@ -4,4 +4,5 @@ public interface ICalamitasCloneBH {
     boolean inProgress();
     void tick();
     void finish();
+    void refresh();
 }

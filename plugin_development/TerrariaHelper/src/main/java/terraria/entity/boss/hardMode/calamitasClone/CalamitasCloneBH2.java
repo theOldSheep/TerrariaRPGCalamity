@@ -1,6 +1,7 @@
 package terraria.entity.boss.hardMode.calamitasClone;
 
 import net.minecraft.server.v1_12_R1.PacketPlayOutBoss;
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -33,6 +34,11 @@ public class CalamitasCloneBH2 implements ICalamitasCloneBH {
         return catastrophe.isAlive() || cataclysm.isAlive();
     }
 
+    // do not refresh on this
+    @Override
+    public void refresh() {
+    }
+
     @Override
     public void finish() {
         owner.bossbar.title = CraftChatMessage.fromString(CalamitasClone.BOSS_TYPE.msgName, true)[0];
@@ -41,8 +47,6 @@ public class CalamitasCloneBH2 implements ICalamitasCloneBH {
 
     @Override
     public void tick() {
-        LivingEntity ownerLivingEntity = (LivingEntity) owner.getBukkitEntity();
-        Player target = owner.target;
         // movement
         owner.getBukkitEntity().setVelocity(MathHelper.getDirection(
                 owner.getBukkitEntity().getLocation(), owner.target.getEyeLocation().add(new Vector(0, 12, 0)),

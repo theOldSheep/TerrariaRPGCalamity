@@ -34,7 +34,6 @@ public class CalamitasClone extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    static final String BULLET_HELL_WARNING = "§6§l弹幕炼狱开始，请小心躲避！", BROTHER_REBORN = "§6§l兄弟重生!";
     static final double FINAL_DASH_SPEED = 3, SPEED = 2, DART_SPEED = 0.5,
                         FIREBALL_SPEED = 3, HELL_BLAST_SPEED = 2;
     static final HashMap<String, Double> attrMapBrimstoneDart, attrMapHellFireball;
@@ -103,9 +102,13 @@ public class CalamitasClone extends EntitySlime {
                 if (indexAI % 20 == 0)
                     projectilesManager.dropOutdated();
                 // bullet hell; movement / attack handled within bullet hell.
-                if (bulletHell != null && bulletHell.inProgress()) {
+                if (bulletHell != null) {
                     duringBulletHell = true;
                     bulletHell.tick();
+                    // refresh duration when target changes
+                    if (lastTarget != target) {
+                        bulletHell.refresh();
+                    }
                     if (! bulletHell.inProgress()) {
                         bulletHell.finish();
                         bulletHell = null;
@@ -140,7 +143,7 @@ public class CalamitasClone extends EntitySlime {
                         // 10%
                         case 3:
                             if (healthRatio < 0.1) {
-                                bulletHell = new CalamitasCloneBH1(this);
+                                bulletHell = new CalamitasCloneBH3(this);
                                 EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT, null);
                                 healthLockProgress = 4;
                             }
