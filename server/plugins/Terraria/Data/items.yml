@@ -3107,7 +3107,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    damageTakenMulti: -0.05
+    damageTakenMulti: -0.1
     buffImmune: 硫磺火
   worth: 4800000
   rarity: 5

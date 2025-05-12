@@ -188,7 +188,6 @@
     blockHitAction: stick
     liveTime: 999999
 坠星:
-    gravity: 0
     projectileSize: 1.5
     minimumDamageTicks: 999999
 彗星:
@@ -643,7 +642,7 @@
 爆炸泡泡:
     blockHitAction: thru
     gravity: 0
-    projectileSize: 20
+    projectileSize: 2
     homing: true
     homingMethod: 2
     homingRadius: 64

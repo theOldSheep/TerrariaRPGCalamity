@@ -89,6 +89,9 @@ public class Anahita extends EntityZombieHusk {
             case WATER_SPEAR:
                 bossbar.color = BossBattle.BarColor.BLUE;
                 break;
+            case BUBBLE:
+                bossbar.color = BossBattle.BarColor.PURPLE;
+                break;
             default:
                 bossbar.color = BossBattle.BarColor.GREEN;
         }
@@ -163,7 +166,7 @@ public class Anahita extends EntityZombieHusk {
                 }
                 default: {
                     Location tempLoc = target.getLocation();
-                    Location currLoc = ((LivingEntity) bukkitEntity).getLocation();
+                    Location currLoc = bukkitEntity.getLocation();
                     tempLoc.setY(currLoc.getY());
                     Vector offsetVec = MathHelper.getDirection(tempLoc, currLoc, 12);
                     offsetVec.setY(12);
