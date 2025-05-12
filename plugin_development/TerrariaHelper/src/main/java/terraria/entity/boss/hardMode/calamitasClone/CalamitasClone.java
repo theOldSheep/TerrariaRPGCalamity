@@ -185,7 +185,7 @@ public class CalamitasClone extends EntitySlime {
                                         bukkitEntity.getLocation(), target.getEyeLocation().add(offset),
                                         SPEED, true));
                                 // shoot projectile
-                                if (indexAI % 8 == 0) {
+                                if (indexAI % 15 == 14) {
                                     shootProjectile(2);
                                 }
                                 // switch phase
