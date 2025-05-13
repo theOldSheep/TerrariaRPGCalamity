@@ -43,7 +43,7 @@ public class LunaticLightningOrb extends EntitySlime {
         Vector strikeDirection = MathHelper.getDirection(startLoc, target.getEyeLocation(), 1);
         GenericHelper.handleStrikeLightning(bukkitEntity, ((LivingEntity) bukkitEntity).getEyeLocation(),
                 MathHelper.getVectorYaw(strikeDirection), MathHelper.getVectorPitch(strikeDirection),
-                80, 8, 1, 5, 2, "255|255|255",
+                80, 8, 1, 5, 2, "t/bt",
                 new ArrayList<>(), attrMap, lightningStrikeOption);
     }
     private void AI() {

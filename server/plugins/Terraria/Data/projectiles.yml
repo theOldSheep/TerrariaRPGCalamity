@@ -184,7 +184,7 @@
 钩爪:
     gravity: 0
     speedMultiPerTick: 1
-    penetration: 999999
+    minimumDamageTicks: 999999
     blockHitAction: stick
     liveTime: 999999
 坠星:

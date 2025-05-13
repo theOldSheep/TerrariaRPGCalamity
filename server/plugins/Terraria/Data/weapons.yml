@@ -1264,108 +1264,129 @@
   type: YOYO
   reach: 16
   velocity: 1.75
-  duration: 80
+  duration: 999999
+  autoSwing: true
 抑郁球:
   type: YOYO
   reach: 24
   velocity: 2.25
-  duration: 100
+  duration: 999999
+  autoSwing: true
 亚马逊悠悠球:
   type: YOYO
   reach: 24
   velocity: 2.25
-  duration: 120
+  duration: 999999
+  autoSwing: true
 克苏鲁之眼悠悠球:
   type: YOYO
   reach: 40
   velocity: 3.25
-  duration: 1200
+  duration: 999999
+  autoSwing: true
 泰拉悠悠球:
   type: YOYO
   reach: 48
   velocity: 3.5
-  duration: 1200
+  duration: 999999
+  autoSwing: true
   recoilPoolMultiplier: 0.6
 烟陨彗星:
   type: YOYO
   reach: 20
   velocity: 2
-  duration: 100
+  duration: 999999
+  autoSwing: true
 涡旋:
   type: YOYO
   reach: 24
   velocity: 2
-  duration: 100
+  duration: 999999
+  autoSwing: true
 空旋:
   type: YOYO
   reach: 32
   velocity: 2.5
-  duration: 120
+  duration: 999999
+  autoSwing: true
 神旨:
   type: YOYO
   reach: 32
   velocity: 2.5
-  duration: 120
+  duration: 999999
+  autoSwing: true
 阴阳:
   type: YOYO
   reach: 32
   velocity: 2.5
-  duration: 150
+  duration: 999999
+  autoSwing: true
 烁光:
   type: YOYO
   reach: 36
   velocity: 2.75
-  duration: 150
+  duration: 999999
+  autoSwing: true
 遗殇:
   type: YOYO
   reach: 40
   velocity: 2.75
-  duration: 180
+  duration: 999999
+  autoSwing: true
 泥潭:
   type: YOYO
   reach: 40
   velocity: 2.75
-  duration: 225
+  duration: 999999
+  autoSwing: true
 断层:
   type: YOYO
   reach: 40
   velocity: 3
-  duration: 250
+  duration: 999999
+  autoSwing: true
 瘟疫狂潮:
   type: YOYO
   reach: 44
   velocity: 3
-  duration: 350
+  duration: 999999
+  autoSwing: true
 微波辐照:
   type: YOYO
   reach: 44
   velocity: 3.25
-  duration: 400
+  duration: 999999
+  autoSwing: true
 日炎:
   type: YOYO
   reach: 48
   velocity: 3.75
-  duration: 800
+  duration: 999999
+  autoSwing: true
 裂魔:
   type: YOYO
   reach: 56
   velocity: 4
-  duration: 700
+  duration: 999999
+  autoSwing: true
 混沌射线:
   type: YOYO
   reach: 56
   velocity: 4
-  duration: 1500
+  duration: 999999
+  autoSwing: true
 神谕:
   type: YOYO
   reach: 56
   velocity: 4
-  duration: 1750
+  duration: 999999
+  autoSwing: true
 阿撒托斯:
   type: YOYO
   reach: 64
   velocity: 4
-  duration: 1500
+  duration: 999999
+  autoSwing: true
 链锤:
   type: FLAIL
   reach: 16

@@ -1078,16 +1078,16 @@ sets:
   甲虫铠甲套装:
     lore:
     - ''
-    - §a套装效果：近战速度和伤害提升20%
+    - §a套装效果：近战速度和伤害提升10%
     attributes:
-      damageMeleeMulti: 0.2
-      useSpeedMeleeMulti: 0.2
+      damageMeleeMulti: 0.1
+      useSpeedMeleeMulti: 0.1
   甲虫壳套装:
     lore:
     - ''
-    - §a套装效果：所受伤害减少20%
+    - §a套装效果：所受伤害减少15%
     attributes:
-      damageTakenMulti: -0.2
+      damageTakenMulti: -0.15
   蘑菇矿套装:
     lore:
     - ''

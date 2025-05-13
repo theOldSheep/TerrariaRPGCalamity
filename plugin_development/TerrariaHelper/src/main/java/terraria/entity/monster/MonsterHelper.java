@@ -1955,9 +1955,12 @@ public class MonsterHelper {
                                             Vector dir = (Vector) extraVariables.get("dir");
                                             GenericHelper.handleStrikeLine(monsterBkt, monsterBkt.getEyeLocation(),
                                                     MathHelper.getVectorYaw(dir), MathHelper.getVectorPitch(dir),
-                                                    48, 0.25, "", "255|125|255",
+                                                    48, 0.25, "", "t/bt",
                                                     new ArrayList<>(), AttributeHelper.getAttrMap(monsterBkt),
-                                                    new GenericHelper.StrikeLineOptions().setBounceWhenHitBlock(true));
+                                                    new GenericHelper.StrikeLineOptions()
+                                                            .setBounceWhenHitBlock(true)
+                                                            .setVanillaParticle(false)
+                                                            .setSnowStormRawUse(false));
                                             break;
                                         case 161:
                                             indexAI = 10001;
@@ -2617,8 +2620,10 @@ public class MonsterHelper {
                                     dir = MathHelper.randomVector();
                                 GenericHelper.handleStrikeLine(monsterBkt, monsterBkt.getEyeLocation(),
                                         MathHelper.getVectorYaw(dir), MathHelper.getVectorPitch(dir), 48, 1,
-                                        "", "100|150|255", new ArrayList<>(), AttributeHelper.getAttrMap(monsterBkt),
-                                        new GenericHelper.StrikeLineOptions());
+                                        "", "t/pkls", new ArrayList<>(), AttributeHelper.getAttrMap(monsterBkt),
+                                        new GenericHelper.StrikeLineOptions()
+                                                .setVanillaParticle(false)
+                                                .setSnowStormRawUse(false));
                                 break;
                         }
                     }

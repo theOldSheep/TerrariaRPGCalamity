@@ -4,48 +4,48 @@
     velocity: 11.5
     playerSpeed: 0.5
     particleItem:
-        - "115|115|115"
+        - "t/bt"
 失谐钩爪:
     amount: 1
     reach: 30
     velocity: 16
     playerSpeed: 1
     particleItem:
-        - "204|0|204"
+        - "t/pkt"
 刺钩:
     amount: 3
     reach: 30
     velocity: 16
     playerSpeed: 0.7
     particleItem:
-        - "100|255|100"
-        - "100|255|100"
-        - "100|255|100"
+        - "t/dgt"
+        - "t/dgt"
+        - "t/dgt"
 阴森钩:
     amount: 3
     reach: 34.375
     velocity: 15.5
     playerSpeed: 0.8
     particleItem:
-        - "0|25|100"
-        - "0|25|100"
-        - "0|25|100"
+        - "t/rt"
+        - "t/rt"
+        - "t/rt"
 圣诞钩:
     amount: 3
     reach: 34.375
     velocity: 15.5
     playerSpeed: 0.8
     particleItem:
-        - "50|255|100"
-        - "50|255|100"
-        - "50|255|100"
+        - "t/yt"
+        - "t/yt"
+        - "t/yt"
 月钩:
     amount: 4
     reach: 34.375
     velocity: 18
     playerSpeed: 1.25
     particleItem:
-        - "235|134|31"
-        - "133|238|203"
-        - "251|114|221"
-        - "104|208|252"
+        - "t/ot"
+        - "t/gt"
+        - "t/bt"
+        - "t/pt"

@@ -30,7 +30,9 @@ public class CelestialPillar extends EntityGiantZombie {
     int amountShieldLeft = SHIELD_AMOUNT;
     // static
     static GenericHelper.ParticleLineOptions particleOption = new GenericHelper.ParticleLineOptions()
-            .setParticleColor("255|125|125")
+            .setVanillaParticle(false)
+            .setSnowStormRawUse(false)
+            .setParticleColor("t/ot")
             .setTicksLinger(3)
             .setWidth(0.1)
             .setStepsize(0.25);

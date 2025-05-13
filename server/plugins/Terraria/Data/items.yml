@@ -1088,7 +1088,7 @@
 星辉碎块:
   item: CLAY_BALL
   lore:
-  - §r夜间在星辉瘟疫使用，召唤白金星舰
+  - §r在星辉瘟疫使用，召唤白金星舰
   - §r附近世纪之花后玩家均可参与挑战
   rarity: 7
 瘟疫起动装置:
@@ -2626,7 +2626,7 @@ Drew之翼:
   - §r闪避攻击时会使你获得75%潜行值
   - §r“光无法到达海洋深处”
   attributes:
-    stealthRegenMulti: 0.15
+    stealthRegenMulti: 0.25
   worth: 9600000
   rarity: 6
 虚空掠夺者:
@@ -2643,7 +2643,6 @@ Drew之翼:
   - §r[饰品]
   - §r▣算作潜伏增幅饰品
   attributes:
-    stealthRegenMulti: 0.05
     stealthConsumptionMulti: -0.5
     damageRogueMulti: 0.07
     critRogue: 7
@@ -2681,7 +2680,7 @@ Drew之翼:
   attributes:
     damageRogueMulti: 0.08
     critRogue: 8
-    stealthRegenMulti: 0.2
+    stealthRegenMulti: 0.25
     stealthConsumptionMulti: -0.5
   worth: 28000000
   rarity: 14
@@ -5950,7 +5949,7 @@ Drew之翼:
 木制悠悠球:
   item: STICK
   lore:
-  - §r掷出悠悠球后按住潜行可以收回
+  - §r掷出悠悠球后再次使用可以收回
   attributes:
     damage: 30
     damageType: Melee
@@ -6009,6 +6008,7 @@ Drew之翼:
   lore:
   - §r向下召唤星星
   - §r一只十分灵活的悠悠球
+  - §r掷出悠悠球后再次使用可以收回
   attributes:
     damage: 36
     damageType: Melee

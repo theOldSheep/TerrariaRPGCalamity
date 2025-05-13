@@ -10,7 +10,9 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftProjectile;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -1264,7 +1266,7 @@ public class PlayerHelper {
                     // if the hook is in place
                     if (hook.getVelocity().lengthSquared() < 1e-5) {
                         // only account for the pulling force when the hook is in a solid block
-                        if (hook.getLocation().getBlock().getType().isSolid()) {
+                        if (((CraftProjectile) hook).getHandle().inBlock()) {
                             center.add(hook.getLocation());
                             hookedAmount++;
                         }
@@ -1282,11 +1284,10 @@ public class PlayerHelper {
                         Vector offsetVector = dVec.clone().multiply(1.5 / dVecLength);
                         GenericHelper.handleParticleLine(dVec, drawCenterLoc.add(offsetVector),
                                 new GenericHelper.ParticleLineOptions()
+                                        .setVanillaParticle(false)
+                                        .setSnowStormRawUse(false)
                                         .setLength(dVecLength - 1.5)
-                                        .setWidth(0.25)
-                                        .setAlpha(0.25f)
-                                        .setTicksLinger(3)
-                                        .setIntensityMulti(0.25)
+                                        .setTicksLinger(2)
                                         .setParticleColor(EntityHelper.getMetadata(hook,
                                                 EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOK_COLOR).asString()));
                     }
@@ -2758,7 +2759,6 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         List<Entity> hooks = (ArrayList<Entity>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOKS).value();
         String hookItemName = ItemHelper.splitItemName(ply.getInventory().getItemInOffHand())[1];
         EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOK_ITEM, hookItemName);
-        World hookWorld = ply.getWorld();
         YmlHelper.YmlSection config = TerrariaHelper.hookConfig;
         int hookAmount = config.getInt(hookItemName + ".amount", 0);
         if (hooks.size() >= hookAmount) {
@@ -2787,7 +2787,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         for (Entity hook : hooks) {
             hookColors.remove(EntityHelper.getMetadata(hook, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOK_COLOR).asString());
         }
-        String color = hookColors.size() > 0 ? hookColors.get(0) : "125|125|125";
+        String color = hookColors.size() > 0 ? hookColors.get(0) : "t/bt";
         EntityHelper.setMetadata(hookEntity, EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOK_COLOR, color);
         // mark hook entity as a hook
         hookEntity.addScoreboardTag("isHook");

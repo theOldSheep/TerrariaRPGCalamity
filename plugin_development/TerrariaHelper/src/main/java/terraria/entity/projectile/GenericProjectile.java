@@ -852,6 +852,12 @@ public class GenericProjectile extends EntityPotion {
         this.a(new AxisAlignedBB(x - projectileRadius, y, z - projectileRadius,
                 x + projectileRadius, y + projectileRadius * 2, z + projectileRadius) );
     }
+    // returns simply whether it is in ground
+    @Override
+    public boolean inBlock() {
+        return inGround;
+    }
+    // tick
     @Override
     public void B_() {
         // start timing

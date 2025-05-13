@@ -103,9 +103,9 @@ public class LunaticCultist extends EntityZombie {
     // summon clones
     private void displaySummonParticle(Entity entity) {
         if (entity == bukkitEntity)
-            summonParticle.setParticleColor("20|110|220");
+            summonParticle.setParticleColor("t/bls");
         else
-            summonParticle.setParticleColor("255|255|255");
+            summonParticle.setParticleColor("t/pkls");
         Vector direction = entity.getLocation().subtract(centerLoc).toVector();
         summonParticle.setLength(direction.length());
         GenericHelper.handleParticleLine(direction, centerLoc, summonParticle);

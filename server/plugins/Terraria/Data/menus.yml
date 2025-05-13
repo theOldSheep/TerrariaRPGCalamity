@@ -832,16 +832,16 @@ bosses_hardmode:
             col: 3
             name: §r[信息] 瘟疫使者歌莉娅
             cmd: terrariaMenu bossPBGLAT
-        eol:
-            row: 3
-            col: 4
-            name: §r[信息] 光之女皇
-            cmd: terrariaMenu bossEOL
         dkfsr:
             row: 3
             col: 5
             name: §r[信息] 猪鲨公爵
             cmd: terrariaMenu bossDKFSR
+        eol:
+            row: 3
+            col: 4
+            name: §r[信息] 光之女皇
+            cmd: terrariaMenu bossEOL
         rvg:
             row: 3
             col: 6
