@@ -51,7 +51,7 @@ public class MoonLordTrueEyeOfCthulhu extends EntitySlime {
                         new GenericHelper.ParticleLineOptions()
                                 .setVanillaParticle(false)
                                 .setParticleColor("b/mdr")
-                                .setTicksLinger(1));
+                                .setTicksLinger(2));
     }
 
     double deathRayYaw, deathRayPitch, deathRayPitchStep, angleOffset;

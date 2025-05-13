@@ -81,7 +81,7 @@ public class Thanatos extends EntitySlime {
                         new GenericHelper.ParticleLineOptions()
                                 .setVanillaParticle(false)
                                 .setParticleColor("b/tnt")
-                                .setTicksLinger(1)
+                                .setTicksLinger(2)
                                 .setIntensityMulti(0.5));
     }
     static final EntityMovementHelper.WormSegmentMovementOptions followOption = new EntityMovementHelper.WormSegmentMovementOptions()

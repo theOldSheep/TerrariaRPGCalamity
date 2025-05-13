@@ -40,7 +40,7 @@ public class GuardianAttacker extends EntitySlime {
                         new GenericHelper.ParticleLineOptions()
                                 .setVanillaParticle(false)
                                 .setParticleColor("b/gdn")
-                                .setTicksLinger(1));
+                                .setTicksLinger(2));
     }
     // HORIZONTAL_POSITION should have value between 0 (directly above target) and 1 (directly above commander)
     static final double HORIZONTAL_POSITION = 0.75, VERTICAL_OFFSET = 10.0, HOVER_SPEED = 2.5;

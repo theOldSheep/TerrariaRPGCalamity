@@ -74,8 +74,8 @@ public class AstrumAureus extends EntitySlime {
                 break;
             case RECHARGE:
                 phaseAI = AIPhase.CRAWL;
-                // Damage Taken: 1 -> 0.5
-                AttributeHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.5", true);
+                // Damage Taken: 1 -> 0.75
+                AttributeHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.3333", true);
                 // defence: 40 -> 80
                 AttributeHelper.tweakAttribute(attrMap, "defence", "40", true);
                 break;
@@ -90,8 +90,8 @@ public class AstrumAureus extends EntitySlime {
         if (phaseAI == AIPhase.RECHARGE) {
             bossbar.color = BossBattle.BarColor.GREEN;
             bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
-            // Damage Taken: 0.5 -> 1
-            AttributeHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.5", false);
+            // Damage Taken: 0.75 -> 1
+            AttributeHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.3333", false);
             // defence: 80 -> 40
             AttributeHelper.tweakAttribute(attrMap, "defence", "40", false);
         }
@@ -232,7 +232,7 @@ public class AstrumAureus extends EntitySlime {
         {
             // update target
             target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
-                    IGNORE_DISTANCE, terraria.entity.boss.BossHelper.TimeRequirement.NIGHT, BIOME_REQUIRED, targetMap.keySet());
+                    IGNORE_DISTANCE, terraria.entity.boss.BossHelper.TimeRequirement.NONE, BIOME_REQUIRED, targetMap.keySet());
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity entity : bossParts) {
@@ -271,7 +271,7 @@ public class AstrumAureus extends EntitySlime {
     }
     // validate if the condition for spawning is met
     public static boolean canSpawn(Player player) {
-        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED && !(WorldHelper.isDayTime(player.getWorld()));
+        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED;
     }
     // a constructor for actual spawning
     public AstrumAureus(Player summonedPlayer) {

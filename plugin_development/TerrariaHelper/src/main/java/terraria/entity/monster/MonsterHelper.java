@@ -2558,9 +2558,10 @@ public class MonsterHelper {
                                     monsterBkt.getLocation().add(offsetDir),
                                     new GenericHelper.ParticleLineOptions()
                                             .setLength(0.99)
-                                            .setWidth(0.5)
-                                            .setParticleColor("100|150|255")
-                                            .setTicksLinger(1));
+                                            .setVanillaParticle(false)
+                                            .setSnowStormRawUse(false)
+                                            .setParticleColor("t/bls")
+                                            .setTicksLinger(2));
                         }
                         // projectiles
                         {
@@ -2571,7 +2572,7 @@ public class MonsterHelper {
                                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                                         monsterBkt, new Vector(), AttributeHelper.getAttrMap(monsterBkt), "流体入侵怪");
                                 AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions()
-                                        .setProjectileSpeed(2);
+                                        .setProjectileSpeed(2.5);
                                 Location targetLoc = AimHelper.helperAimEntity(monsterBkt, target, aimHelper);
                                 shootInfo.velocity = MathHelper.getDirection(shootInfo.shootLoc, targetLoc, 2);
                                 EntityHelper.spawnProjectile(shootInfo);

@@ -68,7 +68,7 @@ public class Artemis extends EntitySlime {
                         new GenericHelper.ParticleLineOptions()
                                 .setVanillaParticle(false)
                                 .setParticleColor("b/atm")
-                                .setTicksLinger(1));
+                                .setTicksLinger(2));
     }
 
     protected boolean stageTransitionTriggered = false;

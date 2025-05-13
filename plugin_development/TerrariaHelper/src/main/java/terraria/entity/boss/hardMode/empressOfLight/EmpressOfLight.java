@@ -38,12 +38,12 @@ public class EmpressOfLight extends EntitySlime {
         CHARGE, PRISMATIC_BOLT, PRISMATIC_BOLT_V2, SUN_DANCE, EVERLASTING_RAINBOW, ETHEREAL_LANCE, ETHEREAL_LANCE_V2;
     }
     AttackPhase attackPhase = AttackPhase.CHARGE;
-    String[] particleColor;
     GenericHelper.ParticleLineOptions particleLineOptionsSunDance, particleLineOptionsEverlastingRainbow,
             particleLineOptionsLance, particleLineOptionsLanceWindup;
     GenericHelper.StrikeLineOptions strikeLineOptionsSunDance, strikeLineOptionsEverlastingRainbow,
             strikeLineOptionsLance;
     Location attackLoc = null;
+    String trailParticle;
     int indexAI = 20, indexAttackPhase = 0;
     double healthRatio = 1;
     boolean secondPhase = false, summonedDuringDay;
@@ -51,12 +51,11 @@ public class EmpressOfLight extends EntitySlime {
     EntityHelper.ProjectileShootInfo shootInfoPrismaticBolt;
     static final double SPEED_PRISMATIC_BOLT = 1.5, SPEED_CHARGE_WINDUP = 0.75, SPEED_CHARGE = 2.5,
             SUN_DANCE_MAX_LENGTH = 32, SUN_DANCE_MAX_WIDTH = 1.5,
-            ETERNAL_RAINBOW_WIDTH = 3, SPEED_ETHEREAL_LANCE = 2;
+            ETERNAL_RAINBOW_WIDTH = 1.5, SPEED_ETHEREAL_LANCE = 2;
     static final int EVERLASTING_RAINBOW_DURATION = 40;
     static HashMap<String, Double> attrMapPrismaticBolt, attrMapSunDance, attrMapEverlastingRainbow, attrMapEtherealLance;
     static Vector[] eLV2Dirs;
     static AttackPhase[] attackOrderPhaseOne, attackOrderPhaseTwo;
-    static String[] particleColorDay, particleColorNight;
     static {
         // ethereal bolt V2 directions
         {
@@ -108,20 +107,6 @@ public class EmpressOfLight extends EntitySlime {
                     AttackPhase.ETHEREAL_LANCE,
                     AttackPhase.CHARGE,
                     AttackPhase.PRISMATIC_BOLT_V2,
-            };
-        }
-        // particle colors
-        {
-            particleColorDay = new String[]{
-                    "255|255|125",
-            };
-            particleColorNight = new String[]{
-                    "255|0|0",
-                    "255|255|0",
-                    "0|255|0",
-                    "0|255|255",
-                    "0|0|255",
-                    "255|0|255",
             };
         }
     }
@@ -320,7 +305,7 @@ public class EmpressOfLight extends EntitySlime {
         Location plyLoc = target.getLocation();
         targetLoc.setY(plyLoc.getY());
         targetLoc = plyLoc.add(MathHelper.getDirection(
-                plyLoc, targetLoc, SUN_DANCE_MAX_LENGTH * 0.65, true));
+                plyLoc, targetLoc, SUN_DANCE_MAX_LENGTH * 0.6, true));
         EntityMovementHelper.movementTP(bukkitEntity, targetLoc);
         // handle particle/damage
         double sizeMultiplier = Math.sqrt(1 - Math.abs(20d - index) / 20);
@@ -385,12 +370,12 @@ public class EmpressOfLight extends EntitySlime {
         double strikePitch = MathHelper.getVectorPitch(strikeDirection);
         GenericHelper.ParticleLineOptions particleLineOptionsTemp = new GenericHelper.ParticleLineOptions()
                 .setVanillaParticle(false)
-                .setParticleColor(GenericHelper.getStringFromColor( GenericHelper.getInterpolateColor(
-                        (double) index / 121, particleLineOptionsEverlastingRainbow.getParticleColorObjects() ) ))
+                .setSnowStormRawUse(false)
+                .setParticleColor(trailParticle)
                 .setTicksLinger(EVERLASTING_RAINBOW_DURATION);
         strikeLineOptionsEverlastingRainbow.setParticleInfo(particleLineOptionsTemp);
         GenericHelper.handleStrikeLine(bukkitEntity, lastLoc, strikeYaw, strikePitch,
-                strikeDirection.length(), ETERNAL_RAINBOW_WIDTH / 2d, "", "",
+                strikeDirection.length(), ETERNAL_RAINBOW_WIDTH, "", "",
                 new ArrayList<>(), attrMapEverlastingRainbow, strikeLineOptionsEverlastingRainbow);
         // next tick
         if (index < 120)
@@ -515,7 +500,6 @@ public class EmpressOfLight extends EntitySlime {
         summonedDuringDay = WorldHelper.isDayTime(bukkitEntity.getWorld());
         if (EventAndTime.isBossRushActive())
             summonedDuringDay = false; // never get bonus dmg for BR
-        particleColor = summonedDuringDay ? particleColorDay : particleColorNight;
         setCustomName(BOSS_TYPE.msgName);
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
@@ -578,16 +562,19 @@ public class EmpressOfLight extends EntitySlime {
         // particle and strike options
         {
             String particleSuffix = summonedDuringDay ? "d" : "n";
+            trailParticle = "t/ep" + particleSuffix;
             particleLineOptionsSunDance = new GenericHelper.ParticleLineOptions()
                     .setVanillaParticle(false)
-                    .setParticleColor(particleColor)
-                    .setTicksLinger(1);
+                    .setSnowStormRawUse(false)
+                    .setParticleColor(trailParticle)
+                    .setTicksLinger(2);
             strikeLineOptionsSunDance = new GenericHelper.StrikeLineOptions()
                     .setParticleInfo(particleLineOptionsSunDance)
                     .setThruWall(true);
             particleLineOptionsEverlastingRainbow = new GenericHelper.ParticleLineOptions()
                     .setVanillaParticle(false)
-                    .setParticleColor(particleColor)
+                    .setSnowStormRawUse(false)
+                    .setParticleColor(trailParticle)
                     .setTicksLinger(EVERLASTING_RAINBOW_DURATION);
             strikeLineOptionsEverlastingRainbow = new GenericHelper.StrikeLineOptions()
                     .setParticleInfo(particleLineOptionsEverlastingRainbow)
@@ -597,7 +584,7 @@ public class EmpressOfLight extends EntitySlime {
             particleLineOptionsLance = new GenericHelper.ParticleLineOptions()
                     .setVanillaParticle(false)
                     .setParticleColor("b/el" + particleSuffix)
-                    .setTicksLinger(1);
+                    .setTicksLinger(2);
             strikeLineOptionsLance = new GenericHelper.StrikeLineOptions()
                     .setParticleInfo(particleLineOptionsLance)
                     .setThruWall(true);

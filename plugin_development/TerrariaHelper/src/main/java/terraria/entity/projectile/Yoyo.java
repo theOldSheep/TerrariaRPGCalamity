@@ -83,7 +83,7 @@ public class Yoyo extends GenericProjectile {
     public void B_() {
         super.B_();
         // returns if too far away
-        boolean isReturning = owner.isSneaking() ||
+        boolean isReturning = (! owner.getScoreboardTags().contains("temp_autoSwing")) ||
                 ticksLived >= ticksDuration ||
                 bukkitEntity.getLocation().distanceSquared(owner.getEyeLocation()) > maxDistanceSquared;
         if (isReturning) {

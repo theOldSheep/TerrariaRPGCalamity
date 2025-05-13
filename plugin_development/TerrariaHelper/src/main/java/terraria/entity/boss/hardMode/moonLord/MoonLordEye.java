@@ -74,7 +74,7 @@ public class MoonLordEye extends EntitySlime {
                         new GenericHelper.ParticleLineOptions()
                                 .setVanillaParticle(false)
                                 .setParticleColor("b/mdrm")
-                                .setTicksLinger(1));
+                                .setTicksLinger(2));
     }
 
     int indexAI = -1, indexAnimation = 0, indexAttackMethod = -1;

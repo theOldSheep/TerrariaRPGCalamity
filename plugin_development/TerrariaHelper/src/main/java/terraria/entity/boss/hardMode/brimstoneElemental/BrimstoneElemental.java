@@ -47,7 +47,7 @@ public class BrimstoneElemental extends EntitySlime {
                 .setStepsize(2)
                 .setVanillaParticle(false)
                 .setParticleColor("b/brmh")
-                .setTicksLinger(1);
+                .setTicksLinger(2);
         rayParticleOption = new GenericHelper.ParticleLineOptions()
                 .setWidth(0.25)
                 .setVanillaParticle(false)

@@ -80,7 +80,7 @@ public class Providence extends EntitySlime {
                         new GenericHelper.ParticleLineOptions()
                                 .setVanillaParticle(false)
                                 .setParticleColor("b/pvd")
-                                .setTicksLinger(1));
+                                .setTicksLinger(2));
 
         aimBomb = new AimHelper.AimHelperOptions()
                 .setAccelerationMode(true)

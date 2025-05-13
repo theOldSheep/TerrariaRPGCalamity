@@ -343,7 +343,7 @@ public class MinionSlime extends EntitySlime {
                                         .setVanillaParticle(false)
                                         .setWidth(0.25)
                                         .setLength(4)
-                                        .setTicksLinger(1)
+                                        .setTicksLinger(2)
                                         .setParticleColor("m/trp"));
                 extraVariables.put("strikeLineOption", strikeLineOption);
                 noclip = true;

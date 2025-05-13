@@ -242,7 +242,7 @@ public class DukeFishron extends EntitySlime {
                     int dashIndex = indexAI % 25;
                     // init dash
                     if (dashIndex == 0) {
-                        initDash(DASH_SPEED_2, 12, 0.5);
+                        initDash(DASH_SPEED_2, 12, 0.2);
                     }
                     // keep the dash
                     else if (dashIndex < 15) {
@@ -331,15 +331,19 @@ public class DukeFishron extends EntitySlime {
         }
         // change attack method
         int dashDuration = 22;
-        if (!finalPhase && indexAI >= dashDuration * dashAmount) {
-            changeAttackPhase();
+        if (indexAI >= dashDuration * dashAmount) {
+            if (!finalPhase) {
+                changeAttackPhase();
+            }
+            indexAI = -30;
         }
         else {
             int dashIndex = indexAI % dashDuration;
             // begin dash
             if (dashIndex == 5) {
                 setCustomName(BOSS_TYPE.msgName + "§2");
-                initDash(DASH_SPEED_3, 10, 1);
+                // predictive dash only on the first dash in all dash sequences
+                initDash(DASH_SPEED_3, 10, indexAI > (dashDuration * (dashAmount - 1)) ? 0 : 1);
             }
             // keep the dash
             else if (dashIndex < 18) {

@@ -28,6 +28,8 @@ p - potion
 	mb - miracle blight
 	sf - shadow flame
 t - trail
+	epd - empress of light day particle (sun dance & everlasting rainbow)
+	epn - empress of light night particle (sun dance & everlasting rainbow)
 	atl - atlantis
 	ntb - nettle burst
 	oll - orange large lasers
