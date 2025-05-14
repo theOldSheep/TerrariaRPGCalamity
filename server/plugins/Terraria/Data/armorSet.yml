@@ -1194,13 +1194,11 @@ sets:
     - ''
     - §a套装效果：
     - §a无视击退
-    - §a所受伤害减少20%
     - §a受到近战攻击后反弹1.5倍伤害
     - §a近战攻击命中敌人后，若其破晓层数小于2则追加一层破晓效果
     - §a▷ 冲刺：双击一个方向可以冲刺，具有一定的冷却时间
     attributes:
       knockbackResistance: 1
-      damageTakenMulti: -0.2
       buffInflictMelee: 破晓|200|1
   星璇套装:
     lore:

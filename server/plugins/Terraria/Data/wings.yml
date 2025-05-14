@@ -75,19 +75,19 @@
     isWing: true
 幽渊斗篷:
     flightTime: 60
-    verticalSpeed: 1.3
+    verticalSpeed: 1.25
     maxAcceleration: 0.225
     horizontalSpeed: 0.7
     isWing: true
 猪鲨之翼:
     flightTime: 60
-    verticalSpeed: 1.3
+    verticalSpeed: 1.25
     maxAcceleration: 0.225
     horizontalSpeed: 0.725
     isWing: true
 女皇之翼:
     flightTime: 50
-    verticalSpeed: 1.25
+    verticalSpeed: 1.3
     maxAcceleration: 0.25
     horizontalSpeed: 0.725
     isWing: true
