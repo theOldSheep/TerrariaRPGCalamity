@@ -41,6 +41,7 @@ public class ItemUseHelper {
             "miscSetting.ammoConsumptionChanceMulti", 0.35d);
     public static final double CHANCE_POTION_CONSUMPTION = TerrariaHelper.settingConfig.getDouble(
             "miscSetting.potionConsumptionChanceMulti", 0.35d);
+    public static final double ZENITH_LENGTH = 6;
     public enum QuickBuffType {
         NONE, HEALTH, MANA, BUFF
     }
@@ -602,7 +603,7 @@ public class ItemUseHelper {
         Vector strikeDir = strikeLoc.clone().subtract(centerLoc).toVector();
         GenericHelper.handleStrikeLine(ply, strikeLoc,
                 MathHelper.getVectorYaw(strikeDir), MathHelper.getVectorPitch(strikeDir),
-                6, 0.5, "天顶剑", color, exceptions, attrMap, strikeLineInfo.setDisplayParticle(displayParticle));
+                ZENITH_LENGTH, 0.5, "天顶剑", color, exceptions, attrMap, strikeLineInfo.setDisplayParticle(displayParticle));
         int delayAmount = ((index + 1) * 16 / indexMax) - (index * 16 / indexMax);
         if (delayAmount > 0) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> handleSingleZenithSwingAnimation(ply, attrMap, centerLoc, reachVector, offsetVector, exceptions, color, strikeLineInfo, index + 1, indexMax, true), delayAmount);
@@ -615,25 +616,27 @@ public class ItemUseHelper {
         EntityPlayer nmsPly = ((CraftPlayer) ply).getHandle();
         Vector lookDir = MathHelper.vectorFromYawPitch_approx(nmsPly.yaw, nmsPly.pitch);
         Location targetLoc = getPlayerTargetLoc(new AimHelper.PlyTargetLocInfo(ply, 4, new AimHelper.AimHelperOptions().setTicksTotal(8).setAimMode(true), true));
-        Location centerLoc = targetLoc.clone().add(ply.getEyeLocation()).multiply(0.5);
-        Vector reachVec = centerLoc.clone().subtract(ply.getEyeLocation()).toVector();
+        // reach - "forward" direction
+        Vector reachVec = targetLoc.clone().subtract(ply.getEyeLocation()).toVector();
+        double reachVecLen = reachVec.length();
+        reachVec.multiply(1 / reachVecLen);
+        // offset - "eclipse" offset direction
         Vector offsetVec = MathHelper.getNonZeroCrossProd(reachVec, reachVec);
         // set the display rotation of item sprite
         Vector orthogonalVec = offsetVec.getCrossProduct(reachVec);
         strikeLineInfo.particleInfo.setRightOrthogonalDir( orthogonalVec );
+
+        // try to hit the target with the middle of the blade
+        targetLoc.subtract(reachVec.clone().multiply(ZENITH_LENGTH * 0.5));
+        Location startLoc = ply.getEyeLocation().subtract(reachVec.clone().multiply(1.5));
         // offset centerLoc backwards by 2 blocks to prevent strike line visual effect spamming the screen
-        // and shorten reachVec by 1 block
-        double reachLength = reachVec.length() - 1;
-        if (reachVec.lengthSquared() > 1) {
-            reachVec.multiply(reachLength / (reachLength + 1));
-        }
-        centerLoc.subtract(lookDir.clone().multiply(2));
+        Location centerLoc = targetLoc.clone().add(startLoc).multiply(0.5);
+        double reachLength = targetLoc.distance(centerLoc);
+        reachVec.multiply(reachLength);
         // offset vector should be proportionally scaled according to reach length
-        // it should be around 0.3 - 0.5 of reach length
-        offsetVec.normalize().multiply(reachLength * (0.3 + Math.random() * 0.2));
+        MathHelper.setVectorLength(offsetVec,reachLength * (0.3 + Math.random() * 0.2));
         // strike
-//        int loopAmount = (int) (reachLength * 4);
-        int loopAmount = 50;
+        int loopAmount = (int) Math.min(50, reachLength * 4);
         String color = "255|0|0";
         if (colors != null && !colors.isEmpty()) color = colors.get((int) (Math.random() * colors.size()));
         handleSingleZenithSwingAnimation(ply, attrMap, centerLoc, reachVec, offsetVec, new HashSet<>(), color, strikeLineInfo, 0, loopAmount, true);

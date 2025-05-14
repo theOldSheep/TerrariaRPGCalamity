@@ -10,6 +10,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 import terraria.gameplay.EventAndTime;
 import terraria.util.*;
@@ -40,7 +42,7 @@ public class LunaticCultist extends EntityZombie {
 
     static HashMap<String, Double> attrMapFireball;
     static final int SUMMON_TIMEOUT = 50;
-    static final double SPEED_FIREBALL = 1.5;
+    static final double SPEED_FIREBALL = 1.5, PARTICLE_RADIUS = 5;
     static GenericHelper.ParticleLineOptions summonParticle;
     EntityHelper.ProjectileShootInfo shootInfoFireball;
     static {
@@ -48,11 +50,17 @@ public class LunaticCultist extends EntityZombie {
         attrMapFireball.put("damage", 540d);
         attrMapFireball.put("knockback", 1.5d);
 
+        ItemStack summonParticleItem = new ItemStack(org.bukkit.Material.DIAMOND_SWORD);
+        ItemMeta summonItemMeta = summonParticleItem.getItemMeta();
+        summonItemMeta.setDisplayName("拜月教徒法阵");
+        summonParticleItem.setItemMeta(summonItemMeta);
+
         summonParticle = new GenericHelper.ParticleLineOptions()
-                .setVanillaParticle(false)
-                .setSnowStormRawUse(false)
-                .setParticleColor("t/bls")
-                .setWidth(1);
+                .setParticleOrItem(false)
+                .setSpriteItem(summonParticleItem)
+                .setTicksLinger(2)
+                .setRightOrthogonalDir(new Vector(0, 1, 0))
+                .setLength(PARTICLE_RADIUS * 2);
     }
 
     private void nextAttack() {
@@ -85,31 +93,40 @@ public class LunaticCultist extends EntityZombie {
             }
         }
     }
+    // get the hover location given the index (boss itself index 0; clones index 1,2...)
     private Location getHoverLocation() {
         return getHoverLocation(0);
     }
     private Location getHoverLocation(int index) {
-        double dirYaw = mainYaw;
-        double dirPitch = -90;
-        if (index > 0) {
+        // the boss itself
+        if (index == 0) {
+            Location pos = target.getLocation();
+            for (int i = 0; i < 20; i ++) {
+                if (pos.getBlock().getRelative(0, 2, 0).getType().isSolid()) break;
+                pos.add(0, 1, 0);
+            }
+            return pos;
+        }
+        else {
+            double dirYaw = mainYaw + 90;
+            double dirPitch = 0;
+            // clones alternate from left to right
             if (index % 2 == 0)
                 dirYaw += 180;
-            dirPitch += ( (index + 1) / 2) * 3.5;
+            // clones are slightly below the true boss
+            int offsetPair = (index + 1) / 2;
+            dirPitch += offsetPair * 3.5;
+            Vector offsetDir = MathHelper.vectorFromYawPitch_approx(dirYaw, dirPitch);
+            offsetDir.multiply(offsetPair * 2);
+            return getHoverLocation(0).add(offsetDir);
         }
-        Vector offsetDir = MathHelper.vectorFromYawPitch_approx(dirYaw, dirPitch);
-        offsetDir.multiply(20);
-        return target.getLocation().add(offsetDir);
     }
-    // summon clones
-    private void displaySummonParticle(Entity entity) {
-        if (entity == bukkitEntity)
-            summonParticle.setParticleColor("t/bls");
-        else
-            summonParticle.setParticleColor("t/pkls");
-        Vector direction = entity.getLocation().subtract(centerLoc).toVector();
-        summonParticle.setLength(direction.length());
-        GenericHelper.handleParticleLine(direction, centerLoc, summonParticle);
+    // summon - summon particle (world sprite)
+    private void displaySummonParticle() {
+        Vector direction = new Vector(PARTICLE_RADIUS, 0, 0);
+        GenericHelper.handleParticleLine(direction, centerLoc.clone().subtract(direction), summonParticle);
     }
+    // summon
     private void attackPhase0() {
         if (indexAI < 0) {
             return;
@@ -139,9 +156,7 @@ public class LunaticCultist extends EntityZombie {
         }
         // particle hint
         {
-            displaySummonParticle(bukkitEntity);
-            for (LunaticCultistClone currClone : clones)
-                displaySummonParticle(currClone.getBukkitEntity());
+            displaySummonParticle();
         }
         // cancel on receiving damage
         if (lastHealth > 0 && getHealth() + 1e-5 < lastHealth) {
