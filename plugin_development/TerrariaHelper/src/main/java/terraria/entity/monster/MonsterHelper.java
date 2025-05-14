@@ -763,9 +763,7 @@ public class MonsterHelper {
                                     randOffset = 1.25;
                                 }
                             }
-                            AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions()
-                                    .setNoGravityTicks(5)
-                                    .setProjectileGravity(0.05)
+                            AimHelper.AimHelperOptions aimHelper = new AimHelper.AimHelperOptions("烈焰箭")
                                     .setProjectileSpeed(projSpd)
                                     .setRandomOffsetRadius(randOffset)
                                     .setAccelerationMode(useAcc)
@@ -2369,9 +2367,13 @@ public class MonsterHelper {
                         switch (indexAI) {
                             // shoot projectile
                             case 85:
+                                Location aimedLoc = AimHelper.helperAimEntity(monsterBkt, target,
+                                        new AimHelper.AimHelperOptions("星云针弹")
+                                                .setProjectileSpeed(3)
+                                                .setAccelerationMode(true));
                                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                                         monsterBkt,
-                                        MathHelper.getDirection(monsterBkt.getEyeLocation(), target.getEyeLocation(), 2.5),
+                                        MathHelper.getDirection(monsterBkt.getEyeLocation(), aimedLoc, 3),
                                         AttributeHelper.getAttrMap(monsterBkt), "星云针弹");
                                 EntityHelper.spawnProjectile(shootInfo);
                                 break;

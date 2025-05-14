@@ -816,8 +816,8 @@ effects:
     isBuff: true
     attributes:
         defence: 60
-        damageTakenMulti: -0.1
         damageMeleeMulti: 0.2
+        critMelee: 10
     tooltip: 提高防御力，你的肌肉更加强壮
   狮心圣裁能量外壳:
     isBuff: true

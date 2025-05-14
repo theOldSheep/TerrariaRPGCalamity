@@ -34,9 +34,13 @@ public class Polterghast extends EntitySlime {
     static final double SPEED_PROJECTILE_FOLLOW = 0.6, HOVER_SPEED = 2.0, HOVER_DIST = 24.0, DASH_SPEED = 3.0;
     static final double SPEED_PROJECTILE_CLUSTER = 1.25, SPEED_PROJECTILE = 2.0;
     static HashMap<String, Double> attrMapProjectile;
-    static AimHelper.AimHelperOptions aimHelperDash, aimHelperDashAcceleration;
+    static AimHelper.AimHelperOptions aimHelperDashWeak, aimHelperDash, aimHelperDashAcceleration;
     EntityHelper.ProjectileShootInfo shootInfoCluster, shootInfoProjectile;
     static {
+        aimHelperDashWeak = new AimHelper.AimHelperOptions()
+                .setAccelerationMode(false)
+                .setProjectileSpeed(DASH_SPEED)
+                .setIntensity(0.6);
         aimHelperDash = new AimHelper.AimHelperOptions()
                 .setAccelerationMode(false)
                 .setProjectileSpeed(DASH_SPEED);
@@ -103,8 +107,8 @@ public class Polterghast extends EntitySlime {
                 setCustomName(BOSS_TYPE.msgName + "§2");
                 AttributeHelper.tweakAttribute(attrMap, "damage", "154", true);
                 AttributeHelper.tweakAttribute(attrMap, "defence", "54", false);
-                // rest for 5 seconds (very long as the player needs to align the boss correctly)
-                indexAI = -100;
+                // rest for 3.5 seconds (very long as the player needs to align the boss correctly)
+                indexAI = -70;
             }
             else {
                 indexAI = -1;
@@ -115,6 +119,7 @@ public class Polterghast extends EntitySlime {
     private void phaseThree() {
         if (clone == null) {
             clone = new PolterghastClone(this);
+            addScoreboardTag("noDamage");
         }
 
         // clone alive: cluster->30->projectiles & windup 30 -> dash 30
@@ -149,11 +154,12 @@ public class Polterghast extends EntitySlime {
             }
         }
         else {
+            removeScoreboardTag("noDamage");
             AIPhase = 3;
             bossbar.color = BossBattle.BarColor.RED;
             bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
-            // rest for 2.5 seconds for the player to get ready
-            indexAI = -50;
+            // rest for 2 seconds for the player to get ready
+            indexAI = -40;
         }
     }
 
@@ -212,7 +218,7 @@ public class Polterghast extends EntitySlime {
                 dashLoc = AimHelper.helperAimEntity(bukkitEntity, target, aimHelperDashAcceleration);
                 break;
             default:
-                dashLoc = target.getEyeLocation();
+                dashLoc = AimHelper.helperAimEntity(bukkitEntity, target, aimHelperDashWeak);
         }
 
         entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_ENDERDRAGON_GROWL, 10f, 1f);

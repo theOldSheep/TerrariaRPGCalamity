@@ -120,14 +120,20 @@ public class Providence extends EntitySlime {
                 phasesAvailable = new int[]{0, 1};
                 break;
         }
+        int minCount = Integer.MAX_VALUE;
         for (int phase : phasesAvailable) {
-            // Calculate weight inversely proportional to frequency
-            double weight = 1.0 / (phaseCounts[phase] + 1); // Avoid division by zero
+            minCount = Math.min(minCount, phaseCounts[phase]);
+        }
+        for (int phase : phasesAvailable) {
+            // skip phases that occurs at least twice more than the minimum
+            if (phaseCounts[phase] >= minCount + 2) continue;
+            // minimum wt = 1; minimum+1 wt = 0.5; > minimum+1 wt = 0
+            double weight = 1.0 / (phaseCounts[phase] - minCount + 1);
             weights.put(phase, weight);
         }
 
         int newPhase = MathHelper.selectWeighedRandom(weights, currentPhase);
-        phaseCounts[newPhase]++; // Increment count for the chosen phase
+        phaseCounts[newPhase]++;
         return newPhase;
     }
     private void projectilePhase() {
@@ -322,26 +328,26 @@ public class Providence extends EntitySlime {
                 // increase player aggro duration
                 targetMap.get(target.getUniqueId()).addAggressionTick();
 
-                // On low health, summon guardians
+                // summon guardians
                 if (getHealth() / getMaxHealth() < 0.33 && commanderState == 0) {
                     commanderMinion = new GuardianCommander(target);
-                    // Overwrite target map
+                    // overwrite target map
                     commanderMinion.targetMap.clear();
                     commanderMinion.targetMap.putAll(targetMap);
                     addScoreboardTag("noDamage");
-                    // Force into the bomb state
+                    // force into the bomb state
                     updateAIPhase(0);
                     commanderState = 1;
                 }
-                // The boss can heal beyond low health when guardians are alive
+                // the boss can heal beyond low health when guardians are alive
                 if (commanderState == 1) {
-                    // Update minion target
+                    // update minion target
                     commanderMinion.target = target;
-                    heal(300);
-                    // Revert damage reduction if guardians defeated
+                    heal(100);
+                    // revert damage reduction if guardians defeated
                     if (!commanderMinion.isAlive()) {
                         removeScoreboardTag("noDamage");
-                        // Continue with AI Phase 0 (reset indexAI)
+                        // continue with AI Phase 0 (reset indexAI)
                         updateAIPhase(0);
                         commanderState = 2;
                     }
@@ -371,7 +377,7 @@ public class Providence extends EntitySlime {
             indexAI = -1;
             return;
         }
-        // Move out of the reduction
+        // move out of the reduction
         if (AIPhase == 2)
             tweakDamageReduction(false);
         switch (newPhase) {
@@ -407,7 +413,7 @@ public class Providence extends EntitySlime {
     }
     // validate if the condition for spawning is met
     public static boolean canSpawn(Player player) {
-        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED && WorldHelper.isDayTime(player.getWorld()) &&
+        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED &&
                 !BossHelper.bossMap.containsKey(BossHelper.BossType.PROFANED_GUARDIANS.msgName);
     }
     // a constructor for actual spawning

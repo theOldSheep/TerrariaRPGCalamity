@@ -116,6 +116,10 @@ public class GuardianCommander extends EntitySlime {
             if (!summonedByProvidence)
                 target = terraria.entity.boss.BossHelper.updateBossTarget(target, getBukkitEntity(),
                         IGNORE_DISTANCE, BIOME_REQUIRED, targetMap.keySet());
+            // if summoned by providence and providence is somehow not present (e.g. lost target), disappear
+            else if (! providenceAlive()) {
+                target = null;
+            }
             // disappear if no target is available
             if (target == null) {
                 for (LivingEntity entity : bossParts) {
@@ -172,7 +176,7 @@ public class GuardianCommander extends EntitySlime {
     }
     // Do not spawn when providence is present
     public static boolean canSpawn(Player player) {
-        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED && WorldHelper.isDayTime(player.getWorld()) && !providenceAlive();
+        return WorldHelper.BiomeType.getBiome(player) == BIOME_REQUIRED && !providenceAlive();
     }
     // a constructor for actual spawning
     public GuardianCommander(Player summonedPlayer) {

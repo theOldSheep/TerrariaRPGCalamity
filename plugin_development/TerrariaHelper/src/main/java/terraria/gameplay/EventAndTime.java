@@ -359,6 +359,7 @@ public class EventAndTime {
         // end if no candidate available
         if (candidates.isEmpty()) {
             endBossRush(true);
+            return;
         }
         // spawn boss
         Player target = candidates.get((int) (Math.random() * candidates.size()));

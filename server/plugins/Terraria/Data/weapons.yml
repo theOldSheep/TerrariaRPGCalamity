@@ -642,7 +642,7 @@
 格拉克斯:
   type: SWING
   autoSwing: true
-  size: 5
+  size: 12
 猎命镰刀:
   type: SWING
   autoSwing: true
@@ -658,12 +658,12 @@
 泰拉阔剑:
   type: SWING
   autoSwing: true
-  size: 8.5
+  size: 6
   useSound: item.exoblade.swing
 血石斩切刃:
   type: SWING
   autoSwing: true
-  size: 11
+  size: 12
 镜之刃:
   type: SWING
   autoSwing: true
@@ -679,7 +679,7 @@
 狮心圣裁:
   type: SWING
   autoSwing: true
-  size: 8
+  size: 13.5
 海神之馈赠:
   type: SWING
   autoSwing: true
@@ -711,7 +711,7 @@
 暴政:
   type: SWING
   autoSwing: true
-  size: 13.5
+  size: 14
 精元劫掠者:
   type: SWING
   autoSwing: true
@@ -748,20 +748,20 @@
 禅心剑:
   type: SWING
   autoSwing: true
-  size: 7
+  size: 8.5
 盖尔大剑:
   type: SWING
   autoSwing: true
-  size: 11
+  size: 12.5
 星流之刃:
   type: SWING
   autoSwing: true
-  size: 10
+  size: 13.5
   useSound: item.exoblade.swing
 星流之刃_RIGHT_CLICK:
   type: STAB
   autoSwing: false
-  size: 12
+  size: 13.5
   attributes:
     useTime: 20
 无限大地:
