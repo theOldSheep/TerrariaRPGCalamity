@@ -79,8 +79,7 @@ public class Polterghast extends EntitySlime {
                 bossbar.color = BossBattle.BarColor.YELLOW;
                 bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
                 setCustomName(BOSS_TYPE.msgName + "§1");
-                AttributeHelper.tweakAttribute(attrMap, "damage", "152", true);
-                AttributeHelper.tweakAttribute(attrMap, "defence", "36", false);
+                AttributeHelper.tweakAttribute(attrMap, "defence", "45", false);
             }
             indexAI = -1;
         }
@@ -105,10 +104,9 @@ public class Polterghast extends EntitySlime {
                 bossbar.color = BossBattle.BarColor.PINK;
                 bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
                 setCustomName(BOSS_TYPE.msgName + "§2");
-                AttributeHelper.tweakAttribute(attrMap, "damage", "154", true);
-                AttributeHelper.tweakAttribute(attrMap, "defence", "54", false);
-                // rest for 3.5 seconds (very long as the player needs to align the boss correctly)
-                indexAI = -70;
+                AttributeHelper.tweakAttribute(attrMap, "defence", "45", false);
+                // rest for 4 seconds (very long as the player needs to align the boss correctly)
+                indexAI = -80;
             }
             else {
                 indexAI = -1;
@@ -158,8 +156,8 @@ public class Polterghast extends EntitySlime {
             AIPhase = 3;
             bossbar.color = BossBattle.BarColor.RED;
             bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
-            // rest for 2 seconds for the player to get ready
-            indexAI = -40;
+            // rest for 2.5 seconds for the player to get ready
+            indexAI = -50;
         }
     }
 
@@ -308,7 +306,7 @@ public class Polterghast extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 768d);
-            attrMap.put("damageTakenMulti", 0.8);
+            attrMap.put("damageTakenMulti", 1d);
             attrMap.put("defence", 180d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
