@@ -55,7 +55,7 @@ public class Signus extends EntitySlime {
 
         // Ensure the new phase is different from the current phase
         while (newPhase == phaseAI) {
-            if (healthPercentage < 0.3) {
+            if (healthPercentage < 0.5) {
                 newPhase = random.nextInt(2) + 2;
             } else {
                 newPhase = random.nextInt(3) + 1;

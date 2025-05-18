@@ -117,26 +117,12 @@ public class TheOldDuke extends EntitySlime {
 
         AimHelper.AimHelperOptions aimHelperOption;
         double random = Math.random();
-        if (AIPhase == 1) {
-            if (random < 0.6) {
-                aimHelperOption = aimHelperDashAcceleration;
-            } else {
-                aimHelperOption = aimHelperDash;
-            }
-        } else if (AIPhase == 2) {
-            if (random < 0.4) {
-                aimHelperOption = aimHelperDashAcceleration;
-            } else {
-                aimHelperOption = aimHelperDash;
-            }
+        if (random < 0.25) {
+            aimHelperOption = aimHelperDashAcceleration;
+        } else if (random < 0.75) {
+            aimHelperOption = aimHelperDash;
         } else {
-            if (random < 0.25) {
-                aimHelperOption = aimHelperDashAcceleration;
-            } else if (random < 0.75) {
-                aimHelperOption = aimHelperDash;
-            } else {
-                aimHelperOption = null;
-            }
+            aimHelperOption = null;
         }
 
         Location targetLocation;

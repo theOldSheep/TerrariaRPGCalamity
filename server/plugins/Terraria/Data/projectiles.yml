@@ -929,7 +929,6 @@
     homingAbility: 999
     noHomingTicks: 40
     maxHomingTicks: 41
-    homingEndSpeedMultiplier: 20
     buffInflict:
         - "死亡低语|80|1"
 幽花子母弹:
