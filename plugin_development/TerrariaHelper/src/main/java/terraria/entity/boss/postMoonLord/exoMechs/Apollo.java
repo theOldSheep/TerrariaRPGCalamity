@@ -25,7 +25,7 @@ public class Apollo extends EntitySlime {
     Draedon owner = null;
     Artemis twin = null;
     // other variables and AI
-    static final double DASH_SPEED = 3.0;
+    static final double DASH_SPEED = 4.5;
     static HashMap<String, Double> ATTR_MAP_PLASMA, ATTR_MAP_ROCKET;
     static AimHelper.AimHelperOptions AIM_HELPER_DASH;
     EntityHelper.ProjectileShootInfo shootInfoPlasma, shootInfoRocket;
@@ -65,7 +65,6 @@ public class Apollo extends EntitySlime {
     // dash when difficulty is high and otherwise fire plasma
     private void phase1Attack() {
         Draedon.Difficulty difficulty = owner.calculateDifficulty(this);
-        int interval = difficulty == Draedon.Difficulty.LOW ? 15 : 10;
         if (difficulty == Draedon.Difficulty.HIGH) {
             if (twin.phaseDurationCounter % 30 == 0) {
                 owner.playWarningSound(false);
@@ -76,6 +75,7 @@ public class Apollo extends EntitySlime {
                 this.yaw = (float) MathHelper.getVectorYaw(dashVel);
             }
         } else {
+            int interval = difficulty == Draedon.Difficulty.LOW ? 15 : 10;
             if (twin.phaseDurationCounter % interval == 0) {
                 fireProjectile(false); // Fire plasma
             }
@@ -83,15 +83,14 @@ public class Apollo extends EntitySlime {
     }
     // fire rockets
     private void phase2Attack() {
-        int interval = owner.calculateDifficulty(this) == Draedon.Difficulty.HIGH ? 8 : 12;
+        int interval = owner.calculateDifficulty(this) == Draedon.Difficulty.HIGH ? 5 : 10;
         if (twin.phaseDurationCounter % interval == 0) {
             fireProjectile(true); // Fire rocket
         }
     }
-    // fire plasma; first perform a dash if difficulty is high
+    // fire plasma; perform a dash first if difficulty is high
     private void phase3Attack() {
         Draedon.Difficulty difficulty = owner.calculateDifficulty(this);
-        int interval = difficulty == Draedon.Difficulty.HIGH ? 12 : 18;
         if (difficulty == Draedon.Difficulty.HIGH && twin.phaseDurationCounter < 30) {
             if (twin.phaseDurationCounter == 0) {
                 owner.playWarningSound(false);
@@ -102,6 +101,7 @@ public class Apollo extends EntitySlime {
                 this.yaw = (float) MathHelper.getVectorYaw(dashVel);
             }
         } else {
+            int interval = difficulty == Draedon.Difficulty.HIGH ? 8 : 15;
             if (twin.phaseDurationCounter % interval == 0) {
                 fireProjectile(false); // Fire plasma
             }
@@ -109,7 +109,7 @@ public class Apollo extends EntitySlime {
     }
     // fire rockets
     private void phase4Attack() {
-        if (twin.phaseDurationCounter % 10 == 0) {
+        if (twin.phaseDurationCounter % 5 == 0) {
             fireProjectile(true); // Fire rocket
         }
     }

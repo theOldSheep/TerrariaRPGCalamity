@@ -167,7 +167,7 @@ Drew之翼:
     isWing: true
 炽天使翼靴:
     flightTime: 85
-    verticalSpeed: 1.5
+    verticalSpeed: 1.45
     maxAcceleration: 0.25
     horizontalSpeed: 0.9
     isBoot: true

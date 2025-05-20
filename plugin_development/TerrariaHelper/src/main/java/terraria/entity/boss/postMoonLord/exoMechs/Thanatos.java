@@ -49,7 +49,7 @@ public class Thanatos extends EntitySlime {
     Player target = null;
     Draedon owner = null;
     // other variables and AI
-    static final double LASER_SPEED = 4.0,
+    static final double LASER_SPEED = 3.25,
             FINAL_LASER_MINIMUM_LENGTH = 24.0, FINAL_LASER_WIDTH = 0.5;
     private static final int ARMOR_CLOSE_COUNTDOWN = 60;
     private static final int LASER_DELAY = 1;
@@ -99,7 +99,7 @@ public class Thanatos extends EntitySlime {
     List<LivingEntity> livingSegments;
     HashSet<Entity> finalLaserDamaged = new HashSet<>();
     Thanatos head;
-    static final int LASER_INTERVAL_EASY = 5, LASER_INTERVAL_NORMAL = 4, LASER_INTERVAL_HARD = 3;
+    static final int LASER_INTERVAL_EASY = 5, LASER_INTERVAL_NORMAL = 3, LASER_INTERVAL_HARD = 1;
     protected int index, laserFireInterval = 3, armorCloseCountdown = 1;
     SegmentType segmentType;
     AttackMethod attackMethod = AttackMethod.LASER_PROJECTILE;
@@ -234,7 +234,7 @@ public class Thanatos extends EntitySlime {
             desiredSpeed = 3.5;
         }
         // Next phase
-        else if (ticks >= 40 + dashDuration * 2) {
+        else if (ticks >= 40 + dashDuration) {
             if (difficulty == Draedon.Difficulty.HIGH) {
                 attackMethod = AttackMethod.GAMMA_LASER_RAY;
 

@@ -1034,18 +1034,16 @@
     homingAbility: 6
     homingRadius: 96
 橙色星流脉冲激光:
-    velocityUpdateRule: projVelUpdItvBossAcc
     projectileSize: 0.5
     liveTime: 60
     penetration: 999999
     gravity: 0
-    blockHitAction: thru0
-    maxSpeed: 3.5
+    blockHitAction: thru
 红色星流脉冲激光:
     projectileSize: 0.5
     liveTime: 60
     penetration: 999999
-    gravity: 00
+    gravity: 0
     blockHitAction: thru
 巨大挥发性等离子光球:
     projectileSize: 3
@@ -1128,7 +1126,7 @@
     projectileSize: 1.5
     blockHitAction: thru
     liveTime: 80
-    gravity: 00
+    gravity: 0
     buffInflict:
         - "孱弱巫咒|60|1"
 深渊炙炎:
@@ -1174,7 +1172,7 @@
     projectileSize: 1
     blockHitAction: thru
     liveTime: 80
-    gravity: 00
+    gravity: 0
     buffInflict:
         - "孱弱巫咒|60|1"
 硫火碎魂拳:
@@ -1182,7 +1180,7 @@
     projectileSize: 2
     blockHitAction: thru
     liveTime: 80
-    gravity: 00
+    gravity: 0
     buffInflict:
         - "孱弱巫咒|60|1"
 斩魂幻锋:
@@ -1190,13 +1188,13 @@
     projectileSize: 2
     blockHitAction: thru
     liveTime: 80
-    gravity: 00
+    gravity: 0
     homing: true
     maxHomingTicks: 20
     homingRadius: 128
     homingAbility: 0
     speedMultiPerTick: 10
-    maxSpeed: 2.5
+    maxSpeed: 3.75
     buffInflict:
         - "孱弱巫咒|60|1"
 毒刺:

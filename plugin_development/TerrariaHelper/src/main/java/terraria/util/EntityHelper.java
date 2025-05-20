@@ -342,8 +342,8 @@ public class EntityHelper {
                         timeRemaining -= 2;
                     break;
                 case "血炎防御损毁":
-                    PlayerHelper.heal((LivingEntity) entity, 2);
-                    timeRemaining -= 2;
+                    PlayerHelper.heal((LivingEntity) entity, 3);
+                    timeRemaining -= 3;
                     break;
                 case "保护矩阵":
                     HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(entity);

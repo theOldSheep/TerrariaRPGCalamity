@@ -48,15 +48,32 @@ public class AresArm extends EntitySlime {
             return attackPattern;
         }
     }
+    // load time, load amount, fire interval, intensity, random offset
     public enum ArmAttackPattern {
-        LASER_CANNON("红色星流脉冲激光", new int[]{10, 8, 5, 10}, new int[]{1, 1, 1, 1}, new int[]{10, 8, 5, 10},
-                2.0, new double[]{0.5, 0.75, 1, 0.25}, new double[]{0.25, 0.5, 1, 0}, createAttributeMap(1560, 1.5)),
-        TESLA_CANNON("特斯拉星流闪电", new int[]{60, 40, 30, 50}, new int[]{4, 5, 6, 1}, new int[]{30, 25, 20, 0},
-                1.8, new double[]{0.6, 0.85, 1, 1}, new double[]{0, 0, 0, 0}, createAttributeMap(1260, 1)),
-        NUKE_LAUNCHER("星流高斯核弹", new int[]{200, 100, 60, 200}, new int[]{0, 1, 1, 0}, new int[]{0, 0, 0, 0},
-                1.5, new double[]{0, 0.5, 1, 0}, new double[]{0, 0, 0, 0}, createAttributeMap(1920, 6)),
-        PLASMA_CANNON("巨大挥发性等离子光球", new int[]{75, 60, 50, 80}, new int[]{2, 3, 5, 2}, new int[]{20, 15, 10, 10},
-                1.2, new double[]{0.5, 0.9, 1, 0}, new double[]{0.75, 1.25, 2, 0}, createAttributeMap(1260, 2.5));
+        LASER_CANNON("红色星流脉冲激光",
+                new int[]{8, 5, 3, 6},
+                new int[]{1, 1, 1, 1},
+                new int[]{1, 1, 1, 1},
+                new double[]{0.875, 0.925, 1, 0.875},
+                new double[]{0.25, 0.5, 1, 0}, 3.5, createAttributeMap(1560, 1.5)),
+        TESLA_CANNON("特斯拉星流闪电",
+                new int[]{60, 40, 30, 50},
+                new int[]{4, 5, 6, 1},
+                new int[]{30, 25, 20, 0},
+                new double[]{0.6, 0.85, 1, 1},
+                new double[]{0, 0, 0, 0}, 1.8, createAttributeMap(1260, 1)),
+        NUKE_LAUNCHER("星流高斯核弹",
+                new int[]{200, 75, 40, 200},
+                new int[]{0, 1, 1, 0},
+                new int[]{0, 0, 0, 0},
+                new double[]{0, 0.5, 1, 0},
+                new double[]{0, 0, 0, 0}, 1.5, createAttributeMap(1920, 6)),
+        PLASMA_CANNON("巨大挥发性等离子光球",
+                new int[]{75, 60, 50, 40},
+                new int[]{2, 3, 5, 1},
+                new int[]{20, 15, 10, 10},
+                new double[]{0.5, 0.9, 1, 0},
+                new double[]{0.75, 1.25, 2, 0}, 1.2, createAttributeMap(1260, 2.5));
 
         private final String projectileType;
         private final int[] loadTimes;
@@ -67,7 +84,7 @@ public class AresArm extends EntitySlime {
         private final double[] randomOffsetRadii;
         private final HashMap<String, Double> attributeMap;
 
-        ArmAttackPattern(String projectileType, int[] loadTimes, int[] loadAmounts, int[] fireIntervals, double projectileSpeed, double[] intensities, double[] randomOffsetRadii, HashMap<String, Double> attributeMap) {
+        ArmAttackPattern(String projectileType, int[] loadTimes, int[] loadAmounts, int[] fireIntervals, double[] intensities, double[] randomOffsetRadii, double projectileSpeed, HashMap<String, Double> attributeMap) {
             this.projectileType = projectileType;
             this.loadTimes = loadTimes;
             this.loadAmounts = loadAmounts;

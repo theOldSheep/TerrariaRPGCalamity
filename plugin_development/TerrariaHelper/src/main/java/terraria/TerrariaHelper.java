@@ -20,6 +20,7 @@ import java.io.File;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 
 public class TerrariaHelper extends JavaPlugin {
@@ -119,9 +120,10 @@ public class TerrariaHelper extends JavaPlugin {
                         }
                         // effects
                         HashMap<String, Integer> effectMap = (HashMap<String, Integer>) EntityHelper.getEffectMap(ply).clone();
-                        Set<String> effects = effectMap.keySet();
+                        List<String> effects = new ArrayList<>(effectMap.keySet());
                         for (String effectDisplayName : effects) {
-                            int effectDisplayTime = effectMap.get(effectDisplayName);
+                            int effectDisplayTime = effectMap.getOrDefault(effectDisplayName, 0);
+                            if (effectDisplayTime <= 0) continue;
                             if (result.length() > 0) result.append(separator);
                             String effectLore = buffConfig.getString("effects." + effectDisplayName + ".tooltip", "我不道啊？！");
                             // tweak the display for certain special buffs

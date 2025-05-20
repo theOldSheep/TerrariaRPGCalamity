@@ -25,14 +25,14 @@ import java.util.Set;
 
 public class ItemUseAndAttributeListener implements Listener {
     // events that could affect attribute and item use logic
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public static void onToolChange(PlayerItemHeldEvent e) {
         Player ply = e.getPlayer();
         if (ply.getScoreboardTags().contains("temp_useCD")) e.setCancelled(true);
         if (e.isCancelled()) return;
         ply.addScoreboardTag("toolChanged");
     }
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public static void onInventoryClick(InventoryClickEvent e) {
         Player ply = (Player) e.getWhoClicked();
         // deny inventory click event if player is not properly playing
@@ -68,7 +68,7 @@ public class ItemUseAndAttributeListener implements Listener {
             }
         }
     }
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public static void onDiscardItem(PlayerDropItemEvent e) {
         Player ply = e.getPlayer();
         if (!PlayerHelper.isProperlyPlaying(ply)) {
@@ -88,7 +88,7 @@ public class ItemUseAndAttributeListener implements Listener {
             }
         }
     }
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public static void onHandItemSwap(PlayerSwapHandItemsEvent e) {
         Player ply = e.getPlayer();
         if (!PlayerHelper.isProperlyPlaying(ply)) {

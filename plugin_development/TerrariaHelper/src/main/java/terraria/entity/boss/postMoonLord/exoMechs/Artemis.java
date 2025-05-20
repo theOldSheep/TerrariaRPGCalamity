@@ -28,7 +28,7 @@ public class Artemis extends EntitySlime {
     Apollo apollo = null;
     // other variables and AI
     static final String LASER_TYPE = "橙色星流脉冲激光";
-    static final double LASER_SPEED = 1, DASH_SPEED = 3,
+    static final double LASER_SPEED = 3.25, DASH_SPEED = 4.5,
             LASER_SPREAD_INTERVAL = 12.5, LASER_SPREAD_TOTAL = 51,
             FINAL_LASER_LENGTH = 128.0, FINAL_LASER_WIDTH = 2.25, FINAL_LASER_ROTATION = 3.0;
     static HashMap<String, Double> ATTR_MAP_LASER, ATTR_MAP_FINAL_LASER;
@@ -230,16 +230,16 @@ public class Artemis extends EntitySlime {
         AimHelper.AimHelperOptions aimHelper;
         switch (owner.calculateDifficulty(this)) {
             case LOW:
-                shootInterval = 10;
+                shootInterval = 6;
                 aimHelper = AIM_HELPER_LASER_INACCURATE;
                 break;
             case MEDIUM:
-                shootInterval = 8;
+                shootInterval = 4;
                 aimHelper = AIM_HELPER_LASER;
                 break;
             case HIGH:
             default:
-                shootInterval = 4;
+                shootInterval = 2;
                 aimHelper = AIM_HELPER_LASER_OFFSET;
         }
         shootLaser(shootInterval, aimHelper);
@@ -247,7 +247,7 @@ public class Artemis extends EntitySlime {
     // fire laser wall & dash at the player
     private void phase2Attack() {
         if (phaseDurationCounter < 75) {
-            if (phaseDurationCounter % 25 == 0) {
+            if (phaseDurationCounter % 15 == 0) {
                 Location shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
                 ArrayList<Vector> directions = MathHelper.getEvenlySpacedProjectileDirections(LASER_SPREAD_INTERVAL, LASER_SPREAD_TOTAL, target, shootLoc, AIM_HELPER_LASER_INACCURATE, LASER_SPEED);
                 for (Vector direction : directions) {
@@ -273,7 +273,7 @@ public class Artemis extends EntitySlime {
     }
     // rapidly fire inaccurate lasers at the player
     private void phase3Attack() {
-        shootLaser(2, AIM_HELPER_LASER_OFFSET);
+        shootLaser(1, AIM_HELPER_LASER_OFFSET);
     }
     // use the laser attack at the player
     private void phase4Attack() {

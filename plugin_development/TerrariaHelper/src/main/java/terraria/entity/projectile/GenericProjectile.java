@@ -1345,8 +1345,9 @@ public class GenericProjectile extends EntityPotion {
         }
 
         // if a target is valid when homing timeout, multiply the speed by the multiplier
-        if (ticksLived == maxHomingTicks) {
+        if (ticksLived == maxHomingTicks && Math.abs(homingEndSpeedMultiplier - 1) > 1e-5) {
             velocity.multiply(homingEndSpeedMultiplier);
+            this.impulse = true;
         }
     }
     // ricochet to the nearest target, returns whether a target was found.
