@@ -261,6 +261,12 @@ pieces:
   - 精金战士套装
   - 精金魔法套装
   - 精金射手套装
+  寒霜头盔:
+  - 寒霜套装
+  寒霜胸甲:
+  - 寒霜套装
+  寒霜护腿:
+  - 寒霜套装
   神圣头盔:
   - 神圣射手套装
   神圣兜帽:
@@ -349,12 +355,6 @@ pieces:
   - 蘑菇矿套装
   蘑菇矿护腿:
   - 蘑菇矿套装
-  寒霜头盔:
-  - 寒霜套装
-  寒霜胸甲:
-  - 寒霜套装
-  寒霜护腿:
-  - 寒霜套装
   阴森头盔:
   - 阴森套装
   阴森胸甲:
@@ -792,19 +792,16 @@ sets:
   熔岩套装:
     lore:
     - ''
-    - §a套装效果： +10% 近战伤害与速度
+    - §a套装效果： +5% 近战伤害
     attributes:
-      damageMeleeMulti: 0.1
-      useSpeedMeleeMulti: 0.1
+      damageMeleeMulti: 0.05
   斯塔提斯近战套装:
     lore:
     - ''
     - §a套装效果： 
-    - §a+5% 近战伤害
     - §a+5% 近战暴击
     attributes:
       critMelee: 5
-      damageMeleeMulti: 0.05
   斯塔提斯远程套装:
     lore:
     - ''
@@ -861,12 +858,10 @@ sets:
     - ''
     - §a套装效果： 
     - §a+10% 伤害
-    - §a+3 召唤栏
-    - §a移动速度略微减少
+    - §a-10% 移动速度
     - §a增加水下适应性
     attributes:
       damageMulti: 0.1
-      minionLimit: 3
       speedMulti: -0.1
       waterAffinity: 1
   水晶刺客套装:
@@ -960,10 +955,10 @@ sets:
   精金战士套装:
     lore:
     - ''
-    - §a套装效果： +20% 近战与移动速度
+    - §a套装效果： +10% 近战与移动速度
     attributes:
-      speedMulti: 0.2
-      useSpeedMeleeMulti: 0.2
+      speedMulti: 0.1
+      useSpeedMeleeMulti: 0.1
   精金射手套装:
     lore:
     - ''
@@ -976,25 +971,37 @@ sets:
     - §a套装效果： -19% 魔力消耗
     attributes:
       manaUseMulti: -0.19
-  神圣魔法套装:
+  寒霜套装:
     lore:
     - ''
-    - §a套装效果： -20% 魔力消耗
+    - §a套装效果：
+    - §a近战和远程攻击会导致霜冻
+    - §a+20% 近战伤害
+    - §a+15% 远程伤害
     attributes:
-      manaUseMulti: -0.2
+      buffInflictMelee: 霜火|160|1
+      buffInflictRanged: 霜火|160|1
+      damageMeleeMulti: 0.2
+      damageRangedMulti: 0.15
+  神圣战士套装:
+    lore:
+    - ''
+    - §a套装效果： +12% 近战与移动速度
+    attributes:
+      speedMulti: 0.12
+      useSpeedMeleeMulti: 0.12
   神圣射手套装:
     lore:
     - ''
     - §a套装效果： 25% 几率不消耗弹药
     attributes:
       ammoConsumptionRate: -0.25
-  神圣战士套装:
+  神圣魔法套装:
     lore:
     - ''
-    - §a套装效果： +19% 近战与移动速度
+    - §a套装效果： -20% 魔力消耗
     attributes:
-      speedMulti: 0.19
-      useSpeedMeleeMulti: 0.19
+      manaUseMulti: -0.2
   神圣召唤套装:
     lore:
     - ''
@@ -1101,18 +1108,6 @@ sets:
       speedMulti: -0.075
       mobLimit: -1
       mobSpawnRateMulti: -0.15
-  寒霜套装:
-    lore:
-    - ''
-    - §a套装效果：
-    - §a近战和远程攻击会导致霜冻
-    - §a+30% 近战伤害
-    - §a+15% 远程伤害
-    attributes:
-      buffInflictMelee: 霜火|160|1
-      buffInflictRanged: 霜火|160|1
-      damageMeleeMulti: 0.3
-      damageRangedMulti: 0.15
   阴森套装:
     lore:
     - ''

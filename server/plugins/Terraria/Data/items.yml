@@ -1314,7 +1314,7 @@
   lore:
   - §r[饰品]
   attributes:
-    defence: 6
+    defence: 4
   worth: 20000
   rarity: 1
 鲨牙项链:
@@ -1376,7 +1376,7 @@
   lore:
   - §r[饰品]
   attributes:
-    defence: 4
+    defence: 6
   worth: 540000
   rarity: 2
 黑曜石护盾:
@@ -1408,7 +1408,7 @@
   - §r点燃木箭，火光熊熊
   - §r“在恐惧中颤抖吧！”
   attributes:
-    damageArrowMulti: 0.1
+    damageArrowMulti: 0.12
     projectileSpeedArrowMulti: 0.35
     arrowConsumptionRate: -0.2
   worth: 7500000
@@ -1419,7 +1419,7 @@
   - §r[饰品]
   - §r▣算作箭袋
   attributes:
-    damageArrowMulti: 0.1
+    damageArrowMulti: 0.15
     projectileSpeedArrowMulti: 0.35
     arrowConsumptionRate: -0.2
     mobLimit: -1
@@ -1688,7 +1688,7 @@
   lore:
   - §r[饰品]
   attributes:
-    regen: 2
+    regen: 4
   worth: 1000000
   rarity: 1
 炼金石:
@@ -1704,7 +1704,7 @@
   - §r[饰品]
   - §r使治疗药水的冷却时间缩短25%
   attributes:
-    regen: 2
+    regen: 4
   worth: 4000000
   rarity: 5
 十字项链:
@@ -1864,7 +1864,7 @@
   lore:
   - §r[饰品]
   attributes:
-    damageSummonMulti: 0.15
+    damageSummonMulti: 0.2
   worth: 8000000
   rarity: 7
 死灵卷轴:
@@ -1873,7 +1873,7 @@
   - §r[饰品]
   attributes:
     minionLimit: 1
-    damageSummonMulti: 0.1
+    damageSummonMulti: 0.05
   worth: 4000000
   rarity: 8
 甲虫莎草纸:
@@ -1882,7 +1882,7 @@
   - §r[饰品]
   attributes:
     minionLimit: 1
-    damageSummonMulti: 0.15
+    damageSummonMulti: 0.1
   worth: 5000000
   rarity: 8
 天蓝石:
@@ -2070,7 +2070,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    maxHealth: 40
+    maxHealth: 100
     manaUseMulti: -0.05
     speedMulti: 0.1
     regen: 2
@@ -2081,7 +2081,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    maxHealth: 40
+    maxHealth: 100
   worth: 200000
   rarity: 1
 魔力凝胶:
@@ -2121,7 +2121,6 @@ Drew之翼:
     meleeReachMulti: 0.5
     damageMeleeMulti: 0.15
     critMelee: 10
-    damageTrueMeleeMulti: 0.5
     buffInflictMelee: 元素谐鸣|80|1
   worth: 28000000
   rarity: 14
@@ -2136,7 +2135,6 @@ Drew之翼:
     meleeReachMulti: 0.65
     damageMeleeMulti: 0.2
     critMelee: 10
-    damageTrueMeleeMulti: 0.1
     buffInflictMelee: 超位崩解|80|1
   worth: 40000000
   rarity: 16
@@ -2159,7 +2157,7 @@ Drew之翼:
   - §r远程伤害造成带电减益
   attributes:
     damageRangedMulti: 0.1
-    critRanged: 5
+    critRanged: 8
     buffInflictRanged: 带电|40|0
   worth: 22000000
   rarity: 11
@@ -2389,7 +2387,6 @@ Drew之翼:
   - §r召唤物命中后造成神圣之火减益
   attributes:
     minionLimit: 2
-    damageSummonMulti: 0.1
     buffInflictSummon: 神圣之火|60|1
   worth: 9600000
   rarity: 7
@@ -2401,7 +2398,6 @@ Drew之翼:
   - §r不能与下位合成同时装备
   attributes:
     minionLimit: 2
-    damageSummonMulti: 0.07
     buffInflictSummon: 辐射|40|1
   worth: 12000000
   rarity: 8
@@ -2413,7 +2409,6 @@ Drew之翼:
   - §r不能与下位合成同时装备
   attributes:
     minionLimit: 3
-    damageSummonMulti: 0.1
     buffInflictSummon: 夜魇|60|1
   worth: 20000000
   rarity: 10
@@ -2425,7 +2420,6 @@ Drew之翼:
   - §r不能与下位合成同时装备
   attributes:
     minionLimit: 4
-    damageSummonMulti: 0.15
     buffInflictSummon: 辐射|60|1
   worth: 28000000
   rarity: 14
@@ -2527,7 +2521,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    stealthRegenMulti: 0.08
+    stealthRegenMulti: 0.12
   worth: 800000
   rarity: 3
 污秽手套:
@@ -2535,7 +2529,6 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    armorPenetration: 5
     damageStealthMulti: 0.08
   worth: 800000
   rarity: 3
@@ -2552,7 +2545,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    stealthRegenMulti: 0.12
+    stealthRegenMulti: 0.15
   worth: 800000
   rarity: 3
 腐蚀脊椎:
@@ -2571,8 +2564,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    armorPenetration: 10
-    damageStealthMulti: 0.08
+    damageStealthMulti: 0.15
   worth: 4800000
   rarity: 5
 毁灭勋章:
@@ -2600,7 +2592,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    useSpeedRogueMulti: -0.15
+    useSpeedRogueMulti: -0.1
     damageRogueMulti: 0.1
     critRogue: 10
   worth: 9600000
@@ -2610,7 +2602,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    useSpeedRogueMulti: 0.2
+    useSpeedRogueMulti: 0.25
     damageRogueMulti: -0.05
     critRogue: -5
   worth: 9600000
@@ -2644,8 +2636,8 @@ Drew之翼:
   - §r▣算作潜伏增幅饰品
   attributes:
     stealthConsumptionMulti: -0.5
-    damageRogueMulti: 0.07
-    critRogue: 7
+    damageRogueMulti: 0.08
+    critRogue: 8
   worth: 16000000
   rarity: 9
 月长石头冠:
@@ -2678,7 +2670,7 @@ Drew之翼:
   - §r闪避攻击时会使你回满潜行值
   - §r“光无法到达海洋深处”
   attributes:
-    damageRogueMulti: 0.08
+    damageRogueMulti: 0.1
     critRogue: 8
     stealthRegenMulti: 0.25
     stealthConsumptionMulti: -0.5
@@ -2762,7 +2754,7 @@ Drew之翼:
   - §r根据被闪避的攻击伤害，闪避有15到90秒的冷却时间
   - §r闪避伤害达到最大生命值50%时闪避冷却达到最大值
   attributes:
-    damageMulti: 0.1
+    damageMulti: 0.05
   worth: 800000
   rarity: 3
 融合之脑:
@@ -2774,9 +2766,9 @@ Drew之翼:
   - §r根据被闪避的攻击伤害，闪避有15到90秒的冷却时间
   - §r闪避伤害达到最大生命值50%时闪避冷却达到最大值
   attributes:
-    damageMulti: 0.1
-    crit: 3
-    damageSummonMulti: 0.03
+    damageMulti: 0.08
+    crit: 4
+    damageSummonMulti: 0.04
   worth: 2400000
   rarity: 5
 聚合之脑:
@@ -2861,8 +2853,8 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    damageMulti: 0.05
-    damageTakenMulti: -0.05
+    damageMulti: 0.07
+    damageTakenMulti: -0.07
     defence: 20
   worth: 9600000
   rarity: 7
@@ -2872,7 +2864,7 @@ Drew之翼:
   - §r[饰品]
   - §6专家模式物品
   - §r广大泰拉玩家的精神结晶
-  - §r在最早时期你会获得多个属性的少量增幅
+  - §r获得大多数进攻，防御和移动属性的少量增幅
   - §r击败特定BOSS后增幅更加强力，这些BOSS包括：
   - §a克苏鲁之眼，腐巢意志，史莱姆之神，血肉之墙
   - §d极地之灵，硫磺火元素，世纪之花，光之女皇，星神游龙，月球领主
@@ -2899,7 +2891,7 @@ Drew之翼:
   - §r▷ 冲刺：双击一个方向可以冲刺，具有一定的冷却时间
   attributes:
     defence: 16
-    damageTakenMulti: -0.05
+    damageTakenMulti: -0.03
     maxHealth: 40
     knockbackResistance: 1
   worth: 7200000
@@ -2925,7 +2917,7 @@ Drew之翼:
   - §r▷ 冲刺：双击一个方向可以冲刺，具有一定的冷却时间
   attributes:
     defence: 32
-    damageTakenMulti: -0.05
+    damageTakenMulti: -0.07
     knockbackResistance: 1
     buffImmune: 燃烧|霜火|狱炎|咒火|暗影焰|硫磺火|破晓|夜魇|神圣之火
   worth: 24000000
@@ -2949,7 +2941,7 @@ Drew之翼:
   - §r[饰品]
   - §r减少治疗药水的冷却时间
   attributes:
-    regen: 2
+    regen: 4
     invulnerabilityTick: 8
   worth: 16000000
   rarity: 9
@@ -2966,7 +2958,7 @@ Drew之翼:
   - §r生命值低于一半时减少受到的伤害
   attributes:
     defence: 36
-    regen: 2
+    regen: 4
     invulnerabilityTick: 10
     knockbackResistance: 1
   worth: 28000000
@@ -3075,7 +3067,6 @@ Drew之翼:
     regen: -16
   attributesFormII:
     maxHealthMulti: -0.5
-    fixedHealingMulti: -0.35
     regen: 24
   worth: 30000000
   rarity: 15
@@ -3096,8 +3087,8 @@ Drew之翼:
   - §r▣算作守护之盾
   - §r坚固沉重的护具，并不是大理石制成的
   attributes:
-    defence: 72
-    speedMulti: -0.3
+    defence: 60
+    speedMulti: -0.15
     knockbackResistance: 1
   worth: 4800000
   rarity: 5
@@ -3106,7 +3097,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   attributes:
-    damageTakenMulti: -0.1
+    damageTakenMulti: -0.12
     buffImmune: 硫磺火
   worth: 4800000
   rarity: 5
@@ -3117,7 +3108,7 @@ Drew之翼:
   - §r受到致死伤害前会受到相当于本次伤害最终值1.75倍的治疗效果
   - §r此效果有180秒冷却时间，最低治疗量为200
   attributes:
-    damageMulti: 0.12
+    damageMulti: 0.15
   worth: 28000000
   rarity: 14
 魔君的礼物:
@@ -14470,7 +14461,6 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 16
-    critMelee: 3
   worth: 900000
   rarity: 2
 熔岩胸甲:
@@ -14479,7 +14469,6 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 18
-    damageMeleeMulti: 0.03
   worth: 600000
   rarity: 2
 熔岩护胫:
@@ -14488,7 +14477,6 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 16
-    useSpeedMeleeMulti: 0.03
   worth: 600000
   rarity: 2
 熔岩护胫靴子:
@@ -14607,9 +14595,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 18
-    damageMeleeMulti: 0.1
-    useSpeedMeleeMulti: 0.1
-    critMelee: 7
+    damageMeleeMulti: 0.08
   worth: 2400000
   rarity: 3
 斯塔提斯头饰:
@@ -14685,7 +14671,7 @@ Dodu的手炮:
   attributes:
     defence: 24
     speedMulti: 0.1
-    damageMeleeMulti: 0.15
+    damageMeleeMulti: 0.05
   worth: 1500000
   rarity: 4
 钴面具:
@@ -14805,7 +14791,6 @@ Dodu的手炮:
   attributes:
     defence: 36
     damageMeleeMulti: 0.05
-    crit: 4
   worth: 4800000
   rarity: 5
 软壳贝甲:
@@ -14814,9 +14799,8 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 44
-    damageMeleeMulti: 0.1
     crit: 6
-    speedMulti: -0.15
+    speedMulti: -0.09
   worth: 4800000
   rarity: 5
 软壳护胫:
@@ -14825,9 +14809,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 30
-    damageMeleeMulti: 0.12
-    crit: 4
-    speedMulti: -0.07
+    speedMulti: -0.06
   worth: 4800000
   rarity: 5
 软壳护胫靴子:
@@ -14838,7 +14820,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 24
+    defence: 20
     crit: 5
     manaUseMulti: -0.1
   worth: 2000000
@@ -14848,8 +14830,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 28
-    damageMeleeMulti: 0.05
+    defence: 24
     ammoConsumptionRate: -0.1
   worth: 2000000
   rarity: 5
@@ -14858,7 +14839,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 20
+    defence: 16
     speedMulti: 0.2
     useSpeedMeleeMulti: 0.1
   worth: 2000000
@@ -14872,8 +14853,8 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 32
-    critMelee: 8
-    damageMeleeMulti: 0.1
+    critMelee: 5
+    damageMeleeMulti: 0.05
   worth: 2250000
   rarity: 4
 秘银兜帽:
@@ -15641,7 +15622,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 48
-    critMelee: 20
+    critMelee: 15
     regenMulti: 0.167
   worth: 7000000
   rarity: 10
@@ -15651,7 +15632,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 68
-    damageMeleeMulti: 0.29
+    damageMeleeMulti: 0.25
     regenMulti: 0.167
   worth: 14000000
   rarity: 10
@@ -15662,7 +15643,7 @@ Dodu的手炮:
   attributes:
     defence: 40
     regenMulti: 0.167
-    useSpeedMeleeMulti: 0.15
+    useSpeedMeleeMulti: 0.2
   worth: 10500000
   rarity: 10
 耀斑护腿靴子:
@@ -16164,7 +16145,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 108
-    damageMeleeMulti: 0.2
+    damageMeleeMulti: 0.15
   worth: 30000000
   rarity: 15
 金兜铁面盔:

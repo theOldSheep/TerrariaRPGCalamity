@@ -5031,7 +5031,7 @@ TINKER_WORKBENCH:
     requireLevel: 1
     resultItem: 潜行者箭袋
     requireItem:
-    - 魔法箭袋
+    - 熔火箭袋
     - 腐香囊
     recipeCategory: ACCESSORY
   '11':
