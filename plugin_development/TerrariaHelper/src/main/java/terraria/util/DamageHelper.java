@@ -877,7 +877,7 @@ public class DamageHelper {
                     double def = victimAttrMap.getOrDefault("defence", 0d);
                     // alternative: lose more defence but regenerate health while recovering
                     if (alternative) {
-                        int duration = (int) Math.min(def, Math.max(dmg, def * 0.5) );
+                        int duration = (int) Math.min(def, Math.max(dmg, def) * 0.35);
                         EntityHelper.applyEffect(victim, "血炎防御损毁", duration);
                     }
                     // "vanilla" behavior of defence-damage

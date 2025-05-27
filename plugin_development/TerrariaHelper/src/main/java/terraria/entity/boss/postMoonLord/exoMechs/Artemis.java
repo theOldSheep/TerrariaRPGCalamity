@@ -39,10 +39,10 @@ public class Artemis extends EntitySlime {
     EntityHelper.ProjectileShootInfo shootInfoLaser;
     static {
         ATTR_MAP_LASER = new HashMap<>();
-        ATTR_MAP_LASER.put("damage", 1260d);
+        ATTR_MAP_LASER.put("damage", 1440d);
         ATTR_MAP_LASER.put("knockback", 1.5d);
         ATTR_MAP_FINAL_LASER = new HashMap<>();
-        ATTR_MAP_FINAL_LASER.put("damage", 1560d);
+        ATTR_MAP_FINAL_LASER.put("damage", 1800d);
         ATTR_MAP_FINAL_LASER.put("knockback", 2.25d);
 
         AIM_HELPER_LASER = new AimHelper.AimHelperOptions(LASER_TYPE)
@@ -399,7 +399,7 @@ public class Artemis extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 1320d);
+            attrMap.put("damage", 1920d);
             attrMap.put("damageTakenMulti", 0.75d);
             attrMap.put("defence", 200d);
             attrMap.put("knockback", 4d);

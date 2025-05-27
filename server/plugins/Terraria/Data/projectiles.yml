@@ -1129,6 +1129,30 @@
     gravity: 0
     buffInflict:
         - "孱弱巫咒|60|1"
+灾厄舞魂:
+    projDisguiseName: 深渊亡魂
+    velocityUpdateRule: projVelUpdItvEverySecondTick
+    penetration: 99999
+    projectileSize: 1.5
+    blockHitAction: thru
+    liveTime: 60
+    gravity: 0
+    buffInflict:
+        - "孱弱巫咒|60|1"
+灾厄烬魂:
+    projDisguiseName: 深渊亡魂
+    velocityUpdateRule: projVelUpdItvBossAcc
+    blockHitAction: thru
+    projectileSize: 1.5
+    liveTime: 41
+    gravity: 0
+    homing: true
+    homingRadius: 128
+    homingAbility: 999
+    noHomingTicks: 25
+    maxHomingTicks: 26
+    buffInflict:
+        - "孱弱巫咒|60|1"
 深渊炙炎:
     velocityUpdateRule: projVelUpdItvBossAcc
     penetration: 99999
@@ -1146,8 +1170,8 @@
     clusterBomb:
         amount: 16
         damageMulti: 0.75
-        name: 灾厄飞弹
-        velocity: 0.5
+        name: 灾厄亡魂
+        velocity: 1.5
 深渊炙炎弹:
     velocityUpdateRule: projVelUpdItvBossAcc
     blockHitAction: thru
@@ -1165,8 +1189,8 @@
         amount: 30
         type: spread
         damageMulti: 0.9
-        name: 灾厄飞弹
-        velocity: 1.25
+        name: 灾厄亡魂
+        velocity: 2.25
 深渊炙颅:
     penetration: 99999
     projectileSize: 1

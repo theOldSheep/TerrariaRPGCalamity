@@ -48,6 +48,7 @@ terraria\entity\npc\TerrariaNPCBandit.class
 terraria\entity\boss\event\mourningWood\MourningWood.class
 terraria\entity\boss\postMoonLord\devourerOfGods\DevourerOfGods.class
 terraria\util\ItemUseHelper$1.class
+terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitasBHBrimstone.class
 terraria\util\PlayerHelper$GameProgress.class
 terraria\entity\monster\MonsterHelper$1.class
 terraria\entity\boss\postMoonLord\exoMechs\AresArm$ArmType.class
@@ -79,6 +80,7 @@ terraria\entity\boss\hardMode\ravager\RavagerHead.class
 terraria\entity\boss\postMoonLord\exoMechs\Draedon$SubBossType.class
 terraria\entity\monster\MonsterWitherSkeleton.class
 terraria\entity\npc\TerrariaNPCNurse.class
+terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitasBHSepulcher.class
 terraria\worldgen\overworld\cavern\CavernChunkGenerator.class
 terraria\entity\boss\postMoonLord\yharon\Infernado.class
 terraria\entity\boss\preHardMode\wallOfFlesh\WallOfFleshWall.class
@@ -143,7 +145,6 @@ terraria\util\PlayerHelper.class
 terraria\entity\projectile\YharonTornado.class
 terraria\TerrariaHelper.class
 terraria\util\NMSUtils$SpawnData.class
-terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitas$1.class
 terraria\entity\boss\hardMode\moonLord\MoonLordBackground$MoonLordBackgroundType.class
 terraria\entity\boss\postMoonLord\devourerOfGods\AttackManager.class
 terraria\worldgen\overworld\OverworldChunkGenerator.class
@@ -181,6 +182,7 @@ terraria\worldgen\underworld\UnderworldChunkGenerator.class
 terraria\worldgen\overworld\StructurePopulator$1.class
 terraria\entity\boss\hardMode\moonLord\MoonLordBackground.class
 terraria\util\GenericHelper$1.class
+terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitasBHRing.class
 terraria\worldgen\overworld\StructurePopulator$StructPosInfo.class
 terraria\event\listener\ServerStopListener.class
 terraria\entity\boss\hardMode\calamitasClone\CalamitasCloneBH3.class
@@ -219,6 +221,7 @@ terraria\entity\boss\postMoonLord\profanedGuardians\GuardianCommander.class
 terraria\entity\boss\preHardMode\desertScourge\DesertScourge.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticCultistClone.class
 terraria\entity\boss\postMoonLord\exoMechs\Artemis.class
+terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitasBHFirework.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHand$HandType.class
 terraria\gameplay\RestartCommandExecutor.class
 terraria\entity\boss\preHardMode\eyeOfCthulhu\EyeOfCthulhu$AIPhase.class
@@ -268,6 +271,7 @@ terraria\worldgen\overworld\OverworldBiomeGenerator$1.class
 terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitas.class
 terraria\worldgen\RandomGenerator.class
 terraria\entity\boss\postMoonLord\ceaselessVoid\DarkEnergy.class
+terraria\entity\boss\postMoonLord\supremeCalamitas\ISupremeCalamitasBH.class
 terraria\event\listener\DropItemSpawnListener.class
 terraria\event\listener\DamageListener$1.class
 terraria\entity\boss\hardMode\astrumAureus\AstrumAureus$1.class
@@ -279,12 +283,10 @@ terraria\entity\npc\TerrariaNPCArmsDealer.class
 terraria\entity\boss\hardMode\dukeFishron\DukeFishron$1.class
 terraria\entity\monster\MonsterSpider.class
 terraria\entity\boss\event\pumpking\PumpkingHead.class
-terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitas$BulletHellProjectileOption.class
 terraria\entity\boss\postMoonLord\exoMechs\Thanatos$SegmentType.class
 terraria\util\EntityHelper.class
 terraria\event\listener\PlayerKeyToggleListener.class
 terraria\entity\boss\hardMode\dukeFishron\WaterBlob.class
-terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitas$BulletHellPattern.class
 terraria\entity\others\TerrariaDroppedItem.class
 terraria\entity\boss\hardMode\moonLord\MoonLordEye$EyeAttackMethod.class
 terraria\entity\boss\postMoonLord\devourerOfGods\ScatteringCircleAttackPattern.class
@@ -321,6 +323,7 @@ terraria\entity\boss\hardMode\moonLord\MoonLordEye$1.class
 terraria\entity\boss\event\santaNK1\SantaNK1.class
 terraria\util\EntityMovementHelper.class
 terraria\entity\boss\hardMode\cryogen\Cryogen.class
+terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitasBHBrother.class
 terraria\entity\boss\hardMode\calamitasClone\CalamitasClone.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Leviathan$AIPhase.class
 terraria\entity\boss\preHardMode\eaterOfWorld\EaterOfWorld.class
@@ -366,11 +369,14 @@ terraria\event\listener\CraftingListener.class
 terraria\entity\boss\hardMode\golem\GolemFist.class
 terraria\entity\boss\hardMode\ravager\RavagerNuke.class
 terraria\entity\boss\hardMode\empressOfLight\EmpressOfLight$AttackPhase.class
+terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitasBHEvaporation.class
 terraria\worldgen\MazeGenerator.class
+terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitasBHAsh.class
 terraria\util\DragoncoreHelper$DragonCoreParticleInfo.class
 terraria\worldgen\overworld\OverworldBiomeGenerator$BiomeFeature.class
 terraria\worldgen\overworld\RailPopulator.class
 terraria\entity\others\TerrariaMinecart$MinecartType.class
 terraria\entity\npc\TerrariaNPCDemolitionist.class
+terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitasBHFinalConversation.class
 terraria\worldgen\overworld\OverworldChunkGenerator$1.class
 terraria\worldgen\MazeGeneratorPrim.class

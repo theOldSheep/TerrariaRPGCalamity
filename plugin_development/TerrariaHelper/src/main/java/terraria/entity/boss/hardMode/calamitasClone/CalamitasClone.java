@@ -1,25 +1,21 @@
 package terraria.entity.boss.hardMode.calamitasClone;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.entity.boss.BossProjectilesManager;
-import terraria.entity.projectile.BulletHellProjectile;
 import terraria.util.MathHelper;
 import terraria.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.UUID;
 
 public class CalamitasClone extends EntitySlime {
@@ -91,6 +87,8 @@ public class CalamitasClone extends EntitySlime {
                     entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
                     entity.remove();
                 }
+                if (bulletHell != null)
+                    bulletHell.finish();
                 return;
             }
             // if target is valid, attack

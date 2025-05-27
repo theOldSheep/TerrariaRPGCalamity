@@ -61,19 +61,19 @@ public class AresArm extends EntitySlime {
                 new int[]{4, 5, 6, 1},
                 new int[]{30, 25, 20, 0},
                 new double[]{0.6, 0.85, 1, 1},
-                new double[]{0, 0, 0, 0}, 1.8, createAttributeMap(1260, 1)),
+                new double[]{0, 0, 0, 0}, 1.8, createAttributeMap(1440, 1)),
         NUKE_LAUNCHER("星流高斯核弹",
                 new int[]{200, 75, 40, 200},
                 new int[]{0, 1, 1, 0},
                 new int[]{0, 0, 0, 0},
                 new double[]{0, 0.5, 1, 0},
-                new double[]{0, 0, 0, 0}, 1.5, createAttributeMap(1920, 6)),
+                new double[]{0, 0, 0, 0}, 1.5, createAttributeMap(2400, 6)),
         PLASMA_CANNON("巨大挥发性等离子光球",
                 new int[]{75, 60, 50, 40},
                 new int[]{2, 3, 5, 1},
                 new int[]{20, 15, 10, 10},
                 new double[]{0.5, 0.9, 1, 0},
-                new double[]{0.75, 1.25, 2, 0}, 1.2, createAttributeMap(1260, 2.5));
+                new double[]{0.75, 1.25, 2, 0}, 1.2, createAttributeMap(1440, 2.5));
 
         private final String projectileType;
         private final int[] loadTimes;

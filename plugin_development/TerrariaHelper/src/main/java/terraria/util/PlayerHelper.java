@@ -1980,8 +1980,8 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
     }
     // others
     public static int getReviveTicks(Player ply) {
-        // respawn time, default to 5 seconds and increases if boss is alive
-        int respawnTime = 5;
+        // respawn time, default to 3 seconds and increases if during event / boss is alive
+        int respawnSec = EventAndTime.currentEvent == EventAndTime.Events.NONE ? 3 : 5;
         for (ArrayList<LivingEntity> bossList : BossHelper.bossMap.values()) {
             HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targets =
                     (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>)
@@ -1989,10 +1989,10 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
             // if the current boss has the player as target, 15 seconds respawn time for each player, up to 1 minute
             if (targets.containsKey(ply.getUniqueId())) {
                 // note: max would take the longest respawn time across all active bosses
-                respawnTime = Math.max(respawnTime, Math.min(targets.size() * 15, 60));
+                respawnSec = Math.max(respawnSec, Math.min(targets.size() * 15, 60));
             }
         }
-        return respawnTime * 20;
+        return respawnSec * 20;
     }
     public static double getEnergyShielding(Player ply) {
         HashMap<String, Integer> plyEffects = EntityHelper.getEffectMap(ply);

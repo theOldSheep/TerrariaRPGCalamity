@@ -15,9 +15,9 @@ import java.util.*;
 
 public class Thanatos extends EntitySlime {
     public enum SegmentType {
-        HEAD("XM-05“塔纳托斯”激光头", "XM-05“塔纳托斯”头", 1500d),
-        BODY("XM-05“塔纳托斯”散热体节", "XM-05“塔纳托斯”体节", 1320d),
-        TAIL("XM-05“塔纳托斯”尾", "XM-05“塔纳托斯”尾", 1100d);
+        HEAD("XM-05“塔纳托斯”激光头", "XM-05“塔纳托斯”头", 2232d),
+        BODY("XM-05“塔纳托斯”散热体节", "XM-05“塔纳托斯”体节", 1920d),
+        TAIL("XM-05“塔纳托斯”尾", "XM-05“塔纳托斯”尾", 1600d);
 
         private String openName, closedName;
         private double damage;
@@ -60,10 +60,10 @@ public class Thanatos extends EntitySlime {
     EntityHelper.ProjectileShootInfo shootInfoLaser;
     static {
         ATTR_MAP_LASER = new HashMap<>();
-        ATTR_MAP_LASER.put("damage", 1260d);
+        ATTR_MAP_LASER.put("damage", 1440d);
         ATTR_MAP_LASER.put("knockback", 1.5d);
         ATTR_MAP_FINAL_LASER = new HashMap<>();
-        ATTR_MAP_FINAL_LASER.put("damage", 1560d);
+        ATTR_MAP_FINAL_LASER.put("damage", 2100d);
         ATTR_MAP_FINAL_LASER.put("knockback", 2.25d);
 
         AIM_HELPER_LASER = new AimHelper.AimHelperOptions()

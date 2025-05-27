@@ -26,6 +26,8 @@ public class Yharon extends EntitySlime {
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
     public static final double BASIC_HEALTH = 3744000 * 2, BASIC_HEALTH_BR = 1776000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
+    static String MSG_COLOR = "§#FFA500";
+    static String PHASE_MSG = "你周围的空气变得灼热起来......";
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
@@ -423,6 +425,10 @@ public class Yharon extends EntitySlime {
             Location loc = bukkitEntity.getLocation();
             loc.getWorld().playSound(loc, "entity.yharon.yharon_roar",
                     org.bukkit.SoundCategory.HOSTILE, 25f, 1f);
+            if (newPhase == 3) {
+                terraria.entity.boss.BossHelper.sendBossMessages(20, 0, entity,
+                        MSG_COLOR, PHASE_MSG);
+            }
         }
     }
     private void executePhase() {

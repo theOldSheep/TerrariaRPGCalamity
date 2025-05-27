@@ -724,9 +724,9 @@ effects:
   弑神者冲刺:
     isBuff: true
     attributes:
-        damageTakenMulti: -0.4
+        damageTakenMulti: -0.65
         knockbackResistance: 1
-    tooltip: 获得30%伤害减免并无视击退，受到攻击时进入冷却
+    tooltip: 获得伤害减免并无视击退，受到攻击时进入冷却
   神弑者之停息:
     isBuff: false
     tooltip: 你需要稍等片刻才能再次使用弑神者冲刺

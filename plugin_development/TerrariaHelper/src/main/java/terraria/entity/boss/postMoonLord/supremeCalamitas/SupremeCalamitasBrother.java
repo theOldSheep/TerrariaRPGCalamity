@@ -23,7 +23,7 @@ public class SupremeCalamitasBrother extends EntitySlime {
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     Player target = null;
     // other variables and AI
-    static final double[] PROJECTILE_SPEEDS = {0.5, 2.0};
+    static final double[] PROJECTILE_SPEEDS = {1.25, 2.8};
     static HashMap<String, Double> attrMapProjectile;
     static AimHelper.AimHelperOptions[] aimHelpers;
     EntityHelper.ProjectileShootInfo shootInfo;
@@ -48,7 +48,7 @@ public class SupremeCalamitasBrother extends EntitySlime {
         shootInfo.shootLoc = ((LivingEntity) bukkitEntity).getEyeLocation();
 
         boolean fireDirectProj = false;
-        if (healthRatio > 0.4) {
+        if (healthRatio > 0.5) {
             int fireInterval = healthRatio > 0.7 ? 8 : 5;
             if (indexAI % fireInterval == 0) {
                 fireDirectProj = true;

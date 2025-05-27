@@ -37,7 +37,7 @@ public class Ares extends EntitySlime {
 
     static {
         ATTR_MAP_LASER_BEAM = new HashMap<>();
-        ATTR_MAP_LASER_BEAM.put("damage", 1560d);
+        ATTR_MAP_LASER_BEAM.put("damage", 1800d);
         ATTR_MAP_LASER_BEAM.put("knockback", 3.5d);
 
         STRIKE_OPTION_LASER_BEAM = new GenericHelper.StrikeLineOptions()

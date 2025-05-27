@@ -31,10 +31,10 @@ public class Apollo extends EntitySlime {
     EntityHelper.ProjectileShootInfo shootInfoPlasma, shootInfoRocket;
     static {
         ATTR_MAP_PLASMA = new HashMap<>();
-        ATTR_MAP_PLASMA.put("damage", 1260d);
+        ATTR_MAP_PLASMA.put("damage", 1440d);
         ATTR_MAP_PLASMA.put("knockback", 1.5d);
         ATTR_MAP_ROCKET = new HashMap<>();
-        ATTR_MAP_ROCKET.put("damage", 1450d);
+        ATTR_MAP_ROCKET.put("damage", 1680d);
         ATTR_MAP_ROCKET.put("knockback", 3.5d);
 
         AIM_HELPER_DASH = new AimHelper.AimHelperOptions()
@@ -178,7 +178,7 @@ public class Apollo extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 1392d);
+            attrMap.put("damage", 2040d);
             attrMap.put("damageTakenMulti", 0.75d);
             attrMap.put("defence", 200d);
             attrMap.put("knockback", 4d);

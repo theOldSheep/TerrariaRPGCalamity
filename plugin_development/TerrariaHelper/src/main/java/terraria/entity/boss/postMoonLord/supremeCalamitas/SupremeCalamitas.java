@@ -9,303 +9,79 @@ import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.util.Consumer;
 import org.bukkit.util.Vector;
 import terraria.entity.boss.BossProjectilesManager;
-import terraria.entity.projectile.BulletHellProjectile;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.UUID;
 
 public class SupremeCalamitas extends EntitySlime {
-    private static class BulletHellProjectileOption {
-        String projectileType;
-        BulletHellProjectile.ProjectileType shootType;
-        HashMap<String, Double> attrMap;
-        double speedMin, speedVariation;
-        int ticksInterval, projectileLiveTime;
-        private BulletHellProjectileOption(String projectileType, BulletHellProjectile.ProjectileType shootType, HashMap<String, Double> attrMap,
-                                           double speedMin, double speedVariation, int ticksInterval, int projectileLiveTime) {
-            this.projectileType = projectileType;
-            this.shootType = shootType;
-            this.attrMap = attrMap;
-            this.speedMin = speedMin;
-            this.speedVariation = speedVariation;
-            this.ticksInterval = ticksInterval;
-            this.projectileLiveTime = projectileLiveTime;
-        }
-    }
-    private static class BulletHellPattern {
-        double healthRatio;
-        boolean lockCamera;
-        int duration;
-        HashSet<BulletHellProjectileOption> projectileCandidates;
-        Consumer<SupremeCalamitas> beginFunc, endFunc;
-        private BulletHellPattern(double healthRatio, int duration, boolean lockCamera) {
-            this.healthRatio = healthRatio;
-            this.duration = duration;
-            this.lockCamera = lockCamera;
-            projectileCandidates = new HashSet<>();
-            beginFunc = null;
-            endFunc = null;
-        }
-        BulletHellPattern addCandidate(BulletHellProjectileOption projectile) {
-            projectileCandidates.add(projectile);
-            return this;
-        }
-        BulletHellPattern setBeginFunc(Consumer<SupremeCalamitas> beginFunc) {
-            this.beginFunc = beginFunc;
-            return this;
-        }
-        BulletHellPattern setEndFunc(Consumer<SupremeCalamitas> endFunc) {
-            this.endFunc = endFunc;
-            return this;
-        }
-    }
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.SUPREME_WITCH_CALAMITAS;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
     public static final double BASIC_HEALTH = 2760000 * 2, BASIC_HEALTH_BR = 1656000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
+    public static final String MSG_PREFIX = "§#FFA500";
     HashMap<String, Double> attrMap;
-    HashMap<String, EntityHelper.ProjectileShootInfo> bulletHellShootInfoMap = new HashMap<>();
-    BulletHellProjectile.BulletHellDirectionInfo bulletHellDir = null;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    static double DASH_SPEED = 3.5, HOVER_SPEED = 2.75, DART_SPEED = 2.75, HELL_BLAST_SPEED = 3.25, GIGA_BLAST_SPEED = 1.25,
-            HOVER_DISTANCE = 48, HOVER_DISTANCE_BROTHERS = 40, HOVER_DISTANCE_BROTHERS_OFFSET = 12,
-            DART_SPREAD_SINGLE = 8.5, DART_SPREAD_TOTAL = 35;
+    static double DASH_SPEED = 4, HOVER_SPEED = 2.75, DART_SPEED = 3.25, HELL_BLAST_SPEED = 3.5, GIGA_BLAST_SPEED = 1.25,
+            HOVER_DISTANCE = 32, DART_SPREAD_SINGLE = 5, DART_SPREAD_TOTAL = 16;
     static HashMap<String, Double> attrMapPrjLow, attrMapPrjMid, attrMapPrjHigh, attrMapPrjExtreme;
-    static BulletHellPattern[] bulletHellPatterns;
     static AimHelper.AimHelperOptions dashAimHelper, blastAimHelper;
     static {
         attrMapPrjLow = new HashMap<>();
-        attrMapPrjLow.put("damage", 1350d);
+        attrMapPrjLow.put("damage", 1500d);
         attrMapPrjLow.put("knockback", 1.5d);
         attrMapPrjMid = new HashMap<>();
-        attrMapPrjMid.put("damage", 1450d);
+        attrMapPrjMid.put("damage", 1680d);
         attrMapPrjMid.put("knockback", 2.0d);
         attrMapPrjHigh = new HashMap<>();
-        attrMapPrjHigh.put("damage", 1560d);
+        attrMapPrjHigh.put("damage", 1800d);
         attrMapPrjHigh.put("knockback", 2.5d);
         attrMapPrjExtreme = new HashMap<>();
-        attrMapPrjExtreme.put("damage", 1850d);
+        attrMapPrjExtreme.put("damage", 2040d);
         attrMapPrjExtreme.put("knockback", 3.75d);
 
-
-        BulletHellProjectileOption optionBlastSurrounding = new BulletHellProjectileOption(
-                "灾厄亡魂", BulletHellProjectile.ProjectileType.SQUARE_BORDER,
-                attrMapPrjMid, 0.4, 0.2, 2, 250);
-        BulletHellProjectileOption optionBlastSurroundingEasy = new BulletHellProjectileOption(
-                "灾厄亡魂", BulletHellProjectile.ProjectileType.SQUARE_BORDER,
-                attrMapPrjMid, 0.4, 0.2, 3, 250);
-        BulletHellProjectileOption optionFlameSkull = new BulletHellProjectileOption(
-                "深渊炙颅", BulletHellProjectile.ProjectileType.SQUARE_BORDER_SIDES,
-                attrMapPrjHigh, 0.4, 0.2, 4, 250);
-        BulletHellProjectileOption optionHellBlast = new BulletHellProjectileOption(
-                "无际裂变", BulletHellProjectile.ProjectileType.CIRCUMFERENCE,
-                attrMapPrjHigh, 0.15, 0.05, 20, 60);
-        BulletHellProjectileOption optionHellBlastEasy = new BulletHellProjectileOption(
-                "无际裂变", BulletHellProjectile.ProjectileType.CIRCUMFERENCE,
-                attrMapPrjHigh, 0.15, 0.05, 30, 60);
-        BulletHellProjectileOption optionGigaBlast = new BulletHellProjectileOption(
-                "深渊炙炎", BulletHellProjectile.ProjectileType.CIRCUMFERENCE,
-                attrMapPrjHigh, 0.175, 0.05, 35, 75);
-
-        final String bossProgress = BOSS_TYPE.msgName;
-        final String MSG_PREFIX = "§#FFA500";
-        bulletHellPatterns = new BulletHellPattern[]{
-                // first bullet hell when summoned
-                new BulletHellPattern(1.1, 400, true)
-                        .addCandidate(optionBlastSurrounding)
-                        .addCandidate(optionBlastSurrounding)
-                        .setBeginFunc(
-                                (boss) -> {
-                                    String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                            new String[]{("如果你想感受一下四级烫伤的话，你可算是找对人了。")} :
-                                            new String[]{("你享受地狱之旅么？")};
-                                    terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
-                                })
-                        .setEndFunc(
-                        (boss) -> {
-                            String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                    new String[]{("他日若你魂销魄散，你会介意我将你的骨头和血肉融入我的造物中吗？")} :
-                                    new String[]{("真奇怪，你应该已经死了才对......")};
-                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
-                            // spawn first sepulcher
-                            new Sepulcher(boss);
-                        }),
-                // second bullet hell 75% health
-                new BulletHellPattern(0.75, 400, true)
-                        .addCandidate(optionBlastSurrounding)
-                        .addCandidate(optionHellBlast)
-                        .setBeginFunc(
-                        (boss) -> {
-                            String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                    new String[]{("你离胜利还差得远着呢。")} :
-                                    new String[]{("距离你上次勉强才击败我的克隆体也没过多久。那玩意就是个失败品，不是么？")};
-                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
-                        }),
-                // third bullet hell 50% health
-                new BulletHellPattern(0.5, 400, true)
-                        .addCandidate(optionBlastSurroundingEasy)
-                        .addCandidate(optionHellBlastEasy)
-                        .addCandidate(optionGigaBlast)
-                        .setBeginFunc(
-                        (boss) -> {
-                            String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                    new String[]{("自我上一次能在如此有趣的靶子假人身上测试我的魔法，已经过了很久了。")} :
-                                    new String[]{("你驾驭着强大的力量，但你使用这股力量只为了自己的私欲。")};
-                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
-                        }),
-                // spawn brothers 45% health
-                new BulletHellPattern(0.45, 50, false)
-                        .setBeginFunc(
-                        (boss) -> {
-                            String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                    new String[]{("只是单有过去形态的空壳罢了，或许在其中依然残存他们的些许灵魂也说不定。")} :
-                                    new String[]{("你想见见我的家人吗？听上去挺可怕，不是么？")};
-                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
-                            boss.brothers.add( new SupremeCalamitasBrother(boss, 0) );
-                            boss.brothers.add( new SupremeCalamitasBrother(boss, 1) );
-                            boss.addScoreboardTag("noDamage");
-                        }),
-                // fourth bullet hell 30% health
-                new BulletHellPattern(0.3, 400, true)
-                        .addCandidate(optionBlastSurrounding)
-                        .addCandidate(optionHellBlastEasy)
-                        .addCandidate(optionGigaBlast)
-                        .setBeginFunc(
-                        (boss) -> {
-                            String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                    new String[]{("我挺好奇，自我们第一次交手后，你是否有在梦魇中见到过这些？")} :
-                                    new String[]{("别想着逃跑。只要你还活着，痛苦就不会离你而去。")};
-                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
-                        }),
-                // another sepulcher at 20% health
-                new BulletHellPattern(0.2, 50, false)
-                        .setBeginFunc(
-                        (boss) -> {
-                            String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                    new String[]{("注意一下，那个会自己爬的坟墓来了，这是最后一次。")} :
-                                    new String[]{("一个后起之人，只识杀戮与偷窃，但却以此得到力量。我想想，这让我想起了谁...？")};
-                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
-                            // spawn second sepulcher
-                            new Sepulcher(boss);
-                        }),
-                // final bullet hell 10% health
-                new BulletHellPattern(0.1, 400, true)
-                        .addCandidate(optionBlastSurroundingEasy)
-                        .addCandidate(optionFlameSkull)
-                        .addCandidate(optionHellBlastEasy)
-                        .addCandidate(optionGigaBlast)
-                        .setBeginFunc(
-                        (boss) -> {
-                            String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                    new String[]{("这难道不令人激动么？")} :
-                                    new String[]{
-                                            ("给我停下！"),
-                                            ("如果我在这里失败，我就再无未来可言。"),
-                                            ("一旦你战胜了我，你就只剩下一条道路。"),
-                                            ("而那条道路......同样也无未来可言。"),
-                                            ("这场战斗的输赢对你而言毫无意义！那你又有什么理由干涉这一切！"),};
-                            terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
-                        }),
-                // final conversation
-                new BulletHellPattern(0.005, 300, false)
-                        .setBeginFunc(
-                                (boss) -> {
-                                    String[] messages = PlayerHelper.hasDefeated( boss.target, bossProgress ) ?
-                                            new String[]{
-                                                    ("了不起的表现，我认可你的胜利。"),
-                                                    ("毫无疑问，你会遇见比我更加强大的敌人。"),
-                                                    ("我相信你不会犯下和他一样的错误。"),
-                                                    ("至于你的未来会变成什么样子，我很期待。"),} :
-                                            new String[]{
-                                                    ("哪怕他抛弃了一切，他的力量也不会消失。"),
-                                                    ("我已没有余力去怨恨他了，对你也是如此......"),
-                                                    ("现在，一切都取决于你。"),};
-                                    terraria.entity.boss.BossHelper.sendBossMessages(20, 0, boss.bukkitEntity, MSG_PREFIX, messages);
-                                })
-                        .setEndFunc(SupremeCalamitas::die),
-        };
-
-        dashAimHelper = new AimHelper.AimHelperOptions().setProjectileSpeed(DASH_SPEED);
-        blastAimHelper = new AimHelper.AimHelperOptions().setProjectileSpeed(HELL_BLAST_SPEED);
+        dashAimHelper = new AimHelper.AimHelperOptions()
+                .setProjectileSpeed(DASH_SPEED)
+                .setAccelerationMode(true);
+        blastAimHelper = new AimHelper.AimHelperOptions()
+                .setProjectileSpeed(HELL_BLAST_SPEED)
+                .setAccelerationMode(true);
     }
 
     EntityHelper.ProjectileShootInfo shootInfoDart, shootInfoHellBlast, shootInfoGigaBlast;
     int bulletHellPatternIdx = 0;
     boolean bulletHellPatternActive = false;
+    ISupremeCalamitasBH[] bulletHellPatterns;
+    ISupremeCalamitasBH bulletHell = null;
 
     // do not init indexAI as 0 to prevent a projectile fired before the first bullet hell
     int indexAI = -50, attackType = 0;
     Vector velocity = new Vector();
-    ArrayList<SupremeCalamitasBrother> brothers = new ArrayList<>();
     BossProjectilesManager projectilesManager = new BossProjectilesManager();
 
 
-    private void tickBulletHellRotation() {
-        if (ticksLived % 25 == 0) {
-            PlayerPOVHelper.setPOVState(target, true);
-        }
-
-        Location loc = target.getLocation();
-        if (MathHelper.getAngleRadian(bulletHellDir.planeNormal, loc.getDirection()) > 1e-5) {
-            loc.setDirection(bulletHellDir.planeNormal);
-            target.teleport(loc);
-        }
-
-    }
-    private void handleBulletHell() {
-        // init bullet hell dir & kill other projectiles
-        if (indexAI == 0) {
-            bulletHellDir = new BulletHellProjectile.BulletHellDirectionInfo(target);
-            projectilesManager.killAll();
-        }
-        // velocity
-        Location hoverLoc = target.getLocation();
-        hoverLoc.add(hoverLoc.getDirection().multiply(HOVER_DISTANCE));
-        velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverLoc, HOVER_SPEED, true);
-
-        BulletHellPattern pattern = bulletHellPatterns[bulletHellPatternIdx];
-
-        bulletHellDir.target = target;
-        // target rotation
-        if (pattern.lockCamera) {
-            tickBulletHellRotation();
-        }
-        // spawn projectiles
-        for (BulletHellProjectileOption projOption : pattern.projectileCandidates) {
-            if (ticksLived % projOption.ticksInterval == 0) {
-                // prepare shoot info
-                EntityHelper.ProjectileShootInfo shootInfo = bulletHellShootInfoMap.computeIfAbsent(projOption.projectileType,
-                        (type) -> new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), projOption.attrMap,
-                                DamageHelper.DamageType.MAGIC, type
-                        ));
-                // fire projectile
-                shootInfo.setLockedTarget(target);
-                double speed = projOption.speedMin + Math.random() * projOption.speedVariation;
-                BulletHellProjectile projectile = new BulletHellProjectile(shootInfo, projOption.shootType, 48, speed, bulletHellDir);
-                projectile.liveTime = projOption.projectileLiveTime;
-                projectilesManager.handleProjectile(projectile.bukkitEntity);
-            }
-        }
-    }
-    private void generalMovement() {
+    void generalMovement(double dist) {
         Vector offsetDir = MathHelper.vectorFromYawPitch_approx(
                 MathHelper.getVectorYaw(bukkitEntity.getLocation().subtract(target.getLocation()).toVector()), 0);
-        offsetDir.multiply(HOVER_DISTANCE);
+        offsetDir.multiply(dist);
         Location eyeHoverLoc = target.getEyeLocation().add(offsetDir);
         velocity = MathHelper.getDirection( ((LivingEntity) bukkitEntity).getEyeLocation(), eyeHoverLoc, HOVER_SPEED, true);
     }
+    void generalHover(double dist) {
+        Vector offsetDir = new Vector(0, dist, 0);
+        Location eyeHoverLoc = target.getEyeLocation().add(offsetDir);
+        velocity = MathHelper.getDirection( ((LivingEntity) bukkitEntity).getEyeLocation(), eyeHoverLoc, HOVER_SPEED, true);
+    }
+
     private void normalAIPhase() {
         // true pattern:
         // 1. darts
@@ -325,8 +101,8 @@ public class SupremeCalamitas extends EntitySlime {
             case 18:
             case 20:
                 trueAttackPattern = 1;
-                attackInterval = 25;
-                attackTimes = isPhase2 ? 2 : 3;
+                attackInterval = 15;
+                attackTimes = isPhase2 ? 3 : 5;
                 break;
             case 1:
             case 5:
@@ -334,24 +110,24 @@ public class SupremeCalamitas extends EntitySlime {
             case 11:
                 trueAttackPattern = 2;
                 attackInterval = 1;
-                attackTimes = 40;
+                attackTimes = 30;
                 break;
             case 2:
             case 4:
                 trueAttackPattern = 3;
-                attackInterval = 25;
+                attackInterval = 10;
                 attackTimes = 2;
                 break;
             case 10:
             case 14:
                 trueAttackPattern = 3;
-                attackInterval = 30;
+                attackInterval = 10;
                 attackTimes = 4;
                 break;
             case 3:
             case 15:
                 trueAttackPattern = 4;
-                attackInterval = 30;
+                attackInterval = 25;
                 attackTimes = isPhase2 ? 2 : 4;
                 break;
             case 7:
@@ -370,7 +146,7 @@ public class SupremeCalamitas extends EntitySlime {
 
         // general movement
         if (trueAttackPattern != 4) {
-            generalMovement();
+            generalMovement(HOVER_DISTANCE);
         }
         // projectile
         if (indexAI % attackInterval == 0 && indexAI >= 0) {
@@ -412,32 +188,6 @@ public class SupremeCalamitas extends EntitySlime {
             attackType ++;
         }
     }
-    private void tickBrothers() {
-        // remove dead brother
-        for (int i = 0; i < brothers.size(); i ++) {
-            if (brothers.get(i).isAlive())
-                continue;
-            brothers.remove(i);
-            i --;
-            if (brothers.isEmpty()) {
-                removeScoreboardTag("noDamage");
-                return;
-            }
-        }
-        double yaw = MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
-        Vector directDir = MathHelper.vectorFromYawPitch_approx(yaw, 0)
-                .multiply(HOVER_DISTANCE - HOVER_DISTANCE_BROTHERS);
-        Location hoverLoc = bukkitEntity.getLocation().add(directDir);
-        if (brothers.size() == 1) {
-            brothers.get(0).desiredLoc = hoverLoc;
-        }
-        else {
-            Vector offsetDir = MathHelper.vectorFromYawPitch_approx(yaw + 90, 0)
-                    .multiply(HOVER_DISTANCE_BROTHERS_OFFSET);
-            brothers.get(0).desiredLoc = hoverLoc.clone().add(offsetDir);
-            brothers.get(1).desiredLoc = hoverLoc.clone().subtract(offsetDir);
-        }
-    }
     private void AI() {
         // no AI after death
         if (getHealth() <= 0d)
@@ -454,6 +204,8 @@ public class SupremeCalamitas extends EntitySlime {
                     entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
                     entity.remove();
                 }
+                if (bulletHell != null)
+                    bulletHell.finish();
                 return;
             }
             // if target is valid, attack
@@ -461,61 +213,50 @@ public class SupremeCalamitas extends EntitySlime {
                 // increase player aggro duration
                 targetMap.get(target.getUniqueId()).addAggressionTick();
 
-                // manage projectiles
-                if (indexAI % 20 == 0)
-                    projectilesManager.dropOutdated();
-
-                BulletHellPattern pattern;
-                if (bulletHellPatternIdx < bulletHellPatterns.length)
-                    pattern = bulletHellPatterns[bulletHellPatternIdx];
-                else
-                    pattern = null;
-                // brothers
-                if (brothers.size() > 0) {
-                    generalMovement();
-                    tickBrothers();
-                }
-                // bullet hell
-                else if (bulletHellPatternActive) {
-                    // retarget: reset bullet hell duration
-                    if (target != lastTarget)
-                        indexAI = 0;
-
-                    handleBulletHell();
-                    // termination. "pattern" would not be null here, don't worry.
-                    if (indexAI > pattern.duration) {
-                        projectilesManager.killAll();
-
-                        bulletHellPatternIdx++;
-                        indexAI = -51;
+                // bullet hell; movement / attack handled within bullet hell.
+                bulletHellPatternActive = bulletHell != null && bulletHell.isStrict();
+                if (bulletHell != null) {
+                    bulletHell.tick();
+                    // refresh duration when target changes
+                    if (lastTarget != target) {
+                        bulletHell.refresh();
+                    }
+                    if (! bulletHell.inProgress()) {
+                        bulletHell.finish();
+                        bulletHell = null;
+                        // no attacks for the next 2.5 seconds out of the bullet hell
+                        indexAI = -50;
                         attackType = 0;
-                        bulletHellPatternActive = false;
-                        removeScoreboardTag("noDamage");
-                        if (pattern.endFunc != null)
-                            pattern.endFunc.accept(this);
+                        bulletHellPatternIdx++;
                         if (bulletHellPatternIdx < bulletHellPatterns.length) {
                             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT,
-                                    (getMaxHealth() * bulletHellPatterns[bulletHellPatternIdx].healthRatio) - 10);
+                                    (getMaxHealth() * bulletHellPatterns[bulletHellPatternIdx].healthRatio()) - 10);
                         }
                     }
                 }
-                // normal behavior
+                if (bulletHellPatternActive)
+                    addScoreboardTag("noDamage");
                 else {
+                    removeScoreboardTag("noDamage");
                     normalAIPhase();
-                    // bullet hell transition
-                    if (pattern != null && getHealth() / getMaxHealth() < pattern.healthRatio) {
-                        indexAI = -1;
-                        bulletHellPatternActive = true;
-                        addScoreboardTag("noDamage");
-                        if (pattern.beginFunc != null)
-                            pattern.beginFunc.accept(this);
-                    }
-                }
 
-                // index increment & velocity maintenance
-                indexAI ++;
-                bukkitEntity.setVelocity(velocity);
+                    // bullet hell transition
+                    ISupremeCalamitasBH pattern;
+                    if (bulletHellPatternIdx < bulletHellPatterns.length)
+                        pattern = bulletHellPatterns[bulletHellPatternIdx];
+                    else
+                        pattern = null;
+                    if (pattern != null && getHealth() / getMaxHealth() < pattern.healthRatio()) {
+                        bulletHell = pattern;
+                        bulletHell.begin();
+                    }
+
+                    // index increment
+                    indexAI++;
+                }
             }
+            // velocity maintenance
+            bukkitEntity.setVelocity(velocity);
         }
         // facing
         if (false)
@@ -558,7 +299,7 @@ public class SupremeCalamitas extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 1400d);
+            attrMap.put("damage", 1800d);
             attrMap.put("damageTakenMulti", 0.75);
             attrMap.put("defence", 200d);
             attrMap.put("knockback", 4d);
@@ -602,6 +343,28 @@ public class SupremeCalamitas extends EntitySlime {
                     DamageHelper.DamageType.MAGIC, "灾厄亡魂");
             shootInfoGigaBlast = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapPrjHigh,
                     DamageHelper.DamageType.MAGIC, "深渊炙炎弹");
+        }
+        // bullet hells
+        {
+            bulletHellPatterns = new ISupremeCalamitasBH[]{
+                    new SupremeCalamitasBHAsh(this, 1.1),
+                    // first bullet hell when summoned
+                    new SupremeCalamitasBHFirework(this, 1.1),
+                    new SupremeCalamitasBHSepulcher(this),
+                    // second bullet hell 75% health
+                    new SupremeCalamitasBHRing(this, 0.75),
+                    // third bullet hell 50% health
+                    new SupremeCalamitasBHBrimstone(this, 0.5),
+                    // spawn brothers 45% health
+                    new SupremeCalamitasBHBrother(this, 0.45),
+                    // fourth bullet hell at 30% health
+                    new SupremeCalamitasBHEvaporation(this, 0.3),
+                    new SupremeCalamitasBHSepulcher(this),
+                    // final bullet hell 10% health
+                    new SupremeCalamitasBHAsh(this, 0.1),
+                    // final conversation
+                    new SupremeCalamitasBHFinalConversation(this, 0.005)
+            };
         }
     }
 

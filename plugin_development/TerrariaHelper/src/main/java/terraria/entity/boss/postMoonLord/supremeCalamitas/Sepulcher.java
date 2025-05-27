@@ -35,7 +35,7 @@ public class Sepulcher extends EntitySlime {
     Sepulcher head;
     static final double[][]
             SEGMENT_DAMAGE = {{1800d}, {1400d}, {1000d}};
-    static final double DART_SPEED = 2.5;
+    static final double DART_SPEED = 3.75;
 
 
     static final int SLIME_SIZE = 8;
