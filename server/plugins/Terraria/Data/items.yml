@@ -1485,8 +1485,8 @@
   - §r[饰品]
   - §r▣算作瞄准镜
   attributes:
-    damageRangedMulti: 0.1
-    critRanged: 10
+    damageRangedMulti: 0.07
+    critRanged: 7
   worth: 5000000
   rarity: 8
 侦察镜:
@@ -1496,8 +1496,8 @@
   - §r▣算作瞄准镜
   - §r“发现敌人”
   attributes:
-    damageRangedMulti: 0.1
-    critRanged: 10
+    damageRangedMulti: 0.08
+    critRanged: 8
     mobLimit: -1
     mobSpawnRateMulti: -0.1
   worth: 15000000
@@ -2317,7 +2317,7 @@ Drew之翼:
   - §r神圣之佑：增加20点防御力和5%伤害减免
   - §r神圣之力：+10%召唤伤害
   attributes:
-    damageSummonMulti: 0.1
+    damageSummonMulti: 0.07
   worth: 26000000
   rarity: 13
 钨钢电池:
@@ -2455,8 +2455,8 @@ Drew之翼:
   - §r使你的召唤物附带神圣之火debuff
   attributes:
     regen: 6
-    barrierMax: 50
-    minionLimit: 2
+    barrierMax: 75
+    minionLimit: 1
     buffInflictSummon: 神圣之火|30|1
   worth: 24000000
   rarity: 12
@@ -2477,7 +2477,7 @@ Drew之翼:
   - §r“忠！诚！”
   attributes:
     minionLimit: 1
-    damageSummonMulti: 0.2
+    damageSummonMulti: 0.15
   worth: 30000000
   rarity: 15
 潜遁者宝石:
@@ -2818,9 +2818,9 @@ Drew之翼:
   - §r蕴含着日蚀之阴的力量
   attributes:
     damageMulti: 0.15
+    damageSummonMulti: 0.05
     crit: 5
     regen: 2
-    minionLimit: 1
     defence: 20
   worth: 28000000
   rarity: 14
@@ -14124,7 +14124,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 0
-    damageSummonMulti: 0.13
+    damageMagicMulti: 0.15
   worth: 150000
   rarity: 1
 钨钢盔甲:
@@ -14343,7 +14343,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 0
-    damageSummonMulti: 0.1
+    damageSummonMulti: 0.15
   worth: 400000
   rarity: 1
 胜潮胸甲:
@@ -14374,7 +14374,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 8
-    damageSummonMulti: 0.03
+    damageSummonMulti: 0.05
   worth: 90000
   rarity: 2
 黑曜石风衣:
@@ -14383,7 +14383,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 12
-    damageSummonMulti: 0.07
+    minionLimit: 1
   worth: 90000
   rarity: 2
 黑曜石裤:
@@ -14531,7 +14531,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 4
-    damageSummonMulti: 0.12
+    damageSummonMulti: 0.13
     speedMulti: 0.05
   worth: 800000
   rarity: 3
@@ -14639,8 +14639,8 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 8
+    damageSummonMulti: 0.17
     minionLimit: 1
-    damageSummonMulti: 0.2
     speedMulti: 0.05
   worth: 2400000
   rarity: 3
@@ -14725,7 +14725,7 @@ Dodu的手炮:
   attributes:
     defence: 10
     minionLimit: 1
-    damageSummonMulti: 0.15
+    damageSummonMulti: 0.1
   worth: 750000
   rarity: 4
 蜘蛛胸甲:
@@ -14734,8 +14734,8 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 16
-    minionLimit: 1
-    damageSummonMulti: 0.15
+    minionLimit: 2
+    damageSummonMulti: 0.1
   worth: 750000
   rarity: 4
 蜘蛛护胫:
@@ -14745,7 +14745,7 @@ Dodu的手炮:
   attributes:
     defence: 14
     minionLimit: 1
-    damageSummonMulti: 0.15
+    damageSummonMulti: 0.1
   worth: 750000
   rarity: 4
 蜘蛛护胫靴子:
@@ -14948,7 +14948,8 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 6
-    damageSummonMulti: 0.2
+    minionLimit: 2
+    damageSummonMulti: 0.15
   worth: 4800000
   rarity: 5
 代达罗斯胸甲:
@@ -15098,7 +15099,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 2
-    damageSummonMulti: 0.2
+    damageSummonMulti: 0.34
     minionLimit: 2
   worth: 5000000
   rarity: 5
@@ -15405,9 +15406,9 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 16
+    defence: 24
     minionLimit: 1
-    damageSummonMulti: 0.15
+    damageSummonMulti: 0.16
   worth: 1000000
   rarity: 8
 阴森胸甲:
@@ -15415,9 +15416,9 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 20
+    defence: 28
     minionLimit: 2
-    damageSummonMulti: 0.15
+    damageSummonMulti: 0.16
   worth: 1000000
   rarity: 8
 阴森护腿:
@@ -15425,9 +15426,9 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 18
+    defence: 26
     minionLimit: 2
-    damageSummonMulti: 0.15
+    damageSummonMulti: 0.16
     speedMulti: 0.2
   worth: 1000000
   rarity: 8
@@ -15528,9 +15529,9 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 12
+    defence: 20
     minionLimit: 2
-    damageSummonMulti: 0.05
+    damageSummonMulti: 0.17
   worth: 12000000
   rarity: 8
 渊泉盔甲:
@@ -15765,7 +15766,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 20
+    defence: 24
     minionLimit: 1
     damageSummonMulti: 0.27
   worth: 7000000
@@ -15775,7 +15776,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 32
+    defence: 36
     minionLimit: 2
     damageSummonMulti: 0.27
   worth: 14000000
@@ -15785,7 +15786,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 24
+    defence: 28
     minionLimit: 1
     damageSummonMulti: 0.27
   worth: 10500000
@@ -15852,7 +15853,7 @@ Dodu的手炮:
   attributes:
     defence: 6
     minionLimit: 1
-    damageSummonMulti: 0.05
+    damageSummonMulti: 0.15
     damageTakenMulti: -0.05
   worth: 24000000
   rarity: 12
@@ -15979,7 +15980,7 @@ Dodu的手炮:
   attributes:
     defence: 32
     minionLimit: 2
-    damageSummonMulti: 0.1
+    damageSummonMulti: 0.24
   worth: 26000000
   rarity: 13
 血炎铠甲:
@@ -16115,7 +16116,7 @@ Dodu的手炮:
   attributes:
     defence: 26
     minionLimit: 2
-    damageSummonMulti: 0.08
+    damageSummonMulti: 0.25
   worth: 28000000
   rarity: 14
 始源林海盔甲:
@@ -16254,6 +16255,7 @@ Dodu的手炮:
   attributes:
     defence: 100
     damageMulti: 0.3
+    damageSummonMulti: 0.15
     crit: 15
   worth: 100000000
   rarity: 16
@@ -16264,6 +16266,7 @@ Dodu的手炮:
   attributes:
     defence: 100
     damageMulti: 0.15
+    damageSummonMulti: 0.15
     crit: 15
     maxHealth: 200
     maxMana: 100
