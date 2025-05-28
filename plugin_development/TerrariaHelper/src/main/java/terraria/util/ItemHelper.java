@@ -123,6 +123,8 @@ public class ItemHelper {
 
     public static void setupItemRecipe(boolean printDebugMessage) {
         Bukkit.clearRecipes();
+        TerrariaHelper.itemConfig = YmlHelper.getFile(TerrariaHelper.Constants.DATA_FOLDER_DIR + "items.yml");
+        TerrariaHelper.recipeConfig = YmlHelper.getFile(TerrariaHelper.Constants.DATA_FOLDER_DIR + "recipes.yml");
         Set<String> items = TerrariaHelper.itemConfig.getKeys(false);
         Set<String> craftStations = TerrariaHelper.recipeConfig.getKeys(false);
         craftStations.remove("categoryOrder");

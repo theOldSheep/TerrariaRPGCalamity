@@ -42,22 +42,24 @@ pieces:
   钨钢战盔:
   - 钨钢近战套装
   钨钢头饰:
-  - 钨钢远程魔法套装
+  - 钨钢远程套装
   钨钢面具:
   - 钨钢盗贼套装
   钨钢兜帽:
-  - 钨钢远程魔法套装
+  - 钨钢魔法套装
   钨钢头罩:
   - 钨钢召唤套装
   钨钢盔甲:
   - 钨钢近战套装
-  - 钨钢远程魔法套装
+  - 钨钢远程套装
   - 钨钢盗贼套装
+  - 钨钢魔法套装
   - 钨钢召唤套装
   钨钢护胫:
   - 钨钢近战套装
-  - 钨钢远程魔法套装
+  - 钨钢远程套装
   - 钨钢盗贼套装
+  - 钨钢魔法套装
   - 钨钢召唤套装
   沙漠巡游者帽:
   - 沙漠巡游者套装
@@ -559,7 +561,7 @@ sets:
     attributes:
       defence: 6
       mobLimit: 2
-  钨钢远程魔法套装:
+  钨钢远程套装:
     lore:
     - ''
     - §a套装效果： +6 防御
@@ -569,13 +571,23 @@ sets:
     lore:
     - ''
     - §a套装效果：
+    - §a+6 防御
     - §a不攻击时累积潜行值，最大50点
     - §a一旦你的潜行值满，下一次盗贼攻击可施展潜伏攻击
     - §b潜伏攻击：
     - §b-> 绝大部分武器的潜伏攻击都拥有特殊效果
     - §b-> 获得相当于当前潜行值10%的盗贼百分比伤害和暴击率
     attributes:
+      defence: 6
       stealthLimit: 50
+  钨钢魔法套装:
+    lore:
+    - ''
+    - §a套装效果：
+    - §a+6 防御
+    - §a+6 防御
+    attributes:
+      defence: 6
   钨钢召唤套装:
     lore:
     - ''
@@ -589,16 +601,10 @@ sets:
     - ''
     - §a套装效果： 
     - §a+12 防御
-    - §a+6 所有伤害
-    - §a+10% 远程暴击
     - §a-20% 弹药消耗
-    - §a+10% 移动速度
     attributes:
       defence: 12
-      critRanged: 10
-      damage: 6
       ammoConsumptionRate: -0.2
-      speedMulti: 0.1
   铜套装:
     lore:
     - ''
@@ -721,33 +727,28 @@ sets:
     - ''
     - §a套装效果：
     - §a+15% 召唤伤害
-    - §a+15% 近战速度
-    - §a+30% 近战范围
+    - §a+1 召唤栏
     attributes:
       damageSummonMulti: 0.15
-      meleeReachMulti: 0.3
-      useSpeedMeleeMulti: 0.15
+      minionLimit: 1
   暗影套装:
     lore:
     - ''
     - §a套装效果： +25% 移动速度
     attributes:
       speedMulti: 0.25
-  死灵射手套:
+  熔岩套装:
     lore:
     - ''
-    - §a套装效果：
-    - §a-20% 弹药消耗
-    - §a+15% 远程暴击
+    - §a套装效果： +5% 近战伤害
     attributes:
-      ammoConsumptionRate: -0.2
-      critRanged: 15
+      damageMeleeMulti: 0.05
   天蓝近战套装:
     lore:
     - ''
     - §a套装效果： 
     - §a+15% 移动速度
-    - §a+5% 近战暴击
+    - §a+5% 近战暴击率
     attributes:
       critMelee: 5
       speedMulti: 0.15
@@ -756,7 +757,7 @@ sets:
     - ''
     - §a套装效果： 
     - §a+15% 移动速度
-    - §a+5% 远程暴击
+    - §a+5% 远程暴击率
     attributes:
       critRanged: 5
       speedMulti: 0.15
@@ -765,7 +766,7 @@ sets:
     - ''
     - §a套装效果： 
     - §a+5% 移动速度
-    - §a+5% 盗贼暴击
+    - §a+5% 盗贼暴击率
     - §a+80 潜行值上限
     attributes:
       critRogue: 5
@@ -776,7 +777,7 @@ sets:
     - ''
     - §a套装效果： 
     - §a+15% 移动速度
-    - §a+5% 魔法暴击
+    - §a+5% 魔法暴击率
     attributes:
       critMagic: 5
       speedMulti: 0.15
@@ -784,22 +785,25 @@ sets:
     lore:
     - ''
     - §a套装效果： 
-    - §a+20% 召唤伤害
-    - §a+2 召唤栏
+    - §a+10% 召唤伤害
+    - §a+1 召唤栏
     attributes:
-      damageSummonMulti: 0.2
-      minionLimit: 2
-  熔岩套装:
+      damageSummonMulti: 0.1
+      minionLimit: 1
+  死灵射手套:
     lore:
     - ''
-    - §a套装效果： +5% 近战伤害
+    - §a套装效果：
+    - §a-20% 弹药消耗
+    - §a+12% 远程暴击率
     attributes:
-      damageMeleeMulti: 0.05
+      ammoConsumptionRate: -0.2
+      critRanged: 12
   斯塔提斯近战套装:
     lore:
     - ''
     - §a套装效果： 
-    - §a+5% 近战暴击
+    - §a+5% 近战暴击率
     attributes:
       critMelee: 5
   斯塔提斯远程套装:
@@ -807,7 +811,7 @@ sets:
     - ''
     - §a套装效果： 
     - §a+5% 远程伤害
-    - §a+5% 远程暴击
+    - §a+5% 远程暴击率
     attributes:
       critRanged: 5
       damageRangedMulti: 0.05
@@ -823,7 +827,7 @@ sets:
     - ''
     - §a套装效果： 
     - §a+5% 魔法伤害
-    - §a+5% 魔法暴击
+    - §a+5% 魔法暴击率
     attributes:
       critMagic: 5
       damageMagicMulti: 0.05
@@ -882,33 +886,45 @@ sets:
   钴射手套装:
     lore:
     - ''
-    - §a套装效果： 20% 几率不消耗弹药
+    - §a套装效果：
+    - §a+15% 远程暴击率
+    - §a20% 几率不消耗弹药
     attributes:
+      critRanged: 15
       ammoConsumptionRate: -0.2
   钴魔法套装:
     lore:
     - ''
-    - §a套装效果： -14% 魔力消耗
+    - §a套装效果：
+    - §a+10% 魔法暴击率
+    - §a-14% 魔力消耗
     attributes:
+      critMagic: 10
       manaUseMulti: -0.14
   秘银战士套装:
     lore:
     - ''
-    - §a套装效果： +8% 近战速度与暴击率
+    - §a套装效果： +6% 近战速度与暴击率
     attributes:
-      useSpeedMeleeMulti: 0.08
-      crit: 8
+      useSpeedMeleeMulti: 0.06
+      crit: 6
   秘银射手套装:
     lore:
     - ''
-    - §a套装效果： 20% 几率不消耗弹药
+    - §a套装效果：
+    - §a+8% 远程暴击率
+    - §a20% 几率不消耗弹药
     attributes:
+      critRanged: 8
       ammoConsumptionRate: -0.2
   秘银魔法套装:
     lore:
     - ''
-    - §a套装效果： -17% 魔力消耗
+    - §a套装效果：
+    - §a+10% 魔法暴击率
+    - §a-17% 魔力消耗
     attributes:
+      critMagic: 10
       manaUseMulti: -0.17
   代达罗斯战士套装:
     lore:
@@ -922,9 +938,10 @@ sets:
   代达罗斯射手套装:
     lore:
     - ''
-    - §a套装效果： +10% 远程伤害
+    - §a套装效果： +10% 远程伤害和暴击率
     attributes:
       damageRangedMulti: 0.1
+      critRanged: 10
   代达罗斯盗贼套装:
     lore:
     - ''
@@ -938,10 +955,10 @@ sets:
     lore:
     - ''
     - §a套装效果：
-    - §a+5% 魔法伤害
+    - §a+15% 魔法伤害
     - §a受到的接触伤害减少7%
     attributes:
-      damageMagicMulti: 0.05
+      damageMagicMulti: 0.15
       damageContactTakenMulti: 0.07
   代达罗斯召唤套装:
     lore:
@@ -962,14 +979,20 @@ sets:
   精金射手套装:
     lore:
     - ''
-    - §a套装效果： 25% 几率不消耗弹药
+    - §a套装效果：
+    - §a+12% 远程暴击率
+    - §a25% 几率不消耗弹药
     attributes:
+      critRanged: 12
       ammoConsumptionRate: -0.25
   精金魔法套装:
     lore:
     - ''
-    - §a套装效果： -19% 魔力消耗
+    - §a套装效果：
+    - §a+17% 魔法伤害
+    - §a-19% 魔力消耗
     attributes:
+      damageMagicMulti: 0.17
       manaUseMulti: -0.19
   寒霜套装:
     lore:
@@ -986,21 +1009,28 @@ sets:
   神圣战士套装:
     lore:
     - ''
-    - §a套装效果： +12% 近战与移动速度
+    - §a套装效果：
+    - §a+12% 近战与移动速度
     attributes:
       speedMulti: 0.12
       useSpeedMeleeMulti: 0.12
   神圣射手套装:
     lore:
     - ''
-    - §a套装效果： 25% 几率不消耗弹药
+    - §a套装效果：
+    - §a+12% 远程伤害
+    - §a25% 几率不消耗弹药
     attributes:
+      damageRangedMulti: 0.12
       ammoConsumptionRate: -0.25
   神圣魔法套装:
     lore:
     - ''
-    - §a套装效果： -20% 魔力消耗
+    - §a套装效果：
+    - §a+19% 魔法伤害
+    - §a-20% 魔力消耗
     attributes:
+      damageMagicMulti: 0.19
       manaUseMulti: -0.2
   神圣召唤套装:
     lore:
@@ -1099,12 +1129,12 @@ sets:
     lore:
     - ''
     - §a套装效果：
-    - §a远程伤害和暴击率提升5%
+    - §a远程伤害和暴击率提升12%
     - §a移动速度减少7.5%
     - §a略微减少刷怪量和刷怪率
     attributes:
-      damageRangedMulti: 0.05
-      critRanged: 5
+      damageRangedMulti: 0.12
+      critRanged: 12
       speedMulti: -0.075
       mobLimit: -1
       mobSpawnRateMulti: -0.15
@@ -1126,29 +1156,28 @@ sets:
     lore:
     - ''
     - §a套装效果：
-    - §a+10% 远程伤害
+    - §a+15% 远程伤害
     - §a使用远程武器时发射出一个熔岩火球
     attributes:
-      damageRangedMulti: 0.1
+      damageRangedMulti: 0.15
   渊泉盗贼套装:
     lore:
     - ''
     - §a套装效果：
-    - §a+5% 盗贼伤害
-    - §a+5% 盗贼暴击率
+    - §a+14% 盗贼伤害和暴击率
     - §a+110 潜行值上限
     attributes:
-      damageRogueMulti: 0.05
-      critRogue: 5
+      damageRogueMulti: 0.14
+      critRogue: 14
       stealthLimit: 110
   渊泉魔法套装:
     lore:
     - ''
     - §a套装效果：
-    - §a+15% 魔法伤害
+    - §a+23% 魔法伤害
     - §a-15% 魔力消耗
     attributes:
-      damageMagicMulti: 0.15
+      damageMagicMulti: 0.23
       manaUseMulti: -0.15
   渊泉召唤套装:
     lore:
@@ -1212,11 +1241,11 @@ sets:
     lore:
     - ''
     - §a套装效果：
-    - §a+9% 盗贼伤害
+    - §a+15% 盗贼伤害
     - §a+115 潜行值上限
     - §a血量低于50%时获得10%伤害和5%暴击率
     attributes:
-      damageRogueMulti: 0.09
+      damageRogueMulti: 0.15
       stealthLimit: 115
   星云套装:
     lore:
@@ -1245,30 +1274,35 @@ sets:
     - ''
     - §a套装效果：
     - §a减少刷怪量和刷怪率
-    - §a远程弹幕在击中敌人后分裂为2个追踪生命能量，分别造成45%的魔法伤害
-    - §a这个效果有1秒的冷却
+    - §a+10% 远程伤害和暴击率
     attributes:
       mobLimit: -2
       mobSpawnRateMulti: -0.5
+      damageRangedMulti: 0.1
+      critRanged: 10
   龙蒿盗贼套装:
     lore:
     - ''
     - §a套装效果：
     - §a减少刷怪量和刷怪率
+    - §a+12% 盗贼伤害和暴击率
     - §a+115 潜行值上限
     attributes:
       mobLimit: -2
       mobSpawnRateMulti: -0.5
+      damageRogueMulti: 0.12
+      critRogue: 12
       stealthLimit: 115
   龙蒿魔法套装:
     lore:
     - ''
     - §a套装效果：
     - §a减少刷怪量和刷怪率
-    - §a每8次挥舞魔法武器就会发射出数个叶片，造成伤害的50%
+    - §a+18% 魔法伤害
     attributes:
       mobLimit: -2
       mobSpawnRateMulti: -0.5
+      damageMagicMulti: 0.18
   龙蒿召唤套装:
     lore:
     - ''
@@ -1310,11 +1344,14 @@ sets:
     - ''
     - §a套装效果：
     - §a+6 生命恢复
+    - §a+10% 远程伤害和暴击率
     - §a击中敌人会掉落红心，这个效果有5秒冷却时间
     - §a按下按下套装增益键[默认为V]释放噬魂幽花的冤魂摧毁你的敌人
     - §a此效果有30秒冷却时间
     attributes:
       regen: 6
+      damageRangedMulti: 0.1
+      critRanged: 10
   血炎盗贼套装:
     lore:
     - ''
@@ -1332,10 +1369,12 @@ sets:
     - ''
     - §a套装效果：
     - §a+6 生命恢复
+    - §a+10% 魔法伤害和暴击率
     - §a击中敌人会掉落红心，这个效果有5秒冷却时间
-    - §a魔法武器每1.25秒会发射一个灵魂射弹
     attributes:
       regen: 6
+      damageMagicMulti: 0.1
+      critMagic: 10
   血炎召唤套装:
     lore:
     - ''
@@ -1448,8 +1487,6 @@ sets:
     - §a继承龙蒿套装、血炎套装和弑神者套装远程头盔的效果
     - §b-> §a继承自龙蒿套装的效果：
     - §a减少刷怪量和刷怪率
-    - §a远程弹幕在击中敌人后分裂为2个追踪生命能量，分别造成45%的魔法伤害
-    - §a这个效果有1秒的冷却
     - §b-> §a继承自血炎套装的效果：
     - §a+6 生命恢复
     - §a击中敌人会掉落红心，这个效果有5秒冷却时间
@@ -1494,11 +1531,9 @@ sets:
     - §a继承龙蒿套装、血炎套装和始源林海套装魔法头盔的效果
     - §b-> §a继承自龙蒿套装的效果：
     - §a减少刷怪量和刷怪率
-    - §a每8次挥舞魔法武器就会发射出数个叶片，造成伤害的50%
     - §b-> §a继承自血炎套装的效果：
     - §a+6 生命恢复
     - §a击中敌人会掉落红心，这个效果有5秒冷却时间
-    - §a魔法武器每1.25秒会发射一个灵魂射弹
     - §b-> §a继承自始源林海套装的效果：
     - §a对敌人造成伤害时生成林海光球治疗你
     - §a即将受到致命伤害时进入8秒始源林海无敌状态
@@ -1546,9 +1581,9 @@ sets:
     - §a如果你已经损失了该宝石，那么这次失去的将会是基础宝石
     - §a破碎的宝石需要30秒来重新凝聚
     - §#EDAA2B黄色宝石增加45%近战伤害，26%近战速度和12%近战暴击率
-    - §#25BC6C绿色宝石增加50%远程伤害和16%远程暴击率
-    - §#E01800红色宝石给予130潜行值上限，50%盗贼伤害和16%盗贼暴击率
-    - §#C83AD1紫色宝石给予50%魔法伤害和16%魔法暴击率；最大魔力值提升100
+    - §#25BC6C绿色宝石增加50%远程伤害和33%远程暴击率
+    - §#E01800红色宝石给予130潜行值上限，50%盗贼伤害和33%盗贼暴击率
+    - §#C83AD1紫色宝石给予50%魔法伤害和33%魔法暴击率；最大魔力值提升100
     - §#2577CE蓝色宝石给予30%召唤伤害和4个召唤栏，并取消手持非召唤武器的召唤伤害降低惩罚
     - §#FF73CE粉色宝石给予150防御，12%伤害减免，40%飞行时间，6生命恢复和更长的受伤无敌帧
   魔影套装:
@@ -1558,7 +1593,7 @@ sets:
     - §a套装效果：
     - §a增加7个召唤栏，但手持其他职业武器对召唤物的伤害惩罚有所加深
     - §a按下套装增益键[默认为V]以黑魔法咒语强化自身
-    - §a这道咒语生效时防御力和伤害减免各降低15%，但造成伤害提高75%
+    - §a这道咒语生效时造成伤害提高75%，但防御力和伤害减免各降低15%
     - §a该效果每次触发都将持续时间重置为30秒，没有冷却限制
     attributes:
       minionLimit: 7

@@ -69,38 +69,6 @@ Script:
     }
     function hasAccessoryConflictSingle(currItem, otherAccessoryName){
       if (currItem == otherAccessoryName) return true;
-      switch(currItem) {
-        case "核子之源":
-          if (otherAccessoryName == "玷星之源") return true;
-          if (otherAccessoryName == "斯塔提斯的诅咒") return true;
-          break;
-        case "玷星之源":
-          if (otherAccessoryName == "核子之源") return true;
-          if (otherAccessoryName == "凝胶充能电池") return true;
-          if (otherAccessoryName == "核燃料棒") return true;
-          if (otherAccessoryName == "星爆核心") return true;
-          break;
-        case "斯塔提斯的诅咒":
-          if (otherAccessoryName == "核子之源") return true;
-          if (otherAccessoryName == "斯塔提斯的祝福") return true;
-          if (otherAccessoryName == "始源暗影炎") return true;
-          break;
-        case "斯塔提斯的祝福":
-        case "始源暗影炎":
-          if (otherAccessoryName == "斯塔提斯的诅咒") return true;
-          break;
-        case "核子之源":
-        case "凝胶充能电池":
-        case "核燃料棒":
-          if (otherAccessoryName == "玷星之源") return true;
-          break;
-        case "深渊潜游服":
-          if (otherAccessoryName == "深渊潜游装") return true;
-          break;
-        case "深渊潜游装":
-          if (otherAccessoryName == "深渊潜游服") return true;
-          break;
-      }
       return false;
     }
     function hasAccessoryConflict(currItem, otherAccessoryNames){

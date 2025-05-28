@@ -84,9 +84,6 @@ public class ArrowHitListener implements Listener {
 
         // weapon-specific characteristics:
         handleProjectileWeapon(projectile, projectileName, projectileScoreboardTags, entity);
-
-        // armor set specific characteristics:
-        handleProjectileArmorSet(projectile, attrMap);
     }
     private static void handleProjectileOnHit(Projectile projectile, String projectileName,
                                               Entity entityHit, Set<String> projectileScoreboardTags) {
@@ -154,40 +151,6 @@ public class ArrowHitListener implements Listener {
             }
             EntityHelper.setMetadata(entityHit, EntityHelper.MetadataName.LAST_ADAMANTITE_PARTICLE_TYPE,
                     projectileName);
-        }
-    }
-    private static void handleProjectileArmorSet(Projectile projectile, HashMap<String, Double> attrMap) {
-        if (projectile.getShooter() instanceof Player) {
-            Player shooter = (Player) projectile.getShooter();
-            String armorSet = PlayerHelper.getArmorSet(shooter);
-            DamageHelper.DamageType damageType = DamageHelper.getDamageType(projectile);
-            Set<String> plyScoreboardTags = shooter.getScoreboardTags();
-            switch (armorSet) {
-                case "龙蒿远程套装":
-                case "金源远程套装": {
-                    switch ( damageType ) {
-                        case ARROW:
-                        case BULLET:
-                        case ROCKET: {
-                            // cool down
-                            String coolDownTag = "temp_tarragonRanged";
-                            if (plyScoreboardTags.contains(coolDownTag))
-                                break;
-                            // apply cool down
-                            EntityHelper.handleEntityTemporaryScoreboardTag(shooter, coolDownTag, 20);
-                            // fire projectile
-                            HashMap<String, Double> extraProjAttrMap = (HashMap<String, Double>) attrMap.clone();
-                            extraProjAttrMap.put("damage", extraProjAttrMap.getOrDefault("damage", 20d) * 0.45);
-                            for (int i = 0; i < 2; i ++) {
-                                EntityHelper.spawnProjectile(shooter, projectile.getLocation(),
-                                        MathHelper.randomVector().multiply(2), extraProjAttrMap,
-                                        DamageHelper.DamageType.MAGIC, "龙蒿生命能量");
-                            }
-                        }
-                    }
-                    break;
-                }
-            }
         }
     }
     private static void handleProjectileBlast(Projectile projectile, Location projectileDestroyLoc) {

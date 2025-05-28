@@ -299,6 +299,8 @@ public class EventAndTime {
             return false;
         if (! BossHelper.bossMap.isEmpty())
             return false;
+        if (getBossRushCandidatePlayers().isEmpty())
+            return false;
         bossRushProgress = -1;
         bossRushSpawn(true);
         return true;
