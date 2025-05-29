@@ -12131,7 +12131,7 @@ Dodu的手炮:
     damage: 75
     damageType: Summon
     knockback: 7.5
-    useTime: 30
+    useTime: 20
     manaUse: 10
   worth: 5000000
   rarity: 4
@@ -12144,7 +12144,7 @@ Dodu的手炮:
     damage: 175
     damageType: Summon
     knockback: 7.5
-    useTime: 30
+    useTime: 20
     manaUse: 10
   worth: 10000000
   rarity: 10
@@ -12158,7 +12158,7 @@ Dodu的手炮:
     damage: 125
     damageType: Summon
     knockback: 7.5
-    useTime: 30
+    useTime: 20
     manaUse: 10
   worth: 10000000
   rarity: 10
@@ -12170,7 +12170,7 @@ Dodu的手炮:
     damage: 16
     damageType: Summon
     knockback: 0.5
-    useTime: 34
+    useTime: 20
     manaUse: 10
   worth: 100000
   rarity: 0
@@ -12182,7 +12182,7 @@ Dodu的手炮:
     damage: 24
     damageType: Summon
     knockback: 0
-    useTime: 34
+    useTime: 20
     manaUse: 10
   worth: 400000
   rarity: 2
@@ -12194,7 +12194,7 @@ Dodu的手炮:
     damage: 100
     damageType: Summon
     knockback: 4
-    useTime: 24
+    useTime: 20
     manaUse: 10
   worth: 7200000
   rarity: 6
@@ -12206,7 +12206,7 @@ Dodu的手炮:
     damage: 300
     damageType: Summon
     knockback: 0
-    useTime: 24
+    useTime: 20
     manaUse: 10
   worth: 12000000
   rarity: 1100
@@ -12218,7 +12218,7 @@ Dodu的手炮:
     damage: 112
     damageType: Summon
     knockback: 2
-    useTime: 19
+    useTime: 20
     manaUse: 10
   worth: 12000000
   rarity: 8
@@ -12230,7 +12230,7 @@ Dodu的手炮:
     damage: 768
     damageType: Summon
     knockback: 4
-    useTime: 13
+    useTime: 15
     manaUse: 10
   worth: 26000000
   rarity: 13
@@ -12243,7 +12243,7 @@ Dodu的手炮:
     damageType: Summon
     projectileSpeed: 10
     knockback: 2
-    useTime: 28
+    useTime: 20
     manaUse: 20
   worth: 2000000
   rarity: 4
@@ -12255,7 +12255,7 @@ Dodu的手炮:
     damage: 46
     damageType: Summon
     knockback: 2
-    useTime: 36
+    useTime: 20
     manaUse: 20
   worth: 200000
   rarity: 3
@@ -12268,7 +12268,7 @@ Dodu的手炮:
     damage: 70
     damageType: Summon
     knockback: 1
-    useTime: 36
+    useTime: 18
     manaUse: 10
   worth: 1000000
   rarity: 4
@@ -12282,7 +12282,7 @@ Dodu的手炮:
     damage: 24
     damageType: Summon
     knockback: 0
-    useTime: 25
+    useTime: 18
     manaUse: 10
   worth: 1000000
   rarity: 5
@@ -12294,7 +12294,7 @@ Dodu的手炮:
     damage: 64
     damageType: Summon
     knockback: 2
-    useTime: 36
+    useTime: 18
     manaUse: 10
   worth: 2000000
   rarity: 5
@@ -12306,7 +12306,7 @@ Dodu的手炮:
     damage: 100
     damageType: Summon
     knockback: 3
-    useTime: 28
+    useTime: 14
     manaUse: 10
   worth: 7000000
   rarity: 7
@@ -12318,7 +12318,7 @@ Dodu的手炮:
     damage: 95
     damageType: Summon
     knockback: 3
-    useTime: 28
+    useTime: 14
     manaUse: 10
   worth: 10000000
   rarity: 8
@@ -12330,7 +12330,7 @@ Dodu的手炮:
     damage: 150
     damageType: Summon
     knockback: 3
-    useTime: 36
+    useTime: 14
     manaUse: 10
   worth: 10000000
   rarity: 8
@@ -12342,7 +12342,7 @@ Dodu的手炮:
     damage: 145
     damageType: Summon
     knockback: 1
-    useTime: 36
+    useTime: 14
     manaUse: 10
   worth: 20000000
   rarity: 8
@@ -12355,7 +12355,7 @@ Dodu的手炮:
     damage: 140
     damageType: Summon
     knockback: 2
-    useTime: 36
+    useTime: 14
     manaUse: 10
   worth: 10000000
   rarity: 10
@@ -12368,7 +12368,7 @@ Dodu的手炮:
     damage: 110
     damageType: Summon
     knockback: 2
-    useTime: 36
+    useTime: 14
     manaUse: 10
   worth: 10000000
   rarity: 10
@@ -12380,7 +12380,7 @@ Dodu的手炮:
     damage: 36
     damageType: Summon
     knockback: 0.5
-    useTime: 34
+    useTime: 20
     manaUse: 10
   worth: 200000
   rarity: 1
@@ -12394,7 +12394,7 @@ Dodu的手炮:
     damage: 22
     damageType: Summon
     knockback: 2
-    useTime: 34
+    useTime: 20
     manaUse: 10
   worth: 200000
   rarity: 1
@@ -12407,7 +12407,7 @@ Dodu的手炮:
     damage: 40
     damageType: Summon
     knockback: 1.15
-    useTime: 34
+    useTime: 20
     manaUse: 10
   worth: 200000
   rarity: 1
@@ -12419,7 +12419,7 @@ Dodu的手炮:
     damage: 40
     damageType: Summon
     knockback: 1
-    useTime: 34
+    useTime: 20
     manaUse: 10
   worth: 200000
   rarity: 1
@@ -12432,7 +12432,7 @@ Dodu的手炮:
     damage: 30
     damageType: Summon
     knockback: 2
-    useTime: 29
+    useTime: 20
     manaUse: 10
   worth: 400000
   rarity: 2
@@ -12445,7 +12445,7 @@ Dodu的手炮:
     damage: 92
     damageType: Summon
     knockback: 2
-    useTime: 34
+    useTime: 20
     manaUse: 10
   worth: 400000
   rarity: 2
@@ -12457,7 +12457,7 @@ Dodu的手炮:
     damage: 16
     damageType: Summon
     knockback: 2
-    useTime: 34
+    useTime: 20
     manaUse: 10
   worth: 400000
   rarity: 2
@@ -12469,7 +12469,7 @@ Dodu的手炮:
     damage: 40
     damageType: Summon
     knockback: 2
-    useTime: 34
+    useTime: 20
     manaUse: 10
   worth: 400000
   rarity: 2
@@ -12481,7 +12481,7 @@ Dodu的手炮:
     damage: 32
     damageType: Summon
     knockback: 0.5
-    useTime: 29
+    useTime: 20
     manaUse: 10
   worth: 400000
   rarity: 2
@@ -12494,7 +12494,7 @@ Dodu的手炮:
     damage: 42
     damageType: Summon
     knockback: 2
-    useTime: 29
+    useTime: 20
     manaUse: 10
   worth: 800000
   rarity: 3
@@ -12506,7 +12506,7 @@ Dodu的手炮:
     damage: 26
     damageType: Summon
     knockback: 2.25
-    useTime: 30
+    useTime: 20
     manaUse: 10
   worth: 800000
   rarity: 3
@@ -12519,7 +12519,7 @@ Dodu的手炮:
     damage: 60
     damageType: Summon
     knockback: 2.25
-    useTime: 30
+    useTime: 20
     manaUse: 10
   worth: 800000
   rarity: 1100
@@ -12532,7 +12532,7 @@ Dodu的手炮:
     damage: 74
     damageType: Summon
     knockback: 3.5
-    useTime: 29
+    useTime: 20
     manaUse: 10
   worth: 800000
   rarity: 3
@@ -12544,7 +12544,7 @@ Dodu的手炮:
     damage: 172
     damageType: Summon
     knockback: 2
-    useTime: 29
+    useTime: 20
     manaUse: 10
   worth: 2400000
   rarity: 4
@@ -12556,7 +12556,7 @@ Dodu的手炮:
     damage: 172
     damageType: Summon
     knockback: 2
-    useTime: 29
+    useTime: 20
     manaUse: 10
   worth: 2400000
   rarity: 4
@@ -12568,7 +12568,7 @@ Dodu的手炮:
     damage: 44
     damageType: Summon
     knockback: 1
-    useTime: 29
+    useTime: 20
     manaUse: 10
   worth: 800000
   rarity: 3
@@ -12582,7 +12582,7 @@ Dodu的手炮:
     damage: 162
     damageType: Summon
     knockback: 1
-    useTime: 24
+    useTime: 18
     manaUse: 10
   worth: 2400000
   rarity: 4
@@ -12595,7 +12595,7 @@ Dodu的手炮:
     damage: 92
     damageType: Summon
     knockback: 3
-    useTime: 24
+    useTime: 18
     manaUse: 10
   worth: 2400000
   rarity: 4
@@ -12607,7 +12607,7 @@ Dodu的手炮:
     damage: 102
     damageType: Summon
     knockback: 2
-    useTime: 24
+    useTime: 18
     manaUse: 10
   worth: 2400000
   rarity: 4
@@ -12620,7 +12620,7 @@ Dodu的手炮:
     damage: 160
     damageType: Summon
     knockback: 4
-    useTime: 24
+    useTime: 18
     manaUse: 10
   worth: 4800000
   rarity: 5
@@ -12633,7 +12633,7 @@ Dodu的手炮:
     damage: 180
     damageType: Summon
     knockback: 2
-    useTime: 24
+    useTime: 18
     manaUse: 10
   worth: 4800000
   rarity: 5
@@ -12646,7 +12646,7 @@ Dodu的手炮:
     damage: 135
     damageType: Summon
     knockback: 4.5
-    useTime: 24
+    useTime: 18
     manaUse: 10
   worth: 4800000
   rarity: 5
@@ -12659,7 +12659,7 @@ Dodu的手炮:
     damage: 100
     damageType: Summon
     knockback: 3
-    useTime: 24
+    useTime: 18
     manaUse: 10
   worth: 4800000
   rarity: 5
@@ -12671,7 +12671,7 @@ Dodu的手炮:
     damage: 65
     damageType: Summon
     knockback: 3
-    useTime: 24
+    useTime: 18
     manaUse: 10
   worth: 4800000
   rarity: 5
@@ -12683,7 +12683,7 @@ Dodu的手炮:
     damage: 65
     damageType: Summon
     knockback: 2
-    useTime: 24
+    useTime: 18
     manaUse: 10
   worth: 4800000
   rarity: 5
@@ -12695,7 +12695,7 @@ Dodu的手炮:
     damage: 55
     damageType: Summon
     knockback: 3
-    useTime: 24
+    useTime: 18
     manaUse: 10
   worth: 4800000
   rarity: 5
@@ -12707,7 +12707,7 @@ Dodu的手炮:
     damage: 83
     damageType: Summon
     knockback: 4.5
-    useTime: 24
+    useTime: 18
     manaUse: 10
   worth: 4800000
   rarity: 5
@@ -12719,7 +12719,7 @@ Dodu的手炮:
     damage: 92
     damageType: Summon
     knockback: 2
-    useTime: 24
+    useTime: 18
     manaUse: 10
   worth: 4800000
   rarity: 1100
@@ -12732,7 +12732,7 @@ Dodu的手炮:
     damage: 140
     damageType: Summon
     knockback: 1.25
-    useTime: 24
+    useTime: 18
     manaUse: 10
   worth: 7200000
   rarity: 6
@@ -12745,7 +12745,7 @@ Dodu的手炮:
     damage: 75
     damageType: Summon
     knockback: 2
-    useTime: 24
+    useTime: 14
     manaUse: 10
   worth: 9600000
   rarity: 7
@@ -12759,7 +12759,7 @@ Dodu的手炮:
     damage: 118
     damageType: Summon
     knockback: 1
-    useTime: 19
+    useTime: 14
     manaUse: 10
   worth: 12000000
   rarity: 8
@@ -12771,7 +12771,7 @@ Dodu的手炮:
     damage: 170
     damageType: Summon
     knockback: 2
-    useTime: 19
+    useTime: 14
     manaUse: 10
   worth: 9600000
   rarity: 7
@@ -12783,7 +12783,7 @@ Dodu的手炮:
     damage: 90
     damageType: Summon
     knockback: 2
-    useTime: 19
+    useTime: 14
     manaUse: 10
   worth: 9600000
   rarity: 7
@@ -12795,7 +12795,7 @@ Dodu的手炮:
     damage: 80
     damageType: Summon
     knockback: 1
-    useTime: 19
+    useTime: 14
     manaUse: 10
   worth: 9600000
   rarity: 7
@@ -12809,7 +12809,7 @@ Dodu的手炮:
     damage: 71
     damageType: Summon
     knockback: 1
-    useTime: 19
+    useTime: 14
     manaUse: 10
   worth: 12000000
   rarity: 8
@@ -12821,7 +12821,7 @@ Dodu的手炮:
     damage: 220
     damageType: Summon
     knockback: 7
-    useTime: 19
+    useTime: 14
     manaUse: 10
   worth: 12000000
   rarity: 8
@@ -12835,7 +12835,7 @@ Dodu的手炮:
     damage: 347
     damageType: Summon
     knockback: 5
-    useTime: 19
+    useTime: 14
     manaUse: 10
   worth: 12000000
   rarity: 8
@@ -12849,7 +12849,7 @@ Dodu的手炮:
     damage: 77
     damageType: Summon
     knockback: 3
-    useTime: 19
+    useTime: 14
     manaUse: 10
   worth: 12000000
   rarity: 8
@@ -12861,7 +12861,7 @@ Dodu的手炮:
     damage: 154
     damageType: Summon
     knockback: 1.25
-    useTime: 19
+    useTime: 14
     manaUse: 10
   worth: 16000000
   rarity: 9
@@ -12889,7 +12889,7 @@ Dodu的手炮:
     damage: 226
     damageType: Summon
     knockback: 5
-    useTime: 14
+    useTime: 10
     manaUse: 10
   worth: 22000000
   rarity: 11
@@ -12902,7 +12902,7 @@ Dodu的手炮:
     damage: 248
     damageType: Summon
     knockback: 5
-    useTime: 14
+    useTime: 10
     manaUse: 10
   worth: 22000000
   rarity: 11
@@ -12914,7 +12914,7 @@ Dodu的手炮:
     damage: 226
     damageType: Summon
     knockback: 2
-    useTime: 14
+    useTime: 10
     manaUse: 10
   worth: 24000000
   rarity: 12
@@ -12928,7 +12928,7 @@ Dodu的手炮:
     damage: 360
     damageType: Summon
     knockback: 5
-    useTime: 14
+    useTime: 10
     manaUse: 10
   worth: 24000000
   rarity: 12
@@ -12944,7 +12944,7 @@ Dodu的手炮:
     damage: 210
     damageType: Summon
     knockback: 3
-    useTime: 14
+    useTime: 10
     manaUse: 12
   worth: 24000000
   rarity: 1100
@@ -12957,7 +12957,7 @@ Dodu的手炮:
     damage: 705
     damageType: Summon
     knockback: 4
-    useTime: 14
+    useTime: 10
     manaUse: 10
   worth: 24000000
   rarity: 12
@@ -12998,7 +12998,7 @@ Dodu的手炮:
     damage: 722
     damageType: Summon
     knockback: 1
-    useTime: 14
+    useTime: 10
     manaUse: 10
   worth: 26000000
   rarity: 13
@@ -13013,7 +13013,7 @@ Dodu的手炮:
     damage: 652
     damageType: Summon
     knockback: 2.5
-    useTime: 14
+    useTime: 10
     manaUse: 10
   worth: 26000000
   rarity: 13
@@ -13028,7 +13028,7 @@ Dodu的手炮:
     damage: 1860
     damageType: Summon
     knockback: 3
-    useTime: 30
+    useTime: 20
     manaUse: 30
   worth: 26000000
   rarity: 13
@@ -13042,7 +13042,7 @@ Dodu的手炮:
     damage: 339
     damageType: Summon
     knockback: 5
-    useTime: 30
+    useTime: 20
     manaUse: 30
   worth: 26000000
   rarity: 13
@@ -13055,7 +13055,7 @@ Dodu的手炮:
     damage: 1082
     damageType: Summon
     knockback: 2
-    useTime: 14
+    useTime: 10
     manaUse: 10
   worth: 28000000
   rarity: 14
@@ -13070,7 +13070,7 @@ Dodu的手炮:
     damage: 978
     damageType: Summon
     knockback: 6
-    useTime: 14
+    useTime: 10
     manaUse: 10
   worth: 28000000
   rarity: 14
@@ -13083,7 +13083,7 @@ Dodu的手炮:
     damage: 486
     damageType: Summon
     knockback: 2
-    useTime: 14
+    useTime: 10
     manaUse: 10
   worth: 28000000
   rarity: 14
@@ -13098,7 +13098,7 @@ Dodu的手炮:
     damage: 1798
     damageType: Summon
     knockback: 4
-    useTime: 40
+    useTime: 30
     manaUse: 40
   worth: 28000000
   rarity: 14
@@ -13110,7 +13110,7 @@ Dodu的手炮:
     damage: 603
     damageType: Summon
     knockback: 8
-    useTime: 14
+    useTime: 10
     manaUse: 12
   worth: 28000000
   rarity: 1100
@@ -13136,7 +13136,7 @@ Dodu的手炮:
     damage: 378
     damageType: Summon
     knockback: 1
-    useTime: 14
+    useTime: 10
     manaUse: 10
   worth: 30000000
   rarity: 15
@@ -13152,7 +13152,7 @@ Dodu的手炮:
     damage: 1500
     damageType: Summon
     knockback: 2
-    useTime: 40
+    useTime: 20
     manaUse: 40
   worth: 30000000
   rarity: 15
@@ -13164,7 +13164,7 @@ Dodu的手炮:
     damage: 609
     damageType: Summon
     knockback: 4
-    useTime: 14
+    useTime: 10
     manaUse: 10
   worth: 30000000
   rarity: 15
@@ -13178,7 +13178,7 @@ Dodu的手炮:
     damage: 762
     damageType: Summon
     knockback: 4
-    useTime: 40
+    useTime: 30
     manaUse: 40
   worth: 30000000
   rarity: 15
@@ -13255,7 +13255,7 @@ Dodu的手炮:
     damage: 2150
     damageType: Summon
     knockback: 4
-    useTime: 60
+    useTime: 50
     manaUse: 80
   worth: 40000000
   rarity: 16
@@ -13274,7 +13274,7 @@ Dodu的手炮:
     damage: 400
     damageType: Summon
     knockback: 1
-    useTime: 50
+    useTime: 30
     manaUse: 60
   worth: 40000000
   rarity: 16
