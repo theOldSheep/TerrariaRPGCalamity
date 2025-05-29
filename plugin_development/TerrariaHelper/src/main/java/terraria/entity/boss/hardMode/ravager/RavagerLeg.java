@@ -93,7 +93,6 @@ public class RavagerLeg extends EntitySlime {
         // init attribute map
         {
             attrMap = (HashMap<String, Double>) owner.attrMap.clone();
-            attrMap.put("damageTakenMulti", 0.85);
             DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
             EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }

@@ -2266,7 +2266,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                         double plyHealthRatio = ply.getHealth() / ply.getMaxHealth();
                         if (plyHealthRatio < 0.5) {
                             AttributeHelper.tweakAttribute(ply, newAttrMap,
-                                    "damageMulti", "0.1", true);
+                                    "damageMulti", "0.05", true);
                             AttributeHelper.tweakAttribute(ply, newAttrMap,
                                     "crit", "5", true);
                         }
@@ -2383,7 +2383,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                             break;
                         }
                         case "恼怒项链": {
-                            if (ply.getHealth() * 2 > ply.getMaxHealth())
+                            if (ply.getHealth() * 2 < ply.getMaxHealth())
                                 AttributeHelper.tweakAttribute(ply, newAttrMap,
                                         "damageMulti", "0.2", true);
                             break;
@@ -3135,8 +3135,8 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     } else {
                         int projectilePower = (int) Math.ceil(dmg * 0.5);
                         createSpectreProjectile(dPly, v.getLocation().add(0, 1.5d, 0), projectilePower, false, "t/bt");
-                        // 600 dmg/second = 30 dmg/tick
-                        coolDownTicks = (int) Math.ceil(projectilePower / 30d);
+                        // 1000 dmg/second = 50 dmg/tick
+                        coolDownTicks = (int) Math.ceil(projectilePower / 50d);
                     }
                     // apply CD
                     EntityHelper.handleEntityTemporaryScoreboardTag(dPly, spectreCD, coolDownTicks);

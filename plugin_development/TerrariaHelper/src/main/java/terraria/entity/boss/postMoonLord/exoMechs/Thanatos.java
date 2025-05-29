@@ -109,11 +109,11 @@ public class Thanatos extends EntitySlime {
 
     public void setOpen(boolean open) {
         if (open && armorCloseCountdown <= 0) {
-            AttributeHelper.tweakAttribute(attrMap, "defenceMulti", "10", false);
+            AttributeHelper.tweakAttribute(attrMap, "defenceMulti", "0.1", false);
             addScoreboardTag("isMonster");
             setCustomName(segmentType.openName);
         } else if (!open && armorCloseCountdown <= 0) {
-            AttributeHelper.tweakAttribute(attrMap, "defenceMulti", "10", true);
+            AttributeHelper.tweakAttribute(attrMap, "defenceMulti", "0.1", true);
             removeScoreboardTag("isMonster");
             setCustomName(segmentType.closedName);
         }
@@ -407,6 +407,7 @@ public class Thanatos extends EntitySlime {
             attrMap.put("crit", 0.04);
             attrMap.put("damage", segmentType.getDamage());
             attrMap.put("defence", 300d);
+            attrMap.put("damageTakenMulti", 0.25d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.BULLET);

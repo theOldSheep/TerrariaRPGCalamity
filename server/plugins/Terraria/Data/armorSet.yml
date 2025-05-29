@@ -593,10 +593,10 @@ sets:
     lore:
     - ''
     - §a套装效果： +6 防御
-    - §a+1 召唤栏
+    - §a+3 召唤栏
     attributes:
       defence: 6
-      minionLimit: 1
+      minionLimit: 3
   沙漠巡游者套装:
     lore:
     - ''
@@ -653,9 +653,12 @@ sets:
   丛林法师套:
     lore:
     - ''
-    - §a套装效果： -15% 魔力消耗
+    - §a套装效果：
+    - §a-7% 魔力消耗
+    - §a+6% 魔法伤害
     attributes:
-      manaUseMulti: -0.15
+      manaUseMulti: -0.07
+      damageMagicMulti: 0.06
   胜潮近战套装:
     lore:
     - ''
@@ -712,12 +715,12 @@ sets:
     - §a套装效果：
     - §a+3 生命恢复
     - §a+8% 召唤伤害
-    - §a+1 召唤栏
+    - §a+3 召唤栏
     - §a增加水下适应性
     attributes:
       damageSummonMulti: 0.08
       regen: 3
-      minionLimit: 1
+      minionLimit: 3
       waterAffinity: 1
   流星套装:
     lore:
@@ -727,11 +730,11 @@ sets:
     lore:
     - ''
     - §a套装效果：
-    - §a+15% 召唤伤害
-    - §a+1 召唤栏
+    - §a+10% 召唤伤害
+    - §a+3 召唤栏
     attributes:
-      damageSummonMulti: 0.15
-      minionLimit: 1
+      damageSummonMulti: 0.1
+      minionLimit: 3
   暗影套装:
     lore:
     - ''
@@ -787,10 +790,10 @@ sets:
     - ''
     - §a套装效果： 
     - §a+10% 召唤伤害
-    - §a+2 召唤栏
+    - §a+4 召唤栏
     attributes:
       damageSummonMulti: 0.1
-      minionLimit: 2
+      minionLimit: 4
   死灵射手套:
     lore:
     - ''
@@ -837,16 +840,19 @@ sets:
     - ''
     - §a套装效果： 
     - §a+5% 召唤伤害
-    - §a+2 召唤栏
+    - §a+4 召唤栏
     attributes:
       damageSummonMulti: 0.05
-      minionLimit: 2
+      minionLimit: 4
   蜘蛛套装:
     lore:
     - ''
-    - §a套装效果： +10% 仆从伤害
+    - §a套装效果：
+    - §a+10% 召唤伤害
+    - §a+2 召唤栏
     attributes:
       damageSummonMulti: 0.1
+      minionLimit: 2
   泰坦之心套装:
     lore:
     - ''
@@ -966,10 +972,10 @@ sets:
     - ''
     - §a套装效果：
     - §a提升35%召唤伤害
-    - §a+3 召唤栏
+    - §a+4 召唤栏
     attributes:
       damageSummonMulti: 0.35
-      minionLimit: 3
+      minionLimit: 4
   精金战士套装:
     lore:
     - ''
@@ -1037,10 +1043,10 @@ sets:
     lore:
     - ''
     - §a套装效果：
-    - §a+3 仆从容量
+    - §a+4 仆从容量
     - §a+25% 仆从伤害
     attributes:
-      minionLimit: 3
+      minionLimit: 4
       damageSummonMulti: 0.25
   叶绿魔法套装:
     lore:
@@ -1244,7 +1250,7 @@ sets:
     - §a套装效果：
     - §a+15% 盗贼伤害
     - §a+115 潜行值上限
-    - §a血量低于50%时获得10%伤害和5%暴击率
+    - §a血量低于50%时获得5%伤害和暴击率
     attributes:
       damageRogueMulti: 0.15
       stealthLimit: 115

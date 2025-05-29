@@ -436,8 +436,8 @@ effects:
   召唤:
     isBuff: true
     attributes:
-      minionLimit: 1
-    tooltip: 召唤栏 +1
+      damageSummonMulti: 0.1
+    tooltip: 召唤伤害增加 10%
   敏捷:
     isBuff: true
     attributes:

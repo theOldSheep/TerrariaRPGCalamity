@@ -76,7 +76,6 @@ public class PlanteraTentacle extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 552d);
-            attrMap.put("damageTakenMulti", 0.9);
             attrMap.put("defence", 40d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);

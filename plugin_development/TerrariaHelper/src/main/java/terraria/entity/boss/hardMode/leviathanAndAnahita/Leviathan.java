@@ -219,7 +219,6 @@ public class Leviathan extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 648d);
-            attrMap.put("damageTakenMulti", 0.65);
             attrMap.put("defence", 80d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);

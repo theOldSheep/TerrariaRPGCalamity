@@ -24,7 +24,7 @@ import java.util.UUID;
 public class LunaticCultist extends EntityZombie {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.LUNATIC_CULTIST;
-    public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
+    public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.DUNGEON;
     public static final double BASIC_HEALTH = 183600 * 2, BASIC_HEALTH_BR = 420750 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
@@ -321,7 +321,7 @@ public class LunaticCultist extends EntityZombie {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 594d);
-            attrMap.put("damageTakenMulti", 0.5d);
+            attrMap.put("damageTakenMulti", 0.6d);
             attrMap.put("defence", 94d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);

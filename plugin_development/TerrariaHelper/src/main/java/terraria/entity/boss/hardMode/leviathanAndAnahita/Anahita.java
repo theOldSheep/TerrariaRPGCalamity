@@ -282,7 +282,6 @@ public class Anahita extends EntityZombieHusk {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 384d);
-            attrMap.put("damageTakenMulti", 0.8);
             attrMap.put("defence", 50d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);

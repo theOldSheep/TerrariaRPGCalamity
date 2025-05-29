@@ -104,7 +104,6 @@ public class RavagerHead extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", postProvidence ? 864d : 624d);
-            attrMap.put("damageTakenMulti", 0.85);
             attrMap.put("defence", postProvidence ? 160d : 80d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);

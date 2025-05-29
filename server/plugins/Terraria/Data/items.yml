@@ -1668,6 +1668,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r近战伤害造成狱炎减益
   attributes:
     buffInflictMelee: 狱炎|100|1
   worth: 2000000
@@ -1873,7 +1874,6 @@
   - §r[饰品]
   attributes:
     minionLimit: 1
-    damageSummonMulti: 0.05
   worth: 4000000
   rarity: 8
 甲虫莎草纸:
@@ -1882,7 +1882,7 @@
   - §r[饰品]
   attributes:
     minionLimit: 1
-    damageSummonMulti: 0.1
+    damageSummonMulti: 0.05
   worth: 5000000
   rarity: 8
 天蓝石:
@@ -2454,9 +2454,10 @@ Drew之翼:
   - §r[饰品]
   - §r使你的召唤物附带神圣之火debuff
   attributes:
-    regen: 6
-    barrierMax: 75
+    regen: 4
+    barrierMax: 50
     minionLimit: 1
+    damageMulti: 0.05
     buffInflictSummon: 神圣之火|30|1
   worth: 24000000
   rarity: 12
@@ -14124,7 +14125,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 0
-    damageMagicMulti: 0.15
+    damageSummonMulti: 0.15
   worth: 150000
   rarity: 1
 钨钢盔甲:
@@ -14275,7 +14276,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 10
+    defence: 7
     maxMana: 40
     critMagic: 3
   worth: 900000
@@ -14285,7 +14286,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 14
+    defence: 11
     damageMagicMulti: 0.06
   worth: 600000
   rarity: 1
@@ -14294,7 +14295,7 @@ Dodu的手炮:
   lore:
   - §r[装备]
   attributes:
-    defence: 8
+    defence: 5
     critMagic: 3
   worth: 600000
   rarity: 1
@@ -15407,7 +15408,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 24
-    minionLimit: 1
+    minionLimit: 2
     damageSummonMulti: 0.16
   worth: 1000000
   rarity: 8
@@ -15530,7 +15531,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 20
-    minionLimit: 2
+    minionLimit: 3
     damageSummonMulti: 0.17
   worth: 12000000
   rarity: 8
@@ -15695,7 +15696,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 30
-    damageRogueMulti: 0.11
+    damageRogueMulti: 0.14
     critRogue: 11
     speedMulti: 0.05
   worth: 20000000
@@ -15708,7 +15709,7 @@ Dodu的手炮:
   attributes:
     defence: 44
     maxHealth: 40
-    damageRogueMulti: 0.07
+    damageRogueMulti: 0.1
     critRogue: 7
   worth: 20000000
   rarity: 10
@@ -15718,7 +15719,7 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 38
-    damageRogueMulti: 0.1
+    damageRogueMulti: 0.13
     critRogue: 7
     speedMulti: 0.15
   worth: 20000000
@@ -16180,8 +16181,8 @@ Dodu的手炮:
   - §r[装备]
   attributes:
     defence: 48
-    damageMagicMulti: 0.2
-    critMagic: 20
+    damageMagicMulti: 0.32
+    critMagic: 32
     maxMana: 100
     manaUseMulti: -0.2
   worth: 30000000
@@ -16193,7 +16194,7 @@ Dodu的手炮:
   attributes:
     defence: 24
     minionLimit: 2
-    damageSummonMulti: 0.1
+    damageSummonMulti: 0.34
   worth: 30000000
   rarity: 15
 古圣金源盔甲:
@@ -16406,7 +16407,7 @@ Dodu的手炮:
 召唤药水:
   item: CLAY_BALL
   lore:
-  - §a+1 仆从上限
+  - §a+10% 召唤伤害
   - §a8分钟持续时间
   worth: 20000
   rarity: 1

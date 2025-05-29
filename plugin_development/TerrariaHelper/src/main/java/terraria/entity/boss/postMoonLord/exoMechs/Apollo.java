@@ -179,7 +179,6 @@ public class Apollo extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 2040d);
-            attrMap.put("damageTakenMulti", 0.75d);
             attrMap.put("defence", 200d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);

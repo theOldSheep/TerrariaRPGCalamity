@@ -57,7 +57,6 @@ terraria\entity\boss\postMoonLord\devourerOfGods\AttackPattern.class
 terraria\event\listener\PlayerQuitListener.class
 terraria\entity\boss\preHardMode\kingSlime\KingSlime$1.class
 terraria\entity\npc\TerrariaNPCGoblinTinkerer.class
-terraria\event\listener\ArrowHitListener$1.class
 terraria\entity\boss\preHardMode\kingSlime\CrownJewel.class
 terraria\entity\boss\hardMode\golem\GolemFoot.class
 terraria\entity\boss\hardMode\thePlaguebringerGoliath\ThePlaguebringerGoliath.class

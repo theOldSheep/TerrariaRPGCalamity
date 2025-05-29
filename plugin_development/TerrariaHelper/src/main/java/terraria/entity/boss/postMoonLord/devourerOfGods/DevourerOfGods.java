@@ -44,7 +44,7 @@ public class DevourerOfGods extends EntitySlime {
     CeaselessVoid ceaselessVoid = null;
     Signus signus = null;
     static final double[]
-            SEGMENT_DAMAGE = {1760d, 1100d, 920d}, SEGMENT_DEFENCE = {100d, 140d, 100d}, SEGMENT_DAMAGE_TAKEN = {0.9d, 0.15d, 1d};
+            SEGMENT_DAMAGE = {1760d, 1100d, 920d}, SEGMENT_DEFENCE = {100d, 140d, 100d}, SEGMENT_DAMAGE_TAKEN = {0.6d, 0.5d, 0.6d};
     static final int SLIME_SIZE = 10, DAMAGE_TAKEN_INTERPOLATE_SEGMENTS = 15;
 
     static final int FLYING_TOTAL_DURATION = 300, FLYING_START_INDEX = 60, FLYING_END_INDEX = 240;

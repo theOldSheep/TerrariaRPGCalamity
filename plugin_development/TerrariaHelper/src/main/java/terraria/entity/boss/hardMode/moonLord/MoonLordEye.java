@@ -334,7 +334,7 @@ public class MoonLordEye extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 1d);
-            attrMap.put("damageTakenMulti", 0.95);
+            attrMap.put("damageTakenMulti", 0.75);
             attrMap.put("defence", eyeLocation.defence);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);

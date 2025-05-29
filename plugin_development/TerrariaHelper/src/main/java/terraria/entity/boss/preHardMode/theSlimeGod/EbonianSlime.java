@@ -194,7 +194,7 @@ public class EbonianSlime extends EntitySlime {
             attrMap.put("damage", 270d);
             attrMap.put("damageMeleeMulti", 1d);
             attrMap.put("damageMulti", 1d);
-            attrMap.put("defence", 12d);
+            attrMap.put("defence", 0d);
             attrMap.put("defenceMulti", 1d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);

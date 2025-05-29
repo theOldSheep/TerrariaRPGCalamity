@@ -270,7 +270,7 @@ public class WallOfFleshMouth extends EntitySlime {
             attrMap.put("damage", 450d);
             attrMap.put("damageMeleeMulti", 1d);
             attrMap.put("damageMulti", 1d);
-            attrMap.put("damageTakenMulti", 0.5d);
+            attrMap.put("damageTakenMulti", 0.8d);
             attrMap.put("defence", 36d);
             attrMap.put("defenceMulti", 1d);
             attrMap.put("knockback", 4d);

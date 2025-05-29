@@ -244,6 +244,7 @@ public class SkeletronPrimeHead extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", REGULAR_DMG);
+            attrMap.put("damageTakenMulti", 0.5);
             attrMap.put("defence", 48d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);

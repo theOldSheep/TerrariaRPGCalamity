@@ -558,7 +558,7 @@ public class Yharon extends EntitySlime {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
             attrMap.put("damage", 1248d);
-            attrMap.put("damageTakenMulti", 0.78);
+            attrMap.put("damageTakenMulti", 0.75);
             attrMap.put("defence", 180d);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);

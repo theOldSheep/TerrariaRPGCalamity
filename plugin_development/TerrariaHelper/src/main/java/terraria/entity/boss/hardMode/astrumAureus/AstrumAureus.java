@@ -74,8 +74,6 @@ public class AstrumAureus extends EntitySlime {
                 break;
             case RECHARGE:
                 phaseAI = AIPhase.CRAWL;
-                // Damage Taken: 1 -> 0.75
-                AttributeHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.3333", true);
                 // defence: 40 -> 80
                 AttributeHelper.tweakAttribute(attrMap, "defence", "40", true);
                 break;
@@ -90,8 +88,6 @@ public class AstrumAureus extends EntitySlime {
         if (phaseAI == AIPhase.RECHARGE) {
             bossbar.color = BossBattle.BarColor.GREEN;
             bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
-            // Damage Taken: 0.75 -> 1
-            AttributeHelper.tweakAttribute(attrMap, "damageTakenMulti", "-0.3333", false);
             // defence: 80 -> 40
             AttributeHelper.tweakAttribute(attrMap, "defence", "40", false);
         }

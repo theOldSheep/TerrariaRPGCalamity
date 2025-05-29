@@ -177,6 +177,7 @@ public class SkeletronPrimeHand extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
+            attrMap.put("damageTakenMulti", 0.5);
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);

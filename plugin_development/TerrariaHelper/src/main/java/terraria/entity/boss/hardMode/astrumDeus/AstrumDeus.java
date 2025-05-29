@@ -26,7 +26,7 @@ public class AstrumDeus extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.ASTRUM_DEUS;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = WorldHelper.BiomeType.ASTRAL_INFECTION;
-    public static final double BASIC_HEALTH = 1728000 * 2, BASIC_HEALTH_BR = 1560000 * 2;
+    public static final double BASIC_HEALTH = 768000 * 2, BASIC_HEALTH_BR = 1560000 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
