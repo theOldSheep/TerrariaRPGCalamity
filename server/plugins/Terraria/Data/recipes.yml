@@ -1215,6 +1215,7 @@ ANVIL:
     requireLevel: 2
     resultItem: 裂天剑
     requireItem:
+    - 秘银锭:8
     - 光明碎块:2
     - 光明之魂:16
     recipeCategory: WEAPON_MAGIC
@@ -4941,26 +4942,26 @@ BREWING_STAND:
     recipeCategory: CONSUMABLE_MANA
   '36':
     requireLevel: 1
-    resultItem: 强效魔力药水:12
+    resultItem: 强效魔力药水:16
     requireItem:
-    - 水瓶:12
+    - 水瓶:16
     - 妖精尘:4
-    - 坠星
+    - 坠星:2
     recipeCategory: CONSUMABLE_MANA
   '37':
     requireLevel: 1
-    resultItem: 超级魔力药水:15
+    resultItem: 超级魔力药水:32
     requireItem:
-    - 强效魔力药水:15
-    - 坠星
-    - 独角兽角
-    - 水晶碎块:3
+    - 强效魔力药水:32
+    - 灾厄尘
+    - 独角兽角:2
+    - 水晶碎块:6
     recipeCategory: CONSUMABLE_MANA
   '38':
     requireLevel: 1
-    resultItem: 至尊魔力药水:15
+    resultItem: 至尊魔力药水:16
     requireItem:
-    - 超级魔力药水:15
+    - 超级魔力药水:16
     - 灵质
     recipeCategory: CONSUMABLE_MANA
 TINKER_WORKBENCH:
@@ -5315,7 +5316,9 @@ TINKER_WORKBENCH:
     resultItem: 虚无箭袋
     requireItem:
     - 潜行者箭袋
-    - 暗离子体:3
+    - 装甲外壳
+    - 扭曲虚空
+    - 暗离子体
     - 星系异石:5
     recipeCategory: ACCESSORY
   '46':

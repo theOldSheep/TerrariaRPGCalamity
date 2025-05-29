@@ -257,7 +257,6 @@
     blockHitAction: thru
     liveTime: 80
 黑檀深渊之球:
-    penetration: 99999
     blockHitAction: thru
     projectileSize: 1
     gravity: 00
@@ -265,7 +264,6 @@
         - "扭曲|60|0.3"
         - "缓慢|100|1"
 血化深渊之球:
-    penetration: 99999
     blockHitAction: thru
     projectileSize: 1
     gravity: 00

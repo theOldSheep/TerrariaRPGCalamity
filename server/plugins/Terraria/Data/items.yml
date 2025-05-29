@@ -1395,7 +1395,7 @@
   - §r[饰品]
   - §r▣算作箭袋
   attributes:
-    damageArrowMulti: 0.1
+    damageRangedMulti: 0.1
     projectileSpeedArrowMulti: 0.35
     arrowConsumptionRate: -0.2
   worth: 5000000
@@ -1408,7 +1408,7 @@
   - §r点燃木箭，火光熊熊
   - §r“在恐惧中颤抖吧！”
   attributes:
-    damageArrowMulti: 0.12
+    damageRangedMulti: 0.12
     projectileSpeedArrowMulti: 0.35
     arrowConsumptionRate: -0.2
   worth: 7500000
@@ -1419,7 +1419,7 @@
   - §r[饰品]
   - §r▣算作箭袋
   attributes:
-    damageArrowMulti: 0.15
+    damageRangedMulti: 0.15
     projectileSpeedArrowMulti: 0.35
     arrowConsumptionRate: -0.2
     mobLimit: -1
@@ -10163,7 +10163,7 @@ Dodu的手炮:
     projectileSpeed: 10
     knockback: 0
     useTime: 26
-    manaUse: 4
+    manaUse: 2
   worth: 100000
   rarity: 1
 钻石法杖:
@@ -10174,8 +10174,8 @@ Dodu的手炮:
     crit: 4
     projectileSpeed: 12.5
     knockback: 5.5
-    useTime: 26
-    manaUse: 16
+    useTime: 30
+    manaUse: 3
   worth: 600000
   rarity: 2
 太空枪:
@@ -10187,7 +10187,7 @@ Dodu的手炮:
     projectileSpeed: 30
     knockback: 0.75
     useTime: 17
-    manaUse: 14
+    manaUse: 4
   worth: 400000
   rarity: 1
 海蓝权杖:
@@ -10199,7 +10199,7 @@ Dodu的手炮:
     projectileSpeed: 37.5
     knockback: 5
     useTime: 10
-    manaUse: 7
+    manaUse: 3
   worth: 1750000
   rarity: 2
 水矢:
@@ -10211,7 +10211,7 @@ Dodu的手炮:
     projectileSpeed: 10
     knockback: 5
     useTime: 17
-    manaUse: 20
+    manaUse: 5
   worth: 1500000
   rarity: 2
 骷髅头法书:
@@ -10223,7 +10223,7 @@ Dodu的手炮:
     projectileSpeed: 10
     knockback: 5.5
     useTime: 26
-    manaUse: 12
+    manaUse: 8
   worth: 1500000
   rarity: 2
 恶魔锄刀:
@@ -10235,7 +10235,7 @@ Dodu的手炮:
     projectileSpeed: 2
     knockback: 5
     useTime: 20
-    manaUse: 30
+    manaUse: 4
   worth: 1500000
   rarity: 3
 激光步枪:
@@ -10247,7 +10247,7 @@ Dodu的手炮:
     projectileSpeed: 17
     knockback: 2.5
     useTime: 11
-    manaUse: 8
+    manaUse: 5
   worth: 3000000
   rarity: 4
 水晶风暴:
@@ -10261,7 +10261,7 @@ Dodu的手炮:
     projectileSpeed: 17.5
     knockback: 3
     useTime: 6
-    manaUse: 5
+    manaUse: 3
   worth: 4000000
   rarity: 4
 裂天剑:
@@ -10273,7 +10273,7 @@ Dodu的手炮:
     projectileSpeed: 16
     knockback: 4
     useTime: 12
-    manaUse: 17
+    manaUse: 8
   worth: 6000000
   rarity: 4
 水晶蛇:
@@ -10285,7 +10285,7 @@ Dodu的手炮:
     projectileSpeed: 17.5
     knockback: 4.4
     useTime: 29
-    manaUse: 9
+    manaUse: 14
   worth: 4000000
   rarity: 5
 邪恶三叉戟:
@@ -10297,7 +10297,7 @@ Dodu的手炮:
     projectileSpeed: 18
     knockback: 6.5
     useTime: 17
-    manaUse: 19
+    manaUse: 12
   worth: 10000000
   rarity: 5
 爆裂藤蔓:
@@ -10309,7 +10309,7 @@ Dodu的手炮:
     crit: 4
     knockback: 1
     useTime: 25
-    manaUse: 12
+    manaUse: 22
   worth: 4000000
   rarity: 7
 吹叶机:
@@ -10337,9 +10337,9 @@ Dodu的手炮:
     projectileSpeed: 13.5
     knockback: 8
     useTime: 20
-    manaUse: 18
+    manaUse: 17
   worth: 6000000
-  rarity: 8
+  rarity: 7
 暗影束法杖:
   item: DIAMOND_SWORD
   lore:
@@ -10350,9 +10350,9 @@ Dodu的手炮:
     crit: 4
     knockback: 3.25
     useTime: 15
-    manaUse: 7
+    manaUse: 13
   worth: 6000000
-  rarity: 8
+  rarity: 7
 幽灵法杖:
   item: DIAMOND_SWORD
   lore:
@@ -10364,9 +10364,9 @@ Dodu的手炮:
     projectileSpeed: 15.5
     knockback: 4
     useTime: 24
-    manaUse: 15
+    manaUse: 21
   worth: 6000000
-  rarity: 8
+  rarity: 7
 磁球:
   item: BOOK
   lore:
@@ -10378,22 +10378,8 @@ Dodu的手炮:
     projectileSpeed: 1.2
     knockback: 6
     useTime: 60
-    manaUse: 14
+    manaUse: 55
   worth: 10000000
-  rarity: 8
-高温射线枪:
-  item: DIAMOND_SWORD
-  lore:
-  - §r射出灼热的高温射线
-  - §r“喔啦！！”
-  attributes:
-    damage: 240
-    damageType: Magic
-    crit: 4
-    knockback: 3
-    useTime: 10
-    manaUse: 8
-  worth: 7000000
   rarity: 7
 剃刀松:
   item: DIAMOND_SWORD
@@ -10404,9 +10390,9 @@ Dodu的手炮:
     projectileSpeed: 24
     knockback: 3.25
     useTime: 8
-    manaUse: 5
+    manaUse: 7
   worth: 9000000
-  rarity: 8
+  rarity: 7
 暴雪法杖:
   item: DIAMOND_SWORD
   attributes:
@@ -10418,7 +10404,7 @@ Dodu的手炮:
     useTime: 10
     manaUse: 9
   worth: 5000000
-  rarity: 8
+  rarity: 7
 蝙蝠权杖:
   item: DIAMOND_SWORD
   attributes:
@@ -10428,8 +10414,22 @@ Dodu的手炮:
     projectileSpeed: 15
     knockback: 3
     useTime: 12
-    manaUse: 6
+    manaUse: 10
   worth: 10000000
+  rarity: 7
+高温射线枪:
+  item: DIAMOND_SWORD
+  lore:
+  - §r射出灼热的高温射线
+  - §r“喔啦！！”
+  attributes:
+    damage: 240
+    damageType: Magic
+    crit: 4
+    knockback: 3
+    useTime: 10
+    manaUse: 11
+  worth: 7000000
   rarity: 8
 夜光:
   item: DIAMOND_SWORD
@@ -10440,7 +10440,7 @@ Dodu的手炮:
     projectileSpeed: 13.5
     knockback: 2.5
     useTime: 26
-    manaUse: 20
+    manaUse: 29
   worth: 5000000
   rarity: 8
 泡泡枪:
@@ -10454,7 +10454,7 @@ Dodu的手炮:
     projectileSpeed: 12.5
     knockback: 3
     useTime: 9
-    manaUse: 4
+    manaUse: 10
   worth: 5000000
   rarity: 8
 利刃台风:
@@ -10469,7 +10469,7 @@ Dodu的手炮:
     projectileSpeed: 8
     knockback: 5
     useTime: 40
-    manaUse: 20
+    manaUse: 44
   worth: 5000000
   rarity: 8
 星云烈焰:
@@ -10484,7 +10484,7 @@ Dodu的手炮:
     projectileSpeed: 12
     knockback: 0
     useTime: 12
-    manaUse: 12
+    manaUse: 13
   worth: 10000000
   rarity: 10
 星云奥秘:
@@ -10498,7 +10498,7 @@ Dodu的手炮:
     projectileSpeed: 9.5
     knockback: 5
     useTime: 30
-    manaUse: 30
+    manaUse: 33
   worth: 10000000
   rarity: 10
 月之耀斑:
@@ -10525,7 +10525,7 @@ Dodu的手炮:
     crit: 4
     knockback: 0
     useTime: 10
-    manaUse: 12
+    manaUse: 10
   worth: 10000000
   rarity: 10
 钨钢法杖:
@@ -10553,7 +10553,7 @@ Dodu的手炮:
     crit: 4
     knockback: 2
     useTime: 30
-    manaUse: 6
+    manaUse: 3
   worth: 200000
   rarity: 1
 魔法玫瑰:
@@ -10567,7 +10567,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3.25
     useTime: 38
-    manaUse: 8
+    manaUse: 4
   worth: 400000
   rarity: 2
 水流喷射:
@@ -10581,7 +10581,7 @@ Dodu的手炮:
     crit: 4
     knockback: 2
     useTime: 33
-    manaUse: 8
+    manaUse: 4
   worth: 400000
   rarity: 2
 海水杖:
@@ -10609,7 +10609,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3.5
     useTime: 25
-    manaUse: 8
+    manaUse: 6
   worth: 200000
   rarity: 1
 丰收:
@@ -10622,8 +10622,8 @@ Dodu的手炮:
     projectileSpeed: 10
     crit: 4
     knockback: 5
-    useTime: 23
-    manaUse: 5
+    useTime: 20
+    manaUse: 2
   worth: 400000
   rarity: 2
 菌杖:
@@ -10636,8 +10636,8 @@ Dodu的手炮:
     projectileSpeed: 1
     crit: 4
     knockback: 2
-    useTime: 24
-    manaUse: 7
+    useTime: 25
+    manaUse: 4
   worth: 400000
   rarity: 2
 狱火蝙蝠杖:
@@ -10650,8 +10650,8 @@ Dodu的手炮:
     projectileSpeed: 20
     crit: 4
     knockback: 5
-    useTime: 30
-    manaUse: 18
+    useTime: 31
+    manaUse: 7
   worth: 800000
   rarity: 3
 腐蚀之雨法杖:
@@ -10666,7 +10666,7 @@ Dodu的手炮:
     projectileSpeed: 6
     crit: 4
     useTime: 60
-    manaUse: 10
+    manaUse: 15
   worth: 800000
   rarity: 3
 永夜射线:
@@ -10680,7 +10680,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3.25
     useTime: 20
-    manaUse: 10
+    manaUse: 6
   worth: 2400000
   rarity: 4
 飞龙之歌:
@@ -10694,8 +10694,8 @@ Dodu的手炮:
     projectileSpeed: 15
     crit: 4
     knockback: 4.75
-    useTime: 23
-    manaUse: 10
+    useTime: 24
+    manaUse: 16
   worth: 4800000
   rarity: 5
 冰晶风暴:
@@ -10709,7 +10709,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5
     useTime: 80
-    manaUse: 13
+    manaUse: 54
   worth: 4800000
   rarity: 5
 冰坠三叉戟:
@@ -10722,8 +10722,8 @@ Dodu的手炮:
     projectileSpeed: 17.5
     crit: 4
     knockback: 7
-    useTime: 25
-    manaUse: 21
+    useTime: 24
+    manaUse: 16
   worth: 4800000
   rarity: 5
 烁兰:
@@ -10737,7 +10737,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5.5
     useTime: 27
-    manaUse: 11
+    manaUse: 19
   worth: 4800000
   rarity: 5
 水灌:
@@ -10765,7 +10765,7 @@ Dodu的手炮:
     crit: 4
     knockback: 7
     useTime: 16
-    manaUse: 6
+    manaUse: 11
   worth: 4800000
   rarity: 5
 女武神权杖:
@@ -10778,7 +10778,7 @@ Dodu的手炮:
     crit: 4
     knockback: 8.5
     useTime: 47
-    manaUse: 26
+    manaUse: 33
   worth: 4800000
   rarity: 5
 深渊女神之复仇:
@@ -10790,7 +10790,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3.5
     useTime: 18
-    manaUse: 15
+    manaUse: 16
   worth: 9600000
   rarity: 7
 泰拉射线:
@@ -10803,7 +10803,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4
     useTime: 24
-    manaUse: 10
+    manaUse: 21
   worth: 12000000
   rarity: 8
 亚特兰蒂斯:
@@ -10816,7 +10816,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5
     useTime: 25
-    manaUse: 12
+    manaUse: 22
   worth: 9600000
   rarity: 7
 南极光羽:
@@ -10830,7 +10830,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3
     useTime: 17
-    manaUse: 8
+    manaUse: 18
   worth: 9600000
   rarity: 7
 狱炎裂空:
@@ -10844,7 +10844,7 @@ Dodu的手炮:
     crit: 29
     knockback: 7
     useTime: 75
-    manaUse: 50
+    manaUse: 82
   worth: 7200000
   rarity: 8
 维苏威阿斯:
@@ -10859,7 +10859,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3
     useTime: 15
-    manaUse: 9
+    manaUse: 16
   worth: 12000000
   rarity: 8
 瘟疫法杖:
@@ -10873,7 +10873,7 @@ Dodu的手炮:
     crit: 4
     knockback: 8
     useTime: 21
-    manaUse: 22
+    manaUse: 23
   worth: 12000000
   rarity: 8
 血涌:
@@ -10888,7 +10888,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3.75
     useTime: 22
-    manaUse: 14
+    manaUse: 24
   worth: 12000000
   rarity: 8
 玄法百枝莲:
@@ -10902,7 +10902,7 @@ Dodu的手炮:
     crit: 4
     knockback: 7.5
     useTime: 23
-    manaUse: 10
+    manaUse: 25
   worth: 20000000
   rarity: 10
 幻星法杖:
@@ -10916,7 +10916,7 @@ Dodu的手炮:
     crit: 19
     knockback: 5
     useTime: 18
-    manaUse: 26
+    manaUse: 20
   worth: 16000000
   rarity: 9
 行星法杖:
@@ -10930,7 +10930,7 @@ Dodu的手炮:
     crit: 4
     knockback: 6.75
     useTime: 10
-    manaUse: 18
+    manaUse: 13
   worth: 20000000
   rarity: 10
 元素射线:
@@ -10947,7 +10947,7 @@ Dodu的手炮:
     crit: 4
     knockback: 7.5
     useTime: 16
-    manaUse: 18
+    manaUse: 20
   worth: 22000000
   rarity: 11
 终结裂空戟:
@@ -10962,7 +10962,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5
     useTime: 25
-    manaUse: 25
+    manaUse: 32
   worth: 22000000
   rarity: 11
 神圣天罚:
@@ -10974,7 +10974,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3.5
     useTime: 12
-    manaUse: 15
+    manaUse: 18
   worth: 24000000
   rarity: 12
 荆棘烁兰:
@@ -10988,7 +10988,7 @@ Dodu的手炮:
     crit: 4
     knockback: 2
     useTime: 23
-    manaUse: 10
+    manaUse: 34
   worth: 24000000
   rarity: 12
 王子:
@@ -11004,7 +11004,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4.25
     useTime: 21
-    manaUse: 12
+    manaUse: 31
   worth: 24000000
   rarity: 12
 槲叶暴风:
@@ -11018,7 +11018,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3.5
     useTime: 6
-    manaUse: 5
+    manaUse: 9
   worth: 24000000
   rarity: 12
 猩红烈焰:
@@ -11032,7 +11032,7 @@ Dodu的手炮:
     crit: 4
     knockback: 8
     useTime: 25
-    manaUse: 22
+    manaUse: 37
   worth: 24000000
   rarity: 12
 心泵血杖:
@@ -11046,7 +11046,7 @@ Dodu的手炮:
     crit: 4
     knockback: 6
     useTime: 14
-    manaUse: 15
+    manaUse: 20
   worth: 24000000
   rarity: 12
 磁场之融:
@@ -11060,7 +11060,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4
     useTime: 49
-    manaUse: 40
+    manaUse: 72
   worth: 24000000
   rarity: 12
 命运神启:
@@ -11074,7 +11074,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5.5
     useTime: 16
-    manaUse: 20
+    manaUse: 24
   worth: 26000000
   rarity: 13
 幻象之怒:
@@ -11088,7 +11088,7 @@ Dodu的手炮:
     crit: 4
     knockback: 7.5
     useTime: 20
-    manaUse: 20
+    manaUse: 30
   worth: 26000000
   rarity: 13
 影流法杖:
@@ -11116,7 +11116,7 @@ Dodu的手炮:
     crit: 4
     knockback: 9
     useTime: 25
-    manaUse: 20
+    manaUse: 37
   worth: 26000000
   rarity: 13
 星龙破空杖:
@@ -11131,7 +11131,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5.2
     useTime: 21
-    manaUse: 12
+    manaUse: 31
   worth: 26000000
   rarity: 13
 酸蚀毒蝰:
@@ -11145,7 +11145,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4
     useTime: 16
-    manaUse: 15
+    manaUse: 24
   worth: 26000000
   rarity: 13
 死亡冰雹:
@@ -11160,7 +11160,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4
     useTime: 22
-    manaUse: 16
+    manaUse: 37
   worth: 28000000
   rarity: 14
 灵魂穿透者:
@@ -11174,7 +11174,7 @@ Dodu的手炮:
     crit: 4
     knockback: 8
     useTime: 25
-    manaUse: 19
+    manaUse: 43
   worth: 28000000
   rarity: 14
 星云法师圣杖:
@@ -11188,7 +11188,7 @@ Dodu的手炮:
     crit: 4
     knockback: 6
     useTime: 30
-    manaUse: 60
+    manaUse: 51
   worth: 26000000
   rarity: 14
 极点光伏:
@@ -11202,7 +11202,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5
     useTime: 33
-    manaUse: 30
+    manaUse: 56
   worth: 28000000
   rarity: 14
 星火凤凰雨:
@@ -11217,7 +11217,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3.5
     useTime: 30
-    manaUse: 35
+    manaUse: 52
   worth: 30000000
   rarity: 15
 氦闪:
@@ -11232,7 +11232,7 @@ Dodu的手炮:
     crit: 4
     knockback: 9.5
     useTime: 50
-    manaUse: 40
+    manaUse: 86
   worth: 30000000
   rarity: 15
 虚空漩涡:
@@ -11246,7 +11246,7 @@ Dodu的手炮:
     crit: 4
     knockback: 0
     useTime: 80
-    manaUse: 60
+    manaUse: 138
   worth: 30000000
   rarity: 15
 耀界之光:
@@ -11262,7 +11262,7 @@ Dodu的手炮:
     crit: 4
     knockback: 7.5
     useTime: 20
-    manaUse: 42
+    manaUse: 35
   worth: 30000000
   rarity: 15
 狞桀:
@@ -11276,7 +11276,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5.75
     useTime: 60
-    manaUse: 41
+    manaUse: 104
   worth: 30000000
   rarity: 15
 绝学法杖:
@@ -11291,7 +11291,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5
     useTime: 20
-    manaUse: 50
+    manaUse: 35
   worth: 40000000
   rarity: 16
 麦格纳炮:
@@ -11305,7 +11305,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3.5
     useTime: 32
-    manaUse: 12
+    manaUse: 7
   worth: 400000
   rarity: 2
 脉冲手枪:
@@ -11319,8 +11319,23 @@ Dodu的手炮:
     crit: 4
     knockback: 0
     useTime: 20
-    manaUse: 6
+    manaUse: 5
   worth: 800000
+  rarity: 1100
+高斯手枪:
+  item: DIAMOND_SWORD
+  lore:
+  - §r一种由魔法驱动的简易手枪；更适合法师使用
+  - §r发射毁灭性的极强击退的高速冲击波
+  attributes:
+    damage: 410
+    damageType: Magic
+    projectileSpeed: 1
+    crit: 4
+    knockback: 11
+    useTime: 20
+    manaUse: 13
+  worth: 4800000
   rarity: 1100
 恐寒症:
   item: DIAMOND_SWORD
@@ -11334,7 +11349,7 @@ Dodu的手炮:
     crit: 4
     knockback: 1.5
     useTime: 40
-    manaUse: 18
+    manaUse: 27
   worth: 7200000
   rarity: 6
 离子冲击波:
@@ -11352,21 +11367,6 @@ Dodu的手炮:
     manaUse: 6
   worth: 4800000
   rarity: 5
-高斯手枪:
-  item: DIAMOND_SWORD
-  lore:
-  - §r一种由魔法驱动的简易手枪；更适合法师使用
-  - §r发射毁灭性的极强击退的高速冲击波
-  attributes:
-    damage: 410
-    damageType: Magic
-    projectileSpeed: 1
-    crit: 4
-    knockback: 11
-    useTime: 20
-    manaUse: 6
-  worth: 4800000
-  rarity: 1100
 激光加特林:
   item: DIAMOND_SWORD
   lore:
@@ -11379,7 +11379,7 @@ Dodu的手炮:
     crit: 4
     knockback: 1
     useTime: 2
-    manaUse: 3
+    manaUse: 2
   worth: 12000000
   rarity: 1100
 拉扎尔射线:
@@ -11392,7 +11392,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5
     useTime: 7
-    manaUse: 4
+    manaUse: 8
   worth: 20000000
   rarity: 10
 泡沫冲锋枪:
@@ -11407,7 +11407,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3.75
     useTime: 15
-    manaUse: 20
+    manaUse: 19
   worth: 20000000
   rarity: 10
 凋亡射线:
@@ -11422,7 +11422,7 @@ Dodu的手炮:
     crit: 4
     knockback: 6.75
     useTime: 7
-    manaUse: 12
+    manaUse: 8
   worth: 20000000
   rarity: 10
 净化激光炮:
@@ -11435,7 +11435,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4.5
     useTime: 19
-    manaUse: 22
+    manaUse: 28
   worth: 24000000
   rarity: 12
 等离子液铸器:
@@ -11450,7 +11450,7 @@ Dodu的手炮:
     crit: 4
     knockback: 7
     useTime: 45
-    manaUse: 24
+    manaUse: 66
   worth: 24000000
   rarity: 1100
 等离子步枪:
@@ -11464,7 +11464,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4
     useTime: 8
-    manaUse: 10
+    manaUse: 12
   worth: 24000000
   rarity: 12
 雷暴雨:
@@ -11479,7 +11479,7 @@ Dodu的手炮:
     crit: 4
     knockback: 2
     useTime: 24
-    manaUse: 50
+    manaUse: 35
   worth: 24000000
   rarity: 12
 以太之低语:
@@ -11493,7 +11493,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5.5
     useTime: 24
-    manaUse: 30
+    manaUse: 35
   worth: 24000000
   rarity: 12
 幻妖龙吟:
@@ -11508,7 +11508,7 @@ Dodu的手炮:
     crit: 4
     knockback: 1
     useTime: 36
-    manaUse: 30
+    manaUse: 54
   worth: 26000000
   rarity: 13
 特斯拉巨炮:
@@ -11523,7 +11523,7 @@ Dodu的手炮:
     crit: 4
     knockback: 10
     useTime: 90
-    manaUse: 60
+    manaUse: 153
   worth: 28000000
   rarity: 1100
 以太流光炮:
@@ -11537,7 +11537,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4
     useTime: 6
-    manaUse: 5
+    manaUse: 10
   worth: 30000000
   rarity: 15
 冰矢:
@@ -11551,7 +11551,7 @@ Dodu的手炮:
     projectileSpeed: 7.5
     knockback: 3.5
     useTime: 20
-    manaUse: 6
+    manaUse: 2
   worth: 400000
   rarity: 2
 珊瑚泥:
@@ -11565,7 +11565,7 @@ Dodu的手炮:
     projectileSpeed: 11.5
     knockback: 3.5
     useTime: 26
-    manaUse: 4
+    manaUse: 3
   worth: 400000
   rarity: 2
 清道夫:
@@ -11579,7 +11579,7 @@ Dodu的手炮:
     projectileSpeed: 12.5
     knockback: 2.5
     useTime: 15
-    manaUse: 4
+    manaUse: 2
   worth: 400000
   rarity: 2
 火矢:
@@ -11593,7 +11593,7 @@ Dodu的手炮:
     projectileSpeed: 9.5
     knockback: 5.5
     useTime: 30
-    manaUse: 12
+    manaUse: 7
   worth: 800000
   rarity: 3
 信风:
@@ -11607,7 +11607,7 @@ Dodu的手炮:
     projectileSpeed: 20
     knockback: 5
     useTime: 12
-    manaUse: 5
+    manaUse: 3
   worth: 800000
   rarity: 3
 深渊之书:
@@ -11620,8 +11620,8 @@ Dodu的手炮:
     crit: 4
     projectileSpeed: 9
     knockback: 6
-    useTime: 25
-    manaUse: 15
+    useTime: 24
+    manaUse: 6
   worth: 2400000
   rarity: 4
 诡触之书:
@@ -11634,7 +11634,7 @@ Dodu的手炮:
     crit: 9
     knockback: 3.5
     useTime: 21
-    manaUse: 7
+    manaUse: 6
   worth: 2400000
   rarity: 4
 冰火矢:
@@ -11648,7 +11648,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5.5
     useTime: 20
-    manaUse: 13
+    manaUse: 10
   worth: 2400000
   rarity: 4
 波塞冬:
@@ -11662,7 +11662,7 @@ Dodu的手炮:
     crit: 4
     knockback: 6
     useTime: 45
-    manaUse: 20
+    manaUse: 22
   worth: 4800000
   rarity: 5
 暗晶风暴:
@@ -11690,7 +11690,7 @@ Dodu的手炮:
     crit: 4
     knockback: 6.5
     useTime: 20
-    manaUse: 15
+    manaUse: 14
   worth: 4800000
   rarity: 5
 死亡之尘:
@@ -11704,7 +11704,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5
     useTime: 25
-    manaUse: 9
+    manaUse: 17
   worth: 4800000
   rarity: 5
 遗迹圣物:
@@ -11718,7 +11718,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4.25
     useTime: 35
-    manaUse: 16
+    manaUse: 25
   worth: 4800000
   rarity: 5
 沸腾之火:
@@ -11732,7 +11732,7 @@ Dodu的手炮:
     crit: 4
     knockback: 6.75
     useTime: 24
-    manaUse: 15
+    manaUse: 17
   worth: 4800000
   rarity: 5
 混乱火鞭:
@@ -11746,13 +11746,13 @@ Dodu的手炮:
     crit: 4
     knockback: 7.5
     useTime: 38
-    manaUse: 20
+    manaUse: 33
   worth: 9600000
   rarity: 7
 常青之气:
   item: BOOK
   lore:
-  - §r发射使敌人燃烧的灵液
+  - §r发射使敌人燃烧的咒焰流
   attributes:
     damage: 120
     damageType: Magic
@@ -11760,7 +11760,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4.5
     useTime: 18
-    manaUse: 8
+    manaUse: 16
   worth: 9600000
   rarity: 7
 天堂之泪:
@@ -11774,7 +11774,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5.5
     useTime: 20
-    manaUse: 18
+    manaUse: 17
   worth: 12000000
   rarity: 8
 始源之尘:
@@ -11788,7 +11788,7 @@ Dodu的手炮:
     crit: 4
     knockback: 7
     useTime: 20
-    manaUse: 19
+    manaUse: 17
   worth: 12000000
   rarity: 8
 凛冬之怒:
@@ -11802,7 +11802,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5
     useTime: 12
-    manaUse: 7
+    manaUse: 10
   worth: 12000000
   rarity: 8
 禁忌之阳:
@@ -11830,7 +11830,7 @@ Dodu的手炮:
     crit: 7
     knockback: 3.5
     useTime: 20
-    manaUse: 8
+    manaUse: 22
   worth: 16000000
   rarity: 9
 天穹流星:
@@ -11845,7 +11845,7 @@ Dodu的手炮:
     crit: 29
     knockback: 3.25
     useTime: 6
-    manaUse: 10
+    manaUse: 7
   worth: 16000000
   rarity: 9
 原核之怒:
@@ -11860,7 +11860,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5
     useTime: 40
-    manaUse: 22
+    manaUse: 51
   worth: 20000000
   rarity: 10
 先兆元素:
@@ -11873,7 +11873,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5.5
     useTime: 10
-    manaUse: 14
+    manaUse: 13
   worth: 22000000
   rarity: 11
 殷红鞭笞:
@@ -11888,7 +11888,7 @@ Dodu的手炮:
     crit: 4
     knockback: 7.5
     useTime: 19
-    manaUse: 30
+    manaUse: 28
   worth: 22000000
   rarity: 11
 生命光流:
@@ -11917,7 +11917,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5
     useTime: 18
-    manaUse: 16
+    manaUse: 31
   worth: 28000000
   rarity: 14
 狂野复诵:
@@ -11931,7 +11931,7 @@ Dodu的手炮:
     crit: 4
     knockback: 8.5
     useTime: 18
-    manaUse: 17
+    manaUse: 31
   worth: 28000000
   rarity: 14
 圣神光辉:
@@ -11945,7 +11945,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3
     useTime: 4
-    manaUse: 4
+    manaUse: 7
   worth: 28000000
   rarity: 14
 黑洞边缘:
@@ -11962,7 +11962,7 @@ Dodu的手炮:
     crit: 4
     knockback: 3.5
     useTime: 32
-    manaUse: 12
+    manaUse: 55
   worth: 28000000
   rarity: 14
 归元漩涡:
@@ -11979,7 +11979,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5
     useTime: 15
-    manaUse: 22
+    manaUse: 26
   worth: 30000000
   rarity: 15
 怨戾:
@@ -11996,7 +11996,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5
     useTime: 24
-    manaUse: 20
+    manaUse: 41
   worth: 30000000
   rarity: 15
 异端:
@@ -12011,7 +12011,7 @@ Dodu的手炮:
     crit: 4
     knockback: 0
     useTime: 5
-    manaUse: 15
+    manaUse: 9
   worth: 30000000
   rarity: 15
 光之舞:
@@ -12028,7 +12028,7 @@ Dodu的手炮:
     crit: 4
     knockback: 4
     useTime: 8
-    manaUse: 6
+    manaUse: 14
   worth: 40000000
   rarity: 16
 北极熊爪:
@@ -12058,7 +12058,7 @@ Dodu的手炮:
     crit: 4
     knockback: 6.5
     useTime: 18
-    manaUse: 7
+    manaUse: 15
   worth: 9600000
   rarity: 7
 鬼之形:
@@ -12072,7 +12072,7 @@ Dodu的手炮:
     crit: 4
     knockback: 5
     useTime: 57
-    manaUse: 20
+    manaUse: 85
   worth: 26000000
   rarity: 13
 寂虚之光:
@@ -12086,7 +12086,7 @@ Dodu的手炮:
     crit: 4
     knockback: 0
     useTime: 10
-    manaUse: 10
+    manaUse: 15
   worth: 26000000
   rarity: 13
 亚利姆水晶:
@@ -12098,8 +12098,8 @@ Dodu的手炮:
     damageType: Magic
     crit: 4
     knockback: 0
-    useTime: 7
-    manaUse: 8
+    useTime: 10
+    manaUse: 17
     buffInflictMagic: 龙焰|60|1
   worth: 30000000
   rarity: 15
@@ -12118,7 +12118,7 @@ Dodu的手炮:
     crit: 14
     knockback: 5
     useTime: 27
-    manaUse: 8
+    manaUse: 47
   worth: 30000000
   rarity: 15
 蜘蛛女王法杖:
@@ -14938,7 +14938,7 @@ Dodu的手炮:
     defence: 16
     damageMagicMulti: 0.15
     critMagic: 10
-    manaUseMulti: -0.1
+    manaUseMulti: -0.17
     maxMana: 60
   worth: 4800000
   rarity: 5
@@ -15222,7 +15222,7 @@ Dodu的手炮:
     damageMagicMulti: 0.07
     critMagic: 5
     maxMana: 70
-    manaUseMulti: -0.1
+    manaUseMulti: -0.2
   worth: 9600000
   rarity: 7
 硫火长袍:
@@ -15319,7 +15319,7 @@ Dodu的手炮:
   attributes:
     defence: 26
     maxMana: 60
-    manaUseMulti: -0.13
+    manaUseMulti: -0.17
     damageMagicMulti: 0.1
     crit: 10
   worth: 7500000
