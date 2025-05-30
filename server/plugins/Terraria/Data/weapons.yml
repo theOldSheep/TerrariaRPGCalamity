@@ -193,7 +193,7 @@
   autoSwing: true
   size: 4.5
   projectileInfo:
-    velocity: 2
+    velocity: 2.75
     noGravity: true
     name: 永夜光束
 真·圣剑:
@@ -201,7 +201,7 @@
   autoSwing: true
   size: 6
   projectileInfo:
-    velocity: 2
+    velocity: 2.75
     noGravity: true
     name: 光明光束
 叶绿军刀:
@@ -224,7 +224,7 @@
   - 91|217|74
   projectileInfo:
     interval: 1
-    velocity: 2.5
+    velocity: 2.75
     name: 叶绿珠
 无头骑士剑:
   type: SWING
@@ -234,7 +234,7 @@
   - 255|125|125
   projectileInfo:
     interval: 1
-    velocity: 2.5
+    velocity: 2.75
     noGravity: true
     name: 烈焰杰克南瓜
 吉他斧:
@@ -262,7 +262,7 @@
   size: 5.5
   projectileInfo:
     interval: 1
-    velocity: 2
+    velocity: 2.75
     name: 装饰
 种子弯刀:
   type: SWING
@@ -270,7 +270,7 @@
   size: 5
   projectileInfo:
     interval: 1
-    velocity: 1.5
+    velocity: 2.75
     isGranade: true
     name: 种子弯刀坚果
   particleColor:
@@ -287,7 +287,7 @@
   size: 4
   projectileInfo:
     interval: 1
-    velocity: 2.25
+    velocity: 3.25
     name: 彩虹猫之刃
   particleColor:
   - 255|155|255
@@ -423,7 +423,7 @@
   size: 3
   projectileInfo:
     interval: 1
-    velocity: 2
+    velocity: 2.25
     name: 霜火球
 灾难巨剑:
   type: SWING
@@ -455,7 +455,7 @@
   size: 4
   projectileInfo:
     interval: 1
-    velocity: 2.5
+    velocity: 2.25
     name: 禁忌镰刀
 炼狱:
   type: SWING
@@ -492,7 +492,7 @@
 彗星陨刃:
   type: SWING
   autoSwing: true
-  size: 8.5
+  size: 4
 荆棘长刃:
   type: SWING
   autoSwing: true
@@ -507,12 +507,12 @@
   size: 4.5
   projectileInfo:
     interval: 1
-    velocity: 2
+    velocity: 2.75
     name: 暗影冰晶
 翡翠之潮:
   type: SWING
   autoSwing: true
-  size: 8
+  size: 4
 庇护之刃:
   type: SWING
   autoSwing: true
@@ -523,7 +523,7 @@
   size: 3
   projectileInfo:
     interval: 1
-    velocity: 2.625
+    velocity: 2.75
     name: 庇护之火
 狱火重剑:
   type: SWING
@@ -539,7 +539,7 @@
   size: 4.5
   projectileInfo:
     interval: 1
-    velocity: 1.5
+    velocity: 2
     name: 灵魂镰刀
 崇高誓约之剑:
   type: SWING
@@ -589,7 +589,7 @@
   size: 4.5
   projectileInfo:
     interval: 1
-    velocity: 1.5
+    velocity: 1.65
     name: 风暴管束者剑气
 大守卫者:
   type: SWING
@@ -617,7 +617,7 @@
   size: 5.25
   projectileInfo:
     interval: 1
-    velocity: 1.85
+    velocity: 2
     name: 毒刃瘟疫云
 季节长剑:
   type: SWING
@@ -649,7 +649,7 @@
   size: 10
   projectileInfo:
     interval: 1
-    velocity: 1.65
+    velocity: 1.85
     name: 猎命镰刀
 不洁巨剑:
   type: SWING
@@ -702,7 +702,7 @@
   size: 7
   projectileInfo:
     interval: 1
-    velocity: 2.5
+    velocity: 3.5
     name: 惊惧光束
 宙能波纹剑:
   type: SWING
@@ -730,7 +730,7 @@
   size: 10
   projectileInfo:
     interval: 1
-    velocity: 3
+    velocity: 2.5
     name: 携序之剑剑气
 光棱破碎者:
   type: STAB
@@ -743,7 +743,7 @@
   projectileInfo:
     useTime: 2
     interval: 1
-    velocity: 3
+    velocity: 3.4
     name: 虹光剑气
 禅心剑:
   type: SWING
@@ -774,7 +774,7 @@
   size: 5
   projectileInfo:
     interval: 1
-    velocity: 3
+    velocity: 3.5
     name: 红色绚辉圣剑光束
 绚辉圣剑_RIGHT_CLICK:
   type: SWING
@@ -813,7 +813,7 @@
   autoSwing: true
   projectileInfo:
     interval: 1
-    velocity: 2
+    velocity: 3
     name: 北极长矛
   particleColor:
   - 75|150|255
@@ -861,7 +861,7 @@
   autoSwing: true
   size: 4
   projectileInfo:
-    velocity: 2.5
+    velocity: 2.75
     name: 元素短剑
 伽利略短剑:
   type: STAB
@@ -1032,7 +1032,7 @@
   autoSwing: true
   size: 4
   projectileInfo:
-    velocity: 2
+    velocity: 2.25
     name: 纯净
 环境之刃[拥怀之凛冽]:
   type: SWING
@@ -1071,7 +1071,7 @@
   autoSwing: true
   size: 6
   projectileInfo:
-    velocity: 1.75
+    velocity: 2.25
     name: 水球
 真·环境之刃[兵匠之傲]:
   type: SWING

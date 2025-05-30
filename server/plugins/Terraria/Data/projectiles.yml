@@ -156,29 +156,29 @@
         velocity: 0.5
     天羽头冠:
         amount: 2
-        damageFixed: 30
+        damageFixed: 18
         name: 天蓝羽毛
         type: star
         velocity: 1.6
     腐蚀脊椎:
         amount: 1
-        damageFixed: 45
+        damageFixed: 50
         name: 腐蚀脊椎毒云
         velocity: 0
     虚空掠夺者:
-        amount: 3
-        damageFixed: 60
+        amount: 2
+        damageFixed: 82
         name: 幻想符札幽灵
         velocity: 2.25
     月长石头冠:
         amount: 1
-        damageFixed: 100
+        damageFixed: 255
         name: 月之耀斑
         type: star
         velocity: 3
     纳米技术:
         amount: 1
-        damageFixed: 180
+        damageFixed: 525
         name: 追踪纳米叶片
         velocity: 2.5
 钩爪:
@@ -3140,6 +3140,7 @@
     homing: true
     homingRadius: 40
     homingAbility: 5
+    enemyInvincibilityFrame: 10
     clusterBomb:
         amount: 1
         damageMulti: 0.25
@@ -4977,7 +4978,7 @@ TNT:
         amount: 4
         name: 水晶碎块
         velocity: 0.5
-        damageMulti: 0.45
+        damageMulti: 0.05
 水晶碎块:
     noGravityTicks: 0
     liveTime: 10
@@ -5011,7 +5012,7 @@ TNT:
         name: 诅咒弹
         type: surround
         velocity: 2.75
-        damageMulti: 0.6
+        damageMulti: 0.2
         fireOnTimeout: false
         fireOnHitBlock: false
 冰砾弹:
@@ -5021,10 +5022,10 @@ TNT:
     buffInflict:
         - "霜火|60|1"
     clusterBomb:
-        amount: 4
+        amount: 5
         name: 水晶碎块
         velocity: 0.5
-        damageMulti: 0.5
+        damageMulti: 0.05
 弹球弹:
     gravity: 0
     liveTime: 150
@@ -5047,7 +5048,7 @@ TNT:
         amount: 2
         name: 泰拉追踪弹
         velocity: 1.5
-        damageMulti: 0.45
+        damageMulti: 0.1
 钫弹:
     gravity: 0
     liveTime: 100
@@ -5192,7 +5193,7 @@ TNT:
         amount: 3
         name: 解离分裂弹
         velocity: 2.5
-        damageMulti: 0.5
+        damageMulti: 1
 解离分裂弹:
     gravity: 0
     projectileSize: 0.5
@@ -6214,8 +6215,7 @@ TNT:
 宙魔之纹:
     gravity: 0
     blockHitAction: slide
-    penetration: 2
-    liveTime: 100
+    liveTime: 50
     projectileSize: 3
     enemyInvincibilityFrame: 10
     speedMultiPerTick: 0.975
@@ -8099,7 +8099,7 @@ TNT:
 圣箭:
     arrowOrPotion: true
     clusterBomb:
-        amount: 3
+        amount: 1
         damageMulti: 0.2
         name: 坠星
         type: star
@@ -8150,7 +8150,7 @@ TNT:
     blastRadius: 0.75
     clusterBomb:
         amount: 3
-        damageMulti: 0.2
+        damageMulti: 0.08
         name: 火焰碎片
         velocity: 1
 泰拉追踪箭:
@@ -8166,7 +8166,7 @@ TNT:
     liveTime: 40
     clusterBomb:
         amount: 2
-        damageMulti: 0.25
+        damageMulti: 0.15
         name: 泰拉追踪箭
         velocity: 2
 极乐陨石:
@@ -8182,7 +8182,7 @@ TNT:
         - "神圣之火|60|1"
     clusterBomb:
         amount: 1
-        damageMulti: 0.5
+        damageMulti: 0.3
         name: 极乐陨石
         type: star
         fireOnTimeout: false
@@ -8209,7 +8209,7 @@ TNT:
     spawnProjectiles:
         interval: 2
         spawnMechanism: FORWARD
-        damageMulti: 0.35
+        damageMulti: 0.1
         speed: 2.5
         spawnType: 征戮分裂箭
 幻象箭:

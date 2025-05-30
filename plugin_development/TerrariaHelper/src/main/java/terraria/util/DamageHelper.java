@@ -16,6 +16,7 @@ import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Consumer;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
+import terraria.event.TerrariaDamageEvent;
 import terraria.gameplay.EventAndTime;
 import terraria.gameplay.Setting;
 
@@ -190,6 +191,11 @@ public class DamageHelper {
                     }
             }
         });
+        // terraria damage event calling
+        DMG_CALLBACK_PIPELINE.add( (damageInfoBus) -> {
+            TerrariaDamageEvent evt = new TerrariaDamageEvent(damageInfoBus);
+            Bukkit.getPluginManager().callEvent(evt);
+        });
         // tweak damage - first section, multiplicative damage reduction and damage against non-player victims.
         // including minion whip bonus, accessories such as paladin shield, random damage floating and crit
         DMG_CALLBACK_PIPELINE.add( (damageInfoBus) -> {
@@ -270,11 +276,11 @@ public class DamageHelper {
                                         double consumptionRatio;
                                         if (plyAcc.equals("魔能过载仪")) {
                                             consumption = 2;
-                                            manaToDamageRate = 50;
+                                            manaToDamageRate = 36;
                                             consumptionRatio = 1;
                                         } else {
                                             consumption = (int) Math.max(mana * 0.035, 5);
-                                            manaToDamageRate = 25;
+                                            manaToDamageRate = 20;
                                             double effectDuration = EntityHelper.getEffectMap(damageSourcePly).getOrDefault("魔力熔蚀", 0);
                                             // at 20 second = 400 ticks, mana use reduced by roughly 100%
                                             consumptionRatio = 1 - Math.pow(effectDuration / 400, 0.25);

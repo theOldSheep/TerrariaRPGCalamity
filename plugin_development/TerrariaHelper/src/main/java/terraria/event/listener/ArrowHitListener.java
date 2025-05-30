@@ -191,6 +191,7 @@ public class ArrowHitListener implements Listener {
                 break;
             }
         }
+        // triggers the on-destroy cluster bomb; for on-collide cluster bomb see GenericProjectile
         handleProjectileClusterBomb(projectile);
     }
     /**

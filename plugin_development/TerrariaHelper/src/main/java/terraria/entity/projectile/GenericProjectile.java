@@ -265,8 +265,6 @@ public class GenericProjectile extends EntityPotion {
         if (bouncePenetrationBonded) {
             updateBounce(bounce - 1);
         }
-        // set position to the exact collision point for more precise explosion etc.
-        setPosition(position.pos.x, position.pos.y, position.pos.z);
         updatePenetration(penetration - 1);
         // special projectile
         hitEntityExtraHandling(e, position, futureLoc, velocityHolder);
@@ -276,7 +274,7 @@ public class GenericProjectile extends EntityPotion {
             destroyWithReason(DESTROY_HIT_ENTITY);
             return new Vec3D(position.pos.x, position.pos.y, position.pos.z);
         }
-        // on-collide cluster bomb
+        // on-collide cluster bomb; on-destroy cluster bomb see ArrowHitListener
         else {
             boolean shouldSpawnClusterBomb = TerrariaHelper.projectileConfig.getBoolean(
                     projectileType + ".clusterBomb.fireOnCollideEntity", false);
@@ -348,7 +346,7 @@ public class GenericProjectile extends EntityPotion {
             double secondaryDmgMulti = 1.0;
             if (! shouldTriggerSecondary && accessories.contains("星流校准器")) {
                 shouldTriggerSecondary = true;
-                secondaryDmgMulti = 0.5;
+                secondaryDmgMulti = 0.8;
             }
             if (shouldTriggerSecondary) {
                 for (String accessory : accessories) {
@@ -1417,6 +1415,8 @@ public class GenericProjectile extends EntityPotion {
         for (HitEntityInfo toHit : hitCandidates) {
             Entity hitEntity = toHit.getHitEntity();
             MovingObjectPosition hitInfo = new MovingObjectPosition(hitEntity, toHit.getHitLocation().pos);
+            // set position to the exact collision point for more precise explosion etc.
+            setPosition(hitInfo.pos.x, hitInfo.pos.y, hitInfo.pos.z);
             if (TerrariaProjectileHitEvent.callProjectileHitEvent(this, hitInfo).isCancelled()) continue;
             Vec3D newLoc = hitEntity(hitEntity, hitInfo, futureLoc, velocityHolder);
             if (newLoc != null) futureLoc = newLoc;

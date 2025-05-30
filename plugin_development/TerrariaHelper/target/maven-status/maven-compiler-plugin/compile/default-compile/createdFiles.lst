@@ -73,6 +73,7 @@ terraria\entity\minion\MinionSlime.class
 terraria\worldgen\overworld\StructureInfo$StructureOperation.class
 terraria\worldgen\Maze.class
 terraria\entity\boss\hardMode\moonLord\MoonLordTrueEyeOfCthulhu.class
+terraria\event\TerrariaWeaponSwingEvent.class
 terraria\event\listener\BossTickListener.class
 terraria\entity\boss\hardMode\moonLord\MoonLordPhantasmalSphere.class
 terraria\entity\boss\hardMode\ravager\RavagerHead.class
@@ -149,6 +150,7 @@ terraria\entity\boss\postMoonLord\devourerOfGods\AttackManager.class
 terraria\worldgen\overworld\OverworldChunkGenerator.class
 terraria\entity\boss\hardMode\moonLord\MoonLordTrueEyeOfCthulhu$EyeAttackMethod.class
 terraria\entity\boss\hardMode\ravager\Ravager.class
+terraria\event\TerrariaDamageEvent.class
 terraria\entity\boss\hardMode\moonLord\MoonLordTrueEyeOfCthulhu$1.class
 terraria\entity\boss\hardMode\plantera\PlanteraTentacle.class
 terraria\worldgen\overworld\BiomeSummary$BiomeSearchGridPosition.class

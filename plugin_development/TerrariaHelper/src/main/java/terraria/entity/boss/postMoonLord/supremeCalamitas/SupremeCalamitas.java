@@ -347,7 +347,6 @@ public class SupremeCalamitas extends EntitySlime {
         // bullet hells
         {
             bulletHellPatterns = new ISupremeCalamitasBH[]{
-                    new SupremeCalamitasBHAsh(this, 1.1),
                     // first bullet hell when summoned
                     new SupremeCalamitasBHFirework(this, 1.1),
                     new SupremeCalamitasBHSepulcher(this),

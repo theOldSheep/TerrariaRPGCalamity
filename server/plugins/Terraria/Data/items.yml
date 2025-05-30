@@ -1196,8 +1196,8 @@
   lore:
   - §r[饰品]
   attributes:
-    damageMulti: -0.9
-    knockback: -10
+    damageMulti: -0.99
+    maxHealth: 99999
   worth: 20000
   rarity: 0
 测试伤害:
@@ -2250,7 +2250,7 @@ Drew之翼:
   - §r[饰品]
   - §r▣算作特殊魔力装置
   - §r手持魔法武器时对敌人造成魔法伤害则触发以下效果：
-  - §r尝试额外消耗2点魔力，若成功则使本次暴击前伤害增加100点
+  - §r尝试额外消耗2点魔力，若成功则使本次暴击前伤害增加72点
   attributes:
     regen: -2
     maxMana: 60
@@ -2279,7 +2279,7 @@ Drew之翼:
   - §r魔力熔蚀在对玩家造成伤害的同时提供额外魔力恢复
   - §r手持魔法武器时对敌人造成魔法伤害则触发以下效果：
   - §r尝试额外消耗当前魔力的3.5%（至少为5）
-  - §r若成功，则将本次暴击前伤害提升额外魔力损耗的25倍
+  - §r若成功，则将本次暴击前伤害提升额外魔力损耗的20倍
   - §r实际损毁的魔力值将基于魔力熔蚀效果剩余时长减少至多100%（伤害提升不变）
   - §r“……目光呆滞……”
   attributes:
@@ -2628,7 +2628,7 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
-  - §r潜伏攻击在击中敌人时会爆炸成追踪灵魂
+  - §r潜伏攻击在击中敌人时会生成追踪灵魂
   - §7▷ 衍生弹幕：基础伤害固定且完全继承原弹幕增伤
   worth: 12000000
   rarity: 8
@@ -2658,7 +2658,7 @@ Drew之翼:
   - §r使用盗贼武器时发射的弹幕量翻倍且发射间隔减半
   attributes:
     damageMulti: -0.3
-    damageRogueMulti: -0.1
+    damageRogueMulti: -0.3
   worth: 24000000
   rarity: 12
 日蚀魔镜:
@@ -2703,7 +2703,7 @@ Drew之翼:
   lore:
   - §r[饰品]
   - §r盗贼衍生弹幕可被所有盗贼攻击的主弹幕触发
-  - §r以此方式触发的衍生弹幕基础伤害降低50%
+  - §r以此方式触发的衍生弹幕基础伤害降低20%
   - §r盗贼攻击造成超位崩解减益
   attributes:
     buffInflictRogue: 超位崩解|40|1
@@ -3915,7 +3915,7 @@ Drew之翼:
     damageType: Melee
     crit: 4
     knockback: 7
-    useTime: 20
+    useTime: 45
   worth: 7200000
   rarity: 5
 硫火鞭:
@@ -3934,7 +3934,7 @@ Drew之翼:
   item: DIAMOND_SWORD
   lore:
   - §r发射追踪剑气
-  - §r击中敌人时给予玩家暴君之怒增益，增加玩家30%近战伤害和10%近战暴击率
+  - §r击中敌人时给予玩家暴君之怒增益，增加玩家5%近战伤害和暴击率
   attributes:
     damage: 118
     damageType: Melee
@@ -3972,13 +3972,13 @@ Drew之翼:
 彗星陨刃:
   item: DIAMOND_SWORD
   lore:
-  - §r击中敌人时会召唤流星
+  - §r召唤流星从天而降
   attributes:
     damage: 267
     damageType: Melee
     crit: 4
     knockback: 7.75
-    useTime: 22
+    useTime: 25
   worth: 16000000
   rarity: 8
 荆棘长刃:
@@ -4025,13 +4025,13 @@ Drew之翼:
 翡翠之潮:
   item: DIAMOND_SWORD
   lore:
-  - §r攻击敌人时从天空召唤利维坦毒牙
+  - §r从天空召唤利维坦毒牙
   attributes:
     damage: 198
     damageType: Melee
     crit: 4
     knockback: 7
-    useTime: 24
+    useTime: 18
   worth: 12000000
   rarity: 7
 庇护之刃:
@@ -4063,7 +4063,7 @@ Drew之翼:
 幻星刀:
   item: DIAMOND_SWORD
   lore:
-  - §r根据敌人剩余生命值造成额外伤害
+  - §r根据敌人剩余生命值造成最高100%的额外伤害
   attributes:
     damage: 231
     damageType: Melee
@@ -4321,7 +4321,7 @@ Drew之翼:
   item: DIAMOND_SWORD
   lore:
   - §r发射三种具有不同追踪能力的剑气
-  - §r剑刃直接击中敌人时给予玩家暴君之怒增益，增加玩家30%近战伤害和10%近战暴击率
+  - §r剑刃直接击中敌人时给予玩家暴君之怒增益，增加玩家5%近战伤害和暴击率
   attributes:
     damage: 456
     damageType: Melee
@@ -6865,7 +6865,7 @@ Drew之翼:
   item: BOW
   lore:
   - §r发射一连串迅速的增压星流晶体箭
-  - §r连续攻击会使武器充能，提供额外的攻击力
+  - §r连续攻击会使武器充能，攻击力线性提升至最多300%
   - §r充能达到最大值时攻击会消耗所有充能且在被击中的目标上方召唤星流闪电激流
   attributes:
     damage: 335
@@ -9281,7 +9281,7 @@ Dodu的手炮:
   - §r潜伏攻击命中时恢复 180 点生命值
   - §r普通攻击会使你失去 10 生命值
   - §r潜伏攻击会使你失去 30% 当前生命值
-  - §r失去生命值的40%会附加到基础伤害中
+  - §r以此失去生命值的40%会附加到基础伤害中
   - §r“似乎随时间的流逝而逐渐崩解”
   attributes:
     damage: 196
@@ -9329,7 +9329,7 @@ Dodu的手炮:
   - §r潜伏攻击在摧毁时会发射更多追踪匕首
   attributes:
     damage: 160
-    damageStealth: 175
+    damageStealth: 4286
     damageType: Rogue
     crit: 14
     knockback: 6
@@ -9399,7 +9399,7 @@ Dodu的手炮:
   - §r丢出一把牺牲之匕
   - §r普通攻击会使你失去 15 生命值
   - §r潜伏攻击会使你失去 20% 当前生命值
-  - §r失去生命值的75%会附加到基础伤害中
+  - §r以此失去生命值的75%会附加到基础伤害中
   - §r普通攻击命中时为你恢复 15 生命值
   - §r潜伏攻击命中时为你恢复 15% 已损失生命值
   attributes:
@@ -9599,7 +9599,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r击中敌人时召唤长矛从天而降
-  - §r潜伏攻击会追击敌人并改为持续召唤长矛
+  - §r潜伏攻击会不停追击、穿刺敌人并召唤长矛
   attributes:
     damage: 1000
     damageStealth: 1500
@@ -11897,7 +11897,7 @@ Dodu的手炮:
   lore:
   - §r发射能量集中的生命射线
   attributes:
-    damage: 420
+    damage: 285
     damageType: Magic
     projectileSpeed: 20
     crit: 4
@@ -12955,7 +12955,7 @@ Dodu的手炮:
   - §r在你的头顶召唤一盏宇宙灯为你而战
   - §r每盏宇宙灯占据两格仆从栏位
   attributes:
-    damage: 705
+    damage: 666
     damageType: Summon
     knockback: 4
     useTime: 10
@@ -13853,6 +13853,7 @@ Dodu的手炮:
   - §r然后撕裂时空出现在玩家身后，加速射出并在接触时爆炸
   attributes:
     damage: 32
+    damageRangedMulti: -0.5
     damageType: Bullet
     crit: 4
     knockback: 3
