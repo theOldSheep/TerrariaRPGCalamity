@@ -49,7 +49,14 @@ Functions:
 import:
   - "inventory_slots_inventory_open"
 
-# 商店内容
+# 为背景增加黑色色调，使显示的物品信息更明显
+bg_texture:
+  x: 0
+  y: 0
+  width: "方法.取屏幕宽度()"
+  height: "方法.取屏幕高度()"
+  texture: 0,0,0,150
+
 # 重铸物品槽
 inv1-5_texture:
   x: "方法.取屏幕宽度() * 20 / 方法.取变量('adjusted_scr_size')"
