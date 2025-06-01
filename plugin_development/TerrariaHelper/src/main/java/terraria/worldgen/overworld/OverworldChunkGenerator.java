@@ -170,7 +170,8 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         populators.add(new OverworldBlockGenericPopulator());
         populators.add(new OrePopulator(Y_OFFSET_OVERWORLD));
         populators.add(new FoliagePopulator());
-        populators.add(new StructurePopulator(true));
+        populators.add(new StructurePopulatorBiomeCenter(true));
+        populators.add(new StructurePopulatorLoot(true));
         populators.add(new RailPopulator());
     }
     public static OverworldChunkGenerator getInstance() {

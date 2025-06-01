@@ -37,8 +37,11 @@ public class DevourerOfGods extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    public String COLOR_PREFIX = "§#00FFFF", MSG_SPAWN = "你不是神……但你的灵魂仍是我的盛宴！",
-            MSG_FINAL_STAGE = "还没完呢！", MSG_KILL = "致命失误！";
+    public String COLOR_PREFIX = "§#00FFFF",
+            MSG_RAM = "尔等蝼蚁，竟妄图离开地面挑战本尊的权威？",
+            MSG_SPAWN = "你不是神……但你的灵魂仍是我的盛宴！",
+            MSG_FINAL_STAGE = "还没完呢！",
+            MSG_KILL = "致命失误！";
     DevourerOfGods head;
     StormWeaver stormWeaver = null;
     CeaselessVoid ceaselessVoid = null;
@@ -153,6 +156,7 @@ public class DevourerOfGods extends EntitySlime {
             // Enter ramming phase
             if (phaseTicks > FLYING_START_INDEX && phaseTicks < FLYING_END_INDEX && !target.isOnGround()) {
                 isRamming = true;
+                terraria.entity.boss.BossHelper.sendBossMessages(1, 0, bukkitEntity, COLOR_PREFIX, MSG_RAM);
                 // Open wormhole in front of target
                 if (stage == 2) {
                     Location wormholeDestination = target.getEyeLocation().add(

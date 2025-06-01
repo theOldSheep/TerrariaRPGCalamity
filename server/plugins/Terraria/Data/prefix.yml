@@ -85,6 +85,8 @@ prefixList:
   - 守护:3
   - 装甲:2
   - 护佑:1
+  - 符文:3
+  - 增广:1
   - 精确:3
   - 幸运:1
   - 锯齿:5
@@ -940,6 +942,22 @@ prefixInfo:
       damageTakenMulti: -0.01
     priceMultiplier: 1.6
     rarity: 2
+  符文:
+    lore:
+    - ''
+    - §a+12能量屏障上限
+    attributes:
+      barrierMax: 12
+    priceMultiplier: 1.15
+    rarity: 1
+  增广:
+    lore:
+    - ''
+    - §a+24能量屏障上限
+    attributes:
+      barrierMax: 24
+    priceMultiplier: 1.6
+    rarity: 2
   精确:
     lore:
     - ''
@@ -1063,9 +1081,9 @@ prefixInfo:
   寂静:
     lore:
     - ''
-    - §a+6%潜行值恢复速度
+    - §a+5%潜行值恢复速度
     attributes:
-      stealthRegenMulti: 0.06
+      stealthRegenMulti: 0.05
     priceMultiplier: 1.44
     rarity: 2
   注魔:

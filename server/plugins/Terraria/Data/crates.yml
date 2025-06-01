@@ -1409,3 +1409,123 @@
       - 湮灭余烬:48:64
       - 铂金币:30
       - 终极治疗药水:5:15
+世界生成:
+  地表箱森林:
+    1:
+      giveAllItems: false
+      amountToGive: 1
+      items:
+      - 木制悠悠球
+      - 木制回力镖
+      - 火花魔棒
+      - 火把:32:64
+  地表箱雪原:
+    1:
+      giveAllItems: false
+      amountToGive: 1
+      items:
+      - 冰坠法杖
+      - 霜华法杖
+      - 冰矢
+  地表箱沙漠:
+    1:
+      giveAllItems: false
+      amountToGive: 1
+      items:
+      - 沙块:16:32
+      - 荒漠之羽:4:8
+      - 太阳之灵法杖
+  地表箱:
+    1:
+      items:
+      - 火把:4:8:0.08
+      - 火把:4:8:0.08
+      - 填充草药鱼:1:1:0.08
+      - 填充草药鱼:1:1:0.08
+      - 手榴弹:3:5:0.33
+      - 铜锭:3:10:0.5
+      - 铁锭:3:10:0.5
+    2:
+      giveAllItems: false
+      amountToGive: 1
+      items:
+      - 木箭:24:48:0.66
+      - 板砖:16:32:0.66
+    3:
+      items:
+      - 树之祭祀:3:3:1
+      - 回城药水:3:5:0.5
+      - 虫洞药水:2:4:0.5
+    4:
+      giveAllItems: false
+      amountToGive: 1
+      items:
+      - 铁皮药水:1:2
+      - 敏捷药水:1:2
+      - 鱼鳃药水:1:2
+    5:
+      items:
+      - 空瓶:10:20:0.5
+      - 木材:16:32
+  洞穴箱森林:
+    1:
+      giveAllItems: false
+      amountToGive: 1
+      items:
+      - 跳跃之瓶
+      - 航鱼靴
+      - 再生手环
+      - 链锤
+  洞穴箱雪原:
+    1:
+      giveAllItems: false
+      amountToGive: 1
+      items:
+      - 跳跃之瓶
+      - 航鱼靴
+      - 冰坠法杖
+  洞穴箱沙漠:
+    1:
+      giveAllItems: false
+      amountToGive: 1
+      items:
+      - 跳跃之瓶
+      - 航鱼靴
+      - 荒漠吊坠
+  洞穴箱:
+    1:
+      items:
+      - 炸弹:5:10:0.2
+      - 炸弹:5:10:0.2
+      - 铁锭:5:14:0.5
+      - 银锭:5:14:0.5
+      - 金锭:3:10:0.25
+      - 雷管:1:1:0.33
+      - 火把:10:20:0.5
+      - 小丑之箭:16:32:0.25
+    2:
+      giveAllItems: false
+      amountToGive: 1
+      items:
+      - 烈焰箭:24:48:0.5
+      - 板砖:16:32:0.5
+    3:
+      giveAllItems: false
+      amountToGive: 1
+      items:
+      - 弱效治疗药水:3:5:0.5
+      - 治疗药水:1:2:0.5
+    4:
+      giveAllItems: false
+      amountToGive: 1
+      items:
+      - 铁皮药水:1:2
+      - 敏捷药水:1:2
+      - 再生药水:1:2
+      - 鱼鳃药水:1:2
+      - 射术药水:1:2
+      - 魔能药水:1:2
+    5:
+      items:
+      - 回城药水:1:2:0.5
+      - 虫洞药水:1:1:0.5

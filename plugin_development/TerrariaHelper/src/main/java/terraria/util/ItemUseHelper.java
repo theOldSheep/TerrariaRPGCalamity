@@ -29,6 +29,7 @@ import terraria.event.TerrariaWeaponSwingEvent;
 import terraria.gameplay.EventAndTime;
 import terraria.gameplay.Setting;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -5391,41 +5392,52 @@ public class ItemUseHelper {
     }
     // this function is called when the player right-clicks an item in inventory.
     public static boolean playerOpenCrate(Player ply, ItemStack item) {
-        ConfigurationSection config = TerrariaHelper.crateConfig;
         String itemType = ItemHelper.splitItemName(item)[1];
+        String cfgPath = itemType;
         if (itemType.equals("专家模式福袋")) {
-            config = config.getConfigurationSection(itemType);
-            itemType = GenericHelper.trimText(item.getItemMeta().getLore().get(0));
+            cfgPath = itemType + "." + GenericHelper.trimText(item.getItemMeta().getLore().get(0));
         }
         // if the item is not set, to prevent bug.
         if (itemType.equals("")) return false;
-        config = config.getConfigurationSection(itemType);
+
+        Collection<ItemStack> items = getCrateItems(ply, cfgPath);
+
+        if (items.isEmpty()) return false;
+
+        items.forEach((toGive) -> PlayerHelper.giveItem(ply, toGive, true));
+        item.setAmount(item.getAmount() - 1);
+        return true;
+    }
+    public static Collection<ItemStack> getCrateItems(@Nullable Player ply, String configPath) {
+        ArrayList<ItemStack> result = new ArrayList<>();
+
+        ConfigurationSection config = TerrariaHelper.crateConfig;
+        config = config.getConfigurationSection(configPath);
         if (config != null) {
-            item.setAmount(item.getAmount() - 1);
             Collection<String> nodes = config.getKeys(false);
             // give items in each section to the player
             for (String dropSectionIndex : nodes) {
                 ConfigurationSection dropSection = config.getConfigurationSection(dropSectionIndex);
-                String progressRequired = dropSection.getString("progressRequired", "");
-                if (!PlayerHelper.hasDefeated(ply, progressRequired))
+                // game progress
+                String progressRequired = dropSection.getString("progressRequired");
+                if (progressRequired != null && (ply == null || !PlayerHelper.hasDefeated(ply, progressRequired)) )
                     continue;
                 List<String> items = dropSection.getStringList("items");
                 boolean shouldGiveAllItems = dropSection.getBoolean("giveAllItems", true);
                 if (shouldGiveAllItems) {
                     for (String itemDescToGive : items) {
-                        PlayerHelper.giveItem(ply, ItemHelper.getItemFromDescription(itemDescToGive), true);
+                        result.add( ItemHelper.getItemFromDescription(itemDescToGive) );
                     }
                 } else {
                     int amountToGive = dropSection.getInt("amountToGive", 1);
                     for (int i = 0; i < amountToGive; i++) {
                         if (items.isEmpty()) break;
                         String itemDescToGive = items.remove((int) (Math.random() * items.size()));
-                        PlayerHelper.giveItem(ply, ItemHelper.getItemFromDescription(itemDescToGive), true);
+                        result.add( ItemHelper.getItemFromDescription(itemDescToGive) );
                     }
                 }
             }
-            return true;
         }
-        return false;
+        return result;
     }
 }

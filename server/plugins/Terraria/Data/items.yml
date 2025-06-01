@@ -2409,7 +2409,7 @@ Drew之翼:
   - §r召唤物命中后造成夜魇减益
   attributes:
     minionLimit: 3
-    damageSummonMulti: 0.05
+    damageSummonMulti: 0.12
     buffInflictSummon: 夜魇|60|1
   worth: 20000000
   rarity: 10
@@ -2421,7 +2421,7 @@ Drew之翼:
   - §r召唤物命中后造成辐射减益削弱敌人防御
   attributes:
     minionLimit: 4
-    damageSummonMulti: 0.05
+    damageSummonMulti: 0.15
     buffInflictSummon: 辐射|60|1
   worth: 28000000
   rarity: 14
@@ -10155,8 +10155,6 @@ Dodu的手炮:
   rarity: 15
 火花魔棒:
   item: STICK
-  lore:
-  - §r可用来合成永夜射线，请妥善保管
   attributes:
     damage: 24
     damageType: Magic

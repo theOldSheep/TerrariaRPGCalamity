@@ -63,6 +63,9 @@ public class OrePopulator extends BlockPopulator {
                             case BEDROCK:
                             // lizard temple/dungeon
                             case SMOOTH_BRICK:
+                            // underground chests
+                            case WOOD:
+                            case CHEST:
                                 break;
                             default:
                                 blk.setType(oreType, false);

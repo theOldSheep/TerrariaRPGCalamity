@@ -28,7 +28,8 @@ public class CavernChunkGenerator extends ChunkGenerator {
         populators = new ArrayList<>();
         populators.add(new OverworldBlockGenericPopulator());
         populators.add(new OrePopulator(Y_OFFSET_CAVERN));
-        populators.add(new StructurePopulator(false));
+        populators.add(new StructurePopulatorBiomeCenter(false));
+        populators.add(new StructurePopulatorLoot(false));
     }
 
     @Override

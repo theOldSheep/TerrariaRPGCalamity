@@ -9,6 +9,8 @@ worldGen:
     nearbyBiomeSampleRadius: 25
     caveOctaves: 4
     railYCoordinate: 125
+    surfaceChestRate: 0.01
+    cavernChestRate: 0.025
   opt:
     chunkPrepDurationLog: false
     caveGenDurationLog: false

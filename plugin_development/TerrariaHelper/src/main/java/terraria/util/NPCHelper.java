@@ -1,7 +1,6 @@
 package terraria.util;
 
 import lk.vexview.api.VexViewAPI;
-import lk.vexview.event.ButtonClickEvent;
 import lk.vexview.gui.VexGui;
 import lk.vexview.gui.components.VexButton;
 import lk.vexview.gui.components.VexComponents;
@@ -9,19 +8,12 @@ import lk.vexview.gui.components.VexText;
 import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.*;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.inventory.*;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.MetadataValue;
@@ -236,7 +228,7 @@ public class NPCHelper {
                         locationInfoStr.append(" 高度的 ");
                         // biome
                         try {
-                            locationInfoStr.append(WorldHelper.BiomeType.valueOf(splitInfo[0]).name);
+                            locationInfoStr.append(WorldHelper.BiomeType.valueOf(splitInfo[0]).displayName);
                         } catch (Exception e) {
                             locationInfoStr.append(splitInfo[0]);
                         }

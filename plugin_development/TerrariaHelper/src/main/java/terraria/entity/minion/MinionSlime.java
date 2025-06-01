@@ -952,7 +952,6 @@ public class MinionSlime extends EntitySlime {
                     // projectile
                     if (shouldFireProjectile) {
                         HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
-                        projAttrMap.put("damage", projAttrMap.get("damage") * 0.5);
                         EntityHelper.spawnProjectile(minionBukkit,
                                 MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), 4),
                                 projAttrMap, "炽焰天龙火球");
