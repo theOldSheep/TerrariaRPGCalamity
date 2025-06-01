@@ -66,25 +66,23 @@ inv1-5_slot:
   identifier: "container_4"
   drawBackground: false
 # 重铸信息
-reforge_prompt_label:
-  x: "方法.取屏幕宽度() * 38 / 方法.取变量('adjusted_scr_size')"
-  y: "方法.取屏幕宽度() * 86 / 方法.取变量('adjusted_scr_size')"
-  scale: "0.8 * 方法.取变量('label_scale')"
-  texts:
-    - "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? '将物品放到此处重铸' : 方法.取物品名(方法.取物品('container_4'))"
-# 重铸花费
-reforge_cost_label:
+current_prefix_name_label:
   x: "方法.取屏幕宽度() * 20 / 方法.取变量('adjusted_scr_size')"
   y: "方法.取屏幕宽度() * 106 / 方法.取变量('adjusted_scr_size')"
   scale: "0.8 * 方法.取变量('label_scale')"
-  visible: "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? 0 : 1"
   texts:
-    - "方法.取物品名(方法.取物品('container_13'))"
-    - "方法.合并文本( '存款: ', 方法.取变量('terraria_money') )"
+    - "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? '将物品放到此处重铸' : 方法.取物品名(方法.取物品('container_4'))"
+current_prefix_lore_label:
+  x: "方法.取屏幕宽度() * 20 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度() * 116 / 方法.取变量('adjusted_scr_size')"
+  scale: "0.8 * 方法.取变量('label_scale')"
+  visible: "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) > 0.1"
+  texts:
+    - "方法.取物品所有lore(方法.取物品('container_4'))"
 # 重铸按钮
 reforge_texture:
-  x: "方法.取屏幕宽度() * 40 / 方法.取变量('adjusted_scr_size')"
-  y: "方法.取屏幕宽度() * 95 / 方法.取变量('adjusted_scr_size')"
+  x: "方法.取屏幕宽度() * 38 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度() * 90 / 方法.取变量('adjusted_scr_size')"
   width: "方法.取屏幕宽度() * 12 / 方法.取变量('adjusted_scr_size')"
   height: "方法.取组件值('reforge_texture','width')"
   texture: "方法.取变量('reforge_btn_texture')"
@@ -93,3 +91,12 @@ reforge_texture:
     enter: "方法.设置变量值('reforge_btn_texture', 'gui/Reforge_1.png')"
     leave: "方法.设置变量值('reforge_btn_texture', 'gui/Reforge_0.png')"
     click: "方法.模拟点击槽位('container_13', 0, 'CLONE', 1)"
+# 存款、重铸花费
+reforge_cost_label:
+  x: "方法.取屏幕宽度() * 55 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度() * 86 / 方法.取变量('adjusted_scr_size')"
+  scale: "0.8 * 方法.取变量('label_scale')"
+  visible: "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? 0 : 1"
+  texts:
+    - "方法.取物品名(方法.取物品('container_13'))"
+    - "方法.合并文本( '存款: ', 方法.取变量('terraria_money') )"
