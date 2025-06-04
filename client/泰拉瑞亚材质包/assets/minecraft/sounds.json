@@ -278,6 +278,33 @@
 			}
 		]
 	},
+	"entity.defenceDamage": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "damage/defense_damage",
+				"attenuation_distance": 24
+			}
+		]
+	},
+	"entity.wilhelmScream": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "damage/wilhelm_scream",
+				"attenuation_distance": 24
+			}
+		]
+	},
+	"entity.mechanicalConfirm": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "random/mechanical_confirm",
+				"attenuation_distance": 24
+			}
+		]
+	},
 	"item.bowShoot": {
         "category": "player",
 		"subtitle": "\u5f13:\u5c04\u7bad",
@@ -377,6 +404,26 @@
 			}
 		]
 	},
+	"item.grenadeLauncher": {
+        "category": "player",
+		"subtitle": "\u69b4\u5f39:\u53d1\u5c04",
+		"sounds": [
+			{
+				"name": "item/grenadelauncher",
+				"attenuation_distance": 20
+			}
+		]
+	},
+	"item.laserCannon": {
+        "category": "player",
+		"subtitle": "\u6fc0\u5149:\u53d1\u5c04",
+		"sounds": [
+			{
+				"name": "item/lasercannon",
+				"attenuation_distance": 32
+			}
+		]
+	},
 	"item.giantExplosion": {
         "category": "sound",
 		"subtitle": "\u6838\u5f39\u7ea7\u7206\u70b8",
@@ -384,6 +431,46 @@
 			{
 				"name": "item/giantexplosion",
 				"attenuation_distance": 64
+			}
+		]
+	},
+	"item.plasmaGrenadeBlast": {
+        "category": "sound",
+		"subtitle": "\u7b49\u79bb\u5b50\u7206\u70b8",
+		"sounds": [
+			{
+				"name": "item/plasmagrenadeblast",
+				"attenuation_distance": 48
+			}
+		]
+	},
+	"item.supernovaBlastGiant": {
+        "category": "sound",
+		"subtitle": "\u8d85\u65b0\u661f:\u5d29\u89e3",
+		"sounds": [
+			{
+				"name": "item/supernovablastgiant",
+				"attenuation_distance": 64
+			}
+		]
+	},
+	"item.supernovaBlastSmall": {
+        "category": "sound",
+		"subtitle": "\u8d85\u65b0\u661f:\u7206\u88c2",
+		"sounds": [
+			{
+				"name": "item/supernovablastsmall",
+				"attenuation_distance": 48
+			}
+		]
+	},
+	"item.supernovaCharge": {
+        "category": "sound",
+		"subtitle": "\u8d85\u65b0\u661f:\u84c4\u80fd",
+		"sounds": [
+			{
+				"name": "item/supernovacharge",
+				"attenuation_distance": 48
 			}
 		]
 	},
@@ -447,6 +534,16 @@
 			}
 		]
 	},
+	"item.danceOfLight": {
+        "category": "player",
+		"subtitle": "\u25a0\u25a0\uff0c\u25a0\u25a0\uff01",
+		"sounds": [
+			{
+				"name": "item/danceoflight",
+				"attenuation_distance": 32
+			}
+		]
+	},
 	"item.guitar": {
         "category": "music",
 		"sounds": [
@@ -460,16 +557,6 @@
 		"sounds": [
 			{
 				"name": "item/harp"
-			}
-		]
-	},
-	"item.danceOfLight": {
-        "category": "player",
-		"subtitle": "\u25a0\u25a0\uff0c\u25a0\u25a0\uff01",
-		"sounds": [
-			{
-				"name": "item/danceoflight",
-				"attenuation_distance": 32
 			}
 		]
 	},
