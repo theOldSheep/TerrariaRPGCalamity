@@ -1805,8 +1805,8 @@
     enemyInvincibilityFrame: 40
     worldSpriteMode: true
     worldSpriteUpdateInterval: 1
-    spawnSound: item.exoblade.explode
-    spawnSoundVolume: 10
+    spawnSound: item.plasmaGrenadeBlast
+    spawnSoundVolume: 5
 大型等离子手雷爆炸:
     projDisguiseName: 等离子手雷爆炸
     gravity: 0
@@ -1817,8 +1817,8 @@
     enemyInvincibilityFrame: 5
     worldSpriteMode: true
     worldSpriteUpdateInterval: 2
-    spawnSound: item.exoblade.explode
-    spawnSoundVolume: 10
+    spawnSound: item.plasmaGrenadeBlast
+    spawnSoundVolume: 7.5
 超新星:
     projectileSize: 3
     speedMultiPerTick: 0.9
@@ -1826,6 +1826,8 @@
     liveTime: 60
     homing: true
     homingRadius: 48
+    spawnSound: entity.mechanicalConfirm
+    spawnSoundVolume: 2.5
     clusterBomb:
         amount: 1
         damageMulti: 2.5
@@ -1840,6 +1842,8 @@
     homing: true
     homingRadius: 48
     homingAbility: 10
+    spawnSound: entity.mechanicalConfirm
+    spawnSoundVolume: 3.5
     clusterBomb:
         amount: 1
         damageMulti: 0.25
@@ -1851,6 +1855,8 @@
     blockHitAction: thru
     minimumDamageTicks: 999999
     liveTime: 20
+    spawnSound: item.supernovaCharge
+    spawnSoundVolume: 5
     clusterBomb:
         amount: 1
         damageMulti: 16
@@ -1865,7 +1871,8 @@
     enemyInvincibilityFrame: 100
     worldSpriteMode: true
     worldSpriteUpdateInterval: 2
-    spawnSound: item.largeWeaponFire
+    spawnSound: item.supernovaBlastSmall
+    spawnSoundVolume: 5
 超新星大爆炸:
     projectileSize: 10
     gravity: 0
@@ -1875,7 +1882,8 @@
     enemyInvincibilityFrame: 100
     worldSpriteMode: true
     worldSpriteUpdateInterval: 2
-    spawnSound: item.largeWeaponFire
+    spawnSound: item.supernovaBlastGiant
+    spawnSoundVolume: 10
 鱼骨回旋镖:
     projectileSize: 0.5
     gravity: 0
@@ -2864,6 +2872,8 @@
         spawnType: 炽天使光束
 炽天使光束:
     blockHitAction: thru
+    spawnSound: item.laserCannon
+    spawnSoundVolume: 5
     liveTime: 1
     trailVanillaParticle: false
     trailColor: t/yt

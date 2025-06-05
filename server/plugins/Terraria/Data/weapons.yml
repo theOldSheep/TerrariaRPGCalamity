@@ -1852,6 +1852,7 @@
   maxLoad: 5
   loadTimeMulti: 0.6
   offSet: 10
+  useSound: item.grenadeLauncher
 芦苇吹管:
   type: SPECIAL_AMMO
   ammo: _高压气泡流

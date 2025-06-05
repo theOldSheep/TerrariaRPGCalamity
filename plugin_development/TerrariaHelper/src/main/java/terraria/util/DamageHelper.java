@@ -892,6 +892,7 @@ public class DamageHelper {
                         EntityHelper.applyEffect(victim, "防御损毁", duration);
                         EntityHelper.applyEffect(victim, "防御修补冷却", 100);
                     }
+                    victim.getWorld().playSound(victim.getEyeLocation(), "entity.defenceDamage", 1.5f, 1f);
                 }
             }
         } );
@@ -955,10 +956,14 @@ public class DamageHelper {
                 }
                 String sound = null;
                 // kills the target
-                if (damageTaker.getHealth() <= dmg) {
+                boolean isFatal = damageTaker.getHealth() <= dmg;
+                if (isFatal) {
                     handleDeath(damageTaker, damageSource, damager, damageType, damageReason, damageInfoBus.debuffType);
+                    // "default" preset sound
                     if (victimTags.contains("isMechanic")) sound = "entity.generic.explode";
                     else sound = "entity." + damageTaker.getType() + ".death";
+                    if (damageTaker instanceof Player && damageReason == DamageReason.FALL)
+                    // try to use the configured sound
                     sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundDamaged", sound);
                     sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundKilled", sound);
                 }
@@ -974,10 +979,12 @@ public class DamageHelper {
                 }
                 // fall damage sound
                 if (damageReason == DamageReason.FALL) {
-                    if (dmg < 200)
-                        sound = "entity.generic.fallSmall";
-                    else
+                    if (isFatal)
+                        sound = "entity.wilhelmScream";
+                    else if (dmg >= 200)
                         sound = "entity.generic.fallBig";
+                    else
+                        sound = "entity.generic.fallSmall";
                 }
                 // play sound
                 if (sound != null)

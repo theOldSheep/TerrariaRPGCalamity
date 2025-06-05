@@ -1302,6 +1302,8 @@ XF-09“阿瑞斯”特斯拉加农炮:
     soundDamaged: entity.hit.otherworldly
     buffImmute:
         - "超位崩解"
+██-██ “嘉登”:
+    soundKilled: entity.wilhelmScream
 至尊灾厄:
     buffInflict:
         - "孱弱巫咒|200|1"

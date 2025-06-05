@@ -282,7 +282,7 @@
         "category": "player",
 		"sounds": [
 			{
-				"name": "damage/defense_damage",
+				"name": "damage/defence_damage",
 				"attenuation_distance": 24
 			}
 		]

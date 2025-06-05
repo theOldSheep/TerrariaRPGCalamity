@@ -48,6 +48,7 @@ public class ItemUseHelper {
         NONE, HEALTH, MANA, BUFF
     }
     public static final String SOUND_GENERIC_SWING = "item.genericSwing", SOUND_BOW_SHOOT = "item.bowShoot",
+            SOUND_GRENADE_LAUNCHER = "item.grenadeLauncher",
             SOUND_GUN_FIRE = "item.gunfire", SOUND_GUN_FIRE_LOUD = "entity.generic.explode",
             SOUND_ARK_PARRY = "item.ark.parry", SOUND_ARK_SCISSOR_CUT = "item.ark.snap";
     protected static final double MELEE_MIN_STRIKE_RADIUS = 0.25;
@@ -5003,6 +5004,9 @@ public class ItemUseHelper {
         switch (weaponCategory) {
             case "BOW":
                 itemUseSound = SOUND_BOW_SHOOT;
+                break;
+            case "ROCKET":
+                itemUseSound = SOUND_GRENADE_LAUNCHER;
                 break;
             case "GUN":
                 if (autoSwing) {
