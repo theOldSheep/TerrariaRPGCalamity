@@ -34,7 +34,7 @@ public class MoonLord extends EntitySlime {
     Player target = null;
     // other variables and AI
     static final double MOVE_SPEED = 0.75, MAX_DIST_BEFORE_TELEPORT = 100;
-    int indexAI = (int) (Math.random() * 360), trueEyeIndexAI = -1, trueEyeSpawned = 0, indexSpawnAnimation = 1;
+    int indexAI = (int) (Math.random() * 360), trueEyeIndexAI = -1, trueEyeSpawned = 0, indexSpawnAnimation = 1200;
     MoonLordBackground background;
     double reachLeft = 15, reachRight = 15;
     boolean secondPhase = false;

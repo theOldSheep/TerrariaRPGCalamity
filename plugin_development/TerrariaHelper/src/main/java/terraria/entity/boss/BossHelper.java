@@ -21,6 +21,7 @@ import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class BossHelper {
@@ -344,6 +345,23 @@ public class BossHelper {
 
             // loot
             if (bossType.hasTreasureBag) {
+                // init new NPC recipe message
+                String npcSellsHint = null;
+                ArrayList<NPCHelper.NPCType> npcTypes = new ArrayList<>();
+                for (NPCHelper.NPCType npcType : NPCHelper.NPCType.values()) {
+                    if (TerrariaHelper.NPCConfig.contains("shops." + npcType.displayName + "." + bossType.msgName))
+                        npcTypes.add(npcType);
+                }
+                if (! npcTypes.isEmpty()) {
+                    StringBuilder builder = new StringBuilder();
+                    builder.append("§e以下NPC开放新的交易：");
+                    for (NPCHelper.NPCType npcType : npcTypes) {
+                        builder.append(npcType.displayName);
+                        builder.append(" ");
+                    }
+                    npcSellsHint = builder.toString();
+                }
+                // loot bag item
                 ItemStack loopBag = ItemHelper.getItemFromDescription(bossType.msgName + "的 专家模式福袋");
                 for (UUID plyID : targetMap.keySet()) {
                     Player ply = Bukkit.getPlayer(plyID);
@@ -353,7 +371,12 @@ public class BossHelper {
                             targetMap.get(plyID).ticksAggression >= ticksAggressionReq;
                     if (hasEnoughContribution) {
                         ply.sendMessage("§a恭喜你击败了BOSS[§r" + bossType.msgName + "§a]!");
-                        PlayerHelper.setDefeated(ply, bossType.msgName, true);
+                        // on first defeat: record boss progress & hint new NPC trade
+                        if (! PlayerHelper.hasDefeated(ply, bossType.msgName)) {
+                            if (npcSellsHint != null)
+                                ply.sendMessage(npcSellsHint);
+                            PlayerHelper.setDefeated(ply, bossType.msgName, true);
+                        }
                         PlayerHelper.giveItem(ply, loopBag, true);
                     } else {
                         ply.sendMessage("§aBOSS " + bossType.msgName + " 已经被击败。很遗憾，您对BOSS战的贡献不足以获得一份战利品。");
