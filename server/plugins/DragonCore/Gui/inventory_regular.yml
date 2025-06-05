@@ -17,7 +17,10 @@ Functions:
   keyPress: "(方法.取当前按下键=='E' || 方法.取当前按下键=='ESCAPE')?{方法.关闭界面;}:0"
 
   # 界面开启之后会自动执行open，此时就可以开始更新变量啦
-  open: "方法.异步执行方法('更新背包变量')"
+  open: |-
+    方法.异步执行方法('更新背包变量');
+    界面变量.hint_scroll = 0;
+    界面变量.hint_selection = -1;
 
   # 由于功能完全是在客户端实现的，所以客户端并不能直接知道变量的值，我们需要通过【方法.更新变量值】来向服务端同步变量值到客户端内
   # 文本内容需要用 ''包裹,不然mod无法识别这条公式
@@ -25,6 +28,14 @@ Functions:
     方法.更新变量值('terraria_defence','terraria_money','terraria_accessory_amount');
     方法.延时(1000);
     方法.异步执行方法('更新背包变量');
+    
+  提示向上: |-
+    界面变量.hint_scroll = 方法.max(0, 界面变量.hint_scroll - 1);
+    
+  提示向下: |-
+    界面变量.temp = 方法.到整数( 方法.取Yaml值('hints_details.count') );
+    界面变量.temp = 方法.max(0, 界面变量.temp - 8);
+    界面变量.hint_scroll = 方法.min(界面变量.temp, 界面变量.hint_scroll + 1);
     
   preRender: |-
     界面变量.label_scale = 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size');
@@ -37,6 +48,157 @@ Functions:
     界面变量.inv_x = 方法.取屏幕宽度() * 8 / 方法.取变量('adjusted_scr_size');
     界面变量.inv_y = 方法.取屏幕宽度() * 10 / 方法.取变量('adjusted_scr_size');
 
+# 物品栏内提示
+hint_texture:
+  x: "方法.取屏幕宽度 * 20 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 105 / 方法.取变量('adjusted_scr_size')"
+  width: "方法.取屏幕宽度 * 250 / 方法.取变量('adjusted_scr_size')"
+  height: "方法.取屏幕宽度 * 110 / 方法.取变量('adjusted_scr_size')"
+  texture: "gui/hints_background.png"
+  actions:
+    wheel: |-
+      方法.执行方法(方法.到整数(方法.取滚轮值()) > 0 ? '提示向上' : '提示向下');
+hint_content_label:
+  x: "方法.取屏幕宽度 * 85 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 110 / 方法.取变量('adjusted_scr_size')"
+  length: "(方法.取屏幕宽度 * 180 / 方法.取变量('adjusted_scr_size') ) / 界面变量.label_scale"
+  scale: "界面变量.label_scale"
+  texts: "方法.取Yaml值(方法.合并文本('hints_details.', 方法.到整数(界面变量.hint_selection), '.desc'))"
+hint_scroll_up_label:
+  x: "方法.取屏幕宽度 * 25 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 110 / 方法.取变量('adjusted_scr_size')"
+  scale: "界面变量.label_scale"
+  texts: "向上翻页"
+  actions:
+    click: |-
+      方法.执行方法('提示向上');
+      方法.执行方法('提示向上');
+      方法.执行方法('提示向上');
+      方法.执行方法('提示向上');
+      方法.执行方法('提示向上');
+      方法.执行方法('提示向上');
+hint_scroll_down_label:
+  x: "方法.取屏幕宽度 * 25 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 200 / 方法.取变量('adjusted_scr_size')"
+  scale: "界面变量.label_scale"
+  texts: "向下翻页"
+  actions:
+    click: |-
+      方法.执行方法('提示向下');
+      方法.执行方法('提示向下');
+      方法.执行方法('提示向下');
+      方法.执行方法('提示向下');
+      方法.执行方法('提示向下');
+      方法.执行方法('提示向下');
+hint_1_label:
+  x: "方法.取屏幕宽度 * 25 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 120 / 方法.取变量('adjusted_scr_size')"
+  scale: "界面变量.label_scale"
+  texts: "方法.取Yaml值(方法.合并文本('hints_details.', 方法.到整数(界面变量.hint_scroll + 1), '.name'))"
+  actions:
+    click: 界面变量.hint_selection = 界面变量.hint_scroll + 1;
+hint_2_label:
+  x: "方法.取屏幕宽度 * 25 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 130 / 方法.取变量('adjusted_scr_size')"
+  scale: "界面变量.label_scale"
+  texts: "方法.取Yaml值(方法.合并文本('hints_details.', 方法.到整数(界面变量.hint_scroll + 2), '.name'))"
+  actions:
+    click: 界面变量.hint_selection = 界面变量.hint_scroll + 2;
+hint_3_label:
+  x: "方法.取屏幕宽度 * 25 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 140 / 方法.取变量('adjusted_scr_size')"
+  scale: "界面变量.label_scale"
+  texts: "方法.取Yaml值(方法.合并文本('hints_details.', 方法.到整数(界面变量.hint_scroll + 3), '.name'))"
+  actions:
+    click: 界面变量.hint_selection = 界面变量.hint_scroll + 3;
+hint_4_label:
+  x: "方法.取屏幕宽度 * 25 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 150 / 方法.取变量('adjusted_scr_size')"
+  scale: "界面变量.label_scale"
+  texts: "方法.取Yaml值(方法.合并文本('hints_details.', 方法.到整数(界面变量.hint_scroll + 4), '.name'))"
+  actions:
+    click: 界面变量.hint_selection = 界面变量.hint_scroll + 4;
+hint_5_label:
+  x: "方法.取屏幕宽度 * 25 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 160 / 方法.取变量('adjusted_scr_size')"
+  scale: "界面变量.label_scale"
+  texts: "方法.取Yaml值(方法.合并文本('hints_details.', 方法.到整数(界面变量.hint_scroll + 5), '.name'))"
+  actions:
+    click: 界面变量.hint_selection = 界面变量.hint_scroll + 5;
+hint_6_label:
+  x: "方法.取屏幕宽度 * 25 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 170 / 方法.取变量('adjusted_scr_size')"
+  scale: "界面变量.label_scale"
+  texts: "方法.取Yaml值(方法.合并文本('hints_details.', 方法.到整数(界面变量.hint_scroll + 6), '.name'))"
+  actions:
+    click: 界面变量.hint_selection = 界面变量.hint_scroll + 6;
+hint_7_label:
+  x: "方法.取屏幕宽度 * 25 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 180 / 方法.取变量('adjusted_scr_size')"
+  scale: "界面变量.label_scale"
+  texts: "方法.取Yaml值(方法.合并文本('hints_details.', 方法.到整数(界面变量.hint_scroll + 7), '.name'))"
+  actions:
+    click: 界面变量.hint_selection = 界面变量.hint_scroll + 7;
+hint_8_label:
+  x: "方法.取屏幕宽度 * 25 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 190 / 方法.取变量('adjusted_scr_size')"
+  scale: "界面变量.label_scale"
+  texts: "方法.取Yaml值(方法.合并文本('hints_details.', 方法.到整数(界面变量.hint_scroll + 8), '.name'))"
+  actions:
+    click: 界面变量.hint_selection = 界面变量.hint_scroll + 8;
+# 设置合成槽位
+crafting_label:
+  x: "方法.取屏幕宽度 * 185 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 15 / 方法.取变量('adjusted_scr_size')"
+  center: true
+  texts: "空手合成"
+  scale: "0.8 * 界面变量.label_scale"
+crafting_texture:
+  x: "方法.取屏幕宽度 * 180 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 25 / 方法.取变量('adjusted_scr_size')"
+  width: "方法.取屏幕宽度 * 12 / 方法.取变量('adjusted_scr_size')"
+  height: "方法.取屏幕宽度 * 12 / 方法.取变量('adjusted_scr_size')"
+  texture: "gui/slot_crafting.png"
+crafting_slot:
+  x: "方法.取屏幕宽度 * 180 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 25 / 方法.取变量('adjusted_scr_size')"
+  width: "方法.取屏幕宽度 * 12 / 方法.取变量('adjusted_scr_size')"
+  height: "方法.取屏幕宽度 * 12 / 方法.取变量('adjusted_scr_size')"
+  identifier: "container_0"
+  drawBackground: false
+  tip: "&r空手制造窗口"
+# 防御
+defence_texture:
+  x: "方法.取屏幕宽度 - (方法.取屏幕宽度 * 50 / 方法.取变量('adjusted_scr_size'))"
+  y: "方法.取屏幕高度 - (方法.取屏幕宽度 * 40 / 方法.取变量('adjusted_scr_size'))"
+  width: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')"
+  height: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')"
+  texture: "gui/defence.png"
+  tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')"
+defence_label:
+  x: "方法.取屏幕宽度 - (方法.取屏幕宽度 * 43 / 方法.取变量('adjusted_scr_size'))"
+  y: "方法.取屏幕高度 - (方法.取屏幕宽度 * 37 / 方法.取变量('adjusted_scr_size'))"
+  center: true
+  scale: "0.8 * 界面变量.label_scale"
+  texts: "方法.合并文本('&#CCCCCC&l', 方法.取变量('terraria_defence'))"
+  tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')"
+# 菜单
+menu_label:
+  x: "界面变量.acc_x + 界面变量.slot_offset * 0.5"
+  y: "界面变量.acc_y + 界面变量.slot_offset * 5"
+  texts: "信息菜单"
+  center: true
+  scale: "界面变量.label_scale"
+  actions:
+    enter: "方法.设置组件值('menu_label', 'fscale', '1.1')"
+    leave: "方法.设置组件值('menu_label', 'fscale', '1')"
+    click: "方法.聊天('/terrariaMenu menu')"
+# 显示钱币
+money_label:
+  x: "方法.取屏幕宽度 * 8 / 方法.取变量('adjusted_scr_size')"
+  y: "方法.取屏幕宽度 * 82 / 方法.取变量('adjusted_scr_size')"
+  texts: "方法.合并文本('金钱: ', 方法.取变量('terraria_money'))"
+  scale: "界面变量.label_scale"
 # 设置4个装备槽和副手槽
 helmet_texture:
   x: "界面变量.hlmt_x"
@@ -217,63 +379,11 @@ accessory7_slot:
   identifier: "accessory7"
   drawBackground: false
 
-# 设置合成槽位
-crafting_label:
-  x: "方法.取屏幕宽度 * 24 / 方法.取变量('adjusted_scr_size')"
-  y: "方法.取屏幕宽度 * 110 / 方法.取变量('adjusted_scr_size')"
-  center: true
-  texts: "合成"
-  scale: "界面变量.label_scale"
-crafting_texture:
-  x: "方法.取屏幕宽度 * 18 / 方法.取变量('adjusted_scr_size')"
-  y: "方法.取屏幕宽度 * 120 / 方法.取变量('adjusted_scr_size')"
-  width: "方法.取屏幕宽度 * 12 / 方法.取变量('adjusted_scr_size')"
-  height: "方法.取屏幕宽度 * 12 / 方法.取变量('adjusted_scr_size')"
-  texture: "gui/slot_crafting.png"
-crafting_slot:
-  x: "方法.取屏幕宽度 * 18 / 方法.取变量('adjusted_scr_size')"
-  y: "方法.取屏幕宽度 * 120 / 方法.取变量('adjusted_scr_size')"
-  width: "方法.取屏幕宽度 * 12 / 方法.取变量('adjusted_scr_size')"
-  height: "方法.取屏幕宽度 * 12 / 方法.取变量('adjusted_scr_size')"
-  identifier: "container_0"
-  drawBackground: false
-  tip: "&2&3&3&r制作窗口"
-# 防御
-defence_texture:
-  x: "方法.取屏幕宽度 - (方法.取屏幕宽度 * 50 / 方法.取变量('adjusted_scr_size'))"
-  y: "方法.取屏幕高度 - (方法.取屏幕宽度 * 40 / 方法.取变量('adjusted_scr_size'))"
-  width: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')"
-  height: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')"
-  texture: "gui/defence.png"
-  tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')"
-defence_label:
-  x: "方法.取屏幕宽度 - (方法.取屏幕宽度 * 43 / 方法.取变量('adjusted_scr_size'))"
-  y: "方法.取屏幕高度 - (方法.取屏幕宽度 * 37 / 方法.取变量('adjusted_scr_size'))"
-  center: true
-  scale: "0.8 * 界面变量.label_scale"
-  texts: "方法.合并文本('&#CCCCCC&l', 方法.取变量('terraria_defence'))"
-  tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')"
 # 背包
 backpack_label:
   x: "方法.取屏幕宽度 * 17 / 方法.取变量('adjusted_scr_size')"
   y: "0"
   texts: "物品栏"
-  scale: "界面变量.label_scale"
-# 菜单
-menu_label:
-  x: "界面变量.acc_x"
-  y: "界面变量.acc_y + 界面变量.slot_offset * 5"
-  texts: "菜单"
-  scale: "界面变量.label_scale"
-  actions:
-    enter: "方法.设置组件值('menu_label', 'fscale', '1.1')"
-    leave: "方法.设置组件值('menu_label', 'fscale', '1')"
-    click: "方法.聊天('/terrariaMenu menu')"
-# 显示钱币
-money_label:
-  x: "方法.取屏幕宽度 * 8 / 方法.取变量('adjusted_scr_size')"
-  y: "方法.取屏幕宽度 * 82 / 方法.取变量('adjusted_scr_size')"
-  texts: "方法.合并文本('金钱: ', 方法.取变量('terraria_money'))"
   scale: "界面变量.label_scale"
 # 背包格子#row 1
 slot0-0_texture:
@@ -783,3 +893,84 @@ slot3-8_slot:
   height: "界面变量.slot_size"
   identifier: "container_35"
   drawBackground: false
+
+
+# 提示信息内容
+hints_details:
+  count: 10
+  -1:
+    desc:
+    - 请点击左侧提示标签在此查阅详细信息
+  1:
+    name: 世界信息
+    desc:
+    - 世界分为三层：地表/地下层，洞穴层与地狱层
+    - "&6重要：可通过右键基岩在世界之间穿梭"
+    - 另外，床亦可在地狱层使用以设置出生点
+    - 在各种群系钓鱼均有不同的鱼获；注意星辉瘟疫与神圣之地的鱼获仅可在困难模式（肉山后）获得
+  2:
+    name: 游戏设置
+    desc:
+    - 可通过/settings命令的指引调整个人喜好，此中包括：
+    - 泰拉瑞亚第三人称信息（默认按键为K）
+    - 辅助瞄准功能的各项设置
+    - UI显示大小（合成台的UI大小请通过Esc中视频设置-界面尺寸调整）
+    - 按键绑定
+    - 各种杂项游戏体验设置
+  3:
+    name: 按键绑定
+    desc:
+    - 可通过/settings命令更改按键绑定；部分常见默认键位：
+    - "[K]-第三人称模式"
+    - "[V]-套装加成主动效果"
+    - "[B]-一键使用增益药水"
+    - "[H]-一键使用治疗药水"
+    - "[J]-一键使用魔力药水"
+  4:
+    name: 属性-攻击
+    desc:
+    - 基础攻击力由武器提供，而以下属性决定最终伤害：
+    - 通用/职业百分比攻击：同属性加法叠加，不同属性乘法叠加
+    - 暴击率/职业暴击率：所有暴击率加法叠加；伤害有相当于最终暴击率的概率触发暴击
+    - 暴击伤害：默认为100%，少数物品机制可增加暴击伤害；触发暴击时伤害额外倍率相当于暴击伤害
+  5:
+    name: 属性-攻速
+    desc:
+    - 基础攻击间隔由武器提供，而以下属性决定最终攻速：
+    - 通用/职业百分比攻速：同属性加法叠加，不同属性乘法叠加来确定最终攻速
+    - 最终攻击间隔为基础攻击间隔/最终攻速；此后将会随机取整到整数刻
+    - 即，若计算后攻击间隔为6.25，则实际使用间隔有25%概率为7刻，75%概率为6刻
+    - 部分物品的特殊攻击方式导致其使用间隔为固定值，此时最终攻速将用于提升物品面板伤害
+  6:
+    name: 属性-防御
+    desc:
+    - 计算百分比伤害/暴击后，伤害进行以下计算：
+    - 首先减去有效防御力，即防御力-护甲穿透(至少为0)
+    - 此后，伤害会乘以受伤倍率；此数值由各项伤害减免分别计算而得的乘数乘算得出
+    - 受伤倍率亦会乘算减少因接触敌人受到的减益状态时长
+    - 各项伤害减免属性转化为受伤倍率乘数的公式为：1/(1-伤害减免)；例如，“&a-50%受到伤害&r”会被转化为1/(1+0.5)，即“&a受伤倍率乘以2/3&r”
+  7:
+    name: 关于物品
+    desc:
+    - 可点击左键使用物品；镐和部分武器亦可右键使用
+    - 镐的左键模式会启用自动挥舞，而右键不会
+    - 自动挥舞：允许自动挥舞的物品在使用时自动开启。自动挥舞启用时，CD结束后将自动再次使用物品；可再次使用武器/工具以关闭自动挥舞
+    - 另外，在聊天中输入 [i] 可以展示手上物品
+  8:
+    name: NPC
+    desc:
+    - 主城处的NPC可以右键交互
+    - 大部分NPC在条件允许后会开启商店功能；许多交易物品存在BOSS进度需求
+    - 点击商店中的物品以购买，点击物品栏中的物品以出售
+    - SHIFT+点击可以一次性出售/购买一整组物品
+  9:
+    name: 合成
+    desc:
+    - 点击物品栏中的合成按钮可以查看无需合成站点的合成表
+    - 与合成站点方块交互时可以开启相对应的合成窗口，显示当前可进行的合成
+    - 潜行模式下与站点交互可以查询站点中的所有配方；此时，若手中有物品，则显示本物品参与制作的配方
+  10:
+    name: 更多信息
+    desc:
+    - 可通过点击物品栏中的“信息菜单”查看更多信息
+    - 例如，BOSS的召唤方式，AI解析以及打法攻略
