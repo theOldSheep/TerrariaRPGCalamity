@@ -40,7 +40,7 @@ public class PlanteraTentacle extends EntitySlime {
             // if target is valid, attack
             else {
                 bukkitEntity.setVelocity(
-                        owner.getBukkitEntity().getLocation().subtract( bukkitEntity.getLocation() ).toVector());
+                        owner.getBukkitEntity().getLocation().add(offsetDirection).subtract( bukkitEntity.getLocation() ).toVector());
             }
         }
         // face away from the boss
