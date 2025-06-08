@@ -10560,7 +10560,7 @@ Dodu的手炮:
   lore:
   - §r发射会爆炸分裂成花瓣的魔法花朵
   attributes:
-    damage: 32
+    damage: 51
     damageType: Magic
     projectileSpeed: 13.5
     crit: 4
@@ -12251,7 +12251,7 @@ Dodu的手炮:
   lore:
   - §r召唤小鬼来为你战斗
   attributes:
-    damage: 46
+    damage: 56
     damageType: Summon
     knockback: 2
     useTime: 20
@@ -12264,7 +12264,7 @@ Dodu的手炮:
   - §r召唤蜘蛛来为你战斗
   - §r“这个好像……是一个……蜘蛛！”
   attributes:
-    damage: 70
+    damage: 51
     damageType: Summon
     knockback: 1
     useTime: 18
@@ -12278,7 +12278,7 @@ Dodu的手炮:
   - §r“千刀万剐”
   attributes:
     armorPenetration: 50
-    damage: 24
+    damage: 29
     damageType: Summon
     knockback: 0
     useTime: 18
@@ -12290,7 +12290,7 @@ Dodu的手炮:
   lore:
   - §r召唤双子魔眼来为你战斗
   attributes:
-    damage: 64
+    damage: 208
     damageType: Summon
     knockback: 2
     useTime: 18
@@ -12302,7 +12302,7 @@ Dodu的手炮:
   lore:
   - §r召唤矮人来为你战斗
   attributes:
-    damage: 100
+    damage: 285
     damageType: Summon
     knockback: 3
     useTime: 14
@@ -12314,7 +12314,7 @@ Dodu的手炮:
   lore:
   - §r召唤乌鸦仆从来为你战斗
   attributes:
-    damage: 95
+    damage: 132
     damageType: Summon
     knockback: 3
     useTime: 14
@@ -12326,7 +12326,7 @@ Dodu的手炮:
   lore:
   - §r召唤致命球来为你战斗
   attributes:
-    damage: 150
+    damage: 252
     damageType: Summon
     knockback: 3
     useTime: 14
@@ -12338,7 +12338,7 @@ Dodu的手炮:
   lore:
   - §r召唤必定命中的附魔剑来为你战斗
   attributes:
-    damage: 145
+    damage: 182
     damageType: Summon
     knockback: 1
     useTime: 14
@@ -12351,7 +12351,7 @@ Dodu的手炮:
   - §r召唤星尘细胞来为你战斗
   - §r“培养最美丽的细胞感染”
   attributes:
-    damage: 140
+    damage: 200
     damageType: Summon
     knockback: 2
     useTime: 14
@@ -12364,7 +12364,7 @@ Dodu的手炮:
   - §r召唤星尘之龙来为你战斗
   - §r“有了星尘之龙后，谁还需要一群仆从呢？”
   attributes:
-    damage: 110
+    damage: 167
     damageType: Summon
     knockback: 2
     useTime: 14
@@ -12376,7 +12376,7 @@ Dodu的手炮:
   lore:
   - §r召唤钨钢机器人为你而战
   attributes:
-    damage: 36
+    damage: 33
     damageType: Summon
     knockback: 0.5
     useTime: 20
@@ -12390,7 +12390,7 @@ Dodu的手炮:
   - §r同时只能存在至多一朵冰霜之花
   - §r“要三连啊~~”
   attributes:
-    damage: 22
+    damage: 47
     damageType: Summon
     knockback: 2
     useTime: 20
@@ -12403,7 +12403,7 @@ Dodu的手炮:
   - §r召唤一个太阳之灵来保护你
   - §r同时只能存在至多一个太阳之灵
   attributes:
-    damage: 40
+    damage: 47
     damageType: Summon
     knockback: 1.15
     useTime: 20
@@ -12415,7 +12415,7 @@ Dodu的手炮:
   lore:
   - §r召唤一个会投掷魔法剧毒花瓣的可爱的颠茄之灵
   attributes:
-    damage: 40
+    damage: 32
     damageType: Summon
     knockback: 1
     useTime: 20
@@ -12428,7 +12428,7 @@ Dodu的手炮:
   - §r召唤真菌块为你而战，真菌块需要占用两个仆从栏位
   - §r真菌块击中敌人后为拥有者恢复生命值，最多存在一个真菌块
   attributes:
-    damage: 30
+    damage: 35
     damageType: Summon
     knockback: 2
     useTime: 20
@@ -12453,7 +12453,7 @@ Dodu的手炮:
   lore:
   - §r召唤海星为你而战
   attributes:
-    damage: 16
+    damage: 22
     damageType: Summon
     knockback: 2
     useTime: 20
@@ -12465,7 +12465,7 @@ Dodu的手炮:
   lore:
   - §r召唤寄居蟹为你而战
   attributes:
-    damage: 40
+    damage: 50
     damageType: Summon
     knockback: 2
     useTime: 20
@@ -12477,7 +12477,7 @@ Dodu的手炮:
   lore:
   - §r召唤灵魂吞噬者宝宝来保护你
   attributes:
-    damage: 32
+    damage: 37
     damageType: Summon
     knockback: 0.5
     useTime: 20
@@ -12502,7 +12502,7 @@ Dodu的手炮:
   lore:
   - §r召唤黑暗爬行者为你而战
   attributes:
-    damage: 26
+    damage: 22
     damageType: Summon
     knockback: 2.25
     useTime: 20
@@ -12578,7 +12578,7 @@ Dodu的手炮:
   - §r向敌人发射你背包内的子弹
   - §r50% 概率不消耗弹药
   attributes:
-    damage: 162
+    damage: 145
     damageType: Summon
     knockback: 1
     useTime: 18
@@ -12591,7 +12591,7 @@ Dodu的手炮:
   - §r召唤缠怨鬼碟为你而战
   - §r“这些盘子不能拿走”
   attributes:
-    damage: 92
+    damage: 75
     damageType: Summon
     knockback: 3
     useTime: 18
@@ -12603,7 +12603,7 @@ Dodu的手炮:
   lore:
   - §r召唤蚀骨之龙为你而战
   attributes:
-    damage: 102
+    damage: 90
     damageType: Summon
     knockback: 2
     useTime: 18
@@ -12616,7 +12616,7 @@ Dodu的手炮:
   - §r召唤远古岩鲨为你而战，击碎敌人的防御
   - §r看起来，它在很久之前就失去了颚骨
   attributes:
-    damage: 160
+    damage: 182
     damageType: Summon
     knockback: 4
     useTime: 18
@@ -12629,7 +12629,7 @@ Dodu的手炮:
   - §r召唤海贝为你而战
   - §r每只海贝占据两个召唤栏
   attributes:
-    damage: 180
+    damage: 72
     damageType: Summon
     knockback: 2
     useTime: 18
@@ -12655,7 +12655,7 @@ Dodu的手炮:
   - §r召唤永冻之焱华为你而战
   - §r同时只能存在至多一个永冻之焱华
   attributes:
-    damage: 100
+    damage: 62
     damageType: Summon
     knockback: 3
     useTime: 18
@@ -12667,7 +12667,7 @@ Dodu的手炮:
   lore:
   - §r召唤代达罗斯守卫为你而战
   attributes:
-    damage: 65
+    damage: 152
     damageType: Summon
     knockback: 3
     useTime: 18
@@ -12679,7 +12679,7 @@ Dodu的手炮:
   lore:
   - §r召唤深海海星为你而战
   attributes:
-    damage: 65
+    damage: 68
     damageType: Summon
     knockback: 2
     useTime: 18
@@ -12691,7 +12691,7 @@ Dodu的手炮:
   lore:
   - §r召唤硫火搜寻者为你而战
   attributes:
-    damage: 55
+    damage: 139
     damageType: Summon
     knockback: 3
     useTime: 18
@@ -12703,7 +12703,7 @@ Dodu的手炮:
   lore:
   - §r召唤环绕在你身边的熔火古刀为你而战
   attributes:
-    damage: 83
+    damage: 80
     damageType: Summon
     knockback: 4.5
     useTime: 18
@@ -12715,7 +12715,7 @@ Dodu的手炮:
   lore:
   - §r召唤架式扫射机为你而战
   attributes:
-    damage: 92
+    damage: 110
     damageType: Summon
     knockback: 2
     useTime: 18
@@ -12728,7 +12728,7 @@ Dodu的手炮:
   - §r召唤太阳神之灵为你而战
   - §r同时只能存在至多一个太阳神之灵
   attributes:
-    damage: 140
+    damage: 94
     damageType: Summon
     knockback: 1.25
     useTime: 18
@@ -12741,7 +12741,7 @@ Dodu的手炮:
   - §r召唤灾厄三兄妹为你而战
   - §r灾厄三兄妹占据两个召唤栏
   attributes:
-    damage: 75
+    damage: 48
     damageType: Summon
     knockback: 2
     useTime: 14
@@ -12755,7 +12755,7 @@ Dodu的手炮:
   - §r迷你世纪之花占据三个召唤栏
   - §r同时只能存在至多一个迷你世纪之花
   attributes:
-    damage: 118
+    damage: 106
     damageType: Summon
     knockback: 1
     useTime: 14
@@ -12767,7 +12767,7 @@ Dodu的手炮:
   lore:
   - §r召唤沙龙卷为你而战
   attributes:
-    damage: 170
+    damage: 130
     damageType: Summon
     knockback: 2
     useTime: 14
@@ -12779,7 +12779,7 @@ Dodu的手炮:
   lore:
   - §r召唤鼠尾草之灵为你而战
   attributes:
-    damage: 90
+    damage: 84
     damageType: Summon
     knockback: 2
     useTime: 14
@@ -12791,7 +12791,7 @@ Dodu的手炮:
   lore:
   - §r召唤畸变吞食者为你而战
   attributes:
-    damage: 80
+    damage: 163
     damageType: Summon
     knockback: 1
     useTime: 14
@@ -12805,7 +12805,7 @@ Dodu的手炮:
   - §r“回归于花下好了，春之亡灵！”
   - §r“沉眠于花下好了，红白之蝶！”
   attributes:
-    damage: 71
+    damage: 126
     damageType: Summon
     knockback: 1
     useTime: 14
@@ -12817,7 +12817,7 @@ Dodu的手炮:
   lore:
   - §r召唤一个小而特别的瘟疫携带者变种
   attributes:
-    damage: 220
+    damage: 282
     damageType: Summon
     knockback: 7
     useTime: 14
@@ -12831,7 +12831,7 @@ Dodu的手炮:
   - §r瘟疫雌蜂占据三个召唤栏
   - §r同时只能存在至多一个瘟疫雌蜂
   attributes:
-    damage: 347
+    damage: 314
     damageType: Summon
     knockback: 5
     useTime: 14
@@ -12845,7 +12845,7 @@ Dodu的手炮:
   - §r凋零枯花占据两个召唤栏
   - §r同时只能存在至多一个凋零枯花
   attributes:
-    damage: 77
+    damage: 132
     damageType: Summon
     knockback: 3
     useTime: 14
@@ -12857,7 +12857,7 @@ Dodu的手炮:
   lore:
   - §r召唤幻星探测器为你而战
   attributes:
-    damage: 154
+    damage: 243
     damageType: Summon
     knockback: 1.25
     useTime: 14
