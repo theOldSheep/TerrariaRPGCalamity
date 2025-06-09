@@ -4,15 +4,13 @@ import net.minecraft.server.v1_12_R1.EntitySlime;
 import net.minecraft.server.v1_12_R1.GenericAttributes;
 import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
 import net.minecraft.server.v1_12_R1.World;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
-import terraria.util.BossHelper;
-import terraria.util.DamageHelper;
-import terraria.util.EntityHelper;
-import terraria.util.MathHelper;
+import terraria.util.*;
 
 import java.util.HashMap;
 
@@ -25,7 +23,6 @@ public class DarkEnergy extends EntitySlime {
     // other variables and AI
     CeaselessVoid owner;
     int indexAI = 0;
-    Vector velocity = new Vector();
 
     private void AI() {
         // no AI after death
@@ -43,7 +40,9 @@ public class DarkEnergy extends EntitySlime {
             // if target is valid, attack
             else {
                 indexAI++;
-                bukkitEntity.setVelocity(velocity);
+                motX = 0;
+                motY = 0;
+                motZ = 0;
 
                 if (indexAI == 20)
                     removeScoreboardTag("noDamage");
@@ -66,8 +65,7 @@ public class DarkEnergy extends EntitySlime {
 
         // Calculate the final position by adding the rotated offset to the center
         Location newLoc = center.clone().add(rotatedOffset);
-
-        velocity = newLoc.subtract(bukkitEntity.getLocation()).toVector();
+        bukkitEntity.teleport(newLoc);
     }
     // default constructor to handle chunk unload
     public DarkEnergy(World world) {

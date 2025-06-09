@@ -525,6 +525,7 @@ public class MinionSlime extends EntitySlime {
             case "白色天龙尾":
             case "灾坟仆从体节":
             case "灾坟仆从尾":
+                this.yaw = EntityHelper.getMetadata(bukkitEntity, "yaw").asFloat();
                 break;
             default:
                 if ( !(MinionHelper.checkTargetIsValidEnemy(
@@ -2177,11 +2178,12 @@ public class MinionSlime extends EntitySlime {
                 // shoot at the target
                 if (!targetIsOwner && index % 12 == 0) {
                     // predict location
+                    double shootSpd = 3;
                     Location shootAimLoc = AimHelper.helperAimEntity(minionBukkit, target,
                             new AimHelper.AimHelperOptions("星幻激光")
-                                    .setProjectileSpeed(2.25));
+                                    .setProjectileSpeed(shootSpd));
                     Vector projVel = MathHelper.getDirection(
-                            minionBukkit.getEyeLocation(), shootAimLoc, 2.25);
+                            minionBukkit.getEyeLocation(), shootAimLoc, shootSpd);
                     EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                             minionBukkit, projVel, attrMap, "星幻激光");
                     shootInfo.properties.put("penetration", 0);
@@ -2701,9 +2703,9 @@ public class MinionSlime extends EntitySlime {
                         switch (weaponType) {
                             // plasma cannon
                             case 0: {
-                                correctedIdx = index + (int) (i * 10 / 4d);
+                                correctedIdx = index + i * 4;
                                 double projSpd = 2.5;
-                                if (correctedIdx % 10 == 0) {
+                                if (correctedIdx % 16 == 0) {
                                     EntityHelper.spawnProjectile(minionBukkit, shootLoc,
                                             MathHelper.getDirection(shootLoc, target.getEyeLocation(), projSpd),
                                             attrMap, DamageHelper.DamageType.ROCKET, "阿瑞斯外骨骼等离子光球");
@@ -2712,8 +2714,8 @@ public class MinionSlime extends EntitySlime {
                             }
                             // tesla cannon
                             case 1: {
-                                correctedIdx = index + (int) (i * 15 / 4d);
-                                if (correctedIdx % 15 == 0) {
+                                correctedIdx = index + i * 3;
+                                if (correctedIdx % 12 == 0) {
                                     double projSpd = 2;
                                     Location aimLoc = AimHelper.helperAimEntity(shootLoc, target,
                                             new AimHelper.AimHelperOptions("阿瑞斯外骨骼球状闪电")
@@ -2727,16 +2729,21 @@ public class MinionSlime extends EntitySlime {
                             }
                             // laser cannon
                             case 2: {
-                                correctedIdx = index + i * 15;
+                                correctedIdx = index + i;
                                 // 25tick projectile, 25tick laser then 10tick idle, total 60 ticks
                                 int internalIdx = correctedIdx % 60;
 
                                 if (internalIdx < 25) {
-                                    if (internalIdx % 5 == 0) {
+                                    if (internalIdx % 3 == 0) {
                                         double projSpd = 3;
+                                        String projType = "阿瑞斯外骨骼热能激光";
+                                        Location aimLoc = AimHelper.helperAimEntity(shootLoc, target,
+                                                new AimHelper.AimHelperOptions(projType)
+                                                        .setAccelerationMode(true)
+                                                        .setProjectileSpeed(projSpd));
                                         EntityHelper.spawnProjectile(minionBukkit, shootLoc,
-                                                MathHelper.getDirection(shootLoc, target.getEyeLocation(), projSpd),
-                                                attrMap, DamageHelper.DamageType.ROCKET, "阿瑞斯外骨骼热能激光");
+                                                MathHelper.getDirection(shootLoc, aimLoc, projSpd),
+                                                attrMap, DamageHelper.DamageType.ROCKET, projType);
                                     }
                                 }
                                 else if (internalIdx < 50) {
@@ -2837,7 +2844,7 @@ public class MinionSlime extends EntitySlime {
                         // burst of homing shards
                         case 1: {
                             double projSpd = 2.5;
-                            if (index % 30 == 0) {
+                            if (index % 33 == 0) {
                                 for (int i = 0; i < 12; i ++) {
                                     EntityHelper.spawnProjectile(minionBukkit,
                                             MathHelper.randomVector().multiply(projSpd),

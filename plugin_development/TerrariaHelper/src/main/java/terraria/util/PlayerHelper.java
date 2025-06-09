@@ -2061,7 +2061,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         // bgm, biome and background
         // prevent duplicated soundtrack etc.
         if (joinOrRespawn) {
-            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BACKGROUND, "");
+            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BACKGROUND, "TEMP_NONE");
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BGM, "normal");
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_LAST_BGM_TIME, 0L);
             EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME, WorldHelper.BiomeType.NORMAL);

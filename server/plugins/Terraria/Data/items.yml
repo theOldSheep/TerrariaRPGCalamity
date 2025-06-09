@@ -1196,6 +1196,7 @@
   lore:
   - §r[饰品]
   attributes:
+    mobLimit: -999
     damageMulti: -0.99
     maxHealth: 99999
   worth: 20000
@@ -12872,7 +12873,7 @@ Dodu的手炮:
   - §r有时会发射导弹而非子弹
   - §r66%几率节省弹药
   attributes:
-    damage: 258
+    damage: 264
     damageType: Summon
     knockback: 0.5
     useTime: 14
@@ -12885,7 +12886,7 @@ Dodu的手炮:
   - §r召唤元素之斧为你而战
   - §r“放心使用，并不会劈坏你的木门”
   attributes:
-    damage: 226
+    damage: 185
     damageType: Summon
     knockback: 5
     useTime: 10
@@ -12898,7 +12899,7 @@ Dodu的手炮:
   - §r在你的头顶召唤元素之花
   - §r共占据3格仆从栏位
   attributes:
-    damage: 248
+    damage: 303
     damageType: Summon
     knockback: 5
     useTime: 10
@@ -12910,7 +12911,7 @@ Dodu的手炮:
   lore:
   - §r召唤圣刃为你而战
   attributes:
-    damage: 226
+    damage: 209
     damageType: Summon
     knockback: 2
     useTime: 10
@@ -12924,7 +12925,7 @@ Dodu的手炮:
   - §r“你说到底↑为什↓么↑~”
   - §r“都→是←我→的←错→~”
   attributes:
-    damage: 360
+    damage: 204
     damageType: Summon
     knockback: 5
     useTime: 10
@@ -12940,7 +12941,7 @@ Dodu的手炮:
   - §#1FFBFF“装备有高端的传感器，几乎无人可以避开它们。能逃脱它们目光的则更少了。
   - §#1FFBFF在我基于视觉灵魂的动力机器实验和我最新的项目之间的一座优秀桥梁。”
   attributes:
-    damage: 210
+    damage: 408
     damageType: Summon
     knockback: 3
     useTime: 10
@@ -12953,7 +12954,7 @@ Dodu的手炮:
   - §r在你的头顶召唤一盏宇宙灯为你而战
   - §r每盏宇宙灯占据两格仆从栏位
   attributes:
-    damage: 666
+    damage: 782
     damageType: Summon
     knockback: 4
     useTime: 10
@@ -12967,7 +12968,7 @@ Dodu的手炮:
   - §r同一时间只能存在一对巨龙
   - §r“吞噬恒星的巨龙”
   attributes:
-    damage: 263
+    damage: 135
     damageType: Summon
     knockback: 2
     useTime: 30
@@ -12982,7 +12983,7 @@ Dodu的手炮:
   - §r需要至少3格仆从栏位才能使用
   - §r同时只能存在至多一家骨龙
   attributes:
-    damage: 163
+    damage: 246
     damageType: Summon
     knockback: 4
     useTime: 30
@@ -12994,7 +12995,7 @@ Dodu的手炮:
   lore:
   - §r召唤花灵来保护你
   attributes:
-    damage: 722
+    damage: 858
     damageType: Summon
     knockback: 1
     useTime: 10
@@ -13009,7 +13010,7 @@ Dodu的手炮:
   - §r在近距离，乌贼会扑向敌人并造成高频伤害
   - §r“深渊之中，任何资源都是稀缺的，每个物种都孤苦伶仃，仅是因为它们根本没有可共享的资源。”
   attributes:
-    damage: 652
+    damage: 742
     damageType: Summon
     knockback: 2.5
     useTime: 10
@@ -13024,7 +13025,7 @@ Dodu的手炮:
   - §r同时只能存在至多一个幻云星体
   - §r“我祈祷拥有一颗透明的心灵~”
   attributes:
-    damage: 1860
+    damage: 1779
     damageType: Summon
     knockback: 3
     useTime: 20
@@ -13038,7 +13039,7 @@ Dodu的手炮:
   - §r需要至少3格仆从栏位才能使用
   - §r同时只能存在至多一个年轻猪龙鱼
   attributes:
-    damage: 339
+    damage: 308
     damageType: Summon
     knockback: 5
     useTime: 20
@@ -13051,7 +13052,7 @@ Dodu的手炮:
   - §r召唤星宇护卫为你而战
   - §r“神，永不护主！”
   attributes:
-    damage: 1082
+    damage: 777
     damageType: Summon
     knockback: 2
     useTime: 10
@@ -13066,7 +13067,7 @@ Dodu的手炮:
   - §r交替发射火箭和子弹
   - §r75%几率节省弹药
   attributes:
-    damage: 978
+    damage: 810
     damageType: Summon
     knockback: 6
     useTime: 10
@@ -13079,7 +13080,7 @@ Dodu的手炮:
   - §r召唤一只强大的渡鸦，可以传送和猛冲
   - §r“永不复焉”
   attributes:
-    damage: 486
+    damage: 480
     damageType: Summon
     knockback: 2
     useTime: 10
@@ -13094,7 +13095,7 @@ Dodu的手炮:
   - §r同时只能存在至多一个光环
   - §r需要5格仆从栏位
   attributes:
-    damage: 1798
+    damage: 2910
     damageType: Summon
     knockback: 4
     useTime: 30
@@ -13106,7 +13107,7 @@ Dodu的手炮:
   lore:
   - §r召唤一对磁铁无人机，无情的撕裂敌人
   attributes:
-    damage: 603
+    damage: 1746
     damageType: Summon
     knockback: 8
     useTime: 10
@@ -13120,7 +13121,7 @@ Dodu的手炮:
   - §r需要至少5格仆从栏位才能使用
   - §r“巨龙撞击”
   attributes:
-    damage: 2392
+    damage: 1735
     damageType: Summon
     knockback: 7
     useTime: 30
@@ -13132,7 +13133,7 @@ Dodu的手炮:
   lore:
   - §r召唤一个UFO来蒸发你的敌人
   attributes:
-    damage: 378
+    damage: 1180
     damageType: Summon
     knockback: 1
     useTime: 10
@@ -13148,7 +13149,7 @@ Dodu的手炮:
   - §r无论何时，灾坟仆从的弹幕将强行对击中的目标造成伤害
   - §#C61B40宇宙之虫可能的未来，对力量的饥渴蒙蔽双眼，这可是一个可怕的警告，但不影响你走向这样的结局。
   attributes:
-    damage: 1500
+    damage: 925
     damageType: Summon
     knockback: 2
     useTime: 20
@@ -13160,7 +13161,7 @@ Dodu的手炮:
   lore:
   - §r召唤一个探魂者为你而战
   attributes:
-    damage: 609
+    damage: 950
     damageType: Summon
     knockback: 4
     useTime: 10
@@ -13231,7 +13232,7 @@ Dodu的手炮:
   - §r宇宙之灵在探测到敌人时会发射大量的跟踪能源箭
   - §r需要至少10格仆从栏位才能使用并且同时只能存在至多一个宇宙之灵
   attributes:
-    damage: 1510
+    damage: 1732
     damageType: Summon
     knockback: 0
     useTime: 50
@@ -13251,7 +13252,7 @@ Dodu的手炮:
   - §r同时只能存在至多一个冰晶结构
   - §#83EFFF“不包含冰的双关语”
   attributes:
-    damage: 2150
+    damage: 1919
     damageType: Summon
     knockback: 4
     useTime: 50
@@ -13270,7 +13271,7 @@ Dodu的手炮:
   - §r需要至少5格仆从栏位才能使用并且最多召唤一次
   - §r“如此结实，我敢说它一击就能打趴那些黑手党”
   attributes:
-    damage: 400
+    damage: 910
     damageType: Summon
     knockback: 1
     useTime: 30
@@ -13756,7 +13757,7 @@ Dodu的手炮:
   - §r穿透一次后获得追踪能力
   attributes:
     damage: 14
-    damageBulletMulti: -0.25
+    damageBulletMulti: -0.5
     damageType: Bullet
     crit: 4
     knockback: 1.25
@@ -13794,7 +13795,7 @@ Dodu的手炮:
 鼠疫弹:
   item: SLIME_BALL
   attributes:
-    armorPenetration: 35
+    armorPenetration: 5
     damage: 30
     damageType: Bullet
     crit: 4
@@ -13810,6 +13811,7 @@ Dodu的手炮:
   - §r击中敌人后产生额外弹幕
   attributes:
     damage: 28
+    damageBulletMulti: -0.45
     damageType: Bullet
     crit: 4
     knockback: 1.5

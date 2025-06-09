@@ -115,10 +115,11 @@ public class CeaselessVoid extends EntitySlime {
             for (DarkEnergy darkEnergy : darkEnergies) {
                 if (darkEnergy.isAlive()) {
                     darkEnergy.updateArcPosition(centerLocation, currAngle, radius,
-                            rotationAxis, rotationAngle + owner.indexAI / 100d);
+                            rotationAxis, rotationAngle);
                 }
                 currAngle += angleSeparation;
             }
+            rotationAngle += 0.01d;
         }
     }
     List<DarkEnergyArc> darkEnergyArcs = new ArrayList<>(); // List to hold arcs

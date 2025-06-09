@@ -4200,7 +4200,7 @@
     blastRadius: 1.75
     clusterBomb:
         amount: 4
-        damageMulti: 0.25
+        damageMulti: 1
         name: 宙蝰制导火箭
         velocity: 2.5
 星律辐射溶解球:
@@ -5022,7 +5022,7 @@ TNT:
         name: 诅咒弹
         type: surround
         velocity: 2.75
-        damageMulti: 0.2
+        damageMulti: 1
         fireOnTimeout: false
         fireOnHitBlock: false
 冰砾弹:
