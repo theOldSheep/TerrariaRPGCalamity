@@ -33,6 +33,8 @@ public class MinionSlime extends EntitySlime {
     ItemStack originalStaff;
     HashMap<String, Double> attrMap;
     HashMap<String, Object> extraVariables = new HashMap<>();
+    // store other parts in here, so in case of removal, those parts are guaranteed to go away
+    ArrayList<net.minecraft.server.v1_12_R1.Entity> otherParts = new ArrayList<>();
     // default constructor when the chunk loads with one of these custom entity to prevent bug
     public MinionSlime(World world) {
         super(world);
@@ -143,19 +145,19 @@ public class MinionSlime extends EntitySlime {
                 break;
             }
             case "小激光眼": {
-                new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                otherParts.add(new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                         this.sentryOrMinion, true,
-                        "小魔焰眼", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                        "小魔焰眼", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone()));
                 setNoGravity(true);
                 break;
             }
             case "迷你灾厄": {
-                new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                otherParts.add(new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                         this.sentryOrMinion, true,
-                        "迷你灾难", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
-                new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                        "迷你灾难", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone()));
+                otherParts.add(new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                         this.sentryOrMinion, false,
-                        "迷你灾祸", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                        "迷你灾祸", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone()));
                 noclip = true;
                 setNoGravity(true);
                 break;
@@ -167,18 +169,18 @@ public class MinionSlime extends EntitySlime {
                 break;
             }
             case "紫蝶": {
-                new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                otherParts.add(new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                         this.sentryOrMinion, false,
-                        "粉蝶", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                        "粉蝶", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone()));
                 noclip = true;
                 setNoGravity(true);
                 break;
             }
             case "血炎骨龙": {
                 for (int i = 0; i < 2; i ++)
-                    new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                    otherParts.add(new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                             this.sentryOrMinion, false,
-                            "血炎骨龙宝宝", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                            "血炎骨龙宝宝", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone()));
                 setSize(3, false);
                 noclip = true;
                 setNoGravity(true);
@@ -192,27 +194,27 @@ public class MinionSlime extends EntitySlime {
             }
             case "磁铁无人机": {
                 if (this.minionInList == bukkitEntity)
-                    new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                    otherParts.add(new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                             this.sentryOrMinion, false,
-                            "磁铁无人机", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                            "磁铁无人机", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone()));
                 noclip = true;
                 setNoGravity(true);
                 break;
             }
             case "光阴流时伞": {
-                new MinionHusk(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                otherParts.add(new MinionHusk(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                         this.sentryOrMinion, true,
-                        "葱茏之锋", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                        "葱茏之锋", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone()));
                 String[] meleeExtraMinions = {"耀目圣刃", "灭兆渡鸦"},
                         rangedExtraMinions = {"宇宙炮艇", "极昼飞行物"};
                 for (String minion : meleeExtraMinions)
-                    new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                    otherParts.add(new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                             this.sentryOrMinion, true,
-                            minion, (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                            minion, (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone()));
                 for (String minion : rangedExtraMinions)
-                    new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                    otherParts.add(new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                             this.sentryOrMinion, false,
-                            minion, (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                            minion, (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone()));
 
                 setSize(3, false);
                 noclip = true;
@@ -270,9 +272,9 @@ public class MinionSlime extends EntitySlime {
                 // for heads only
                 switch (minionType) {
                     case "黑色天龙":
-                        new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                        otherParts.add(new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                             this.sentryOrMinion, true,
-                            "白色天龙", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
+                            "白色天龙", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone()));
                     case "白色天龙": {
                         ArrayList<LivingEntity> segments = new ArrayList<>(11);
                         // add this head
@@ -283,6 +285,7 @@ public class MinionSlime extends EntitySlime {
                                     this.sentryOrMinion, true,
                                     minionType + "体节", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
                             segments.add((LivingEntity) newSeg.getBukkitEntity());
+                            otherParts.add(newSeg);
                         }
                         // save segment info
                         extraVariables.put("s", segments);
@@ -307,16 +310,18 @@ public class MinionSlime extends EntitySlime {
                     segments.add((LivingEntity) bukkitEntity);
                     // add body (10 segments)
                     for (int i = 0; i < 10; i++) {
-                        MinionSlime newSeg1 = new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
+                        MinionSlime newSeg = new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                                 this.sentryOrMinion, true,
                                 minionType + "体节", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
-                        segments.add((LivingEntity) newSeg1.getBukkitEntity());
+                        segments.add((LivingEntity) newSeg.getBukkitEntity());
+                        otherParts.add(newSeg);
                     }
                     // add tail
                     MinionSlime tailSeg = new MinionSlime(this.owner, this.minionSlot, this.minionSlotMax, this.minionInList,
                             this.sentryOrMinion, true,
                             minionType + "尾", (HashMap<String, Double>) this.attrMap.clone(), this.originalStaff.clone());
                     segments.add((LivingEntity) tailSeg.getBukkitEntity());
+                    otherParts.add(tailSeg);
                     // save segment info
                     extraVariables.put("s", segments);
                 }
@@ -3066,5 +3071,13 @@ public class MinionSlime extends EntitySlime {
         hasTeleported = false;
         // add 1 to index
         index ++;
+    }
+    // on death - remove parts as well
+    @Override
+    public void die() {
+        super.die();
+        for (net.minecraft.server.v1_12_R1.Entity e : otherParts) {
+            e.die();
+        }
     }
 }

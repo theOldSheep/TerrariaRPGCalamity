@@ -30,6 +30,8 @@ public class MinionCaveSpider extends EntityCaveSpider {
     ItemStack originalStaff;
     HashMap<String, Double> attrMap;
     HashMap<String, Object> extraVariables = new HashMap<>();
+    // store other parts in here, so in case of removal, those parts are guaranteed to go away
+    ArrayList<net.minecraft.server.v1_12_R1.Entity> otherParts = new ArrayList<>();
     // default constructor when the chunk loads with one of these custom entity to prevent bug
     public MinionCaveSpider(World world) {
         super(world);
@@ -205,5 +207,13 @@ public class MinionCaveSpider extends EntityCaveSpider {
         hasTeleported = false;
         // add 1 to index
         index ++;
+    }
+    // on death - remove parts as well
+    @Override
+    public void die() {
+        super.die();
+        for (net.minecraft.server.v1_12_R1.Entity e : otherParts) {
+            e.die();
+        }
     }
 }
