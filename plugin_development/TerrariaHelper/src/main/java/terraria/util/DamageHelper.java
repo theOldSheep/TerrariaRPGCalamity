@@ -1507,6 +1507,7 @@ public class DamageHelper {
         // special death message cases
         if (v instanceof Player) {
             Player plyV = (Player) v;
+            // tool specific msg
             String plyTool = ItemHelper.splitItemName(plyV.getInventory().getItemInMainHand() )[1];
             switch (plyTool) {
                 case "雷姆的复仇":
@@ -1517,7 +1518,12 @@ public class DamageHelper {
                         dm = "<victim> 忘记了抱头蹲防";
                     break;
             }
-            if ( PlayerHelper.getAccessories(plyV).contains("空灵护符") && Math.random() < 0.1 ) {
+            // armor set specific msg
+            if ( PlayerHelper.getArmorSet(plyV).contains("天钻套装") && Math.random() < 0.5 ) {
+                dm = "§4<victim> 一去不复返";
+            }
+            // accessory specific msg
+            if ( PlayerHelper.getAccessories(plyV).contains("空灵护符") && Math.random() < 0.25 ) {
                 String msg = "§4<victim>死了    <victim>死了".replaceAll("<victim>", v.getName());
                 for (int i = 0; i < 3; i ++) {
                     Bukkit.broadcastMessage(msg);
