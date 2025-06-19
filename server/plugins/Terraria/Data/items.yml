@@ -8427,7 +8427,7 @@ Dodu的手炮:
   - §r潜伏攻击会使炸弹飞的更快并且在爆炸时生成五个泡泡
   attributes:
     damage: 24
-    damageStealth: 32
+    damageStealth: 329
     damageType: Rogue
     crit: 4
     knockback: 8
@@ -8442,7 +8442,7 @@ Dodu的手炮:
   - §r“盗贼这下NB了”
   attributes:
     damage: 30
-    damageStealth: 50
+    damageStealth: 210
     damageType: Rogue
     crit: 4
     knockback: 5.75
@@ -8456,7 +8456,7 @@ Dodu的手炮:
   - §r潜伏攻击速度稍快，爆炸更强烈并放出大量火花
   attributes:
     damage: 80
-    damageStealth: 140
+    damageStealth: 387
     damageType: Rogue
     crit: 4
     knockback: 8
@@ -8470,7 +8470,7 @@ Dodu的手炮:
   - §r潜伏攻击形成更多气泡，并造成狱炎和咒火减益
   attributes:
     damage: 110
-    damageStealth: 175
+    damageStealth: 770
     damageType: Rogue
     crit: 4
     knockback: 4.5
@@ -8485,7 +8485,7 @@ Dodu的手炮:
   - §r“鱼雷母舰入境！”
   attributes:
     damage: 92
-    damageStealth: 225
+    damageStealth: 386
     damageType: Rogue
     crit: 4
     knockback: 6.5
@@ -8500,7 +8500,7 @@ Dodu的手炮:
   - §r“物理驱魔”
   attributes:
     damage: 128
-    damageStealth: 160
+    damageStealth: 1190
     damageType: Rogue
     crit: 4
     knockback: 1
@@ -8515,7 +8515,7 @@ Dodu的手炮:
   - §r“我需要更大的破坏”
   attributes:
     damage: 100
-    damageStealth: 150
+    damageStealth: 406
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -8529,7 +8529,7 @@ Dodu的手炮:
   - §r潜伏攻击使得粉尘云更猛烈
   attributes:
     damage: 148
-    damageStealth: 200
+    damageStealth: 426
     damageType: Rogue
     crit: 4
     knockback: 4
@@ -8543,7 +8543,7 @@ Dodu的手炮:
   - §r潜伏攻击爆出追踪海水弹
   attributes:
     damage: 120
-    damageStealth: 180
+    damageStealth: 815
     damageType: Rogue
     crit: 4
     knockback: 6.5
@@ -8558,7 +8558,7 @@ Dodu的手炮:
   - §r潜伏攻击会产生一次大爆炸并生成更多的蜜蜂
   attributes:
     damage: 126
-    damageStealth: 200
+    damageStealth: 757
     damageType: Rogue
     crit: 4
     knockback: 1.5
@@ -8572,7 +8572,7 @@ Dodu的手炮:
   - §r潜伏攻击发射能穿透的爆炸飞盘
   attributes:
     damage: 240
-    damageStealth: 350
+    damageStealth: 950
     damageType: Rogue
     crit: 4
     knockback: 4
@@ -8586,7 +8586,7 @@ Dodu的手炮:
   - §r潜伏攻击生成更多更强的子母炸弹
   attributes:
     damage: 300
-    damageStealth: 400
+    damageStealth: 976
     damageType: Rogue
     crit: 4
     knockback: 10
