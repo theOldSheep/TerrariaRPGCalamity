@@ -148,8 +148,6 @@ public class StructurePopulatorBiomeCenter extends BlockPopulator {
     static Location getCavernOpening(World wld, int centerX, int centerZ,
                                             int xzToleranceSteps, int xzToleranceStepSize,
                                             int yMin, int yMax, int yStep) {
-        long ns = System.nanoTime();
-
         ArrayList<Location> validLocations = new ArrayList<>();
         ArrayList<Location> searchXZ = new ArrayList<>();
         int x, z;
@@ -169,11 +167,8 @@ public class StructurePopulatorBiomeCenter extends BlockPopulator {
                     validLocations.add(new Location(wld, x, y, z));
                 }
             }
-            // TODO
-//            if (! validYs.isEmpty()) break;
+            if (! validLocations.isEmpty()) break;
         }
-
-        Bukkit.broadcastMessage("NS: " + (System.nanoTime() - ns));
 
         if (validLocations.isEmpty()) return new Location(wld, centerX, yMin + (int) (Math.random() * yMax - yMin), centerZ);
         return validLocations.get((int) (Math.random() * validLocations.size()));

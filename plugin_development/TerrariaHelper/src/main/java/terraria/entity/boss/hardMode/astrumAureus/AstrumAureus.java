@@ -178,6 +178,8 @@ public class AstrumAureus extends EntitySlime {
             double speedMulti = getSpeedMulti();
             double speed = HORIZONTAL_SPEED * speedMulti;
             Vector velocity;
+            // overwrite below when needed
+            noclip = true;
             if (indexAI == 0) {
                 velocity = getHorizontalDirection();
                 velocity.multiply(speed);
@@ -196,7 +198,6 @@ public class AstrumAureus extends EntitySlime {
                 if (velLen > speed) {
                     velocity.multiply(speed / velLen);
                 }
-                noclip = true;
                 if (falling) {
                     yComp -= 0.075;
                     // landing
@@ -213,8 +214,11 @@ public class AstrumAureus extends EntitySlime {
                         }
                     }
                 }
-                else if (locY > target.getLocation().getY())
-                    falling = true;
+                else {
+                    if (locY > target.getLocation().getY()) {
+                        falling = true;
+                    }
+                }
                 velocity.setY(yComp);
             }
             bukkitEntity.setVelocity(velocity);
