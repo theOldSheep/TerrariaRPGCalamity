@@ -19,7 +19,7 @@ public class SupremeCalamitasBHAsh implements ISupremeCalamitasBH {
     static final int WAIT_TICKS = 20 * 5;
     static final int DURATION_TICKS = 20 * 25;
     static final double HOVER_DISTANCE = 32;
-    static final double PROJECTILE_SPEED = 2.75;
+    static final double PROJECTILE_SPEED = 2.5;
     static final AimHelper.AimHelperOptions BLAST_AIM_HELPER;
     static {
         BLAST_AIM_HELPER = new AimHelper.AimHelperOptions()

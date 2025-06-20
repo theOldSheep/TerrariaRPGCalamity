@@ -32,21 +32,21 @@ public class SupremeCalamitas extends EntitySlime {
     Player target = null;
     // other variables and AI
     static double DASH_SPEED = 4, HOVER_SPEED = 2.75, DART_SPEED = 3.25, HELL_BLAST_SPEED = 3.5, GIGA_BLAST_SPEED = 1.25,
-            HOVER_DISTANCE = 32, DART_SPREAD_SINGLE = 5, DART_SPREAD_TOTAL = 16;
+            HOVER_DISTANCE = 32, DART_SPREAD_SINGLE = 8, DART_SPREAD_TOTAL = 25;
     static HashMap<String, Double> attrMapPrjLow, attrMapPrjMid, attrMapPrjHigh, attrMapPrjExtreme;
     static AimHelper.AimHelperOptions dashAimHelper, blastAimHelper;
     static {
         attrMapPrjLow = new HashMap<>();
-        attrMapPrjLow.put("damage", 1500d);
+        attrMapPrjLow.put("damage", 1350d);
         attrMapPrjLow.put("knockback", 1.5d);
         attrMapPrjMid = new HashMap<>();
-        attrMapPrjMid.put("damage", 1680d);
+        attrMapPrjMid.put("damage", 1450d);
         attrMapPrjMid.put("knockback", 2.0d);
         attrMapPrjHigh = new HashMap<>();
-        attrMapPrjHigh.put("damage", 1800d);
+        attrMapPrjHigh.put("damage", 1560d);
         attrMapPrjHigh.put("knockback", 2.5d);
         attrMapPrjExtreme = new HashMap<>();
-        attrMapPrjExtreme.put("damage", 2040d);
+        attrMapPrjExtreme.put("damage", 1850d);
         attrMapPrjExtreme.put("knockback", 3.75d);
 
         dashAimHelper = new AimHelper.AimHelperOptions()
@@ -299,7 +299,7 @@ public class SupremeCalamitas extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 1800d);
+            attrMap.put("damage", 1400d);
             attrMap.put("damageTakenMulti", 0.75);
             attrMap.put("defence", 200d);
             attrMap.put("knockback", 4d);

@@ -15,9 +15,9 @@ import java.util.*;
 
 public class Thanatos extends EntitySlime {
     public enum SegmentType {
-        HEAD("XM-05“塔纳托斯”激光头", "XM-05“塔纳托斯”头", 2232d),
-        BODY("XM-05“塔纳托斯”散热体节", "XM-05“塔纳托斯”体节", 1920d),
-        TAIL("XM-05“塔纳托斯”尾", "XM-05“塔纳托斯”尾", 1600d);
+        HEAD("XM-05“塔纳托斯”激光头", "XM-05“塔纳托斯”头", 1920d),
+        BODY("XM-05“塔纳托斯”散热体节", "XM-05“塔纳托斯”体节", 1320d),
+        TAIL("XM-05“塔纳托斯”尾", "XM-05“塔纳托斯”尾", 1100d);
 
         private String openName, closedName;
         private double damage;
@@ -60,10 +60,10 @@ public class Thanatos extends EntitySlime {
     EntityHelper.ProjectileShootInfo shootInfoLaser;
     static {
         ATTR_MAP_LASER = new HashMap<>();
-        ATTR_MAP_LASER.put("damage", 1440d);
+        ATTR_MAP_LASER.put("damage", 1260d);
         ATTR_MAP_LASER.put("knockback", 1.5d);
         ATTR_MAP_FINAL_LASER = new HashMap<>();
-        ATTR_MAP_FINAL_LASER.put("damage", 2100d);
+        ATTR_MAP_FINAL_LASER.put("damage", 1800d);
         ATTR_MAP_FINAL_LASER.put("knockback", 2.25d);
 
         AIM_HELPER_LASER = new AimHelper.AimHelperOptions()
@@ -109,11 +109,11 @@ public class Thanatos extends EntitySlime {
 
     public void setOpen(boolean open) {
         if (open && armorCloseCountdown <= 0) {
-            AttributeHelper.tweakAttribute(attrMap, "defenceMulti", "0.1", false);
+            AttributeHelper.tweakAttribute(attrMap, "damageTakenMulti", "-9", false);
             addScoreboardTag("isMonster");
             setCustomName(segmentType.openName);
         } else if (!open && armorCloseCountdown <= 0) {
-            AttributeHelper.tweakAttribute(attrMap, "defenceMulti", "0.1", true);
+            AttributeHelper.tweakAttribute(attrMap, "damageTakenMulti", "-9", true);
             removeScoreboardTag("isMonster");
             setCustomName(segmentType.closedName);
         }
