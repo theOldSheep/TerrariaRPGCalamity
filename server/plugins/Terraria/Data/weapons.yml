@@ -3099,13 +3099,12 @@ Dodu的手炮:
     distance: 32
     velocity: 3.5
   stealth:
-    type: FLAIL
+    type: BOOMERANG
     projectile: 熔岩切碎者Ex
     strict: false
     returnOnHitBlock: false
     reach: 32
     velocity: 3.25
-    canRotate: false
 狱卒之镰:
   type: ROGUE
   normal:

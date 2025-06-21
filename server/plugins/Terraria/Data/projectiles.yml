@@ -1846,7 +1846,7 @@
     spawnSoundVolume: 3.5
     clusterBomb:
         amount: 1
-        damageMulti: 0.25
+        damageMulti: 1
         name: 超新星牵引
         velocity: 0
 超新星牵引:
@@ -1859,7 +1859,7 @@
     spawnSoundVolume: 5
     clusterBomb:
         amount: 1
-        damageMulti: 16
+        damageMulti: 4
         name: 超新星大爆炸
         velocity: 0
 超新星小爆炸:
@@ -2173,7 +2173,7 @@
     spawnProjectiles:
         interval: 3
         spawnMechanism: SURROUND
-        damageMulti: 0.15
+        damageMulti: 0.25
         speed: 2
         spawnType: 瘟疫搜寻者
 元素飞盘:
@@ -2235,7 +2235,7 @@
     spawnProjectiles:
         interval: 3
         spawnMechanism: SURROUND
-        damageMulti: 0.15
+        damageMulti: 0.25
         speed: 1.5
         spawnType: 神圣之火
 狱卒之镰:

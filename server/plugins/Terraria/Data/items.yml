@@ -8600,7 +8600,7 @@ Dodu的手炮:
   - §r潜伏攻击会使炸弹释放出极为强劲的震荡波
   attributes:
     damage: 400
-    damageStealth: 1000
+    damageStealth: 170
     damageType: Rogue
     crit: 4
     knockback: 3
@@ -8614,7 +8614,7 @@ Dodu的手炮:
   - §r潜伏攻击会召唤一个持续时间更长的黑洞，同时会有更加强力的牵引力
   attributes:
     damage: 520
-    damageStealth: 700
+    damageStealth: 864
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -8628,7 +8628,7 @@ Dodu的手炮:
   - §r潜伏攻击会瞬间命中敌人
   attributes:
     damage: 1660
-    damageStealth: 2520
+    damageStealth: 7270
     damageType: Rogue
     crit: 20
     knockback: 8
@@ -8643,7 +8643,7 @@ Dodu的手炮:
   - §r“每个手雷中都封存着高度浓缩且炽热的等离子，小心使用”
   attributes:
     damage: 1900
-    damageStealth: 2430
+    damageStealth: 2849
     damageType: Rogue
     crit: 4
     knockback: 3
@@ -8658,7 +8658,7 @@ Dodu的手炮:
   - §r潜伏攻击将会产生一道撼动现实基础的冲击波
   attributes:
     damage: 10072
-    damageStealth: 17500
+    damageStealth: 2130
     damageType: Rogue
     crit: 4
     knockback: 18
@@ -8671,7 +8671,7 @@ Dodu的手炮:
   - §r潜伏攻击会扔出能敌人之间弹跳的回旋镖
   attributes:
     damage: 54
-    damageStealth: 60
+    damageStealth: 517
     damageType: Rogue
     crit: 4
     knockback: 5.5
@@ -8686,7 +8686,7 @@ Dodu的手炮:
   - §r“沙县！”
   attributes:
     damage: 52
-    damageStealth: 60
+    damageStealth: 173
     damageType: Rogue
     crit: 4
     knockback: 3.5
@@ -8699,7 +8699,7 @@ Dodu的手炮:
   - §r发射慢速，远距离的回旋镖
   attributes:
     damage: 36
-    damageStealth: 72
+    damageStealth: 225
     damageType: Rogue
     crit: 4
     knockback: 1.5
@@ -8713,7 +8713,7 @@ Dodu的手炮:
   - §r潜伏攻击会穿墙并以极高的频率倾泻激光，激光攻击距离更远
   attributes:
     damage: 38
-    damageStealth: 60
+    damageStealth: 228
     damageType: Rogue
     crit: 4
     knockback: 3
@@ -8728,7 +8728,7 @@ Dodu的手炮:
   - §r潜伏攻击使斧头飞的更远，并在命中时发射四把魔法飞斧
   attributes:
     damage: 40
-    damageStealth: 70
+    damageStealth: 396
     damageType: Rogue
     crit: 4
     knockback: 1
@@ -8742,7 +8742,7 @@ Dodu的手炮:
   - §r潜伏攻击会使回飞刃飞得很快
   attributes:
     damage: 90
-    damageStealth: 100
+    damageStealth: 935
     damageType: Rogue
     crit: 8
     knockback: 3
@@ -8756,7 +8756,7 @@ Dodu的手炮:
   - §r“也叫作Dowak”
   attributes:
     damage: 126
-    damageStealth: 150
+    damageStealth: 1446
     damageType: Rogue
     crit: 20
     knockback: 12
@@ -8770,7 +8770,7 @@ Dodu的手炮:
   - §r潜伏攻击能够无限穿透
   attributes:
     damage: 150
-    damageStealth: 225
+    damageStealth: 1740
     damageType: Rogue
     crit: 8
     knockback: 4
@@ -8785,7 +8785,7 @@ Dodu的手炮:
   - §r潜伏攻击击中时召唤追踪的黑暗碎块
   attributes:
     damage: 80
-    damageStealth: 120
+    damageStealth: 1905
     damageType: Rogue
     crit: 4
     knockback: 1
@@ -8798,7 +8798,7 @@ Dodu的手炮:
   - §r潜伏攻击产生冰霜爆炸
   attributes:
     damage: 120
-    damageStealth: 160
+    damageStealth: 1075
     damageType: Rogue
     crit: 4
     knockback: 6.75
@@ -8812,7 +8812,7 @@ Dodu的手炮:
   - §r潜伏攻击会使冰刃追踪攻击敌怪
   attributes:
     damage: 120
-    damageStealth: 150
+    damageStealth: 242
     damageType: Rogue
     crit: 4
     knockback: 4
@@ -8826,7 +8826,7 @@ Dodu的手炮:
   - §r潜伏攻击使手里剑爆出大量硫火飞弹
   attributes:
     damage: 56
-    damageStealth: 60
+    damageStealth: 1600
     damageType: Rogue
     crit: 4
     knockback: 6.5
@@ -8839,7 +8839,7 @@ Dodu的手炮:
   - §r潜伏攻击在击中时生成孢子云
   attributes:
     damage: 168
-    damageStealth: 200
+    damageStealth: 1605
     damageType: Rogue
     crit: 4
     knockback: 7.5
@@ -8853,7 +8853,7 @@ Dodu的手炮:
   - §r潜伏攻击会投掷速度较慢但分裂间隔更低的泰拉飞盘
   attributes:
     damage: 200
-    damageStealth: 225
+    damageStealth: 1512
     damageType: Rogue
     crit: 4
     knockback: 4
@@ -8867,7 +8867,7 @@ Dodu的手炮:
   - §r潜伏攻击会扔出飞行距离较短的冰冻回旋镖
   attributes:
     damage: 180
-    damageStealth: 200
+    damageStealth: 1448
     damageType: Rogue
     crit: 20
     knockback: 12
@@ -8881,7 +8881,7 @@ Dodu的手炮:
   - §r潜伏攻击能够穿透敌人
   attributes:
     damage: 190
-    damageStealth: 225
+    damageStealth: 905
     damageType: Rogue
     crit: 4
     knockback: 8.5
@@ -8895,7 +8895,7 @@ Dodu的手炮:
   - §r潜伏攻击导致回旋镖无限穿透并不断释放瘟疫寻觅者
   attributes:
     damage: 160
-    damageStealth: 175
+    damageStealth: 1325
     damageType: Rogue
     crit: 4
     knockback: 4.5
@@ -8909,7 +8909,7 @@ Dodu的手炮:
   - §r潜伏攻击飞行速度较慢，但飞行距离远且穿透敌怪
   attributes:
     damage: 184
-    damageStealth: 200
+    damageStealth: 2200
     damageType: Rogue
     crit: 4
     knockback: 9
@@ -8923,7 +8923,7 @@ Dodu的手炮:
   - §r潜伏攻击会使镰刀在飞行中不断释放神圣火球，并在命中时产生更多的火球
   attributes:
     damage: 332
-    damageStealth: 444
+    damageStealth: 8800
     damageType: Rogue
     crit: 4
     knockback: 9
@@ -8937,7 +8937,7 @@ Dodu的手炮:
   - §r潜伏攻击命中后召唤一大群受苦亡魂
   attributes:
     damage: 332
-    damageStealth: 666
+    damageStealth: 3602
     damageType: Rogue
     crit: 4
     knockback: 7.5
@@ -8951,7 +8951,7 @@ Dodu的手炮:
   - §r潜伏攻击会在击中敌人时释放狂暴龙卷
   attributes:
     damage: 486
-    damageStealth: 444
+    damageStealth: 4450
     damageType: Rogue
     crit: 4
     knockback: 7
@@ -8965,7 +8965,7 @@ Dodu的手炮:
   - §r潜伏攻击会投掷追踪速度更快的环刃并造成多次伤害
   attributes:
     damage: 666
-    damageStealth: 666
+    damageStealth: 3444
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -8979,7 +8979,7 @@ Dodu的手炮:
   - §r潜伏攻击会无限穿透并追踪，且发射更多激光
   attributes:
     damage: 1240
-    damageStealth: 1000
+    damageStealth: 3368
     damageType: Rogue
     crit: 4
     knockback: 7
@@ -8993,7 +8993,7 @@ Dodu的手炮:
   - §r潜伏攻击的飞盘会弹向其他目标而非追踪
   attributes:
     damage: 5700
-    damageStealth: 5000
+    damageStealth: 7787
     damageType: Rogue
     crit: 4
     knockback: 3
@@ -9007,7 +9007,7 @@ Dodu的手炮:
   - §r潜伏攻击无限穿透并分裂出更多镰刀
   attributes:
     damage: 560
-    damageStealth: 1000
+    damageStealth: 6795
     damageType: Rogue
     crit: 4
     knockback: 6
@@ -9022,7 +9022,7 @@ Dodu的手炮:
   - §r“生灵在她的无尽仇恨中溺亡”
   attributes:
     damage: 260
-    damageStealth: 1500
+    damageStealth: 4717
     damageType: Rogue
     crit: 4
     knockback: 9
