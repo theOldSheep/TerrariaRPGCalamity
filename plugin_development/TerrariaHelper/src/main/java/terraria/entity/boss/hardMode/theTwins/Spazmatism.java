@@ -37,13 +37,13 @@ public class Spazmatism extends EntitySlime {
     EntityHelper.ProjectileShootInfo shootInfoCursedFlame, shootInfoFlameThrower, shootInfoHomingFlame;
     static {
         attrMapCursedFlame = new HashMap<>();
-        attrMapCursedFlame.put("damage", 324d);
+        attrMapCursedFlame.put("damage", 456d);
         attrMapCursedFlame.put("knockback", 2d);
         attrMapFlameThrower = new HashMap<>();
-        attrMapFlameThrower.put("damage", 420d);
+        attrMapFlameThrower.put("damage", 528d);
         attrMapFlameThrower.put("knockback", 2d);
         attrMapHomingFlame = new HashMap<>();
-        attrMapHomingFlame.put("damage", 360d);
+        attrMapHomingFlame.put("damage", 468d);
         attrMapHomingFlame.put("knockback", 2d);
     }
     private void changePhase() {

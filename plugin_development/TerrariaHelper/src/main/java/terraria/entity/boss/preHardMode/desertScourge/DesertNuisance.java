@@ -34,9 +34,9 @@ public class DesertNuisance extends EntitySlime {
     DesertScourge owner;
     public static final int TOTAL_LENGTH = 14;
     public static final double
-            HEAD_DMG = 180d, HEAD_DEF = 4d,
-            BODY_DMG = 90d, BODY_DEF = 8d,
-            TAIL_DMG = 60d, TAIL_DEF = 14d;
+            HEAD_DMG = 228d, HEAD_DEF = 4d,
+            BODY_DMG = 126d, BODY_DEF = 8d,
+            TAIL_DMG = 72d, TAIL_DEF = 14d;
     public static final EntityMovementHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
             new EntityMovementHelper.WormSegmentMovementOptions()
                     .setFollowDistance(2)

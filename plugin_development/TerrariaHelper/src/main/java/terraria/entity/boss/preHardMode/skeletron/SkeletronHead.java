@@ -35,7 +35,7 @@ public class SkeletronHead extends EntitySlime {
     int indexAI = 0;
     boolean spinning = false, extraHandsSpawned = false;
     Location teleportLoc = null;
-    static final double SPINNING_DMG = 342, REGULAR_DMG = 132;
+    static final double SPINNING_DMG = 342, REGULAR_DMG = 264;
     static HashMap<String, Double> skull_attrMap, shadow_flame_attrMap;
     static {
         skull_attrMap = new HashMap<>();

@@ -34,7 +34,7 @@ public class TheHiveMind extends EntitySlime {
     static HashMap<String, Double> attrMapShaderRain;
     static {
         attrMapShaderRain = new HashMap<>();
-        attrMapShaderRain.put("damage", 204d);
+        attrMapShaderRain.put("damage", 240d);
     }
     private enum AIPhase {
         CHARGE, CIRCLE, DASH, BURROW;
@@ -270,7 +270,7 @@ public class TheHiveMind extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 270d);
+            attrMap.put("damage", 324d);
             attrMap.put("damageMeleeMulti", 1d);
             attrMap.put("damageMulti", 1d);
             attrMap.put("defence", 16d);

@@ -40,16 +40,16 @@ public class Retinazer extends EntitySlime {
     EntityHelper.ProjectileShootInfo shootInfoGenericLaser, shootInfoMissile;
     static {
         attrMapEyeLaser = new HashMap<>();
-        attrMapEyeLaser.put("damage", 276d);
+        attrMapEyeLaser.put("damage", 420d);
         attrMapEyeLaser.put("knockback", 2d);
         attrMapDeathLaser = new HashMap<>();
-        attrMapDeathLaser.put("damage", 336d);
+        attrMapDeathLaser.put("damage", 468d);
         attrMapDeathLaser.put("knockback", 2d);
         attrMapRapidFire = new HashMap<>();
-        attrMapRapidFire.put("damage", 252d);
+        attrMapRapidFire.put("damage", 278d);
         attrMapRapidFire.put("knockback", 2d);
         attrMapHomingMissile = new HashMap<>();
-        attrMapHomingMissile.put("damage", 420d);
+        attrMapHomingMissile.put("damage", 456d);
         attrMapHomingMissile.put("knockback", 4d);
 
         laserAimHelper = new AimHelper.AimHelperOptions()

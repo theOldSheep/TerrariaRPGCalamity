@@ -103,7 +103,7 @@ public class CrownJewel extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 100d);
+            attrMap.put("damage", 132d);
             attrMap.put("damageMulti", 1d);
             attrMap.put("knockback", 4d);
             DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.ARROW);

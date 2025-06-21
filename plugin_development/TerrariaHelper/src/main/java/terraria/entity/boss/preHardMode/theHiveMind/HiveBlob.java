@@ -118,7 +118,7 @@ public class HiveBlob extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 180d);
+            attrMap.put("damage", 216d);
             attrMap.put("damageMeleeMulti", 1d);
             attrMap.put("damageMulti", 1d);
             attrMap.put("defence", 16d);

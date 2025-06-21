@@ -89,7 +89,7 @@ public class DarkHeart extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 204d);
+            attrMap.put("damage", 222d);
             attrMap.put("damageMeleeMulti", 1d);
             attrMap.put("damageMulti", 1d);
             attrMap.put("defence", 4d);

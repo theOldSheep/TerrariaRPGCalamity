@@ -132,7 +132,7 @@ public class EyeOfCthulhu extends EntitySlime {
                         rageRotationIndex --;
                         // end of spinning state
                         if (rageRotationIndex == 0) {
-                            // enrage spinning, damage: 102 -> 132
+                            // enrage spinning, damage: 150 -> 182
                             AttributeHelper.tweakAttribute(attrMap, "damage", "30", true);
                             // enrage spinning, defence: 124 -> 0
                             AttributeHelper.tweakAttribute(attrMap, "defence", "124", false);
@@ -353,7 +353,7 @@ public class EyeOfCthulhu extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 102d);
+            attrMap.put("damage", 150d);
             attrMap.put("damageMeleeMulti", 1d);
             attrMap.put("damageMulti", 1d);
             attrMap.put("defence", 24d);

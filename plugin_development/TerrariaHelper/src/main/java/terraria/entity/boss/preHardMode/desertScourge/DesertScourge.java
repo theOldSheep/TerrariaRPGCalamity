@@ -35,9 +35,9 @@ public class DesertScourge extends EntitySlime {
     DesertScourge head;
     public static final int TOTAL_LENGTH = 42;
     public static final double
-            HEAD_DMG = 264d, HEAD_DEF = 8d,
-            BODY_DMG = 120d, BODY_DEF = 12d,
-            TAIL_DMG = 84d, TAIL_DEF = 18d;
+            HEAD_DMG = 330d, HEAD_DEF = 8d,
+            BODY_DMG = 144d, BODY_DEF = 12d,
+            TAIL_DMG = 108d, TAIL_DEF = 18d;
     public static final EntityMovementHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
             new EntityMovementHelper.WormSegmentMovementOptions()
                     .setFollowDistance(2)

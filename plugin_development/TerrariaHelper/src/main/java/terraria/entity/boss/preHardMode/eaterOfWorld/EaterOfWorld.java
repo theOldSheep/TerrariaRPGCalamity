@@ -34,9 +34,9 @@ public class EaterOfWorld extends EntitySlime {
     // other variables and AI
     public static final int TOTAL_LENGTH = 79;
     public static final double
-            HEAD_DMG = 264d, HEAD_DEF = 16d,
-            BODY_DMG = 80d, BODY_DEF = 12d,
-            TAIL_DMG = 64d, TAIL_DEF = 20d;
+            HEAD_DMG = 330d, HEAD_DEF = 16d,
+            BODY_DMG = 120d, BODY_DEF = 12d,
+            TAIL_DMG = 96d, TAIL_DEF = 20d;
     public static final EntityMovementHelper.WormSegmentMovementOptions FOLLOW_PROPERTY =
             new EntityMovementHelper.WormSegmentMovementOptions()
                     .setFollowDistance(1.53)
@@ -46,7 +46,7 @@ public class EaterOfWorld extends EntitySlime {
     static final HashMap<String, Double> attrMapSpit;
     static {
         attrMapSpit = new HashMap<>();
-        attrMapSpit.put("damage", 192d);
+        attrMapSpit.put("damage", 228d);
         attrMapSpit.put("health", 1d);
         attrMapSpit.put("healthMax", 1d);
         attrMapSpit.put("knockback", 4d);

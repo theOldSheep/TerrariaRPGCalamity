@@ -202,7 +202,7 @@ public class Crabulon extends EntitySlime {
         {
             attrMap = new HashMap<>();
             attrMap.put("crit", 0.04);
-            attrMap.put("damage", 240d);
+            attrMap.put("damage", 288d);
             attrMap.put("damageMeleeMulti", 1d);
             attrMap.put("damageMulti", 1d);
             attrMap.put("defence", 16d);
