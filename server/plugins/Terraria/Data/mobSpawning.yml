@@ -2004,6 +2004,14 @@ mobInfo:
                     knockback: 2
                     knockbackResistance: 0.2
                     health: 300
+            underworld1:
+                attributes:
+                    damage: 84
+                    damageType: "Arrow"
+                    defence: 10
+                    knockback: 2
+                    knockbackResistance: 0.2
+                    health: 300
     水晶史莱姆:
         name: "水晶史莱姆"
         monsterType: "SLIME"
