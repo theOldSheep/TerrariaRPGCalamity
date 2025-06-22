@@ -1,13 +1,11 @@
 package terraria.util;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Minecart;
@@ -120,13 +118,13 @@ public class AimHelper {
             Player targetPly = (Player) target;
             targetLoc = PlayerHelper.getAccurateLocation(targetPly);
 
-            enemyVel = (Vector) EntityHelper.getMetadata(target, EntityHelper.MetadataName.PLAYER_LAST_VELOCITY_ACTUAL).value();
-            enemyAcc = (Vector) EntityHelper.getMetadata(target, EntityHelper.MetadataName.PLAYER_ACCELERATION).value();
+            enemyVel = (Vector) MetadataHelper.getMetadata(target, MetadataHelper.MetadataName.PLAYER_LAST_VELOCITY_ACTUAL).value();
+            enemyAcc = (Vector) MetadataHelper.getMetadata(target, MetadataHelper.MetadataName.PLAYER_ACCELERATION).value();
         }
         else {
             targetLoc = target.getLocation();
-            MetadataValue currVelMetadata = EntityHelper.getMetadata(target, EntityHelper.MetadataName.ENTITY_CURRENT_VELOCITY);
-            MetadataValue lastVelMetadata = EntityHelper.getMetadata(target, EntityHelper.MetadataName.ENTITY_LAST_VELOCITY);
+            MetadataValue currVelMetadata = MetadataHelper.getMetadata(target, MetadataHelper.MetadataName.ENTITY_CURRENT_VELOCITY);
+            MetadataValue lastVelMetadata = MetadataHelper.getMetadata(target, MetadataHelper.MetadataName.ENTITY_LAST_VELOCITY);
             // placeholder; use the saved current velocity for teleportation-based AI compatibility below.
             enemyVel = target.getVelocity();
             // if any of the two are not yet recorded, assume acceleration is none.
@@ -439,7 +437,7 @@ public class AimHelper {
         // get the appropriate aim location if roughly looking at an enemy
         if (hitEntity != null) {
             targetLoc = AimHelper.helperAimEntity(ply, hitEntity, aimHelperInfo);
-            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE, hitEntity);
+            MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_TARGET_LOC_CACHE, hitEntity);
         }
         // add random offset to "looking location", consistent with aim helper's setting, if entity is not found
         else {
@@ -447,7 +445,7 @@ public class AimHelper {
             targetLoc.add(Math.random() * randomOffset - randomOffsetHalved,
                     Math.random() * randomOffset - randomOffsetHalved,
                     Math.random() * randomOffset - randomOffsetHalved);
-            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE, targetLoc.clone());
+            MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_TARGET_LOC_CACHE, targetLoc.clone());
         }
         return targetLoc;
     }
@@ -460,7 +458,7 @@ public class AimHelper {
      * @return the cached target location
      */
     public static Location getPlayerCachedTargetLoc(Player ply, AimHelper.AimHelperOptions aimHelperInfo) {
-        MetadataValue metadataValue = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE);
+        MetadataValue metadataValue = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_TARGET_LOC_CACHE);
         if (metadataValue == null)
             return ply.getEyeLocation();
         // if a location is cached

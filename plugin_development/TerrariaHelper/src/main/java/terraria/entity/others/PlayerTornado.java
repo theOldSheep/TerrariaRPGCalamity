@@ -11,8 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
-import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
+import terraria.util.MetadataHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,8 +83,8 @@ public class PlayerTornado extends EntitySlime {
         setCustomName(name);
         setCustomNameVisible(false);
         bukkitEntity.addScoreboardTag("noDamage");
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, this.attrMap);
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_SOURCE, owner);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.ATTRIBUTE_MAP, this.attrMap);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.DAMAGE_SOURCE, owner);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init slime size and offsets

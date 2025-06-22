@@ -96,13 +96,13 @@ public class Mount extends EntitySlime {
         attrMap.put("damage", contactDmg);
         attrMap.put("knockback", mountSection.getDouble("knockback", 2d));
         synchronizeAttribute();
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         // init properties
         setNoGravity(! hasGravity);
         setSize(slimeSize, false);
         addScoreboardTag("isMount");
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_SOURCE, owner);
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, owner);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.DAMAGE_SOURCE, owner);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.DAMAGE_TAKER, owner);
         setCustomName(mountType);
         setCustomNameVisible(false);
         getAttributeInstance(GenericAttributes.maxHealth).setValue(444);

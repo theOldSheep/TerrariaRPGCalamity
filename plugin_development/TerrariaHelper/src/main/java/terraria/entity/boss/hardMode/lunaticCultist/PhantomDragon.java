@@ -193,7 +193,7 @@ public class PhantomDragon extends EntitySlime {
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -218,12 +218,12 @@ public class PhantomDragon extends EntitySlime {
                 attrMap.put("defence", BODY_DEF);
             }
             DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init target map
         {
-            targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) EntityHelper.getMetadata(owner.getBukkitEntity(), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
+            targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) MetadataHelper.getMetadata(owner.getBukkitEntity(), MetadataHelper.MetadataName.BOSS_TARGET_MAP).value();
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
             target = summonedPlayer;
         }
         // init health and slime size
@@ -241,7 +241,7 @@ public class PhantomDragon extends EntitySlime {
             this.setNoGravity(true);
             this.persistent = true;
 
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
             if (index + 1 < TOTAL_LENGTH)
                 new PhantomDragon(summonedPlayer, bossParts, owner, index + 1, isFirst, spawnLoc.subtract(0, 1, 0));

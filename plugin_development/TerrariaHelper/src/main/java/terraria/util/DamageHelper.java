@@ -56,7 +56,7 @@ public class DamageHelper {
             // bosses normally take damage from only players involved in the boss fight or debuff
             if (damageTakerTags.contains("isBOSS")) {
                 if (damageInfoBus.isDirectAttackDamage) {
-                    MetadataValue bossTargets = EntityHelper.getMetadata(victim, EntityHelper.MetadataName.BOSS_TARGET_MAP);
+                    MetadataValue bossTargets = MetadataHelper.getMetadata(victim, MetadataHelper.MetadataName.BOSS_TARGET_MAP);
                     boolean canProperlyDamage = false;
                     if (damageSource instanceof Player) {
                         if ( bossTargets == null ||
@@ -219,10 +219,10 @@ public class DamageHelper {
                     // minion damage effects and whips
                     if (damageInfoBus.isMinionDmg) {
                         MetadataValue temp;
-                        temp = EntityHelper.getMetadata(victim, EntityHelper.MetadataName.MINION_WHIP_BONUS_DAMAGE);
+                        temp = MetadataHelper.getMetadata(victim, MetadataHelper.MetadataName.MINION_WHIP_BONUS_DAMAGE);
                         double dmgBonus = temp != null ? temp.asDouble() : 0;
                         damageInfoBus.setCurrDmg( damageInfoBus.getCurrDmg() + dmgBonus );
-                        temp = EntityHelper.getMetadata(victim, EntityHelper.MetadataName.MINION_WHIP_BONUS_CRIT);
+                        temp = MetadataHelper.getMetadata(victim, MetadataHelper.MetadataName.MINION_WHIP_BONUS_CRIT);
                         damageInfoBus.setCritRate( damageInfoBus.getCritRate() + (temp != null ? temp.asDouble() : 0) );
                         // on-hit effects from accessory
                         if (damagerAccessories.contains("幻魂神物")) {
@@ -317,14 +317,14 @@ public class DamageHelper {
 
                 // paladin shield, only applies to player victims
                 if (! EntityHelper.hasEffect(victim, "圣骑士护盾")) {
-                    String team = EntityHelper.getMetadata(victim, EntityHelper.MetadataName.PLAYER_TEAM).asString();
+                    String team = MetadataHelper.getMetadata(victim, MetadataHelper.MetadataName.PLAYER_TEAM).asString();
                     // works with players within 96 blocks
                     double dist = 9216;
                     Entity shieldPly = null;
                     for (Player ply : victim.getWorld().getPlayers()) {
                         if (!PlayerHelper.isProperlyPlaying(ply)) continue;
                         if (!EntityHelper.hasEffect(ply, "圣骑士护盾")) continue;
-                        String currTeam = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_TEAM).asString();
+                        String currTeam = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_TEAM).asString();
                         if (!(currTeam.equals(team))) continue;
                         double currDist = ply.getLocation().distanceSquared(victim.getLocation());
                         if (currDist >= dist) continue;
@@ -372,9 +372,9 @@ public class DamageHelper {
                 // boss damage reduction
                 if (damageInfoBus.damageTaker.getScoreboardTags().contains("isBOSS")) {
                     double dynamicDR = 1;
-                    MetadataValue temp = EntityHelper.getMetadata(victim, EntityHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION);
+                    MetadataValue temp = MetadataHelper.getMetadata(victim, MetadataHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION);
                     if (temp != null) dynamicDR = temp.asDouble();
-                    BossHelper.BossType type = (BossHelper.BossType) EntityHelper.getMetadata(victim, EntityHelper.MetadataName.BOSS_TYPE).value();
+                    BossHelper.BossType type = (BossHelper.BossType) MetadataHelper.getMetadata(victim, MetadataHelper.MetadataName.BOSS_TYPE).value();
                     if (damageInfoBus.damageSource instanceof Player &&  ! PlayerHelper.hasDefeated((Player) damageInfoBus.damageSource, type) )
                         dmg *= dynamicDR;
                 }
@@ -387,8 +387,8 @@ public class DamageHelper {
             dmg = Math.round(dmg);
             if (dmg < 1.5) dmg = damageInfoBus.didCrit() ? 2 : 1;
             // for some entities that locks health at a specific value
-            MetadataValue healthLockMetadata = EntityHelper.getMetadata(damageInfoBus.damageTaker,
-                    EntityHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT);
+            MetadataValue healthLockMetadata = MetadataHelper.getMetadata(damageInfoBus.damageTaker,
+                    MetadataHelper.MetadataName.HEALTH_LOCKED_AT_AMOUNT);
             if (healthLockMetadata != null) {
                 double healthLock = healthLockMetadata.asDouble();
                 if (damageInfoBus.damageTaker.getHealth() > healthLock) {
@@ -675,7 +675,7 @@ public class DamageHelper {
                     return;
                 }
                 // health regen time reset
-                EntityHelper.setMetadata(victim, EntityHelper.MetadataName.REGEN_TIME, 0);
+                MetadataHelper.setMetadata(victim, MetadataHelper.MetadataName.REGEN_TIME, 0);
                 // special damager
                 switch (damager.getName()) {
                     case "水螺旋": {
@@ -867,7 +867,7 @@ public class DamageHelper {
                 switch (ItemHelper.splitItemName(plyTool)[1]) {
                     case "赤陨霸龙弓": {
                         if (isDirectDmg)
-                            EntityHelper.setMetadata(vPly, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, 0);
+                            MetadataHelper.setMetadata(vPly, MetadataHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, 0);
                         break;
                     }
                 }
@@ -932,13 +932,13 @@ public class DamageHelper {
                 float soundVolume = 3f;
                 // register damage dealt
                 if (damageSource instanceof Player) {
-                    MetadataValue typeData = EntityHelper.getMetadata(victim, EntityHelper.MetadataName.MONSTER_PARENT_TYPE);
+                    MetadataValue typeData = MetadataHelper.getMetadata(victim, MetadataHelper.MetadataName.MONSTER_PARENT_TYPE);
                     String type = typeData == null ? null : typeData.asString();
                     // record dmg dealt to bosses
                     if (damageTakerTags.contains("isBOSS")) {
                         // bosses have louder damage sound
                         soundVolume = 8f;
-                        MetadataValue temp = EntityHelper.getMetadata(damageTaker, EntityHelper.MetadataName.BOSS_TARGET_MAP);
+                        MetadataValue temp = MetadataHelper.getMetadata(damageTaker, MetadataHelper.MetadataName.BOSS_TARGET_MAP);
                         if (temp != null) {
                             HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targets =
                                     (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) temp.value();
@@ -1315,15 +1315,15 @@ public class DamageHelper {
     // Helper functions for damage handling
     public static DamageType getDamageType(Metadatable entity) {
         try {
-            return (DamageType) EntityHelper.getMetadata(entity, EntityHelper.MetadataName.DAMAGE_TYPE).value();
+            return (DamageType) MetadataHelper.getMetadata(entity, MetadataHelper.MetadataName.DAMAGE_TYPE).value();
         } catch (Exception e) {
             return DamageType.MELEE;
         }
     }
 
     public static void setDamageType(Metadatable entity, DamageType damageType) {
-        if (damageType == null) EntityHelper.setMetadata(entity, EntityHelper.MetadataName.DAMAGE_TYPE, DamageType.MELEE);
-        else EntityHelper.setMetadata(entity, EntityHelper.MetadataName.DAMAGE_TYPE, damageType);
+        if (damageType == null) MetadataHelper.setMetadata(entity, MetadataHelper.MetadataName.DAMAGE_TYPE, DamageType.MELEE);
+        else MetadataHelper.setMetadata(entity, MetadataHelper.MetadataName.DAMAGE_TYPE, damageType);
     }
 
     /**
@@ -1349,7 +1349,7 @@ public class DamageHelper {
         Set<String> entityScoreboardTags = entity.getScoreboardTags();
         Entity damageSource = getDamageSource(entity);
         if (damageTakerScoreboardTags.contains("isPillar")) {
-            MetadataValue temp = EntityHelper.getMetadata(damageTaker, EntityHelper.MetadataName.CELESTIAL_PILLAR_SHIELD);
+            MetadataValue temp = MetadataHelper.getMetadata(damageTaker, MetadataHelper.MetadataName.CELESTIAL_PILLAR_SHIELD);
             if (temp != null && temp.asInt() > 0) return false;
         }
         if (!(damageTaker instanceof LivingEntity)) {
@@ -1409,7 +1409,7 @@ public class DamageHelper {
             Player damageTakerPly = (Player) damageTaker;
             if (PlayerHelper.isProperlyPlaying(damageTakerPly)) {
                 // handle special parent type (slime damage neglected by royal gel)
-                MetadataValue temp = EntityHelper.getMetadata(damageSource, EntityHelper.MetadataName.MONSTER_PARENT_TYPE);
+                MetadataValue temp = MetadataHelper.getMetadata(damageSource, MetadataHelper.MetadataName.MONSTER_PARENT_TYPE);
                 if (temp != null) {
                     String parentType = temp.asString();
                     if (parentType.equals("史莱姆") && accessories.contains("皇家凝胶"))
@@ -1544,7 +1544,7 @@ public class DamageHelper {
                     deathMessageConfigDir = "deathMessages.Debuff_" + debuffType;
                     break;
                 case NEGATIVE_REGEN: {
-                    MetadataValue mdv = EntityHelper.getMetadata(v, EntityHelper.MetadataName.PLAYER_NEG_REGEN_CAUSE);
+                    MetadataValue mdv = MetadataHelper.getMetadata(v, MetadataHelper.MetadataName.PLAYER_NEG_REGEN_CAUSE);
                     if (mdv != null) {
                         HashMap<String, Double> negRegenCause = (HashMap<String, Double>) mdv.value();
                         String randomizedCause = MathHelper.selectWeighedRandom(negRegenCause);
@@ -1623,7 +1623,7 @@ public class DamageHelper {
             double respawnHealth = Math.max(400, maxHealth / 2);
             // make sure the new health do not exceed maximum health
             vPly.setHealth(Math.min(respawnHealth, maxHealth) );
-            EntityHelper.setMetadata(vPly, EntityHelper.MetadataName.RESPAWN_COUNTDOWN, respawnTime);
+            MetadataHelper.setMetadata(vPly, MetadataHelper.MetadataName.RESPAWN_COUNTDOWN, respawnTime);
             vPly.setGameMode(GameMode.SPECTATOR);
             vPly.setFlySpeed(0);
             vPly.setFallDistance(0);
@@ -1694,12 +1694,12 @@ public class DamageHelper {
             // monster generic drop, event etc.
             else if (vScoreboardTags.contains("isMonster")) {
                 LivingEntity vLiving = (LivingEntity) v;
-                MetadataValue spawnEvt = EntityHelper.getMetadata(v, EntityHelper.MetadataName.SPAWN_IN_EVENT);
+                MetadataValue spawnEvt = MetadataHelper.getMetadata(v, MetadataHelper.MetadataName.SPAWN_IN_EVENT);
                 // event monster
                 if (spawnEvt != null && spawnEvt.value() == EventAndTime.currentEvent ) {
                     HashMap<EventAndTime.EventInfoMapKeys, Double> eventInfo = EventAndTime.eventInfo;
                     if (eventInfo.getOrDefault(EventAndTime.EventInfoMapKeys.IS_INVASION, 1d) > 0) {
-                        MetadataValue progress = EntityHelper.getMetadata(v, EntityHelper.MetadataName.KILL_CONTRIBUTE_EVENT_PROGRESS);
+                        MetadataValue progress = MetadataHelper.getMetadata(v, MetadataHelper.MetadataName.KILL_CONTRIBUTE_EVENT_PROGRESS);
                         if (progress != null) {
                             double invadeProgress = eventInfo.getOrDefault(EventAndTime.EventInfoMapKeys.INVADE_PROGRESS, 0d);
                             eventInfo.put(EventAndTime.EventInfoMapKeys.INVADE_PROGRESS,
@@ -1708,8 +1708,8 @@ public class DamageHelper {
                     }
                 }
                 // generic death drop etc.
-                MetadataValue parentTypeMetadata = EntityHelper.getMetadata(v, EntityHelper.MetadataName.MONSTER_PARENT_TYPE);
-                MetadataValue bossTypeMetadata = EntityHelper.getMetadata(v, EntityHelper.MetadataName.BOSS_TYPE);
+                MetadataValue parentTypeMetadata = MetadataHelper.getMetadata(v, MetadataHelper.MetadataName.MONSTER_PARENT_TYPE);
+                MetadataValue bossTypeMetadata = MetadataHelper.getMetadata(v, MetadataHelper.MetadataName.BOSS_TYPE);
                 String parentType = "";
                 if (bossTypeMetadata != null)
                     parentType = bossTypeMetadata.value().toString();
@@ -1912,7 +1912,7 @@ public class DamageHelper {
             if (shooter instanceof Entity) source = (Entity) shooter;
             else break;
         }
-        MetadataValue damageSourceMetadata = EntityHelper.getMetadata(source, EntityHelper.MetadataName.DAMAGE_SOURCE);
+        MetadataValue damageSourceMetadata = MetadataHelper.getMetadata(source, MetadataHelper.MetadataName.DAMAGE_SOURCE);
         if (damageSourceMetadata != null)
             source = (Entity) damageSourceMetadata.value();
         return source;
@@ -1920,7 +1920,7 @@ public class DamageHelper {
 
     public static Entity getDamageTaker(Entity victim) {
         Entity taker = victim;
-        MetadataValue mdv = EntityHelper.getMetadata(victim, EntityHelper.MetadataName.DAMAGE_TAKER);
+        MetadataValue mdv = MetadataHelper.getMetadata(victim, MetadataHelper.MetadataName.DAMAGE_TAKER);
         if (mdv != null)
             taker = (Entity) mdv.value();
         return taker;
@@ -1939,10 +1939,10 @@ public class DamageHelper {
             if (ply.getLocation().distanceSquared(playLoc) > audibleDistSqr)
                 continue;
             // get last played time
-            MetadataValue mdv = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_DAMAGE_SOUND_MEMO);
+            MetadataValue mdv = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_DAMAGE_SOUND_MEMO);
             if (mdv == null) {
                 soundPlayed = new HashMap<>();
-                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DAMAGE_SOUND_MEMO, soundPlayed);
+                MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_DAMAGE_SOUND_MEMO, soundPlayed);
             }
             else {
                 soundPlayed = (HashMap<String, Long>) mdv.value();
@@ -1959,17 +1959,17 @@ public class DamageHelper {
     // tracks the DPS and display the damage info to the player
     private static void trackDPS(Player src, String victimName, int dpsVersion, double health, double maxHealth, double dmg, boolean beginOrEnd) {
         // update variables
-        int currVer = EntityHelper.getMetadata(src, EntityHelper.MetadataName.DPS_VERSION).asInt();
-        int hits = EntityHelper.getMetadata(src, EntityHelper.MetadataName.DPS_HITS).asInt();
-        double dmgTotal = EntityHelper.getMetadata(src, EntityHelper.MetadataName.DPS_DMG_TOTAL).asDouble();
+        int currVer = MetadataHelper.getMetadata(src, MetadataHelper.MetadataName.DPS_VERSION).asInt();
+        int hits = MetadataHelper.getMetadata(src, MetadataHelper.MetadataName.DPS_HITS).asInt();
+        double dmgTotal = MetadataHelper.getMetadata(src, MetadataHelper.MetadataName.DPS_DMG_TOTAL).asDouble();
         // dps version mismatch, ignore this.
         if (dpsVersion >= 0 && currVer != dpsVersion) return;
 
         int recordSign = beginOrEnd ? 1 : -1;
         hits += recordSign;
         dmgTotal += dmg * recordSign;
-        EntityHelper.setMetadata(src, EntityHelper.MetadataName.DPS_HITS, hits);
-        EntityHelper.setMetadata(src, EntityHelper.MetadataName.DPS_DMG_TOTAL, dmgTotal);
+        MetadataHelper.setMetadata(src, MetadataHelper.MetadataName.DPS_HITS, hits);
+        MetadataHelper.setMetadata(src, MetadataHelper.MetadataName.DPS_DMG_TOTAL, dmgTotal);
         // send message; remove this damage record later.
         if (beginOrEnd) {
             String throttlingTag = "temp_DpsBarCD";

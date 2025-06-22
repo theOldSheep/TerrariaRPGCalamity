@@ -20,7 +20,6 @@ import java.io.File;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 
 public class TerrariaHelper extends JavaPlugin {
@@ -91,10 +90,10 @@ public class TerrariaHelper extends JavaPlugin {
                     case "stealth": {
                         double maxStealth = PlayerHelper.getMaxStealth(ply);
                         if (maxStealth < 1) return "-1";
-                        return (int) (EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble() / maxStealth * 100) + "";
+                        return (int) (MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_STEALTH).asDouble() / maxStealth * 100) + "";
                     }
                     case "oxygen": {
-                        return ((double) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR).asInt() / PlayerHelper.PLAYER_MAX_OXYGEN) + "";
+                        return ((double) MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_AIR).asInt() / PlayerHelper.PLAYER_MAX_OXYGEN) + "";
                     }
                     case "pov_locked": {
                         return ply.getScoreboardTags().contains("temp_lockPOV") ? "1" : "0";
@@ -112,7 +111,7 @@ public class TerrariaHelper extends JavaPlugin {
                         StringBuilder result = new StringBuilder();
                         String separator = "~";
                         // switchable accessory
-                        MetadataValue switchableName = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.ACCESSORY_SWITCHABLE_DISPLAY);
+                        MetadataValue switchableName = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.ACCESSORY_SWITCHABLE_DISPLAY);
                         if (switchableName != null) {
                             result.append(switchableName.asString()).append(separator)
                                     .append(" ").append(separator)
@@ -228,6 +227,7 @@ public class TerrariaHelper extends JavaPlugin {
         PlayerHelper.threadSaveInventories();
         PlayerHelper.threadSpecialBiome();
         EventAndTime.threadTimeAndEvent();
+        MetadataHelper.threadMetadataGC();
     }
 
     @Override

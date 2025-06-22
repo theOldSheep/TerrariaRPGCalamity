@@ -10,9 +10,7 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.*;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.metadata.Metadatable;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
@@ -27,8 +25,8 @@ import java.util.logging.Level;
 public class EntityHelper {
     // constants
     static HashMap<String, Set<String>> buffInferior, buffSuperior;
-    private static final HashMap<String, MetadataName> METADATA_NAME_MAPPING = new HashMap<>();
 
+    // superior/inferior buff setups
     static {
         buffSuperior = new HashMap<>(50);
         buffInferior = new HashMap<>(50);
@@ -70,152 +68,6 @@ public class EntityHelper {
         }
         TerrariaHelper.LOGGER.info("[Entity Helper] buffSuperior: " + buffSuperior);
         TerrariaHelper.LOGGER.info("[Entity Helper] buffInferior: " + buffInferior);
-    }
-
-    public enum MetadataName {
-        ACCESSORIES("accessory"),
-        ACCESSORIES_FLIGHT_BACKUP("accessoryThrust"),
-        ACCESSORIES_LIST("accessoryList"),
-        ACCESSORY_SWITCHABLE_DISPLAY("accSwtDspl"),
-        ARMOR_SET("armorSet"),
-        ATTRIBUTE_MAP("attrMap"),
-        BLOCK_BREAK_PROGRESS("breakProgress"),
-        BOSS_BAR("bossbar"),
-        BOSS_TARGET_MAP("targets"),
-        BOSS_TYPE("bossType"),
-        BUFF_IMMUNE("buffImmune"),
-        BUFF_INFLICT("buffInflict"),
-        BULLET_HELL_PROJECTILE_DIRECTION("bltHellDir"),
-        CALAMITAS_PROJECTILE_TICKS_LIVED("projectileTicksLive"),
-        CALAMITAS_PROJECTILE_ORIGINAL("projectileOriginal"),
-        CELESTIAL_PILLAR_SHIELD("shield"),
-        DAMAGE_SOURCE("damageSourcePlayer"),
-        DAMAGE_TAKER("damageTaker"),
-        DAMAGE_TYPE("damageType"),
-        DPS_DMG_TOTAL("dpsDmg"),
-        DPS_HITS("dpsHits"),
-        DPS_VERSION("dpsVersion"),
-        DYNAMIC_DAMAGE_REDUCTION("dynamicDR"),
-        EFFECTS("effects"),
-        ENTITY_CURRENT_VELOCITY("eCurrVel"),
-        ENTITY_LAST_VELOCITY("eLastVel"),
-        HEALTH_LOCKED_AT_AMOUNT("healthLock"),
-        INVULNERABILITY_TICK_EDITION_MAP("ivtEdiMap"),
-        LAST_ADAMANTITE_PARTICLE_TYPE("APAType"),
-        KNOCKBACK_SLOW_FACTOR("kbFactor"),
-        KILL_CONTRIBUTE_EVENT_PROGRESS("killProgress"),
-        MINION_WHIP_BONUS_CRIT("minionWhipBonusCrit"),
-        MINION_WHIP_BONUS_DAMAGE("minionWhipBonusDamage"),
-        MONSTER_PARENT_TYPE("parentType"),
-        NPC_FIRST_SELL_INDEX("firstSell"),
-        NPC_GUI_VIEWERS("GUIViewers"),
-        PLAYER_ACCELERATION("playerAcl"),
-        PLAYER_AIR("playerAir"),
-        PLAYER_BIOME("playerBiome"),
-        PLAYER_CRAFTING_RECIPE_INDEX("recipeNumber"),
-        PLAYER_CRAFTING_STATION("craftingStation"),
-        PLAYER_DAMAGE_SOUND_MEMO("lastDmgPlayed"),
-        PLAYER_DASH_DIRECTION("chargeDir"),
-        PLAYER_DASH_KEY_PRESSED_MS("chargeDirLastPressed"),
-        PLAYER_BIOME_BLADE_SPIN_PITCH("spinPitch"),
-        PLAYER_BUFF_INFLICT("effectInflict"),
-        PLAYER_EXOSKELETON("plyAresESklt"),
-        PLAYER_FORCED_BACKGROUND("forceBackground"),
-        PLAYER_FORCED_BGM("forceBGM"),
-        PLAYER_GRAPPLING_HOOKS("hooks"),
-        PLAYER_GRAPPLING_HOOK_COLOR("color"),
-        PLAYER_GRAPPLING_HOOK_ITEM("grapplingHookItem"),
-        PLAYER_HEALTH_TIER("healthTier"),
-        PLAYER_INTERNAL_ITEM_START_USE_CD("useCDInternal"),
-        PLAYER_INTERNAL_LAST_ITEM_START_USE_CD("useCDInternalLast"),
-        PLAYER_INVENTORIES("inventories"),
-        PLAYER_ITEM_SWING_AMOUNT("swingAmount"),
-        PLAYER_KEYS_PRESSED("keysPressed"),
-        PLAYER_LAST_BACKGROUND("lastBackground"),
-        PLAYER_LAST_BGM("lastBGM"),
-        PLAYER_LAST_BGM_TIME("lastBGMTime"),
-        // the velocity in world, for the last tick
-        PLAYER_LAST_VELOCITY_ACTUAL("plyLastVel"),
-        PLAYER_MANA_REGEN_DELAY("manaRegenDelay"),
-        PLAYER_MANA_REGEN_COUNTER("manaRegenCounter"),
-        PLAYER_MANA_TIER("manaTier"),
-        PLAYER_MINION_LIST("minions"),
-        PLAYER_MINION_WHIP_FOCUS("minionWhipFocus"),
-        PLAYER_MONSTER_SPAWNED_AMOUNT("mobAmount"),
-        PLAYER_NEG_REGEN_CAUSE("negRegenSrc"),
-        PLAYER_NEXT_MINION_INDEX("nextMinionIndex"),
-        PLAYER_NEXT_SENTRY_INDEX("nextSentryIndex"),
-        PLAYER_NPC_INTERACTING("NPCViewing"),
-        PLAYER_SENTRY_LIST("sentries"),
-        PLAYER_STEALTH("stealth"),
-        PLAYER_TARGET_LOC_CACHE("targetLocCache"),
-        PLAYER_TEAM("team"),
-        PLAYER_TELEPORT_TARGET("teleportTarget"),
-        PLAYER_THRUST_INDEX("thrustIndex"),
-        PLAYER_THRUST_PROGRESS("thrustProgress"),
-        PLAYER_TRASH_ITEMS("trashItems"),
-        PLAYER_VELOCITY_MULTI("plyVelMulti"),
-        PLAYER_VELOCITY_INTERNAL("plyVelItn"),
-        PROJECTILE_BOUNCE_LEFT("bounce"),
-        PROJECTILE_DESTROY_REASON("destroyReason"),
-        PROJECTILE_ENTITIES_COLLIDED("collided"),
-        PROJECTILE_LAST_HIT_ENTITY("projLHE"),
-        PROJECTILE_PENETRATION_LEFT("penetration"),
-        REGEN_TIME("regenTime"),
-        RESPAWN_COUNTDOWN("respawnCD"),
-        SPAWN_IN_EVENT("spawnEvent"),
-        SUCK_TARGET("suckTarget"),
-        THROTTLE_DMG_HOLOGRAM("tDHl"),
-        THROTTLE_DPS_ACTION_BAR("tDPS");
-        // fields
-        String metadataName;
-        // constructors
-        MetadataName(String metadataName) {
-            this.metadataName = metadataName;
-            // test for collision
-            if (METADATA_NAME_MAPPING.containsKey(metadataName)) {
-                TerrariaHelper.LOGGER.log(
-                        Level.SEVERE, "Metadata Name Collision: " + METADATA_NAME_MAPPING +
-                                " between " + METADATA_NAME_MAPPING.get(metadataName) + " and " + this);
-            }
-            METADATA_NAME_MAPPING.put(metadataName, this);
-        }
-
-        @Override
-        public String toString() {
-            return metadataName;
-        }
-    }
-
-    // helper functions
-    public static void initEntityMetadata(Entity entity) {
-        // in this function call, potion effect map is initialized when needed
-        getEffectMap(entity);
-
-        setMetadata(entity, MetadataName.DAMAGE_TYPE, DamageHelper.DamageType.MELEE);
-        setMetadata(entity, MetadataName.BUFF_IMMUNE, new HashMap<String, Integer>());
-    }
-
-    public static MetadataValue getMetadata(Metadatable owner, String key) {
-        try {
-            return owner.getMetadata(key).get(0);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-    public static MetadataValue getMetadata(Metadatable owner, MetadataName metadataName) {
-        return getMetadata(owner, metadataName.toString());
-    }
-    @Deprecated
-    // It's OKAY to use this, but prefer the MetadataName for consistency!
-    public static void setMetadata(Metadatable owner, String key, Object value) {
-        if (value == null)
-            owner.removeMetadata(key, TerrariaHelper.getInstance());
-        else
-            owner.setMetadata(key, new FixedMetadataValue(TerrariaHelper.getInstance(), value));
-    }
-    public static void setMetadata(Metadatable owner, MetadataName key, Object value) {
-        setMetadata(owner, key.toString(), value);
     }
 
     public static void makeTarget(Entity entity, Entity target) {
@@ -263,10 +115,10 @@ public class EntityHelper {
     }
 
     public static LinkedHashMap<String, Integer> getEffectMap(Entity entity) {
-        MetadataValue mdv = getMetadata(entity, MetadataName.EFFECTS);
+        MetadataValue mdv = MetadataHelper.getMetadata(entity, MetadataHelper.MetadataName.EFFECTS);
         if (mdv == null) {
             LinkedHashMap<String, Integer> effectMap = new LinkedHashMap<>();
-            setMetadata(entity, MetadataName.EFFECTS, effectMap);
+            MetadataHelper.setMetadata(entity, MetadataHelper.MetadataName.EFFECTS, effectMap);
             return effectMap;
         }
         return (LinkedHashMap<String, Integer>) mdv.value();
@@ -522,7 +374,7 @@ public class EntityHelper {
             // returns if the entity is not applicable to this effect (e.g. a projectile)
             if (! (entity instanceof LivingEntity) ) return;
             // returns if the entity is immune to this effect (i.e. debuff)
-            MetadataValue buffImmuneMetadata = getMetadata(entity, MetadataName.BUFF_IMMUNE);
+            MetadataValue buffImmuneMetadata = MetadataHelper.getMetadata(entity, MetadataHelper.MetadataName.BUFF_IMMUNE);
             if (buffImmuneMetadata != null) {
                 Map<String, Integer> buffImmune = (Map<String, Integer>) buffImmuneMetadata.value();
                 if (buffImmune.containsKey(effect)) return;
@@ -621,7 +473,7 @@ public class EntityHelper {
             dir = dir.clone().multiply(kbMulti);
         }
         // update the knockback slow factor, which effects the walking speed of zombies etc.
-        setMetadata(entity, MetadataName.KNOCKBACK_SLOW_FACTOR, kbMulti);
+        MetadataHelper.setMetadata(entity, MetadataHelper.MetadataName.KNOCKBACK_SLOW_FACTOR, kbMulti);
         // the entity subject to that knockback
         Entity knockbackTaker = EntityMovementHelper.getMount(entity);
         if (knockbackTaker == null) knockbackTaker = entity;
@@ -649,7 +501,7 @@ public class EntityHelper {
             // apply the invulnerability tick
             entity.addScoreboardTag(scoreboardTagName);
             // record edition
-            MetadataValue metadataValue = getMetadata(entity, MetadataName.INVULNERABILITY_TICK_EDITION_MAP);
+            MetadataValue metadataValue = MetadataHelper.getMetadata(entity, MetadataHelper.MetadataName.INVULNERABILITY_TICK_EDITION_MAP);
             HashMap<String, Integer> invulnerabilityTickEditionMap;
             if (metadataValue == null)
                 invulnerabilityTickEditionMap = new HashMap<>();
@@ -657,12 +509,12 @@ public class EntityHelper {
                 invulnerabilityTickEditionMap = (HashMap<String, Integer>) metadataValue.value();
             int iTickEdition = invulnerabilityTickEditionMap.getOrDefault(scoreboardTagName, 0) + 1;
             invulnerabilityTickEditionMap.put(scoreboardTagName, iTickEdition);
-            setMetadata(entity, MetadataName.INVULNERABILITY_TICK_EDITION_MAP, invulnerabilityTickEditionMap);
+            MetadataHelper.setMetadata(entity, MetadataHelper.MetadataName.INVULNERABILITY_TICK_EDITION_MAP, invulnerabilityTickEditionMap);
             // remove it if the edition is not outdated
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
                     () -> {
-                        HashMap<String, Integer> currITickEditionMap = (HashMap<String, Integer>) getMetadata(
-                                entity, MetadataName.INVULNERABILITY_TICK_EDITION_MAP).value();
+                        HashMap<String, Integer> currITickEditionMap = (HashMap<String, Integer>) MetadataHelper.getMetadata(
+                                entity, MetadataHelper.MetadataName.INVULNERABILITY_TICK_EDITION_MAP).value();
                         if (currITickEditionMap.get(scoreboardTagName) == iTickEdition)
                             entity.removeScoreboardTag(scoreboardTagName);
                         switch (scoreboardTagName) {

@@ -57,9 +57,11 @@ terraria\entity\boss\event\celestialPillar\CelestialPillar$1.class
 terraria\util\MonsterHelper$UniqueMonsterInfo.class
 terraria\util\WorldHelper$LeafLayerShape.class
 terraria\entity\boss\preHardMode\eyeOfCthulhu\EyeOfCthulhu$1.class
+terraria\util\MetadataHelper.class
 terraria\entity\others\TerrariaFishingHook.class
 terraria\util\DamageHelper$DamageInfoBus.class
 terraria\entity\boss\postMoonLord\providence\Providence.class
+terraria\util\MetadataHelper$MetadataName.class
 terraria\util\WorldHelper.class
 terraria\entity\boss\postMoonLord\exoMechs\Ares.class
 terraria\util\ArmourerWorkshopHelper.class
@@ -125,7 +127,6 @@ terraria\util\DamageHelper$DamageType.class
 terraria\worldgen\WorldGenHelper.class
 terraria\entity\monster\MonsterSlime.class
 terraria\event\listener\RandomTitleListener.class
-terraria\util\EntityHelper$MetadataName.class
 terraria\entity\boss\hardMode\brimstoneElemental\BrimstoneElemental.class
 terraria\worldgen\overworld\OverworldBiomeGenerator$1.class
 terraria\entity\boss\postMoonLord\supremeCalamitas\ISupremeCalamitasBH.class

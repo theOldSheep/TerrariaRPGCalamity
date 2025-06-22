@@ -1,14 +1,11 @@
 package terraria.entity.npc;
 
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
 import org.bukkit.util.Vector;
-import terraria.TerrariaHelper;
 import terraria.util.*;
 import terraria.util.MathHelper;
 
@@ -16,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Level;
 
 public class TerrariaNPC extends EntityVillager {
     public NPCHelper.NPCType NPCType;
@@ -55,7 +51,7 @@ public class TerrariaNPC extends EntityVillager {
         this.goalSelector.a(11, new PathfinderGoalRandomLookaround(this));
         // other variables and attributes etc.
         this.ageLocked = true;
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.NPC_GUI_VIEWERS, GUIViewers);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.NPC_GUI_VIEWERS, GUIViewers);
         NPCHelper.NPCMap.put(NPCType, (LivingEntity) bukkitEntity);
         this.setCustomName(NPCType.displayName);
         this.setCustomNameVisible(true);
@@ -114,7 +110,7 @@ public class TerrariaNPC extends EntityVillager {
             default:
                 DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
         }
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         // health
         double maxHealth = 1000;
         ((LivingEntity) bukkitEntity).getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(maxHealth);
@@ -322,7 +318,7 @@ public class TerrariaNPC extends EntityVillager {
     public void B_() {
         super.B_();
         // initialize the NPC again if the chunk reloaded
-        if (EntityHelper.getMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP) == null)
+        if (MetadataHelper.getMetadata(bukkitEntity, MetadataHelper.MetadataName.ATTRIBUTE_MAP) == null)
             initTypeInfo();
         // remove duplicate
         if (ticksLived % 5 == 4 && NPCHelper.NPCMap.get(NPCType) != bukkitEntity) {

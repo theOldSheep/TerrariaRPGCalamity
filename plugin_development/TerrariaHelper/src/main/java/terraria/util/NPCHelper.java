@@ -78,15 +78,15 @@ public class NPCHelper {
 
     public static void recordInteractingNPC(Player ply, Entity NPC) {
         if (NPC != null) {
-            ((HashSet<Player>) EntityHelper.getMetadata(NPC, EntityHelper.MetadataName.NPC_GUI_VIEWERS).value()).add(ply);
-            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_NPC_INTERACTING, NPC);
+            ((HashSet<Player>) MetadataHelper.getMetadata(NPC, MetadataHelper.MetadataName.NPC_GUI_VIEWERS).value()).add(ply);
+            MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_NPC_INTERACTING, NPC);
         } else {
-            MetadataValue NPCViewing = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_NPC_INTERACTING);
+            MetadataValue NPCViewing = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_NPC_INTERACTING);
             if (NPCViewing != null) {
-                ((HashSet<Player>) EntityHelper.getMetadata((Metadatable) NPCViewing.value(),
-                        EntityHelper.MetadataName.NPC_GUI_VIEWERS).value()).remove(ply);
+                ((HashSet<Player>) MetadataHelper.getMetadata((Metadatable) NPCViewing.value(),
+                        MetadataHelper.MetadataName.NPC_GUI_VIEWERS).value()).remove(ply);
             }
-            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_NPC_INTERACTING, null);
+            MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_NPC_INTERACTING, null);
         }
     }
     // below: functions related to direct interaction with the NPC
@@ -346,7 +346,7 @@ public class NPCHelper {
         ConfigurationSection shopSection = TerrariaHelper.NPCConfig.getConfigurationSection("shops." + NPCType);
         int index = fillShopGui(ply, shopInv, 0, shopSection);
         // open inv and setup variables
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.NPC_FIRST_SELL_INDEX, index);
+        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.NPC_FIRST_SELL_INDEX, index);
         recordInteractingNPC(ply, NPC);
         ply.openInventory(shopInv);
         ply.sendMessage("§a您可以按左键买卖单个物品，shift+左键买卖整组物品，或右键查看物品价格。");

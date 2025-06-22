@@ -159,9 +159,9 @@ public class GenericProjectile extends EntityPotion {
         else removeScoreboardTag("blastOnTimeout");
         if (blastDamageShooter) addScoreboardTag("blastDamageShooter");
         else removeScoreboardTag("blastDamageShooter");
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, this.penetration);
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_BOUNCE_LEFT, this.bounce);
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_ENTITIES_COLLIDED, this.damageCD);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, this.penetration);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.PROJECTILE_BOUNCE_LEFT, this.bounce);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.PROJECTILE_ENTITIES_COLLIDED, this.damageCD);
     }
     // setup properties of the specific type, including its item displayed
     public void setType(String type) {
@@ -218,7 +218,7 @@ public class GenericProjectile extends EntityPotion {
 
         this.attrMap = (HashMap<String, Double>) attrMap.clone();
         this.lastTrailDisplayLocation = loc.clone();
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, this.attrMap);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.ATTRIBUTE_MAP, this.attrMap);
         DamageHelper.setDamageType(bukkitEntity, damageType);
         setProperties(projectileType);
         // play spawned sound
@@ -261,7 +261,7 @@ public class GenericProjectile extends EntityPotion {
         // handle damage CD before doing anything else. Otherwise, exploding projectiles will damage the enemy being hit twice.
         GenericHelper.damageCoolDown(damageCD, e.getBukkitEntity(), enemyInvincibilityFrame);
         // handles post-hit mechanism: damage value is handled by a listener
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_LAST_HIT_ENTITY, e.getBukkitEntity());
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.PROJECTILE_LAST_HIT_ENTITY, e.getBukkitEntity());
         if (bouncePenetrationBonded) {
             updateBounce(bounce - 1);
         }
@@ -279,9 +279,9 @@ public class GenericProjectile extends EntityPotion {
             boolean shouldSpawnClusterBomb = TerrariaHelper.projectileConfig.getBoolean(
                     projectileType + ".clusterBomb.fireOnCollideEntity", false);
             if (shouldSpawnClusterBomb) {
-                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
+                MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.PROJECTILE_DESTROY_REASON, DESTROY_HIT_ENTITY);
                 ArrowHitListener.handleProjectileClusterBomb(bukkitEntity);
-                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, null);
+                MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.PROJECTILE_DESTROY_REASON, null);
             }
         }
         return null;
@@ -305,9 +305,9 @@ public class GenericProjectile extends EntityPotion {
                 maxHomingTicks = noHomingTicks + 1;
                 break;
             case "血炎弹":
-                double healthRegenTime = EntityHelper.getMetadata(shooter.getBukkitEntity(), EntityHelper.MetadataName.REGEN_TIME)
+                double healthRegenTime = MetadataHelper.getMetadata(shooter.getBukkitEntity(), MetadataHelper.MetadataName.REGEN_TIME)
                         .asDouble();
-                EntityHelper.setMetadata(shooter.getBukkitEntity(), EntityHelper.MetadataName.REGEN_TIME, healthRegenTime + 2);
+                MetadataHelper.setMetadata(shooter.getBukkitEntity(), MetadataHelper.MetadataName.REGEN_TIME, healthRegenTime + 2);
                 break;
             case "陨星之拳Ex":
             case "镀金匕首":
@@ -693,7 +693,7 @@ public class GenericProjectile extends EntityPotion {
                     // ram into the owner's target
                     else {
                         Location targetLoc;
-                        MetadataValue targetCache = EntityHelper.getMetadata(owner, EntityHelper.MetadataName.PLAYER_TARGET_LOC_CACHE);
+                        MetadataValue targetCache = MetadataHelper.getMetadata(owner, MetadataHelper.MetadataName.PLAYER_TARGET_LOC_CACHE);
                         if (targetCache != null &&
                                 targetCache.value() instanceof LivingEntity &&
                                 DamageHelper.checkCanDamage(owner, ((LivingEntity) targetCache.value()), true))
@@ -799,11 +799,11 @@ public class GenericProjectile extends EntityPotion {
     }
     protected void updateBounce(int newBounce) {
         bounce = newBounce;
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_BOUNCE_LEFT, newBounce);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.PROJECTILE_BOUNCE_LEFT, newBounce);
     }
     protected void updatePenetration(int newPenetration) {
         penetration = newPenetration;
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, newPenetration);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.PROJECTILE_PENETRATION_LEFT, newPenetration);
     }
     // override functions
     @Override
@@ -830,7 +830,7 @@ public class GenericProjectile extends EntityPotion {
     }
     // die
     public void destroyWithReason(int reason) {
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON, reason);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.PROJECTILE_DESTROY_REASON, reason);
         die();
     }
     @Override

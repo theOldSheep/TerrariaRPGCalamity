@@ -144,7 +144,7 @@ public class CelestialPillar extends EntityGiantZombie {
             attrMap.put("knockbackResistance", 1d);
             // damage multiplier
             DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init health and slime size
         {

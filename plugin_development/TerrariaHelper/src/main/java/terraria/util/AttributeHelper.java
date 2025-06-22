@@ -17,13 +17,13 @@ import java.util.logging.Level;
 public class AttributeHelper {
     // helper functions for tweaking attribute
     public static void tweakAttribute(Entity entity, String key, String value, boolean addOrRemove) {
-        if (key.equals(EntityHelper.MetadataName.DAMAGE_TYPE.toString())) {
-            if (addOrRemove) EntityHelper.setMetadata(entity, EntityHelper.MetadataName.DAMAGE_TYPE,
+        if (key.equals(MetadataHelper.MetadataName.DAMAGE_TYPE.toString())) {
+            if (addOrRemove) MetadataHelper.setMetadata(entity, MetadataHelper.MetadataName.DAMAGE_TYPE,
                     DamageHelper.DAMAGE_TYPE_INTERNAL_NAME_MAPPING.getOrDefault(value, DamageHelper.DamageType.MELEE));
             return;
         }
         try {
-            if (key.startsWith(EntityHelper.MetadataName.BUFF_INFLICT.toString())) {
+            if (key.startsWith(MetadataHelper.MetadataName.BUFF_INFLICT.toString())) {
                 if (entity instanceof Player) {
                     HashMap<String, ArrayList<String>> effectInflict = PlayerHelper.getPlayerEffectInflict(entity);
                     if (!effectInflict.containsKey(key)) return;
@@ -34,8 +34,8 @@ public class AttributeHelper {
                 }
                 return;
             }
-            else if (key.equals(EntityHelper.MetadataName.BUFF_IMMUNE.toString())) {
-                Map<String, Integer> buffImmune = (Map<String, Integer>) EntityHelper.getMetadata(entity, EntityHelper.MetadataName.BUFF_IMMUNE).value();
+            else if (key.equals(MetadataHelper.MetadataName.BUFF_IMMUNE.toString())) {
+                Map<String, Integer> buffImmune = (Map<String, Integer>) MetadataHelper.getMetadata(entity, MetadataHelper.MetadataName.BUFF_IMMUNE).value();
                 int layers = buffImmune.getOrDefault(value, 0);
                 if (addOrRemove)
                     layers ++;
@@ -132,8 +132,8 @@ public class AttributeHelper {
 
     // usually used in updating player attribute
     public static void tweakAttribute(Entity entity, HashMap<String, Double> attrMap, String key, String value, boolean addOrRemove) {
-        if (key.equals(EntityHelper.MetadataName.DAMAGE_TYPE.toString())) {
-            if (addOrRemove) EntityHelper.setMetadata(entity, EntityHelper.MetadataName.DAMAGE_TYPE,
+        if (key.equals(MetadataHelper.MetadataName.DAMAGE_TYPE.toString())) {
+            if (addOrRemove) MetadataHelper.setMetadata(entity, MetadataHelper.MetadataName.DAMAGE_TYPE,
                     DamageHelper.DAMAGE_TYPE_INTERNAL_NAME_MAPPING.getOrDefault(value, DamageHelper.DamageType.MELEE));
             return;
         }
@@ -150,7 +150,7 @@ public class AttributeHelper {
                 return;
             }
             if (key.equals("buffImmune")) {
-                Map<String, Integer> buffImmune = (Map<String, Integer>) EntityHelper.getMetadata(entity, EntityHelper.MetadataName.BUFF_IMMUNE).value();
+                Map<String, Integer> buffImmune = (Map<String, Integer>) MetadataHelper.getMetadata(entity, MetadataHelper.MetadataName.BUFF_IMMUNE).value();
                 for (String immune : value.split("\\|")) {
                     int layers = buffImmune.getOrDefault(immune, 0);
                     if (addOrRemove)
@@ -217,7 +217,7 @@ public class AttributeHelper {
 
     public static HashMap<String, Double> getAttrMap(Metadatable entity) {
         try {
-            MetadataValue mdv = EntityHelper.getMetadata(entity, EntityHelper.MetadataName.ATTRIBUTE_MAP);
+            MetadataValue mdv = MetadataHelper.getMetadata(entity, MetadataHelper.MetadataName.ATTRIBUTE_MAP);
             return mdv == null ? new HashMap<>(0) : (HashMap<String, Double>) mdv.value();
         } catch (Exception e) {
             return new HashMap<>(0);

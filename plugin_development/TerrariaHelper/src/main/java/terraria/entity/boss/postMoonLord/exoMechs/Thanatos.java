@@ -356,7 +356,7 @@ public class Thanatos extends EntitySlime {
                 tick();
 
                 // facing
-                MetadataValue valYaw = EntityHelper.getMetadata(bukkitEntity, "yaw");
+                MetadataValue valYaw = MetadataHelper.getMetadata(bukkitEntity, "yaw");
                 if (valYaw != null) this.yaw = valYaw.asFloat();
                 else this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
             }
@@ -395,9 +395,9 @@ public class Thanatos extends EntitySlime {
         setCustomNameVisible(true);
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         if (index > 0) {
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.bukkitEntity);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.DAMAGE_TAKER, head.bukkitEntity);
         }
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
@@ -411,16 +411,16 @@ public class Thanatos extends EntitySlime {
             attrMap.put("knockback", 4d);
             attrMap.put("knockbackResistance", 1d);
             DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.BULLET);
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
         bossbar = draedon.bossbar;
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_BAR, bossbar);
         // init target map
         {
             targetMap = owner.targetMap;
             target = owner.target;
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
         // init health and slime size
         {

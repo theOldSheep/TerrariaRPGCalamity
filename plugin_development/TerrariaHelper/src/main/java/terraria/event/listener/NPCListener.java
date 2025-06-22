@@ -65,7 +65,7 @@ public class NPCListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onButtonClick(ButtonClickEvent evt) {
         Player ply = evt.getPlayer();
-        MetadataValue NPCViewingMetadata = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_NPC_INTERACTING);
+        MetadataValue NPCViewingMetadata = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_NPC_INTERACTING);
         if (NPCViewingMetadata == null)
             return;
         Villager NPCViewing = (Villager) NPCViewingMetadata.value();
@@ -169,7 +169,7 @@ public class NPCListener implements Listener {
             }
             case "商店": {
                 evt.setCancelled(true);
-                MetadataValue firstSellMetadata = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.NPC_FIRST_SELL_INDEX);
+                MetadataValue firstSellMetadata = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.NPC_FIRST_SELL_INDEX);
                 // if the GUI variable is not valid, close inventory
                 if (firstSellMetadata == null) {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), ply::closeInventory, 1);

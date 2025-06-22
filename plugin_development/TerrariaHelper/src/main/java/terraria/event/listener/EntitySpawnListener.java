@@ -11,6 +11,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import terraria.util.EntityHelper;
+import terraria.util.MetadataHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,8 +51,8 @@ public class EntitySpawnListener implements Listener {
                     // make the player responsible for the explosion
                     HashMap<String, Double> attrMap = new HashMap<>();
                     attrMap.put("damage", 1200d);
-                    EntityHelper.setMetadata(entityTNT, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
-                    EntityHelper.setMetadata(entityTNT, EntityHelper.MetadataName.DAMAGE_SOURCE, damageCausePlayer);
+                    MetadataHelper.setMetadata(entityTNT, MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
+                    MetadataHelper.setMetadata(entityTNT, MetadataHelper.MetadataName.DAMAGE_SOURCE, damageCausePlayer);
                     EntityHelper.handleEntityExplode(entityTNT, 7.5, new ArrayList<>(), blastLoc);
                 }
             }

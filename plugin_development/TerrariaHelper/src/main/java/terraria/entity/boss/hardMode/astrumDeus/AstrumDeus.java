@@ -151,7 +151,7 @@ public class AstrumDeus extends EntitySlime {
     private void phaseTransition() {
         // new tail
         LivingEntity newTail = bossParts.get(SECOND_HEAD_INDEX - 2);
-        EntityHelper.setMetadata(newTail, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMapTail.clone());
+        MetadataHelper.setMetadata(newTail, MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMapTail.clone());
         newTail.setCustomName(BOSS_TYPE.msgName + "尾");
         // remove a segment to separate the two
         LivingEntity toRemove = bossParts.get(SECOND_HEAD_INDEX - 1);
@@ -160,7 +160,7 @@ public class AstrumDeus extends EntitySlime {
         // new head
         LivingEntity newHead = bossParts.get(SECOND_HEAD_INDEX);
         AstrumDeus newHeadNMS = (AstrumDeus) ((CraftLivingEntity) newHead).getHandle();
-        EntityHelper.setMetadata(newHead, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMapHead.clone());
+        MetadataHelper.setMetadata(newHead, MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMapHead.clone());
         newHead.setCustomName(BOSS_TYPE.msgName + "头");
         // new head should become a new health pool
         double updatedHealth = getHealth();
@@ -170,7 +170,7 @@ public class AstrumDeus extends EntitySlime {
             AstrumDeus currSegmentNMS = (AstrumDeus) ((CraftLivingEntity) currentSegment).getHandle();
             // update health of second half
             currentSegment.setHealth(updatedHealth);
-            EntityHelper.setMetadata(currentSegment, EntityHelper.MetadataName.DAMAGE_TAKER,
+            MetadataHelper.setMetadata(currentSegment, MetadataHelper.MetadataName.DAMAGE_TAKER,
                     idx == SECOND_HEAD_INDEX ? null : newHead);
             currSegmentNMS.head = idx == SECOND_HEAD_INDEX ? null : newHeadNMS;
         }
@@ -338,9 +338,9 @@ public class AstrumDeus extends EntitySlime {
             else {
                 // update facing direction
                 {
-                    MetadataValue valYaw = EntityHelper.getMetadata(bukkitEntity, "yaw");
+                    MetadataValue valYaw = MetadataHelper.getMetadata(bukkitEntity, "yaw");
                     if (valYaw != null) this.yaw = valYaw.asFloat();
-                    MetadataValue valPitch = EntityHelper.getMetadata(bukkitEntity, "pitch");
+                    MetadataValue valPitch = MetadataHelper.getMetadata(bukkitEntity, "pitch");
                     if (valPitch != null) this.pitch = valPitch.asFloat();
                 }
                 if (isHead) {
@@ -413,7 +413,7 @@ public class AstrumDeus extends EntitySlime {
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -431,15 +431,15 @@ public class AstrumDeus extends EntitySlime {
                 attrMap = (HashMap<String, Double>) attrMapBody.clone();
             }
             DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
         if (segmentIndex == 0) {
             bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
                     BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_BAR, bossbar);
         } else {
-            bossbar = (BossBattleServer) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_BAR).value();
+            bossbar = (BossBattleServer) MetadataHelper.getMetadata(bossParts.get(0), MetadataHelper.MetadataName.BOSS_BAR).value();
         }
         // init target map
         {
@@ -447,9 +447,9 @@ public class AstrumDeus extends EntitySlime {
                 targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                         getBukkitEntity(), BossHelper.BossType.GOLEM.msgName, summonedPlayer, true, bossbar);
             } else {
-                targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
+                targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) MetadataHelper.getMetadata(bossParts.get(0), MetadataHelper.MetadataName.BOSS_TARGET_MAP).value();
             }
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
             target = summonedPlayer;
         }
         // init health and slime size
@@ -478,7 +478,7 @@ public class AstrumDeus extends EntitySlime {
                     DamageHelper.DamageType.ARROW, "幻星雷");
             // segment settings
             if (head != null)
-                EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
+                MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
             if (segmentIndex + 1 < TOTAL_LENGTH)
                 new AstrumDeus(summonedPlayer, bossParts, spawnParticleLoc, segmentIndex + 1);

@@ -30,7 +30,7 @@ public class ArrowHitListener implements Listener {
         Set<String> scoreboardTags = projectile.getScoreboardTags();
         if (scoreboardTags.contains("isGrenade")) {
             Location projectileDestroyLoc = MathHelper.toBukkitVector(e.movingObjectPosition.pos).toLocation(block.getWorld());
-            MetadataValue bounceRemain = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.PROJECTILE_BOUNCE_LEFT);
+            MetadataValue bounceRemain = MetadataHelper.getMetadata(projectile, MetadataHelper.MetadataName.PROJECTILE_BOUNCE_LEFT);
             if (bounceRemain == null || bounceRemain.asInt() < 0 || scoreboardTags.contains("blastOnContactBlock")) {
                 handleProjectileBlast(projectile, projectileDestroyLoc);
             }
@@ -142,21 +142,21 @@ public class ArrowHitListener implements Listener {
         }
         // adamantite particle accelerator's double damage handling
         if (projectileScoreboardTags.contains("isAPA")) {
-            MetadataValue lastParticleName = EntityHelper.getMetadata(entityHit,
-                    EntityHelper.MetadataName.LAST_ADAMANTITE_PARTICLE_TYPE);
+            MetadataValue lastParticleName = MetadataHelper.getMetadata(entityHit,
+                    MetadataHelper.MetadataName.LAST_ADAMANTITE_PARTICLE_TYPE);
             if (lastParticleName != null && ! (lastParticleName.asString().equals(projectileName) )) {
                 HashMap<String, Double> attrMapProj = AttributeHelper.getAttrMap(projectile);
                 DamageHelper.handleDamage((Entity) projectile.getShooter(), entityHit,
                         attrMapProj.get("damage"), DamageHelper.DamageReason.PROJECTILE);
             }
-            EntityHelper.setMetadata(entityHit, EntityHelper.MetadataName.LAST_ADAMANTITE_PARTICLE_TYPE,
+            MetadataHelper.setMetadata(entityHit, MetadataHelper.MetadataName.LAST_ADAMANTITE_PARTICLE_TYPE,
                     projectileName);
         }
     }
     private static void handleProjectileBlast(Projectile projectile, Location projectileDestroyLoc) {
         // explode
-        HashSet<org.bukkit.entity.Entity> damageExceptions = (HashSet<Entity>) EntityHelper.getMetadata(projectile,
-                EntityHelper.MetadataName.PROJECTILE_ENTITIES_COLLIDED).value();
+        HashSet<org.bukkit.entity.Entity> damageExceptions = (HashSet<Entity>) MetadataHelper.getMetadata(projectile,
+                MetadataHelper.MetadataName.PROJECTILE_ENTITIES_COLLIDED).value();
         String projectileName = projectile.getName();
         int blastDuration = TerrariaHelper.projectileConfig.getInt( projectileName + ".blastDuration", 1);
         double blastRadius = TerrariaHelper.projectileConfig.getDouble( projectileName + ".blastRadius", 1.5);
@@ -206,7 +206,7 @@ public class ArrowHitListener implements Listener {
         ConfigurationSection clusterSection = projectileSection.getConfigurationSection("clusterBomb");
 
         int destroyReason = GenericProjectile.DESTROY_TIME_OUT;
-        MetadataValue destroyReasonMetadata = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.PROJECTILE_DESTROY_REASON);
+        MetadataValue destroyReasonMetadata = MetadataHelper.getMetadata(projectile, MetadataHelper.MetadataName.PROJECTILE_DESTROY_REASON);
         if (destroyReasonMetadata != null) destroyReason = destroyReasonMetadata.asInt();
 
         boolean shouldFire;
@@ -217,7 +217,7 @@ public class ArrowHitListener implements Listener {
             shouldFire = clusterSection.getBoolean("fireOnHitBlock", true);
         else if (destroyReason == GenericProjectile.DESTROY_HIT_ENTITY) {
             shouldFire = clusterSection.getBoolean("fireOnHitEntity", true);
-            MetadataValue collidedVal = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.PROJECTILE_LAST_HIT_ENTITY);
+            MetadataValue collidedVal = MetadataHelper.getMetadata(projectile, MetadataHelper.MetadataName.PROJECTILE_LAST_HIT_ENTITY);
             if (collidedVal != null)
                 entityHit = (Entity) collidedVal.value();
         }
@@ -256,7 +256,7 @@ public class ArrowHitListener implements Listener {
             // get a more precise location at the edge of the enemy's bounding box
             Location projectileDestroyLoc = projectile.getLocation();
             // bullet hell blasts
-            MetadataValue bulletHellInfo = EntityHelper.getMetadata(projectile, EntityHelper.MetadataName.BULLET_HELL_PROJECTILE_DIRECTION);
+            MetadataValue bulletHellInfo = MetadataHelper.getMetadata(projectile, MetadataHelper.MetadataName.BULLET_HELL_PROJECTILE_DIRECTION);
             if (bulletHellInfo != null) {
                 EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(
                         projectileSource, projectileDestroyLoc, new Vector(),

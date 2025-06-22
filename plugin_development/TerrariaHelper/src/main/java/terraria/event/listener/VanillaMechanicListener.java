@@ -127,7 +127,7 @@ public class VanillaMechanicListener implements Listener {
     public void onAirChange(EntityAirChangeEvent e) {
         if (e.getEntity() instanceof Player) {
             Player ply = (Player) e.getEntity();
-            MetadataValue mtv = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_AIR);
+            MetadataValue mtv = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_AIR);
             if (mtv != null && e.getAmount() != mtv.asInt())
                 e.setCancelled(true);
         }
@@ -150,12 +150,12 @@ public class VanillaMechanicListener implements Listener {
             if (distSqr > 900) {
                 // sentry
                 for (Entity entity :
-                        ((ArrayList<Entity>) EntityHelper.getMetadata(e.getPlayer(), EntityHelper.MetadataName.PLAYER_SENTRY_LIST).value()) ) {
+                        ((ArrayList<Entity>) MetadataHelper.getMetadata(e.getPlayer(), MetadataHelper.MetadataName.PLAYER_SENTRY_LIST).value()) ) {
                     entity.remove();
                 }
                 // minion
                 for (Entity entity :
-                        ((ArrayList<Entity>) EntityHelper.getMetadata(e.getPlayer(), EntityHelper.MetadataName.PLAYER_MINION_LIST).value()) ) {
+                        ((ArrayList<Entity>) MetadataHelper.getMetadata(e.getPlayer(), MetadataHelper.MetadataName.PLAYER_MINION_LIST).value()) ) {
                     entity.remove();
                 }
             }

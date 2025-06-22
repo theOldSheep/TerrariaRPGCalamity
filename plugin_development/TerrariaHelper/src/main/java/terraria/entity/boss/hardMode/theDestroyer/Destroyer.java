@@ -193,9 +193,9 @@ public class Destroyer extends EntitySlime {
             else {
                 // update facing direction
                 {
-                    MetadataValue valYaw = EntityHelper.getMetadata(bukkitEntity, "yaw");
+                    MetadataValue valYaw = MetadataHelper.getMetadata(bukkitEntity, "yaw");
                     if (valYaw != null) this.yaw = valYaw.asFloat();
-                    MetadataValue valPitch = EntityHelper.getMetadata(bukkitEntity, "pitch");
+                    MetadataValue valPitch = MetadataHelper.getMetadata(bukkitEntity, "pitch");
                     if (valPitch != null) this.pitch = valPitch.asFloat();
                 }
                 // head
@@ -273,7 +273,7 @@ public class Destroyer extends EntitySlime {
         addScoreboardTag("isMechanic");
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -302,25 +302,25 @@ public class Destroyer extends EntitySlime {
                 attrMap.put("defence", BODY_DEF);
             }
             DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
         if (segmentIndex == 0) {
             bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
                     BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
         } else {
-            bossbar = (BossBattleServer) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_BAR).value();
+            bossbar = (BossBattleServer) MetadataHelper.getMetadata(bossParts.get(0), MetadataHelper.MetadataName.BOSS_BAR).value();
         }
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_BAR, bossbar);
         // init target map
         {
             if (segmentIndex == 0) {
                 targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                         getBukkitEntity(), BossHelper.BossType.WALL_OF_FLESH.msgName, summonedPlayer, true, bossbar);
             } else {
-                targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
+                targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) MetadataHelper.getMetadata(bossParts.get(0), MetadataHelper.MetadataName.BOSS_TARGET_MAP).value();
             }
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
             target = summonedPlayer;
         }
         // init health and slime size
@@ -347,7 +347,7 @@ public class Destroyer extends EntitySlime {
             projectilePropertyElectricLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapElectricLaser,
                     DamageHelper.DamageType.MAGIC, "电击激光");
             // segment settings
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
             if (segmentIndex + 1 < TOTAL_LENGTH)
                 new Destroyer(summonedPlayer, bossParts, segmentIndex + 1);

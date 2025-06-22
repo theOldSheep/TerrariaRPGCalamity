@@ -1,7 +1,6 @@
 package terraria.event.listener;
 
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -127,7 +126,7 @@ public class ItemUseAndAttributeListener implements Listener {
         } else {
             ply.removeScoreboardTag("isSecondaryAttack");
         }
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, 0);
+        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, 0);
         ItemUseHelper.playerUseItem(ply);
     }
     // swing item listener

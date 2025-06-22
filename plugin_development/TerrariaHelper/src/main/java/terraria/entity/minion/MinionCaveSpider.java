@@ -12,8 +12,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import terraria.util.DamageHelper;
-import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
+import terraria.util.MetadataHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -73,9 +73,9 @@ public class MinionCaveSpider extends EntityCaveSpider {
         // add to world
         ((CraftWorld) owner.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // attributes etc.
-        EntityHelper.setMetadata(getBukkitEntity(), EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
+        MetadataHelper.setMetadata(getBukkitEntity(), MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         addScoreboardTag("isMinion");
-        EntityHelper.setMetadata(getBukkitEntity(), EntityHelper.MetadataName.DAMAGE_SOURCE, owner);
+        MetadataHelper.setMetadata(getBukkitEntity(), MetadataHelper.MetadataName.DAMAGE_SOURCE, owner);
         DamageHelper.setDamageType(getBukkitEntity(), DamageHelper.DamageType.SUMMON);
         addScoreboardTag("noDamage");
         addScoreboardTag("noMelee");
@@ -147,8 +147,8 @@ public class MinionCaveSpider extends EntityCaveSpider {
             MinionHelper.setTarget(this, ownerNMS, sentryOrMinion, targetNeedLineOfSight, protectOwner);
         // extra ticking AI
         Vector velocity = new Vector(motX, motY, motZ);
-        Collection<Entity> allMinions = (Collection<Entity>) EntityHelper.getMetadata(owner,
-                sentryOrMinion ? EntityHelper.MetadataName.PLAYER_SENTRY_LIST : EntityHelper.MetadataName.PLAYER_MINION_LIST).value();
+        Collection<Entity> allMinions = (Collection<Entity>) MetadataHelper.getMetadata(owner,
+                sentryOrMinion ? MetadataHelper.MetadataName.PLAYER_SENTRY_LIST : MetadataHelper.MetadataName.PLAYER_MINION_LIST).value();
         LivingEntity target, minionBukkit = (LivingEntity) getBukkitEntity();
         if (getGoalTarget() != null) target = (LivingEntity) (getGoalTarget().getBukkitEntity());
         else target = owner;

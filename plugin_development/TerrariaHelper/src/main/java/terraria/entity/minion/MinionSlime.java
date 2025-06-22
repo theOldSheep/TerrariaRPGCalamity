@@ -77,9 +77,9 @@ public class MinionSlime extends EntitySlime {
         ((CraftWorld) owner.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // attributes etc.
         setSize(1, false);
-        EntityHelper.setMetadata(getBukkitEntity(), EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
+        MetadataHelper.setMetadata(getBukkitEntity(), MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         addScoreboardTag("isMinion");
-        EntityHelper.setMetadata(getBukkitEntity(), EntityHelper.MetadataName.DAMAGE_SOURCE, owner);
+        MetadataHelper.setMetadata(getBukkitEntity(), MetadataHelper.MetadataName.DAMAGE_SOURCE, owner);
         DamageHelper.setDamageType(getBukkitEntity(), DamageHelper.DamageType.SUMMON);
         addScoreboardTag("noDamage");
         addScoreboardTag("noMelee");
@@ -530,7 +530,7 @@ public class MinionSlime extends EntitySlime {
             case "白色天龙尾":
             case "灾坟仆从体节":
             case "灾坟仆从尾":
-                this.yaw = EntityHelper.getMetadata(bukkitEntity, "yaw").asFloat();
+                this.yaw = MetadataHelper.getMetadata(bukkitEntity, "yaw").asFloat();
                 break;
             default:
                 if ( !(MinionHelper.checkTargetIsValidEnemy(
@@ -541,8 +541,8 @@ public class MinionSlime extends EntitySlime {
         }
         // extra ticking AI
         Vector velocity = new Vector(motX / 0.91, motY / 0.98, motZ / 0.91);
-        Collection<Entity> allMinions = (Collection<Entity>) EntityHelper.getMetadata(owner,
-                sentryOrMinion ? EntityHelper.MetadataName.PLAYER_SENTRY_LIST : EntityHelper.MetadataName.PLAYER_MINION_LIST).value();
+        Collection<Entity> allMinions = (Collection<Entity>) MetadataHelper.getMetadata(owner,
+                sentryOrMinion ? MetadataHelper.MetadataName.PLAYER_SENTRY_LIST : MetadataHelper.MetadataName.PLAYER_MINION_LIST).value();
         LivingEntity target, minionBukkit = (LivingEntity) getBukkitEntity();
         if (getGoalTarget() != null) target = (LivingEntity) (getGoalTarget().getBukkitEntity());
         else target = owner;
@@ -2064,7 +2064,7 @@ public class MinionSlime extends EntitySlime {
                     this.yaw = (float) MathHelper.getVectorYaw(velocity);
                     for (int i = 1; i < allSegments.size(); i ++) {
                         ((CraftLivingEntity) allSegments.get(i)).getHandle().yaw =
-                                EntityHelper.getMetadata(allSegments.get(i), "yaw").asFloat();
+                                MetadataHelper.getMetadata(allSegments.get(i), "yaw").asFloat();
                     }
                 }
                 // set display name according to segment info
@@ -2118,7 +2118,7 @@ public class MinionSlime extends EntitySlime {
                 this.yaw = (float) MathHelper.getVectorYaw(velocity);
                 for (int i = 1; i < allSegments.size(); i ++) {
                     ((CraftLivingEntity) allSegments.get(i)).getHandle().yaw =
-                            EntityHelper.getMetadata(allSegments.get(i), "yaw").asFloat();
+                            MetadataHelper.getMetadata(allSegments.get(i), "yaw").asFloat();
                 }
                 break;
             }
@@ -2154,7 +2154,7 @@ public class MinionSlime extends EntitySlime {
                 this.yaw = (float) MathHelper.getVectorYaw(velocity);
                 for (int i = 1; i < allSegments.size(); i ++) {
                     ((CraftLivingEntity) allSegments.get(i)).getHandle().yaw =
-                            EntityHelper.getMetadata(allSegments.get(i), "yaw").asFloat();
+                            MetadataHelper.getMetadata(allSegments.get(i), "yaw").asFloat();
                 }
                 break;
             }

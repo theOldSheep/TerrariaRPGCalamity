@@ -162,7 +162,7 @@ public class MonsterHelper {
     public static void naturalMobSpawning(Player ply) {
         HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(ply);
         int mobLimit = attrMap.getOrDefault("mobLimit", 10d).intValue();
-        if (EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_MONSTER_SPAWNED_AMOUNT).asInt() >= mobLimit)
+        if (MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_MONSTER_SPAWNED_AMOUNT).asInt() >= mobLimit)
             return;
         // celestial pillars
         WorldHelper.HeightLayer heightLayer = WorldHelper.HeightLayer.getHeightLayer(ply.getLocation());
@@ -241,7 +241,7 @@ public class MonsterHelper {
         // monsters are prohibited to spawn when the active monsters are exceeding target's mob limit by 3 times
         HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(target);
         int mobLimit = attrMap.getOrDefault("mobLimit", 10d).intValue();
-        if (EntityHelper.getMetadata(target, EntityHelper.MetadataName.PLAYER_MONSTER_SPAWNED_AMOUNT).asInt() >= mobLimit * 3)
+        if (MetadataHelper.getMetadata(target, MetadataHelper.MetadataName.PLAYER_MONSTER_SPAWNED_AMOUNT).asInt() >= mobLimit * 3)
             return null;
         // get monster info
         ConfigurationSection mobInfoSection = TerrariaHelper.mobSpawningConfig.getConfigurationSection("mobInfo." + type);
@@ -330,7 +330,7 @@ public class MonsterHelper {
             DisguiseAPI.disguiseEntity(entity, disguise);
         }
         // set parent type
-        EntityHelper.setMetadata(entity, EntityHelper.MetadataName.MONSTER_PARENT_TYPE, type);
+        MetadataHelper.setMetadata(entity, MetadataHelper.MetadataName.MONSTER_PARENT_TYPE, type);
         // unique monster cache
         boolean unique = mobInfoSection.getBoolean("unique", false);
         if (unique) {

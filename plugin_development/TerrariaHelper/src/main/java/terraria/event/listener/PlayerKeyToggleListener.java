@@ -2,20 +2,13 @@ package terraria.event.listener;
 
 import eos.moe.dragoncore.api.event.KeyPressEvent;
 import eos.moe.dragoncore.api.event.KeyReleaseEvent;
-import net.minecraft.server.v1_12_R1.EntityPlayer;
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.omg.CORBA.TypeCodePackage.BadKind;
 import terraria.gameplay.Setting;
-import terraria.util.EntityHelper;
-import terraria.util.ItemUseHelper;
-import terraria.util.PlayerHelper;
-import terraria.util.PlayerPOVHelper;
+import terraria.util.*;
 
 import java.util.*;
 
@@ -59,9 +52,9 @@ public class PlayerKeyToggleListener implements Listener {
                 keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_A)) ||
                 keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_S)) ||
                 keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_D))) ) {
-            long lastChargeTime = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS).asLong();
+            long lastChargeTime = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS).asLong();
             long currTimeInMS = Calendar.getInstance().getTimeInMillis();
-            String lastChargeDir = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_DIRECTION).asString();
+            String lastChargeDir = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_DASH_DIRECTION).asString();
             if (currTimeInMS - lastChargeTime < 200 && lastChargeDir.equals(keyPressed)) {
                 // try to dash in the double-tapped direction
                 Collection<String> cgDir = new ArrayList<>();
@@ -69,8 +62,8 @@ public class PlayerKeyToggleListener implements Listener {
                 double chargeYaw = PlayerHelper.getPlayerMoveYaw(ply, cgDir);
                 PlayerHelper.handleDash(ply, chargeYaw, 0);
             }
-            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS, currTimeInMS);
-            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_DASH_DIRECTION, keyPressed);
+            MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_DASH_KEY_PRESSED_MS, currTimeInMS);
+            MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_DASH_DIRECTION, keyPressed);
         }
         // Hotkey dash
         if (keyPressed.equals(Setting.getOptionString(ply, Setting.Options.CONTROL_DASH)) ) {
@@ -130,8 +123,8 @@ public class PlayerKeyToggleListener implements Listener {
 
         // remove all hooks that are in place, if needed
         if (removeAllGrapplingHooks > 0) {
-            for (Entity hook : (Collection<Entity>) EntityHelper.getMetadata(ply,
-                    EntityHelper.MetadataName.PLAYER_GRAPPLING_HOOKS).value())
+            for (Entity hook : (Collection<Entity>) MetadataHelper.getMetadata(ply,
+                    MetadataHelper.MetadataName.PLAYER_GRAPPLING_HOOKS).value())
                 if (removeAllGrapplingHooks != 1 || hook.getVelocity().lengthSquared() < 1e-5)
                     hook.remove();
         }

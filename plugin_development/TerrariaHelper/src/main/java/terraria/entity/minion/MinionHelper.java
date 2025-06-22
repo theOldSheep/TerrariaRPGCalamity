@@ -16,10 +16,7 @@ import org.bukkit.metadata.MetadataValue;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.Setting;
-import terraria.util.AttributeHelper;
-import terraria.util.DamageHelper;
-import terraria.util.EntityHelper;
-import terraria.util.PlayerHelper;
+import terraria.util.*;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -64,12 +61,12 @@ public class MinionHelper {
         int minionLimit;
         {
             if (sentryOrMinion) {
-                minionList = (ArrayList<Entity>) EntityHelper.getMetadata(owner,
-                        EntityHelper.MetadataName.PLAYER_SENTRY_LIST).value();
+                minionList = (ArrayList<Entity>) MetadataHelper.getMetadata(owner,
+                        MetadataHelper.MetadataName.PLAYER_SENTRY_LIST).value();
                 minionLimit = attrMap.getOrDefault("sentryLimit", 1d).intValue();
             } else {
-                minionList = (ArrayList<Entity>) EntityHelper.getMetadata(owner,
-                        EntityHelper.MetadataName.PLAYER_MINION_LIST).value();
+                minionList = (ArrayList<Entity>) MetadataHelper.getMetadata(owner,
+                        MetadataHelper.MetadataName.PLAYER_MINION_LIST).value();
                 minionLimit = attrMap.getOrDefault("minionLimit", 1d).intValue();
             }
         }
@@ -173,8 +170,8 @@ public class MinionHelper {
         // whip target
         boolean whipTargetValid = false;
         {
-            MetadataValue whipTargetMetadata = EntityHelper.getMetadata(owner.getBukkitEntity(),
-                    EntityHelper.MetadataName.PLAYER_MINION_WHIP_FOCUS);
+            MetadataValue whipTargetMetadata = MetadataHelper.getMetadata(owner.getBukkitEntity(),
+                    MetadataHelper.MetadataName.PLAYER_MINION_WHIP_FOCUS);
             if (whipTargetMetadata != null) {
                 Entity whipTarget = (Entity) whipTargetMetadata.value();
                 net.minecraft.server.v1_12_R1.Entity whipTargetNMS = ((CraftEntity) whipTarget).getHandle();

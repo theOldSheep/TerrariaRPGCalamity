@@ -60,24 +60,24 @@ public class ItemUseHelper {
     }
     public static int applyCD(Player ply, int CD) {
         ply.addScoreboardTag("temp_useCD");
-        MetadataValue lastCDInternal = EntityHelper.getMetadata(ply,
-                EntityHelper.MetadataName.PLAYER_INTERNAL_LAST_ITEM_START_USE_CD);
+        MetadataValue lastCDInternal = MetadataHelper.getMetadata(ply,
+                MetadataHelper.MetadataName.PLAYER_INTERNAL_LAST_ITEM_START_USE_CD);
         long lastCDApply;
         if (lastCDInternal == null) {
             lastCDApply = 0;
         } else {
             lastCDApply = lastCDInternal.asLong() + 1;
         }
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_INTERNAL_ITEM_START_USE_CD, lastCDApply);
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_INTERNAL_LAST_ITEM_START_USE_CD, lastCDApply);
+        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_INTERNAL_ITEM_START_USE_CD, lastCDApply);
+        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_INTERNAL_LAST_ITEM_START_USE_CD, lastCDApply);
         ItemStack tool = ply.getInventory().getItemInMainHand();
         // the CD <= 0: never stops on its own
         PacketPlayOutSetCooldown packet = new PacketPlayOutSetCooldown(CraftItemStack.asNMSCopy(tool).getItem(), CD <= 0 ? 1919810 : CD);
         ((CraftPlayer) ply).getHandle().playerConnection.sendPacket(packet);
         if (CD > 0) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(), () -> {
-                if (ply.isOnline() && EntityHelper.getMetadata(ply,
-                        EntityHelper.MetadataName.PLAYER_INTERNAL_ITEM_START_USE_CD).asLong() == lastCDApply) {
+                if (ply.isOnline() && MetadataHelper.getMetadata(ply,
+                        MetadataHelper.MetadataName.PLAYER_INTERNAL_ITEM_START_USE_CD).asLong() == lastCDApply) {
                     if (!PlayerHelper.isProperlyPlaying(ply)) {
                         ply.removeScoreboardTag("temp_autoSwing");
                         ply.removeScoreboardTag("temp_isLoadingWeapon");
@@ -255,14 +255,14 @@ public class ItemUseHelper {
             case "血月天塔柱": {
                 if ( ! ply.getScoreboardTags().contains("temp_useCD") ) {
                     String targetBackground = itemName.replace("天塔柱", "");
-                    MetadataValue forceBackground = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_FORCED_BACKGROUND);
+                    MetadataValue forceBackground = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_FORCED_BACKGROUND);
                     // update force background
                     if (forceBackground == null || ! forceBackground.asString().equals(targetBackground)) {
-                        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_FORCED_BACKGROUND, targetBackground);
+                        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_FORCED_BACKGROUND, targetBackground);
                     }
                     // remove force background
                     else {
-                        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_FORCED_BACKGROUND, null);
+                        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_FORCED_BACKGROUND, null);
                     }
                     applyCD(ply, 20);
                 }
@@ -431,7 +431,7 @@ public class ItemUseHelper {
                                 case "maxHealth": {
                                     applyCD(ply, 15);
                                     // permanently increase max health
-                                    EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_HEALTH_TIER,
+                                    MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_HEALTH_TIER,
                                             PlayerHelper.getPlayerHealthTier(ply) + 1);
                                     PlayerHelper.setupAttribute(ply);
                                     PlayerHelper.heal(ply, potionPotency);
@@ -441,7 +441,7 @@ public class ItemUseHelper {
                                 case "maxMana": {
                                     applyCD(ply, 15);
                                     // permanently increase max mana
-                                    EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_TIER,
+                                    MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_MANA_TIER,
                                             PlayerHelper.getPlayerManaTier(ply) + 1);
                                     PlayerHelper.setupAttribute(ply);
                                     PlayerHelper.restoreMana(ply, potionPotency);
@@ -3053,10 +3053,10 @@ public class ItemUseHelper {
                 double progress = Math.min(swingAmount, 35) / 35d;
                 double spinAmount = 40 + progress * 135;
                 size += progress * size;
-                MetadataValue value = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME_BLADE_SPIN_PITCH);
+                MetadataValue value = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_BIOME_BLADE_SPIN_PITCH);
                 pitchMin = (value == null || swingAmount == 0) ? -180d : value.asDouble();
                 pitchMax = pitchMin + spinAmount;
-                EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_BIOME_BLADE_SPIN_PITCH, pitchMax);
+                MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_BIOME_BLADE_SPIN_PITCH, pitchMax);
                 break;
             }
             case "远古方舟": {
@@ -4012,12 +4012,12 @@ public class ItemUseHelper {
             }
         }
         // stealth
-        double currStealth = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH).asDouble();
+        double currStealth = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_STEALTH).asDouble();
         double maxStealth = PlayerHelper.getMaxStealth(ply);
         double stealthConsumption = maxStealth * attrMap.getOrDefault("stealthConsumptionMulti", 1d) - 1e-9;
         boolean isStealth = maxStealth > 0 && currStealth >= stealthConsumption;
         currStealth = Math.max(0, currStealth - stealthConsumption);
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH, currStealth);
+        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_STEALTH, currStealth);
         // this effect only lasts for one hit
         if (EntityHelper.hasEffect(ply, "掠夺者护符")) {
             EntityHelper.removeEffect(ply, "掠夺者护符");
@@ -4057,7 +4057,7 @@ public class ItemUseHelper {
             int maxMana = AttributeHelper.getAttrMap(ply).getOrDefault("maxMana", 20d).intValue();
             int regenDelay = (int) Math.ceil(0.3 * (
                     (1 - ((double) currMana / maxMana)) * 240 + 45   ));
-            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_MANA_REGEN_DELAY, regenDelay);
+            MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_MANA_REGEN_DELAY, regenDelay);
             return true;
         }
         return false;
@@ -4870,7 +4870,7 @@ public class ItemUseHelper {
         // mana consumption tweak
         switch (itemType) {
             case "太空枪":
-                if (EntityHelper.getMetadata(ply, EntityHelper.MetadataName.ARMOR_SET).asString().equals("流星套装"))
+                if (MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.ARMOR_SET).asString().equals("流星套装"))
                     manaConsumption = 0;
                 break;
             case "终极棱镜":
@@ -4908,20 +4908,20 @@ public class ItemUseHelper {
                                             boolean sentryOrMinion, boolean hasContactDamage, boolean noDuplication,
                                             ItemStack originalStaff) {
         ArrayList<Entity> minionList;
-        EntityHelper.MetadataName indexNextMetadataKey;
+        MetadataHelper.MetadataName indexNextMetadataKey;
         int minionLimit, indexNext;
         // initialize minion limit and minion list
         {
             if (sentryOrMinion) {
-                minionList = (ArrayList<Entity>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_SENTRY_LIST).value();
+                minionList = (ArrayList<Entity>) MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_SENTRY_LIST).value();
                 minionLimit = attrMap.getOrDefault("sentryLimit", 1d).intValue();
-                indexNextMetadataKey = EntityHelper.MetadataName.PLAYER_NEXT_SENTRY_INDEX;
+                indexNextMetadataKey = MetadataHelper.MetadataName.PLAYER_NEXT_SENTRY_INDEX;
             } else {
-                minionList = (ArrayList<Entity>) EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_MINION_LIST).value();
+                minionList = (ArrayList<Entity>) MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_MINION_LIST).value();
                 minionLimit = attrMap.getOrDefault("minionLimit", 1d).intValue();
-                indexNextMetadataKey = EntityHelper.MetadataName.PLAYER_NEXT_MINION_INDEX;
+                indexNextMetadataKey = MetadataHelper.MetadataName.PLAYER_NEXT_MINION_INDEX;
             }
-            indexNext = EntityHelper.getMetadata(ply, indexNextMetadataKey).asInt();
+            indexNext = MetadataHelper.getMetadata(ply, indexNextMetadataKey).asInt();
             // prevent bug brought by shrink in minion limit
             if (indexNext >= minionLimit)
                 indexNext = 0;
@@ -4974,7 +4974,7 @@ public class ItemUseHelper {
                 minionList.add(minionEntity);
             indexNext = (indexNext + 1) % minionLimit;
         }
-        EntityHelper.setMetadata(ply, indexNextMetadataKey, indexNext);
+        MetadataHelper.setMetadata(ply, indexNextMetadataKey, indexNext);
         return true;
     }
     protected static boolean playerUseSummon(Player ply, String itemType, int swingAmount, String weaponType,
@@ -5208,7 +5208,7 @@ public class ItemUseHelper {
         // cursed players can not use any item
         if (EntityHelper.hasEffect(ply, "诅咒")) {
             ply.removeScoreboardTag("temp_autoSwing");
-            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, 0);
+            MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, 0);
             return;
         }
         // if the player is not logged in or is dead
@@ -5260,7 +5260,7 @@ public class ItemUseHelper {
                         Setting.getOptionBool(ply, Setting.Options.DEFAULT_AUTO_SWING));
                 boolean isLoading = false;
                 int maxLoad = weaponSection.getInt("maxLoad", 0);
-                int swingAmount = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT).asInt();
+                int swingAmount = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT).asInt();
                 if (maxLoad > 0) {
                     swingAmount = Math.min(swingAmount, maxLoad);
                     // this is not first loading attempt
@@ -5284,7 +5284,7 @@ public class ItemUseHelper {
                 if (isLoading) {
                     swingAmount = Math.min(swingAmount + 1, maxLoad);
                     ply.addScoreboardTag("temp_autoSwing");
-                    EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, swingAmount);
+                    MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, swingAmount);
                     displayLoadingProgress(ply, mainHandItem, swingAmount, maxLoad);
                     double loadSpeedMulti = weaponSection.getDouble("loadTimeMulti", 0.5d);
                     applyCD(ply, attrMap.getOrDefault("useTime", 10d)
@@ -5374,14 +5374,14 @@ public class ItemUseHelper {
                 if (success) {
                     if (autoSwing) {
                         ply.addScoreboardTag("temp_autoSwing");
-                        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, swingAmount + 1);
+                        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_ITEM_SWING_AMOUNT, swingAmount + 1);
                     }
                     // play item use sound
                     playerUseItemSound(ply, weaponType, itemName, autoSwing);
                     // always completely reset stealth if the weapon is not rogue
                     // stealth for rogue weapons is handled in its own section.
                     if (! isRogue)
-                        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_STEALTH, 0d);
+                        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_STEALTH, 0d);
                 } else {
                     // prevent bug, if the item is not being used successfully, cancel auto swing
                     // this mainly happens when mana has depleted or ammo runs out

@@ -56,8 +56,8 @@ public class EntityMovementHelper {
         if (spd.lengthSquared() > 1e5)
             spd.zero();
         if (entity instanceof Player) {
-            EntityHelper.setMetadata(entity, EntityHelper.MetadataName.PLAYER_VELOCITY_INTERNAL, spd);
-            MetadataValue mtv = EntityHelper.getMetadata(entity, EntityHelper.MetadataName.PLAYER_VELOCITY_MULTI);
+            MetadataHelper.setMetadata(entity, MetadataHelper.MetadataName.PLAYER_VELOCITY_INTERNAL, spd);
+            MetadataValue mtv = MetadataHelper.getMetadata(entity, MetadataHelper.MetadataName.PLAYER_VELOCITY_MULTI);
             spd = spd.clone();
             if (mtv != null)
                 spd.multiply(mtv.asDouble());
@@ -123,8 +123,8 @@ public class EntityMovementHelper {
                     segmentCurrent.setVelocity(new Vector());
                 }
 
-                EntityHelper.setMetadata(segmentCurrent, "yaw", (float) MathHelper.getVectorYaw( dVec ));
-                EntityHelper.setMetadata(segmentCurrent, "pitch", (float) MathHelper.getVectorPitch( dVec ));
+                MetadataHelper.setMetadata(segmentCurrent, "yaw", (float) MathHelper.getVectorYaw( dVec ));
+                MetadataHelper.setMetadata(segmentCurrent, "pitch", (float) MathHelper.getVectorPitch( dVec ));
             }
         }
     }

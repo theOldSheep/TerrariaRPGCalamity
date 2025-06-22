@@ -7,7 +7,6 @@ import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -188,9 +187,9 @@ public class EaterOfWorld extends EntitySlime {
                     targetMap.get(target.getUniqueId()).addAggressionTick();
                 // update facing direction
                 {
-                    MetadataValue valYaw = EntityHelper.getMetadata(bukkitEntity, "yaw");
+                    MetadataValue valYaw = MetadataHelper.getMetadata(bukkitEntity, "yaw");
                     if (valYaw != null) this.yaw = valYaw.asFloat();
-                    MetadataValue valPitch = EntityHelper.getMetadata(bukkitEntity, "pitch");
+                    MetadataValue valPitch = MetadataHelper.getMetadata(bukkitEntity, "pitch");
                     if (valPitch != null) this.pitch = valPitch.asFloat();
                 }
                 // attack
@@ -256,7 +255,7 @@ public class EaterOfWorld extends EntitySlime {
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -287,25 +286,25 @@ public class EaterOfWorld extends EntitySlime {
                 attrMap.put("defence", BODY_DEF);
             }
             DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
         if (index == 0) {
             bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
                     BossBattle.BarColor.GREEN, BossBattle.BarStyle.PROGRESS);
         } else {
-            bossbar = (BossBattleServer) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_BAR).value();
+            bossbar = (BossBattleServer) MetadataHelper.getMetadata(bossParts.get(0), MetadataHelper.MetadataName.BOSS_BAR).value();
         }
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_BAR, bossbar);
         // init target map
         {
             if (index == 0) {
                 targetMap = terraria.entity.boss.BossHelper.setupBossTarget(
                         getBukkitEntity(), "", summonedPlayer, true, bossbar);
             } else {
-                targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
+                targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) MetadataHelper.getMetadata(bossParts.get(0), MetadataHelper.MetadataName.BOSS_TARGET_MAP).value();
             }
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
             target = summonedPlayer;
         }
         // init health and slime size

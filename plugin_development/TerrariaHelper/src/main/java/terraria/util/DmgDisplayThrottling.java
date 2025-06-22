@@ -83,7 +83,7 @@ public class DmgDisplayThrottling<T> {
 
     // initialization helper functions
     public static DmgDisplayThrottling<DmgHologramContext> getDmgHoloThrottle(Entity victim) {
-        MetadataValue mdv = EntityHelper.getMetadata(victim, EntityHelper.MetadataName.THROTTLE_DMG_HOLOGRAM);
+        MetadataValue mdv = MetadataHelper.getMetadata(victim, MetadataHelper.MetadataName.THROTTLE_DMG_HOLOGRAM);
         DmgDisplayThrottling<DmgHologramContext> result;
         if (mdv != null) {
             result = (DmgDisplayThrottling<DmgHologramContext>) mdv.value();
@@ -93,7 +93,7 @@ public class DmgDisplayThrottling<T> {
                     (data) -> GenericHelper.displayHolo(victim, data.dmg, data.crit, data.ctx),
                     DMG_HOLOGRAM_INTERVAL,
                     Comparator.comparingDouble(DmgHologramContext::getDmg));
-            EntityHelper.setMetadata(victim, EntityHelper.MetadataName.THROTTLE_DMG_HOLOGRAM, result);
+            MetadataHelper.setMetadata(victim, MetadataHelper.MetadataName.THROTTLE_DMG_HOLOGRAM, result);
         }
         return result;
     }
@@ -115,7 +115,7 @@ public class DmgDisplayThrottling<T> {
 
     // initialization helper functions
     public static DmgDisplayThrottling<DpsDisplayContext> getDpsDisplayThrottle(Player ply) {
-        MetadataValue mdv = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.THROTTLE_DPS_ACTION_BAR);
+        MetadataValue mdv = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.THROTTLE_DPS_ACTION_BAR);
         DmgDisplayThrottling<DpsDisplayContext> result;
         if (mdv != null) {
             result = (DmgDisplayThrottling<DpsDisplayContext>) mdv.value();
@@ -125,7 +125,7 @@ public class DmgDisplayThrottling<T> {
                     (data) -> PlayerHelper.sendActionBar(ply, data.msg),
                     DPS_DISPLAY_INTERVAL,
                     Comparator.comparingDouble(DpsDisplayContext::getTimestamp));
-            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.THROTTLE_DPS_ACTION_BAR, result);
+            MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.THROTTLE_DPS_ACTION_BAR, result);
         }
         return result;
     }

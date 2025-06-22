@@ -3,9 +3,9 @@ package terraria.entity.projectile;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
-import terraria.TerrariaHelper;
 import terraria.util.EntityHelper;
 import terraria.util.MathHelper;
+import terraria.util.MetadataHelper;
 
 public class BulletHellProjectile extends GenericProjectile {
     public enum ProjectileType {
@@ -33,7 +33,7 @@ public class BulletHellProjectile extends GenericProjectile {
         super(calculateProjectileInfo(shootInfo, type, distance, speed, directionInfo));
         this.directionInfo = directionInfo;
 
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BULLET_HELL_PROJECTILE_DIRECTION, directionInfo);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BULLET_HELL_PROJECTILE_DIRECTION, directionInfo);
     }
 
     private static EntityHelper.ProjectileShootInfo calculateProjectileInfo(EntityHelper.ProjectileShootInfo shootInfo, ProjectileType type, double distance, double speed, BulletHellDirectionInfo directionInfo) {

@@ -199,11 +199,11 @@ public class GameplayHelper {
         return evt.isCancelled();
     }
     private static int getBlockBreakingDisplayID(Location loc) {
-        int result = loc.getBlockX();
-        result <<= 1;
-        result += loc.getBlockZ();
-        result <<= 1;
-        result += loc.getBlockY();
+        int result = loc.getBlockY();
+        result <<= 2;
+        result ^= loc.getBlockZ();
+        result <<= 2;
+        result ^= loc.getBlockX();
         return result;
     }
     public static void playerMineBlock(Block blockToBreak, Player ply) {
@@ -212,7 +212,7 @@ public class GameplayHelper {
         boolean denyNoMiningSet = true;
         if (unBreakable(blockToBreak, ply, denyNoMiningSet)) return;
         // get existing breaking progress
-        MetadataValue temp = EntityHelper.getMetadata(blockToBreak, EntityHelper.MetadataName.BLOCK_BREAK_PROGRESS);
+        MetadataValue temp = MetadataHelper.getMetadata(blockToBreak, MetadataHelper.MetadataName.BLOCK_BREAK_PROGRESS);
         int breakingProgress = 0;
         if (temp != null) breakingProgress = temp.asInt();
         // get breaking progress required to break the block
@@ -228,7 +228,7 @@ public class GameplayHelper {
         PacketPlayOutBlockBreakAnimation packetToSend;
         if (breakingProgress >= breakingProgressMax) {
             // send packet and metadata before breaking to prevent bug
-            EntityHelper.setMetadata(blockToBreak, EntityHelper.MetadataName.BLOCK_BREAK_PROGRESS, 0);
+            MetadataHelper.setMetadata(blockToBreak, MetadataHelper.MetadataName.BLOCK_BREAK_PROGRESS, 0);
             packetToSend = new PacketPlayOutBlockBreakAnimation(
                     breakProgressDisplayID,
                     new BlockPosition(blockToBreak.getX(), blockToBreak.getY(), blockToBreak.getZ()),
@@ -241,7 +241,7 @@ public class GameplayHelper {
             playerBreakBlock(blockToBreak, ply);
         } else {
             // save block breaking progress and send animation packet
-            EntityHelper.setMetadata(blockToBreak, EntityHelper.MetadataName.BLOCK_BREAK_PROGRESS, breakingProgress);
+            MetadataHelper.setMetadata(blockToBreak, MetadataHelper.MetadataName.BLOCK_BREAK_PROGRESS, breakingProgress);
             int breakProgress = (int) Math.floor((double) (8 * breakingProgress) / breakingProgressMax);
             packetToSend = new PacketPlayOutBlockBreakAnimation(
                     breakProgressDisplayID,

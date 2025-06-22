@@ -227,9 +227,9 @@ public class StormWeaver extends EntitySlime {
                 }
                 // update facing direction from handleSegmentsFollow
                 {
-                    MetadataValue valYaw = EntityHelper.getMetadata(bukkitEntity, "yaw");
+                    MetadataValue valYaw = MetadataHelper.getMetadata(bukkitEntity, "yaw");
                     if (valYaw != null) this.yaw = valYaw.asFloat();
-                    MetadataValue valPitch = EntityHelper.getMetadata(bukkitEntity, "pitch");
+                    MetadataValue valPitch = MetadataHelper.getMetadata(bukkitEntity, "pitch");
                     if (valPitch != null) this.pitch = valPitch.asFloat();
                 }
 
@@ -309,7 +309,7 @@ public class StormWeaver extends EntitySlime {
             addScoreboardTag("isMonster");
         }
         addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -321,15 +321,15 @@ public class StormWeaver extends EntitySlime {
             attrMap.put("damage", SEGMENT_DAMAGE[segmentTypeIndex][0]);
             attrMap.put("defence", SEGMENT_DEFENCE[segmentTypeIndex][0]);
             DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MELEE);
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // init boss bar
         if (segmentIndex == 0) {
             bossbar = new BossBattleServer(CraftChatMessage.fromString(BOSS_TYPE.msgName, true)[0],
                     BossBattle.BarColor.BLUE, BossBattle.BarStyle.PROGRESS);
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_BAR, bossbar);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_BAR, bossbar);
         } else {
-            bossbar = (BossBattleServer) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_BAR).value();
+            bossbar = (BossBattleServer) MetadataHelper.getMetadata(bossParts.get(0), MetadataHelper.MetadataName.BOSS_BAR).value();
         }
         // init target map
         {
@@ -338,9 +338,9 @@ public class StormWeaver extends EntitySlime {
                         getBukkitEntity(), BossHelper.BossType.PROVIDENCE_THE_PROFANED_GODDESS.msgName,
                         summonedPlayer, true, !isSummonedByDoG, bossbar);
             } else {
-                targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.BOSS_TARGET_MAP).value();
+                targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) MetadataHelper.getMetadata(bossParts.get(0), MetadataHelper.MetadataName.BOSS_TARGET_MAP).value();
             }
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
             target = summonedPlayer;
         }
         // init health and slime size
@@ -366,7 +366,7 @@ public class StormWeaver extends EntitySlime {
                     DamageHelper.DamageType.MAGIC, "寒霜波");
             shootInfoLaser = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapLaser,
                     DamageHelper.DamageType.BULLET, "电击激光");
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
             if (segmentTypeIndex != 2)
                 new StormWeaver(summonedPlayer, bossParts, segmentIndex + 1);

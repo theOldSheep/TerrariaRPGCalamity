@@ -7,7 +7,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.metadata.MetadataValue;
-import terraria.util.EntityHelper;
+import terraria.util.MetadataHelper;
 
 public class PlayerChatListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
@@ -35,7 +35,7 @@ public class PlayerChatListener implements Listener {
                         }
                         // target player is online
                         else {
-                            EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_TELEPORT_TARGET, parts[1]);
+                            MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_TELEPORT_TARGET, parts[1]);
                             ply.sendMessage("§a传送请求已发送！");
                             targetPly.sendMessage(String.format(
                                     "§a玩家 %1$s 请求传送到你的位置！", ply.getName()));
@@ -50,8 +50,8 @@ public class PlayerChatListener implements Listener {
                         Player teleportAcceptedPly = Bukkit.getServer().getPlayerExact(parts[1]);
                         // if the player is found
                         if (teleportAcceptedPly != null) {
-                            MetadataValue teleportRequestTarget = EntityHelper.getMetadata(teleportAcceptedPly,
-                                    EntityHelper.MetadataName.PLAYER_TELEPORT_TARGET);
+                            MetadataValue teleportRequestTarget = MetadataHelper.getMetadata(teleportAcceptedPly,
+                                    MetadataHelper.MetadataName.PLAYER_TELEPORT_TARGET);
                             // successful teleport
                             if (teleportRequestTarget != null && teleportRequestTarget.asString().equals(ply.getName())) {
                                 ply.sendMessage(String.format(
@@ -61,8 +61,8 @@ public class PlayerChatListener implements Listener {
                                 teleportAcceptedPly.removeScoreboardTag("wormHolePotionUsed");
                                 teleportAcceptedPly.teleport(ply);
                                 // remove teleport cache and wormhole potion scoreboard tag
-                                EntityHelper.setMetadata(teleportAcceptedPly,
-                                        EntityHelper.MetadataName.PLAYER_TELEPORT_TARGET, null);
+                                MetadataHelper.setMetadata(teleportAcceptedPly,
+                                        MetadataHelper.MetadataName.PLAYER_TELEPORT_TARGET, null);
                                 teleportAcceptedPly.removeScoreboardTag("wormHolePotionUsed");
                             }
                             // no request present

@@ -572,9 +572,9 @@ public class GenericHelper {
             }
             // whip dmg/crit bonus and prioritized focus
             if (whipBonusDamage > 1e-5 || whipBonusCrit > 1e-5) {
-                EntityHelper.setMetadata(victim,  EntityHelper.MetadataName.MINION_WHIP_BONUS_DAMAGE,  whipBonusDamage);
-                EntityHelper.setMetadata(victim,  EntityHelper.MetadataName.MINION_WHIP_BONUS_CRIT,    whipBonusCrit);
-                EntityHelper.setMetadata(damager, EntityHelper.MetadataName.PLAYER_MINION_WHIP_FOCUS,  victim);
+                MetadataHelper.setMetadata(victim,  MetadataHelper.MetadataName.MINION_WHIP_BONUS_DAMAGE,  whipBonusDamage);
+                MetadataHelper.setMetadata(victim,  MetadataHelper.MetadataName.MINION_WHIP_BONUS_CRIT,    whipBonusCrit);
+                MetadataHelper.setMetadata(damager, MetadataHelper.MetadataName.PLAYER_MINION_WHIP_FOCUS,  victim);
             }
             damageCoolDown(exceptions, victim, damageCD);
             advanced.amountEntitiesHit ++;

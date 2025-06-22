@@ -144,9 +144,9 @@ public class Sepulcher extends EntitySlime {
                 }
                 // update facing direction from handleSegmentsFollow
                 {
-                    MetadataValue valYaw = EntityHelper.getMetadata(bukkitEntity, "yaw");
+                    MetadataValue valYaw = MetadataHelper.getMetadata(bukkitEntity, "yaw");
                     if (valYaw != null) this.yaw = valYaw.asFloat();
-                    MetadataValue valPitch = EntityHelper.getMetadata(bukkitEntity, "pitch");
+                    MetadataValue valPitch = MetadataHelper.getMetadata(bukkitEntity, "pitch");
                     if (valPitch != null) this.pitch = valPitch.asFloat();
                 }
             }
@@ -187,7 +187,7 @@ public class Sepulcher extends EntitySlime {
         setCustomNameVisible(true);
         addScoreboardTag("isMonster");
         addScoreboardTag("isBOSS");
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         // init attribute map
@@ -199,12 +199,12 @@ public class Sepulcher extends EntitySlime {
             attrMap.put("damage", SEGMENT_DAMAGE[segmentTypeIndex][0]);
             attrMap.put("defence", 0d);
             DamageHelper.setDamageType(bukkitEntity, DamageHelper.DamageType.MAGIC);
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
         }
         // clone target map
         {
             targetMap = (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) owner.targetMap.clone();
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TARGET_MAP, targetMap);
         }
         // init health and slime size
         {
@@ -223,7 +223,7 @@ public class Sepulcher extends EntitySlime {
             // projectile info
             shootInfoDart = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), attrMapDart,
                     DamageHelper.DamageType.MAGIC, "灾厄飞弹");
-            EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
+            MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.DAMAGE_TAKER, head.getBukkitEntity());
             // next segment
             if (segmentTypeIndex != 2)
                 new Sepulcher(owner, bossParts, segmentIndex + 1);

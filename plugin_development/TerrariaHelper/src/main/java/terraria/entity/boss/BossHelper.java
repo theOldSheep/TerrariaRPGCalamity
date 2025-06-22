@@ -21,7 +21,6 @@ import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 
 import javax.annotation.Nullable;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class BossHelper {
@@ -63,7 +62,7 @@ public class BossHelper {
     public static double[] getHealthInfo(ArrayList<LivingEntity> bossParts, terraria.util.BossHelper.BossType bossType) {
         double[] result = new double[] {0d, 0d};
         for (LivingEntity e : bossParts) {
-            MetadataValue mdv = EntityHelper.getMetadata(e, EntityHelper.MetadataName.DAMAGE_TAKER);
+            MetadataValue mdv = MetadataHelper.getMetadata(e, MetadataHelper.MetadataName.DAMAGE_TAKER);
             // only account for the health of damage-taking parts
             if (mdv != null && mdv.value() != e)
                 continue;
@@ -98,7 +97,7 @@ public class BossHelper {
             double targetTime = TerrariaHelper.settingConfig.getInt("BossDefeatTime." + bossName, 900);
             // get current dynamic damage multiplier
             double currDynamicDM;
-            MetadataValue metadataVal = EntityHelper.getMetadata(bossParts.get(0), EntityHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION);
+            MetadataValue metadataVal = MetadataHelper.getMetadata(bossParts.get(0), MetadataHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION);
             if (metadataVal != null) currDynamicDM = metadataVal.asDouble();
             else currDynamicDM = 0.9d; // has 10% DR at the beginning ("prior" assumption about player's DPS build).
             // dynamic DR only applies when the current time elapsed is within the expected time to defeat the boss
@@ -135,7 +134,7 @@ public class BossHelper {
             }
         }
         for (LivingEntity bossPart : bossParts) {
-            EntityHelper.setMetadata(bossPart, EntityHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION, dynamicDamageMultiplier);
+            MetadataHelper.setMetadata(bossPart, MetadataHelper.MetadataName.DYNAMIC_DAMAGE_REDUCTION, dynamicDamageMultiplier);
         }
     }
     public static double getBossHealthMulti(int numPly) {
@@ -146,7 +145,7 @@ public class BossHelper {
     public static HashMap<UUID, BossTargetInfo> setupBossTarget(Entity boss, String bossDefeatRequirement,
                                                           Player ply, boolean hasDistanceRestriction, boolean sendMsg, BossBattleServer bossbar) {
         HashMap<UUID, BossTargetInfo> targets = new HashMap<>();
-        String team = EntityHelper.getMetadata(ply, EntityHelper.MetadataName.PLAYER_TEAM).asString();
+        String team = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_TEAM).asString();
         // print out targets of the boss
         StringBuilder msg = new StringBuilder();
         boolean firstAppend = true;
@@ -161,7 +160,7 @@ public class BossHelper {
                 // hasn't defeated prerequisite
                 if (!PlayerHelper.hasDefeated(currPly, bossDefeatRequirement)) continue;
                 // not in the same team
-                if (!EntityHelper.getMetadata(currPly, EntityHelper.MetadataName.PLAYER_TEAM).asString().equals(team)) continue;
+                if (!MetadataHelper.getMetadata(currPly, MetadataHelper.MetadataName.PLAYER_TEAM).asString().equals(team)) continue;
                 // too far away
                 if (hasDistanceRestriction &&
                         GenericHelper.getHorizontalDistance(currPly.getLocation(), ply.getLocation()) > 192) continue;
@@ -176,8 +175,8 @@ public class BossHelper {
             msg.append(currPly.getName());
         }
         bossbar.setVisible(true);
-        EntityHelper.setMetadata(boss, EntityHelper.MetadataName.BOSS_BAR, bossbar);
-        EntityHelper.setMetadata(boss, EntityHelper.MetadataName.BOSS_TARGET_MAP, targets);
+        MetadataHelper.setMetadata(boss, MetadataHelper.MetadataName.BOSS_BAR, bossbar);
+        MetadataHelper.setMetadata(boss, MetadataHelper.MetadataName.BOSS_TARGET_MAP, targets);
         // print targets
         if (sendMsg)
             Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
@@ -209,14 +208,14 @@ public class BossHelper {
     }
     // this is in place to help aim helpers
     public static void updateSpeedForAimHelper(Entity boss) {
-        MetadataValue currVel = EntityHelper.getMetadata(boss, EntityHelper.MetadataName.ENTITY_CURRENT_VELOCITY);
+        MetadataValue currVel = MetadataHelper.getMetadata(boss, MetadataHelper.MetadataName.ENTITY_CURRENT_VELOCITY);
         if (currVel != null)
-            EntityHelper.setMetadata(boss, EntityHelper.MetadataName.ENTITY_LAST_VELOCITY, currVel.value());
+            MetadataHelper.setMetadata(boss, MetadataHelper.MetadataName.ENTITY_LAST_VELOCITY, currVel.value());
         // calculate velocity
         net.minecraft.server.v1_12_R1.Entity bossNMS = ((CraftEntity) boss).getHandle();
         Vector velocity = new Vector(bossNMS.locX - bossNMS.lastX, bossNMS.locY - bossNMS.lastY, bossNMS.locZ - bossNMS.lastZ);
 
-        EntityHelper.setMetadata(boss, EntityHelper.MetadataName.ENTITY_CURRENT_VELOCITY, velocity);
+        MetadataHelper.setMetadata(boss, MetadataHelper.MetadataName.ENTITY_CURRENT_VELOCITY, velocity);
     }
     // generally, this function also handles misc aspects like cached velocity
     public static Player updateBossTarget(Player currentTarget, Entity boss, boolean ignoreDistance,

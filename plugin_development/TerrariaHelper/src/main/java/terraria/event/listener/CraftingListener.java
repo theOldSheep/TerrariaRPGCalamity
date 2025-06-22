@@ -163,9 +163,9 @@ public class CraftingListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onVexButtonClick(ButtonClickEvent e) {
         Player player = e.getPlayer();
-        String station = EntityHelper.getMetadata(player, EntityHelper.MetadataName.PLAYER_CRAFTING_STATION).asString();
+        String station = MetadataHelper.getMetadata(player, MetadataHelper.MetadataName.PLAYER_CRAFTING_STATION).asString();
         if (station.equals("CLOSED")) return;
-        int recipeIndex = EntityHelper.getMetadata(player, EntityHelper.MetadataName.PLAYER_CRAFTING_RECIPE_INDEX).asInt();
+        int recipeIndex = MetadataHelper.getMetadata(player, MetadataHelper.MetadataName.PLAYER_CRAFTING_RECIPE_INDEX).asInt();
         switch (e.getButton().getName()) {
             case "点我合成":
                 handlePlayerCraft(player, recipeIndex, station, false);
@@ -182,7 +182,7 @@ public class CraftingListener implements Listener {
     public void onVexSlotClick(VexSlotClickEvent e) {
         Player player = e.getPlayer();
         if (player.getScoreboardTags().contains("tempCraftRecipeSelect")) return;
-        String station = EntityHelper.getMetadata(player, EntityHelper.MetadataName.PLAYER_CRAFTING_STATION).asString();
+        String station = MetadataHelper.getMetadata(player, MetadataHelper.MetadataName.PLAYER_CRAFTING_STATION).asString();
         int recipeIndex = e.getID();
         // get next index to display(prevent index collision)
         int index = ItemHelper.CRAFTING_GUI_LENGTH_MAP.get(station);
@@ -256,7 +256,7 @@ public class CraftingListener implements Listener {
         currGui.addDynamicComponent(btn1);
         currGui.addDynamicComponent(btn2);
         // setup cool down to prevent accidental selection of new recipes, glitch / spamming
-        EntityHelper.setMetadata(player, EntityHelper.MetadataName.PLAYER_CRAFTING_RECIPE_INDEX, recipeIndex);
+        MetadataHelper.setMetadata(player, MetadataHelper.MetadataName.PLAYER_CRAFTING_RECIPE_INDEX, recipeIndex);
         EntityHelper.handleEntityTemporaryScoreboardTag(player, "tempCraftRecipeSelect", 5);
     }
     enum CraftingFilter {
@@ -412,8 +412,8 @@ public class CraftingListener implements Listener {
         guiToOpen.addComponent(new VexButton("CRAFT_ALL", "选择配方", BACKGROUND_IMAGE, BACKGROUND_IMAGE,
                 guiToOpen.getWidth() - 60, guiToOpen.getHeight() - 50, 35, 17 + level));
         // open gui
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CRAFTING_RECIPE_INDEX, -1);
-        EntityHelper.setMetadata(ply, EntityHelper.MetadataName.PLAYER_CRAFTING_STATION, guiKey);
+        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_CRAFTING_RECIPE_INDEX, -1);
+        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_CRAFTING_STATION, guiKey);
         VexViewAPI.openGui(ply, guiToOpen);
         // setup cool down to prevent accidentally opening several guis and causing error (or spamming the server)
         EntityHelper.handleEntityTemporaryScoreboardTag(ply, "tempCraftingCD", 10);

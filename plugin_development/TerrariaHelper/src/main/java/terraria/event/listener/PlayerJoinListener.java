@@ -2,12 +2,10 @@ package terraria.event.listener;
 
 import net.minecraft.server.v1_12_R1.BossBattleServer;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,7 +22,6 @@ import terraria.util.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 
 public class PlayerJoinListener implements Listener {
@@ -50,7 +47,7 @@ public class PlayerJoinListener implements Listener {
             }
         }
         // teleport to spawn point if the player is not waiting for revive
-        MetadataValue respawnCD = EntityHelper.getMetadata(joinedPly, EntityHelper.MetadataName.RESPAWN_COUNTDOWN);
+        MetadataValue respawnCD = MetadataHelper.getMetadata(joinedPly, MetadataHelper.MetadataName.RESPAWN_COUNTDOWN);
         if (respawnCD == null) {
             joinedPly.setGameMode(GameMode.SURVIVAL);
             joinedPly.teleport(PlayerHelper.getSpawnLocation(joinedPly), PlayerTeleportEvent.TeleportCause.PLUGIN);
@@ -64,7 +61,7 @@ public class PlayerJoinListener implements Listener {
         for (ArrayList<LivingEntity> bossList : BossHelper.bossMap.values()) {
             if (bossList.isEmpty())
                 continue;
-            MetadataValue bossbarMetadata = EntityHelper.getMetadata(bossList.get(0), EntityHelper.MetadataName.BOSS_BAR);
+            MetadataValue bossbarMetadata = MetadataHelper.getMetadata(bossList.get(0), MetadataHelper.MetadataName.BOSS_BAR);
             if (bossbarMetadata == null)
                 TerrariaHelper.LOGGER.log(Level.SEVERE, "Boss " + bossList.get(0) +
                         " has no boss bar metadata when showing bossbar to a joined player.");

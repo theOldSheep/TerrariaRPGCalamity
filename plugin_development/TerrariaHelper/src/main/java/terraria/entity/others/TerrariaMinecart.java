@@ -12,7 +12,7 @@ import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.util.DamageHelper;
-import terraria.util.EntityHelper;
+import terraria.util.MetadataHelper;
 import terraria.util.PlayerHelper;
 
 import java.util.HashMap;
@@ -82,9 +82,9 @@ public class TerrariaMinecart extends EntityMinecartRideable {
         {
             attrMap = new HashMap<>();
         }
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_SOURCE, owner);
-        EntityHelper.setMetadata(bukkitEntity, EntityHelper.MetadataName.DAMAGE_TAKER, owner);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.ATTRIBUTE_MAP, attrMap);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.DAMAGE_SOURCE, owner);
+        MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.DAMAGE_TAKER, owner);
 
         setCustomName( this.type.name );
         setCustomNameVisible(false);
