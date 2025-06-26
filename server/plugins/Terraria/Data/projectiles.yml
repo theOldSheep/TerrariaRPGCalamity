@@ -2555,6 +2555,7 @@
         name: 咒焰火球
         velocity: 0.5
 咒焰火球:
+    projDisguiseName: 咒火球
     liveTime: 10
     noGravityTicks: 0
     buffInflict:
