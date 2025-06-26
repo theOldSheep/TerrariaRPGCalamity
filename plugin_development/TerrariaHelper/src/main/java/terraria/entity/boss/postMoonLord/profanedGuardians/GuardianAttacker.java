@@ -69,7 +69,7 @@ public class GuardianAttacker extends EntitySlime {
         hoverPosition.add(0, VERTICAL_OFFSET, 0);
 
         // 2. Movement towards Hovering Location
-        this.velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverPosition, HOVER_SPEED);
+        this.velocity = MathHelper.getDirection(bukkitEntity.getLocation(), hoverPosition, HOVER_SPEED, true);
         if (isLaserPhase) {
             if (this.velocity.getY() > LASER_SPEED_VERTICAL)
                 this.velocity.setY(LASER_SPEED_VERTICAL);
