@@ -3,6 +3,7 @@ package terraria.util;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
@@ -79,7 +80,15 @@ public class MetadataHelper {
             {
                 HashSet<Entity> removedEntities = new HashSet<>();
                 for (Entity e : entityMetadataKeys.keySet()) {
-                    if (e.isDead()) {
+                    boolean shouldGC = e.isDead();
+                    // do not GC metadata of players if they are reconnected
+                    if (shouldGC && e instanceof Player) {
+                        Player plyE = (Player) e;
+                        if (Bukkit.getPlayer(plyE.getUniqueId()) != null) {
+                            shouldGC = false;
+                        }
+                    }
+                    if (shouldGC) {
                         // remove all metadata associated
                         for (String key : entityMetadataKeys.get(e)) {
                             setMetadata(e, key, null);
