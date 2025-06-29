@@ -10157,7 +10157,7 @@ Dodu的手炮:
 火花魔棒:
   item: STICK
   attributes:
-    damage: 24
+    damage: 59
     damageType: Magic
     crit: 4
     projectileSpeed: 10
@@ -10169,7 +10169,7 @@ Dodu的手炮:
 钻石法杖:
   item: DIAMOND_SWORD
   attributes:
-    damage: 46
+    damage: 65
     damageType: Magic
     crit: 4
     projectileSpeed: 12.5
@@ -10181,7 +10181,7 @@ Dodu的手炮:
 太空枪:
   item: WOOD_SWORD
   attributes:
-    damage: 59
+    damage: 80
     damageType: Magic
     crit: 4
     projectileSpeed: 30
@@ -10193,7 +10193,7 @@ Dodu的手炮:
 海蓝权杖:
   item: DIAMOND_SWORD
   attributes:
-    damage: 53
+    damage: 80
     damageType: Magic
     crit: 4
     projectileSpeed: 37.5
@@ -10205,7 +10205,7 @@ Dodu的手炮:
 水矢:
   item: BOOK
   attributes:
-    damage: 84
+    damage: 106
     damageType: Magic
     crit: 4
     projectileSpeed: 10
@@ -10217,7 +10217,7 @@ Dodu的手炮:
 骷髅头法书:
   item: BOOK
   attributes:
-    damage: 50
+    damage: 75
     damageType: Magic
     crit: 4
     projectileSpeed: 10
@@ -10229,7 +10229,7 @@ Dodu的手炮:
 恶魔锄刀:
   item: BOOK
   attributes:
-    damage: 100
+    damage: 150
     damageType: Magic
     crit: 4
     projectileSpeed: 2
@@ -10241,7 +10241,7 @@ Dodu的手炮:
 激光步枪:
   item: DIAMOND_SWORD
   attributes:
-    damage: 78
+    damage: 164
     damageType: Magic
     crit: 4
     projectileSpeed: 17
@@ -10255,7 +10255,7 @@ Dodu的手炮:
   lore:
   - §r召唤快速发射的水晶碎块
   attributes:
-    damage: 80
+    damage: 96
     damageType: Magic
     crit: 4
     projectileSpeed: 17.5
@@ -10267,7 +10267,7 @@ Dodu的手炮:
 裂天剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 65
+    damage: 100
     damageType: Magic
     crit: 24
     projectileSpeed: 16
@@ -10279,7 +10279,7 @@ Dodu的手炮:
 水晶蛇:
   item: DIAMOND_SWORD
   attributes:
-    damage: 198
+    damage: 172
     damageType: Magic
     crit: 4
     projectileSpeed: 17.5
@@ -10291,7 +10291,7 @@ Dodu的手炮:
 邪恶三叉戟:
   item: DIAMOND_SWORD
   attributes:
-    damage: 350
+    damage: 252
     damageType: Magic
     crit: 4
     projectileSpeed: 18
@@ -10304,7 +10304,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   attributes:
     armorPenetration: 20
-    damage: 200
+    damage: 91
     damageType: Magic
     crit: 4
     knockback: 1
@@ -10317,7 +10317,7 @@ Dodu的手炮:
   lore:
   - §r快速射出刀锋般锋利的树叶
   attributes:
-    damage: 135
+    damage: 86
     damageType: Magic
     crit: 4
     projectileSpeed: 15
@@ -10331,7 +10331,7 @@ Dodu的手炮:
   lore:
   - §r发射造成破晓的火光球
   attributes:
-    damage: 200
+    damage: 105
     damageType: Magic
     crit: 4
     projectileSpeed: 13.5
@@ -10345,7 +10345,7 @@ Dodu的手炮:
   lore:
   - §r产生会在墙上反弹的暗影光束
   attributes:
-    damage: 312
+    damage: 215
     damageType: Magic
     crit: 4
     knockback: 3.25
@@ -10358,7 +10358,7 @@ Dodu的手炮:
   lore:
   - §r召唤亡魂来追杀敌人
   attributes:
-    damage: 255
+    damage: 192
     damageType: Magic
     crit: 4
     projectileSpeed: 15.5
@@ -10372,7 +10372,7 @@ Dodu的手炮:
   lore:
   - §r射出弹跳磁球，向敌人发射电磁波
   attributes:
-    damage: 100
+    damage: 86
     damageType: Magic
     crit: 4
     projectileSpeed: 1.2
@@ -10384,7 +10384,7 @@ Dodu的手炮:
 剃刀松:
   item: DIAMOND_SWORD
   attributes:
-    damage: 102
+    damage: 74
     damageType: Magic
     crit: 4
     projectileSpeed: 24
@@ -10396,7 +10396,7 @@ Dodu的手炮:
 暴雪法杖:
   item: DIAMOND_SWORD
   attributes:
-    damage: 74
+    damage: 51
     damageType: Magic
     crit: 4
     projectileSpeed: 20
@@ -10408,7 +10408,7 @@ Dodu的手炮:
 蝙蝠权杖:
   item: DIAMOND_SWORD
   attributes:
-    damage: 130
+    damage: 106
     damageType: Magic
     crit: 4
     projectileSpeed: 15
@@ -10423,7 +10423,7 @@ Dodu的手炮:
   - §r射出灼热的高温射线
   - §r“喔啦！！”
   attributes:
-    damage: 240
+    damage: 262
     damageType: Magic
     crit: 4
     knockback: 3
@@ -10434,7 +10434,7 @@ Dodu的手炮:
 夜光:
   item: DIAMOND_SWORD
   attributes:
-    damage: 100
+    damage: 132
     damageType: Magic
     crit: 4
     projectileSpeed: 13.5
@@ -10448,7 +10448,7 @@ Dodu的手炮:
   lore:
   - §r快速射出强劲的泡泡
   attributes:
-    damage: 140
+    damage: 200
     damageType: Magic
     crit: 4
     projectileSpeed: 12.5
@@ -10463,7 +10463,7 @@ Dodu的手炮:
   - §r发射快速移动的利刃台风
   - §r利刃台风对单体单位有极长的无敌帧
   attributes:
-    damage: 300
+    damage: 607
     damageType: Magic
     crit: 4
     projectileSpeed: 8
@@ -10478,7 +10478,7 @@ Dodu的手炮:
   - §r20%概率发射出更具威力的烈焰
   - §r“从猎户座腰带收到掌中”
   attributes:
-    damage: 282
+    damage: 705
     damageType: Magic
     crit: 4
     projectileSpeed: 12
@@ -10492,7 +10492,7 @@ Dodu的手炮:
   lore:
   - §r“召唤大量星体能量来追杀敌人”
   attributes:
-    damage: 140
+    damage: 246
     damageType: Magic
     crit: 4
     projectileSpeed: 9.5
@@ -10506,7 +10506,7 @@ Dodu的手炮:
   lore:
   - §r射出月之耀斑
   attributes:
-    damage: 300
+    damage: 451
     damageType: Magic
     crit: 4
     projectileSpeed: 22
@@ -10520,7 +10520,7 @@ Dodu的手炮:
   lore:
   - §r“发射生命解离彩虹”
   attributes:
-    damage: 365
+    damage: 186
     damageType: Magic
     crit: 4
     knockback: 0

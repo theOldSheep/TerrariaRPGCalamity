@@ -4873,12 +4873,6 @@ public class ItemUseHelper {
                 if (MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.ARMOR_SET).asString().equals("流星套装"))
                     manaConsumption = 0;
                 break;
-            case "终极棱镜":
-                if (swingAmount >= 25)
-                    manaConsumption *= 2;
-                else if (swingAmount >= 15)
-                    manaConsumption *= 1.5;
-                break;
         }
         if (!consumeMana(ply, manaConsumption)) return false;
         // post mana consumption
