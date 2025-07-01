@@ -7297,7 +7297,7 @@ TNT:
         interval: 3
         offset: 0
         spawnMechanism: SURROUND
-        damageMulti: 0.25
+        damageMulti: 0.35
         speed: 2
         spawnType: 幻象幻魂
 幻象幻魂:

@@ -10533,7 +10533,7 @@ Dodu的手炮:
   lore:
   - §r发射钨钢光球
   attributes:
-    damage: 30
+    damage: 41
     damageType: Magic
     crit: 4
     projectileSpeed: 9
@@ -10547,7 +10547,7 @@ Dodu的手炮:
   lore:
   - §r召唤冰柱从天而降
   attributes:
-    damage: 24
+    damage: 44
     damageType: Magic
     projectileSpeed: 11
     crit: 4
@@ -10561,7 +10561,7 @@ Dodu的手炮:
   lore:
   - §r发射会爆炸分裂成花瓣的魔法花朵
   attributes:
-    damage: 51
+    damage: 44
     damageType: Magic
     projectileSpeed: 13.5
     crit: 4
@@ -10575,7 +10575,7 @@ Dodu的手炮:
   lore:
   - §r发射一个水柱
   attributes:
-    damage: 30
+    damage: 31
     damageType: Magic
     projectileSpeed: 17.5
     crit: 4
@@ -10589,7 +10589,7 @@ Dodu的手炮:
   lore:
   - §r发射两道不精准的蓝色魔法矢
   attributes:
-    damage: 47
+    damage: 42
     damageType: Magic
     projectileSpeed: 16
     crit: 4
@@ -10603,7 +10603,7 @@ Dodu的手炮:
   lore:
   - §r召唤羽毛从天而降
   attributes:
-    damage: 36
+    damage: 46
     damageType: Magic
     projectileSpeed: 15
     crit: 4
@@ -10617,7 +10617,7 @@ Dodu的手炮:
   lore:
   - §r丢出燃烧的南瓜
   attributes:
-    damage: 52
+    damage: 46
     damageType: Magic
     projectileSpeed: 10
     crit: 4
@@ -10631,7 +10631,7 @@ Dodu的手炮:
   lore:
   - §r在玩家附近召唤孢子球
   attributes:
-    damage: 44
+    damage: 77
     damageType: Magic
     projectileSpeed: 1
     crit: 4
@@ -10645,7 +10645,7 @@ Dodu的手炮:
   lore:
   - §r发射火蝙蝠
   attributes:
-    damage: 75
+    damage: 57
     damageType: Magic
     projectileSpeed: 20
     crit: 4
@@ -10661,7 +10661,7 @@ Dodu的手炮:
   - §r“§m命中率堪忧§r”
   - §r“追踪，很神奇吧”
   attributes:
-    damage: 100
+    damage: 20
     damageType: Magic
     projectileSpeed: 6
     crit: 4
@@ -10675,7 +10675,7 @@ Dodu的手炮:
   - §r发射暗影射线
   - §r射线命中的第一个敌怪会受到额外的攻击
   attributes:
-    damage: 46
+    damage: 44
     damageType: Magic
     crit: 4
     knockback: 3.25
@@ -10689,7 +10689,7 @@ Dodu的手炮:
   - §r我呼唤神话中的飞龙，祈求向大地降下恩泽
   - §r召唤飞龙与羽毛从天而降
   attributes:
-    damage: 100
+    damage: 168
     damageType: Magic
     projectileSpeed: 15
     crit: 4
@@ -10703,7 +10703,7 @@ Dodu的手炮:
   lore:
   - §r发射一个冰晶追踪你的敌人
   attributes:
-    damage: 90
+    damage: 140
     damageType: Magic
     projectileSpeed: 16.5
     crit: 4
@@ -10717,7 +10717,7 @@ Dodu的手炮:
   lore:
   - §r发射穿透性冰柱
   attributes:
-    damage: 175
+    damage: 232
     damageType: Magic
     projectileSpeed: 17.5
     crit: 4
@@ -10731,7 +10731,7 @@ Dodu的手炮:
   lore:
   - §r发射闪光花朵，爆炸分裂成追踪花瓣
   attributes:
-    damage: 141
+    damage: 159
     damageType: Magic
     projectileSpeed: 16
     crit: 4
@@ -10745,7 +10745,7 @@ Dodu的手炮:
   lore:
   - §r发射一个水柱
   attributes:
-    damage: 120
+    damage: 110
     damageType: Magic
     projectileSpeed: 18.5
     crit: 4
@@ -10759,7 +10759,7 @@ Dodu的手炮:
   lore:
   - §r发射硫磺火射线
   attributes:
-    damage: 95
+    damage: 294
     damageType: Magic
     projectileSpeed: 25
     crit: 4
@@ -10773,7 +10773,7 @@ Dodu的手炮:
   lore:
   - §r释放拥有神圣之力的毁灭射线
   attributes:
-    damage: 249
+    damage: 202
     damageType: Magic
     crit: 4
     knockback: 8.5
@@ -10784,7 +10784,7 @@ Dodu的手炮:
 深渊女神之复仇:
   item: DIAMOND_SWORD
   attributes:
-    damage: 166
+    damage: 158
     damageType: Magic
     projectileSpeed: 16
     crit: 4
@@ -10798,7 +10798,7 @@ Dodu的手炮:
   lore:
   - §r发射能量射线，命中后分解为自然能量
   attributes:
-    damage: 124
+    damage: 112
     damageType: Magic
     crit: 4
     knockback: 4
@@ -10811,7 +10811,7 @@ Dodu的手炮:
   lore:
   - §r发射海之三叉戟
   attributes:
-    damage: 170
+    damage: 292
     damageType: Magic
     crit: 4
     knockback: 5
@@ -10824,7 +10824,7 @@ Dodu的手炮:
   lore:
   - §r发射一波优美的极光束，击中后爆裂为星辰
   attributes:
-    damage: 180
+    damage: 326
     damageType: Magic
     projectileSpeed: 17
     crit: 4
@@ -10838,7 +10838,7 @@ Dodu的手炮:
   lore:
   - §r召唤三叉戟攻击敌人
   attributes:
-    damage: 145
+    damage: 233
     damageType: Magic
     projectileSpeed: 16
     crit: 29
@@ -10853,7 +10853,7 @@ Dodu的手炮:
   - §r召唤一群熔岩陨星
   - §r右键直接发射散开的熔岩陨星
   attributes:
-    damage: 173
+    damage: 208
     damageType: Magic
     projectileSpeed: 17.5
     crit: 4
@@ -10867,7 +10867,7 @@ Dodu的手炮:
   lore:
   - §r发射瘟疫之牙
   attributes:
-    damage: 200
+    damage: 330
     damageType: Magic
     projectileSpeed: 17
     crit: 4
@@ -10882,7 +10882,7 @@ Dodu的手炮:
   - §r由下方召唤血之涌泉
   - §r“咦？为什么是红色的？”
   attributes:
-    damage: 240
+    damage: 177
     damageType: Magic
     projectileSpeed: 10
     crit: 4
@@ -10896,7 +10896,7 @@ Dodu的手炮:
   lore:
   - §r发射闪光花朵，爆炸分裂成追踪花瓣
   attributes:
-    damage: 400
+    damage: 358
     damageType: Magic
     projectileSpeed: 18
     crit: 4
@@ -10910,7 +10910,7 @@ Dodu的手炮:
   lore:
   - §r自天外召唤水晶陨落造成大量伤害
   attributes:
-    damage: 575
+    damage: 1368
     damageType: Magic
     projectileSpeed: 16
     crit: 19
@@ -10924,7 +10924,7 @@ Dodu的手炮:
   lore:
   - §r召唤小行星从天而降
   attributes:
-    damage: 337
+    damage: 384
     damageType: Magic
     projectileSpeed: 17.5
     crit: 4
@@ -10942,7 +10942,7 @@ Dodu的手炮:
   - §#7dffe1星旋射线§r命中后造成带电减益
   - §#19c8e1星尘射线§r命中敌怪后产生追踪的星尘流星
   attributes:
-    damage: 208
+    damage: 280
     damageType: Magic
     crit: 4
     knockback: 7.5
@@ -10956,7 +10956,7 @@ Dodu的手炮:
   - §r召唤终结三叉戟
   - §r三叉戟会造成诅咒狱火和硫磺火减益
   attributes:
-    damage: 330
+    damage: 496
     damageType: Magic
     projectileSpeed: 19.5
     crit: 4
@@ -10968,7 +10968,7 @@ Dodu的手炮:
 神圣天罚:
   item: DIAMOND_SWORD
   attributes:
-    damage: 310
+    damage: 240
     damageType: Magic
     projectileSpeed: 19
     crit: 4
@@ -10982,7 +10982,7 @@ Dodu的手炮:
   lore:
   - §r每朵玫瑰都有刺
   attributes:
-    damage: 508
+    damage: 528
     damageType: Magic
     projectileSpeed: 20
     crit: 4
@@ -10998,7 +10998,7 @@ Dodu的手炮:
   - §r所以现在你告诉我王子爆炸了，变成了一朵花？
   - §r-Dain
   attributes:
-    damage: 535
+    damage: 440
     damageType: Magic
     projectileSpeed: 23.5
     crit: 4
@@ -11012,7 +11012,7 @@ Dodu的手炮:
   lore:
   - §r发射针叶风暴
   attributes:
-    damage: 150
+    damage: 127
     damageType: Magic
     projectileSpeed: 24
     crit: 4
@@ -11026,7 +11026,7 @@ Dodu的手炮:
   lore:
   - §r发射一阵从敌人身上吸取生命的猩红火焰
   attributes:
-    damage: 386
+    damage: 282
     damageType: Magic
     projectileSpeed: 21
     crit: 4
@@ -11040,7 +11040,7 @@ Dodu的手炮:
   lore:
   - §r发射血炎束，命中敌怪后治疗自己
   attributes:
-    damage: 1000
+    damage: 1200
     damageType: Magic
     projectileSpeed: 6
     crit: 4
@@ -11054,7 +11054,7 @@ Dodu的手炮:
   lore:
   - §r发射菱形十字排列的磁球
   attributes:
-    damage: 315
+    damage: 325
     damageType: Magic
     projectileSpeed: 7.5
     crit: 4
@@ -11068,7 +11068,7 @@ Dodu的手炮:
   lore:
   - §r在身边召唤跟踪玩家的魂火
   attributes:
-    damage: 500
+    damage: 1260
     damageType: Magic
     projectileSpeed: 2.5
     crit: 4
@@ -11082,7 +11082,7 @@ Dodu的手炮:
   lore:
   - §r释放会分裂的幻象球
   attributes:
-    damage: 890
+    damage: 682
     damageType: Magic
     projectileSpeed: 17.5
     crit: 4
@@ -11125,7 +11125,7 @@ Dodu的手炮:
   - §r令天幕坠落
   - §r召唤暗夜飞龙与繁星从天而降
   attributes:
-    damage: 576
+    damage: 529
     damageType: Magic
     projectileSpeed: 25
     crit: 4

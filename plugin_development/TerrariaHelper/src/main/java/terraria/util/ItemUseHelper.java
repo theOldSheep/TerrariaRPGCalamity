@@ -4587,7 +4587,7 @@ public class ItemUseHelper {
                         break;
                     }
                     case "亚特兰蒂斯": {
-                        length = 24;
+                        length = 32;
                         width = 0.5;
                         particleColor = "t/atl";
                         strikeInfo

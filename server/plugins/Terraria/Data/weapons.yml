@@ -4111,7 +4111,7 @@ Dodu的手炮:
 维苏威阿斯:
   type: MAGIC_PROJECTILE
   projectileName: 熔岩陨星
-  shots: 3
+  shots: 5
   autoSwing: true
   useSound: item.genericMeteorStaff
 维苏威阿斯_RIGHT_CLICK:
