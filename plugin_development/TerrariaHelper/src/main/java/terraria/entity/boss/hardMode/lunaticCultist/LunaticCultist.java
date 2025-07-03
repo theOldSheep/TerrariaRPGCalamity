@@ -102,7 +102,7 @@ public class LunaticCultist extends EntityZombie {
         if (index == 0) {
             Location pos = target.getLocation();
             for (int i = 0; i < 20; i ++) {
-                if (pos.getBlock().getRelative(0, 2, 0).getType().isSolid()) break;
+                if (pos.getBlock().getRelative(0, 3, 0).getType().isSolid()) break;
                 pos.add(0, 1, 0);
             }
             return pos;

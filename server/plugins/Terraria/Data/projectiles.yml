@@ -512,7 +512,6 @@
         name: 灾厄飞弹
         velocity: 0.5
 硫磺火球:
-    penetration: 99999
     blockHitAction: thru
     liveTime: 80
     gravity: 0
@@ -7428,7 +7427,7 @@ TNT:
     trailColor: t/ot
     clusterBomb:
         amount: 1
-        damageMulti: 0.25
+        damageMulti: 1.5
         name: 冲击波1
         velocity: 0
 磁球:
@@ -7777,7 +7776,7 @@ TNT:
     noGravityTicks: 0
     trailVanillaParticle: false
     trailColor: t/lt
-    penetration: 999999
+    penetration: 1
     buffInflict:
         - "咒火|100|1"
 天堂之泪:
@@ -7799,7 +7798,7 @@ TNT:
     blastOnContactBlock: false
     blastOnContactEnemy: true
     blastOnTimeout: false
-    blastDuration: 16
+    blastDuration: 6
     penetration: 2
     buffInflict:
         - "碎甲|80|1"

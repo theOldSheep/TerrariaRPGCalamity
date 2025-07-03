@@ -4344,7 +4344,7 @@ Dodu的手炮:
   projectileName: 等离子液铸器脉冲
   offSet: 27.5
   attributes:
-    damage: 1000
+    damage: 1100
     useTime: 5
     manaUse: 8
   autoSwing: true

@@ -4610,6 +4610,7 @@ public class ItemUseHelper {
                         particleColor = "t/ols";
                         strikeInfo
                                 .setThruWall(false)
+                                .setMaxTargetHit(5)
                                 .setMaxTargetHit(1)
                                 .setDamagedFunction((hitIndex, hitEntity, hitLoc) ->
                                     EntityHelper.handleEntityExplode(ply, 1, new ArrayList<>(), hitLoc));

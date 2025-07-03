@@ -76,6 +76,7 @@ public class LunaticAncientLight extends EntitySlime {
             setCustomName("远古辉光");
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isBOSS");
+        bukkitEntity.addScoreboardTag("noDamage");
         MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
         goalSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);
         targetSelector = new PathfinderGoalSelector(world != null && world.methodProfiler != null ? world.methodProfiler : null);

@@ -112,8 +112,7 @@ public class LunaticAncientDoom extends EntitySlime {
         this.doomOrEnd = doomOrEnd;
         setCustomName(doomOrEnd ? "远古噩运" : "预言之末");
         setCustomNameVisible(true);
-        if (!doomOrEnd)
-            bukkitEntity.addScoreboardTag("noDamage");
+        bukkitEntity.addScoreboardTag("noDamage");
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");
         MetadataHelper.setMetadata(bukkitEntity, MetadataHelper.MetadataName.BOSS_TYPE, BOSS_TYPE);
