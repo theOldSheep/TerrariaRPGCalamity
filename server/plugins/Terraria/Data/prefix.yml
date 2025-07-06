@@ -945,17 +945,17 @@ prefixInfo:
   符文:
     lore:
     - ''
-    - §a+12能量屏障上限
+    - §a+16能量屏障上限
     attributes:
-      barrierMax: 12
+      barrierMax: 16
     priceMultiplier: 1.15
     rarity: 1
   增广:
     lore:
     - ''
-    - §a+24能量屏障上限
+    - §a+32能量屏障上限
     attributes:
-      barrierMax: 24
+      barrierMax: 32
     priceMultiplier: 1.6
     rarity: 2
   精确:

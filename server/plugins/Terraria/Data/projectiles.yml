@@ -190,6 +190,9 @@
 坠星:
     projectileSize: 1.5
     minimumDamageTicks: 999999
+落星:
+    projDisguiseName: 坠星
+    projectileSize: 1.5
 彗星:
     gravity: 0
     projectileSize: 2
@@ -2674,7 +2677,7 @@
     liveTime: 80
     projectileSize: 1
     gravity: 0
-    healOnHit: 180
+    healOnHit: 60
     buffInflict:
         - "血液沸腾|200|1"
 光辉星剑:
@@ -5526,7 +5529,7 @@ TNT:
         spawnMechanism: BOTTOM
         damageMulti: 1
         speed: 1
-        spawnType: 坠星
+        spawnType: 落星
 涡旋:
     spawnProjectiles:
         interval: 10
@@ -5564,7 +5567,7 @@ TNT:
         spawnMechanism: ENEMY
         damageMulti: 1
         speed: 1.25
-        spawnType: 坠星
+        spawnType: 落星
     buffInflict:
         - "霜火|40|1"
 炼狱死光:
@@ -7856,7 +7859,7 @@ TNT:
     blastOnContactBlock: false
     blastOnContactEnemy: true
     blastOnTimeout: false
-    blastDuration: 16
+    blastDuration: 6
     penetration: 4
     buffInflict:
         - "碎甲|80|1"
@@ -8019,7 +8022,7 @@ TNT:
     bounce: 9
     liveTime: 175
     gravity: 0
-    penetration: 999990
+    penetration: 1
 鬼魂能量球:
     gravity: 0
     projectileSize: 1.5
@@ -8105,13 +8108,13 @@ TNT:
 狱炎箭:
     arrowOrPotion: true
     isGrenade: true
-    blastRadius: 2
+    blastRadius: 1.6
 圣箭:
     arrowOrPotion: true
     clusterBomb:
         amount: 1
         damageMulti: 0.2
-        name: 坠星
+        name: 落星
         type: star
         fireOnTimeout: false
         velocity: 2
@@ -8141,8 +8144,8 @@ TNT:
     buffInflict:
         - "霜火|60|1"
     clusterBomb:
-        amount: 3
-        damageMulti: 0.15
+        amount: 2
+        damageMulti: 0.12
         name: 水晶碎块
         velocity: 0.35
 火焰碎片:
@@ -8176,7 +8179,7 @@ TNT:
     liveTime: 40
     clusterBomb:
         amount: 2
-        damageMulti: 0.15
+        damageMulti: 0.1
         name: 泰拉追踪箭
         velocity: 2
 极乐陨石:
@@ -8192,7 +8195,7 @@ TNT:
         - "神圣之火|60|1"
     clusterBomb:
         amount: 1
-        damageMulti: 0.3
+        damageMulti: 0.15
         name: 极乐陨石
         type: star
         fireOnTimeout: false
@@ -8230,7 +8233,7 @@ TNT:
 闪电箭:
     arrowOrPotion: true
     isGrenade: true
-    blastRadius: 1
+    blastRadius: 2
     buffInflict:
         - "带电|20|1"
 贝壳箭:
@@ -8481,7 +8484,7 @@ TNT:
         - "超位崩解|100|1"
     clusterBomb:
         amount: 1
-        damageMulti: 0.75
+        damageMulti: 1
         name: 天堂星流闪电
         type: star
         fireOnTimeout: false
@@ -8507,7 +8510,7 @@ TNT:
         spawnType: 瘟疫疫病球
     clusterBomb:
         amount: 3
-        damageMulti: 0.5
+        damageMulti: 0.25
         name: 瘟疫疫病球
         velocity: 2.5
 瘟疫疫病球:

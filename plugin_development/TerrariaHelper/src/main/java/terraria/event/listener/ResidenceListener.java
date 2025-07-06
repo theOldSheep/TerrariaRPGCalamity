@@ -11,7 +11,7 @@ import org.bukkit.event.Listener;
 import terraria.TerrariaHelper;
 
 public class ResidenceListener implements Listener {
-    static final int PROTECTION_RADIUS = 200;
+    static final int PROTECTION_RADIUS = TerrariaHelper.settingConfig.getInt("miscSetting.minimumResidenceDistFromSpawn", 200);
     CuboidArea getSpawnProtectionArea() {
         World surfaceWorld = Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE);
         return new CuboidArea(

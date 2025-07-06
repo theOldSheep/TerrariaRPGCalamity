@@ -779,7 +779,7 @@ public class PlayerHelper {
                         else if (BossHelper.bossMap.containsKey(BossHelper.BossType.YHARON_DRAGON_OF_REBIRTH.msgName) )
                             current = "血月";
                         else if (BossHelper.bossMap.containsKey(BossHelper.BossType.THE_DEVOURER_OF_GODS.msgName) )
-                            current = "虚空";
+                            current = "神吞";
                         else if (BossHelper.bossMap.containsKey(BossHelper.BossType.MOON_LORD.msgName))
                             current = "虚空";
                         else if (BossHelper.bossMap.containsKey(BossHelper.BossType.CALAMITAS_CLONE.msgName))
@@ -805,6 +805,9 @@ public class PlayerHelper {
                     // setup client target time
                     int time = 0;
                     switch (current) {
+                        case "日食":
+                            time = 20000;
+                            break;
                         case "虚空":
                             time = 22000;
                             break;
@@ -824,10 +827,8 @@ public class PlayerHelper {
                             time = 23300;
                             break;
                         case "猪鲨":
+                        case "神吞":
                             time = 23365;
-                            break;
-                        case "日食":
-                            time = 20000;
                             break;
                         // no change in background
                         default:

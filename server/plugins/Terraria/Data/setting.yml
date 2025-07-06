@@ -1,4 +1,5 @@
 miscSetting:
+  minimumResidenceDistFromSpawn: 200
   summoningItemConsumption: false
   restartCountdown: 30
   restartCountdownBossActive: 60

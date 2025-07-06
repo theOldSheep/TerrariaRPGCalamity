@@ -3464,7 +3464,6 @@ public class ItemUseHelper {
                 int currCharge = getDurability(weaponItem, maxCharge);
                 double chargeRatio = (double) currCharge / maxCharge;
                 // charges increases damage
-                // the quadratic style makes extra damage obvious only when it is almost fully charged
                 attrMap.put("damage", attrMapOriginal.get("damage") * (1 + chargeRatio * 2));
                 // first shot of each fire round increases the charge
                 if (fireIndex == 1)
@@ -3934,28 +3933,28 @@ public class ItemUseHelper {
                         switch (projType) {
                             case "憎恶血刃": {
                                 double healthConsumed = 10;
-                                double extraBaseDmg = healthConsumed * 0.4;
+                                double extraBaseDmg = healthConsumed * 7.5;
                                 PlayerHelper.heal(ply, -healthConsumed, false, projType);
                                 AttributeHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
                                 break;
                             }
                             case "憎恶血刃Ex": {
-                                double healthConsumed = ply.getHealth() * 0.3;
-                                double extraBaseDmg = healthConsumed * 0.4;
+                                double healthConsumed = ply.getHealth() * 0.1;
+                                double extraBaseDmg = healthConsumed * 7.5;
                                 PlayerHelper.heal(ply, -healthConsumed, false, projType);
                                 AttributeHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
                                 break;
                             }
                             case "牺牲": {
                                 double healthConsumed = 15;
-                                double extraBaseDmg = healthConsumed * 0.75;
+                                double extraBaseDmg = healthConsumed * 15;
                                 PlayerHelper.heal(ply, -healthConsumed, false, projType);
                                 AttributeHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
                                 break;
                             }
                             case "牺牲Ex": {
                                 double healthConsumed = ply.getHealth() * 0.2;
-                                double extraBaseDmg = healthConsumed * 0.75;
+                                double extraBaseDmg = healthConsumed * 15;
                                 PlayerHelper.heal(ply, -healthConsumed, false, projType);
                                 AttributeHelper.tweakAttribute(shootInfo.attrMap, "damage", extraBaseDmg + "", true);
                                 break;
@@ -4213,7 +4212,7 @@ public class ItemUseHelper {
                 case "狱炎裂空":
                 case "终结裂空戟":
                 case "狂野复诵":
-                case "光之舞": {
+                case "f": {
                     fireLoc = ply.getEyeLocation().add(
                             Math.random() * 4 - 2,
                             Math.random() * 4 - 2,
@@ -4227,7 +4226,7 @@ public class ItemUseHelper {
                         if (charge++ >= 90) {
                             charge = 0;
                             HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
-                            projAttrMap.put("damage", 233333d);
+                            projAttrMap.put("damage", projAttrMap.getOrDefault("damage", 10d) * 100d);
                             projAttrMap.put("damageMulti", projAttrMap.getOrDefault("damageMulti", 1d) *
                                     (100 + projAttrMap.getOrDefault("crit", 4d)) / 100);
                             projAttrMap.put("crit", 100d);

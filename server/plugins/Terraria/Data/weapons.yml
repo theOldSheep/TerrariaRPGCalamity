@@ -1618,7 +1618,7 @@
   autoSwing: true
   ammo: _孢子球
   attributes:
-    useTime: 20
+    useTime: 4
     useSpeedMulti: 1
     useSpeedRangedMulti: 1
 宇束弓:
@@ -1718,7 +1718,6 @@
 鬼火弓:
   type: BOW
   autoSwing: true
-  shots: 4
   offSet: 30
 血陨:
   type: BOW
@@ -1790,8 +1789,7 @@
   fireRoundsDelay: 4
   autoSwing: true
   attributes:
-    damage: 418
-    useTime: 20
+    useTime: 16
   ammoConversion:
     ALL:
     - 充能炎龙崩啸
@@ -1842,6 +1840,8 @@
 诘责_RIGHT_CLICK:
   type: BOW
   autoSwing: true
+  attributes:
+    useTime: 8
   ammoConversion:
     ALL:
     - 诘责之矢
@@ -1950,6 +1950,7 @@
   ammo: 爆炸杰克南瓜灯
   autoSwing: true
   isGranade: true
+  useSound: item.grenadeLauncher
 精灵熔枪:
   type: SPECIAL_AMMO
   ammo: 凝胶
@@ -4528,17 +4529,11 @@ Dodu的手炮:
   offSet: 10
   autoSwing: true
   useSound: item.genericTyphoon
-  attributes:
-    damage: 362
-    useTime: 5
 归元漩涡_RIGHT_CLICK:
   type: MAGIC_PROJECTILE
   projectileName: 小型归元漩涡
   autoSwing: true
   useSound: item.genericTyphoon
-  attributes:
-    damage: 932
-    useTime: 7
 怨戾:
   type: MAGIC_SPECIAL
   fireRounds: 8

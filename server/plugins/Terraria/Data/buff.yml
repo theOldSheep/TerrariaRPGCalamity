@@ -358,7 +358,8 @@ effects:
     isBuff: true
     attributes:
       damageRangedMulti: 0.05
-    tooltip: 远程伤害增加5%
+      damageRogueMulti: 0.1
+    tooltip: 远程伤害增加5%，盗贼伤害增加10%
   战斗:
     isBuff: true
     attributes:
@@ -413,13 +414,13 @@ effects:
   魔能:
     isBuff: true
     attributes:
-      damageMagicMulti: 0.1
-    tooltip: 魔法伤害增加 10%
+      damageMagicMulti: 0.15
+    tooltip: 魔法伤害增加 15%
   魔力掌控:
     isBuff: true
     attributes:
-      manaUseMulti: -0.1
-    tooltip: 魔力消耗减少 10%
+      manaUseMulti: -0.2
+    tooltip: 魔力消耗减少 20%
   黑曜石皮:
     isBuff: true
     tooltip: 免疫岩浆和燃烧
@@ -436,8 +437,8 @@ effects:
   召唤:
     isBuff: true
     attributes:
-      damageSummonMulti: 0.1
-    tooltip: 召唤伤害增加 10%
+      damageSummonMulti: 0.15
+    tooltip: 召唤伤害增加 15%
   敏捷:
     isBuff: true
     attributes:
