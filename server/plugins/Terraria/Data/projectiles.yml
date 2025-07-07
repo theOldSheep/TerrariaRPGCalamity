@@ -203,7 +203,7 @@
     blockHitAction: thru
     liveTime: 60
 殷红弹幕:
-    gravity: 00
+    gravity: 0
     blockHitAction: thru
     liveTime: 60
 灾虫沙尘暴:
@@ -217,7 +217,7 @@
     gravity: 0.02
     blockHitAction: thru
 魔唾液:
-    gravity: 00
+    gravity: 0
     projectileSize: 0.5
     penetration: 9
 腐蚀之云:
@@ -262,14 +262,14 @@
 黑檀深渊之球:
     blockHitAction: thru
     projectileSize: 1
-    gravity: 00
+    gravity: 0
     buffInflict:
         - "扭曲|60|0.3"
         - "缓慢|100|1"
 血化深渊之球:
     blockHitAction: thru
     projectileSize: 1
-    gravity: 00
+    gravity: 0
     buffInflict:
         - "扭曲|60|0.3"
         - "流血|160|1"
@@ -421,21 +421,21 @@
 死亡激光:
     penetration: 99999
     liveTime: 100
-    gravity: 00
+    gravity: 0
     blockHitAction: thru
     buffInflict:
         - "燃烧|80|1"
 诅咒激光:
     penetration: 99999
     liveTime: 100
-    gravity: 00
+    gravity: 0
     blockHitAction: thru
     buffInflict:
         - "咒火|60|1"
 电击激光:
     penetration: 99999
     liveTime: 100
-    gravity: 00
+    gravity: 0
     blockHitAction: thru
     buffInflict:
         - "带电|40|1"
@@ -447,7 +447,7 @@
     projectileSize: 0.5
     blockHitAction: thru
     liveTime: 100
-    gravity: 00
+    gravity: 0
     buffInflict:
         - "硫磺火|60|1"
 灾厄飞弹:
@@ -456,7 +456,7 @@
     projectileSize: 0.5
     blockHitAction: thru
     liveTime: 100
-    gravity: 00
+    gravity: 0
     buffInflict:
         - "孱弱巫咒|40|1"
 炼狱硫火球:
@@ -483,7 +483,7 @@
     projectileSize: 1.5
     blockHitAction: thru
     liveTime: 80
-    gravity: 00
+    gravity: 0
     velocityUpdateRule: projVelUpdItvEveryTick
     buffInflict:
         - "孱弱巫咒|60|1"
@@ -657,7 +657,7 @@
         - "碎甲|100|1"
 星幻激光:
     penetration: 99999
-    gravity: 00
+    gravity: 0
     liveTime: 80
     blockHitAction: thru
     trailVanillaParticle: false
@@ -667,7 +667,7 @@
 橙星幻激光:
     projDisguiseName: 星幻激光
     penetration: 99999
-    gravity: 00
+    gravity: 0
     liveTime: 80
     blockHitAction: thru
     trailVanillaParticle: false
@@ -890,7 +890,7 @@
     blockHitAction: thru
     projectileSize: 1
     liveTime: 60
-    gravity: 00
+    gravity: 0
     buffInflict:
         - "神圣之火|40|1"
 神圣之矛:
@@ -904,7 +904,7 @@
     blockHitAction: thru
     projectileSize: 1
     liveTime: 60
-    gravity: 00
+    gravity: 0
     buffInflict:
         - "扭曲|30|1"
 无限灯笼:
@@ -943,7 +943,7 @@
     projectileSize: 1.5
     liveTime: 80
     penetration: 999999
-    gravity: 00
+    gravity: 0
     buffInflict:
         - "夜魇|25|1"
 遗爵鲨牙刺球:
@@ -1342,8 +1342,6 @@
     speedMultiPerTick: 999
     maxSpeed: 64
     projectileSize: 0.5
-    isGrenade: true
-    blastRadius: 2.75
     trailVanillaParticle: false
     trailColor: t/rls
 自由之星能量球:
@@ -1389,7 +1387,6 @@
 异象纳米离子束:
     gravity: 0
     liveTime: 2
-    penetration: 999999
     speedMultiPerTick: 999
     maxSpeed: 80
     projectileSize: 1.5
@@ -1401,7 +1398,7 @@
     projectileSize: 1.5
     clusterBomb:
         amount: 1
-        damageMulti: 0.5
+        damageMulti: 0.25
         name: 冲击波1
         velocity: 0
 冲击波1:
@@ -4534,7 +4531,7 @@
         amount: 5
         name: 瘟疫蜜蜂
         velocity: 1.25
-        damageMulti: 0.25
+        damageMulti: 1
 瘟疫导弹:
     gravity: 0
     projectileSize: 0.5
@@ -4558,7 +4555,7 @@
         amount: 5
         name: 瘟疫蜜蜂
         velocity: 1.25
-        damageMulti: 0.3333
+        damageMulti: 1
 天蝎座迷你火箭:
     gravity: 0
     projectileSize: 0.5
@@ -4579,7 +4576,7 @@
     gravity: 0
     projectileSize: 0.75
     isGrenade: true
-    blastRadius: 5
+    blastRadius: 0.25
     buffInflict:
         - "神圣之火|150|1"
 大集束火箭:
@@ -4723,11 +4720,10 @@ TNT:
     slowedByWater: true
 尖桩:
     gravity: 0
-    penetration: 9
+    penetration: 1
 玉米糖:
     blockHitAction: bounce
     bounce: 4
-    penetration: 2
 爆炸杰克南瓜灯:
     liveTime: 120
     projectileSize: 1
@@ -4739,7 +4735,6 @@ TNT:
     gravity: 0
     liveTime: 10
     projectileSize: 1.5
-    penetration: 999999
     trailVanillaParticle: false
     trailColor: t/bls
     trailLingerTime: 4
@@ -4789,11 +4784,19 @@ TNT:
     trailVanillaParticle: false
     trailColor: t/rls
     trailLingerTime: 6
+混乱之息:
+    blockHitAction: thru
+    liveTime: 40
+    gravity: 0
+    projectileSize: 2
+    trailVanillaParticle: false
+    trailColor: t/rll
+    buffInflict:
+        - "硫磺火|60|1"
 泰拉火焰:
     gravity: 0
     projectileSize: 1
     liveTime: 12
-    penetration: 999999
     trailVanillaParticle: false
     trailColor: t/gls
     trailLingerTime: 6
@@ -4803,7 +4806,6 @@ TNT:
     gravity: 0
     projectileSize: 1
     liveTime: 12
-    penetration: 999999
     trailVanillaParticle: false
     trailColor: t/pls
     trailLingerTime: 6
@@ -4813,7 +4815,6 @@ TNT:
     gravity: 0
     projectileSize: 1
     liveTime: 12
-    penetration: 999999
     trailVanillaParticle: false
     trailColor: t/gls
     trailLingerTime: 6
@@ -4891,7 +4892,6 @@ TNT:
 星流火星:
     gravity: 0
     projectileSize: 1.5
-    penetration: 2
     liveTime: 10
     trailVanillaParticle: false
     trailColor: t/rls;t/ols;t/gls;t/bls;t/pls
@@ -4966,7 +4966,6 @@ TNT:
     liveTime: 150
     blockHitAction: bounce
     bounce: 2
-    penetration: 2
     bouncePenetrationBonded: true
     slowedByWater: true
 银子弹:
@@ -4991,7 +4990,7 @@ TNT:
         amount: 4
         name: 水晶碎块
         velocity: 0.5
-        damageMulti: 0.05
+        damageMulti: 0.075
 水晶碎块:
     noGravityTicks: 0
     liveTime: 10
@@ -5017,6 +5016,8 @@ TNT:
 鼠疫弹:
     gravity: 0
     liveTime: 100
+    buffInflict:
+        - "瘟疫|60|1"
 海伯里斯弹:
     gravity: 0
     liveTime: 100
@@ -5034,17 +5035,11 @@ TNT:
     penetration: 1
     buffInflict:
         - "霜火|60|1"
-    clusterBomb:
-        amount: 5
-        name: 水晶碎块
-        velocity: 0.5
-        damageMulti: 0.05
 弹球弹:
     gravity: 0
     liveTime: 150
     blockHitAction: bounce
     bounce: 4
-    penetration: 4
     bounceVelocityMulti: 1.25
     bouncePenetrationBonded: true
 泰拉追踪弹:
@@ -5082,8 +5077,6 @@ TNT:
 弑神折返弹:
     gravity: 0
     liveTime: 50
-    isGrenade: true
-    blastRadius: 0.5
 弑神弹:
     gravity: 0
     liveTime: 80
@@ -5150,7 +5143,6 @@ TNT:
 巨舰水流:
     gravity: 0
     liveTime: 50
-    penetration: 1
     trailVanillaParticle: false
     trailColor: t/bt
 麦格纳冲击波:
@@ -5259,7 +5251,6 @@ TNT:
         velocity: 3
 五彩星:
     gravity: 0
-    penetration: 999999
     blockHitAction: thru
     projectileSize: 0.5
     liveTime: 50
@@ -5355,7 +5346,6 @@ TNT:
 月神高速弹:
     gravity: 0
     liveTime: 20
-    penetration: 2
     trailVanillaParticle: false
     trailColor: t/rt
     buffInflict:
@@ -6864,7 +6854,7 @@ TNT:
     trailVanillaParticle: false
     trailColor: t/bt
 激光:
-    gravity: 00
+    gravity: 0
     liveTime: 600
     penetration: 2
     spawnSound: item.genericLaser

@@ -6958,7 +6958,7 @@ Drew之翼:
 榴弹发射器:
   item: BLAZE_ROD
   attributes:
-    damage: 169
+    damage: 195
     damageType: Rocket
     crit: 4
     projectileSpeed: 8
@@ -6971,7 +6971,7 @@ Drew之翼:
   lore:
   - §r发射自动寻敌的导弹
   attributes:
-    damage: 134
+    damage: 60
     damageType: Rocket
     crit: 4
     projectileSpeed: 15
@@ -6982,7 +6982,7 @@ Drew之翼:
 喜庆弹射器:
   item: BLAZE_ROD
   attributes:
-    damage: 240
+    damage: 251
     damageType: Rocket
     crit: 4
     projectileSpeed: 20
@@ -6995,7 +6995,7 @@ Drew之翼:
   lore:
   - §r发射一个玛瑙火箭弹，爆炸时生成远古岩鲨
   attributes:
-    damage: 85
+    damage: 144
     damageType: Rocket
     crit: 4
     projectileSpeed: 17.5
@@ -7008,7 +7008,7 @@ Drew之翼:
   lore:
   - §r发射多种瘟疫火箭，爆炸时生成瘟疫蜜蜂
   attributes:
-    damage: 56
+    damage: 105
     damageType: Rocket
     crit: 4
     projectileSpeed: 16
@@ -7020,9 +7020,10 @@ Drew之翼:
   item: BLAZE_ROD
   lore:
   - §rBOOM
-  - §r右键发射不会摧毁物块的核弹
+  - §r发射追踪导弹
+  - §r右键发射不会摧毁物块的追踪核弹
   attributes:
-    damage: 290
+    damage: 490
     damageType: Rocket
     crit: 4
     projectileSpeed: 20
@@ -7036,7 +7037,7 @@ Drew之翼:
   - §r发射圣火火箭
   - §r“自动追踪重度依赖”
   attributes:
-    damage: 428
+    damage: 1294
     damageType: Rocket
     crit: 4
     projectileSpeed: 24
@@ -7049,7 +7050,7 @@ Drew之翼:
   lore:
   - §r发射一个大的追踪火箭，爆炸出小的追踪火箭
   attributes:
-    damage: 4500
+    damage: 5659
     damageType: Rocket
     crit: 12
     projectileSpeed: 24
@@ -7063,7 +7064,7 @@ Drew之翼:
   - §r发射一束四发空气燃料火箭，火箭会爆炸成大量火花
   - §r鸡肉味，嘎嘣脆
   attributes:
-    damage: 1522
+    damage: 1365
     damageType: Rocket
     crit: 4
     projectileSpeed: 16
@@ -7077,7 +7078,7 @@ Drew之翼:
   - §r发射小鸡火箭，产生巨大燃爆
   - §r“你↓干↑嘛→↗啊嗨→哟↓”
   attributes:
-    damage: 2494
+    damage: 8022
     damageType: Rocket
     crit: 4
     projectileSpeed: 17.5
@@ -7091,7 +7092,7 @@ Drew之翼:
   - §r发射一颗强大的嘉登火箭，击溃万物
   - §r火箭击中敌人时分裂出激光
   attributes:
-    damage: 850
+    damage: 955
     damageType: Rocket
     crit: 4
     projectileSpeed: 15
@@ -7105,7 +7106,7 @@ Drew之翼:
   lore:
   - §r将至多5枚南瓜榴弹装填后一次性射出
   attributes:
-    damage: 49
+    damage: 68
     damageType: Bullet
     crit: 4
     projectileSpeed: 16
@@ -7118,7 +7119,7 @@ Drew之翼:
   lore:
   - §r发射高压气泡流
   attributes:
-    damage: 56
+    damage: 60
     damageType: Arrow
     crit: 4
     projectileSpeed: 25
@@ -7131,7 +7132,7 @@ Drew之翼:
   lore:
   - §r发射一块珊瑚
   attributes:
-    damage: 38
+    damage: 46
     damageType: Bullet
     crit: 14
     projectileSpeed: 14.5
@@ -7142,7 +7143,7 @@ Drew之翼:
 旋风发射器:
   item: BLAZE_ROD
   attributes:
-    damage: 39
+    damage: 47
     damageType: Bullet
     crit: 4
     projectileSpeed: 16.5
@@ -7155,7 +7156,7 @@ Drew之翼:
   lore:
   - §r发射电击敌人的钩爪
   attributes:
-    damage: 153
+    damage: 236
     damageType: Bullet
     crit: 14
     projectileSpeed: 19.5
@@ -7169,12 +7170,12 @@ Drew之翼:
   - §r发射一束泡泡，击中敌人时召唤更多泡泡
   - §r右键以发射一个慢而大的水弹，击中敌人时召唤水龙卷
   attributes:
-    damage: 130
+    damage: 93
     damageType: Bullet
     crit: 4
     projectileSpeed: 20
     knockback: 5
-    useTime: 24
+    useTime: 34
   worth: 4800000
   rarity: 5
 物质调谐器:
@@ -7184,7 +7185,7 @@ Drew之翼:
   - §r发射不稳定物质，碰撞物块后造成更多伤害
   - §r不稳定物质击中物块前可以无限穿透敌怪，但造成的伤害变低
   attributes:
-    damage: 90
+    damage: 132
     damageType: Bullet
     crit: 4
     projectileSpeed: 17.5
@@ -7198,7 +7199,7 @@ Drew之翼:
   - §r轮流发射两种极性相反的粒子光束
   - §r被极性相反的粒子光束轮流击中时额外造成一次伤害判定
   attributes:
-    damage: 212
+    damage: 156
     damageType: Bullet
     crit: 4
     projectileSpeed: 480
@@ -7212,7 +7213,7 @@ Drew之翼:
   - §r巨大且笨重的武器，但其射出的大威力子弹在清理成群的敌人时十分出色。
   - §r发射毁灭性的荒谬击退的高速冲击波
   attributes:
-    damage: 300
+    damage: 202
     damageType: Bullet
     crit: 4
     projectileSpeed: 27
@@ -7225,7 +7226,7 @@ Drew之翼:
   lore:
   - §r亚利姆军队的重装步兵部队使用的激光武器
   attributes:
-    damage: 781
+    damage: 1247
     damageType: Bullet
     crit: 4
     projectileSpeed: 5
@@ -7238,7 +7239,7 @@ Drew之翼:
   lore:
   - §r发射爆炸能量球
   attributes:
-    damage: 630
+    damage: 862
     damageType: Bullet
     crit: 4
     projectileSpeed: 22
@@ -7251,7 +7252,7 @@ Drew之翼:
   lore:
   - §r发射一个剧毒鱼叉并释放出细菌
   attributes:
-    damage: 600
+    damage: 557
     damageType: Bullet
     crit: 4
     projectileSpeed: 25
@@ -7265,7 +7266,7 @@ Drew之翼:
   - §r嘉登的高效电磁脉冲步枪，让他能够应对自己的创造物叛变时的突发状况
   - §r当脉冲击中目标时，它将可以追踪敌人
   attributes:
-    damage: 2400
+    damage: 3473
     damageType: Bullet
     crit: 4
     projectileSpeed: 25
@@ -7280,12 +7281,12 @@ Drew之翼:
   - §r左键可以充能并快速发射5道离子光束
   - §r右键发射一颗裂变炸弹，其制造的冲击波可以对敌人造成难以想象的巨量伤害
   attributes:
-    damage: 2195
+    damage: 1288
     damageType: Bullet
     crit: 4
     projectileSpeed: 15
     knockback: 4.5
-    useTime: 140
+    useTime: 30
   worth: 28000000
   rarity: 1100
 骨头手套:
@@ -7294,7 +7295,7 @@ Drew之翼:
   - §r投出骨头
   - §6专家模式物品
   attributes:
-    damage: 75
+    damage: 53
     damageType: Arrow
     crit: 4
     projectileSpeed: 10
@@ -7305,7 +7306,7 @@ Drew之翼:
 尖桩发射器:
   item: BOW
   attributes:
-    damage: 272
+    damage: 225
     damageType: Arrow
     crit: 14
     projectileSpeed: 12
@@ -7330,7 +7331,7 @@ Drew之翼:
 玉米糖步枪:
   item: BOW
   attributes:
-    damage: 200
+    damage: 210
     damageType: Arrow
     crit: 14
     projectileSpeed: 14
@@ -7354,7 +7355,7 @@ Drew之翼:
 杰克南瓜灯发射器:
   item: BOW
   attributes:
-    damage: 268
+    damage: 267
     damageType: Arrow
     crit: 14
     projectileSpeed: 11
@@ -7377,7 +7378,7 @@ Drew之翼:
 精灵熔枪:
   item: BOW
   attributes:
-    damage: 64
+    damage: 90
     damageType: Arrow
     crit: 14
     projectileSpeed: 25.5
@@ -7388,7 +7389,7 @@ Drew之翼:
 火花喷射器:
   item: BOW
   attributes:
-    damage: 17
+    damage: 26
     damageType: Arrow
     crit: 4
     projectileSpeed: 5
@@ -7402,7 +7403,7 @@ Drew之翼:
   lore:
   - §r“如果让你重新来~过~”
   attributes:
-    damage: 30
+    damage: 28
     damageType: Arrow
     crit: 4
     projectileSpeed: 8
@@ -7416,7 +7417,7 @@ Drew之翼:
   lore:
   - §r发射一大片反弹凝胶
   attributes:
-    damage: 30
+    damage: 35
     damageType: Arrow
     crit: 4
     projectileSpeed: 6.5
@@ -7442,7 +7443,7 @@ Drew之翼:
 混乱之息:
   item: BOW
   attributes:
-    damage: 167
+    damage: 237
     damageType: Arrow
     crit: 4
     projectileSpeed: 8.5
@@ -7454,7 +7455,7 @@ Drew之翼:
 泰拉喷火器:
   item: BOW
   attributes:
-    damage: 110
+    damage: 150
     damageType: Arrow
     crit: 4
     projectileSpeed: 7.5
@@ -7466,7 +7467,7 @@ Drew之翼:
 极光烈焰:
   item: BOW
   attributes:
-    damage: 125
+    damage: 222
     damageType: Arrow
     crit: 4
     projectileSpeed: 7.5
@@ -7478,7 +7479,7 @@ Drew之翼:
 枯萎散播者:
   item: BOW
   attributes:
-    damage: 232
+    damage: 334
     damageType: Arrow
     crit: 4
     projectileSpeed: 7.5
@@ -7491,7 +7492,7 @@ Drew之翼:
   lore:
   - §r“湮阳冥风”
   attributes:
-    damage: 257
+    damage: 193
     damageType: Arrow
     crit: 4
     projectileSpeed: 9
@@ -7503,7 +7504,7 @@ Drew之翼:
 元素喷射器:
   item: BOW
   attributes:
-    damage: 325
+    damage: 486
     damageType: Arrow
     crit: 4
     projectileSpeed: 10
@@ -7515,10 +7516,10 @@ Drew之翼:
 纯元怒焰:
   item: BOW
   lore:
-  - §r射出一束猛烈的烈焰螺旋
+  - §r射出一束猛烈的烈焰
   - §r右击发射一团缓慢的余晖烈焰
   attributes:
-    damage: 240
+    damage: 280
     damageType: Arrow
     crit: 4
     projectileSpeed: 11
@@ -7533,7 +7534,7 @@ Drew之翼:
   - §r使你与敌人的血液沸腾
   - §r命中时恢复生命值
   attributes:
-    damage: 425
+    damage: 465
     damageType: Arrow
     crit: 4
     projectileSpeed: 12
@@ -7548,7 +7549,7 @@ Drew之翼:
   - §r哈雷彗星比想象中来得早
   - §r发射一颗燃烧彗星
   attributes:
-    damage: 2195
+    damage: 2782
     damageType: Arrow
     crit: 24
     projectileSpeed: 14.6
@@ -7559,12 +7560,12 @@ Drew之翼:
 净化怒焰:
   item: BOW
   attributes:
-    damage: 600
+    damage: 785
     damageType: Arrow
     crit: 4
     projectileSpeed: 14
     knockback: 4
-    useTime: 12
+    useTime: 15
     ammoConsumptionRate: -0.9
   worth: 28000000
   rarity: 14
@@ -7575,7 +7576,7 @@ Drew之翼:
   - §r右键发射追踪星焱，追踪、穿透敌人并将其焚化
   - §r“请勿用来烤制吐司披萨”
   attributes:
-    damage: 450
+    damage: 579
     damageType: Arrow
     crit: 4
     projectileSpeed: 18
@@ -7587,7 +7588,7 @@ Drew之翼:
 燧发枪:
   item: BLAZE_ROD
   attributes:
-    damage: 20
+    damage: 40
     damageType: Bullet
     crit: 4
     projectileSpeed: 5
@@ -7598,7 +7599,7 @@ Drew之翼:
 手枪:
   item: BLAZE_ROD
   attributes:
-    damage: 52
+    damage: 85
     damageType: Bullet
     crit: 4
     projectileSpeed: 10
@@ -7609,7 +7610,7 @@ Drew之翼:
 凤凰爆破枪:
   item: BLAZE_ROD
   attributes:
-    damage: 65
+    damage: 94
     damageType: Bullet
     crit: 4
     projectileSpeed: 13
@@ -7620,7 +7621,7 @@ Drew之翼:
 迷你鲨:
   item: BLAZE_ROD
   attributes:
-    damage: 12
+    damage: 21
     damageType: Bullet
     crit: 4
     projectileSpeed: 7
@@ -7634,7 +7635,7 @@ Drew之翼:
   lore:
   - §r三连发，只有第一发消耗弹药
   attributes:
-    damage: 57
+    damage: 62
     damageType: Bullet
     crit: 4
     projectileSpeed: 7.75
@@ -7647,7 +7648,7 @@ Drew之翼:
   lore:
   - §r“迷你鲨的老大哥”
   attributes:
-    damage: 68
+    damage: 92
     damageType: Bullet
     crit: 4
     projectileSpeed: 10
@@ -7659,7 +7660,7 @@ Drew之翼:
 金星马格南:
   item: BLAZE_ROD
   attributes:
-    damage: 155
+    damage: 170
     damageType: Bullet
     crit: 4
     projectileSpeed: 13.5
@@ -7670,7 +7671,7 @@ Drew之翼:
 狙击步枪:
   item: BLAZE_ROD
   attributes:
-    damage: 575
+    damage: 822
     damageType: Bullet
     crit: 29
     projectileSpeed: 16
@@ -7681,7 +7682,7 @@ Drew之翼:
 战术霰弹枪:
   item: BLAZE_ROD
   attributes:
-    damage: 178
+    damage: 136
     damageType: Bullet
     crit: 4
     projectileSpeed: 6
@@ -7692,7 +7693,7 @@ Drew之翼:
 链式机枪:
   item: BLAZE_ROD
   attributes:
-    damage: 128
+    damage: 93
     damageType: Bullet
     crit: 4
     projectileSpeed: 14
@@ -7706,7 +7707,7 @@ Drew之翼:
   lore:
   - §r“劈劈啪啪，乒乒乓乓，一顿混乱，惨绝人寰。”
   attributes:
-    damage: 136
+    damage: 181
     damageType: Bullet
     crit: 4
     projectileSpeed: 14
@@ -7720,7 +7721,7 @@ Drew之翼:
   lore:
   - §r“它来自太空边缘”
   attributes:
-    damage: 192
+    damage: 300
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -7732,7 +7733,7 @@ Drew之翼:
 四管猎枪:
   item: BLAZE_ROD
   attributes:
-    damage: 55
+    damage: 107
     damageType: Bullet
     crit: 4
     projectileSpeed: 7
@@ -7743,7 +7744,7 @@ Drew之翼:
 玛瑙爆破枪:
   item: BLAZE_ROD
   attributes:
-    damage: 79
+    damage: 187
     damageType: Bullet
     crit: 4
     projectileSpeed: 8
@@ -7756,7 +7757,7 @@ Drew之翼:
   lore:
   - §r发射一串鹅卵石冲击波
   attributes:
-    damage: 16
+    damage: 20
     damageType: Bullet
     crit: 4
     projectileSpeed: 6
@@ -7770,7 +7771,7 @@ Drew之翼:
   lore:
   - §r将火枪子弹转化为命中后分裂的真菌弹
   attributes:
-    damage: 26
+    damage: 33
     damageType: Bullet
     crit: 4
     projectileSpeed: 14
@@ -7784,12 +7785,12 @@ Drew之翼:
   - §r发射出一大片弹跳子弹
   - §r“瞄准？那是啥？”
   attributes:
-    damage: 6
+    damage: 7
     damageType: Bullet
     crit: 4
     projectileSpeed: 9
     knockback: 0
-    useTime: 35
+    useTime: 45
   worth: 800000
   rarity: 3
 碎水霰弹枪:
@@ -7797,7 +7798,7 @@ Drew之翼:
   lore:
   - §r将火枪子弹转化为蓝晶碎片，击中敌人时分裂为追踪碎片
   attributes:
-    damage: 27
+    damage: 62
     damageType: Bullet
     crit: 10
     projectileSpeed: 22
@@ -7810,7 +7811,7 @@ Drew之翼:
   lore:
   - §r发射数颗子弹
   attributes:
-    damage: 48
+    damage: 77
     damageType: Bullet
     crit: 4
     projectileSpeed: 5
@@ -7838,7 +7839,7 @@ P90:
   lore:
   - §r使用时间越长，发射速度和精确度越高
   attributes:
-    damage: 20
+    damage: 8
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -7851,7 +7852,7 @@ P90:
   lore:
   - §r发射诅咒弹
   attributes:
-    damage: 75
+    damage: 104
     damageType: Bullet
     crit: 4
     projectileSpeed: 14
@@ -7861,8 +7862,10 @@ P90:
   rarity: 4
 音波步枪:
   item: BLAZE_ROD
+  lore:
+  - §r将火枪子弹转化为能量弹，击中敌人时分裂为追踪碎片
   attributes:
-    damage: 75
+    damage: 95
     damageType: Bullet
     crit: 4
     projectileSpeed: 15
@@ -7870,17 +7873,17 @@ P90:
     useTime: 15
   worth: 7200000
   rarity: 5
-地狱降临:
+深核GK2:
   item: BLAZE_ROD
   lore:
-  - §r子弹命中敌人时片刻即可发射下一发子弹
+  - §r“挖到手软，赚到盆满！”
   attributes:
-    damage: 172
+    damage: 180
     damageType: Bullet
     crit: 4
-    projectileSpeed: 12
-    knockback: 2
-    useTime: 50
+    projectileSpeed: 20
+    knockback: 7
+    useTime: 14
   worth: 4800000
   rarity: 5
 霜牙冲击波:
@@ -7889,7 +7892,7 @@ P90:
   - §r一次发射六发子弹
   - §r将火枪子弹转化为穿透冰锥
   attributes:
-    damage: 50
+    damage: 107
     damageType: Bullet
     crit: 4
     projectileSpeed: 5
@@ -7897,45 +7900,46 @@ P90:
     useTime: 50
   worth: 7200000
   rarity: 5
+地狱降临:
+  item: BLAZE_ROD
+  lore:
+  - §r子弹命中敌人时片刻即可发射下一发子弹
+  attributes:
+    damage: 220
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 2
+    useTime: 50
+  worth: 4800000
+  rarity: 5
 憎恨:
   item: BLAZE_ROD
   lore:
   - §r发射一发强大的狙击弹
   - §r右键以发射一连串子弹
   attributes:
-    damage: 573
+    damage: 890
     damageType: Bullet
     crit: 4
     projectileSpeed: 11
     knockback: 2
-    useTime: 16
+    useTime: 36
     ammoConsumptionRate: -0.5
   worth: 12000000
   rarity: 7
-深核GK2:
-  item: BLAZE_ROD
-  lore:
-  - §r“挖到手软，赚到盆满！”
-  attributes:
-    damage: 110
-    damageType: Bullet
-    crit: 4
-    projectileSpeed: 20
-    knockback: 7
-    useTime: 14
-  worth: 4800000
-  rarity: 5
 巨舰鲨:
   item: BLAZE_ROD
   lore:
   - §r每隔一发就会射出强劲水流
   attributes:
-    damage: 95
+    damage: 98
     damageType: Bullet
     crit: 4
     projectileSpeed: 16
     knockback: 2.5
     useTime: 5
+    ammoConsumptionRate: -0.5
   worth: 12000000
   rarity: 7
 九头蛇:
@@ -7943,7 +7947,7 @@ P90:
   lore:
   - §r连续射击会发射额外的弹药并减慢使用速度
   attributes:
-    damage: 220
+    damage: 262
     damageType: Bullet
     crit: 0
     projectileSpeed: 12
@@ -7957,7 +7961,7 @@ P90:
   - §r汝命归我……
   - §r连续攻击时在不同发射数量间循环
   attributes:
-    damage: 92
+    damage: 107
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -7970,7 +7974,7 @@ P90:
   lore:
   - §r发射鹅卵石和麦格纳冲击波
   attributes:
-    damage: 232
+    damage: 168
     damageType: Bullet
     crit: 4
     projectileSpeed: 15
@@ -7983,7 +7987,7 @@ P90:
   lore:
   - §r将子弹转化为毒水弹
   attributes:
-    damage: 270
+    damage: 187
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -7994,7 +7998,7 @@ P90:
 发条鳄鱼枪:
   item: BLAZE_ROD
   attributes:
-    damage: 82
+    damage: 165
     damageType: Bullet
     crit: 4
     projectileSpeed: 20
@@ -8007,7 +8011,7 @@ P90:
   lore:
   - §r一次发射两颗子弹
   attributes:
-    damage: 53
+    damage: 105
     damageType: Bullet
     crit: 4
     projectileSpeed: 11.5
@@ -8020,7 +8024,7 @@ P90:
   lore:
   - §r将火枪子弹转化为消失时爆裂成瘟疫碎片的瘟疫子弹
   attributes:
-    damage: 362
+    damage: 1006
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -8035,7 +8039,7 @@ P90:
   - §r右键发射高伤无人机群
   - §r无人机击中有瘟疫减益的敌怪时必定暴击
   attributes:
-    damage: 42
+    damage: 70
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -8049,7 +8053,7 @@ P90:
   - §r一次发射三颗子弹
   - §r将火枪子弹转化为爆炸弹
   attributes:
-    damage: 122
+    damage: 250
     damageType: Bullet
     crit: 4
     projectileSpeed: 30
@@ -8062,13 +8066,12 @@ P90:
   lore:
   - §r@全体成员
   attributes:
-    damage: 75
+    damage: 78
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
     knockback: 4.5
     useTime: 32
-    ammoConsumptionRate: -0.5
   worth: 16000000
   rarity: 9
 蘑菇狙击枪:
@@ -8076,20 +8079,20 @@ P90:
   lore:
   - §r额外发射强大的追踪蘑菇
   attributes:
-    damage: 265
+    damage: 615
     damageType: Bullet
     crit: 39
     projectileSpeed: 10
     knockback: 9.75
     useTime: 27
   worth: 20000000
-  rarity: 10
+  rarity: 9
 幻星冲击炮:
   item: BLAZE_ROD
   lore:
   - §r将火枪子弹转化为幻星弹
   attributes:
-    damage: 204
+    damage: 524
     damageType: Bullet
     crit: 29
     projectileSpeed: 12
@@ -8102,13 +8105,12 @@ P90:
   lore:
   - §r@全体成员
   attributes:
-    damage: 138
+    damage: 93
     damageType: Bullet
     crit: 4
     projectileSpeed: 13
     knockback: 4.5
     useTime: 30
-    ammoConsumptionRate: -0.5
   worth: 20000000
   rarity: 10
 玛瑙链炮:
@@ -8116,13 +8118,12 @@ P90:
   lore:
   - §r发射数颗子弹和一个玛瑙碎片
   attributes:
-    damage: 124
+    damage: 205
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
     knockback: 4.5
     useTime: 15
-    ammoConsumptionRate: -0.5
   worth: 20000000
   rarity: 10
 解离者:
@@ -8130,10 +8131,10 @@ P90:
   lore:
   - §r神话，传说，这把枪能让你的电脑爆炸
   - §r发射一团会分裂弹射的能量子弹
-  - §r右键发射一团普通子弹
+  - §r右键发射普通子弹并造成更高伤害
   - §r“在这个时期看到这样的面板伤害时，你就知道它是个什么货色了”
   attributes:
-    damage: 42
+    damage: 19
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -8146,7 +8147,7 @@ P90:
   lore:
   - §r一次发射五颗子弹
   attributes:
-    damage: 175
+    damage: 239
     damageType: Bullet
     crit: 4
     projectileSpeed: 20
@@ -8159,7 +8160,7 @@ P90:
   lore:
   - §r发射可以削减敌人防线的高速闪光子弹
   attributes:
-    damage: 2320
+    damage: 2089
     damageType: Bullet
     crit: 4
     projectileSpeed: 7.5
@@ -8173,12 +8174,25 @@ P90:
   - §r射出八颗子弹
   - §r战斗直到胜利
   attributes:
-    damage: 233
+    damage: 272
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
     knockback: 3
     useTime: 24
+  worth: 24000000
+  rarity: 12
+深红手炮:
+  item: BLAZE_ROD
+  lore:
+  - §r三连发，将火枪子弹转化为血炎弹
+  attributes:
+    damage: 573
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 18
+    knockback: 5.5
+    useTime: 18
   worth: 24000000
   rarity: 12
 海龙:
@@ -8187,7 +8201,7 @@ P90:
   - §r每隔一发子弹就会射出强劲水流
   - §r每18发子弹会发射一枚追踪火箭，爆炸后产生火焰碎片
   attributes:
-    damage: 285
+    damage: 338
     damageType: Bullet
     crit: 4
     projectileSpeed: 16
@@ -8201,26 +8215,12 @@ P90:
   lore:
   - §r发射数颗子弹
   attributes:
-    damage: 170
+    damage: 197
     damageType: Bullet
     crit: 4
     projectileSpeed: 18
     knockback: 3.25
     useTime: 20
-    ammoConsumptionRate: -0.9
-  worth: 24000000
-  rarity: 12
-深红手炮:
-  item: BLAZE_ROD
-  lore:
-  - §r将火枪子弹转化为血炎弹
-  attributes:
-    damage: 830
-    damageType: Bullet
-    crit: 4
-    projectileSpeed: 18
-    knockback: 5.5
-    useTime: 18
   worth: 24000000
   rarity: 12
 大比目鱼炮:
@@ -8228,7 +8228,7 @@ P90:
   lore:
   - §r是的，这把武器现在还是强得过分
   attributes:
-    damage: 75
+    damage: 208
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -8243,7 +8243,7 @@ Dodu的手炮:
   - §r发射高爆花生壳
   - §r嗯，就是你想的那个“花生壳”
   attributes:
-    damage: 1715
+    damage: 2826
     damageType: Bullet
     crit: 4
     projectileSpeed: 32
@@ -8256,7 +8256,7 @@ Dodu的手炮:
   lore:
   - §r将火枪子弹转化为腐烂肉块
   attributes:
-    damage: 512
+    damage: 1540
     damageType: Bullet
     crit: 4
     projectileSpeed: 16
@@ -8269,16 +8269,16 @@ Dodu的手炮:
   item: BLAZE_ROD
   lore:
   - §r发射一团会分裂弹射的能量子弹
-  - §r右键发射一团普通子弹
+  - §r右键发射普通子弹并造成更高伤害
   - §r只要你把它握在手中，无限的电脑解离就不会停止
   - §r所以说……不要停下来啊……
   attributes:
-    damage: 189
+    damage: 128
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
     knockback: 1
-    useTime: 18
+    useTime: 30
   worth: 28000000
   rarity: 14
 宇宙之源:
@@ -8288,13 +8288,12 @@ Dodu的手炮:
   - §r令星空坠落到敌人头上
   - §r“宇宙万法的那个源头，他是什么？”
   attributes:
-    damage: 500
+    damage: 746
     damageType: Bullet
     crit: 4
     projectileSpeed: 20
     knockback: 6.5
     useTime: 26
-    ammoConsumptionRate: -0.5
   worth: 28000000
   rarity: 14
 反器材狙击步枪:
@@ -8303,7 +8302,7 @@ Dodu的手炮:
   - §r将火枪子弹转化为.50口径的狙击子弹，撕裂敌人的防御和伤害减免
   - §r狙击子弹会在敌人四周释放第二轮含有5发子弹的弹雨
   attributes:
-    damage: 4000
+    damage: 5205
     damageType: Bullet
     crit: 24
     projectileSpeed: 12
@@ -8317,13 +8316,13 @@ Dodu的手炮:
   - §r来自于泰拉大陆之边界
   - §r将火枪子弹转化为泰拉弹
   attributes:
-    damage: 242
+    damage: 445
     damageType: Bullet
     crit: 19
     projectileSpeed: 16
     knockback: 2.75
     useTime: 2
-    ammoConsumptionRate: -0.5
+    ammoConsumptionRate: -0.75
   worth: 28000000
   rarity: 14
 奥妮克希亚:
@@ -8331,7 +8330,7 @@ Dodu的手炮:
   lore:
   - §r向敌人倾泻弹雨与玛瑙碎片
   attributes:
-    damage: 263
+    damage: 550
     damageType: Bullet
     crit: 4
     projectileSpeed: 16
@@ -8343,23 +8342,22 @@ Dodu的手炮:
 巨龙之息:
   item: BLAZE_ROD
   lore:
-  - §r左键发射两束散弹
+  - §r发射两束散弹
   - §r第一束为六发普通子弹
   - §r第二束为六发密集龙息弹
   attributes:
-    damage: 354
+    damage: 415
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
     knockback: 6.5
     useTime: 18
-    ammoConsumptionRate: -0.66
   worth: 30000000
   rarity: 15
 迷你加特林:
   item: BLAZE_ROD
   attributes:
-    damage: 486
+    damage: 802
     damageType: Bullet
     crit: 4
     projectileSpeed: 22
@@ -8376,7 +8374,7 @@ Dodu的手炮:
   - §r命中时召唤6发额外子弹
   - §r“击穿即便是拥有着最精良武装的敌人心脏”
   attributes:
-    damage: 4444
+    damage: 3765
     damageType: Bullet
     crit: 39
     projectileSpeed: 12
@@ -8391,12 +8389,12 @@ Dodu的手炮:
   - §r左键攻击会发射出击中时产生爆炸的激光
   - §r右键攻击会发射出多束激光，击中敌怪时释放出追踪能量流
   attributes:
-    damage: 625
+    damage: 2600
     damageType: Bullet
     crit: 4
     projectileSpeed: 16
     knockback: 8
-    useTime: 28
+    useTime: 30
   worth: 30000000
   rarity: 15
 太虚星龙炮:
@@ -8404,7 +8402,7 @@ Dodu的手炮:
   lore:
   - §r每隔一发就会发射海龙追踪火箭
   attributes:
-    damage: 419
+    damage: 736
     damageType: Bullet
     crit: 4
     projectileSpeed: 18
@@ -8417,10 +8415,10 @@ Dodu的手炮:
   item: BLAZE_ROD
   lore:
   - §r获得相当于暴击率50%的暴击伤害加成
-  - §r将火枪子弹转化为极强的高速子弹，穿透两个敌人并造成强大的流血减益
+  - §r将火枪子弹转化为极强的高速子弹，造成强大的流血减益
   - §r该减益每秒造成100点伤害，最多叠加10层
   attributes:
-    damage: 246
+    damage: 1572
     damageType: Bullet
     crit: 34
     projectileSpeed: 9
@@ -13599,7 +13597,7 @@ Dodu的手炮:
   - §r命中敌人时天降一枚继承15%攻击力的陨石
   - §r“回应我吧，极乐之箭！”
   attributes:
-    damage: 16
+    damage: 26
     damageType: Arrow
     crit: 4
     knockback: 3
@@ -13625,7 +13623,7 @@ Dodu的手炮:
   - §r迅速分裂出最多两支小型追踪箭矢，继承10%攻击力
   - §r“很好的合成全部，使我的背包旋转”
   attributes:
-    damage: 28
+    damage: 40
     damageType: Arrow
     crit: 4
     knockback: 3.5
@@ -13646,7 +13644,7 @@ Dodu的手炮:
 陨星弹:
   item: SLIME_BALL
   attributes:
-    damage: 18
+    damage: 22
     damageType: Bullet
     crit: 4
     knockback: 1
@@ -13679,7 +13677,7 @@ Dodu的手炮:
 水晶子弹:
   item: SLIME_BALL
   lore:
-  - §r碰撞时产生水晶碎片
+  - §r碰撞时爆裂成两片继承7.5%攻击力的水晶碎片
   attributes:
     damage: 10
     damageType: Bullet
@@ -13692,7 +13690,7 @@ Dodu的手炮:
 诅咒弹:
   item: SLIME_BALL
   attributes:
-    damage: 30
+    damage: 24
     damageType: Bullet
     crit: 4
     knockback: 4
@@ -13705,7 +13703,7 @@ Dodu的手炮:
   lore:
   - §r对目标施放酸性毒液
   attributes:
-    damage: 34
+    damage: 32
     damageType: Bullet
     crit: 4
     knockback: 4.1
@@ -13750,7 +13748,6 @@ Dodu的手炮:
     crit: 4
     knockback: 1.25
     projectileSpeed: 5
-    projectileSpeedMulti: 0.5
   worth: 5000
   rarity: 1
 弹球弹:
@@ -13773,7 +13770,7 @@ Dodu的手炮:
   - §r穿透一次后获得追踪能力
   attributes:
     damage: 14
-    damageBulletMulti: -0.5
+    damageRangedMulti: -0.5
     damageType: Bullet
     crit: 4
     knockback: 1.25
@@ -13784,10 +13781,9 @@ Dodu的手炮:
 冰砾弹:
   item: SLIME_BALL
   lore:
-  - §r可以命中至多两次
-  - §r第二次打击分裂成碎冰
+  - §r这种特殊材质比想象中更加坚硬
   attributes:
-    damage: 26
+    damage: 28
     damageType: Bullet
     crit: 4
     knockback: 2
@@ -13798,9 +13794,9 @@ Dodu的手炮:
 泰拉弹:
   item: SLIME_BALL
   lore:
-  - §r爆炸并分裂出死亡追踪射线
+  - §r碰撞时分裂成两发继承10%攻击力的追踪弹
   attributes:
-    damage: 15
+    damage: 10
     damageType: Bullet
     crit: 4
     knockback: 1.25
@@ -13811,8 +13807,7 @@ Dodu的手炮:
 鼠疫弹:
   item: SLIME_BALL
   attributes:
-    armorPenetration: 5
-    damage: 30
+    damage: 35
     damageType: Bullet
     crit: 4
     knockback: 1.5
@@ -13826,8 +13821,8 @@ Dodu的手炮:
   - §r你的敌人不会好过了...
   - §r击中敌人后产生额外弹幕
   attributes:
-    damage: 28
-    damageBulletMulti: -0.45
+    damage: 18
+    damageRangedMulti: -0.5
     damageType: Bullet
     crit: 4
     knockback: 1.5
@@ -13840,7 +13835,7 @@ Dodu的手炮:
   lore:
   - §r会爆炸的圣火子弹
   attributes:
-    damage: 36
+    damage: 32
     damageType: Bullet
     crit: 4
     knockback: 2
@@ -13866,9 +13861,9 @@ Dodu的手炮:
   lore:
   - §r具有无限穿透力的重型弹药，能够撕裂时空
   - §r穿透第一个敌怪后飞行一段时间就会消失
-  - §r然后撕裂时空出现在玩家身后，加速射出并在接触时爆炸
+  - §r然后撕裂时空出现在玩家身后加速射出
   attributes:
-    damage: 32
+    damage: 36
     damageRangedMulti: -0.5
     damageType: Bullet
     crit: 4
@@ -13950,7 +13945,7 @@ Dodu的手炮:
   - §r部分发射器的爆炸会摧毁图格
   - §7▷ 爆炸物：摧毁方块会按照玩家手上的工具和游戏进度进行判定
   attributes:
-    damage: 130
+    damage: 115
     damageType: Rocket
     crit: 4
   worth: 10000
@@ -16331,7 +16326,7 @@ Dodu的手炮:
 弹药储备药水:
   item: CLAY_BALL
   lore:
-  - §a20% 不消耗弹药
+  - §a75% 不消耗弹药
   - §a8分钟持续时间
   worth: 20000
   rarity: 1

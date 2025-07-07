@@ -310,7 +310,7 @@ effects:
     isBuff: false
     attributes:
       damageTakenMulti: 0.15
-    tooltip: 降低防御力和伤害减免
+    tooltip: 降低伤害减免
   枯萎:
     isBuff: false
     attributes:
@@ -352,8 +352,8 @@ effects:
   弹药储备:
     isBuff: true
     attributes:
-      ammoConsumptionRate: -0.2
-    tooltip: 20%概率不消耗弹药
+      ammoConsumptionRate: -0.75
+    tooltip: 75%概率不消耗弹药
   射术:
     isBuff: true
     attributes:

@@ -234,7 +234,7 @@ public class EbonianSlime extends EntitySlime {
         // shoot info, aim helper and other size-specific values
         {
             shootInfo = new EntityHelper.ProjectileShootInfo(bukkitEntity, new Vector(), ATTR_MAP_PROJECTILE, "黑檀深渊之球");
-            aimOption = new AimHelper.AimHelperOptions()
+            aimOption = new AimHelper.AimHelperOptions("黑檀深渊之球")
                     .setAimMode(false)
                     .setProjectileSpeed(TheSlimeGod.PROJECTILE_SPEED);
             switch (slimeSize) {

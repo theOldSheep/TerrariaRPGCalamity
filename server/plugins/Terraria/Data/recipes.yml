@@ -1201,7 +1201,6 @@ ANVIL:
     - 迷你鲨
     - 非法枪械部件
     - 秘银锭:10
-    - 力量之魂:5
     recipeCategory: WEAPON_BULLET
   '132':
     requireLevel: 2

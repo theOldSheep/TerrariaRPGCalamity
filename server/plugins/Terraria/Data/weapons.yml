@@ -1919,9 +1919,9 @@
   type: SPECIAL_AMMO
   ammo: _异象纳米离子束
   fireRounds: 10
-  fireRoundsDelay: 5
+  fireRoundsDelay: 1
   attributes:
-    useTime: 50
+    useTime: 10
     useSpeedMulti: 1
     useSpeedRangedMulti: 1
   autoSwing: true
@@ -2029,7 +2029,7 @@
     useSpeedRangedMulti: 1
   ammoConversion:
     凝胶:
-    - 硫火喷射
+    - 混乱之息
 泰拉喷火器:
   type: SPECIAL_AMMO
   ammo: 凝胶
@@ -2114,11 +2114,11 @@
   type: SPECIAL_AMMO
   ammo: 凝胶
   fireRounds: 3
-  fireRoundsDelay: 2
+  fireRoundsDelay: 1
   autoSwing: true
   attributes:
     projectileSpeed: 3
-    useTime: 6
+    useTime: 4
     useSpeedMulti: 1
     useSpeedRangedMulti: 1
   ammoConversion:
@@ -2132,7 +2132,7 @@
   autoSwing: true
   attributes:
     projectileSpeed: 35
-    useTime: 3
+    useTime: 5
     useSpeedMulti: 1
     useSpeedRangedMulti: 1
   ammoConversion:
@@ -2186,7 +2186,7 @@
   offSet: 35
   autoSwing: true
   attributes:
-    useTime: 7
+    useTime: 15
   ammoConversion:
     凝胶:
     - 追踪星焱
@@ -2220,6 +2220,7 @@
 狙击步枪:
   type: GUN
   autoSwing: true
+  useSound: entity.generic.explode
 战术霰弹枪:
   type: GUN
   shots: 6
@@ -2328,7 +2329,7 @@ P90:
   fireRounds: 3
   fireRoundsDelay: 1
   attributes:
-    damage: 125
+    damage: 140
     useTime: 7
 深核GK2:
   type: GUN
@@ -2391,8 +2392,8 @@ P90:
   offSet: 9
   autoSwing: true
   attributes:
-    damage: 200
-    useTime: 25
+    damage: 95
+    useTime: 10
 灭域者:
   type: GUN
   shots: 3
@@ -2444,6 +2445,8 @@ P90:
   shots: 4
   offSet: 25
   autoSwing: true
+  attributes:
+    damage: 66
 黄金之鹰:
   type: GUN
   shots: 5
@@ -2518,6 +2521,7 @@ Dodu的手炮:
   shots: 2
   autoSwing: true
   attributes:
+    damage: 392
     useTime: 10
     useSpeedMulti: 1
     useSpeedRangedMulti: 1
@@ -2566,9 +2570,6 @@ Dodu的手炮:
   type: SPECIAL_AMMO
   ammo: _煌晖御流激光
   autoSwing: true
-  attributes:
-    damage: 1680
-    useTime: 10
 煌晖御流炮_RIGHT_CLICK:
   type: SPECIAL_AMMO
   ammo: _煌晖御流射线
@@ -2576,6 +2577,7 @@ Dodu的手炮:
   offSet: 25
   autoSwing: true
   attributes:
+    damage: 1016
     useTime: 5
 太虚星龙炮:
   type: GUN
@@ -2653,8 +2655,7 @@ Dodu的手炮:
   type: ROCKET
   autoSwing: true
   attributes:
-    damage: 1000
-    useTime: 13
+    useTime: 10
   ammoConversion:
     ALL:
     - 天蝎座大号核弹
