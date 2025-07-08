@@ -78,6 +78,8 @@ public class Flail extends GenericProjectile {
         // flails that returns on first hit
         switch (super.projectileType) {
             case "海蚌锤":
+            case "雷姆的复仇":
+            case "龙魂破":
                 returning = true;
                 break;
         }

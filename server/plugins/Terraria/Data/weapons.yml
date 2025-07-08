@@ -1454,6 +1454,7 @@
   type: FLAIL
   reach: 48
   velocity: 3.75
+  strict: false
   autoSwing: true
 晨星链刃:
   type: WHIP
@@ -1465,6 +1466,7 @@
   type: FLAIL
   reach: 48
   velocity: 4
+  strict: false
   autoSwing: true
 新月链刃:
   type: WHIP
@@ -1482,6 +1484,7 @@
   type: BOOMERANG
   distance: 48
   velocity: 5
+  strict: false
   autoSwing: true
 塔纳托斯的脊柱:
   type: WHIP

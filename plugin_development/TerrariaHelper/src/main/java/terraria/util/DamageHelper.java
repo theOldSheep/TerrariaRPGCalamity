@@ -258,7 +258,7 @@ public class DamageHelper {
                         case "利维坦":
                             // the damager is the flail
                             if (damageInfoBus.damager.getName().equals("雷姆的复仇"))
-                                damageInfoBus.setCurrDmg( damageInfoBus.getCurrDmg() * 8 );
+                                damageInfoBus.setCurrDmg( damageInfoBus.getCurrDmg() * 2 );
                             break;
 
                     }

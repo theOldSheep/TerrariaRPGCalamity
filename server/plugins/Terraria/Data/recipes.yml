@@ -4964,6 +4964,16 @@ BREWING_STAND:
     - 灵质
     recipeCategory: CONSUMABLE_MANA
 TINKER_WORKBENCH:
+  '0':
+    requireLevel: 1
+    resultItem: 玄秘颅冠
+    requireItem:
+    - 钱币槽
+    - 坠星:99
+    - 黏鞍
+    - 神秘电路:32
+    - 可疑镀层:32
+    recipeCategory: ACCESSORY
   '1':
     requireLevel: 1
     resultItem: 魔力花
