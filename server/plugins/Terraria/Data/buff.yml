@@ -314,7 +314,7 @@ effects:
   枯萎:
     isBuff: false
     attributes:
-      damageTakenMulti: 0.1
+      damageTakenMulti: 0.05
     tooltip: 软弱无力
   诅咒:
     isBuff: false
