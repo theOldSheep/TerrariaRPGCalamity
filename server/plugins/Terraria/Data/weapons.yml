@@ -562,7 +562,7 @@
   autoSwing: true
   size: 3.75
   attributes:
-    damage: 484
+    damage: 225
   projectileInfo:
     interval: 1
     velocity: 2
@@ -999,6 +999,8 @@
   type: STAB
   autoSwing: false
   attributes:
+    damage: 40
+    armorPenetration: 30
     useTime: 45
   size: 7.5
 残缺环境刃[澄澈之纯净]:
