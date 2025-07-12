@@ -1322,7 +1322,9 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作穿甲饰品
   attributes:
+    damageMulti: 0.05
     armorPenetration: 8
   worth: 1000000
   rarity: 1
@@ -1736,7 +1738,7 @@
   attributes:
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.35
-    damageMeleeMulti: 0.1
+    damageMeleeMulti: 0.08
     critMelee: 5
   worth: 5000000
   rarity: 5
@@ -1749,7 +1751,7 @@
   attributes:
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.4
-    damageMeleeMulti: 0.15
+    damageMeleeMulti: 0.12
     critMelee: 5
     regen: 2
     buffInflictMelee: 狱炎|80|1
@@ -2131,7 +2133,7 @@ Drew之翼:
   attributes:
     knockbackMeleeMulti: 1
     meleeReachMulti: 0.5
-    damageMeleeMulti: 0.15
+    damageMeleeMulti: 0.1
     critMelee: 10
     buffInflictMelee: 元素谐鸣|80|1
   worth: 28000000
@@ -2718,6 +2720,8 @@ Drew之翼:
   - §r以此方式触发的衍生弹幕基础伤害降低20%
   - §r盗贼攻击造成超位崩解减益
   attributes:
+    critRogue: 8
+    damageRogueMulti: 0.08
     buffInflictRogue: 超位崩解|40|1
   worth: 40000000
   rarity: 16
@@ -2804,7 +2808,9 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作穿甲饰品
   attributes:
+    damageMulti: 0.12
     armorPenetration: 20
   worth: 9600000
   rarity: 7
@@ -2812,8 +2818,10 @@ Drew之翼:
   item: LEASH
   lore:
   - §r[饰品]
+  - §r▣算作穿甲饰品
   - §r取自顶级掠食者的恐怖战利品
   attributes:
+    damageMulti: 0.18
     armorPenetration: 50
   worth: 26000000
   rarity: 13
@@ -3585,7 +3593,7 @@ Drew之翼:
 草薙剑:
   item: WOOD_SWORD
   attributes:
-    damage: 62
+    damage: 28
     damageType: Melee
     crit: 4
     knockback: 3.5
@@ -3595,7 +3603,7 @@ Drew之翼:
 光之驱逐:
   item: DIAMOND_SWORD
   attributes:
-    damage: 101
+    damage: 34
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3605,7 +3613,7 @@ Drew之翼:
 陨星光剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 105
+    damage: 28
     damageType: Melee
     crit: 4
     knockback: 3.5
@@ -3615,7 +3623,7 @@ Drew之翼:
 烈焰剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 120
+    damage: 67
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -3625,7 +3633,7 @@ Drew之翼:
 妖刀村正:
   item: DIAMOND_SWORD
   attributes:
-    damage: 140
+    damage: 49
     damageType: Melee
     crit: 4
     knockback: 3.5
@@ -3637,7 +3645,7 @@ Drew之翼:
   lore:
   - §r每隔一次攻击就会发射永夜光束
   attributes:
-    damage: 373
+    damage: 78
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3647,7 +3655,7 @@ Drew之翼:
 翡翠斧:
   item: DIAMOND_SWORD
   attributes:
-    damage: 39
+    damage: 26
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3659,7 +3667,7 @@ Drew之翼:
   lore:
   - §r发射水刃剑气
   attributes:
-    damage: 89
+    damage: 39
     damageType: Melee
     crit: 4
     knockback: 2
@@ -3669,7 +3677,7 @@ Drew之翼:
 泪刃:
   item: DIAMOND_SWORD
   attributes:
-    damage: 106
+    damage: 44
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -3679,7 +3687,7 @@ Drew之翼:
 真菌爪:
   item: DIAMOND_SWORD
   attributes:
-    damage: 27
+    damage: 24
     damageType: Melee
     crit: 4
     knockback: 3.75
@@ -3691,7 +3699,7 @@ Drew之翼:
   lore:
   - §r发射绝望之光
   attributes:
-    damage: 190
+    damage: 75
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3702,7 +3710,7 @@ Drew之翼:
 灼炎弯刀:
   item: DIAMOND_SWORD
   attributes:
-    damage: 37
+    damage: 25
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -3714,7 +3722,7 @@ Drew之翼:
   lore:
   - §r发射恶毒球体，黏附于物块并爆炸
   attributes:
-    damage: 261
+    damage: 68
     damageType: Melee
     crit: 4
     knockback: 4.25
@@ -3727,7 +3735,7 @@ Drew之翼:
   - §r发射会将敌怪吸入的旋风
   - §r“随风而去吧！”
   attributes:
-    damage: 248
+    damage: 62
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3739,7 +3747,7 @@ Drew之翼:
   lore:
   - §r切割敌人时会释放涡旋能量撕裂周围的敌人
   attributes:
-    damage: 140
+    damage: 70
     damageType: Melee
     crit: 4
     knockback: 7
@@ -3751,7 +3759,7 @@ Drew之翼:
   lore:
   - §r发射凝胶波
   attributes:
-    damage: 266
+    damage: 128
     damageType: Melee
     crit: 4
     knockback: 5.25
@@ -3763,7 +3771,7 @@ Drew之翼:
   lore:
   - §r敌人死亡时治疗玩家
   attributes:
-    damage: 300
+    damage: 100
     damageType: Melee
     crit: 4
     knockback: 5.25
@@ -3773,7 +3781,7 @@ Drew之翼:
 纯净之斧:
   item: DIAMOND_SWORD
   attributes:
-    damage: 270
+    damage: 75
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3785,7 +3793,7 @@ Drew之翼:
   lore:
   - §r在玩家周围生成两秒后会爆炸的宇宙能量之火
   attributes:
-    damage: 119
+    damage: 80
     damageType: Melee
     crit: 4
     knockback: 5.25
@@ -3810,7 +3818,7 @@ Drew之翼:
   - §r发出爆炸绝望光束
   - §r造成酸性毒液减益
   attributes:
-    damage: 285
+    damage: 122
     damageType: Melee
     crit: 4
     knockback: 5.75
@@ -3823,7 +3831,7 @@ Drew之翼:
   lore:
   - §r发射追踪的风暴剑气
   attributes:
-    damage: 124
+    damage: 110
     damageType: Melee
     crit: 4
     knockback: 6
@@ -3835,7 +3843,7 @@ Drew之翼:
   lore:
   - §r生成无限穿透并爆炸出冰晶的冰炸弹
   attributes:
-    damage: 102
+    damage: 65
     damageType: Melee
     crit: 4
     knockback: 7.25
@@ -3848,7 +3856,7 @@ Drew之翼:
   lore:
   - §r发射夜光刀锋
   attributes:
-    damage: 302
+    damage: 115
     damageType: Melee
     crit: 4
     knockback: 5
@@ -3861,7 +3869,7 @@ Drew之翼:
   lore:
   - §r发射追踪炎霜球
   attributes:
-    damage: 292
+    damage: 120
     damageType: Melee
     crit: 4
     knockback: 6.25
@@ -3873,7 +3881,7 @@ Drew之翼:
   lore:
   - §r发射会造成狱火减益的火花
   attributes:
-    damage: 434
+    damage: 184
     damageType: Melee
     crit: 4
     knockback: 6.25
@@ -3899,7 +3907,7 @@ Drew之翼:
   - §r击碎敌人的护甲
   - §r当敌人护甲已经被击碎时治疗玩家
   attributes:
-    damage: 370
+    damage: 84
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -3911,7 +3919,7 @@ Drew之翼:
   lore:
   - §r发射恶魔镰刀，有等同于暴击率的概率造成暗影焰爆炸
   attributes:
-    damage: 440
+    damage: 300
     damageType: Melee
     crit: 4
     knockback: 6.5
@@ -3923,7 +3931,7 @@ Drew之翼:
   lore:
   - §r挥动时生成一些追踪火星
   attributes:
-    damage: 242
+    damage: 108
     damageType: Melee
     crit: 4
     knockback: 7
@@ -3935,7 +3943,7 @@ Drew之翼:
   lore:
   - §r发射一颗硫磺火弹，爆裂后产生更多硫磺火弹
   attributes:
-    damage: 248
+    damage: 185
     damageType: Melee
     crit: 4
     knockback: 6
@@ -3948,7 +3956,7 @@ Drew之翼:
   - §r发射追踪剑气
   - §r击中敌人时给予玩家暴君之怒增益，增加玩家5%近战伤害和暴击率
   attributes:
-    damage: 150
+    damage: 118
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -3960,7 +3968,7 @@ Drew之翼:
   lore:
   - §r根据你已损失生命值附加额外伤害
   attributes:
-    damage: 500
+    damage: 300
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -3973,7 +3981,7 @@ Drew之翼:
   lore:
   - §r发射短距离三叉戟
   attributes:
-    damage: 280
+    damage: 252
     damageType: Melee
     crit: 4
     knockback: 8
@@ -3986,7 +3994,7 @@ Drew之翼:
   lore:
   - §r召唤流星从天而降
   attributes:
-    damage: 345
+    damage: 267
     damageType: Melee
     crit: 4
     knockback: 7.75
@@ -3998,7 +4006,7 @@ Drew之翼:
   lore:
   - §r命中时召唤荆棘
   attributes:
-    damage: 350
+    damage: 124
     damageType: Melee
     crit: 4
     knockback: 7.25
@@ -4026,7 +4034,7 @@ Drew之翼:
   - §r被冰之大魔法师祝福的远古之刃
   - §r发射暗影冰晶
   attributes:
-    damage: 267
+    damage: 216
     damageType: Melee
     crit: 4
     knockback: 4
@@ -4039,7 +4047,7 @@ Drew之翼:
   lore:
   - §r从天空召唤利维坦毒牙
   attributes:
-    damage: 494
+    damage: 198
     damageType: Melee
     crit: 4
     knockback: 7
@@ -4052,7 +4060,7 @@ Drew之翼:
   - §r用剑击打敌人时，庇护之光会爆发出火焰
   - §r右键发射庇护之火
   attributes:
-    damage: 369
+    damage: 213
     damageType: Melee
     crit: 4
     knockback: 4.25
@@ -4064,7 +4072,7 @@ Drew之翼:
   lore:
   - §r发射若干个火球
   attributes:
-    damage: 350
+    damage: 246
     damageType: Melee
     crit: 4
     knockback: 7.75
@@ -4077,7 +4085,7 @@ Drew之翼:
   lore:
   - §r根据敌人剩余生命值造成最高100%的额外伤害
   attributes:
-    damage: 450
+    damage: 231
     damageType: Melee
     crit: 4
     knockback: 4
@@ -4090,7 +4098,7 @@ Drew之翼:
   lore:
   - §r发射出一把灵魂镰刀
   attributes:
-    damage: 550
+    damage: 455
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -4104,7 +4112,7 @@ Drew之翼:
   - §r射出发散的恶魔镰刀
   - §r直接击中敌人时有等同于暴击率的概率造成爆炸
   attributes:
-    damage: 155
+    damage: 78
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -4114,10 +4122,8 @@ Drew之翼:
   rarity: 8
 瘟疫毒刃:
   item: DIAMOND_SWORD
-  lore:
-  - §r射出瘟疫刃
   attributes:
-    damage: 512
+    damage: 408
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -4143,7 +4149,7 @@ Drew之翼:
   lore:
   - §r发射出破坏性的追踪火花
   attributes:
-    damage: 240
+    damage: 360
     damageType: Melee
     crit: 4
     knockback: 8
@@ -4155,7 +4161,7 @@ Drew之翼:
   lore:
   - §r发射数个追踪离子球
   attributes:
-    damage: 373
+    damage: 250
     damageType: Melee
     crit: 4
     knockback: 5.25
@@ -4168,7 +4174,7 @@ Drew之翼:
   - §r召唤燃烧头骨
   - §r燃烧头骨命中敌怪时会爆炸成追踪火球
   attributes:
-    damage: 371
+    damage: 550
     damageType: Melee
     crit: 4
     knockback: 8
@@ -4183,7 +4189,7 @@ Drew之翼:
   - §r发射剑气将怪物吸入
   - §r“别想逃开哦”
   attributes:
-    damage: 400
+    damage: 397
     damageType: Melee
     crit: 4
     knockback: 6.25
@@ -4197,7 +4203,7 @@ Drew之翼:
   - §r当敌人护甲已经被击碎时治疗玩家
   - §r击中低于半血的敌人会释放彩虹弹幕
   attributes:
-    damage: 725
+    damage: 272
     damageType: Melee
     crit: 4
     knockback: 8.5
@@ -4209,7 +4215,7 @@ Drew之翼:
   lore:
   - §r发射大量会爆炸的宇宙冲击波
   attributes:
-    damage: 270
+    damage: 105
     damageType: Melee
     crit: 4
     knockback: 4.25
@@ -4224,7 +4230,7 @@ Drew之翼:
   - §r你可以听见这把剑微弱的安抚和低语
   - §r“无论你在何方，你都绝非孤身一人。我永远会在你身旁，我的王”
   attributes:
-    damage: 603
+    damage: 168
     damageType: Melee
     crit: 4
     knockback: 7
@@ -4237,7 +4243,7 @@ Drew之翼:
   - §r发射蜜蜂和瘟疫云
   - §r“奴役蜜蜂，属实可耻”
   attributes:
-    damage: 386
+    damage: 255
     damageType: Melee
     crit: 4
     knockback: 6
@@ -4252,7 +4258,7 @@ Drew之翼:
   - §r剑气在白天造成破晓减益，在晚上造成夜魇
   - §r“打破次元壁”
   attributes:
-    damage: 780
+    damage: 763
     damageType: Melee
     crit: 4
     knockback: 6.5
@@ -4264,7 +4270,7 @@ Drew之翼:
   lore:
   - §r击中敌人时会天降月火
   attributes:
-    damage: 100
+    damage: 64
     damageType: Melee
     crit: 4
     knockback: 7.75
@@ -4286,7 +4292,7 @@ Drew之翼:
   lore:
   - §r命中敌人会爆发神圣之火
   attributes:
-    damage: 250
+    damage: 228
     damageType: Melee
     crit: 4
     knockback: 7.75
@@ -4300,7 +4306,7 @@ Drew之翼:
   - §r以混沌之核的愤怒铸造而成
   - §r召唤大量从天而降的陨石
   attributes:
-    damage: 800
+    damage: 431
     damageType: Melee
     crit: 4
     knockback: 6
@@ -4312,7 +4318,7 @@ Drew之翼:
   lore:
   - §r击中敌人会在短时间内大幅提升你的防御、近战伤害和暴击率
   attributes:
-    damage: 700
+    damage: 500
     damageType: Melee
     crit: 4
     knockback: 8
@@ -4324,7 +4330,7 @@ Drew之翼:
   lore:
   - §r直接击中敌人会恢复生命值
   attributes:
-    damage: 1150
+    damage: 340
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -4337,7 +4343,7 @@ Drew之翼:
   - §r发射三种具有不同追踪能力的剑气
   - §r剑刃直接击中敌人时给予玩家暴君之怒增益，增加玩家5%近战伤害和暴击率
   attributes:
-    damage: 835
+    damage: 456
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -4352,7 +4358,7 @@ Drew之翼:
   - §r击中敌人后召唤斩切光束
   - §r能量矢命中后爆炸
   attributes:
-    damage: 470
+    damage: 473
     damageType: Melee
     crit: 4
     knockback: 7
@@ -4365,7 +4371,7 @@ Drew之翼:
   - §r击中生命值低于20%的非BOSS敌怪时会产生血爆
   - §r血爆会掉落可以治愈玩家的红心
   attributes:
-    damage: 900
+    damage: 817
     damageType: Melee
     crit: 4
     knockback: 8
@@ -4379,7 +4385,7 @@ Drew之翼:
   - §r你必须用剑身击中敌人才能触发此效果
   - §r射出的弹幕将跟随玩家并保持一定距离
   attributes:
-    damage: 767
+    damage: 555
     damageType: Melee
     crit: 4
     knockback: 7
@@ -4392,7 +4398,7 @@ Drew之翼:
   - §r发射追踪并在击中时召唤追踪并在击中时召唤追踪火球的恐惧骷髅的烈焰头骨
   - §r“禁止禁止套娃”
   attributes:
-    damage: 688
+    damage: 600
     damageType: Melee
     crit: 4
     knockback: 8.5
@@ -4404,7 +4410,7 @@ Drew之翼:
   lore:
   - §r击中敌人时试图召唤可以使伤害减半的能量庇护，此效果持续10秒且有45秒冷却时间
   attributes:
-    damage: 1000
+    damage: 691
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -4417,7 +4423,7 @@ Drew之翼:
   - §r发射一个无限穿透的渊海三叉戟
   - §r渊海三叉戟在飞行途中降下更多三叉戟
   attributes:
-    damage: 1100
+    damage: 750
     damageType: Melee
     crit: 4
     knockback: 9
@@ -4442,7 +4448,7 @@ Drew之翼:
   - §r射出会弹射的恐惧光束
   - §r每次弹射或命中敌人时猛烈爆炸
   attributes:
-    damage: 1057
+    damage: 345
     damageType: Melee
     crit: 4
     knockback: 8.5
@@ -4454,7 +4460,7 @@ Drew之翼:
   lore:
   - §r射出发散的旋转刀刃
   attributes:
-    damage: 1234
+    damage: 466
     damageType: Melee
     crit: 4
     knockback: 8
@@ -4467,7 +4473,7 @@ Drew之翼:
   lore:
   - §r命中时生成弑神之焰
   attributes:
-    damage: 1789
+    damage: 1769
     damageType: Melee
     crit: 4
     knockback: 9
@@ -4479,7 +4485,7 @@ Drew之翼:
   lore:
   - §r发射命中敌人时治愈自身的精元镰刀
   attributes:
-    damage: 1055
+    damage: 739
     damageType: Melee
     crit: 4
     knockback: 8
@@ -4493,7 +4499,7 @@ Drew之翼:
   - §r发射发散的恶魔之镰
   - §r直接命中敌人时有等同于暴击率的概率造成暗影焰爆炸
   attributes:
-    damage: 715
+    damage: 450
     damageType: Melee
     crit: 4
     knockback: 6.75
@@ -4510,7 +4516,7 @@ Drew之翼:
   - §r“无论你在何方，你都绝非孤身一人。我永远会在你身旁，我的王”
   - §7§m“这把刀在之前的版本名字不是巨剑“巴拉”，绝 对 不 是”
   attributes:
-    damage: 1345
+    damage: 703
     damageType: Melee
     crit: 4
     knockback: 7
@@ -4524,7 +4530,7 @@ Drew之翼:
   - §r左键发射一束彩虹光炮
   - §r右键迅速挥舞，释放虹光剑气
   attributes:
-    damage: 1177
+    damage: 937
     damageType: Melee
     crit: 12
     knockback: 7
@@ -4537,7 +4543,7 @@ Drew之翼:
   lore:
   - §r安宁
   attributes:
-    damage: 682
+    damage: 626
     damageType: Melee
     crit: 4
     knockback: 2.5
@@ -4554,7 +4560,7 @@ Drew之翼:
   - §r第三次挥动造成两次伤害判定
   - §r挥刀时逐渐积攒力量，最终将四散发射大量追踪骷髅
   attributes:
-    damage: 2785
+    damage: 1572
     damageType: Melee
     crit: 4
     knockback: 9
@@ -4570,7 +4576,7 @@ Drew之翼:
   - §r充能将用作强化左键攻击，满充能时本次攻击在命中敌人时爆炸
   - §r“嘉登喷流之刃”
   attributes:
-    damage: 3523
+    damage: 958
     damageType: Melee
     crit: 4
     knockback: 9
@@ -4588,7 +4594,7 @@ Drew之翼:
   - §r绿陨石造成瘟疫
   - §r“收了神通吧，卡成PPT了”
   attributes:
-    damage: 3535
+    damage: 340
     damageType: Melee
     crit: 4
     knockback: 9.5
@@ -4602,7 +4608,7 @@ Drew之翼:
   - §r发射彩虹光束，效果取决于它们的颜色
   - §r右击施展真近战攻击
   attributes:
-    damage: 3000
+    damage: 2415
     damageType: Melee
     crit: 14
     knockback: 8
@@ -4919,7 +4925,7 @@ Drew之翼:
   lore:
   - §r击中敌人时散发电火花
   attributes:
-    damage: 35
+    damage: 40
     damageType: Melee
     crit: 4
     knockback: 5.5
@@ -4932,7 +4938,7 @@ Drew之翼:
   - §r击中敌人时散发电火花
   - §r挥刺时射出追踪电火花
   attributes:
-    damage: 108
+    damage: 134
     damageType: Melee
     crit: 4
     knockback: 7
@@ -4944,7 +4950,7 @@ Drew之翼:
   lore:
   - §r攻击敌人会让你获得极短暂的近战无敌帧
   attributes:
-    damage: 369
+    damage: 382
     damageType: Melee
     crit: 4
     knockback: 8.25
@@ -4956,7 +4962,7 @@ Drew之翼:
   lore:
   - §r生成彩虹短剑，击中敌人后会发出额外的短剑弹幕
   attributes:
-    damage: 400
+    damage: 215
     damageType: Melee
     crit: 4
     knockback: 8.5
@@ -4972,7 +4978,7 @@ Drew之翼:
   - §r击中敌人时生成小行星
   - §r“并不能使敌人内外翻转”
   attributes:
-    damage: 400
+    damage: 462
     damageType: Melee
     crit: 4
     knockback: 10
@@ -4987,7 +4993,7 @@ Drew之翼:
   - §r发射一束追踪敌人的宇宙射线
   - §r在击中敌人后在较远处生成追踪弹幕
   attributes:
-    damage: 767
+    damage: 686
     damageType: Melee
     crit: 4
     knockback: 9
@@ -4997,7 +5003,7 @@ Drew之翼:
 赤潮矛:
   item: DIAMOND_SWORD
   attributes:
-    damage: 117
+    damage: 59
     damageType: Melee
     crit: 4
     knockback: 5
@@ -5009,7 +5015,7 @@ Drew之翼:
   lore:
   - §r发射追踪漩涡
   attributes:
-    damage: 60
+    damage: 28
     damageType: Melee
     crit: 4
     knockback: 4.5
@@ -5019,7 +5025,7 @@ Drew之翼:
 金羽:
   item: DIAMOND_SWORD
   attributes:
-    damage: 155
+    damage: 64
     damageType: Melee
     crit: 4
     knockback: 5.75
@@ -5032,7 +5038,7 @@ Drew之翼:
   - §r左键当做矛使用
   - §r右键当做链球使用
   attributes:
-    damage: 137
+    damage: 60
     damageType: Melee
     crit: 4
     knockback: 5
@@ -5045,7 +5051,7 @@ Drew之翼:
   lore:
   - §r发射星夜光束
   attributes:
-    damage: 200
+    damage: 113
     damageType: Melee
     crit: 4
     knockback: 6
@@ -5057,7 +5063,7 @@ Drew之翼:
   lore:
   - §r打击敌人时会引发硫磺火爆炸并降落硫磺火
   attributes:
-    damage: 66
+    damage: 132
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5069,7 +5075,7 @@ Drew之翼:
   lore:
   - §r发射花矛尖
   attributes:
-    damage: 320
+    damage: 270
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5081,7 +5087,7 @@ Drew之翼:
   lore:
   - §r发射一个长矛状的射线
   attributes:
-    damage: 347
+    damage: 248
     damageType: Melee
     crit: 4
     knockback: 8.5
@@ -5093,7 +5099,7 @@ Drew之翼:
   lore:
   - §r命中时爆炸并有等同于暴击率的概率生成一个追踪弹幕
   attributes:
-    damage: 800
+    damage: 238
     damageType: Melee
     crit: 4
     knockback: 6.75
@@ -5106,7 +5112,7 @@ Drew之翼:
   lore:
   - §r打击敌人会发射瘟疫搜寻者
   attributes:
-    damage: 600
+    damage: 222
     damageType: Melee
     crit: 4
     knockback: 8.5
@@ -5119,7 +5125,7 @@ Drew之翼:
   lore:
   - §r释放多个能量脉冲
   attributes:
-    damage: 260
+    damage: 168
     damageType: Melee
     crit: 4
     knockback: 9
@@ -5131,7 +5137,7 @@ Drew之翼:
   lore:
   - §r有等同于暴击率的概率在命中后召唤一枚幻星
   attributes:
-    damage: 792
+    damage: 220
     damageType: Melee
     crit: 29
     knockback: 8.5
@@ -5144,11 +5150,11 @@ Drew之翼:
   - §r撕裂宇宙！
   - §r发射一只元素之矛，飞行过程中会分裂数次
   attributes:
-    damage: 95
+    damage: 454
     damageType: Melee
     crit: 4
     knockback: 9.5
-    useTime: 60
+    useTime: 30
     buffInflictMelee: 元素谐鸣|80|1
   worth: 22000000
   rarity: 11
@@ -5157,7 +5163,7 @@ Drew之翼:
   lore:
   - §r命中敌怪时治疗玩家
   attributes:
-    damage: 1265
+    damage: 1119
     damageType: Melee
     crit: 4
     knockback: 8.75
@@ -5169,7 +5175,7 @@ Drew之翼:
   lore:
   - §r放出五个灵魂鬼爪
   attributes:
-    damage: 507
+    damage: 576
     damageType: Melee
     crit: 4
     knockback: 8.5
@@ -5181,7 +5187,7 @@ Drew之翼:
   lore:
   - §r发射一柄巨大的鱼叉穿刺敌人，鱼叉会附着在方块上
   attributes:
-    damage: 700
+    damage: 900
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5465,7 +5471,7 @@ Drew之翼:
   - §#83B87E“这东西甚至可以直接把人的眼睛挖出来！”
   - §#83B87E“……啊。”
   attributes:
-    damage: 29
+    damage: 28
     damageType: Melee
     crit: 4
     knockback: 3.75
@@ -5477,7 +5483,7 @@ Drew之翼:
   lore:
   - §r发射一连串恶魔之刃
   attributes:
-    damage: 44
+    damage: 35
     damageType: Melee
     crit: 4
     knockback: 4
@@ -5489,12 +5495,11 @@ Drew之翼:
   lore:
   - §r右键将向敌人冲刺，刺中敌人时自动调整距离并急速造成伤害
   attributes:
-    damage: 47
+    damage: 58
     damageType: Melee
     crit: 4
     knockback: 7
     useTime: 34
-    armorPenetration: 30
   worth: 800000
   rarity: 3
 残缺环境刃[澄澈之纯净]:
@@ -5503,7 +5508,7 @@ Drew之翼:
   - §#ABB448射出薄弱的弹幕，它将击碎敌怪的防御
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 162
+    damage: 92
     damageType: Melee
     crit: 4
     knockback: 5
@@ -5516,7 +5521,7 @@ Drew之翼:
   - §#A5EBEB以冰川凝结为剑身，施行威力递增的三连剑技
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 225
+    damage: 115
     damageType: Melee
     crit: 4
     knockback: 5
@@ -5530,7 +5535,7 @@ Drew之翼:
   - §#EE9C49你在半空时，剑刃也能用于在物块之间弹跳
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 300
+    damage: 148
     damageType: Melee
     crit: 4
     knockback: 5
@@ -5544,7 +5549,7 @@ Drew之翼:
   - §#D34093攻击汲取击中敌怪的生命，并从其身上弹开
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 220
+    damage: 120
     damageType: Melee
     crit: 4
     knockback: 5
@@ -5558,7 +5563,7 @@ Drew之翼:
   - §#A2C855刃尖击中敌怪必定暴击，潜行时击中物块将把你拉去
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 232
+    damage: 100
     damageType: Melee
     crit: 4
     knockback: 5
@@ -5571,7 +5576,7 @@ Drew之翼:
   - §#A2C855射出薄弱的弹幕，它将击碎敌怪的防御
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 267
+    damage: 176
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5584,7 +5589,7 @@ Drew之翼:
   - §#A5EBEB以冰川凝结为剑身，施行威力递增的三连剑技
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 486
+    damage: 277
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5597,7 +5602,7 @@ Drew之翼:
   - §#EE9C49于面前召唤炙热的剑刃。你在半空时，剑刃能用于在物块之间弹跳
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 635
+    damage: 200
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5611,7 +5616,7 @@ Drew之翼:
   - §#D34093成功击中敌怪减少使用冷却
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 1000
+    damage: 383
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5625,7 +5630,7 @@ Drew之翼:
   - §#A2C855暴击造成额外的伤害
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 713
+    damage: 200
     damageType: Melee
     crit: -25
     critDamage: 75
@@ -5640,7 +5645,7 @@ Drew之翼:
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   - §r“■■■ ■~■~■~■~”
   attributes:
-    damage: 672
+    damage: 260
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5654,7 +5659,7 @@ Drew之翼:
   - §#8A86FC右键攻击向前冲刺并在击中敌人或方块时造成猛烈爆炸
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 648
+    damage: 380
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5667,7 +5672,7 @@ Drew之翼:
   - §#486ACC发射不受液体减速的水球，水球会爆裂成数个冲击波
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 110
+    damage: 165
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5681,7 +5686,7 @@ Drew之翼:
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   - §r“爱滴魔力转圈圈~”
   attributes:
-    damage: 1000
+    damage: 795
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5700,7 +5705,7 @@ Drew之翼:
   - §#D83716右键攻击借助敌人而非物块弹跳
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 1320
+    damage: 450
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5714,7 +5719,7 @@ Drew之翼:
   - §#71EFB1每第二次攻击造成的伤害显著增加
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 1732
+    damage: 430
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5729,7 +5734,7 @@ Drew之翼:
   - §#846DE9撞击地面将引发山崩地裂，天地轰鸣，刹那间，一排异界巨石破土而出
   - §r潜行右键使武器与环境相谐振，储存生物群系的力量
   attributes:
-    damage: 676
+    damage: 1850
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5745,7 +5750,7 @@ Drew之翼:
   - §r一把破旧生锈的剑，曾经对抗过这个世界的邪恶，现在它准备再一次发挥作用
   - §r“惊为天人的蹭闪手法”
   attributes:
-    damage: 260
+    damage: 100
     damageType: Melee
     crit: 4
     knockback: 6.25
@@ -5761,7 +5766,7 @@ Drew之翼:
   - §r锻造出来征服一切邪恶的神圣之刃
   - §r“并不能触发时空断裂”
   attributes:
-    damage: 555
+    damage: 490
     damageType: Melee
     crit: 4
     knockback: 6.5
@@ -5779,7 +5784,7 @@ Drew之翼:
   - §r一对注入了泰拉大陆精华的天赐之刃，其威力足以切割现实的结构
   - §r“剪刀飞快”
   attributes:
-    damage: 408
+    damage: 741
     damageType: Melee
     crit: 14
     knockback: 8.5
@@ -5797,7 +5802,7 @@ Drew之翼:
   - §#FFA403格挡后会获得16层充能，充能会强化普通攻击，让你可以同时使用两把剑刃
   - §r“你的旅程的物理顶点，拥有着能使神明§m笑嘻§r分崩离析的力量”
   attributes:
-    damage: 1900
+    damage: 4700
     damageType: Melee
     crit: 19
     knockback: 9.5
@@ -5810,7 +5815,7 @@ Drew之翼:
   - §r你感到死神之手掌控着你
   - §r发射一连串追踪镰刀
   attributes:
-    damage: 414
+    damage: 707
     damageType: Melee
     crit: 4
     knockback: 9
@@ -5822,7 +5827,7 @@ Drew之翼:
   lore:
   - §r利用相位剑进行攻击并释放热熔光刃
   attributes:
-    damage: 1702
+    damage: 1500
     damageType: Melee
     crit: 4
     knockback: 7
@@ -5835,7 +5840,7 @@ Drew之翼:
   - §r召唤一个让长矛穿过的传送门
   - §r短暂延迟后在目标周围释放长矛的复制体刺穿敌人
   attributes:
-    damage: 1245
+    damage: 1680
     damageType: Melee
     crit: 4
     knockback: 9.75
@@ -5855,7 +5860,7 @@ Drew之翼:
   - §r潜行时鼠标右键切换当前调谐
   - §r“转圈圈咯~”
   attributes:
-    damage: 1455
+    damage: 888
     damageType: Melee
     crit: 4
     knockback: 9
@@ -5873,7 +5878,7 @@ Drew之翼:
   - §r潜行时鼠标右键切换当前调谐
   - §r“很好的索敌，使我的银河旋转”
   attributes:
-    damage: 1050
+    damage: 2086
     damageType: Melee
     crit: 4
     knockback: 9
@@ -5910,7 +5915,7 @@ Drew之翼:
   - §r全部环境调谐已存在其中
   - §r潜行时鼠标右键切换当前调谐
   attributes:
-    damage: 3482
+    damage: 4000
     damageType: Melee
     crit: 4
     knockback: 9
@@ -5923,7 +5928,7 @@ Drew之翼:
   - §r旋转武器，命中敌怪时产生爆炸火球
   - §r“石猴出世”
   attributes:
-    damage: 1530
+    damage: 1807
     damageType: Melee
     crit: 4
     knockback: 7.5
@@ -5938,7 +5943,7 @@ Drew之翼:
   - §r天降正义！
   - §r“你怎么穿着法杖的贴图，还用人攻击方式”
   attributes:
-    damage: 612
+    damage: 828
     damageType: Melee
     crit: 4
     knockback: 2.5
@@ -5950,7 +5955,7 @@ Drew之翼:
   lore:
   - §r掷出在目标处旋转的硫火三叉戟，撕裂你的敌人
   attributes:
-    damage: 753
+    damage: 828
     damageType: Melee
     crit: 4
     knockback: 9
@@ -6266,7 +6271,7 @@ Drew之翼:
 木弓:
   item: BOW
   attributes:
-    damage: 11
+    damage: 26
     damageType: Arrow
     crit: 4
     projectileSpeed: 6.1
@@ -6277,7 +6282,7 @@ Drew之翼:
 铜质短弓:
   item: BOW
   attributes:
-    damage: 14
+    damage: 32
     damageType: Arrow
     crit: 4
     projectileSpeed: 6.6
@@ -6288,7 +6293,7 @@ Drew之翼:
 铁弓:
   item: BOW
   attributes:
-    damage: 17
+    damage: 36
     damageType: Arrow
     crit: 4
     projectileSpeed: 6.6
@@ -6299,7 +6304,7 @@ Drew之翼:
 银弓:
   item: BOW
   attributes:
-    damage: 23
+    damage: 39
     damageType: Arrow
     crit: 4
     projectileSpeed: 6.6
@@ -6310,7 +6315,7 @@ Drew之翼:
 金弓:
   item: BOW
   attributes:
-    damage: 35
+    damage: 42
     damageType: Arrow
     crit: 4
     projectileSpeed: 6.6
@@ -6321,7 +6326,7 @@ Drew之翼:
 恶魔弓:
   item: BOW
   attributes:
-    damage: 46
+    damage: 54
     damageType: Arrow
     crit: 4
     projectileSpeed: 6.7
@@ -6332,7 +6337,7 @@ Drew之翼:
 熔火之怒:
   item: BOW
   attributes:
-    damage: 50
+    damage: 79
     damageType: Arrow
     crit: 4
     projectileSpeed: 8
@@ -6343,7 +6348,7 @@ Drew之翼:
 代达罗斯风暴弓:
   item: BOW
   attributes:
-    damage: 50
+    damage: 80
     damageType: Arrow
     crit: 4
     projectileSpeed: 12.5
@@ -6354,7 +6359,7 @@ Drew之翼:
 钴连弩:
   item: BOW
   attributes:
-    damage: 190
+    damage: 231
     damageType: Arrow
     crit: 4
     projectileSpeed: 9
@@ -6365,7 +6370,7 @@ Drew之翼:
 秘银连弩:
   item: BOW
   attributes:
-    damage: 190
+    damage: 399
     damageType: Arrow
     crit: 4
     projectileSpeed: 9.5
@@ -6376,7 +6381,7 @@ Drew之翼:
 精金连弩:
   item: BOW
   attributes:
-    damage: 170
+    damage: 202
     damageType: Arrow
     crit: 4
     projectileSpeed: 10
@@ -6387,7 +6392,7 @@ Drew之翼:
 神圣连弩:
   item: BOW
   attributes:
-    damage: 240
+    damage: 360
     damageType: Arrow
     crit: 4
     projectileSpeed: 10
@@ -6398,7 +6403,7 @@ Drew之翼:
 叶绿连弩:
   item: BOW
   attributes:
-    damage: 90
+    damage: 124
     damageType: Arrow
     crit: 4
     projectileSpeed: 11.5
@@ -6409,7 +6414,7 @@ Drew之翼:
 海啸弓:
   item: BOW
   attributes:
-    damage: 135
+    damage: 144
     damageType: Arrow
     crit: 4
     projectileSpeed: 5
@@ -6420,7 +6425,7 @@ Drew之翼:
 日暮:
   item: BOW
   attributes:
-    damage: 150
+    damage: 190
     damageType: Arrow
     crit: 4
     projectileSpeed: 10
@@ -6431,7 +6436,7 @@ Drew之翼:
 幻象弓:
   item: BOW
   attributes:
-    damage: 110
+    damage: 181
     damageType: Arrow
     crit: 4
     projectileSpeed: 10
@@ -6443,7 +6448,7 @@ Drew之翼:
 钨钢弓:
   item: BOW
   attributes:
-    damage: 17
+    damage: 36
     damageType: Arrow
     crit: 4
     projectileSpeed: 12
@@ -6456,7 +6461,7 @@ Drew之翼:
   lore:
   - §r将木箭转化为闪电箭
   attributes:
-    damage: 34
+    damage: 45
     damageType: Arrow
     crit: 4
     projectileSpeed: 14
@@ -6467,7 +6472,7 @@ Drew之翼:
 贝壳刃弓:
   item: BOW
   lore:
-  - §r将木箭转化为锋利的贝壳箭
+  - §r将木箭转化为锋利的贝壳箭，穿透四个敌人
   attributes:
     damage: 100
     damageType: Arrow
@@ -6480,10 +6485,10 @@ Drew之翼:
 烈风:
   item: BOW
   lore:
-  - §r额外发射三支低伤害天羽
+  - §r额外发射三支继承100%攻击力的追踪天羽
   - §r“并不能将自己发射出去”
   attributes:
-    damage: 40
+    damage: 26
     damageType: Arrow
     crit: 4
     projectileSpeed: 20
@@ -6494,9 +6499,9 @@ Drew之翼:
 凝胶弓:
   item: BOW
   lore:
-  - §r额外发射两束凝胶
+  - §r额外发射两束继承100%攻击力的凝胶
   attributes:
-    damage: 76
+    damage: 70
     damageType: Arrow
     crit: 4
     projectileSpeed: 12
@@ -6511,7 +6516,7 @@ Drew之翼:
   - §r将木箭转化为能在物块表面滑动的能量束
   - §r“啊摩擦~摩↓→↗擦→”
   attributes:
-    damage: 74
+    damage: 66
     damageType: Arrow
     crit: 4
     projectileSpeed: 8
@@ -6525,7 +6530,7 @@ Drew之翼:
   - §r一次发射四支箭
   - §r木箭转化为能反弹的黑翼蝙蝠
   attributes:
-    damage: 64
+    damage: 71
     damageType: Arrow
     crit: 4
     projectileSpeed: 16
@@ -6539,7 +6544,7 @@ Drew之翼:
   - §r一次发射两支箭
   - §r发射一个额外的水晶飞镖
   attributes:
-    damage: 100
+    damage: 116
     damageType: Arrow
     crit: 4
     projectileSpeed: 12
@@ -6552,7 +6557,7 @@ Drew之翼:
   lore:
   - §r一次发射两支冰雾箭
   attributes:
-    damage: 130
+    damage: 225
     damageType: Arrow
     crit: 4
     projectileSpeed: 12
@@ -6565,7 +6570,7 @@ Drew之翼:
   lore:
   - §r将木箭转化为闪电箭
   attributes:
-    damage: 95
+    damage: 117
     damageType: Arrow
     crit: 4
     projectileSpeed: 15
@@ -6579,7 +6584,7 @@ Drew之翼:
   - §r一次发射三支箭
   - §r将木箭转化为硫火射线
   attributes:
-    damage: 100
+    damage: 86
     damageType: Arrow
     crit: 4
     projectileSpeed: 13
@@ -6593,7 +6598,7 @@ Drew之翼:
   - §r发射如水流般密集的叶之箭
   - §r右键发射会散发毒云的孢子球
   attributes:
-    damage: 80
+    damage: 53
     damageType: Arrow
     crit: 4
     projectileSpeed: 10
@@ -6608,7 +6613,7 @@ Drew之翼:
   - §r将木箭转化为沿物块滑行的能量束
   - §r“阴暗地滑行”
   attributes:
-    damage: 140
+    damage: 149
     damageType: Arrow
     crit: 4
     projectileSpeed: 10
@@ -6621,7 +6626,7 @@ Drew之翼:
   lore:
   - §r将木箭转化为能击碎敌人的装甲并且会碎裂为化石碎片的破城巨箭
   attributes:
-    damage: 182
+    damage: 234
     damageType: Arrow
     crit: 4
     projectileSpeed: 20
@@ -6636,7 +6641,7 @@ Drew之翼:
   - §r将木箭转化为小丑之箭
   - §r“满足了小时候随便用小丑之箭的梦想”
   attributes:
-    damage: 110
+    damage: 124
     damageType: Arrow
     crit: 4
     projectileSpeed: 10
@@ -6650,7 +6655,7 @@ Drew之翼:
   - §r一次发射三支箭矢
   - §r额外发射两支诅咒箭或狱炎箭
   attributes:
-    damage: 96
+    damage: 103
     damageType: Arrow
     crit: 4
     projectileSpeed: 17
@@ -6664,7 +6669,7 @@ Drew之翼:
   - §r一次发射两支箭矢
   - §r将木箭转化为接触后爆炸成蜜蜂的瘟疫箭
   attributes:
-    damage: 140
+    damage: 246
     damageType: Arrow
     crit: 4
     projectileSpeed: 12
@@ -6678,7 +6683,7 @@ Drew之翼:
   - §r一次发射三支箭
   - §r“一箭三连”
   attributes:
-    damage: 182
+    damage: 399
     damageType: Arrow
     crit: 4
     projectileSpeed: 16
@@ -6692,7 +6697,7 @@ Drew之翼:
   - §r从天空发射七发箭矢风暴
   - §r将木箭转化为自导能源箭
   attributes:
-    damage: 150
+    damage: 191
     damageType: Arrow
     crit: 4
     projectileSpeed: 12
@@ -6705,7 +6710,7 @@ Drew之翼:
   lore:
   - §r将所有箭矢转化为星能之箭，飞行时生成追踪的魂灵星炎
   attributes:
-    damage: 214
+    damage: 368
     damageType: Arrow
     crit: 4
     projectileSpeed: 6
@@ -6717,10 +6722,10 @@ Drew之翼:
 发条弓:
   item: BOW
   lore:
-  - §r蓄力以逐渐填装威力强大的箭矢
+  - §r蓄力以逐渐填装威力强大的追踪箭矢
   - §r最多装填六发
   attributes:
-    damage: 1462
+    damage: 1145
     damageType: Arrow
     crit: 4
     projectileSpeed: 15
@@ -6731,9 +6736,9 @@ Drew之翼:
 地核之炎:
   item: BOW
   lore:
-  - §r发射四支可穿透物块的爆炸辐射箭
+  - §r发射四支可穿透物块的辐射箭
   attributes:
-    damage: 592
+    damage: 392
     damageType: Arrow
     crit: 4
     projectileSpeed: 9
@@ -6748,7 +6753,7 @@ Drew之翼:
   - §r一次发射四支箭
   - §r额外发射两支毒液箭或叶绿箭
   attributes:
-    damage: 330
+    damage: 260
     damageType: Arrow
     crit: 4
     projectileSpeed: 16
@@ -6762,7 +6767,7 @@ Drew之翼:
   - §r发射巨量从天而降的箭矢
   - §r将木箭转化为能源箭矢
   attributes:
-    damage: 110
+    damage: 128
     damageType: Arrow
     crit: 4
     projectileSpeed: 28
@@ -6775,7 +6780,7 @@ Drew之翼:
   lore:
   - §r发射正常箭矢的同时发射恶魔焰火球
   attributes:
-    damage: 265
+    damage: 706
     damageType: Arrow
     crit: 4
     projectileSpeed: 20
@@ -6790,7 +6795,7 @@ Drew之翼:
   - §r自天空中发射五支箭
   - §r将所有箭转化为跟踪箭
   attributes:
-    damage: 362
+    damage: 272
     damageType: Arrow
     crit: 4
     projectileSpeed: 20
@@ -6803,7 +6808,7 @@ Drew之翼:
   lore:
   - §r发射能够产生水爆炸的充能猎魂鲨
   attributes:
-    damage: 1272
+    damage: 1140
     damageType: Arrow
     crit: 4
     projectileSpeed: 20
@@ -6817,7 +6822,7 @@ Drew之翼:
   - §r一次发射五支箭矢
   - §r将木箭转化为鲨鱼和台风箭
   attributes:
-    damage: 596
+    damage: 423
     damageType: Arrow
     crit: 4
     projectileSpeed: 12
@@ -6832,7 +6837,7 @@ Drew之翼:
   - §r将箭矢转化为星云射线
   - §r“死亡如风，常伴吾身”
   attributes:
-    damage: 687
+    damage: 856
     damageType: Arrow
     crit: 4
     projectileSpeed: 20
@@ -6846,7 +6851,7 @@ Drew之翼:
   - §r一次发射六支箭
   - §r将木箭转化为鲨鱼，充能猎魂鲨和台风箭
   attributes:
-    damage: 296
+    damage: 287
     damageType: Arrow
     crit: 4
     projectileSpeed: 35
@@ -6859,7 +6864,7 @@ Drew之翼:
   lore:
   - §r发射五发普通箭，击中敌怪后生成幻影箭
   attributes:
-    damage: 369
+    damage: 537
     damageType: Arrow
     crit: 4
     projectileSpeed: 20
@@ -6874,7 +6879,7 @@ Drew之翼:
   - §r射出连续的电浆光矢
   - §r随使用时间的增加，光矢会被替换成镭射死光
   attributes:
-    damage: 786
+    damage: 815
     damageType: Arrow
     crit: 4
     projectileSpeed: 18
@@ -6889,10 +6894,10 @@ Drew之翼:
   - §r发射一连串炎龙崩啸，持续使用获得攻速且发射的炎龙崩啸获得增强
   - §r增强后的炎龙崩啸击中后降下陨石雨
   - §r如果受到伤害，持续使用增益将重新计数
-  - §r右键发射的炎龙崩啸必定属于增强状态，但伤害较低且射速较慢
+  - §r右键发射的炎龙崩啸必定属于增强状态，但射速较慢
   - §r“区区之事，无伤尔”
   attributes:
-    damage: 621
+    damage: 571
     damageType: Arrow
     crit: 4
     projectileSpeed: 18
@@ -6908,7 +6913,7 @@ Drew之翼:
   - §r连续攻击会使武器充能，攻击力线性提升至最多300%
   - §r充能达到最大值时攻击会消耗所有充能且在被击中的目标上方召唤星流闪电激流
   attributes:
-    damage: 335
+    damage: 446
     damageType: Arrow
     crit: 4
     projectileSpeed: 12
@@ -6920,8 +6925,9 @@ Drew之翼:
   item: BOW
   lore:
   - §r发射瘟疫箭，在飞行过程中和击中后产生瘟疫爆弹
+  - §r持续使用获得更快攻速
   attributes:
-    damage: 2098
+    damage: 1700
     damageType: Arrow
     crit: 4
     projectileSpeed: 20
@@ -6935,7 +6941,7 @@ Drew之翼:
   - §r发射10支高速箭
   - §r“好劲啊！”
   attributes:
-    damage: 40
+    damage: 57
     damageType: Arrow
     crit: 4
     projectileSpeed: 12
@@ -6949,7 +6955,7 @@ Drew之翼:
   - §r一次发射四只箭
   - §r同时发射两片锋叶
   attributes:
-    damage: 114
+    damage: 77
     damageType: Arrow
     crit: 4
     projectileSpeed: 16
@@ -6962,7 +6968,7 @@ Drew之翼:
   lore:
   - §r额外发射一支命中后碎裂的冰坠箭
   attributes:
-    damage: 195
+    damage: 202
     damageType: Arrow
     crit: 4
     projectileSpeed: 11
@@ -6977,7 +6983,7 @@ Drew之翼:
   - §r左键可填充至多八支箭矢并将其一起发射出
   - §r右键可使其连续发射
   attributes:
-    damage: 4760
+    damage: 7957
     damageType: Arrow
     crit: 4
     projectileSpeed: 14.5
@@ -6988,7 +6994,7 @@ Drew之翼:
 榴弹发射器:
   item: BLAZE_ROD
   attributes:
-    damage: 169
+    damage: 195
     damageType: Rocket
     crit: 4
     projectileSpeed: 8
@@ -7001,7 +7007,7 @@ Drew之翼:
   lore:
   - §r发射自动寻敌的导弹
   attributes:
-    damage: 134
+    damage: 60
     damageType: Rocket
     crit: 4
     projectileSpeed: 15
@@ -7012,7 +7018,7 @@ Drew之翼:
 喜庆弹射器:
   item: BLAZE_ROD
   attributes:
-    damage: 240
+    damage: 251
     damageType: Rocket
     crit: 4
     projectileSpeed: 20
@@ -7025,7 +7031,7 @@ Drew之翼:
   lore:
   - §r发射一个玛瑙火箭弹，爆炸时生成远古岩鲨
   attributes:
-    damage: 85
+    damage: 144
     damageType: Rocket
     crit: 4
     projectileSpeed: 17.5
@@ -7038,7 +7044,7 @@ Drew之翼:
   lore:
   - §r发射多种瘟疫火箭，爆炸时生成瘟疫蜜蜂
   attributes:
-    damage: 56
+    damage: 105
     damageType: Rocket
     crit: 4
     projectileSpeed: 16
@@ -7050,9 +7056,10 @@ Drew之翼:
   item: BLAZE_ROD
   lore:
   - §rBOOM
-  - §r右键发射不会摧毁物块的核弹
+  - §r发射追踪导弹
+  - §r右键发射不会摧毁物块的追踪核弹
   attributes:
-    damage: 290
+    damage: 490
     damageType: Rocket
     crit: 4
     projectileSpeed: 20
@@ -7066,7 +7073,7 @@ Drew之翼:
   - §r发射圣火火箭
   - §r“自动追踪重度依赖”
   attributes:
-    damage: 428
+    damage: 1294
     damageType: Rocket
     crit: 4
     projectileSpeed: 24
@@ -7079,7 +7086,7 @@ Drew之翼:
   lore:
   - §r发射一个大的追踪火箭，爆炸出小的追踪火箭
   attributes:
-    damage: 4500
+    damage: 5659
     damageType: Rocket
     crit: 12
     projectileSpeed: 24
@@ -7093,7 +7100,7 @@ Drew之翼:
   - §r发射一束四发空气燃料火箭，火箭会爆炸成大量火花
   - §r鸡肉味，嘎嘣脆
   attributes:
-    damage: 1522
+    damage: 1365
     damageType: Rocket
     crit: 4
     projectileSpeed: 16
@@ -7107,7 +7114,7 @@ Drew之翼:
   - §r发射小鸡火箭，产生巨大燃爆
   - §r“你↓干↑嘛→↗啊嗨→哟↓”
   attributes:
-    damage: 2494
+    damage: 8022
     damageType: Rocket
     crit: 4
     projectileSpeed: 17.5
@@ -7121,7 +7128,7 @@ Drew之翼:
   - §r发射一颗强大的嘉登火箭，击溃万物
   - §r火箭击中敌人时分裂出激光
   attributes:
-    damage: 850
+    damage: 955
     damageType: Rocket
     crit: 4
     projectileSpeed: 15
@@ -7135,7 +7142,7 @@ Drew之翼:
   lore:
   - §r将至多5枚南瓜榴弹装填后一次性射出
   attributes:
-    damage: 49
+    damage: 68
     damageType: Bullet
     crit: 4
     projectileSpeed: 16
@@ -7148,7 +7155,7 @@ Drew之翼:
   lore:
   - §r发射高压气泡流
   attributes:
-    damage: 56
+    damage: 60
     damageType: Arrow
     crit: 4
     projectileSpeed: 25
@@ -7161,7 +7168,7 @@ Drew之翼:
   lore:
   - §r发射一块珊瑚
   attributes:
-    damage: 38
+    damage: 46
     damageType: Bullet
     crit: 14
     projectileSpeed: 14.5
@@ -7172,7 +7179,7 @@ Drew之翼:
 旋风发射器:
   item: BLAZE_ROD
   attributes:
-    damage: 39
+    damage: 47
     damageType: Bullet
     crit: 4
     projectileSpeed: 16.5
@@ -7185,7 +7192,7 @@ Drew之翼:
   lore:
   - §r发射电击敌人的钩爪
   attributes:
-    damage: 153
+    damage: 236
     damageType: Bullet
     crit: 14
     projectileSpeed: 19.5
@@ -7199,12 +7206,12 @@ Drew之翼:
   - §r发射一束泡泡，击中敌人时召唤更多泡泡
   - §r右键以发射一个慢而大的水弹，击中敌人时召唤水龙卷
   attributes:
-    damage: 130
+    damage: 93
     damageType: Bullet
     crit: 4
     projectileSpeed: 20
     knockback: 5
-    useTime: 24
+    useTime: 34
   worth: 4800000
   rarity: 5
 物质调谐器:
@@ -7214,7 +7221,7 @@ Drew之翼:
   - §r发射不稳定物质，碰撞物块后造成更多伤害
   - §r不稳定物质击中物块前可以无限穿透敌怪，但造成的伤害变低
   attributes:
-    damage: 90
+    damage: 132
     damageType: Bullet
     crit: 4
     projectileSpeed: 17.5
@@ -7228,7 +7235,7 @@ Drew之翼:
   - §r轮流发射两种极性相反的粒子光束
   - §r被极性相反的粒子光束轮流击中时额外造成一次伤害判定
   attributes:
-    damage: 212
+    damage: 156
     damageType: Bullet
     crit: 4
     projectileSpeed: 480
@@ -7242,7 +7249,7 @@ Drew之翼:
   - §r巨大且笨重的武器，但其射出的大威力子弹在清理成群的敌人时十分出色。
   - §r发射毁灭性的荒谬击退的高速冲击波
   attributes:
-    damage: 300
+    damage: 202
     damageType: Bullet
     crit: 4
     projectileSpeed: 27
@@ -7255,7 +7262,7 @@ Drew之翼:
   lore:
   - §r亚利姆军队的重装步兵部队使用的激光武器
   attributes:
-    damage: 781
+    damage: 1247
     damageType: Bullet
     crit: 4
     projectileSpeed: 5
@@ -7268,7 +7275,7 @@ Drew之翼:
   lore:
   - §r发射爆炸能量球
   attributes:
-    damage: 630
+    damage: 862
     damageType: Bullet
     crit: 4
     projectileSpeed: 22
@@ -7281,7 +7288,7 @@ Drew之翼:
   lore:
   - §r发射一个剧毒鱼叉并释放出细菌
   attributes:
-    damage: 600
+    damage: 557
     damageType: Bullet
     crit: 4
     projectileSpeed: 25
@@ -7295,7 +7302,7 @@ Drew之翼:
   - §r嘉登的高效电磁脉冲步枪，让他能够应对自己的创造物叛变时的突发状况
   - §r当脉冲击中目标时，它将可以追踪敌人
   attributes:
-    damage: 2400
+    damage: 3473
     damageType: Bullet
     crit: 4
     projectileSpeed: 25
@@ -7310,12 +7317,12 @@ Drew之翼:
   - §r左键可以充能并快速发射5道离子光束
   - §r右键发射一颗裂变炸弹，其制造的冲击波可以对敌人造成难以想象的巨量伤害
   attributes:
-    damage: 2195
+    damage: 1288
     damageType: Bullet
     crit: 4
     projectileSpeed: 15
     knockback: 4.5
-    useTime: 140
+    useTime: 30
   worth: 28000000
   rarity: 1100
 骨头手套:
@@ -7324,7 +7331,7 @@ Drew之翼:
   - §r投出骨头
   - §6专家模式物品
   attributes:
-    damage: 75
+    damage: 53
     damageType: Arrow
     crit: 4
     projectileSpeed: 10
@@ -7335,7 +7342,7 @@ Drew之翼:
 尖桩发射器:
   item: BOW
   attributes:
-    damage: 272
+    damage: 225
     damageType: Arrow
     crit: 14
     projectileSpeed: 12
@@ -7360,7 +7367,7 @@ Drew之翼:
 玉米糖步枪:
   item: BOW
   attributes:
-    damage: 200
+    damage: 210
     damageType: Arrow
     crit: 14
     projectileSpeed: 14
@@ -7384,7 +7391,7 @@ Drew之翼:
 杰克南瓜灯发射器:
   item: BOW
   attributes:
-    damage: 268
+    damage: 267
     damageType: Arrow
     crit: 14
     projectileSpeed: 11
@@ -7407,7 +7414,7 @@ Drew之翼:
 精灵熔枪:
   item: BOW
   attributes:
-    damage: 64
+    damage: 90
     damageType: Arrow
     crit: 14
     projectileSpeed: 25.5
@@ -7418,7 +7425,7 @@ Drew之翼:
 火花喷射器:
   item: BOW
   attributes:
-    damage: 17
+    damage: 26
     damageType: Arrow
     crit: 4
     projectileSpeed: 5
@@ -7432,7 +7439,7 @@ Drew之翼:
   lore:
   - §r“如果让你重新来~过~”
   attributes:
-    damage: 30
+    damage: 28
     damageType: Arrow
     crit: 4
     projectileSpeed: 8
@@ -7446,7 +7453,7 @@ Drew之翼:
   lore:
   - §r发射一大片反弹凝胶
   attributes:
-    damage: 30
+    damage: 35
     damageType: Arrow
     crit: 4
     projectileSpeed: 6.5
@@ -7472,7 +7479,7 @@ Drew之翼:
 混乱之息:
   item: BOW
   attributes:
-    damage: 167
+    damage: 237
     damageType: Arrow
     crit: 4
     projectileSpeed: 8.5
@@ -7484,7 +7491,7 @@ Drew之翼:
 泰拉喷火器:
   item: BOW
   attributes:
-    damage: 110
+    damage: 150
     damageType: Arrow
     crit: 4
     projectileSpeed: 7.5
@@ -7496,7 +7503,7 @@ Drew之翼:
 极光烈焰:
   item: BOW
   attributes:
-    damage: 125
+    damage: 222
     damageType: Arrow
     crit: 4
     projectileSpeed: 7.5
@@ -7508,7 +7515,7 @@ Drew之翼:
 枯萎散播者:
   item: BOW
   attributes:
-    damage: 232
+    damage: 334
     damageType: Arrow
     crit: 4
     projectileSpeed: 7.5
@@ -7521,7 +7528,7 @@ Drew之翼:
   lore:
   - §r“湮阳冥风”
   attributes:
-    damage: 257
+    damage: 193
     damageType: Arrow
     crit: 4
     projectileSpeed: 9
@@ -7533,7 +7540,7 @@ Drew之翼:
 元素喷射器:
   item: BOW
   attributes:
-    damage: 325
+    damage: 486
     damageType: Arrow
     crit: 4
     projectileSpeed: 10
@@ -7545,10 +7552,10 @@ Drew之翼:
 纯元怒焰:
   item: BOW
   lore:
-  - §r射出一束猛烈的烈焰螺旋
+  - §r射出一束猛烈的烈焰
   - §r右击发射一团缓慢的余晖烈焰
   attributes:
-    damage: 240
+    damage: 280
     damageType: Arrow
     crit: 4
     projectileSpeed: 11
@@ -7563,7 +7570,7 @@ Drew之翼:
   - §r使你与敌人的血液沸腾
   - §r命中时恢复生命值
   attributes:
-    damage: 425
+    damage: 465
     damageType: Arrow
     crit: 4
     projectileSpeed: 12
@@ -7578,7 +7585,7 @@ Drew之翼:
   - §r哈雷彗星比想象中来得早
   - §r发射一颗燃烧彗星
   attributes:
-    damage: 2195
+    damage: 2782
     damageType: Arrow
     crit: 24
     projectileSpeed: 14.6
@@ -7589,12 +7596,12 @@ Drew之翼:
 净化怒焰:
   item: BOW
   attributes:
-    damage: 600
+    damage: 785
     damageType: Arrow
     crit: 4
     projectileSpeed: 14
     knockback: 4
-    useTime: 12
+    useTime: 15
     ammoConsumptionRate: -0.9
   worth: 28000000
   rarity: 14
@@ -7605,7 +7612,7 @@ Drew之翼:
   - §r右键发射追踪星焱，追踪、穿透敌人并将其焚化
   - §r“请勿用来烤制吐司披萨”
   attributes:
-    damage: 450
+    damage: 579
     damageType: Arrow
     crit: 4
     projectileSpeed: 18
@@ -7617,7 +7624,7 @@ Drew之翼:
 燧发枪:
   item: BLAZE_ROD
   attributes:
-    damage: 20
+    damage: 40
     damageType: Bullet
     crit: 4
     projectileSpeed: 5
@@ -7628,7 +7635,7 @@ Drew之翼:
 手枪:
   item: BLAZE_ROD
   attributes:
-    damage: 52
+    damage: 85
     damageType: Bullet
     crit: 4
     projectileSpeed: 10
@@ -7639,7 +7646,7 @@ Drew之翼:
 凤凰爆破枪:
   item: BLAZE_ROD
   attributes:
-    damage: 65
+    damage: 94
     damageType: Bullet
     crit: 4
     projectileSpeed: 13
@@ -7650,7 +7657,7 @@ Drew之翼:
 迷你鲨:
   item: BLAZE_ROD
   attributes:
-    damage: 12
+    damage: 21
     damageType: Bullet
     crit: 4
     projectileSpeed: 7
@@ -7664,7 +7671,7 @@ Drew之翼:
   lore:
   - §r三连发，只有第一发消耗弹药
   attributes:
-    damage: 57
+    damage: 62
     damageType: Bullet
     crit: 4
     projectileSpeed: 7.75
@@ -7677,7 +7684,7 @@ Drew之翼:
   lore:
   - §r“迷你鲨的老大哥”
   attributes:
-    damage: 68
+    damage: 92
     damageType: Bullet
     crit: 4
     projectileSpeed: 10
@@ -7689,7 +7696,7 @@ Drew之翼:
 金星马格南:
   item: BLAZE_ROD
   attributes:
-    damage: 155
+    damage: 170
     damageType: Bullet
     crit: 4
     projectileSpeed: 13.5
@@ -7700,7 +7707,7 @@ Drew之翼:
 狙击步枪:
   item: BLAZE_ROD
   attributes:
-    damage: 575
+    damage: 822
     damageType: Bullet
     crit: 29
     projectileSpeed: 16
@@ -7711,7 +7718,7 @@ Drew之翼:
 战术霰弹枪:
   item: BLAZE_ROD
   attributes:
-    damage: 178
+    damage: 136
     damageType: Bullet
     crit: 4
     projectileSpeed: 6
@@ -7722,7 +7729,7 @@ Drew之翼:
 链式机枪:
   item: BLAZE_ROD
   attributes:
-    damage: 128
+    damage: 93
     damageType: Bullet
     crit: 4
     projectileSpeed: 14
@@ -7736,7 +7743,7 @@ Drew之翼:
   lore:
   - §r“劈劈啪啪，乒乒乓乓，一顿混乱，惨绝人寰。”
   attributes:
-    damage: 136
+    damage: 181
     damageType: Bullet
     crit: 4
     projectileSpeed: 14
@@ -7750,7 +7757,7 @@ Drew之翼:
   lore:
   - §r“它来自太空边缘”
   attributes:
-    damage: 192
+    damage: 300
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -7762,7 +7769,7 @@ Drew之翼:
 四管猎枪:
   item: BLAZE_ROD
   attributes:
-    damage: 55
+    damage: 107
     damageType: Bullet
     crit: 4
     projectileSpeed: 7
@@ -7773,7 +7780,7 @@ Drew之翼:
 玛瑙爆破枪:
   item: BLAZE_ROD
   attributes:
-    damage: 79
+    damage: 187
     damageType: Bullet
     crit: 4
     projectileSpeed: 8
@@ -7786,7 +7793,7 @@ Drew之翼:
   lore:
   - §r发射一串鹅卵石冲击波
   attributes:
-    damage: 16
+    damage: 20
     damageType: Bullet
     crit: 4
     projectileSpeed: 6
@@ -7800,7 +7807,7 @@ Drew之翼:
   lore:
   - §r将火枪子弹转化为命中后分裂的真菌弹
   attributes:
-    damage: 26
+    damage: 33
     damageType: Bullet
     crit: 4
     projectileSpeed: 14
@@ -7814,12 +7821,12 @@ Drew之翼:
   - §r发射出一大片弹跳子弹
   - §r“瞄准？那是啥？”
   attributes:
-    damage: 6
+    damage: 7
     damageType: Bullet
     crit: 4
     projectileSpeed: 9
     knockback: 0
-    useTime: 35
+    useTime: 45
   worth: 800000
   rarity: 3
 碎水霰弹枪:
@@ -7827,7 +7834,7 @@ Drew之翼:
   lore:
   - §r将火枪子弹转化为蓝晶碎片，击中敌人时分裂为追踪碎片
   attributes:
-    damage: 27
+    damage: 62
     damageType: Bullet
     crit: 10
     projectileSpeed: 22
@@ -7840,7 +7847,7 @@ Drew之翼:
   lore:
   - §r发射数颗子弹
   attributes:
-    damage: 48
+    damage: 77
     damageType: Bullet
     crit: 4
     projectileSpeed: 5
@@ -7868,7 +7875,7 @@ P90:
   lore:
   - §r使用时间越长，发射速度和精确度越高
   attributes:
-    damage: 20
+    damage: 8
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -7881,7 +7888,7 @@ P90:
   lore:
   - §r发射诅咒弹
   attributes:
-    damage: 75
+    damage: 104
     damageType: Bullet
     crit: 4
     projectileSpeed: 14
@@ -7891,8 +7898,10 @@ P90:
   rarity: 4
 音波步枪:
   item: BLAZE_ROD
+  lore:
+  - §r将火枪子弹转化为能量弹，击中敌人时分裂为追踪碎片
   attributes:
-    damage: 75
+    damage: 95
     damageType: Bullet
     crit: 4
     projectileSpeed: 15
@@ -7900,17 +7909,17 @@ P90:
     useTime: 15
   worth: 7200000
   rarity: 5
-地狱降临:
+深核GK2:
   item: BLAZE_ROD
   lore:
-  - §r子弹命中敌人时片刻即可发射下一发子弹
+  - §r“挖到手软，赚到盆满！”
   attributes:
-    damage: 172
+    damage: 180
     damageType: Bullet
     crit: 4
-    projectileSpeed: 12
-    knockback: 2
-    useTime: 50
+    projectileSpeed: 20
+    knockback: 7
+    useTime: 14
   worth: 4800000
   rarity: 5
 霜牙冲击波:
@@ -7919,7 +7928,7 @@ P90:
   - §r一次发射六发子弹
   - §r将火枪子弹转化为穿透冰锥
   attributes:
-    damage: 50
+    damage: 107
     damageType: Bullet
     crit: 4
     projectileSpeed: 5
@@ -7927,45 +7936,46 @@ P90:
     useTime: 50
   worth: 7200000
   rarity: 5
+地狱降临:
+  item: BLAZE_ROD
+  lore:
+  - §r子弹命中敌人时片刻即可发射下一发子弹
+  attributes:
+    damage: 220
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 12
+    knockback: 2
+    useTime: 50
+  worth: 4800000
+  rarity: 5
 憎恨:
   item: BLAZE_ROD
   lore:
   - §r发射一发强大的狙击弹
   - §r右键以发射一连串子弹
   attributes:
-    damage: 573
+    damage: 890
     damageType: Bullet
     crit: 4
     projectileSpeed: 11
     knockback: 2
-    useTime: 16
+    useTime: 36
     ammoConsumptionRate: -0.5
   worth: 12000000
   rarity: 7
-深核GK2:
-  item: BLAZE_ROD
-  lore:
-  - §r“挖到手软，赚到盆满！”
-  attributes:
-    damage: 110
-    damageType: Bullet
-    crit: 4
-    projectileSpeed: 20
-    knockback: 7
-    useTime: 14
-  worth: 4800000
-  rarity: 5
 巨舰鲨:
   item: BLAZE_ROD
   lore:
   - §r每隔一发就会射出强劲水流
   attributes:
-    damage: 95
+    damage: 98
     damageType: Bullet
     crit: 4
     projectileSpeed: 16
     knockback: 2.5
     useTime: 5
+    ammoConsumptionRate: -0.5
   worth: 12000000
   rarity: 7
 九头蛇:
@@ -7973,7 +7983,7 @@ P90:
   lore:
   - §r连续射击会发射额外的弹药并减慢使用速度
   attributes:
-    damage: 220
+    damage: 262
     damageType: Bullet
     crit: 0
     projectileSpeed: 12
@@ -7987,7 +7997,7 @@ P90:
   - §r汝命归我……
   - §r连续攻击时在不同发射数量间循环
   attributes:
-    damage: 92
+    damage: 107
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -8000,7 +8010,7 @@ P90:
   lore:
   - §r发射鹅卵石和麦格纳冲击波
   attributes:
-    damage: 232
+    damage: 168
     damageType: Bullet
     crit: 4
     projectileSpeed: 15
@@ -8013,7 +8023,7 @@ P90:
   lore:
   - §r将子弹转化为毒水弹
   attributes:
-    damage: 270
+    damage: 187
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -8024,7 +8034,7 @@ P90:
 发条鳄鱼枪:
   item: BLAZE_ROD
   attributes:
-    damage: 82
+    damage: 165
     damageType: Bullet
     crit: 4
     projectileSpeed: 20
@@ -8037,7 +8047,7 @@ P90:
   lore:
   - §r一次发射两颗子弹
   attributes:
-    damage: 53
+    damage: 105
     damageType: Bullet
     crit: 4
     projectileSpeed: 11.5
@@ -8050,7 +8060,7 @@ P90:
   lore:
   - §r将火枪子弹转化为消失时爆裂成瘟疫碎片的瘟疫子弹
   attributes:
-    damage: 362
+    damage: 1006
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -8065,7 +8075,7 @@ P90:
   - §r右键发射高伤无人机群
   - §r无人机击中有瘟疫减益的敌怪时必定暴击
   attributes:
-    damage: 42
+    damage: 70
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -8079,7 +8089,7 @@ P90:
   - §r一次发射三颗子弹
   - §r将火枪子弹转化为爆炸弹
   attributes:
-    damage: 122
+    damage: 250
     damageType: Bullet
     crit: 4
     projectileSpeed: 30
@@ -8092,13 +8102,12 @@ P90:
   lore:
   - §r@全体成员
   attributes:
-    damage: 75
+    damage: 78
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
     knockback: 4.5
     useTime: 32
-    ammoConsumptionRate: -0.5
   worth: 16000000
   rarity: 9
 蘑菇狙击枪:
@@ -8106,20 +8115,20 @@ P90:
   lore:
   - §r额外发射强大的追踪蘑菇
   attributes:
-    damage: 265
+    damage: 615
     damageType: Bullet
     crit: 39
     projectileSpeed: 10
     knockback: 9.75
     useTime: 27
   worth: 20000000
-  rarity: 10
+  rarity: 9
 幻星冲击炮:
   item: BLAZE_ROD
   lore:
   - §r将火枪子弹转化为幻星弹
   attributes:
-    damage: 204
+    damage: 524
     damageType: Bullet
     crit: 29
     projectileSpeed: 12
@@ -8132,13 +8141,12 @@ P90:
   lore:
   - §r@全体成员
   attributes:
-    damage: 138
+    damage: 93
     damageType: Bullet
     crit: 4
     projectileSpeed: 13
     knockback: 4.5
     useTime: 30
-    ammoConsumptionRate: -0.5
   worth: 20000000
   rarity: 10
 玛瑙链炮:
@@ -8146,13 +8154,12 @@ P90:
   lore:
   - §r发射数颗子弹和一个玛瑙碎片
   attributes:
-    damage: 124
+    damage: 205
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
     knockback: 4.5
     useTime: 15
-    ammoConsumptionRate: -0.5
   worth: 20000000
   rarity: 10
 解离者:
@@ -8160,10 +8167,10 @@ P90:
   lore:
   - §r神话，传说，这把枪能让你的电脑爆炸
   - §r发射一团会分裂弹射的能量子弹
-  - §r右键发射一团普通子弹
+  - §r右键发射普通子弹并造成更高伤害
   - §r“在这个时期看到这样的面板伤害时，你就知道它是个什么货色了”
   attributes:
-    damage: 42
+    damage: 19
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -8176,7 +8183,7 @@ P90:
   lore:
   - §r一次发射五颗子弹
   attributes:
-    damage: 175
+    damage: 239
     damageType: Bullet
     crit: 4
     projectileSpeed: 20
@@ -8189,7 +8196,7 @@ P90:
   lore:
   - §r发射可以削减敌人防线的高速闪光子弹
   attributes:
-    damage: 2320
+    damage: 2089
     damageType: Bullet
     crit: 4
     projectileSpeed: 7.5
@@ -8203,12 +8210,25 @@ P90:
   - §r射出八颗子弹
   - §r战斗直到胜利
   attributes:
-    damage: 233
+    damage: 272
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
     knockback: 3
     useTime: 24
+  worth: 24000000
+  rarity: 12
+深红手炮:
+  item: BLAZE_ROD
+  lore:
+  - §r三连发，将火枪子弹转化为血炎弹
+  attributes:
+    damage: 573
+    damageType: Bullet
+    crit: 4
+    projectileSpeed: 18
+    knockback: 5.5
+    useTime: 18
   worth: 24000000
   rarity: 12
 海龙:
@@ -8217,7 +8237,7 @@ P90:
   - §r每隔一发子弹就会射出强劲水流
   - §r每18发子弹会发射一枚追踪火箭，爆炸后产生火焰碎片
   attributes:
-    damage: 285
+    damage: 338
     damageType: Bullet
     crit: 4
     projectileSpeed: 16
@@ -8231,26 +8251,12 @@ P90:
   lore:
   - §r发射数颗子弹
   attributes:
-    damage: 170
+    damage: 197
     damageType: Bullet
     crit: 4
     projectileSpeed: 18
     knockback: 3.25
     useTime: 20
-    ammoConsumptionRate: -0.9
-  worth: 24000000
-  rarity: 12
-深红手炮:
-  item: BLAZE_ROD
-  lore:
-  - §r将火枪子弹转化为血炎弹
-  attributes:
-    damage: 830
-    damageType: Bullet
-    crit: 4
-    projectileSpeed: 18
-    knockback: 5.5
-    useTime: 18
   worth: 24000000
   rarity: 12
 大比目鱼炮:
@@ -8258,7 +8264,7 @@ P90:
   lore:
   - §r是的，这把武器现在还是强得过分
   attributes:
-    damage: 75
+    damage: 208
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
@@ -8273,7 +8279,7 @@ Dodu的手炮:
   - §r发射高爆花生壳
   - §r嗯，就是你想的那个“花生壳”
   attributes:
-    damage: 1715
+    damage: 2826
     damageType: Bullet
     crit: 4
     projectileSpeed: 32
@@ -8286,7 +8292,7 @@ Dodu的手炮:
   lore:
   - §r将火枪子弹转化为腐烂肉块
   attributes:
-    damage: 512
+    damage: 1540
     damageType: Bullet
     crit: 4
     projectileSpeed: 16
@@ -8299,16 +8305,16 @@ Dodu的手炮:
   item: BLAZE_ROD
   lore:
   - §r发射一团会分裂弹射的能量子弹
-  - §r右键发射一团普通子弹
+  - §r右键发射普通子弹并造成更高伤害
   - §r只要你把它握在手中，无限的电脑解离就不会停止
   - §r所以说……不要停下来啊……
   attributes:
-    damage: 189
+    damage: 128
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
     knockback: 1
-    useTime: 18
+    useTime: 30
   worth: 28000000
   rarity: 14
 宇宙之源:
@@ -8318,13 +8324,12 @@ Dodu的手炮:
   - §r令星空坠落到敌人头上
   - §r“宇宙万法的那个源头，他是什么？”
   attributes:
-    damage: 500
+    damage: 746
     damageType: Bullet
     crit: 4
     projectileSpeed: 20
     knockback: 6.5
     useTime: 26
-    ammoConsumptionRate: -0.5
   worth: 28000000
   rarity: 14
 反器材狙击步枪:
@@ -8333,7 +8338,7 @@ Dodu的手炮:
   - §r将火枪子弹转化为.50口径的狙击子弹，撕裂敌人的防御和伤害减免
   - §r狙击子弹会在敌人四周释放第二轮含有5发子弹的弹雨
   attributes:
-    damage: 4000
+    damage: 5205
     damageType: Bullet
     crit: 24
     projectileSpeed: 12
@@ -8347,13 +8352,13 @@ Dodu的手炮:
   - §r来自于泰拉大陆之边界
   - §r将火枪子弹转化为泰拉弹
   attributes:
-    damage: 242
+    damage: 445
     damageType: Bullet
     crit: 19
     projectileSpeed: 16
     knockback: 2.75
     useTime: 2
-    ammoConsumptionRate: -0.5
+    ammoConsumptionRate: -0.75
   worth: 28000000
   rarity: 14
 奥妮克希亚:
@@ -8361,7 +8366,7 @@ Dodu的手炮:
   lore:
   - §r向敌人倾泻弹雨与玛瑙碎片
   attributes:
-    damage: 263
+    damage: 550
     damageType: Bullet
     crit: 4
     projectileSpeed: 16
@@ -8373,23 +8378,22 @@ Dodu的手炮:
 巨龙之息:
   item: BLAZE_ROD
   lore:
-  - §r左键发射两束散弹
+  - §r发射两束散弹
   - §r第一束为六发普通子弹
   - §r第二束为六发密集龙息弹
   attributes:
-    damage: 354
+    damage: 415
     damageType: Bullet
     crit: 4
     projectileSpeed: 12
     knockback: 6.5
     useTime: 18
-    ammoConsumptionRate: -0.66
   worth: 30000000
   rarity: 15
 迷你加特林:
   item: BLAZE_ROD
   attributes:
-    damage: 486
+    damage: 802
     damageType: Bullet
     crit: 4
     projectileSpeed: 22
@@ -8406,7 +8410,7 @@ Dodu的手炮:
   - §r命中时召唤6发额外子弹
   - §r“击穿即便是拥有着最精良武装的敌人心脏”
   attributes:
-    damage: 4444
+    damage: 3765
     damageType: Bullet
     crit: 39
     projectileSpeed: 12
@@ -8421,12 +8425,12 @@ Dodu的手炮:
   - §r左键攻击会发射出击中时产生爆炸的激光
   - §r右键攻击会发射出多束激光，击中敌怪时释放出追踪能量流
   attributes:
-    damage: 625
+    damage: 2600
     damageType: Bullet
     crit: 4
     projectileSpeed: 16
     knockback: 8
-    useTime: 28
+    useTime: 30
   worth: 30000000
   rarity: 15
 太虚星龙炮:
@@ -8434,7 +8438,7 @@ Dodu的手炮:
   lore:
   - §r每隔一发就会发射海龙追踪火箭
   attributes:
-    damage: 419
+    damage: 736
     damageType: Bullet
     crit: 4
     projectileSpeed: 18
@@ -8447,10 +8451,10 @@ Dodu的手炮:
   item: BLAZE_ROD
   lore:
   - §r获得相当于暴击率50%的暴击伤害加成
-  - §r将火枪子弹转化为极强的高速子弹，穿透两个敌人并造成强大的流血减益
+  - §r将火枪子弹转化为极强的高速子弹，造成强大的流血减益
   - §r该减益每秒造成100点伤害，最多叠加10层
   attributes:
-    damage: 246
+    damage: 1572
     damageType: Bullet
     crit: 34
     projectileSpeed: 9
@@ -8465,8 +8469,8 @@ Dodu的手炮:
   - §r投掷一颗会在爆炸时产生泡泡的炸弹
   - §r潜伏攻击会使炸弹飞的更快并且在爆炸时生成五个泡泡
   attributes:
-    damage: 24
-    damageStealth: 32
+    damage: 50
+    damageStealth: 329
     damageType: Rogue
     crit: 4
     knockback: 8
@@ -8480,8 +8484,8 @@ Dodu的手炮:
   - §r潜伏攻击会使拳头在敌人间来回反弹，至多4次
   - §r“盗贼这下NB了”
   attributes:
-    damage: 30
-    damageStealth: 50
+    damage: 136
+    damageStealth: 210
     damageType: Rogue
     crit: 4
     knockback: 5.75
@@ -8494,8 +8498,8 @@ Dodu的手炮:
   - §r丢出一个沉重的爆炸桶
   - §r潜伏攻击速度稍快，爆炸更强烈并放出大量火花
   attributes:
-    damage: 80
-    damageStealth: 140
+    damage: 376
+    damageStealth: 387
     damageType: Rogue
     crit: 4
     knockback: 8
@@ -8508,8 +8512,8 @@ Dodu的手炮:
   - §r投掷一小瓶会爆炸成邪恶气泡的不洁之水
   - §r潜伏攻击形成更多气泡，并造成狱炎和咒火减益
   attributes:
-    damage: 110
-    damageStealth: 175
+    damage: 294
+    damageStealth: 770
     damageType: Rogue
     crit: 4
     knockback: 4.5
@@ -8523,8 +8527,8 @@ Dodu的手炮:
   - §r潜伏攻击会丢出疯狂追踪的天鳍核武并留下毒云
   - §r“鱼雷母舰入境！”
   attributes:
-    damage: 92
-    damageStealth: 225
+    damage: 295
+    damageStealth: 386
     damageType: Rogue
     crit: 4
     knockback: 6.5
@@ -8538,8 +8542,8 @@ Dodu的手炮:
   - §r潜伏攻击会产生更大的爆炸，以及充满神圣之光的流星
   - §r“物理驱魔”
   attributes:
-    damage: 128
-    damageStealth: 160
+    damage: 133
+    damageStealth: 1190
     damageType: Rogue
     crit: 4
     knockback: 1
@@ -8553,8 +8557,8 @@ Dodu的手炮:
   - §r潜伏攻击丢出集束燃爆瓶
   - §r“我需要更大的破坏”
   attributes:
-    damage: 100
-    damageStealth: 150
+    damage: 130
+    damageStealth: 406
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -8567,8 +8571,8 @@ Dodu的手炮:
   - §r炸裂成一团粉尘云
   - §r潜伏攻击使得粉尘云更猛烈
   attributes:
-    damage: 148
-    damageStealth: 200
+    damage: 233
+    damageStealth: 426
     damageType: Rogue
     crit: 4
     knockback: 4
@@ -8581,8 +8585,8 @@ Dodu的手炮:
   - §r扔出一个剧毒烧瓶
   - §r潜伏攻击爆出追踪海水弹
   attributes:
-    damage: 120
-    damageStealth: 180
+    damage: 762
+    damageStealth: 815
     damageType: Rogue
     crit: 4
     knockback: 6.5
@@ -8596,8 +8600,8 @@ Dodu的手炮:
   - §r释放大量瘟疫蜜蜂
   - §r潜伏攻击会产生一次大爆炸并生成更多的蜜蜂
   attributes:
-    damage: 126
-    damageStealth: 200
+    damage: 250
+    damageStealth: 757
     damageType: Rogue
     crit: 4
     knockback: 1.5
@@ -8610,8 +8614,8 @@ Dodu的手炮:
   - §r投掷在方块表面滑行的飞盘
   - §r潜伏攻击发射能穿透的爆炸飞盘
   attributes:
-    damage: 240
-    damageStealth: 350
+    damage: 420
+    damageStealth: 950
     damageType: Rogue
     crit: 4
     knockback: 4
@@ -8624,8 +8628,8 @@ Dodu的手炮:
   - §r发射巨大的毁灭地雷，爆炸形成追踪子母炸弹
   - §r潜伏攻击生成更多更强的子母炸弹
   attributes:
-    damage: 300
-    damageStealth: 400
+    damage: 1779
+    damageStealth: 976
     damageType: Rogue
     crit: 4
     knockback: 10
@@ -8638,8 +8642,8 @@ Dodu的手炮:
   - §r扔出一颗炸弹
   - §r潜伏攻击会使炸弹释放出极为强劲的震荡波
   attributes:
-    damage: 400
-    damageStealth: 1000
+    damage: 313
+    damageStealth: 170
     damageType: Rogue
     crit: 4
     knockback: 3
@@ -8652,8 +8656,8 @@ Dodu的手炮:
   - §r碰撞时碎裂，召唤一个持续牵引附近敌人的奇点
   - §r潜伏攻击会召唤一个持续时间更长的黑洞，同时会有更加强力的牵引力
   attributes:
-    damage: 520
-    damageStealth: 700
+    damage: 1205
+    damageStealth: 864
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -8666,8 +8670,8 @@ Dodu的手炮:
   - §r掷出一发迅猛的半影飞弹，爆炸产生追踪灵魂火焰
   - §r潜伏攻击会瞬间命中敌人
   attributes:
-    damage: 1660
-    damageStealth: 2520
+    damage: 3459
+    damageStealth: 7270
     damageType: Rogue
     crit: 20
     knockback: 8
@@ -8681,8 +8685,8 @@ Dodu的手炮:
   - §r潜伏攻击会使手雷在撞击时造成更加猛烈的汽化爆炸
   - §r“每个手雷中都封存着高度浓缩且炽热的等离子，小心使用”
   attributes:
-    damage: 1900
-    damageStealth: 2430
+    damage: 1364
+    damageStealth: 2849
     damageType: Rogue
     crit: 4
     knockback: 3
@@ -8696,8 +8700,8 @@ Dodu的手炮:
   - §r每颗炸弹都会产生一颗微型超新星，它会牵引弱小的敌人
   - §r潜伏攻击将会产生一道撼动现实基础的冲击波
   attributes:
-    damage: 10072
-    damageStealth: 17500
+    damage: 4628
+    damageStealth: 2130
     damageType: Rogue
     crit: 4
     knockback: 18
@@ -8709,8 +8713,8 @@ Dodu的手炮:
   lore:
   - §r潜伏攻击会扔出能敌人之间弹跳的回旋镖
   attributes:
-    damage: 54
-    damageStealth: 60
+    damage: 135
+    damageStealth: 517
     damageType: Rogue
     crit: 4
     knockback: 5.5
@@ -8724,8 +8728,8 @@ Dodu的手炮:
   - §r潜伏攻击将同时扔出两个沙钱，击中敌人后炸成珊瑚碎片
   - §r“沙县！”
   attributes:
-    damage: 52
-    damageStealth: 60
+    damage: 215
+    damageStealth: 173
     damageType: Rogue
     crit: 4
     knockback: 3.5
@@ -8737,8 +8741,8 @@ Dodu的手炮:
   lore:
   - §r发射慢速，远距离的回旋镖
   attributes:
-    damage: 36
-    damageStealth: 72
+    damage: 140
+    damageStealth: 225
     damageType: Rogue
     crit: 4
     knockback: 1.5
@@ -8751,8 +8755,8 @@ Dodu的手炮:
   - §r扔出一个会向周围敌人发射激光的飞盘
   - §r潜伏攻击会穿墙并以极高的频率倾泻激光，激光攻击距离更远
   attributes:
-    damage: 38
-    damageStealth: 60
+    damage: 403
+    damageStealth: 228
     damageType: Rogue
     crit: 4
     knockback: 3
@@ -8766,8 +8770,8 @@ Dodu的手炮:
   - §r在命中时召唤一个能穿墙和自动瞄准的魔法飞斧
   - §r潜伏攻击使斧头飞的更远，并在命中时发射四把魔法飞斧
   attributes:
-    damage: 40
-    damageStealth: 70
+    damage: 230
+    damageStealth: 396
     damageType: Rogue
     crit: 4
     knockback: 1
@@ -8780,8 +8784,8 @@ Dodu的手炮:
   - §r扔出无限穿透的锋利回飞刃
   - §r潜伏攻击会使回飞刃飞得很快
   attributes:
-    damage: 90
-    damageStealth: 100
+    damage: 441
+    damageStealth: 935
     damageType: Rogue
     crit: 8
     knockback: 3
@@ -8794,8 +8798,8 @@ Dodu的手炮:
   - §r发射击中第一个敌人就会返回的回飞棒
   - §r“也叫作Dowak”
   attributes:
-    damage: 126
-    damageStealth: 150
+    damage: 556
+    damageStealth: 1446
     damageType: Rogue
     crit: 20
     knockback: 12
@@ -8808,8 +8812,8 @@ Dodu的手炮:
   - §r扔出灼热回飞刃
   - §r潜伏攻击能够无限穿透
   attributes:
-    damage: 150
-    damageStealth: 225
+    damage: 479
+    damageStealth: 1740
     damageType: Rogue
     crit: 8
     knockback: 4
@@ -8823,8 +8827,8 @@ Dodu的手炮:
   - §r回旋镖在击中敌人时召唤光明碎块
   - §r潜伏攻击击中时召唤追踪的黑暗碎块
   attributes:
-    damage: 80
-    damageStealth: 120
+    damage: 709
+    damageStealth: 1905
     damageType: Rogue
     crit: 4
     knockback: 1
@@ -8836,8 +8840,8 @@ Dodu的手炮:
   lore:
   - §r潜伏攻击产生冰霜爆炸
   attributes:
-    damage: 120
-    damageStealth: 160
+    damage: 1140
+    damageStealth: 1075
     damageType: Rogue
     crit: 4
     knockback: 6.75
@@ -8850,8 +8854,8 @@ Dodu的手炮:
   - §r投出一把冰刃，击中敌人时释放若干个冰星
   - §r潜伏攻击会使冰刃追踪攻击敌怪
   attributes:
-    damage: 120
-    damageStealth: 150
+    damage: 405
+    damageStealth: 242
     damageType: Rogue
     crit: 4
     knockback: 4
@@ -8864,8 +8868,8 @@ Dodu的手炮:
   - §r投出硫火手里剑
   - §r潜伏攻击使手里剑爆出大量硫火飞弹
   attributes:
-    damage: 56
-    damageStealth: 60
+    damage: 363
+    damageStealth: 1600
     damageType: Rogue
     crit: 4
     knockback: 6.5
@@ -8877,8 +8881,8 @@ Dodu的手炮:
   lore:
   - §r潜伏攻击在击中时生成孢子云
   attributes:
-    damage: 168
-    damageStealth: 200
+    damage: 198
+    damageStealth: 1605
     damageType: Rogue
     crit: 4
     knockback: 7.5
@@ -8891,8 +8895,8 @@ Dodu的手炮:
   - §r掷出泰拉飞盘，有敌人在附近时分裂出新的飞盘
   - §r潜伏攻击会投掷速度较慢但分裂间隔更低的泰拉飞盘
   attributes:
-    damage: 200
-    damageStealth: 225
+    damage: 220
+    damageStealth: 1512
     damageType: Rogue
     crit: 4
     knockback: 4
@@ -8905,8 +8909,8 @@ Dodu的手炮:
   - §r发射长距离回旋镖，接触敌人时碎成冰锥
   - §r潜伏攻击会扔出飞行距离较短的冰冻回旋镖
   attributes:
-    damage: 180
-    damageStealth: 200
+    damage: 155
+    damageStealth: 1448
     damageType: Rogue
     crit: 20
     knockback: 12
@@ -8919,8 +8923,8 @@ Dodu的手炮:
   - §r扔出会在击中敌人时爆炸的飞镰
   - §r潜伏攻击能够穿透敌人
   attributes:
-    damage: 190
-    damageStealth: 225
+    damage: 331
+    damageStealth: 905
     damageType: Rogue
     crit: 4
     knockback: 8.5
@@ -8933,8 +8937,8 @@ Dodu的手炮:
   - §r扔出一把瘟疫回旋镖，碰撞时释放瘟疫寻觅者
   - §r潜伏攻击导致回旋镖无限穿透并不断释放瘟疫寻觅者
   attributes:
-    damage: 160
-    damageStealth: 175
+    damage: 460
+    damageStealth: 1325
     damageType: Rogue
     crit: 4
     knockback: 4.5
@@ -8947,8 +8951,8 @@ Dodu的手炮:
   - §r掷出元素飞盘，命中敌怪时分裂出数个新的元素飞盘
   - §r潜伏攻击飞行速度较慢，但飞行距离远且穿透敌怪
   attributes:
-    damage: 184
-    damageStealth: 200
+    damage: 1800
+    damageStealth: 2200
     damageType: Rogue
     crit: 4
     knockback: 9
@@ -8961,8 +8965,8 @@ Dodu的手炮:
   - §r扔出一把会在命中敌人时产生神圣火球的飞镰
   - §r潜伏攻击会使镰刀在飞行中不断释放神圣火球，并在命中时产生更多的火球
   attributes:
-    damage: 332
-    damageStealth: 444
+    damage: 1172
+    damageStealth: 8800
     damageType: Rogue
     crit: 4
     knockback: 9
@@ -8975,8 +8979,8 @@ Dodu的手炮:
   - §r快速投掷狱卒之镰
   - §r潜伏攻击命中后召唤一大群受苦亡魂
   attributes:
-    damage: 332
-    damageStealth: 666
+    damage: 1408
+    damageStealth: 3602
     damageType: Rogue
     crit: 4
     knockback: 7.5
@@ -8989,8 +8993,8 @@ Dodu的手炮:
   - §r扔出追踪的死神之镰
   - §r潜伏攻击会在击中敌人时释放狂暴龙卷
   attributes:
-    damage: 486
-    damageStealth: 444
+    damage: 1766
+    damageStealth: 4450
     damageType: Rogue
     crit: 4
     knockback: 7
@@ -9003,8 +9007,8 @@ Dodu的手炮:
   - §r投掷一个环刃，选择一个目标并快速追踪敌人
   - §r潜伏攻击会投掷追踪速度更快的环刃并造成多次伤害
   attributes:
-    damage: 666
-    damageStealth: 666
+    damage: 3745
+    damageStealth: 3444
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -9017,8 +9021,8 @@ Dodu的手炮:
   - §r投出一个向周围敌人发射星云激光的缓慢飞盘
   - §r潜伏攻击会无限穿透并追踪，且发射更多激光
   attributes:
-    damage: 1240
-    damageStealth: 1000
+    damage: 2109
+    damageStealth: 3368
     damageType: Rogue
     crit: 4
     knockback: 7
@@ -9031,8 +9035,8 @@ Dodu的手炮:
   - §r扔出一个处理计算的飞盘，飞盘会追踪且向敌人发射电能
   - §r潜伏攻击的飞盘会弹向其他目标而非追踪
   attributes:
-    damage: 5700
-    damageStealth: 5000
+    damage: 7429
+    damageStealth: 7787
     damageType: Rogue
     crit: 4
     knockback: 3
@@ -9042,11 +9046,12 @@ Dodu的手炮:
 星神之杀:
   item: DIAMOND_SWORD
   lore:
-  - §r掷出一把高速的圣金镰刀——星神之杀，击中敌怪时分裂出数把幻影镰刀
-  - §r潜伏攻击无限穿透并分裂出更多镰刀
+  - §r掷出一把高速的圣金镰刀——星神之杀
+  - §r无限穿透并在击中敌怪时分裂出数把幻影镰刀
+  - §r潜伏攻击分裂出更多镰刀
   attributes:
-    damage: 560
-    damageStealth: 1000
+    damage: 7500
+    damageStealth: 6795
     damageType: Rogue
     crit: 4
     knockback: 6
@@ -9060,8 +9065,8 @@ Dodu的手炮:
   - §r潜伏攻击留下的刀刃更为致命
   - §r“生灵在她的无尽仇恨中溺亡”
   attributes:
-    damage: 260
-    damageStealth: 1500
+    damage: 2162
+    damageStealth: 4717
     damageType: Rogue
     crit: 4
     knockback: 9
@@ -9075,8 +9080,8 @@ Dodu的手炮:
   - §r发射钨钢飞刀
   - §r潜伏攻击会使飞刀缓慢飞行，无视重力并迅速造成至多3次伤害
   attributes:
-    damage: 18
-    damageStealth: 20
+    damage: 35
+    damageStealth: 147
     damageType: Rogue
     crit: 4
     knockback: 1
@@ -9088,10 +9093,10 @@ Dodu的手炮:
   lore:
   - §r扔出一把会在敌人间反弹一次的闪亮匕首
   - §r潜伏攻击迅速向附近至多三个敌人数次投出无法反弹的匕首
-  - §r仅每波投出的匕首中的随机一个会造成潜伏攻击的后续判定
+  - §r仅每三波投出的匕首中的随机一个会造成潜伏攻击的后续判定
   attributes:
-    damage: 28
-    damageStealth: 10
+    damage: 38
+    damageStealth: 43
     damageType: Rogue
     crit: 4
     knockback: 1
@@ -9104,8 +9109,8 @@ Dodu的手炮:
   - §r飞行时分裂成几个短距离飞刀
   - §r潜伏攻击使飞刀可以分裂两次
   attributes:
-    damage: 32
-    damageStealth: 32
+    damage: 42
+    damageStealth: 154
     damageType: Rogue
     crit: 8
     knockback: 3
@@ -9118,8 +9123,8 @@ Dodu的手炮:
   - §r疯狂发射短距离真菌根系
   - §r潜伏打击会引发真菌爆炸
   attributes:
-    damage: 20
-    damageStealth: 40
+    damage: 35
+    damageStealth: 244
     damageType: Rogue
     crit: 4
     knockback: 1.5
@@ -9133,8 +9138,8 @@ Dodu的手炮:
   - §r扔出一个燃烧着的飞刀
   - §r潜伏攻击会使飞刀被火焰吞没，与墙和敌怪接触时爆炸
   attributes:
-    damage: 48
-    damageStealth: 48
+    damage: 165
+    damageStealth: 309
     damageType: Rogue
     crit: 4
     knockback: 1
@@ -9148,8 +9153,8 @@ Dodu的手炮:
   - §r扔出一把会召唤追踪羽毛的飞刀
   - §r潜伏攻击会扔出一束飞刀
   attributes:
-    damage: 32
-    damageStealth: 32
+    damage: 115
+    damageStealth: 168
     damageType: Rogue
     crit: 4
     knockback: 2
@@ -9162,8 +9167,8 @@ Dodu的手炮:
   - §r丢出一个飞行一小段距离的石钟乳
   - §r潜伏攻击会丢出一个更大的石钟乳，造成更多伤害且会移动更远距离
   attributes:
-    damage: 74
-    damageStealth: 100
+    damage: 248
+    damageStealth: 870
     damageType: Rogue
     crit: 4
     knockback: 1
@@ -9176,8 +9181,8 @@ Dodu的手炮:
   - §r潜伏攻击追踪敌人
   - §r“五指……你知道我要说什么”
   attributes:
-    damage: 72
-    damageStealth: 128
+    damage: 129
+    damageStealth: 1024
     damageType: Rogue
     crit: 12
     knockback: 5
@@ -9191,8 +9196,8 @@ Dodu的手炮:
   - §r投掷凝胶飞镖
   - §r潜伏攻击将使飞镖忽视重力并在敌人间弹跳一次
   attributes:
-    damage: 56
-    damageStealth: 72
+    damage: 94
+    damageStealth: 622
     damageType: Rogue
     crit: 4
     knockback: 2.5
@@ -9205,8 +9210,8 @@ Dodu的手炮:
   - §r投掷三把不精准的匕首
   - §r潜伏攻击会投掷一把会爆裂成咒焰火球的匕首
   attributes:
-    damage: 90
-    damageStealth: 90
+    damage: 110
+    damageStealth: 988
     damageType: Rogue
     crit: 4
     knockback: 4.5
@@ -9219,8 +9224,8 @@ Dodu的手炮:
   - §r投掷一个会在短时间后分裂的飞刀
   - §r潜伏攻击会使飞刀爆裂出更多碎片
   attributes:
-    damage: 72
-    damageStealth: 100
+    damage: 150
+    damageStealth: 735
     damageType: Rogue
     crit: 8
     knockback: 5
@@ -9233,8 +9238,8 @@ Dodu的手炮:
   lore:
   - §r潜伏攻击发射三道追踪钴蓝能量束
   attributes:
-    damage: 116
-    damageStealth: 125
+    damage: 175
+    damageStealth: 650
     damageType: Rogue
     crit: 4
     knockback: 2.5
@@ -9247,8 +9252,8 @@ Dodu的手炮:
   lore:
   - §r潜伏攻击覆盖着致命的毒素，会造成辐射、中毒和剧毒减益
   attributes:
-    damage: 160
-    damageStealth: 225
+    damage: 210
+    damageStealth: 3042
     damageType: Rogue
     crit: 4
     knockback: 1.75
@@ -9262,8 +9267,8 @@ Dodu的手炮:
   - §r潜伏攻击会使飞刀的飞行速度更快并在命中时生成多道闪电
   - §#24c7f0“力挽狂澜”
   attributes:
-    damage: 76
-    damageStealth: 80
+    damage: 312
+    damageStealth: 1240
     damageType: Rogue
     crit: 12
     knockback: 7
@@ -9277,8 +9282,8 @@ Dodu的手炮:
   - §r潜伏攻击扔出三把高速飞刀
   - §r“非常适合用来扎破气球”
   attributes:
-    damage: 300
-    damageStealth: 300
+    damage: 376
+    damageStealth: 1190
     damageType: Rogue
     crit: 22
     knockback: 4
@@ -9292,8 +9297,8 @@ Dodu的手炮:
   - §r潜伏攻击会在敌人周围投掷6把飞刀
   - §r“砸！瓦鲁多！”
   attributes:
-    damage: 175
-    damageStealth: 225
+    damage: 242
+    damageStealth: 509
     damageType: Rogue
     crit: 8
     knockback: 4
@@ -9306,8 +9311,8 @@ Dodu的手炮:
   - §r发射一串苦无
   - §r潜伏攻击发射三把追踪穿透苦无
   attributes:
-    damage: 104
-    damageStealth: 125
+    damage: 234
+    damageStealth: 795
     damageType: Rogue
     crit: 8
     knockback: 1.25
@@ -9318,14 +9323,14 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   lore:
   - §r普通攻击命中时恢复 10 点生命值
-  - §r潜伏攻击命中时恢复 180 点生命值
+  - §r潜伏攻击命中时恢复 60 点生命值
   - §r普通攻击会使你失去 10 生命值
-  - §r潜伏攻击会使你失去 30% 当前生命值
-  - §r以此失去生命值的40%会附加到基础伤害中
+  - §r潜伏攻击会使你失去 10% 当前生命值
+  - §r以此失去生命值的7.5倍会附加到基础伤害中
   - §r“似乎随时间的流逝而逐渐崩解”
   attributes:
-    damage: 196
-    damageStealth: 125
+    damage: 998
+    damageStealth: 4580
     damageType: Rogue
     crit: 4
     knockback: 3
@@ -9338,8 +9343,8 @@ Dodu的手炮:
   - §r投掷一个匕首并分裂成追踪匕首
   - §r潜伏攻击会分裂更多追踪匕首
   attributes:
-    damage: 110
-    damageStealth: 150
+    damage: 591
+    damageStealth: 2333
     damageType: Rogue
     crit: 12
     knockback: 5
@@ -9354,8 +9359,8 @@ Dodu的手炮:
   - §r飞行足够距离后，苦无会获得月之能量，追踪至附近敌人
   - §r潜伏攻击会立即投掷出五把加强的苦无
   attributes:
-    damage: 224
-    damageStealth: 300
+    damage: 174
+    damageStealth: 1162
     damageType: Rogue
     crit: 4
     knockback: 2
@@ -9368,8 +9373,8 @@ Dodu的手炮:
   - §r投掷一把会分裂成灼热追踪匕首的匕首
   - §r潜伏攻击在摧毁时会发射更多追踪匕首
   attributes:
-    damage: 160
-    damageStealth: 4286
+    damage: 604
+    damageStealth: 3300
     damageType: Rogue
     crit: 14
     knockback: 6
@@ -9383,7 +9388,7 @@ Dodu的手炮:
   - §r投掷一支小而致命的投镖
   attributes:
     damage: 760
-    damageStealth: 950
+    damageStealth: 7000
     damageType: Rogue
     crit: 4
     knockback: 4.5
@@ -9396,8 +9401,8 @@ Dodu的手炮:
   - §r发射鬼畜的短程苦无
   - §r潜伏攻击发射一束能够刺穿敌人后折返的苦无
   attributes:
-    damage: 184
-    damageStealth: 250
+    damage: 915
+    damageStealth: 1333
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -9410,8 +9415,8 @@ Dodu的手炮:
   - §r扔出一把时间之刃，在命中后操控自身的时间以再次攻击
   - §r潜伏攻击在命中时在敌人周围召唤大量时间之刃
   attributes:
-    damage: 864
-    damageStealth: 999
+    damage: 1548
+    damageStealth: 2200
     damageType: Rogue
     crit: 4
     knockback: 2
@@ -9423,10 +9428,10 @@ Dodu的手炮:
   lore:
   - §r投掷一柄急速飞行，穿透两次但会迅速减速并消散成光的匕首
   - §r光束不会穿透敌人
-  - §r潜伏攻击会无限穿透后释放7个光束
+  - §r潜伏攻击会无限穿透后释放光束
   attributes:
-    damage: 640
-    damageStealth: 725
+    damage: 2743
+    damageStealth: 7050
     damageType: Rogue
     crit: 4
     knockback: 6
@@ -9439,12 +9444,12 @@ Dodu的手炮:
   - §r丢出一把牺牲之匕
   - §r普通攻击会使你失去 15 生命值
   - §r潜伏攻击会使你失去 20% 当前生命值
-  - §r以此失去生命值的75%会附加到基础伤害中
+  - §r以此失去生命值的15倍会附加到基础伤害中
   - §r普通攻击命中时为你恢复 15 生命值
   - §r潜伏攻击命中时为你恢复 15% 已损失生命值
   attributes:
-    damage: 600
-    damageStealth: 300
+    damage: 2896
+    damageStealth: 24545
     damageType: Rogue
     crit: 4
     knockback: 4
@@ -9457,8 +9462,8 @@ Dodu的手炮:
   - §r扔出一把会在命中方块时弹跳向敌人的标枪
   - §r潜伏攻击会扔出三把标枪
   attributes:
-    damage: 24
-    damageStealth: 30
+    damage: 65
+    damageStealth: 156
     damageType: Rogue
     crit: 4
     knockback: 3.5
@@ -9471,8 +9476,8 @@ Dodu的手炮:
   - §r发射一支会在命中时产生追踪旋风的穿云标枪
   - §r潜伏攻击产生更多旋风
   attributes:
-    damage: 36
-    damageStealth: 40
+    damage: 104
+    damageStealth: 403
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -9485,8 +9490,8 @@ Dodu的手炮:
   - §r扔出一把弹跳向敌人的标枪，可以穿透一次
   - §r潜伏攻击会扔出三把标枪
   attributes:
-    damage: 160
-    damageStealth: 200
+    damage: 232
+    damageStealth: 428
     damageType: Rogue
     crit: 4
     knockback: 4
@@ -9499,8 +9504,8 @@ Dodu的手炮:
   - §r投掷高速长矛，撞击时释放追踪能量体
   - §r潜伏攻击会使矛释放更多能量体
   attributes:
-    damage: 160
-    damageStealth: 300
+    damage: 495
+    damageStealth: 1432
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -9513,8 +9518,8 @@ Dodu的手炮:
   lore:
   - §r投掷一支可以无限穿透的水晶标枪
   attributes:
-    damage: 184
-    damageStealth: 200
+    damage: 226
+    damageStealth: 867
     damageType: Rogue
     crit: 4
     knockback: 6
@@ -9528,8 +9533,8 @@ Dodu的手炮:
   - §r潜伏攻击爆出更多毒云
   - §r毒云会造成削减敌人防御的辐射减益
   attributes:
-    damage: 100
-    damageStealth: 125
+    damage: 355
+    damageStealth: 656
     damageType: Rogue
     crit: 4
     knockback: 3.5
@@ -9543,8 +9548,8 @@ Dodu的手炮:
   - §r长矛命中后爆成化石碎片
   - §r潜伏攻击会产生更多的化石碎片
   attributes:
-    damage: 130
-    damageStealth: 200
+    damage: 263
+    damageStealth: 1718
     damageType: Rogue
     crit: 4
     knockback: 6
@@ -9557,8 +9562,8 @@ Dodu的手炮:
   - §r投掷三支跟踪矛
   - §r潜伏攻击会投掷一发巨大，高速并无限穿透的神圣之矛
   attributes:
-    damage: 100
-    damageStealth: 425
+    damage: 302
+    damageStealth: 834
     damageType: Rogue
     crit: 4
     knockback: 2
@@ -9571,8 +9576,8 @@ Dodu的手炮:
   - §r发射巨大的幽魂投矛，命中敌人时会召唤四个幽魂
   - §r潜伏攻击可以穿透两次，并且每次击中敌人时均会召唤三个幽魂
   attributes:
-    damage: 304
-    damageStealth: 328
+    damage: 298
+    damageStealth: 2010
     damageType: Rogue
     crit: 4
     knockback: 8
@@ -9586,8 +9591,8 @@ Dodu的手炮:
   - §r普通攻击会无限穿透
   - §r潜伏攻击无法穿透且在摧毁后留下追踪星星
   attributes:
-    damage: 480
-    damageStealth: 512
+    damage: 422
+    damageStealth: 3215
     damageType: Rogue
     crit: 4
     knockback: 8
@@ -9599,8 +9604,8 @@ Dodu的手炮:
   lore:
   - §r发射一支会爆炸的不洁之矛
   attributes:
-    damage: 644
-    damageStealth: 800
+    damage: 1300
+    damageStealth: 4264
     damageType: Rogue
     crit: 4
     knockback: 8
@@ -9613,8 +9618,8 @@ Dodu的手炮:
   - §r普通攻击投掷三支小型跟踪矛
   - §r潜伏攻击会投掷一发割裂现实的高速投矛贯穿你的敌人
   attributes:
-    damage: 450
-    damageStealth: 750
+    damage: 447
+    damageStealth: 4824
     damageType: Rogue
     crit: 4
     knockback: 8
@@ -9627,8 +9632,8 @@ Dodu的手炮:
   - §r用这支夜之长矛痛击你的敌人
   - §r潜伏攻击命中敌人会召唤追踪的星辰
   attributes:
-    damage: 1062
-    damageStealth: 1333
+    damage: 2474
+    damageStealth: 8482
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -9641,8 +9646,8 @@ Dodu的手炮:
   - §r击中敌人时召唤长矛从天而降
   - §r潜伏攻击会不停追击、穿刺敌人并召唤长矛
   attributes:
-    damage: 1000
-    damageStealth: 1500
+    damage: 3767
+    damageStealth: 1761
     damageType: Rogue
     crit: 4
     knockback: 3.5
@@ -9655,8 +9660,8 @@ Dodu的手炮:
   - §r投掷强力的追踪火矛
   - §r潜伏攻击会在命中后喷发出火球
   attributes:
-    damage: 5000
-    damageStealth: 5000
+    damage: 2110
+    damageStealth: 8025
     damageType: Rogue
     crit: 4
     knockback: 8
@@ -9669,8 +9674,8 @@ Dodu的手炮:
   - §r投掷出处于量子叠加态的标枪，击中后会从其他时间线对目标再次发动攻击
   - §r潜伏攻击会召唤更多彩虹标枪
   attributes:
-    damage: 640
-    damageStealth: 720
+    damage: 4736
+    damageStealth: 5984
     damageType: Rogue
     crit: 4
     knockback: 7
@@ -9684,8 +9689,8 @@ Dodu的手炮:
   - §r潜伏攻击会使神枪获得生命汲取并且会在击中敌人时爆成一片追踪弹幕
   - §r“神枪「冈格尼尔」”
   attributes:
-    damage: 20000
-    damageStealth: 32767
+    damage: 19391
+    damageStealth: 15700
     damageType: Rogue
     crit: 24
     knockback: 8
@@ -9698,8 +9703,8 @@ Dodu的手炮:
   lore:
   - §r投出一个穿透至多十次后消失的尖刺球
   attributes:
-    damage: 15
-    damageStealth: 45
+    damage: 41
+    damageStealth: 300
     damageType: Rogue
     crit: 4
     knockback: 1
@@ -9713,8 +9718,8 @@ Dodu的手炮:
   - §r潜伏攻击会使钉球爆成更多钉球
   - §r“哦，那一定很疼”
   attributes:
-    damage: 60
-    damageStealth: 80
+    damage: 68
+    damageStealth: 170
     damageType: Rogue
     crit: 4
     knockback: 7
@@ -9728,8 +9733,8 @@ Dodu的手炮:
   - §r投出一团污泥
   - §r潜伏攻击会使斑点在命中时分裂，造成更多伤害
   attributes:
-    damage: 96
-    damageStealth: 105
+    damage: 130
+    damageStealth: 642
     damageType: Rogue
     crit: 4
     knockback: 1
@@ -9742,8 +9747,8 @@ Dodu的手炮:
   - §r丢出一个不稳定的设备穿过方块追杀敌人
   - §r潜伏攻击会使设备黏附在方块上并释放伤害性电磁脉冲
   attributes:
-    damage: 90
-    damageStealth: 100
+    damage: 308
+    damageStealth: 175
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -9758,8 +9763,8 @@ Dodu的手炮:
   - §r尖钉球会向四周发射接触敌人后爆炸的小太阳
   - §r“地底太阳的力量正被你握在掌心”
   attributes:
-    damage: 400
-    damageStealth: 500
+    damage: 4229
+    damageStealth: 275
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -9772,8 +9777,8 @@ Dodu的手炮:
   - §r扔出追踪尖钉球，快速追踪敌人
   - §r潜伏攻击悬停在空中并召唤穿墙弑神苦无
   attributes:
-    damage: 284
-    damageStealth: 300
+    damage: 3888
+    damageStealth: 525
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -9787,8 +9792,8 @@ Dodu的手炮:
   - §r投出一个手里剑
   - §r潜伏攻击同时发射数个弹幕
   attributes:
-    damage: 15
-    damageStealth: 15
+    damage: 88
+    damageStealth: 342
     damageType: Rogue
     crit: 4
     knockback: 0
@@ -9803,8 +9808,8 @@ Dodu的手炮:
   - §r潜伏攻击会使板砖碎裂
   - §r“以理服人”
   attributes:
-    damage: 34
-    damageStealth: 50
+    damage: 74
+    damageStealth: 215
     damageType: Rogue
     crit: 24
     knockback: 5
@@ -9817,8 +9822,8 @@ Dodu的手炮:
   lore:
   - §r“这柄斧太干了”
   attributes:
-    damage: 28
-    damageStealth: 40
+    damage: 43
+    damageStealth: 415
     damageType: Rogue
     crit: 4
     knockback: 3
@@ -9831,8 +9836,8 @@ Dodu的手炮:
   - §r掷出一个弹射向敌人的弹跳眼球
   - §r潜伏攻击更快且弹跳、穿刺次数均有所增加
   attributes:
-    damage: 32
-    damageStealth: 40
+    damage: 70
+    damageStealth: 371
     damageType: Rogue
     crit: 4
     knockback: 3.5
@@ -9845,8 +9850,8 @@ Dodu的手炮:
   lore:
   - §r潜伏攻击可以穿透一次
   attributes:
-    damage: 52
-    damageStealth: 60
+    damage: 97
+    damageStealth: 955
     damageType: Rogue
     crit: 12
     knockback: 2.5
@@ -9858,8 +9863,8 @@ Dodu的手炮:
   lore:
   - §r投掷出带电的小小宇宙蜗牛
   attributes:
-    damage: 72
-    damageStealth: 86
+    damage: 168
+    damageStealth: 1915
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -9873,8 +9878,8 @@ Dodu的手炮:
   - §r扔出快速但易碎的追踪冰花
   - §r潜伏攻击穿透两次，且在命中时生成追踪冰花
   attributes:
-    damage: 90
-    damageStealth: 90
+    damage: 125
+    damageStealth: 312
     damageType: Rogue
     crit: 11
     knockback: 2.5
@@ -9887,8 +9892,8 @@ Dodu的手炮:
   lore:
   - §r潜伏攻击无视重力
   attributes:
-    damage: 134
-    damageStealth: 150
+    damage: 280
+    damageStealth: 3000
     damageType: Rogue
     crit: 4
     knockback: 3.25
@@ -9901,8 +9906,8 @@ Dodu的手炮:
   - §r投掷可以穿透九次的硫火飞爪
   - §r潜伏攻击投出两只飞爪
   attributes:
-    damage: 170
-    damageStealth: 170
+    damage: 195
+    damageStealth: 850
     damageType: Rogue
     crit: 4
     knockback: 7
@@ -9915,8 +9920,8 @@ Dodu的手炮:
   - §r投掷一把深渊战斧，造成碎甲和深渊水压减益
   - §r潜伏攻击会使斧头飞的更快，并额外造成死亡标记减益
   attributes:
-    damage: 272
-    damageStealth: 200
+    damage: 379
+    damageStealth: 2480
     damageType: Rogue
     crit: 4
     knockback: 3
@@ -9930,8 +9935,8 @@ Dodu的手炮:
   - §r发射不受重力影响的高速符札，不断释放追踪的失落灵魂
   - §r潜伏攻击追踪敌人且释放更多的灵魂
   attributes:
-    damage: 163
-    damageStealth: 172
+    damage: 94
+    damageStealth: 548
     damageType: Rogue
     crit: 4
     knockback: 6
@@ -9943,8 +9948,8 @@ Dodu的手炮:
   lore:
   - §r投掷一个不受重力影响的沙暴手里剑
   attributes:
-    damage: 230
-    damageStealth: 235
+    damage: 373
+    damageStealth: 3268
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -9958,8 +9963,8 @@ Dodu的手炮:
   - §r潜伏攻击会使石板碎裂
   - §r“可能用脸接板砖真的不是个好想法……”
   attributes:
-    damage: 456
-    damageStealth: 470
+    damage: 329
+    damageStealth: 996
     damageType: Rogue
     crit: 24
     knockback: 10
@@ -9972,8 +9977,8 @@ Dodu的手炮:
   - §r迅速投掷毒牙，造成毒液减益
   - §r潜伏攻击会掷出6枚高速毒牙，无视重力并且会在命中时产生水爆炸
   attributes:
-    damage: 128
-    damageStealth: 150
+    damage: 497
+    damageStealth: 696
     damageType: Rogue
     crit: 4
     knockback: 1
@@ -9986,8 +9991,8 @@ Dodu的手炮:
   - §r扔出一颗分裂流星，分裂并缓慢追踪附近的敌人
   - §r潜伏攻击会在击中敌人时召唤分裂陨星
   attributes:
-    damage: 96
-    damageStealth: 100
+    damage: 700
+    damageStealth: 700
     damageType: Rogue
     crit: 4
     knockback: 6
@@ -10001,8 +10006,8 @@ Dodu的手炮:
   - §r潜伏攻击会使注射器在碎裂时生成瘟疫蜜蜂
   - §r“我保证这对你的健康有百害而无一利”
   attributes:
-    damage: 120
-    damageStealth: 128
+    damage: 468
+    damageStealth: 1361
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -10014,8 +10019,8 @@ Dodu的手炮:
   lore:
   - §r扔出一把穿透两次的飞斧
   attributes:
-    damage: 180
-    damageStealth: 180
+    damage: 771
+    damageStealth: 3828
     damageType: Rogue
     crit: 4
     knockback: 2
@@ -10028,8 +10033,8 @@ Dodu的手炮:
   - §r发射一个快速的追踪飞盘
   - §r潜伏攻击会穿透两次
   attributes:
-    damage: 232
-    damageStealth: 255
+    damage: 937
+    damageStealth: 1462
     damageType: Rogue
     crit: 4
     knockback: 4.5
@@ -10043,8 +10048,8 @@ Dodu的手炮:
   - §r潜伏攻击会发射强大的屠刀并穿透一次
   - §r“太空鸡，就是它了”
   attributes:
-    damage: 666
-    damageStealth: 1024
+    damage: 1137
+    damageStealth: 6722
     damageType: Rogue
     crit: 4
     knockback: 8
@@ -10057,8 +10062,8 @@ Dodu的手炮:
   - §r掷出击中敌人时弹向其他敌人的镰刀
   - §r潜伏攻击会反弹更多次
   attributes:
-    damage: 280
-    damageStealth: 305
+    damage: 2544
+    damageStealth: 3596
     damageType: Rogue
     crit: 4
     knockback: 6
@@ -10071,8 +10076,8 @@ Dodu的手炮:
   - §r扔出一把受重力影响的血斧，击中敌怪时治疗玩家
   - §r潜伏攻击可以穿透四次
   attributes:
-    damage: 490
-    damageStealth: 500
+    damage: 1862
+    damageStealth: 5742
     damageType: Rogue
     crit: 4
     knockback: 3
@@ -10085,8 +10090,8 @@ Dodu的手炮:
   - §r发射圣雷天劫，击中敌人时从天上降下闪电
   - §r潜伏攻击召唤更多闪电且弹幕移动速度提高
   attributes:
-    damage: 932
-    damageStealth: 1024
+    damage: 882
+    damageStealth: 2594
     damageType: Rogue
     crit: 16
     knockback: 10
@@ -10100,8 +10105,8 @@ Dodu的手炮:
   - §r潜伏攻击发射六颗毒牙并击碎敌人护甲
   - §r“你将需要一艘更大的船”
   attributes:
-    damage: 318
-    damageStealth: 666
+    damage: 1546
+    damageStealth: 1953
     damageType: Rogue
     crit: 4
     knockback: 1
@@ -10113,8 +10118,8 @@ Dodu的手炮:
   lore:
   - §r抛出一个沉重的巨大哑铃
   attributes:
-    damage: 932
-    damageStealth: 1320
+    damage: 8471
+    damageStealth: 18036
     damageType: Rogue
     crit: 4
     knockback: 8
@@ -10128,8 +10133,8 @@ Dodu的手炮:
   - §r潜伏攻击会穿透四次
   - §r“切成碎片”
   attributes:
-    damage: 360
-    damageStealth: 400
+    damage: 2104
+    damageStealth: 8719
     damageType: Rogue
     crit: 4
     knockback: 4
@@ -10141,8 +10146,8 @@ Dodu的手炮:
   lore:
   - §r发射一连串追踪飞刀
   attributes:
-    damage: 450
-    damageStealth: 525
+    damage: 1302
+    damageStealth: 3322
     damageType: Rogue
     crit: 4
     knockback: 6.75
@@ -10156,8 +10161,8 @@ Dodu的手炮:
   - §r潜伏攻击发射三次镰刀
   - §r“我们必将再度拥抱黎明”
   attributes:
-    damage: 666
-    damageStealth: 1250
+    damage: 1413
+    damageStealth: 1094
     damageType: Rogue
     crit: 4
     knockback: 5
@@ -10170,8 +10175,8 @@ Dodu的手炮:
   - §r扔出一个高速飞行的平底锅
   - §#842593“伤~害↘不↑会↓断~”
   attributes:
-    damage: 4444
-    damageStealth: 4444
+    damage: 5220
+    damageStealth: 26082
     damageType: Rogue
     crit: 4
     knockback: 10
@@ -10185,8 +10190,8 @@ Dodu的手炮:
   - §r手里剑在命中敌人后碎裂并释放出一发追踪火箭
   - §r潜伏攻击会使手里剑在碎裂时释放出更多火箭
   attributes:
-    damage: 1632
-    damageStealth: 1750
+    damage: 2806
+    damageStealth: 3891
     damageType: Rogue
     crit: 4
     knockback: 8.5
@@ -10195,10 +10200,8 @@ Dodu的手炮:
   rarity: 15
 火花魔棒:
   item: STICK
-  lore:
-  - §r可用来合成永夜射线，请妥善保管
   attributes:
-    damage: 24
+    damage: 59
     damageType: Magic
     crit: 4
     projectileSpeed: 10
@@ -10210,7 +10213,7 @@ Dodu的手炮:
 钻石法杖:
   item: DIAMOND_SWORD
   attributes:
-    damage: 46
+    damage: 65
     damageType: Magic
     crit: 4
     projectileSpeed: 12.5
@@ -10222,7 +10225,7 @@ Dodu的手炮:
 太空枪:
   item: WOOD_SWORD
   attributes:
-    damage: 59
+    damage: 80
     damageType: Magic
     crit: 4
     projectileSpeed: 30
@@ -10234,7 +10237,7 @@ Dodu的手炮:
 海蓝权杖:
   item: DIAMOND_SWORD
   attributes:
-    damage: 53
+    damage: 80
     damageType: Magic
     crit: 4
     projectileSpeed: 37.5
@@ -10246,7 +10249,7 @@ Dodu的手炮:
 水矢:
   item: BOOK
   attributes:
-    damage: 84
+    damage: 106
     damageType: Magic
     crit: 4
     projectileSpeed: 10
@@ -10258,7 +10261,7 @@ Dodu的手炮:
 骷髅头法书:
   item: BOOK
   attributes:
-    damage: 50
+    damage: 75
     damageType: Magic
     crit: 4
     projectileSpeed: 10
@@ -10270,7 +10273,7 @@ Dodu的手炮:
 恶魔锄刀:
   item: BOOK
   attributes:
-    damage: 100
+    damage: 150
     damageType: Magic
     crit: 4
     projectileSpeed: 2
@@ -10282,7 +10285,7 @@ Dodu的手炮:
 激光步枪:
   item: DIAMOND_SWORD
   attributes:
-    damage: 78
+    damage: 164
     damageType: Magic
     crit: 4
     projectileSpeed: 17
@@ -10296,7 +10299,7 @@ Dodu的手炮:
   lore:
   - §r召唤快速发射的水晶碎块
   attributes:
-    damage: 80
+    damage: 96
     damageType: Magic
     crit: 4
     projectileSpeed: 17.5
@@ -10308,7 +10311,7 @@ Dodu的手炮:
 裂天剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 65
+    damage: 100
     damageType: Magic
     crit: 24
     projectileSpeed: 16
@@ -10320,7 +10323,7 @@ Dodu的手炮:
 水晶蛇:
   item: DIAMOND_SWORD
   attributes:
-    damage: 198
+    damage: 172
     damageType: Magic
     crit: 4
     projectileSpeed: 17.5
@@ -10332,7 +10335,7 @@ Dodu的手炮:
 邪恶三叉戟:
   item: DIAMOND_SWORD
   attributes:
-    damage: 350
+    damage: 252
     damageType: Magic
     crit: 4
     projectileSpeed: 18
@@ -10345,7 +10348,7 @@ Dodu的手炮:
   item: DIAMOND_SWORD
   attributes:
     armorPenetration: 20
-    damage: 200
+    damage: 91
     damageType: Magic
     crit: 4
     knockback: 1
@@ -10358,7 +10361,7 @@ Dodu的手炮:
   lore:
   - §r快速射出刀锋般锋利的树叶
   attributes:
-    damage: 135
+    damage: 86
     damageType: Magic
     crit: 4
     projectileSpeed: 15
@@ -10372,7 +10375,7 @@ Dodu的手炮:
   lore:
   - §r发射造成破晓的火光球
   attributes:
-    damage: 200
+    damage: 105
     damageType: Magic
     crit: 4
     projectileSpeed: 13.5
@@ -10386,7 +10389,7 @@ Dodu的手炮:
   lore:
   - §r产生会在墙上反弹的暗影光束
   attributes:
-    damage: 312
+    damage: 215
     damageType: Magic
     crit: 4
     knockback: 3.25
@@ -10399,7 +10402,7 @@ Dodu的手炮:
   lore:
   - §r召唤亡魂来追杀敌人
   attributes:
-    damage: 255
+    damage: 192
     damageType: Magic
     crit: 4
     projectileSpeed: 15.5
@@ -10413,7 +10416,7 @@ Dodu的手炮:
   lore:
   - §r射出弹跳磁球，向敌人发射电磁波
   attributes:
-    damage: 100
+    damage: 86
     damageType: Magic
     crit: 4
     projectileSpeed: 1.2
@@ -10425,7 +10428,7 @@ Dodu的手炮:
 剃刀松:
   item: DIAMOND_SWORD
   attributes:
-    damage: 102
+    damage: 74
     damageType: Magic
     crit: 4
     projectileSpeed: 24
@@ -10437,7 +10440,7 @@ Dodu的手炮:
 暴雪法杖:
   item: DIAMOND_SWORD
   attributes:
-    damage: 74
+    damage: 51
     damageType: Magic
     crit: 4
     projectileSpeed: 20
@@ -10449,7 +10452,7 @@ Dodu的手炮:
 蝙蝠权杖:
   item: DIAMOND_SWORD
   attributes:
-    damage: 130
+    damage: 106
     damageType: Magic
     crit: 4
     projectileSpeed: 15
@@ -10464,7 +10467,7 @@ Dodu的手炮:
   - §r射出灼热的高温射线
   - §r“喔啦！！”
   attributes:
-    damage: 240
+    damage: 262
     damageType: Magic
     crit: 4
     knockback: 3
@@ -10475,7 +10478,7 @@ Dodu的手炮:
 夜光:
   item: DIAMOND_SWORD
   attributes:
-    damage: 100
+    damage: 132
     damageType: Magic
     crit: 4
     projectileSpeed: 13.5
@@ -10489,7 +10492,7 @@ Dodu的手炮:
   lore:
   - §r快速射出强劲的泡泡
   attributes:
-    damage: 140
+    damage: 200
     damageType: Magic
     crit: 4
     projectileSpeed: 12.5
@@ -10504,7 +10507,7 @@ Dodu的手炮:
   - §r发射快速移动的利刃台风
   - §r利刃台风对单体单位有极长的无敌帧
   attributes:
-    damage: 300
+    damage: 607
     damageType: Magic
     crit: 4
     projectileSpeed: 8
@@ -10519,7 +10522,7 @@ Dodu的手炮:
   - §r20%概率发射出更具威力的烈焰
   - §r“从猎户座腰带收到掌中”
   attributes:
-    damage: 282
+    damage: 705
     damageType: Magic
     crit: 4
     projectileSpeed: 12
@@ -10533,7 +10536,7 @@ Dodu的手炮:
   lore:
   - §r“召唤大量星体能量来追杀敌人”
   attributes:
-    damage: 140
+    damage: 246
     damageType: Magic
     crit: 4
     projectileSpeed: 9.5
@@ -10547,7 +10550,7 @@ Dodu的手炮:
   lore:
   - §r射出月之耀斑
   attributes:
-    damage: 300
+    damage: 451
     damageType: Magic
     crit: 4
     projectileSpeed: 22
@@ -10561,7 +10564,7 @@ Dodu的手炮:
   lore:
   - §r“发射生命解离彩虹”
   attributes:
-    damage: 365
+    damage: 186
     damageType: Magic
     crit: 4
     knockback: 0
@@ -10574,7 +10577,7 @@ Dodu的手炮:
   lore:
   - §r发射钨钢光球
   attributes:
-    damage: 30
+    damage: 41
     damageType: Magic
     crit: 4
     projectileSpeed: 9
@@ -10588,7 +10591,7 @@ Dodu的手炮:
   lore:
   - §r召唤冰柱从天而降
   attributes:
-    damage: 24
+    damage: 44
     damageType: Magic
     projectileSpeed: 11
     crit: 4
@@ -10602,7 +10605,7 @@ Dodu的手炮:
   lore:
   - §r发射会爆炸分裂成花瓣的魔法花朵
   attributes:
-    damage: 32
+    damage: 44
     damageType: Magic
     projectileSpeed: 13.5
     crit: 4
@@ -10616,7 +10619,7 @@ Dodu的手炮:
   lore:
   - §r发射一个水柱
   attributes:
-    damage: 30
+    damage: 31
     damageType: Magic
     projectileSpeed: 17.5
     crit: 4
@@ -10630,7 +10633,7 @@ Dodu的手炮:
   lore:
   - §r发射两道不精准的蓝色魔法矢
   attributes:
-    damage: 47
+    damage: 42
     damageType: Magic
     projectileSpeed: 16
     crit: 4
@@ -10644,7 +10647,7 @@ Dodu的手炮:
   lore:
   - §r召唤羽毛从天而降
   attributes:
-    damage: 36
+    damage: 46
     damageType: Magic
     projectileSpeed: 15
     crit: 4
@@ -10658,7 +10661,7 @@ Dodu的手炮:
   lore:
   - §r丢出燃烧的南瓜
   attributes:
-    damage: 52
+    damage: 46
     damageType: Magic
     projectileSpeed: 10
     crit: 4
@@ -10672,7 +10675,7 @@ Dodu的手炮:
   lore:
   - §r在玩家附近召唤孢子球
   attributes:
-    damage: 44
+    damage: 77
     damageType: Magic
     projectileSpeed: 1
     crit: 4
@@ -10686,7 +10689,7 @@ Dodu的手炮:
   lore:
   - §r发射火蝙蝠
   attributes:
-    damage: 75
+    damage: 57
     damageType: Magic
     projectileSpeed: 20
     crit: 4
@@ -10702,7 +10705,7 @@ Dodu的手炮:
   - §r“§m命中率堪忧§r”
   - §r“追踪，很神奇吧”
   attributes:
-    damage: 100
+    damage: 20
     damageType: Magic
     projectileSpeed: 6
     crit: 4
@@ -10716,7 +10719,7 @@ Dodu的手炮:
   - §r发射暗影射线
   - §r射线命中的第一个敌怪会受到额外的攻击
   attributes:
-    damage: 46
+    damage: 44
     damageType: Magic
     crit: 4
     knockback: 3.25
@@ -10730,7 +10733,7 @@ Dodu的手炮:
   - §r我呼唤神话中的飞龙，祈求向大地降下恩泽
   - §r召唤飞龙与羽毛从天而降
   attributes:
-    damage: 100
+    damage: 168
     damageType: Magic
     projectileSpeed: 15
     crit: 4
@@ -10744,7 +10747,7 @@ Dodu的手炮:
   lore:
   - §r发射一个冰晶追踪你的敌人
   attributes:
-    damage: 90
+    damage: 140
     damageType: Magic
     projectileSpeed: 16.5
     crit: 4
@@ -10758,7 +10761,7 @@ Dodu的手炮:
   lore:
   - §r发射穿透性冰柱
   attributes:
-    damage: 175
+    damage: 232
     damageType: Magic
     projectileSpeed: 17.5
     crit: 4
@@ -10772,7 +10775,7 @@ Dodu的手炮:
   lore:
   - §r发射闪光花朵，爆炸分裂成追踪花瓣
   attributes:
-    damage: 141
+    damage: 159
     damageType: Magic
     projectileSpeed: 16
     crit: 4
@@ -10786,7 +10789,7 @@ Dodu的手炮:
   lore:
   - §r发射一个水柱
   attributes:
-    damage: 120
+    damage: 110
     damageType: Magic
     projectileSpeed: 18.5
     crit: 4
@@ -10800,7 +10803,7 @@ Dodu的手炮:
   lore:
   - §r发射硫磺火射线
   attributes:
-    damage: 95
+    damage: 294
     damageType: Magic
     projectileSpeed: 25
     crit: 4
@@ -10814,7 +10817,7 @@ Dodu的手炮:
   lore:
   - §r释放拥有神圣之力的毁灭射线
   attributes:
-    damage: 249
+    damage: 202
     damageType: Magic
     crit: 4
     knockback: 8.5
@@ -10825,7 +10828,7 @@ Dodu的手炮:
 深渊女神之复仇:
   item: DIAMOND_SWORD
   attributes:
-    damage: 166
+    damage: 158
     damageType: Magic
     projectileSpeed: 16
     crit: 4
@@ -10839,7 +10842,7 @@ Dodu的手炮:
   lore:
   - §r发射能量射线，命中后分解为自然能量
   attributes:
-    damage: 124
+    damage: 112
     damageType: Magic
     crit: 4
     knockback: 4
@@ -10852,7 +10855,7 @@ Dodu的手炮:
   lore:
   - §r发射海之三叉戟
   attributes:
-    damage: 170
+    damage: 292
     damageType: Magic
     crit: 4
     knockback: 5
@@ -10865,7 +10868,7 @@ Dodu的手炮:
   lore:
   - §r发射一波优美的极光束，击中后爆裂为星辰
   attributes:
-    damage: 180
+    damage: 326
     damageType: Magic
     projectileSpeed: 17
     crit: 4
@@ -10879,7 +10882,7 @@ Dodu的手炮:
   lore:
   - §r召唤三叉戟攻击敌人
   attributes:
-    damage: 145
+    damage: 233
     damageType: Magic
     projectileSpeed: 16
     crit: 29
@@ -10894,7 +10897,7 @@ Dodu的手炮:
   - §r召唤一群熔岩陨星
   - §r右键直接发射散开的熔岩陨星
   attributes:
-    damage: 173
+    damage: 208
     damageType: Magic
     projectileSpeed: 17.5
     crit: 4
@@ -10908,7 +10911,7 @@ Dodu的手炮:
   lore:
   - §r发射瘟疫之牙
   attributes:
-    damage: 200
+    damage: 330
     damageType: Magic
     projectileSpeed: 17
     crit: 4
@@ -10923,7 +10926,7 @@ Dodu的手炮:
   - §r由下方召唤血之涌泉
   - §r“咦？为什么是红色的？”
   attributes:
-    damage: 240
+    damage: 177
     damageType: Magic
     projectileSpeed: 10
     crit: 4
@@ -10937,7 +10940,7 @@ Dodu的手炮:
   lore:
   - §r发射闪光花朵，爆炸分裂成追踪花瓣
   attributes:
-    damage: 400
+    damage: 358
     damageType: Magic
     projectileSpeed: 18
     crit: 4
@@ -10951,7 +10954,7 @@ Dodu的手炮:
   lore:
   - §r自天外召唤水晶陨落造成大量伤害
   attributes:
-    damage: 575
+    damage: 1368
     damageType: Magic
     projectileSpeed: 16
     crit: 19
@@ -10965,7 +10968,7 @@ Dodu的手炮:
   lore:
   - §r召唤小行星从天而降
   attributes:
-    damage: 337
+    damage: 384
     damageType: Magic
     projectileSpeed: 17.5
     crit: 4
@@ -10983,7 +10986,7 @@ Dodu的手炮:
   - §#7dffe1星旋射线§r命中后造成带电减益
   - §#19c8e1星尘射线§r命中敌怪后产生追踪的星尘流星
   attributes:
-    damage: 208
+    damage: 280
     damageType: Magic
     crit: 4
     knockback: 7.5
@@ -10997,7 +11000,7 @@ Dodu的手炮:
   - §r召唤终结三叉戟
   - §r三叉戟会造成诅咒狱火和硫磺火减益
   attributes:
-    damage: 330
+    damage: 496
     damageType: Magic
     projectileSpeed: 19.5
     crit: 4
@@ -11009,7 +11012,7 @@ Dodu的手炮:
 神圣天罚:
   item: DIAMOND_SWORD
   attributes:
-    damage: 310
+    damage: 240
     damageType: Magic
     projectileSpeed: 19
     crit: 4
@@ -11023,7 +11026,7 @@ Dodu的手炮:
   lore:
   - §r每朵玫瑰都有刺
   attributes:
-    damage: 508
+    damage: 528
     damageType: Magic
     projectileSpeed: 20
     crit: 4
@@ -11039,7 +11042,7 @@ Dodu的手炮:
   - §r所以现在你告诉我王子爆炸了，变成了一朵花？
   - §r-Dain
   attributes:
-    damage: 535
+    damage: 440
     damageType: Magic
     projectileSpeed: 23.5
     crit: 4
@@ -11053,7 +11056,7 @@ Dodu的手炮:
   lore:
   - §r发射针叶风暴
   attributes:
-    damage: 150
+    damage: 127
     damageType: Magic
     projectileSpeed: 24
     crit: 4
@@ -11067,7 +11070,7 @@ Dodu的手炮:
   lore:
   - §r发射一阵从敌人身上吸取生命的猩红火焰
   attributes:
-    damage: 386
+    damage: 282
     damageType: Magic
     projectileSpeed: 21
     crit: 4
@@ -11081,7 +11084,7 @@ Dodu的手炮:
   lore:
   - §r发射血炎束，命中敌怪后治疗自己
   attributes:
-    damage: 1000
+    damage: 1200
     damageType: Magic
     projectileSpeed: 6
     crit: 4
@@ -11095,7 +11098,7 @@ Dodu的手炮:
   lore:
   - §r发射菱形十字排列的磁球
   attributes:
-    damage: 315
+    damage: 325
     damageType: Magic
     projectileSpeed: 7.5
     crit: 4
@@ -11109,7 +11112,7 @@ Dodu的手炮:
   lore:
   - §r在身边召唤跟踪玩家的魂火
   attributes:
-    damage: 500
+    damage: 1260
     damageType: Magic
     projectileSpeed: 2.5
     crit: 4
@@ -11123,7 +11126,7 @@ Dodu的手炮:
   lore:
   - §r释放会分裂的幻象球
   attributes:
-    damage: 890
+    damage: 682
     damageType: Magic
     projectileSpeed: 17.5
     crit: 4
@@ -11138,7 +11141,7 @@ Dodu的手炮:
   - §r穿透的敌人越多，伤害越高
   - §r“……也会带~来折磨~”
   attributes:
-    damage: 543
+    damage: 1681
     damageType: Magic
     crit: 4
     knockback: 8
@@ -11166,7 +11169,7 @@ Dodu的手炮:
   - §r令天幕坠落
   - §r召唤暗夜飞龙与繁星从天而降
   attributes:
-    damage: 576
+    damage: 529
     damageType: Magic
     projectileSpeed: 25
     crit: 4
@@ -11180,7 +11183,7 @@ Dodu的手炮:
   lore:
   - §r释放一束毒牙和喷吐物
   attributes:
-    damage: 262
+    damage: 290
     damageType: Magic
     projectileSpeed: 21
     crit: 4
@@ -11195,7 +11198,7 @@ Dodu的手炮:
   - §r在你的敌人头顶降下死亡之雨！
   - §r释放星云激光从天而降
   attributes:
-    damage: 945
+    damage: 1314
     damageType: Magic
     projectileSpeed: 18
     crit: 4
@@ -11209,7 +11212,7 @@ Dodu的手炮:
   lore:
   - §r发射威力强大的光束，命中时会生成更多光束
   attributes:
-    damage: 897
+    damage: 727
     damageType: Magic
     projectileSpeed: 6
     crit: 4
@@ -11223,7 +11226,7 @@ Dodu的手炮:
   lore:
   - §r你的手中掌握着星云法师真正的力量……
   attributes:
-    damage: 1024
+    damage: 963
     damageType: Magic
     projectileSpeed: 16
     crit: 4
@@ -11237,7 +11240,7 @@ Dodu的手炮:
   lore:
   - §r在目标位置圆形散射出电磁球
   attributes:
-    damage: 206
+    damage: 245
     damageType: Magic
     projectileSpeed: 2
     crit: 4
@@ -11252,7 +11255,7 @@ Dodu的手炮:
   - §r召唤火幕从天而降
   - §r“圣火洗礼”
   attributes:
-    damage: 486
+    damage: 460
     damageType: Magic
     projectileSpeed: 30
     crit: 4
@@ -11267,7 +11270,7 @@ Dodu的手炮:
   - §r“于刹那之间瞥见星海浩瀚之威”
   - §r发射挥发性星核，随即引发巨大聚变爆炸
   attributes:
-    damage: 2400
+    damage: 840
     damageType: Magic
     projectileSpeed: 18.5
     crit: 4
@@ -11281,7 +11284,7 @@ Dodu的手炮:
   lore:
   - §r在目标位置圆形散射出电磁球
   attributes:
-    damage: 403
+    damage: 532
     damageType: Magic
     projectileSpeed: 2
     crit: 4
@@ -11297,7 +11300,7 @@ Dodu的手炮:
   - §r命中敌怪或击中物块时，元素能量束会分裂出元素能量体
   - §r它的威严激发了无与伦比的天才壮举
   attributes:
-    damage: 180
+    damage: 693
     damageType: Magic
     projectileSpeed: 6
     crit: 4
@@ -11311,7 +11314,7 @@ Dodu的手炮:
   lore:
   - §r释放地狱之力，命中或飞行一段时间后爆炸成骷髅
   attributes:
-    damage: 10370
+    damage: 11327
     damageType: Magic
     projectileSpeed: 30
     crit: 4
@@ -11326,7 +11329,7 @@ Dodu的手炮:
   - §r发射一道在接近敌人时会自动分裂的弹射光束
   - §r“漂亮滴很呐！”
   attributes:
-    damage: 1212
+    damage: 1000
     damageType: Magic
     projectileSpeed: 25
     crit: 4
@@ -11340,7 +11343,7 @@ Dodu的手炮:
   lore:
   - §r发射一束能量冲击波
   attributes:
-    damage: 52
+    damage: 68
     damageType: Magic
     projectileSpeed: 12
     crit: 4
@@ -11354,7 +11357,7 @@ Dodu的手炮:
   lore:
   - §r发射一道在击中一个敌人后，可以弧向附近敌人的脉冲
   attributes:
-    damage: 52
+    damage: 74
     damageType: Magic
     projectileSpeed: 15
     crit: 4
@@ -11369,7 +11372,7 @@ Dodu的手炮:
   - §r一种由魔法驱动的简易手枪；更适合法师使用
   - §r发射毁灭性的极强击退的高速冲击波
   attributes:
-    damage: 410
+    damage: 743
     damageType: Magic
     projectileSpeed: 1
     crit: 4
@@ -11384,7 +11387,7 @@ Dodu的手炮:
   - §r战栗
   - §r发射多个冰锥
   attributes:
-    damage: 126
+    damage: 77
     damageType: Magic
     projectileSpeed: 16.5
     crit: 4
@@ -11399,7 +11402,7 @@ Dodu的手炮:
   - §r发射会加速并爆炸的离子冲击波
   - §r魔力越充足时伤害越高
   attributes:
-    damage: 132
+    damage: 212
     damageType: Magic
     projectileSpeed: 10
     crit: 4
@@ -11414,7 +11417,7 @@ Dodu的手炮:
   - §r亚利姆舰队和基地防御部队配装的大型激光炮
   - §r短暂充能后以疯狂的速度射出激光
   attributes:
-    damage: 105
+    damage: 110
     damageType: Magic
     projectileSpeed: 24
     crit: 4
@@ -11428,7 +11431,7 @@ Dodu的手炮:
   lore:
   - §r发射光束，在击中敌人时爆炸
   attributes:
-    damage: 140
+    damage: 218
     damageType: Magic
     crit: 4
     knockback: 5
@@ -11442,7 +11445,7 @@ Dodu的手炮:
   - §r射出一大串泡沫
   - §r“化为，浮沫吧！”
   attributes:
-    damage: 120
+    damage: 152
     damageType: Magic
     projectileSpeed: 17.5
     crit: 4
@@ -11457,7 +11460,7 @@ Dodu的手炮:
   - §r发射会加速并爆炸的离子冲击波
   - §r你的魔力值越高，它的威力越大
   attributes:
-    damage: 400
+    damage: 292
     damageType: Magic
     projectileSpeed: 24
     crit: 4
@@ -11471,7 +11474,7 @@ Dodu的手炮:
   lore:
   - §r三连发神圣能量射线
   attributes:
-    damage: 750
+    damage: 966
     damageType: Magic
     crit: 4
     knockback: 4.5
@@ -11485,7 +11488,7 @@ Dodu的手炮:
   - §r左键发射一道大型爆炸等离子束
   - §r右键启用过载模式，开火速度提升但伤害和精度降低
   attributes:
-    damage: 3000
+    damage: 3300
     damageType: Magic
     projectileSpeed: 30
     crit: 4
@@ -11499,7 +11502,7 @@ Dodu的手炮:
   lore:
   - §r快速发射离子束
   attributes:
-    damage: 950
+    damage: 856
     damageType: Magic
     projectileSpeed: 25
     crit: 4
@@ -11514,7 +11517,7 @@ Dodu的手炮:
   - §r发射等离子子弹，同时召唤额外的等离子子弹从天而降
   - §r“暴雨倾盆”
   attributes:
-    damage: 364
+    damage: 207
     damageType: Magic
     projectileSpeed: 20
     crit: 4
@@ -11528,7 +11531,7 @@ Dodu的手炮:
   lore:
   - §r发射一束激光
   attributes:
-    damage: 810
+    damage: 315
     damageType: Magic
     projectileSpeed: 15
     crit: 4
@@ -11543,7 +11546,7 @@ Dodu的手炮:
   - §r发射一串弹射声波
   - §r全损音质，贯耳魔音
   attributes:
-    damage: 1800
+    damage: 1374
     damageType: Magic
     projectileSpeed: 14.5
     crit: 4
@@ -11558,7 +11561,7 @@ Dodu的手炮:
   - §r轻型能量炮，能发射出会爆炸的强电束
   - §r光束可以向附近的目标发射电弧
   attributes:
-    damage: 2591
+    damage: 2964
     damageType: Magic
     projectileSpeed: 40
     crit: 4
@@ -11572,7 +11575,7 @@ Dodu的手炮:
   lore:
   - §r发射可以穿过任何东西的聚焦光子
   attributes:
-    damage: 1790
+    damage: 2468
     damageType: Magic
     projectileSpeed: 24
     crit: 4
@@ -11586,7 +11589,7 @@ Dodu的手炮:
   lore:
   - §r发射缓慢飞行的冰矢
   attributes:
-    damage: 34
+    damage: 44
     damageType: Magic
     crit: 4
     projectileSpeed: 7.5
@@ -11600,7 +11603,7 @@ Dodu的手炮:
   lore:
   - §r喷出一块珊瑚
   attributes:
-    damage: 42
+    damage: 57
     damageType: Magic
     crit: 4
     projectileSpeed: 11.5
@@ -11614,7 +11617,7 @@ Dodu的手炮:
   lore:
   - §r喷出一团能量弹
   attributes:
-    damage: 30
+    damage: 33
     damageType: Magic
     crit: 4
     projectileSpeed: 12.5
@@ -11628,7 +11631,7 @@ Dodu的手炮:
   lore:
   - §r发射缓慢飞行的火矢
   attributes:
-    damage: 124
+    damage: 120
     damageType: Magic
     crit: 4
     projectileSpeed: 9.5
@@ -11642,7 +11645,7 @@ Dodu的手炮:
   lore:
   - §r发射天蓝羽毛
   attributes:
-    damage: 98
+    damage: 67
     damageType: Magic
     crit: 4
     projectileSpeed: 20
@@ -11656,7 +11659,7 @@ Dodu的手炮:
   lore:
   - §r释放一个缓慢移动的黑暗能量球
   attributes:
-    damage: 86
+    damage: 128
     damageType: Magic
     crit: 4
     projectileSpeed: 9
@@ -11670,7 +11673,7 @@ Dodu的手炮:
   lore:
   - §r释放邪恶的触手攻击敌人
   attributes:
-    damage: 74
+    damage: 104
     damageType: Magic
     crit: 9
     knockback: 3.5
@@ -11683,7 +11686,7 @@ Dodu的手炮:
   lore:
   - §r发射缓慢飞行的冰火箭
   attributes:
-    damage: 180
+    damage: 262
     damageType: Magic
     projectileSpeed: 12.5
     crit: 4
@@ -11697,7 +11700,7 @@ Dodu的手炮:
   lore:
   - §r释放波塞冬的台风
   attributes:
-    damage: 124
+    damage: 189
     damageType: Magic
     projectileSpeed: 13.5
     crit: 4
@@ -11711,7 +11714,7 @@ Dodu的手炮:
   lore:
   - §r快速发射暗晶碎片，一次能发射两个
   attributes:
-    damage: 68
+    damage: 95
     damageType: Magic
     projectileSpeed: 16
     crit: 4
@@ -11725,7 +11728,7 @@ Dodu的手炮:
   lore:
   - §r发射弹跳硫磺火球
   attributes:
-    damage: 230
+    damage: 369
     damageType: Magic
     projectileSpeed: 16.5
     crit: 4
@@ -11739,7 +11742,7 @@ Dodu的手炮:
   lore:
   - §r丢出一团巨大的粉尘击碎敌人的防御
   attributes:
-    damage: 246
+    damage: 241
     damageType: Magic
     projectileSpeed: 15
     crit: 4
@@ -11753,7 +11756,7 @@ Dodu的手炮:
   lore:
   - §r放射出一圈沙之刃
   attributes:
-    damage: 72
+    damage: 79
     damageType: Magic
     projectileSpeed: 20
     crit: 4
@@ -11767,7 +11770,7 @@ Dodu的手炮:
   lore:
   - §r发射一团硫磺火烈焰
   attributes:
-    damage: 170
+    damage: 100
     damageType: Magic
     projectileSpeed: 17.5
     crit: 4
@@ -11781,7 +11784,7 @@ Dodu的手炮:
   lore:
   - §r静看着整个世界的燃烧...
   attributes:
-    damage: 245
+    damage: 337
     damageType: Magic
     projectileSpeed: 17
     crit: 4
@@ -11795,7 +11798,7 @@ Dodu的手炮:
   lore:
   - §r发射使敌人燃烧的咒焰流
   attributes:
-    damage: 120
+    damage: 95
     damageType: Magic
     projectileSpeed: 18
     crit: 4
@@ -11809,7 +11812,7 @@ Dodu的手炮:
   lore:
   - §r发射两个缓慢移动的神圣光团
   attributes:
-    damage: 170
+    damage: 167
     damageType: Magic
     projectileSpeed: 12.5
     crit: 4
@@ -11823,7 +11826,7 @@ Dodu的手炮:
   lore:
   - §r丢出一团巨大的粉尘，击碎敌人的护甲
   attributes:
-    damage: 120
+    damage: 114
     damageType: Magic
     projectileSpeed: 8
     crit: 4
@@ -11837,7 +11840,7 @@ Dodu的手炮:
   lore:
   - §r这书摸起来冷极了
   attributes:
-    damage: 200
+    damage: 191
     damageType: Magic
     projectileSpeed: 14
     crit: 4
@@ -11851,7 +11854,7 @@ Dodu的手炮:
   lore:
   - §r发射一颗火球，在消失之际产生巨型爆炸
   attributes:
-    damage: 175
+    damage: 268
     damageType: Magic
     projectileSpeed: 11.5
     crit: 4
@@ -11866,7 +11869,7 @@ Dodu的手炮:
   - §r召唤宇宙之触助你撕裂敌人
   - §#305F4F“大脑在颤抖!”
   attributes:
-    damage: 220
+    damage: 316
     damageType: Magic
     crit: 7
     knockback: 3.5
@@ -11880,7 +11883,7 @@ Dodu的手炮:
   - §r向上发射一颗彗星
   - §r“What is reflected in my eyes?”
   attributes:
-    damage: 370
+    damage: 425
     damageType: Magic
     projectileSpeed: 14.5
     crit: 29
@@ -11895,7 +11898,7 @@ Dodu的手炮:
   - §r发射高能台风
   - §r“原神，启动！”
   attributes:
-    damage: 96
+    damage: 198
     damageType: Magic
     projectileSpeed: 14.5
     crit: 4
@@ -11909,7 +11912,7 @@ Dodu的手炮:
   lore:
   - §r创造元素触手戳刺你的敌人
   attributes:
-    damage: 260
+    damage: 255
     damageType: Magic
     crit: 4
     knockback: 5.5
@@ -11923,7 +11926,7 @@ Dodu的手炮:
   - §r一次发射3道空气斩
   - §r“鞭笞我吧，公瑾！”
   attributes:
-    damage: 460
+    damage: 534
     damageType: Magic
     projectileSpeed: 24
     crit: 4
@@ -11937,7 +11940,7 @@ Dodu的手炮:
   lore:
   - §r发射能量集中的生命射线
   attributes:
-    damage: 285
+    damage: 330
     damageType: Magic
     projectileSpeed: 20
     crit: 4
@@ -11952,7 +11955,7 @@ Dodu的手炮:
   - §r丢出一团巨大的粉尘
   - §r“源神，启动！”
   attributes:
-    damage: 570
+    damage: 600
     damageType: Magic
     projectileSpeed: 15
     crit: 4
@@ -11966,7 +11969,7 @@ Dodu的手炮:
   lore:
   - §r向光标处发射狂野之镰并追踪敌人
   attributes:
-    damage: 660
+    damage: 873
     damageType: Magic
     projectileSpeed: 0.5
     crit: 4
@@ -11980,7 +11983,7 @@ Dodu的手炮:
   lore:
   - §r释放追踪小光球和爆破光球
   attributes:
-    damage: 864
+    damage: 1149
     damageType: Magic
     projectileSpeed: 15
     crit: 4
@@ -11997,7 +12000,7 @@ Dodu的手炮:
   - §r“万物被悉数卷入其中，连光也无法幸免”
   - §r“缘神，启动！”
   attributes:
-    damage: 400
+    damage: 444
     damageType: Magic
     projectileSpeed: 12.5
     crit: 4
@@ -12014,7 +12017,7 @@ Dodu的手炮:
   - §r充能完毕时向你的前方投射一个巨大旋涡并造成猛烈爆炸
   - §r“元神，启动！”
   attributes:
-    damage: 932
+    damage: 505
     damageType: Magic
     projectileSpeed: 20
     crit: 4
@@ -12032,7 +12035,7 @@ Dodu的手炮:
   - §#C61B40“当被原谅之人尚未能饶恕自身时，
   - §#C61B40得到宽恕所带来的安慰也仅限于此了。”
   attributes:
-    damage: 444
+    damage: 1162
     damageType: Magic
     crit: 4
     knockback: 5
@@ -12046,7 +12049,7 @@ Dodu的手炮:
   - §r从翻开的书页中召唤火焰与灵魂
   - §r翻书的时间越长，召唤成功率越高
   attributes:
-    damage: 1500
+    damage: 2000
     damageType: Magic
     projectileSpeed: 15
     crit: 4
@@ -12060,7 +12063,8 @@ Dodu的手炮:
   lore:
   - §r将敌人以光刃弹雨湮灭
   - §r“炫目闪光过后，一切荡然无存”
-  - §r闪光必定暴击，且将原有暴击率转化为增伤
+  - §r闪光造成100倍面板伤害，由命中单位平分
+  - §r闪光必定暴击，且将原有暴击率转化为乘法增伤
   - §r“比！太！阳！更！光！”
   attributes:
     damage: 648
@@ -12068,7 +12072,7 @@ Dodu的手炮:
     projectileSpeed: 20
     crit: 4
     knockback: 4
-    useTime: 8
+    useTime: 6
     manaUse: 14
   worth: 40000000
   rarity: 16
@@ -12081,7 +12085,7 @@ Dodu的手炮:
   attributes:
     damage: 233
     damageType: Magic
-    projectileSpeed: 6
+    projectileSpeed: 12
     crit: 4
     knockback: 10
     useTime: 28
@@ -12093,9 +12097,9 @@ Dodu的手炮:
   lore:
   - §r发射缓慢移动的高音音符
   attributes:
-    damage: 200
+    damage: 512
     damageType: Magic
-    projectileSpeed: 5
+    projectileSpeed: 13.5
     crit: 4
     knockback: 6.5
     useTime: 18
@@ -12107,7 +12111,7 @@ Dodu的手炮:
   lore:
   - §r发射会追踪敌人并爆炸的幽魂能量球
   attributes:
-    damage: 433
+    damage: 806
     damageType: Magic
     projectileSpeed: 17.5
     crit: 4
@@ -12122,7 +12126,7 @@ Dodu的手炮:
   - §r“炫日下的一切是如此的和谐一致
   - §r但炎日光辉已被暗月所侵蚀”
   attributes:
-    damage: 666
+    damage: 133
     damageType: Magic
     crit: 4
     knockback: 0
@@ -12135,7 +12139,7 @@ Dodu的手炮:
   lore:
   - §r发射猛烈的破坏死光
   attributes:
-    damage: 666
+    damage: 1123
     damageType: Magic
     crit: 4
     knockback: 0
@@ -12153,7 +12157,7 @@ Dodu的手炮:
   - §#C61B40“聚合成那地牢怪物的灵魂永远无法进入他们所期望的来世，
   - §#C61B40被愤怒玷污、融化，他们终将如此。”
   attributes:
-    damage: 666
+    damage: 1160
     damageType: Magic
     projectileSpeed: 17.5
     crit: 14
@@ -12293,7 +12297,7 @@ Dodu的手炮:
   lore:
   - §r召唤小鬼来为你战斗
   attributes:
-    damage: 46
+    damage: 56
     damageType: Summon
     knockback: 2
     useTime: 20
@@ -12306,7 +12310,7 @@ Dodu的手炮:
   - §r召唤蜘蛛来为你战斗
   - §r“这个好像……是一个……蜘蛛！”
   attributes:
-    damage: 70
+    damage: 51
     damageType: Summon
     knockback: 1
     useTime: 18
@@ -12320,7 +12324,7 @@ Dodu的手炮:
   - §r“千刀万剐”
   attributes:
     armorPenetration: 50
-    damage: 24
+    damage: 29
     damageType: Summon
     knockback: 0
     useTime: 18
@@ -12332,7 +12336,7 @@ Dodu的手炮:
   lore:
   - §r召唤双子魔眼来为你战斗
   attributes:
-    damage: 64
+    damage: 208
     damageType: Summon
     knockback: 2
     useTime: 18
@@ -12344,7 +12348,7 @@ Dodu的手炮:
   lore:
   - §r召唤矮人来为你战斗
   attributes:
-    damage: 100
+    damage: 285
     damageType: Summon
     knockback: 3
     useTime: 14
@@ -12356,7 +12360,7 @@ Dodu的手炮:
   lore:
   - §r召唤乌鸦仆从来为你战斗
   attributes:
-    damage: 95
+    damage: 132
     damageType: Summon
     knockback: 3
     useTime: 14
@@ -12368,7 +12372,7 @@ Dodu的手炮:
   lore:
   - §r召唤致命球来为你战斗
   attributes:
-    damage: 150
+    damage: 252
     damageType: Summon
     knockback: 3
     useTime: 14
@@ -12380,7 +12384,7 @@ Dodu的手炮:
   lore:
   - §r召唤必定命中的附魔剑来为你战斗
   attributes:
-    damage: 145
+    damage: 182
     damageType: Summon
     knockback: 1
     useTime: 14
@@ -12393,7 +12397,7 @@ Dodu的手炮:
   - §r召唤星尘细胞来为你战斗
   - §r“培养最美丽的细胞感染”
   attributes:
-    damage: 140
+    damage: 200
     damageType: Summon
     knockback: 2
     useTime: 14
@@ -12406,7 +12410,7 @@ Dodu的手炮:
   - §r召唤星尘之龙来为你战斗
   - §r“有了星尘之龙后，谁还需要一群仆从呢？”
   attributes:
-    damage: 110
+    damage: 167
     damageType: Summon
     knockback: 2
     useTime: 14
@@ -12418,7 +12422,7 @@ Dodu的手炮:
   lore:
   - §r召唤钨钢机器人为你而战
   attributes:
-    damage: 36
+    damage: 33
     damageType: Summon
     knockback: 0.5
     useTime: 20
@@ -12432,7 +12436,7 @@ Dodu的手炮:
   - §r同时只能存在至多一朵冰霜之花
   - §r“要三连啊~~”
   attributes:
-    damage: 22
+    damage: 47
     damageType: Summon
     knockback: 2
     useTime: 20
@@ -12445,7 +12449,7 @@ Dodu的手炮:
   - §r召唤一个太阳之灵来保护你
   - §r同时只能存在至多一个太阳之灵
   attributes:
-    damage: 40
+    damage: 47
     damageType: Summon
     knockback: 1.15
     useTime: 20
@@ -12457,7 +12461,7 @@ Dodu的手炮:
   lore:
   - §r召唤一个会投掷魔法剧毒花瓣的可爱的颠茄之灵
   attributes:
-    damage: 40
+    damage: 32
     damageType: Summon
     knockback: 1
     useTime: 20
@@ -12470,7 +12474,7 @@ Dodu的手炮:
   - §r召唤真菌块为你而战，真菌块需要占用两个仆从栏位
   - §r真菌块击中敌人后为拥有者恢复生命值，最多存在一个真菌块
   attributes:
-    damage: 30
+    damage: 35
     damageType: Summon
     knockback: 2
     useTime: 20
@@ -12495,7 +12499,7 @@ Dodu的手炮:
   lore:
   - §r召唤海星为你而战
   attributes:
-    damage: 16
+    damage: 22
     damageType: Summon
     knockback: 2
     useTime: 20
@@ -12507,7 +12511,7 @@ Dodu的手炮:
   lore:
   - §r召唤寄居蟹为你而战
   attributes:
-    damage: 40
+    damage: 50
     damageType: Summon
     knockback: 2
     useTime: 20
@@ -12519,7 +12523,7 @@ Dodu的手炮:
   lore:
   - §r召唤灵魂吞噬者宝宝来保护你
   attributes:
-    damage: 32
+    damage: 37
     damageType: Summon
     knockback: 0.5
     useTime: 20
@@ -12544,7 +12548,7 @@ Dodu的手炮:
   lore:
   - §r召唤黑暗爬行者为你而战
   attributes:
-    damage: 26
+    damage: 22
     damageType: Summon
     knockback: 2.25
     useTime: 20
@@ -12619,8 +12623,9 @@ Dodu的手炮:
   - §r召唤黑鹰战斗机为你而战
   - §r向敌人发射你背包内的子弹
   - §r50% 概率不消耗弹药
+  - §r弹幕仅继承弹药特性，无视弹药面板属性
   attributes:
-    damage: 162
+    damage: 145
     damageType: Summon
     knockback: 1
     useTime: 18
@@ -12633,7 +12638,7 @@ Dodu的手炮:
   - §r召唤缠怨鬼碟为你而战
   - §r“这些盘子不能拿走”
   attributes:
-    damage: 92
+    damage: 75
     damageType: Summon
     knockback: 3
     useTime: 18
@@ -12645,7 +12650,7 @@ Dodu的手炮:
   lore:
   - §r召唤蚀骨之龙为你而战
   attributes:
-    damage: 102
+    damage: 90
     damageType: Summon
     knockback: 2
     useTime: 18
@@ -12658,7 +12663,7 @@ Dodu的手炮:
   - §r召唤远古岩鲨为你而战，击碎敌人的防御
   - §r看起来，它在很久之前就失去了颚骨
   attributes:
-    damage: 160
+    damage: 182
     damageType: Summon
     knockback: 4
     useTime: 18
@@ -12671,7 +12676,7 @@ Dodu的手炮:
   - §r召唤海贝为你而战
   - §r每只海贝占据两个召唤栏
   attributes:
-    damage: 180
+    damage: 72
     damageType: Summon
     knockback: 2
     useTime: 18
@@ -12697,7 +12702,7 @@ Dodu的手炮:
   - §r召唤永冻之焱华为你而战
   - §r同时只能存在至多一个永冻之焱华
   attributes:
-    damage: 100
+    damage: 62
     damageType: Summon
     knockback: 3
     useTime: 18
@@ -12709,7 +12714,7 @@ Dodu的手炮:
   lore:
   - §r召唤代达罗斯守卫为你而战
   attributes:
-    damage: 65
+    damage: 152
     damageType: Summon
     knockback: 3
     useTime: 18
@@ -12721,7 +12726,7 @@ Dodu的手炮:
   lore:
   - §r召唤深海海星为你而战
   attributes:
-    damage: 65
+    damage: 68
     damageType: Summon
     knockback: 2
     useTime: 18
@@ -12733,7 +12738,7 @@ Dodu的手炮:
   lore:
   - §r召唤硫火搜寻者为你而战
   attributes:
-    damage: 55
+    damage: 139
     damageType: Summon
     knockback: 3
     useTime: 18
@@ -12745,7 +12750,7 @@ Dodu的手炮:
   lore:
   - §r召唤环绕在你身边的熔火古刀为你而战
   attributes:
-    damage: 83
+    damage: 80
     damageType: Summon
     knockback: 4.5
     useTime: 18
@@ -12757,7 +12762,7 @@ Dodu的手炮:
   lore:
   - §r召唤架式扫射机为你而战
   attributes:
-    damage: 92
+    damage: 110
     damageType: Summon
     knockback: 2
     useTime: 18
@@ -12770,7 +12775,7 @@ Dodu的手炮:
   - §r召唤太阳神之灵为你而战
   - §r同时只能存在至多一个太阳神之灵
   attributes:
-    damage: 140
+    damage: 94
     damageType: Summon
     knockback: 1.25
     useTime: 18
@@ -12783,7 +12788,7 @@ Dodu的手炮:
   - §r召唤灾厄三兄妹为你而战
   - §r灾厄三兄妹占据两个召唤栏
   attributes:
-    damage: 75
+    damage: 48
     damageType: Summon
     knockback: 2
     useTime: 14
@@ -12797,7 +12802,7 @@ Dodu的手炮:
   - §r迷你世纪之花占据三个召唤栏
   - §r同时只能存在至多一个迷你世纪之花
   attributes:
-    damage: 118
+    damage: 106
     damageType: Summon
     knockback: 1
     useTime: 14
@@ -12809,7 +12814,7 @@ Dodu的手炮:
   lore:
   - §r召唤沙龙卷为你而战
   attributes:
-    damage: 170
+    damage: 130
     damageType: Summon
     knockback: 2
     useTime: 14
@@ -12821,7 +12826,7 @@ Dodu的手炮:
   lore:
   - §r召唤鼠尾草之灵为你而战
   attributes:
-    damage: 90
+    damage: 84
     damageType: Summon
     knockback: 2
     useTime: 14
@@ -12833,7 +12838,7 @@ Dodu的手炮:
   lore:
   - §r召唤畸变吞食者为你而战
   attributes:
-    damage: 80
+    damage: 163
     damageType: Summon
     knockback: 1
     useTime: 14
@@ -12847,7 +12852,7 @@ Dodu的手炮:
   - §r“回归于花下好了，春之亡灵！”
   - §r“沉眠于花下好了，红白之蝶！”
   attributes:
-    damage: 71
+    damage: 126
     damageType: Summon
     knockback: 1
     useTime: 14
@@ -12859,7 +12864,7 @@ Dodu的手炮:
   lore:
   - §r召唤一个小而特别的瘟疫携带者变种
   attributes:
-    damage: 220
+    damage: 282
     damageType: Summon
     knockback: 7
     useTime: 14
@@ -12873,7 +12878,7 @@ Dodu的手炮:
   - §r瘟疫雌蜂占据三个召唤栏
   - §r同时只能存在至多一个瘟疫雌蜂
   attributes:
-    damage: 347
+    damage: 314
     damageType: Summon
     knockback: 5
     useTime: 14
@@ -12887,7 +12892,7 @@ Dodu的手炮:
   - §r凋零枯花占据两个召唤栏
   - §r同时只能存在至多一个凋零枯花
   attributes:
-    damage: 77
+    damage: 132
     damageType: Summon
     knockback: 3
     useTime: 14
@@ -12899,7 +12904,7 @@ Dodu的手炮:
   lore:
   - §r召唤幻星探测器为你而战
   attributes:
-    damage: 154
+    damage: 243
     damageType: Summon
     knockback: 1.25
     useTime: 14
@@ -12913,8 +12918,9 @@ Dodu的手炮:
   - §r战机会消耗你物品栏中的子弹
   - §r有时会发射导弹而非子弹
   - §r66%几率节省弹药
+  - §r弹幕仅继承弹药特性，无视弹药面板属性
   attributes:
-    damage: 258
+    damage: 264
     damageType: Summon
     knockback: 0.5
     useTime: 14
@@ -12927,7 +12933,7 @@ Dodu的手炮:
   - §r召唤元素之斧为你而战
   - §r“放心使用，并不会劈坏你的木门”
   attributes:
-    damage: 226
+    damage: 185
     damageType: Summon
     knockback: 5
     useTime: 10
@@ -12940,7 +12946,7 @@ Dodu的手炮:
   - §r在你的头顶召唤元素之花
   - §r共占据3格仆从栏位
   attributes:
-    damage: 248
+    damage: 303
     damageType: Summon
     knockback: 5
     useTime: 10
@@ -12952,7 +12958,7 @@ Dodu的手炮:
   lore:
   - §r召唤圣刃为你而战
   attributes:
-    damage: 226
+    damage: 209
     damageType: Summon
     knockback: 2
     useTime: 10
@@ -12966,7 +12972,7 @@ Dodu的手炮:
   - §r“你说到底↑为什↓么↑~”
   - §r“都→是←我→的←错→~”
   attributes:
-    damage: 360
+    damage: 204
     damageType: Summon
     knockback: 5
     useTime: 10
@@ -12982,7 +12988,7 @@ Dodu的手炮:
   - §#1FFBFF“装备有高端的传感器，几乎无人可以避开它们。能逃脱它们目光的则更少了。
   - §#1FFBFF在我基于视觉灵魂的动力机器实验和我最新的项目之间的一座优秀桥梁。”
   attributes:
-    damage: 210
+    damage: 408
     damageType: Summon
     knockback: 3
     useTime: 10
@@ -12995,7 +13001,7 @@ Dodu的手炮:
   - §r在你的头顶召唤一盏宇宙灯为你而战
   - §r每盏宇宙灯占据两格仆从栏位
   attributes:
-    damage: 666
+    damage: 782
     damageType: Summon
     knockback: 4
     useTime: 10
@@ -13009,7 +13015,7 @@ Dodu的手炮:
   - §r同一时间只能存在一对巨龙
   - §r“吞噬恒星的巨龙”
   attributes:
-    damage: 263
+    damage: 135
     damageType: Summon
     knockback: 2
     useTime: 30
@@ -13024,7 +13030,7 @@ Dodu的手炮:
   - §r需要至少3格仆从栏位才能使用
   - §r同时只能存在至多一家骨龙
   attributes:
-    damage: 163
+    damage: 246
     damageType: Summon
     knockback: 4
     useTime: 30
@@ -13036,7 +13042,7 @@ Dodu的手炮:
   lore:
   - §r召唤花灵来保护你
   attributes:
-    damage: 722
+    damage: 858
     damageType: Summon
     knockback: 1
     useTime: 10
@@ -13051,7 +13057,7 @@ Dodu的手炮:
   - §r在近距离，乌贼会扑向敌人并造成高频伤害
   - §r“深渊之中，任何资源都是稀缺的，每个物种都孤苦伶仃，仅是因为它们根本没有可共享的资源。”
   attributes:
-    damage: 652
+    damage: 742
     damageType: Summon
     knockback: 2.5
     useTime: 10
@@ -13066,7 +13072,7 @@ Dodu的手炮:
   - §r同时只能存在至多一个幻云星体
   - §r“我祈祷拥有一颗透明的心灵~”
   attributes:
-    damage: 1860
+    damage: 1779
     damageType: Summon
     knockback: 3
     useTime: 20
@@ -13080,7 +13086,7 @@ Dodu的手炮:
   - §r需要至少3格仆从栏位才能使用
   - §r同时只能存在至多一个年轻猪龙鱼
   attributes:
-    damage: 339
+    damage: 308
     damageType: Summon
     knockback: 5
     useTime: 20
@@ -13093,7 +13099,7 @@ Dodu的手炮:
   - §r召唤星宇护卫为你而战
   - §r“神，永不护主！”
   attributes:
-    damage: 1082
+    damage: 777
     damageType: Summon
     knockback: 2
     useTime: 10
@@ -13107,8 +13113,9 @@ Dodu的手炮:
   - §r炮艇会消耗你物品栏中的子弹
   - §r交替发射火箭和子弹
   - §r75%几率节省弹药
+  - §r弹幕仅继承弹药特性，无视弹药面板属性
   attributes:
-    damage: 978
+    damage: 810
     damageType: Summon
     knockback: 6
     useTime: 10
@@ -13121,7 +13128,7 @@ Dodu的手炮:
   - §r召唤一只强大的渡鸦，可以传送和猛冲
   - §r“永不复焉”
   attributes:
-    damage: 486
+    damage: 480
     damageType: Summon
     knockback: 2
     useTime: 10
@@ -13136,7 +13143,7 @@ Dodu的手炮:
   - §r同时只能存在至多一个光环
   - §r需要5格仆从栏位
   attributes:
-    damage: 1798
+    damage: 2910
     damageType: Summon
     knockback: 4
     useTime: 30
@@ -13148,7 +13155,7 @@ Dodu的手炮:
   lore:
   - §r召唤一对磁铁无人机，无情的撕裂敌人
   attributes:
-    damage: 603
+    damage: 1746
     damageType: Summon
     knockback: 8
     useTime: 10
@@ -13162,7 +13169,7 @@ Dodu的手炮:
   - §r需要至少5格仆从栏位才能使用
   - §r“巨龙撞击”
   attributes:
-    damage: 2392
+    damage: 1735
     damageType: Summon
     knockback: 7
     useTime: 30
@@ -13174,7 +13181,7 @@ Dodu的手炮:
   lore:
   - §r召唤一个UFO来蒸发你的敌人
   attributes:
-    damage: 378
+    damage: 1180
     damageType: Summon
     knockback: 1
     useTime: 10
@@ -13190,7 +13197,7 @@ Dodu的手炮:
   - §r无论何时，灾坟仆从的弹幕将强行对击中的目标造成伤害
   - §#C61B40宇宙之虫可能的未来，对力量的饥渴蒙蔽双眼，这可是一个可怕的警告，但不影响你走向这样的结局。
   attributes:
-    damage: 1500
+    damage: 925
     damageType: Summon
     knockback: 2
     useTime: 20
@@ -13202,7 +13209,7 @@ Dodu的手炮:
   lore:
   - §r召唤一个探魂者为你而战
   attributes:
-    damage: 609
+    damage: 950
     damageType: Summon
     knockback: 4
     useTime: 10
@@ -13273,7 +13280,7 @@ Dodu的手炮:
   - §r宇宙之灵在探测到敌人时会发射大量的跟踪能源箭
   - §r需要至少10格仆从栏位才能使用并且同时只能存在至多一个宇宙之灵
   attributes:
-    damage: 1510
+    damage: 1732
     damageType: Summon
     knockback: 0
     useTime: 50
@@ -13293,7 +13300,7 @@ Dodu的手炮:
   - §r同时只能存在至多一个冰晶结构
   - §#83EFFF“不包含冰的双关语”
   attributes:
-    damage: 2150
+    damage: 1919
     damageType: Summon
     knockback: 4
     useTime: 50
@@ -13312,7 +13319,7 @@ Dodu的手炮:
   - §r需要至少5格仆从栏位才能使用并且最多召唤一次
   - §r“如此结实，我敢说它一击就能打趴那些黑手党”
   attributes:
-    damage: 400
+    damage: 910
     damageType: Summon
     knockback: 1
     useTime: 30
@@ -13499,7 +13506,7 @@ Dodu的手炮:
 狱炎箭:
   item: ARROW
   attributes:
-    damage: 24
+    damage: 11
     damageType: Arrow
     crit: 4
     knockback: 8
@@ -13508,6 +13515,8 @@ Dodu的手炮:
   rarity: 2
 圣箭:
   item: ARROW
+  lore:
+  - §r召唤一颗继承20%攻击力的坠星
   attributes:
     damage: 12
     damageType: Arrow
@@ -13546,7 +13555,7 @@ Dodu的手炮:
   lore:
   - §r对目标施放酸性毒液
   attributes:
-    damage: 29
+    damage: 36
     damageType: Arrow
     crit: 4
     knockback: 4.2
@@ -13570,7 +13579,7 @@ Dodu的手炮:
 汽油箭:
   item: ARROW
   lore:
-  - §r爆裂出火花
+  - §r爆裂出三片继承8%攻击力的火花
   - §r“你就像那，一把火~”
   attributes:
     damage: 22
@@ -13585,7 +13594,7 @@ Dodu的手炮:
   lore:
   - §r冰冷刺骨的箭矢
   attributes:
-    damage: 36
+    damage: 32
     damageType: Arrow
     crit: 4
     knockback: 1.5
@@ -13595,9 +13604,9 @@ Dodu的手炮:
 冰坠箭:
   item: ARROW
   lore:
-  - §r命中后碎裂
+  - §r命中后碎裂成两枚继承12%攻击力的冰晶
   attributes:
-    damage: 26
+    damage: 10
     damageType: Arrow
     crit: 4
     knockback: 2.5
@@ -13608,9 +13617,9 @@ Dodu的手炮:
 泰拉箭:
   item: ARROW
   lore:
-  - §r高速移动并爆裂成更多箭
+  - §r高速移动并爆裂成两支继承10%攻击力的追踪箭
   attributes:
-    damage: 30
+    damage: 10
     damageType: Arrow
     crit: 4
     knockback: 1.5
@@ -13621,10 +13630,10 @@ Dodu的手炮:
 极乐之箭:
   item: ARROW
   lore:
-  - §r命中敌人时天降陨石
+  - §r命中敌人时天降一枚继承15%攻击力的陨石
   - §r“回应我吧，极乐之箭！”
   attributes:
-    damage: 20
+    damage: 26
     damageType: Arrow
     crit: 4
     knockback: 3
@@ -13647,10 +13656,10 @@ Dodu的手炮:
   item: ARROW
   lore:
   - §r穿透实体方块
-  - §r迅速分裂出最多两支小型追踪箭矢
+  - §r迅速分裂出最多两支小型追踪箭矢，继承10%攻击力
   - §r“很好的合成全部，使我的背包旋转”
   attributes:
-    damage: 28
+    damage: 40
     damageType: Arrow
     crit: 4
     knockback: 3.5
@@ -13671,7 +13680,7 @@ Dodu的手炮:
 陨星弹:
   item: SLIME_BALL
   attributes:
-    damage: 18
+    damage: 22
     damageType: Bullet
     crit: 4
     knockback: 1
@@ -13704,7 +13713,7 @@ Dodu的手炮:
 水晶子弹:
   item: SLIME_BALL
   lore:
-  - §r碰撞时产生水晶碎片
+  - §r碰撞时爆裂成两片继承7.5%攻击力的水晶碎片
   attributes:
     damage: 10
     damageType: Bullet
@@ -13717,7 +13726,7 @@ Dodu的手炮:
 诅咒弹:
   item: SLIME_BALL
   attributes:
-    damage: 30
+    damage: 24
     damageType: Bullet
     crit: 4
     knockback: 4
@@ -13730,7 +13739,7 @@ Dodu的手炮:
   lore:
   - §r对目标施放酸性毒液
   attributes:
-    damage: 34
+    damage: 32
     damageType: Bullet
     crit: 4
     knockback: 4.1
@@ -13775,7 +13784,6 @@ Dodu的手炮:
     crit: 4
     knockback: 1.25
     projectileSpeed: 5
-    projectileSpeedMulti: 0.5
   worth: 5000
   rarity: 1
 弹球弹:
@@ -13798,7 +13806,7 @@ Dodu的手炮:
   - §r穿透一次后获得追踪能力
   attributes:
     damage: 14
-    damageBulletMulti: -0.25
+    damageRangedMulti: -0.5
     damageType: Bullet
     crit: 4
     knockback: 1.25
@@ -13809,10 +13817,9 @@ Dodu的手炮:
 冰砾弹:
   item: SLIME_BALL
   lore:
-  - §r可以命中至多两次
-  - §r第二次打击分裂成碎冰
+  - §r这种特殊材质比想象中更加坚硬
   attributes:
-    damage: 26
+    damage: 28
     damageType: Bullet
     crit: 4
     knockback: 2
@@ -13823,9 +13830,9 @@ Dodu的手炮:
 泰拉弹:
   item: SLIME_BALL
   lore:
-  - §r爆炸并分裂出死亡追踪射线
+  - §r碰撞时分裂成两发继承10%攻击力的追踪弹
   attributes:
-    damage: 15
+    damage: 10
     damageType: Bullet
     crit: 4
     knockback: 1.25
@@ -13836,8 +13843,7 @@ Dodu的手炮:
 鼠疫弹:
   item: SLIME_BALL
   attributes:
-    armorPenetration: 35
-    damage: 30
+    damage: 35
     damageType: Bullet
     crit: 4
     knockback: 1.5
@@ -13851,7 +13857,8 @@ Dodu的手炮:
   - §r你的敌人不会好过了...
   - §r击中敌人后产生额外弹幕
   attributes:
-    damage: 28
+    damage: 18
+    damageRangedMulti: -0.5
     damageType: Bullet
     crit: 4
     knockback: 1.5
@@ -13864,7 +13871,7 @@ Dodu的手炮:
   lore:
   - §r会爆炸的圣火子弹
   attributes:
-    damage: 36
+    damage: 32
     damageType: Bullet
     crit: 4
     knockback: 2
@@ -13890,9 +13897,9 @@ Dodu的手炮:
   lore:
   - §r具有无限穿透力的重型弹药，能够撕裂时空
   - §r穿透第一个敌怪后飞行一段时间就会消失
-  - §r然后撕裂时空出现在玩家身后，加速射出并在接触时爆炸
+  - §r然后撕裂时空出现在玩家身后加速射出
   attributes:
-    damage: 32
+    damage: 36
     damageRangedMulti: -0.5
     damageType: Bullet
     crit: 4
@@ -13974,7 +13981,7 @@ Dodu的手炮:
   - §r部分发射器的爆炸会摧毁图格
   - §7▷ 爆炸物：摧毁方块会按照玩家手上的工具和游戏进度进行判定
   attributes:
-    damage: 130
+    damage: 115
     damageType: Rocket
     crit: 4
   worth: 10000
@@ -16355,7 +16362,7 @@ Dodu的手炮:
 弹药储备药水:
   item: CLAY_BALL
   lore:
-  - §a20% 不消耗弹药
+  - §a75% 不消耗弹药
   - §a8分钟持续时间
   worth: 20000
   rarity: 1
@@ -16363,6 +16370,7 @@ Dodu的手炮:
   item: CLAY_BALL
   lore:
   - §a+5% 远程伤害
+  - §a+10% 盗贼伤害
   - §a8分钟持续时间
   worth: 20000
   rarity: 1
@@ -16420,14 +16428,14 @@ Dodu的手炮:
 魔能药水:
   item: CLAY_BALL
   lore:
-  - §a+10% 魔法伤害
+  - §a+15% 魔法伤害
   - §a4分钟持续时间
   worth: 20000
   rarity: 1
 魔力掌控药水:
   item: CLAY_BALL
   lore:
-  - §a-10% 魔力消耗
+  - §a-20% 魔力消耗
   - §a8分钟持续时间
   worth: 20000
   rarity: 1
@@ -16448,7 +16456,7 @@ Dodu的手炮:
 召唤药水:
   item: CLAY_BALL
   lore:
-  - §a+10% 召唤伤害
+  - §a+15% 召唤伤害
   - §a8分钟持续时间
   worth: 20000
   rarity: 1
@@ -16536,8 +16544,8 @@ Dodu的手炮:
 树之祭祀:
   item: CLAY_BALL
   lore:
-  - §r右键木板或树木使用，摧毁它并获得生命再生效果
-  - §r对木板使用时为16秒，对树木使用时为10秒
+  - §r右键木材或树木使用，摧毁它并获得生命再生效果
+  - §r对木材使用时为16秒，对树木使用时为10秒
   - §r可于建材商人处购买更多
   - §r“是的，它严重减缓了我的工作效率”
   worth: 600
