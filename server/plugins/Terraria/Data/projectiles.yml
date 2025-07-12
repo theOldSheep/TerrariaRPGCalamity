@@ -6585,7 +6585,7 @@ TNT:
         amount: 4
         name: 冲击波
         velocity: 0.75
-        damageMulti: 0.4
+        damageMulti: 0.75
 冲击波:
     arrowOrPotion: true
     noGravityTicks: 0
@@ -6760,7 +6760,7 @@ TNT:
         - "元素谐鸣|40|1"
     clusterBomb:
         amount: 6
-        damageMulti: 0.4
+        damageMulti: 1
         name: 蓝色元素光束
         velocity: 1.25
 蓝色元素光束:
@@ -6772,7 +6772,7 @@ TNT:
         - "元素谐鸣|40|1"
     clusterBomb:
         amount: 4
-        damageMulti: 0.6
+        damageMulti: 1
         name: 粉色元素光束
         velocity: 1.15
 粉色元素光束:
@@ -6784,7 +6784,7 @@ TNT:
         - "元素谐鸣|40|1"
     clusterBomb:
         amount: 2
-        damageMulti: 0.8
+        damageMulti: 1
         name: 橙色元素光束
         velocity: 1
 橙色元素光束:
