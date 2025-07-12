@@ -5452,16 +5452,19 @@ TNT:
     gravity: 0
 雷姆的复仇:
     projectileSize: 1.5
+    penetration: 1
     gravity: 0
     buffInflict:
         - "枯萎|80|1"
 脉冲龙链枷:
     projectileSize: 5
+    penetration: 999999
     gravity: 0
     buffInflict:
         - "带电|60|1"
 龙魂破:
     projectileSize: 3
+    penetration: 1
     gravity: 0
     buffInflict:
         - "神圣之火|60|1"
@@ -5469,12 +5472,12 @@ TNT:
         interval: 1
         offset: 1.0
         spawnMechanism: SURROUND
-        damageMulti: 0.15
+        damageMulti: 1
         speed: 2
         spawnType: 龙魂破火星
     clusterBomb:
         amount: 12
-        damageMulti: 0.35
+        damageMulti: 1
         name: 龙魂破花瓣
         type: surround
         fireOnTimeout: false
@@ -5501,7 +5504,7 @@ TNT:
         interval: 4
         offset: 0.5
         spawnMechanism: SURROUND
-        damageMulti: 0.25
+        damageMulti: 1
         speed: 1.75
         spawnType: 泰拉悠悠球光束
 泰拉悠悠球光束:
@@ -5539,7 +5542,7 @@ TNT:
         interval: 10
         offset: 22
         spawnMechanism: ENEMY
-        damageMulti: 0.25
+        damageMulti: 1
         speed: 1
         spawnType: 信风羽
 神旨:
@@ -5547,7 +5550,7 @@ TNT:
         interval: 6
         offset: 22
         spawnMechanism: ENEMY
-        damageMulti: 0.75
+        damageMulti: 1
         speed: 1
         spawnType: 凝胶束
 烁光:
@@ -5572,7 +5575,7 @@ TNT:
         interval: 7
         offset: 25
         spawnMechanism: ENEMY
-        damageMulti: 0.5
+        damageMulti: 1
         speed: 1.35
         spawnType: 炼狱死光
     buffInflict:
@@ -5581,7 +5584,7 @@ TNT:
     spawnProjectiles:
         interval: 8
         spawnMechanism: SURROUND
-        damageMulti: 0.75
+        damageMulti: 1
         speed: 0.35
         spawnType: 孢子云
     buffInflict:
@@ -5597,7 +5600,7 @@ TNT:
         interval: 30
         offset: 25
         spawnMechanism: ENEMY
-        damageMulti: 0.75
+        damageMulti: 1
         speed: 1.4
         spawnType: 瘟疫搜寻者
     buffInflict:
@@ -5609,7 +5612,7 @@ TNT:
 日炎:
     clusterBomb:
         amount: 3
-        damageMulti: 0.75
+        damageMulti: 1
         name: 日炎爆炸余烬
         fireOnTimeout: false
         fireOnCollideEntity: true
@@ -6582,7 +6585,7 @@ TNT:
         amount: 4
         name: 冲击波
         velocity: 0.75
-        damageMulti: 0.4
+        damageMulti: 0.75
 冲击波:
     arrowOrPotion: true
     noGravityTicks: 0
@@ -6757,7 +6760,7 @@ TNT:
         - "元素谐鸣|40|1"
     clusterBomb:
         amount: 6
-        damageMulti: 0.4
+        damageMulti: 1
         name: 蓝色元素光束
         velocity: 1.25
 蓝色元素光束:
@@ -6769,7 +6772,7 @@ TNT:
         - "元素谐鸣|40|1"
     clusterBomb:
         amount: 4
-        damageMulti: 0.6
+        damageMulti: 1
         name: 粉色元素光束
         velocity: 1.15
 粉色元素光束:
@@ -6781,7 +6784,7 @@ TNT:
         - "元素谐鸣|40|1"
     clusterBomb:
         amount: 2
-        damageMulti: 0.8
+        damageMulti: 1
         name: 橙色元素光束
         velocity: 1
 橙色元素光束:

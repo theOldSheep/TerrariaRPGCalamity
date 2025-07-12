@@ -314,7 +314,7 @@ effects:
   枯萎:
     isBuff: false
     attributes:
-      damageTakenMulti: 0.1
+      damageTakenMulti: 0.05
     tooltip: 软弱无力
   诅咒:
     isBuff: false
@@ -409,7 +409,7 @@ effects:
   生命力:
     isBuff: true
     attributes:
-      healthMulti: 0.2
+      maxHealthMulti: 0.2
     tooltip: 获得 20% 最大生命值
   魔能:
     isBuff: true

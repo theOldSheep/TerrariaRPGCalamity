@@ -562,7 +562,7 @@
   autoSwing: true
   size: 3.75
   attributes:
-    damage: 225
+    damage: 484
   projectileInfo:
     interval: 1
     velocity: 2
@@ -999,8 +999,6 @@
   type: STAB
   autoSwing: false
   attributes:
-    damage: 40
-    armorPenetration: 30
     useTime: 45
   size: 7.5
 残缺环境刃[澄澈之纯净]:
@@ -1454,6 +1452,7 @@
   type: FLAIL
   reach: 48
   velocity: 3.75
+  strict: false
   autoSwing: true
 晨星链刃:
   type: WHIP
@@ -1465,6 +1464,7 @@
   type: FLAIL
   reach: 48
   velocity: 4
+  strict: false
   autoSwing: true
 新月链刃:
   type: WHIP
@@ -1482,6 +1482,7 @@
   type: BOOMERANG
   distance: 48
   velocity: 5
+  strict: false
   autoSwing: true
 塔纳托斯的脊柱:
   type: WHIP
