@@ -1540,7 +1540,7 @@ public class ItemUseHelper {
                                         Location cachedLoc = currExplodeLoc.clone();
                                         if (i <= 1) {
                                             // projectile
-                                            EntityHelper.spawnProjectile(ply, cachedLoc, traceDir, AttributeHelper.getAttrMap(ply),
+                                            EntityHelper.spawnProjectile(ply, cachedLoc, traceDir, attrMap,
                                                     DamageHelper.DamageType.MELEE, "银河之雷");
                                         }
                                         Bukkit.getScheduler().scheduleSyncDelayedTask(TerrariaHelper.getInstance(),
@@ -1798,7 +1798,7 @@ public class ItemUseHelper {
                                 Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), 2, "远古剑气", false, 0);
                                 projVel.normalize().multiply(2);
 
-                                EntityHelper.spawnProjectile(ply, projVel, AttributeHelper.getAttrMap(ply), "远古剑气");
+                                EntityHelper.spawnProjectile(ply, projVel, attrMap, "远古剑气");
                                 charge --;
                                 setDurability(weaponItem, 10, charge);
                             }
@@ -1812,13 +1812,12 @@ public class ItemUseHelper {
                     }
                     case "死神擢升": {
                         if (currentIndex == 0) {
-                            HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
                             for (int i = 0; i < 4; i++) {
                                 Vector projVel = MathHelper.vectorFromYawPitch_approx(
                                         plyYaw + Math.random() * 10 - 5,
                                         plyPitch + Math.random() * 10 - 5);
                                 projVel.multiply(2.75);
-                                EntityHelper.spawnProjectile(ply, projVel, projAttrMap,
+                                EntityHelper.spawnProjectile(ply, projVel, attrMap,
                                         DamageHelper.DamageType.MELEE, "死神擢升镰刀");
                             }
                         }
@@ -1931,11 +1930,10 @@ public class ItemUseHelper {
                     case "巨龙之怒": {
                         strikeRadius = 1;
                         // on-hit projectiles
-                        HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
                         strikeLineInfo.setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
                             Vector projVel = MathHelper.randomVector();
                             projVel.multiply(2.5);
-                            EntityHelper.spawnProjectile(ply, hitLoc, projVel, projAttrMap,
+                            EntityHelper.spawnProjectile(ply, hitLoc, projVel, attrMap,
                                     DamageHelper.DamageType.MELEE, "巨龙之怒火球");
                         });
                         break;
@@ -2227,7 +2225,7 @@ public class ItemUseHelper {
                     }
                     case "圣火之刃": {
                         strikeLineInfo.setDamagedFunction((hitIdx, hitEntity, hitLoc) -> {
-                            HashMap<String, Double> projAttrMap = (HashMap<String, Double>) AttributeHelper.getAttrMap(ply).clone();
+                            HashMap<String, Double> projAttrMap = (HashMap<String, Double>) attrMap.clone();
                             double startYaw = Math.random() * 360;
                             for (int i = 0; i < 4; i ++) {
                                 Vector projVel = MathHelper.vectorFromYawPitch_approx(startYaw + 90 * i, 0);
@@ -2284,7 +2282,7 @@ public class ItemUseHelper {
 
                             Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), projSpd, projType, false, 0);
                             projVel.normalize().multiply(projSpd);
-                            EntityHelper.spawnProjectile(ply, projVel, AttributeHelper.getAttrMap(ply), projType);
+                            EntityHelper.spawnProjectile(ply, projVel, attrMap, projType);
                         }
                         strikeLineInfo.setDamagedFunction( (hitIdx, hitEntity, hitLoc) -> {
                             EntityHelper.applyEffect(ply, "暴君之怒", 100);
@@ -2298,7 +2296,7 @@ public class ItemUseHelper {
                             Location spawnLoc = hitLoc.add(hitEntity.getLocation()).multiply(0.5);
                             spawnLoc.subtract(projVel);
                             projVel.multiply(2);
-                            EntityHelper.spawnProjectile(ply, spawnLoc, projVel, AttributeHelper.getAttrMap(ply),
+                            EntityHelper.spawnProjectile(ply, spawnLoc, projVel, attrMap,
                                     DamageHelper.DamageType.MELEE, "泰拉斩切光束");
                         });
                         break;
@@ -2496,8 +2494,7 @@ public class ItemUseHelper {
                                     i == (int) (loopTimes * 0.6) ||
                                     i == (int) (loopTimes * 0.7)) {
                                 offsetDir.multiply(1.35);
-                                EntityHelper.spawnProjectile(ply, offsetDir,
-                                        AttributeHelper.getAttrMap(ply), "血之镰刀");
+                                EntityHelper.spawnProjectile(ply, offsetDir, attrMap, "血之镰刀");
                             }
                             break;
                         }
@@ -2552,7 +2549,7 @@ public class ItemUseHelper {
                                         });
                             }
                             // cache the crit rate, set it to 100, handle hit and reset to normal
-                            HashMap<String, Double> plyAttrMap = AttributeHelper.getAttrMap(ply);
+                            HashMap<String, Double> plyAttrMap = (HashMap<String, Double>) attrMap.clone();
                             double critRate = plyAttrMap.getOrDefault("crit", 4d);
                             plyAttrMap.put("crit", 100d);
                             String bladeColor = weaponType.equals("真·环境之刃[缚囚之悼]") ? "t/bls" : "t/gls";
@@ -2612,7 +2609,7 @@ public class ItemUseHelper {
                                 if (i == 0) {
                                     Vector projVel = getPlayerAimDir(ply, ply.getEyeLocation(), 2.5, "真·远古剑气", false, 0);
                                     projVel.normalize().multiply(2.5);
-                                    EntityHelper.spawnProjectile(ply, projVel, AttributeHelper.getAttrMap(ply), "真·远古剑气");
+                                    EntityHelper.spawnProjectile(ply, projVel, attrMap, "真·远古剑气");
                                     charge--;
                                     setDurability(weaponItem, 10, charge);
                                 }
@@ -2623,10 +2620,9 @@ public class ItemUseHelper {
                                         i == (int) (loopTimes * 0.5) ||
                                         i == (int) (loopTimes * 0.65)) {
                                     offsetDir.multiply(2);
-                                    HashMap<String, Double> attrMapPly = (HashMap<String, Double>) AttributeHelper.getAttrMap(ply).clone();
+                                    HashMap<String, Double> attrMapPly = (HashMap<String, Double>) attrMap.clone();
                                     attrMapPly.put("damage", attrMapPly.getOrDefault("damage", 1d) * 0.35);
-                                    EntityHelper.spawnProjectile(ply, offsetDir,
-                                            attrMapPly, "远古之星");
+                                    EntityHelper.spawnProjectile(ply, offsetDir, attrMapPly, "远古之星");
                                 }
                             }
                             break;
