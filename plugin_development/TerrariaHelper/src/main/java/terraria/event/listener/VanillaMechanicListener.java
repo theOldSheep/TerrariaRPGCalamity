@@ -183,7 +183,7 @@ public class VanillaMechanicListener implements Listener {
             return;
         }
         // reset player stats after world change
-        PlayerHelper.initPlayerStats(e.getPlayer(), true);
+        PlayerHelper.initPlayerStats(e.getPlayer(), false);
     }
     @EventHandler(priority = EventPriority.LOW)
     public void onExplode(EntityExplodeEvent e) {
