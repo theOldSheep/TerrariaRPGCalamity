@@ -5200,7 +5200,7 @@ Drew之翼:
 木制回力镖:
   item: STICK
   attributes:
-    damage: 19
+    damage: 95
     damageType: Melee
     crit: 4
     knockback: 5
@@ -5210,7 +5210,7 @@ Drew之翼:
 附魔回力镖:
   item: STICK
   attributes:
-    damage: 26
+    damage: 110
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5220,7 +5220,7 @@ Drew之翼:
 荆棘旋刃:
   item: STICK
   attributes:
-    damage: 39
+    damage: 115
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5230,7 +5230,7 @@ Drew之翼:
 烈焰回旋镖:
   item: STICK
   attributes:
-    damage: 100
+    damage: 260
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5243,7 +5243,7 @@ Drew之翼:
   lore:
   - §r追杀敌人
   attributes:
-    damage: 288
+    damage: 495
     damageType: Melee
     crit: 4
     knockback: 5
@@ -5253,7 +5253,7 @@ Drew之翼:
 链锤:
   item: STICK
   attributes:
-    damage: 18
+    damage: 75
     damageType: Melee
     crit: 4
     knockback: 4.6
@@ -5263,7 +5263,7 @@ Drew之翼:
 火焰锤:
   item: STICK
   attributes:
-    damage: 24
+    damage: 87
     damageType: Melee
     crit: 4
     knockback: 4.6
@@ -5274,7 +5274,7 @@ Drew之翼:
 蓝月:
   item: STICK
   attributes:
-    damage: 85
+    damage: 194
     damageType: Melee
     crit: 4
     knockback: 6
@@ -5284,7 +5284,7 @@ Drew之翼:
 太极连枷:
   item: STICK
   attributes:
-    damage: 135
+    damage: 462
     damageType: Melee
     crit: 4
     knockback: 6
@@ -5296,7 +5296,7 @@ Drew之翼:
   lore:
   - §r喷出自动寻敌泡泡
   attributes:
-    damage: 346
+    damage: 788
     damageType: Melee
     crit: 4
     knockback: 4.5
@@ -5306,7 +5306,7 @@ Drew之翼:
 日耀喷发剑:
   item: DIAMOND_SWORD
   attributes:
-    damage: 608
+    damage: 607
     damageType: Melee
     crit: 4
     knockback: 2
@@ -5319,7 +5319,7 @@ Drew之翼:
   lore:
   - §r旋转至少一秒后掷出将额外射出一股赤潮涡流
   attributes:
-    damage: 68
+    damage: 81
     damageType: Melee
     crit: 4
     knockback: 6
@@ -5329,7 +5329,7 @@ Drew之翼:
 海胆链球:
   item: STICK
   attributes:
-    damage: 56
+    damage: 78
     damageType: Melee
     crit: 4
     knockback: 6
@@ -5341,7 +5341,7 @@ Drew之翼:
   lore:
   - §r发射一个受重力影响的巨蛤，在留空一段时间后会造成更高伤害。
   attributes:
-    damage: 350
+    damage: 369
     damageType: Melee
     crit: 4
     knockback: 10
@@ -5353,7 +5353,7 @@ Drew之翼:
   lore:
   - §r击中敌人后脱手而出
   attributes:
-    damage: 641
+    damage: 1029
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5380,11 +5380,11 @@ Drew之翼:
   - §r对猪鲨公爵，硫海遗爵，巨像乌贼和猎魂鲨造成额外伤害
   - §r“如有鬼助”
   attributes:
-    damage: 2786
+    damage: 4145
     damageType: Melee
     crit: 4
     knockback: 10
-    useTime: 15
+    useTime: 60
   worth: 20000000
   rarity: 10
 晨星链刃:
@@ -5392,7 +5392,7 @@ Drew之翼:
   lore:
   - §r发射两个日耀链剑
   attributes:
-    damage: 234
+    damage: 390
     damageType: Melee
     crit: 4
     knockback: 2.5
@@ -5405,11 +5405,11 @@ Drew之翼:
   - §r重型链枷，每一个都内置有在挥舞时启动的强劲发电机
   - §r丢出龙首，龙首会释放电场
   attributes:
-    damage: 1366
+    damage: 1906
     damageType: Melee
     crit: 4
     knockback: 2.5
-    useTime: 10
+    useTime: 60
   worth: 24000000
   rarity: 1100
 新月链刃:
@@ -5417,7 +5417,7 @@ Drew之翼:
   lore:
   - §r以寒锋恰似拜月者希冀之月
   attributes:
-    damage: 1075
+    damage: 1353
     damageType: Melee
     crit: 4
     knockback: 4
@@ -5442,11 +5442,11 @@ Drew之翼:
   - §r发射龙头，释放龙息火星
   - §r击中敌人时召唤花瓣
   attributes:
-    damage: 2525
+    damage: 785
     damageType: Melee
     crit: 4
     knockback: 9
-    useTime: 20
+    useTime: 45
     buffInflictMelee: 神圣之火|60|1
   worth: 30000000
   rarity: 15
@@ -5456,7 +5456,7 @@ Drew之翼:
   - §r挥出由星流金属构成的鞭子
   - §r“这何尝不是一种脊髓剑”
   attributes:
-    damage: 2414
+    damage: 4042
     damageType: Melee
     crit: 4
     knockback: 8
@@ -5968,10 +5968,9 @@ Drew之翼:
 木制悠悠球:
   item: STICK
   lore:
-  - §r掷出悠悠球后再次使用可以收回
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 30
+    damage: 40
     damageType: Melee
     crit: 4
     projectileSpeed: 16
@@ -5984,7 +5983,7 @@ Drew之翼:
   lore:
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 40
+    damage: 50
     damageType: Melee
     crit: 4
     projectileSpeed: 16
@@ -5997,7 +5996,7 @@ Drew之翼:
   lore:
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 87
+    damage: 88
     damageType: Melee
     crit: 4
     projectileSpeed: 16
@@ -6010,7 +6009,7 @@ Drew之翼:
   lore:
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 534
+    damage: 342
     damageType: Melee
     crit: 4
     projectileSpeed: 16
@@ -6023,7 +6022,7 @@ Drew之翼:
   lore:
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 306
+    damage: 204
     damageType: Melee
     crit: 14
     projectileSpeed: 16
@@ -6036,10 +6035,9 @@ Drew之翼:
   lore:
   - §r向下召唤星星
   - §r一只十分灵活的悠悠球
-  - §r掷出悠悠球后再次使用可以收回
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 36
+    damage: 38
     damageType: Melee
     crit: 4
     projectileSpeed: 16
@@ -6052,7 +6050,7 @@ Drew之翼:
   lore:
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 55
+    damage: 40
     damageType: Melee
     crit: 4
     projectileSpeed: 12.5
@@ -6067,7 +6065,7 @@ Drew之翼:
   - §r一只十分灵活的悠悠球
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 78
+    damage: 102
     damageType: Melee
     crit: 4
     projectileSpeed: 16
@@ -6082,7 +6080,7 @@ Drew之翼:
   - §r一只十分灵活的悠悠球
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 80
+    damage: 82
     damageType: Melee
     crit: 4
     projectileSpeed: 32
@@ -6097,7 +6095,7 @@ Drew之翼:
   - §r一只十分灵活的悠悠球
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 152
+    damage: 184
     damageType: Melee
     crit: 4
     projectileSpeed: 32
@@ -6112,7 +6110,7 @@ Drew之翼:
   - §r一只十分灵活的悠悠球
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 136
+    damage: 163
     damageType: Melee
     crit: 4
     projectileSpeed: 36
@@ -6127,7 +6125,7 @@ Drew之翼:
   - §r一只十分灵活的悠悠球
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 354
+    damage: 223
     damageType: Melee
     crit: 4
     projectileSpeed: 36
@@ -6142,7 +6140,7 @@ Drew之翼:
   - §r一只十分灵活的悠悠球
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 226
+    damage: 179
     damageType: Melee
     crit: 4
     projectileSpeed: 36
@@ -6157,7 +6155,7 @@ Drew之翼:
   - §r一只十分灵活的悠悠球
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 240
+    damage: 307
     damageType: Melee
     crit: 4
     projectileSpeed: 40
@@ -6172,7 +6170,7 @@ Drew之翼:
   - §r一只十分灵活的悠悠球
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 480
+    damage: 516
     damageType: Melee
     crit: 4
     projectileSpeed: 40
@@ -6188,7 +6186,7 @@ Drew之翼:
   - §r用幻星的传统方式料理你的敌人，是舌尖上的灾厄的著名菜点
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 417
+    damage: 720
     damageType: Melee
     crit: 4
     projectileSpeed: 54
@@ -6199,11 +6197,11 @@ Drew之翼:
 日炎:
   item: STICK
   lore:
-  - §r击中敌人时产生强大的圣火爆炸
+  - §r击中敌人时爆发出强大的圣火
   - §r一只十分灵活的悠悠球
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 676
+    damage: 385
     damageType: Melee
     crit: 4
     projectileSpeed: 54
@@ -6218,7 +6216,7 @@ Drew之翼:
   - §r一只十分灵活的悠悠球
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 1593
+    damage: 1100
     damageType: Melee
     crit: 4
     projectileSpeed: 48
@@ -6233,7 +6231,7 @@ Drew之翼:
   - §r一只超级灵活的悠悠球
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 1747
+    damage: 1560
     damageType: Melee
     crit: 4
     projectileSpeed: 54
@@ -6249,7 +6247,7 @@ Drew之翼:
   - §r一只超级灵活的悠悠球
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 1512
+    damage: 1272
     damageType: Melee
     crit: 4
     projectileSpeed: 54
@@ -6265,7 +6263,7 @@ Drew之翼:
   - §r一只十分甚至九分灵活的悠悠球
   - §7▷ 悠悠球：使用物品时投出悠悠球，再次使用物品即可收回
   attributes:
-    damage: 500
+    damage: 313
     damageType: Melee
     crit: 4
     projectileSpeed: 60
