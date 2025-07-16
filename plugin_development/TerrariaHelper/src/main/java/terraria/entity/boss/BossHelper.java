@@ -16,12 +16,17 @@ import org.bukkit.util.Vector;
 import terraria.TerrariaHelper;
 import terraria.entity.boss.event.celestialPillar.CelestialPillar;
 import terraria.entity.boss.hardMode.astrumDeus.AstrumDeus;
+import terraria.entity.boss.postMoonLord.exoMechs.Apollo;
+import terraria.entity.boss.postMoonLord.exoMechs.Ares;
+import terraria.entity.boss.postMoonLord.exoMechs.Artemis;
+import terraria.entity.boss.postMoonLord.exoMechs.Thanatos;
 import terraria.entity.projectile.HitEntityInfo;
 import terraria.gameplay.EventAndTime;
 import terraria.util.*;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class BossHelper {
     public enum TimeRequirement {
@@ -61,23 +66,35 @@ public class BossHelper {
     }
     public static double[] getHealthInfo(ArrayList<LivingEntity> bossParts, terraria.util.BossHelper.BossType bossType) {
         double[] result = new double[] {0d, 0d};
-        for (LivingEntity e : bossParts) {
+        // default - only account for the health of damage-taking parts
+        Predicate<LivingEntity> criteria = (e) -> {
             MetadataValue mdv = MetadataHelper.getMetadata(e, MetadataHelper.MetadataName.DAMAGE_TAKER);
-            // only account for the health of damage-taking parts
-            if (mdv != null && mdv.value() != e)
-                continue;
-            result[0] += e.getHealth();
-            result[1] += e.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-        }
+            return (mdv == null || mdv.value() != e);
+        };
         // tweak total health so that health for bosses that share health pool are calculated correctly.
+        // note that worm-like bosses are handled above.
         double multiplier;
         switch (bossType) {
+            // some parts will be dead when defeated - their metadata would be garbage-collected.
+            // use this brute-force looping with a multiplier instead.
             case ASTRUM_DEUS:
                 // 50% health dealt as a whole, and 50% health dealt to the two parts -> 150% total
                 multiplier = 1.5d / AstrumDeus.TOTAL_LENGTH;
+                criteria = (e) -> true;
+                break;
+            case EXO_MECHS:
+                multiplier = Artemis.BASIC_HEALTH + Ares.BASIC_HEALTH + Thanatos.BASIC_HEALTH;
+                multiplier /= (Artemis.BASIC_HEALTH * 2 + Ares.BASIC_HEALTH * 5 + Thanatos.BASIC_HEALTH * Thanatos.TOTAL_LENGTH);
+                criteria = (e) -> true;
                 break;
             default:
                 multiplier = 1d;
+        }
+        for (LivingEntity e : bossParts) {
+            if (criteria.test(e)) {
+                result[0] += e.getHealth();
+                result[1] += e.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+            }
         }
         result[0] *= multiplier;
         result[1] *= multiplier;

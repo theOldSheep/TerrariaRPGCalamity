@@ -477,6 +477,7 @@ public class Yharon extends EntitySlime {
         }
     }
     private boolean isOutOfBoundary(Player ply) {
+        if (ply.getWorld() != bukkitEntity.getWorld()) return false;
         Location targetHorizontalLocation = ply.getLocation();
         targetHorizontalLocation.setY(spawnPosition.getY());
         double horizontalDistance = spawnPosition.distanceSquared(targetHorizontalLocation);

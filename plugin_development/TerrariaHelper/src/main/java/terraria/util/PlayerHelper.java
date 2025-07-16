@@ -1983,13 +1983,21 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
         // respawn time, default to 3 seconds and increases if during event / boss is alive
         int respawnSec = EventAndTime.currentEvent == EventAndTime.Events.NONE ? 3 : 5;
         for (ArrayList<LivingEntity> bossList : BossHelper.bossMap.values()) {
-            HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targets =
-                    (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>)
-                            MetadataHelper.getMetadata(bossList.get(0), MetadataHelper.MetadataName.BOSS_TARGET_MAP).value();
-            // if the current boss has the player as target, 15 seconds respawn time for each player, up to 1 minute
-            if (targets.containsKey(ply.getUniqueId())) {
-                // note: max would take the longest respawn time across all active bosses
-                respawnSec = Math.max(respawnSec, Math.min(targets.size() * 15, 60));
+            Entity boss = bossList.get(0);
+            for (Entity curr : bossList) {
+                if (curr.isDead()) continue;
+                boss = curr;
+                break;
+            }
+            MetadataValue mdv = MetadataHelper.getMetadata(boss, MetadataHelper.MetadataName.BOSS_TARGET_MAP);
+            if (mdv != null) {
+                HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targets =
+                        (HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo>) mdv.value();
+                // if the current boss has the player as target, 15 seconds respawn time for each player, up to 1 minute
+                if (targets.containsKey(ply.getUniqueId())) {
+                    // note: max would take the longest respawn time across all active bosses
+                    respawnSec = Math.max(respawnSec, Math.min(targets.size() * 15, 60));
+                }
             }
         }
         return respawnSec * 20;

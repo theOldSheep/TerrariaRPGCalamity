@@ -232,7 +232,7 @@ public class CeaselessVoid extends EntitySlime {
                 double healthRatio = getHealth() / getMaxHealth();
                 for (UUID uid : targetMap.keySet()) {
                     Player ply = Bukkit.getPlayer(uid);
-                    if (ply == null)
+                    if (ply == null || ply.getWorld() != bukkitEntity.getWorld())
                         continue;
                     double distSqr = bukkitEntity.getLocation().distanceSquared(ply.getLocation());
                     double suctionForce = (SUCTION_FORCE_DISTANCE_FACTOR_MAX +

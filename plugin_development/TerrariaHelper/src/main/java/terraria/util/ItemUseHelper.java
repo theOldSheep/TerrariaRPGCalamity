@@ -3974,7 +3974,7 @@ public class ItemUseHelper {
                 }
                 // apply CD
                 if (index == 0) {
-                    double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRangedMulti", 1d);
+                    double useSpeed = attrMap.getOrDefault("useSpeedMulti", 1d) * attrMap.getOrDefault("useSpeedRogueMulti", 1d);
                     double useTimeMulti = 1 / useSpeed;
                     applyCD(ply, attrMap.getOrDefault("useTime", 20d) * useTimeMulti);
                 }
