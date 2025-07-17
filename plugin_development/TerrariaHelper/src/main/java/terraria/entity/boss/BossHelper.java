@@ -69,7 +69,7 @@ public class BossHelper {
         // default - only account for the health of damage-taking parts
         Predicate<LivingEntity> criteria = (e) -> {
             MetadataValue mdv = MetadataHelper.getMetadata(e, MetadataHelper.MetadataName.DAMAGE_TAKER);
-            return (mdv == null || mdv.value() != e);
+            return (mdv == null || mdv.value() == e);
         };
         // tweak total health so that health for bosses that share health pool are calculated correctly.
         // note that worm-like bosses are handled above.

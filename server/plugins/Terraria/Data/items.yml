@@ -1892,6 +1892,7 @@
   item: LEASH
   lore:
   - §r[饰品]
+  - §r“只有打不过史莱姆王的人才戴这破烂”
   attributes:
     maxHealthMulti: 5.91
     fixedHealingMulti: 0.6
@@ -9766,7 +9767,7 @@ Dodu的手炮:
   - §r尖钉球会向四周发射接触敌人后爆炸的小太阳
   - §r“地底太阳的力量正被你握在掌心”
   attributes:
-    damage: 4229
+    damage: 3375
     damageStealth: 275
     damageType: Rogue
     crit: 4
