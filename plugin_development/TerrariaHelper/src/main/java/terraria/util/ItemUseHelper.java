@@ -4208,7 +4208,7 @@ public class ItemUseHelper {
                 case "狱炎裂空":
                 case "终结裂空戟":
                 case "狂野复诵":
-                case "f": {
+                case "光之舞": {
                     fireLoc = ply.getEyeLocation().add(
                             Math.random() * 4 - 2,
                             Math.random() * 4 - 2,
