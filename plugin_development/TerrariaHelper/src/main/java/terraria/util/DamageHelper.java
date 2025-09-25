@@ -1958,6 +1958,8 @@ public class DamageHelper {
 
     // tracks the DPS and display the damage info to the player
     private static void trackDPS(Player src, String victimName, int dpsVersion, double health, double maxHealth, double dmg, boolean beginOrEnd) {
+        // do nothing if the player is offline (null pointers on the metadata)
+        if (! src.isOnline()) return;
         // update variables
         int currVer = MetadataHelper.getMetadata(src, MetadataHelper.MetadataName.DPS_VERSION).asInt();
         int hits = MetadataHelper.getMetadata(src, MetadataHelper.MetadataName.DPS_HITS).asInt();
