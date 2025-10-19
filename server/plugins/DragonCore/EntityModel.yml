@@ -40,6 +40,20 @@
   texture: "荒漠灾虫/尾/tail.png"
   scale: 32
   renderAlways: true
+菌生蟹:
+  entity: "菌生蟹"
+  contains: false
+  model: "菌生蟹/ai_model.obj"
+  texture: "菌生蟹/ai_model.jpg"
+  scale: 128
+  renderAlways: true
+腐巢意志:
+  entity: "腐巢意志"
+  contains: false
+  model: "腐巢意志/ai_model.obj"
+  texture: "腐巢意志/ai_model.png"
+  scale: 128
+  renderAlways: true
 渊海灾虫头:
   entity: "渊海灾虫头"
   contains: false
@@ -61,6 +75,13 @@
   texture: "渊海灾虫/尾/texture.png"
   scale: 45
   renderAlways: true
+硫磺火元素:
+  entity: "硫磺火元素"
+  contains: false
+  model: "硫磺火元素/ai_model.obj"
+  texture: "硫磺火元素/ai_model.png"
+  scale: 80
+  renderAlways: true
 白金星舰:
   entity: "白金星舰"
   contains: true
@@ -68,6 +89,27 @@
   texture: "白金星舰/texture.png"
   scale: 20
   renderAlways: true
+瘟疫使者歌莉娅:
+  entity: "瘟疫使者歌莉娅"
+  contains: true
+  model: "瘟疫使者歌莉娅/ai_model.obj"
+  texture: "瘟疫使者歌莉娅/ai_model.png"
+  scale: 200
+  renderAlways: true
+猪鲨公爵:
+  entity: "猪鲨公爵"
+  contains: true
+  model: "猪鲨公爵/猪鲨公爵/ai_model.obj"
+  texture: "猪鲨公爵/猪鲨公爵/ai_model.png"
+  scale: 128
+  renderAlways: true
+龙卷鲨:
+  entity: "龙卷鲨"
+  contains: true
+  model: "猪鲨公爵/龙卷鲨/ai_model.obj"
+  texture: "猪鲨公爵/龙卷鲨/ai_model.png"
+  scale: 64
+  renderAlways: false
 星神游龙头:
   entity: "星神游龙头"
   contains: false

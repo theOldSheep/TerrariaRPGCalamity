@@ -1,0 +1,8 @@
+regex:
+ -?\d.\d+e-\d+
+replace:
+ 0
+
+AI: 
+https://studio.tripo3d.ai/
+https://hitem3d.ai/
