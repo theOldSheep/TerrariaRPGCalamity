@@ -82,6 +82,13 @@
   texture: "硫磺火元素/ai_model.png"
   scale: 80
   renderAlways: true
+利维坦:
+  entity: "利维坦"
+  contains: true
+  model: "利维坦/ai_model.obj"
+  texture: "利维坦/ai_model.png"
+  scale: 640
+  renderAlways: true
 白金星舰:
   entity: "白金星舰"
   contains: true
