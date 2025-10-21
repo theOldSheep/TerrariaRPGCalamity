@@ -138,6 +138,20 @@
   texture: "星神游龙/体节/body.png"
   scale: 100
   renderAlways: true
+痴愚金龙:
+  entity: "痴愚金龙"
+  contains: false
+  model: "痴愚金龙/ai_model.obj"
+  texture: "痴愚金龙/ai_model.png"
+  scale: 196
+  renderAlways: true
+亵渎天神:
+  entity: "亵渎天神，普罗维登斯"
+  contains: false
+  model: "亵渎天神/ai_model.obj"
+  texture: "亵渎天神/ai_model.png"
+  scale: 416
+  renderAlways: true
 装甲风暴编织者头:
   entity: "装甲风暴编织者头"
   contains: false
@@ -179,6 +193,13 @@
   model: "神明吞噬者/尾/tail.obj"
   texture: "神明吞噬者/StormWeaver.png"
   scale: 50
+  renderAlways: true
+西格纳斯:
+  entity: "神之使徒西格纳斯"
+  contains: false
+  model: "西格纳斯/ai_model.obj"
+  texture: "西格纳斯/ai_model.png"
+  scale: 100
   renderAlways: true
 装甲神明吞噬者头:
   entity: "装甲神明吞噬者头"
@@ -235,6 +256,13 @@
   model: "神明吞噬者/体节/body.obj"
   texture: "神明吞噬者/DoG.png"
   scale: 12
+  renderAlways: true
+犽戎:
+  entity: "丛林龙，犽戎"
+  contains: false
+  model: "犽戎/ai_model.obj"
+  texture: "犽戎/ai_model.png"
+  scale: 256
   renderAlways: true
 灾坟魔物头:
   entity: "灾坟魔物头"
