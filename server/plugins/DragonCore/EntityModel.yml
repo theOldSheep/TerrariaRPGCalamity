@@ -141,8 +141,8 @@
 痴愚金龙:
   entity: "痴愚金龙"
   contains: false
-  model: "cylj/ai_model.obj"
-  texture: "cylj/ai_model.png"
+  model: "cyjl/ai_model.obj"
+  texture: "cyjl/ai_model.png"
   scale: 196
   renderAlways: true
 亵渎天神:
