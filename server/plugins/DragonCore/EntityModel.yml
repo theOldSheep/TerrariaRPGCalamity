@@ -145,6 +145,27 @@
   texture: "cyjl/ai_model.png"
   scale: 196
   renderAlways: true
+圣晶守卫:
+  entity: "亵渎守卫·圣晶"
+  contains: false
+  model: "xdsw/sj/ai_model.obj"
+  texture: "xdsw/sj/ai_model.png"
+  scale: 175
+  renderAlways: true
+神石守卫:
+  entity: "亵渎守卫·神石"
+  contains: false
+  model: "xdsw/ty/ai_model.obj"
+  texture: "xdsw/ty/ai_model.png"
+  scale: 175
+  renderAlways: true
+统御守卫:
+  entity: "亵渎守卫·统御"
+  contains: false
+  model: "xdsw/ty/ai_model.obj"
+  texture: "xdsw/ty/ai_model.png"
+  scale: 175
+  renderAlways: true
 亵渎天神:
   entity: "亵渎天神，普罗维登斯"
   contains: false
@@ -194,12 +215,47 @@
   texture: "smtsz/StormWeaver.png"
   scale: 50
   renderAlways: true
+无尽虚空:
+  entity: "无尽虚空"
+  contains: false
+  model: "wjxk/ai_model.obj"
+  texture: "wjxk/ai_model.png"
+  scale: 250
+  renderAlways: true
 西格纳斯:
   entity: "神之使徒西格纳斯"
   contains: false
   model: "xgns/ai_model.obj"
   texture: "xgns/ai_model.png"
   scale: 100
+  renderAlways: true
+噬魂幽花:
+  entity: "噬魂幽花"
+  contains: false
+  model: "shyh/shyh/ai_model.obj"
+  texture: "shyh/shyh/ai_model.png"
+  scale: 225
+  renderAlways: true
+聚魂幽花:
+  entity: "聚魂幽花"
+  contains: false
+  model: "shyh/jhyh/ai_model.obj"
+  texture: "shyh/jhyh/ai_model.png"
+  scale: 225
+  renderAlways: true
+噬魂幽花克隆体:
+  entity: "噬魂幽花克隆体"
+  contains: false
+  model: "shyh/jhyh/ai_model.obj"
+  texture: "shyh/jhyh/ai_model.png"
+  scale: 225
+  renderAlways: true
+硫海遗爵:
+  entity: "硫海遗爵"
+  contains: false
+  model: "lhyj/ai_model.obj"
+  texture: "lhyj/ai_model.png"
+  scale: 250
   renderAlways: true
 装甲神明吞噬者头:
   entity: "装甲神明吞噬者头"
