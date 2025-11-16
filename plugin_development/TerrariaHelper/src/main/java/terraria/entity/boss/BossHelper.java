@@ -2,6 +2,7 @@ package terraria.entity.boss;
 
 import net.minecraft.server.v1_12_R1.AxisAlignedBB;
 import net.minecraft.server.v1_12_R1.BossBattleServer;
+import net.minecraft.server.v1_12_R1.EntityLiving;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
@@ -26,6 +27,7 @@ import terraria.util.*;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class BossHelper {
@@ -66,38 +68,46 @@ public class BossHelper {
     }
     public static double[] getHealthInfo(ArrayList<LivingEntity> bossParts, terraria.util.BossHelper.BossType bossType) {
         double[] result = new double[] {0d, 0d};
-        // default - only account for the health of damage-taking parts
+        // default - only account for the health of damage-taking parts, and the multiplier is 1 times
         Predicate<LivingEntity> criteria = (e) -> {
             MetadataValue mdv = MetadataHelper.getMetadata(e, MetadataHelper.MetadataName.DAMAGE_TAKER);
             return (mdv == null || mdv.value() == e);
         };
-        // tweak total health so that health for bosses that share health pool are calculated correctly.
-        // note that worm-like bosses are handled above.
-        double multiplier;
+        Function<LivingEntity, Double> multiplier = (e) -> 1d;
+        // tweak total health with special criteria/multiplier.
+        // bosses with multiple health pool parts, damage taker metadata of one part will be removed on death.
+        // thus the naive, damage-taker-based approach will be flawed.
+        // note that *simple* worm-like bosses are handled by criteria.
         switch (bossType) {
-            // some parts will be dead when defeated - their metadata would be garbage-collected.
-            // use this brute-force looping with a multiplier instead.
             case ASTRUM_DEUS:
                 // 50% health dealt as a whole, and 50% health dealt to the two parts -> 150% total
-                multiplier = 1.5d / AstrumDeus.TOTAL_LENGTH;
                 criteria = (e) -> true;
+                multiplier = (e) -> 1.5d / AstrumDeus.TOTAL_LENGTH;
                 break;
             case EXO_MECHS:
-                multiplier = Artemis.BASIC_HEALTH + Ares.BASIC_HEALTH + Thanatos.BASIC_HEALTH;
-                multiplier /= (Artemis.BASIC_HEALTH * 2 + Ares.BASIC_HEALTH * 5 + Thanatos.BASIC_HEALTH * Thanatos.TOTAL_LENGTH);
                 criteria = (e) -> true;
+                multiplier = (e) -> {
+                    net.minecraft.server.v1_12_R1.Entity eNms = ((CraftEntity) e).getHandle();
+                    // Artemis/Apollo: calculated twice
+                    if (eNms instanceof Artemis || eNms instanceof Apollo) {
+                        return 1d / 2;
+                    }
+                    // Thanatos: calculated by its length
+                    if (eNms instanceof Thanatos) {
+                        return 1d / Thanatos.TOTAL_LENGTH;
+                    }
+                    // Ares: calculated 5 times
+                    return 1d / 5;
+                };
                 break;
-            default:
-                multiplier = 1d;
         }
         for (LivingEntity e : bossParts) {
             if (criteria.test(e)) {
-                result[0] += e.getHealth();
-                result[1] += e.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                double multi = multiplier.apply(e);
+                result[0] += e.getHealth() * multi;
+                result[1] += e.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * multi;
             }
         }
-        result[0] *= multiplier;
-        result[1] *= multiplier;
         return result;
     }
     public static void updateBossBarAndDamageReduction(BossBattleServer bossbar, ArrayList<LivingEntity> bossParts, terraria.util.BossHelper.BossType type) {
