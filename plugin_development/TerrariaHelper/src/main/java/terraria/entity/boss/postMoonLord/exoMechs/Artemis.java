@@ -360,8 +360,8 @@ public class Artemis extends EntitySlime {
                 if (owner.isSubBossActive(Draedon.SubBossType.ARTEMIS)) {
                     if (!stageTransitionTriggered && getHealth() / getMaxHealth() < 0.7) {
                         stageTransitionTriggered = true;
-                        setCustomName(getCustomName() + "§1");
-                        apollo.setCustomName(apollo.getCustomName() + "§1");
+                        setCustomName(getCustomName() + "EX");
+                        apollo.setCustomName(apollo.getCustomName() + "EX");
                     }
                     attackTarget();
                 } else {

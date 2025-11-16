@@ -78,7 +78,6 @@ public class Polterghast extends EntitySlime {
                 AIPhase = 1;
                 bossbar.color = BossBattle.BarColor.YELLOW;
                 bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
-                setCustomName(BOSS_TYPE.msgName + "§1");
                 AttributeHelper.tweakAttribute(attrMap, "defence", "45", false);
             }
             indexAI = -1;
@@ -103,7 +102,7 @@ public class Polterghast extends EntitySlime {
                 AIPhase = 2;
                 bossbar.color = BossBattle.BarColor.PINK;
                 bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
-                setCustomName(BOSS_TYPE.msgName + "§2");
+                setCustomName("聚魂幽花");
                 AttributeHelper.tweakAttribute(attrMap, "defence", "45", false);
                 // rest for 4 seconds (very long as the player needs to align the boss correctly)
                 indexAI = -80;

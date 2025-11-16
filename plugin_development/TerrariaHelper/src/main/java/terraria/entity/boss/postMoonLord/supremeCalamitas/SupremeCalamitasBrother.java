@@ -150,7 +150,7 @@ public class SupremeCalamitasBrother extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(12, false);
+            setSize(16, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
