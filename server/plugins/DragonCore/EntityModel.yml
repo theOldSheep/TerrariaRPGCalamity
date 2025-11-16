@@ -320,6 +320,132 @@
   texture: "yr/ai_model.png"
   scale: 256
   renderAlways: true
+阿尔忒弥斯:
+  entity: "XS-01“阿尔忒弥斯”"
+  contains: false
+  model: "xljx/aetms/ai_model.obj"
+  texture: "xljx/aetms/ai_model.png"
+  scale: 200
+  renderAlways: true
+阿尔忒弥斯EX:
+  entity: "XS-01“阿尔忒弥斯”EX"
+  contains: false
+  model: "xljx/aetms_ex/ai_model.obj"
+  texture: "xljx/aetms_ex/ai_model.png"
+  scale: 175
+  renderAlways: true
+阿波罗:
+  entity: "XS-03“阿波罗”"
+  contains: false
+  model: "xljx/abl/ai_model.obj"
+  texture: "xljx/abl/ai_model.png"
+  scale: 200
+  renderAlways: true
+阿波罗EX:
+  entity: "XS-03“阿波罗”EX"
+  contains: false
+  model: "xljx/abl_ex/ai_model.obj"
+  texture: "xljx/abl_ex/ai_model.png"
+  scale: 175
+  renderAlways: true
+塔纳托斯头:
+  entity: "XM-05“塔纳托斯”头"
+  contains: false
+  model: "smtsz/t/head.obj"
+  texture: "smtsz/Thanatos.png"
+  scale: 60
+  renderAlways: true
+塔纳托斯激光头:
+  entity: "XM-05“塔纳托斯”激光头"
+  contains: false
+  model: "smtsz/t/head.obj"
+  texture: "smtsz/ThanatosOpen.png"
+  scale: 60
+  renderAlways: true
+塔纳托斯体节:
+  entity: "XM-05“塔纳托斯”体节"
+  contains: false
+  model: "smtsz/tj/body.obj"
+  texture: "smtsz/Thanatos.png"
+  scale: 60
+  renderAlways: true
+塔纳托斯散热体节:
+  entity: "XM-05“塔纳托斯”散热体节"
+  contains: false
+  model: "smtsz/tj/body.obj"
+  texture: "smtsz/ThanatosOpen.png"
+  scale: 60
+  renderAlways: true
+塔纳托斯尾:
+  entity: "XM-05“塔纳托斯”尾"
+  contains: false
+  model: "smtsz/w/tail.obj"
+  texture: "smtsz/Thanatos.png"
+  scale: 60
+  renderAlways: true
+阿瑞斯:
+  entity: "XF-09“阿瑞斯”"
+  contains: false
+  model: "xljx/ars/ai_model.obj"
+  texture: "xljx/ars/ai_model.png"
+  scale: 325
+  renderAlways: true
+阿瑞斯核弹:
+  entity: "XF-09“阿瑞斯”高斯核弹发射井"
+  contains: false
+  model: "xljx/ars_hd/ai_model.obj"
+  texture: "xljx/ars_hd/ai_model.png"
+  scale: 225
+  renderAlways: true
+阿瑞斯激光:
+  entity: "XF-09“阿瑞斯”镭射加农炮"
+  contains: false
+  model: "xljx/ars_jg/ai_model.obj"
+  texture: "xljx/ars_jg/ai_model.png"
+  scale: 225
+  renderAlways: true
+阿瑞斯离子:
+  entity: "XF-09“阿瑞斯”离子加农炮"
+  contains: false
+  model: "xljx/ars_lz/ai_model.obj"
+  texture: "xljx/ars_lz/ai_model.png"
+  scale: 225
+  renderAlways: true
+阿瑞斯特斯拉:
+  entity: "XF-09“阿瑞斯”特斯拉加农炮"
+  contains: false
+  model: "xljx/ars_tsl/ai_model.obj"
+  texture: "xljx/ars_tsl/ai_model.png"
+  scale: 225
+  renderAlways: true
+嘉登:
+  entity: "██-██ “嘉登”"
+  contains: false
+  model: "xljx/jd/ai_model.obj"
+  texture: "xljx/jd/ai_model.png"
+  scale: 75
+  renderAlways: true
+至尊灾厄:
+  entity: "至尊灾厄"
+  contains: false
+  model: "zzze/ze/ai_model.obj"
+  texture: "zzze/ze/ai_model.png"
+  scale: 125
+  renderAlways: true
+至尊灾难:
+  entity: "至尊灾难"
+  contains: false
+  model: "zzze/zn/ai_model.obj"
+  texture: "zzze/zn/ai_model.png"
+  scale: 200
+  renderAlways: true
+至尊灾祸:
+  entity: "至尊灾祸"
+  contains: false
+  model: "zzze/zh/ai_model.obj"
+  texture: "zzze/zh/ai_model.png"
+  scale: 200
+  renderAlways: true
 灾坟魔物头:
   entity: "灾坟魔物头"
   contains: false
@@ -361,39 +487,4 @@
   model: "zfmw/CustomModel.obj"
   texture: "zfmw/texture.png"
   scale: 18
-  renderAlways: true
-塔纳托斯头:
-  entity: "XM-05“塔纳托斯”头"
-  contains: false
-  model: "smtsz/t/head.obj"
-  texture: "smtsz/Thanatos.png"
-  scale: 60
-  renderAlways: true
-塔纳托斯激光头:
-  entity: "XM-05“塔纳托斯”激光头"
-  contains: false
-  model: "smtsz/t/head.obj"
-  texture: "smtsz/ThanatosOpen.png"
-  scale: 60
-  renderAlways: true
-塔纳托斯体节:
-  entity: "XM-05“塔纳托斯”体节"
-  contains: false
-  model: "smtsz/tj/body.obj"
-  texture: "smtsz/Thanatos.png"
-  scale: 60
-  renderAlways: true
-塔纳托斯散热体节:
-  entity: "XM-05“塔纳托斯”散热体节"
-  contains: false
-  model: "smtsz/tj/body.obj"
-  texture: "smtsz/ThanatosOpen.png"
-  scale: 60
-  renderAlways: true
-塔纳托斯尾:
-  entity: "XM-05“塔纳托斯”尾"
-  contains: false
-  model: "smtsz/w/tail.obj"
-  texture: "smtsz/Thanatos.png"
-  scale: 60
   renderAlways: true
