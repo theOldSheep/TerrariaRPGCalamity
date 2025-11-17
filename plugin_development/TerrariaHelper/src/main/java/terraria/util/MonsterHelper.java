@@ -88,15 +88,17 @@ public class MonsterHelper {
         switch (spawnLocationType) {
             case "GROUND":
             case "WATER_GROUND": {
-                // so that the loop does not terminate at once
-                boolean lastLocValid = true;
+                // so that the loop does not terminate at once when randomized into solid block
+                boolean lastLocEmpty = false;
+                spawnLoc.setY(Math.floor(spawnLoc.getY()));
                 for (int i = 1; i <= adjustHeight; i++) {
-                    boolean currLocValid = spawnLoc.getY() > 0 && spawnLoc.getY() < 256;
+                    boolean currLocEmpty = spawnLoc.getY() > 0 && spawnLoc.getY() < 256;
                     Material currBlockMat = spawnLoc.getBlock().getType();
-                    if (currBlockMat.isSolid()) currLocValid = false;
-                    // the block became valid
-                    if (!lastLocValid && currLocValid) {
-                        spawnLoc.setY(Math.floor(spawnLoc.getY()));
+                    if (currBlockMat.isSolid()) {
+                        currLocEmpty = false;
+                    }
+                    // the block became solid, spawn it here
+                    if (lastLocEmpty && !currLocEmpty) {
                         // validation of spawn location
                         switch (currBlockMat) {
                             case WATER:
@@ -112,14 +114,16 @@ public class MonsterHelper {
                                 if (spawnLocationType.equals("WATER_GROUND") && ! currBlockMat.isSolid())
                                     return true;
                         }
+                        // the location is validated - slightly increase y to prevent falling through the block
+                        spawnLoc.add(0, 1, 0);
                         break;
                     }
                     // tweak location to find appropriate spawn loc
-                    if (lastLocValid) // last is valid (air): move down
+                    if (currLocEmpty) // last is valid (air): move down
                         spawnLoc.add(0, -1, 0);
                     else // last not valid (solid): move up
                         spawnLoc.add(0, 1, 0);
-                    lastLocValid = currLocValid;
+                    lastLocEmpty = currLocEmpty;
                     // no proper location found
                     if (i == adjustHeight) return true;
                 }
