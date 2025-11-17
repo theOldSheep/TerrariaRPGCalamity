@@ -131,6 +131,15 @@ effects:
     damageMonster: 12
     snowStormParticle: p/sf
     tooltip: 正在损失生命值
+  深渊水压:
+    isBuff: false
+    damageInterval: 10
+    damage: 25
+    damageMonster: 50
+    attributes:
+      regenMulti: -1
+      waterAffinity: -1
+    tooltip: 深海压强似乎作用于身
   带电:
     isBuff: false
     damageInterval: 4
@@ -231,6 +240,13 @@ effects:
     damage: 10
     snowStormParticle: p/hf
     tooltip: 你离亵渎天神太远了！
+  死亡低语:
+    isBuff: false
+    snowStormParticle: p/bl
+    attributes:
+      damageMulti: -0.2
+      regenMulti: -1
+    tooltip: 死亡临近；攻击力和生命再生降低
   硫磺海剧毒:
     isBuff: false
     damageInterval: 4
@@ -239,15 +255,6 @@ effects:
     attributes:
       regenMulti: -1
     tooltip: 有毒的硫磺海水正在烧灼你的皮肤
-  深渊水压:
-    isBuff: false
-    damageInterval: 10
-    damage: 25
-    damageMonster: 50
-    attributes:
-      regenMulti: -1
-      waterAffinity: -1
-    tooltip: 深海压强似乎作用于身
   弑神怒焰:
     isBuff: false
     damageInterval: 4

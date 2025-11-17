@@ -332,6 +332,7 @@ public class Artemis extends EntitySlime {
         newLocation.add(eyeToFootDir);
         EntityMovementHelper.movementTP(bukkitEntity, newLocation);
         bukkitEntity.setVelocity(new Vector(0, 0, 0));
+        this.yaw = (float) MathHelper.getVectorYaw( laserDir );
 
         double laserLength = Math.max( ((LivingEntity) bukkitEntity).getEyeLocation()
                 .subtract(target.getEyeLocation()).toVector().length(), FINAL_LASER_LENGTH);

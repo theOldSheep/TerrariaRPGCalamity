@@ -80,7 +80,7 @@
   contains: false
   model: "lhhys/ai_model.obj"
   texture: "lhhys/ai_model.png"
-  scale: 80
+  scale: 100
   renderAlways: true
 利维坦:
   entity: "利维坦"
@@ -103,11 +103,25 @@
   texture: "wyszgly/ai_model.png"
   scale: 200
   renderAlways: true
-猪鲨公爵:
-  entity: "猪鲨公爵"
+猪鲨公爵常态:
+  entity: "猪鲨公爵-常态"
   contains: true
   model: "zsgj/zsgj/ai_model.obj"
   texture: "zsgj/zsgj/ai_model.png"
+  scale: 128
+  renderAlways: true
+猪鲨公爵狂暴:
+  entity: "猪鲨公爵-狂暴"
+  contains: true
+  model: "zsgj/zsgj/ai_model.obj"
+  texture: "zsgj/zsgj/ai_model_kb.png"
+  scale: 128
+  renderAlways: true
+猪鲨公爵幽魂:
+  entity: "猪鲨公爵-幽魂"
+  contains: true
+  model: "zsgj/zsgj/ai_model.obj"
+  texture: "zsgj/zsgj/ai_model_yh.png"
   scale: 128
   renderAlways: true
 龙卷鲨:
@@ -117,6 +131,13 @@
   texture: "zsgj/ljs/ai_model.png"
   scale: 64
   renderAlways: false
+猪龙鱼坐骑:
+  entity: "猪龙鱼坐骑"
+  contains: true
+  model: "zsgj/zsgj/ai_model.obj"
+  texture: "zsgj/zsgj/ai_model.png"
+  scale: 64
+  renderAlways: true
 星神游龙头:
   entity: "星神游龙头"
   contains: false
@@ -449,42 +470,42 @@
 灾坟魔物头:
   entity: "灾坟魔物头"
   contains: false
-  model: "zfmw/CustomModel.obj"
-  texture: "zfmw/texture.png"
+  model: "zzze/zfmw/CustomModel.obj"
+  texture: "zzze/zfmw/texture.png"
   scale: 50
   renderAlways: true
 灾坟魔物体节:
   entity: "灾坟魔物体节"
   contains: false
-  model: "zfmw/CustomModel.obj"
-  texture: "zfmw/texture.png"
+  model: "zzze/zfmw/CustomModel.obj"
+  texture: "zzze/zfmw/texture.png"
   scale: 50
   renderAlways: true
 灾坟魔物尾:
   entity: "灾坟魔物尾"
   contains: false
-  model: "zfmw/CustomModel.obj"
-  texture: "zfmw/texture.png"
+  model: "zzze/zfmw/CustomModel.obj"
+  texture: "zzze/zfmw/texture.png"
   scale: 50
   renderAlways: true
 灾坟仆从:
   entity: "灾坟仆从"
   contains: false
-  model: "zfmw/CustomModel.obj"
-  texture: "zfmw/texture.png"
+  model: "zzze/zfmw/CustomModel.obj"
+  texture: "zzze/zfmw/texture.png"
   scale: 18
   renderAlways: true
 灾坟仆从体节:
   entity: "灾坟仆从体节"
   contains: false
-  model: "zfmw/CustomModel.obj"
-  texture: "zfmw/texture.png"
+  model: "zzze/zfmw/CustomModel.obj"
+  texture: "zzze/zfmw/texture.png"
   scale: 18
   renderAlways: true
 灾坟仆从尾:
   entity: "灾坟仆从尾"
   contains: false
-  model: "zfmw/CustomModel.obj"
-  texture: "zfmw/texture.png"
+  model: "zzze/zfmw/CustomModel.obj"
+  texture: "zzze/zfmw/texture.png"
   scale: 18
   renderAlways: true

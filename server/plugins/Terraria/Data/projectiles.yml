@@ -937,7 +937,7 @@
     penetration: 999999
     gravity: 0
     buffInflict:
-        - "夜魇|40|1"
+        - "夜魇|50|1"
 幽花弹幕:
     blockHitAction: thru
     projectileSize: 1.5
@@ -945,7 +945,7 @@
     penetration: 999999
     gravity: 0
     buffInflict:
-        - "夜魇|25|1"
+        - "夜魇|50|1"
 遗爵鲨牙刺球:
     gravity: 0
     liveTime: 80

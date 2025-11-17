@@ -62,7 +62,7 @@ public class DukeFishron extends EntitySlime {
         bukkitEntity.setVelocity(new Vector());
         switch (phaseAI) {
             case 2:
-                setCustomName(BOSS_TYPE.msgName + "§2");
+                setCustomName(BOSS_TYPE.msgName + "-狂暴");
                 bossbar.color = BossBattle.BarColor.YELLOW;
                 attackPhase = AttackPhase.DASH;
                 // damage: 420 -> 604
@@ -71,7 +71,7 @@ public class DukeFishron extends EntitySlime {
                 AttributeHelper.tweakAttribute(bukkitEntity, "defence", "20", false);
                 break;
             case 3:
-                setCustomName(BOSS_TYPE.msgName + "§3");
+                setCustomName(BOSS_TYPE.msgName + "-幽魂");
                 bossbar.color = BossBattle.BarColor.RED;
                 attackPhase = AttackPhase.DASH_1;
                 // damage: 604 -> 554
@@ -318,16 +318,20 @@ public class DukeFishron extends EntitySlime {
     private void AIPhase3() {
         boolean finalPhase = healthRatio < 0.2;
         int dashAmount;
-        switch (attackPhase) {
-            case DASH_1:
-                dashAmount = 1;
-                break;
-            case DASH_2:
-                dashAmount = 2;
-                break;
-            case DASH_3:
-            default:
-                dashAmount = 3;
+        if (finalPhase) {
+            dashAmount = 3;
+        } else {
+            switch (attackPhase) {
+                case DASH_1:
+                    dashAmount = 1;
+                    break;
+                case DASH_2:
+                    dashAmount = 2;
+                    break;
+                case DASH_3:
+                default:
+                    dashAmount = 3;
+            }
         }
         // change attack method
         int dashDuration = 22;
@@ -341,7 +345,7 @@ public class DukeFishron extends EntitySlime {
             int dashIndex = indexAI % dashDuration;
             // begin dash
             if (dashIndex == 5) {
-                setCustomName(BOSS_TYPE.msgName + "§2");
+                setCustomName(BOSS_TYPE.msgName + "-狂暴");
                 // predictive dash only on the first dash in all dash sequences
                 initDash(DASH_SPEED_3, 10, indexAI > (dashDuration * (dashAmount - 1)) ? 0 : 1);
             }
@@ -351,7 +355,7 @@ public class DukeFishron extends EntitySlime {
             }
             // before the beginning and after the end of each dash
             else {
-                setCustomName(BOSS_TYPE.msgName + "§3");
+                setCustomName(BOSS_TYPE.msgName + "-幽魂");
                 bukkitEntity.setVelocity(new Vector(0, 0.25, 0));
             }
         }
@@ -400,10 +404,15 @@ public class DukeFishron extends EntitySlime {
             }
         }
         // face the player
-        if (attackPhase == AttackPhase.DASH)
-            this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
-        else
-            this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+        switch (attackPhase) {
+            case DASH:
+            case DASH_1:
+            case DASH_2:
+            case DASH_3:
+                this.yaw = (float) MathHelper.getVectorYaw( bukkitEntity.getVelocity() );
+            default:
+                this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+        }
         // collision dmg
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }
@@ -424,7 +433,7 @@ public class DukeFishron extends EntitySlime {
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName(BOSS_TYPE.msgName + "§1");
+        setCustomName(BOSS_TYPE.msgName + "-常态");
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");

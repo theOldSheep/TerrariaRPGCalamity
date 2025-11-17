@@ -1218,6 +1218,14 @@
     defence: 1000
   worth: 20000
   rarity: 0
+测试无怪:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  attributes:
+    mobLimit: -999999
+  worth: 20000
+  rarity: 0
 向导巫毒娃娃:
   item: LEASH
   lore:

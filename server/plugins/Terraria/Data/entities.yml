@@ -914,7 +914,21 @@
         - "燃烧"
         - "神圣之火"
         - "夜魇"
-猪鲨公爵:
+猪鲨公爵-常态:
+    soundDamaged: entity.old_duke.old_duke_hurt
+    buffImmute:
+        - "中毒"
+        - "剧毒"
+        - "燃烧"
+        - "霜火"
+猪鲨公爵-狂暴:
+    soundDamaged: entity.old_duke.old_duke_hurt
+    buffImmute:
+        - "中毒"
+        - "剧毒"
+        - "燃烧"
+        - "霜火"
+猪鲨公爵-幽魂:
     soundDamaged: entity.old_duke.old_duke_hurt
     buffImmute:
         - "中毒"
@@ -1103,7 +1117,20 @@
 噬魂幽花:
     soundDamaged: entity.hit.ghost
     buffInflict:
-        - "死亡低语|60|1"
+        - "死亡低语|45|1"
+        - "夜魇|75|1"
+    buffImmute:
+        - "狱炎"
+        - "辐射"
+        - "带电"
+        - "破晓"
+        - "神圣之火"
+        - "夜魇"
+聚魂幽花:
+    soundDamaged: entity.hit.ghost
+    buffInflict:
+        - "死亡低语|75|1"
+        - "夜魇|100|1"
     buffImmute:
         - "狱炎"
         - "辐射"
@@ -1114,7 +1141,8 @@
 噬魂幽花克隆体:
     soundDamaged: entity.hit.ghost
     buffInflict:
-        - "死亡低语|60|1"
+        - "死亡低语|75|1"
+        - "夜魇|100|1"
     buffImmute:
         - "狱炎"
         - "辐射"
@@ -1223,19 +1251,43 @@
 XS-01“阿尔忒弥斯”:
     soundDamaged: entity.hit.otherworldly
     buffInflict:
-        - "超位崩解|40|1"
+        - "超位崩解|60|1"
+    buffImmute:
+        - "超位崩解"
+XS-01“阿尔忒弥斯”EX:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "超位崩解|100|1"
     buffImmute:
         - "超位崩解"
 XS-03“阿波罗”:
     soundDamaged: entity.hit.otherworldly
     buffInflict:
-        - "超位崩解|40|1"
+        - "超位崩解|60|1"
+    buffImmute:
+        - "超位崩解"
+XS-03“阿波罗”EX:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "超位崩解|100|1"
     buffImmute:
         - "超位崩解"
 XM-05“塔纳托斯”头:
     soundDamaged: entity.hit.otherworldly
     buffInflict:
-        - "超位崩解|60|1"
+        - "超位崩解|80|1"
+    buffImmute:
+        - "燃烧"
+        - "霜火"
+        - "狱炎"
+        - "破晓"
+        - "夜魇"
+        - "龙焰"
+        - "超位崩解"
+XM-05“塔纳托斯”激光头:
+    soundDamaged: entity.hit.otherworldly
+    buffInflict:
+        - "超位崩解|160|1"
     buffImmute:
         - "燃烧"
         - "霜火"
@@ -1247,7 +1299,7 @@ XM-05“塔纳托斯”头:
 XM-05“塔纳托斯”体节:
     soundDamaged: entity.hit.otherworldly
     buffInflict:
-        - "超位崩解|20|1"
+        - "超位崩解|60|1"
     buffImmute:
         - "燃烧"
         - "霜火"
@@ -1259,7 +1311,7 @@ XM-05“塔纳托斯”体节:
 XM-05“塔纳托斯”散热体节:
     soundDamaged: entity.hit.otherworldly
     buffInflict:
-        - "超位崩解|40|1"
+        - "超位崩解|100|1"
     buffImmute:
         - "燃烧"
         - "霜火"
@@ -1271,7 +1323,7 @@ XM-05“塔纳托斯”散热体节:
 XM-05“塔纳托斯”尾:
     soundDamaged: entity.hit.otherworldly
     buffInflict:
-        - "超位崩解|30|1"
+        - "超位崩解|45|1"
     buffImmute:
         - "燃烧"
         - "霜火"
@@ -1306,7 +1358,7 @@ XF-09“阿瑞斯”特斯拉加农炮:
     soundKilled: entity.wilhelmScream
 至尊灾厄:
     buffInflict:
-        - "孱弱巫咒|200|1"
+        - "孱弱巫咒|260|1"
     buffImmute:
         - "燃烧"
         - "霜火"
@@ -1337,6 +1389,8 @@ XF-09“阿瑞斯”特斯拉加农炮:
         - "孱弱巫咒"
 灾坟魔物头:
     soundDamaged: entity.hit.flesh
+    buffInflict:
+        - "孱弱巫咒|120|1"
     buffImmute:
         - "燃烧"
         - "霜火"
@@ -1347,6 +1401,8 @@ XF-09“阿瑞斯”特斯拉加农炮:
         - "孱弱巫咒"
 灾坟魔物体节:
     soundDamaged: entity.hit.flesh
+    buffInflict:
+        - "孱弱巫咒|100|1"
     buffImmute:
         - "燃烧"
         - "霜火"
@@ -1357,6 +1413,8 @@ XF-09“阿瑞斯”特斯拉加农炮:
         - "孱弱巫咒"
 灾坟魔物尾:
     soundDamaged: entity.hit.flesh
+    buffInflict:
+        - "孱弱巫咒|80|1"
     buffImmute:
         - "燃烧"
         - "霜火"

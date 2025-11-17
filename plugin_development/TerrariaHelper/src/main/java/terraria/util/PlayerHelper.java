@@ -805,6 +805,7 @@ public class PlayerHelper {
                     // setup client target time
                     int time = 0;
                     switch (current) {
+                        case "猪鲨":
                         case "日食":
                             time = 20000;
                             break;
@@ -826,7 +827,6 @@ public class PlayerHelper {
                         case "星尘":
                             time = 23300;
                             break;
-                        case "猪鲨":
                         case "神吞":
                             time = 23365;
                             break;
