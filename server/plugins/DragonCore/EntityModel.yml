@@ -4,126 +4,126 @@
   model: "hmzc/t/head.obj"
   texture: "hmzc/t/head.png"
   scale: 65
-  renderAlways: true
+  # renderAlways: true
 荒漠灾虫体节:
   entity: "荒漠灾虫体节"
   contains: false
   model: "hmzc/tj/body.obj"
   texture: "hmzc/tj/body.png"
   scale: 65
-  renderAlways: true
+  # renderAlways: true
 荒漠灾虫尾:
   entity: "荒漠灾虫尾"
   contains: false
   model: "hmzc/w/tail.obj"
   texture: "hmzc/w/tail.png"
   scale: 65
-  renderAlways: true
+  # renderAlways: true
 黄沙恶虫头:
   entity: "黄沙恶虫头"
   contains: false
   model: "hmzc/t/head.obj"
   texture: "hmzc/t/head.png"
   scale: 32
-  renderAlways: true
+  # renderAlways: true
 黄沙恶虫体节:
   entity: "黄沙恶虫体节"
   contains: false
   model: "hmzc/tj/body.obj"
   texture: "hmzc/tj/body.png"
   scale: 32
-  renderAlways: true
+  # renderAlways: true
 黄沙恶虫尾:
   entity: "黄沙恶虫尾"
   contains: false
   model: "hmzc/w/tail.obj"
   texture: "hmzc/w/tail.png"
   scale: 32
-  renderAlways: true
+  # renderAlways: true
 菌生蟹:
   entity: "菌生蟹"
   contains: false
   model: "jsx/ai_model.obj"
   texture: "jsx/ai_model.jpg"
   scale: 128
-  renderAlways: true
+  # renderAlways: true
 腐巢意志:
   entity: "腐巢意志"
   contains: false
   model: "fcyz/ai_model.obj"
   texture: "fcyz/ai_model.png"
   scale: 128
-  renderAlways: true
+  # renderAlways: true
 渊海灾虫头:
   entity: "渊海灾虫头"
   contains: false
   model: "yhzc/t/custom_model.obj"
   texture: "yhzc/t/texture.png"
   scale: 45
-  renderAlways: true
+  # renderAlways: true
 渊海灾虫体节:
   entity: "渊海灾虫体节"
   contains: false
   model: "yhzc/tj/custom_model.obj"
   texture: "yhzc/tj/texture.png"
   scale: 45
-  renderAlways: true
+  # renderAlways: true
 渊海灾虫尾:
   entity: "渊海灾虫尾"
   contains: false
   model: "yhzc/w/custom_model.obj"
   texture: "yhzc/w/texture.png"
   scale: 45
-  renderAlways: true
+  # renderAlways: true
 硫磺火元素:
   entity: "硫磺火元素"
   contains: false
   model: "lhhys/ai_model.obj"
   texture: "lhhys/ai_model.png"
   scale: 100
-  renderAlways: true
+  # renderAlways: true
 利维坦:
   entity: "利维坦"
   contains: true
   model: "lwt/ai_model.obj"
   texture: "lwt/ai_model.png"
   scale: 640
-  renderAlways: true
+  # renderAlways: true
 白金星舰:
   entity: "白金星舰"
   contains: true
   model: "bjxj/custom_model.obj"
   texture: "bjxj/texture.png"
   scale: 20
-  renderAlways: true
+  # renderAlways: true
 瘟疫使者歌莉娅:
   entity: "瘟疫使者歌莉娅"
   contains: true
   model: "wyszgly/ai_model.obj"
   texture: "wyszgly/ai_model.png"
   scale: 200
-  renderAlways: true
+  # renderAlways: true
 猪鲨公爵常态:
   entity: "猪鲨公爵-常态"
   contains: true
   model: "zsgj/zsgj/ai_model.obj"
   texture: "zsgj/zsgj/ai_model.png"
   scale: 128
-  renderAlways: true
+  # renderAlways: true
 猪鲨公爵狂暴:
   entity: "猪鲨公爵-狂暴"
   contains: true
   model: "zsgj/zsgj/ai_model.obj"
   texture: "zsgj/zsgj/ai_model_kb.png"
   scale: 128
-  renderAlways: true
+  # renderAlways: true
 猪鲨公爵幽魂:
   entity: "猪鲨公爵-幽魂"
   contains: true
   model: "zsgj/zsgj/ai_model.obj"
   texture: "zsgj/zsgj/ai_model_yh.png"
   scale: 128
-  renderAlways: true
+  # renderAlways: true
 龙卷鲨:
   entity: "龙卷鲨"
   contains: true
@@ -137,375 +137,382 @@
   model: "zsgj/zsgj/ai_model.obj"
   texture: "zsgj/zsgj/ai_model.png"
   scale: 64
-  renderAlways: true
+  # renderAlways: true
 星神游龙头:
   entity: "星神游龙头"
   contains: false
   model: "xsyl/t/head.obj"
   texture: "xsyl/t/head.png"
   scale: 100
-  renderAlways: true
+  # renderAlways: true
 星神游龙体节:
   entity: "星神游龙体节"
   contains: false
   model: "xsyl/tj/body.obj"
   texture: "xsyl/tj/body.png"
   scale: 100
-  renderAlways: true
+  # renderAlways: true
 星神游龙尾:
   entity: "星神游龙尾"
   contains: false
   model: "xsyl/tj/body.obj"
   texture: "xsyl/tj/body.png"
   scale: 100
-  renderAlways: true
+  # renderAlways: true
 痴愚金龙:
   entity: "痴愚金龙"
   contains: false
   model: "cyjl/ai_model.obj"
   texture: "cyjl/ai_model.png"
   scale: 196
-  renderAlways: true
+  # renderAlways: true
 圣晶守卫:
   entity: "亵渎守卫·圣晶"
   contains: false
   model: "xdsw/sj/ai_model.obj"
   texture: "xdsw/sj/ai_model.png"
   scale: 175
-  renderAlways: true
+  # renderAlways: true
 神石守卫:
   entity: "亵渎守卫·神石"
   contains: false
   model: "xdsw/ty/ai_model.obj"
   texture: "xdsw/ty/ai_model.png"
   scale: 175
-  renderAlways: true
+  # renderAlways: true
 统御守卫:
   entity: "亵渎守卫·统御"
   contains: false
   model: "xdsw/ty/ai_model.obj"
   texture: "xdsw/ty/ai_model.png"
   scale: 175
-  renderAlways: true
+  # renderAlways: true
 亵渎天神:
   entity: "亵渎天神，普罗维登斯"
   contains: false
   model: "xdts/ai_model.obj"
   texture: "xdts/ai_model.png"
   scale: 416
-  renderAlways: true
+  # renderAlways: true
 装甲风暴编织者头:
   entity: "装甲风暴编织者头"
   contains: false
   model: "smtsz/t/head.obj"
   texture: "smtsz/StormWeaverArmored.png"
   scale: 55
-  renderAlways: true
+  # renderAlways: true
 装甲风暴编织者体节:
   entity: "装甲风暴编织者体节"
   contains: false
   model: "smtsz/tj/body.obj"
   texture: "smtsz/StormWeaverArmored.png"
   scale: 55
-  renderAlways: true
+  # renderAlways: true
 装甲风暴编织者尾:
   entity: "装甲风暴编织者尾"
   contains: false
   model: "smtsz/w/tail.obj"
   texture: "smtsz/StormWeaverArmored.png"
   scale: 55
-  renderAlways: true
+  # renderAlways: true
 风暴编织者头:
   entity: "风暴编织者头"
   contains: false
   model: "smtsz/t/head.obj"
   texture: "smtsz/StormWeaver.png"
   scale: 50
-  renderAlways: true
+  # renderAlways: true
 风暴编织者体节:
   entity: "风暴编织者体节"
   contains: false
   model: "smtsz/tj/body.obj"
   texture: "smtsz/StormWeaver.png"
   scale: 50
-  renderAlways: true
+  # renderAlways: true
 风暴编织者尾:
   entity: "风暴编织者尾"
   contains: false
   model: "smtsz/w/tail.obj"
   texture: "smtsz/StormWeaver.png"
   scale: 50
-  renderAlways: true
+  # renderAlways: true
 无尽虚空:
   entity: "无尽虚空"
   contains: false
   model: "wjxk/ai_model.obj"
   texture: "wjxk/ai_model.png"
   scale: 250
-  renderAlways: true
+  # renderAlways: true
 西格纳斯:
   entity: "神之使徒西格纳斯"
   contains: false
   model: "xgns/ai_model.obj"
   texture: "xgns/ai_model.png"
   scale: 100
-  renderAlways: true
+  # renderAlways: true
 噬魂幽花:
   entity: "噬魂幽花"
   contains: false
   model: "shyh/shyh/ai_model.obj"
   texture: "shyh/shyh/ai_model.png"
   scale: 225
-  renderAlways: true
+  # renderAlways: true
 聚魂幽花:
   entity: "聚魂幽花"
   contains: false
   model: "shyh/jhyh/ai_model.obj"
   texture: "shyh/jhyh/ai_model.png"
   scale: 225
-  renderAlways: true
+  # renderAlways: true
 噬魂幽花克隆体:
   entity: "噬魂幽花克隆体"
   contains: false
   model: "shyh/jhyh/ai_model.obj"
   texture: "shyh/jhyh/ai_model.png"
   scale: 225
-  renderAlways: true
+  # renderAlways: true
 硫海遗爵:
   entity: "硫海遗爵"
   contains: false
   model: "lhyj/ai_model.obj"
   texture: "lhyj/ai_model.png"
   scale: 250
-  renderAlways: true
+  # renderAlways: true
 装甲神明吞噬者头:
   entity: "装甲神明吞噬者头"
   contains: false
   model: "smtsz/t/head.obj"
   texture: "smtsz/DoG.png"
   scale: 70
-  renderAlways: true
+  # renderAlways: true
 装甲神明吞噬者体节:
   entity: "装甲神明吞噬者体节"
   contains: false
   model: "smtsz/tj/body.obj"
   texture: "smtsz/DoG.png"
   scale: 70
-  renderAlways: true
+  # renderAlways: true
 装甲神明吞噬者尾:
   entity: "装甲神明吞噬者尾"
   contains: false
   model: "smtsz/w/tail.obj"
   texture: "smtsz/DoG.png"
   scale: 70
-  renderAlways: true
+  # renderAlways: true
 神明吞噬者头:
   entity: "神明吞噬者头"
   contains: false
   model: "smtsz/t/head.obj"
   texture: "smtsz/DoG.png"
   scale: 70
-  renderAlways: true
+  # renderAlways: true
 神明吞噬者体节:
   entity: "神明吞噬者体节"
   contains: false
   model: "smtsz/tj/body.obj"
   texture: "smtsz/DoG.png"
   scale: 70
-  renderAlways: true
+  # renderAlways: true
 神明吞噬者尾:
   entity: "神明吞噬者尾"
   contains: false
   model: "smtsz/w/tail.obj"
   texture: "smtsz/DoG.png"
   scale: 70
-  renderAlways: true
+  # renderAlways: true
 小星宇神卫头:
   entity: "小星宇神卫头"
   contains: false
   model: "smtsz/t/head.obj"
   texture: "smtsz/DoG.png"
   scale: 12
-  renderAlways: true
+  # renderAlways: true
 小星宇神卫体节:
   entity: "小星宇神卫"
   contains: false
   model: "smtsz/tj/body.obj"
   texture: "smtsz/DoG.png"
   scale: 12
-  renderAlways: true
+  # renderAlways: true
 犽戎:
   entity: "丛林龙，犽戎"
   contains: false
   model: "yr/ai_model.obj"
   texture: "yr/ai_model.png"
   scale: 256
-  renderAlways: true
+  # renderAlways: true
 阿尔忒弥斯:
   entity: "XS-01“阿尔忒弥斯”"
   contains: false
   model: "xljx/aetms/ai_model.obj"
   texture: "xljx/aetms/ai_model.png"
   scale: 200
-  renderAlways: true
+  # # renderAlways: true
 阿尔忒弥斯EX:
   entity: "XS-01“阿尔忒弥斯”EX"
   contains: false
   model: "xljx/aetms_ex/ai_model.obj"
   texture: "xljx/aetms_ex/ai_model.png"
   scale: 175
-  renderAlways: true
+  # # renderAlways: true
 阿波罗:
   entity: "XS-03“阿波罗”"
   contains: false
   model: "xljx/abl/ai_model.obj"
   texture: "xljx/abl/ai_model.png"
   scale: 200
-  renderAlways: true
+  # # renderAlways: true
 阿波罗EX:
   entity: "XS-03“阿波罗”EX"
   contains: false
   model: "xljx/abl_ex/ai_model.obj"
   texture: "xljx/abl_ex/ai_model.png"
   scale: 175
-  renderAlways: true
+  # # renderAlways: true
 塔纳托斯头:
   entity: "XM-05“塔纳托斯”头"
   contains: false
   model: "smtsz/t/head.obj"
   texture: "smtsz/Thanatos.png"
   scale: 60
-  renderAlways: true
+  # renderAlways: true
 塔纳托斯激光头:
   entity: "XM-05“塔纳托斯”激光头"
   contains: false
   model: "smtsz/t/head.obj"
   texture: "smtsz/ThanatosOpen.png"
   scale: 60
-  renderAlways: true
+  # renderAlways: true
 塔纳托斯体节:
   entity: "XM-05“塔纳托斯”体节"
   contains: false
   model: "smtsz/tj/body.obj"
   texture: "smtsz/Thanatos.png"
   scale: 60
-  renderAlways: true
+  # renderAlways: true
 塔纳托斯散热体节:
   entity: "XM-05“塔纳托斯”散热体节"
   contains: false
   model: "smtsz/tj/body.obj"
   texture: "smtsz/ThanatosOpen.png"
   scale: 60
-  renderAlways: true
+  # renderAlways: true
 塔纳托斯尾:
   entity: "XM-05“塔纳托斯”尾"
   contains: false
   model: "smtsz/w/tail.obj"
   texture: "smtsz/Thanatos.png"
   scale: 60
-  renderAlways: true
+  # renderAlways: true
 阿瑞斯:
   entity: "XF-09“阿瑞斯”"
   contains: false
   model: "xljx/ars/ai_model.obj"
   texture: "xljx/ars/ai_model.png"
   scale: 325
-  renderAlways: true
+  # # renderAlways: true
 阿瑞斯核弹:
   entity: "XF-09“阿瑞斯”高斯核弹发射井"
   contains: false
   model: "xljx/ars_hd/ai_model.obj"
   texture: "xljx/ars_hd/ai_model.png"
   scale: 225
-  renderAlways: true
+  # # renderAlways: true
 阿瑞斯激光:
   entity: "XF-09“阿瑞斯”镭射加农炮"
   contains: false
   model: "xljx/ars_jg/ai_model.obj"
   texture: "xljx/ars_jg/ai_model.png"
   scale: 225
-  renderAlways: true
+  # # renderAlways: true
 阿瑞斯离子:
   entity: "XF-09“阿瑞斯”离子加农炮"
   contains: false
   model: "xljx/ars_lz/ai_model.obj"
   texture: "xljx/ars_lz/ai_model.png"
   scale: 225
-  renderAlways: true
+  # # renderAlways: true
 阿瑞斯特斯拉:
   entity: "XF-09“阿瑞斯”特斯拉加农炮"
   contains: false
   model: "xljx/ars_tsl/ai_model.obj"
   texture: "xljx/ars_tsl/ai_model.png"
   scale: 225
-  renderAlways: true
+  # # renderAlways: true
 嘉登:
   entity: "██-██ “嘉登”"
   contains: false
   model: "xljx/jd/ai_model.obj"
   texture: "xljx/jd/ai_model.png"
   scale: 75
-  renderAlways: true
+  # # renderAlways: true
+阿瑞斯外骨骼:
+  entity: "阿瑞斯外骨骼"
+  contains: false
+  model: "xljx/ars/ai_model.obj"
+  texture: "xljx/ars/ai_model.png"
+  scale: 125
+  # # renderAlways: true
 至尊灾厄:
   entity: "至尊灾厄"
   contains: false
   model: "zzze/ze/ai_model.obj"
   texture: "zzze/ze/ai_model.png"
   scale: 125
-  renderAlways: true
+  # renderAlways: true
 至尊灾难:
   entity: "至尊灾难"
   contains: false
   model: "zzze/zn/ai_model.obj"
   texture: "zzze/zn/ai_model.png"
   scale: 200
-  renderAlways: true
+  # renderAlways: true
 至尊灾祸:
   entity: "至尊灾祸"
   contains: false
   model: "zzze/zh/ai_model.obj"
   texture: "zzze/zh/ai_model.png"
   scale: 200
-  renderAlways: true
+  # renderAlways: true
 灾坟魔物头:
   entity: "灾坟魔物头"
   contains: false
   model: "zzze/zfmw/CustomModel.obj"
   texture: "zzze/zfmw/texture.png"
   scale: 50
-  renderAlways: true
+  # renderAlways: true
 灾坟魔物体节:
   entity: "灾坟魔物体节"
   contains: false
   model: "zzze/zfmw/CustomModel.obj"
   texture: "zzze/zfmw/texture.png"
   scale: 50
-  renderAlways: true
+  # renderAlways: true
 灾坟魔物尾:
   entity: "灾坟魔物尾"
   contains: false
   model: "zzze/zfmw/CustomModel.obj"
   texture: "zzze/zfmw/texture.png"
   scale: 50
-  renderAlways: true
+  # renderAlways: true
 灾坟仆从:
   entity: "灾坟仆从"
   contains: false
   model: "zzze/zfmw/CustomModel.obj"
   texture: "zzze/zfmw/texture.png"
   scale: 18
-  renderAlways: true
+  # renderAlways: true
 灾坟仆从体节:
   entity: "灾坟仆从体节"
   contains: false
   model: "zzze/zfmw/CustomModel.obj"
   texture: "zzze/zfmw/texture.png"
   scale: 18
-  renderAlways: true
+  # renderAlways: true
 灾坟仆从尾:
   entity: "灾坟仆从尾"
   contains: false
   model: "zzze/zfmw/CustomModel.obj"
   texture: "zzze/zfmw/texture.png"
   scale: 18
-  renderAlways: true
+  # renderAlways: true
