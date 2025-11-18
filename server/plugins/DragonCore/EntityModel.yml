@@ -44,7 +44,7 @@
   entity: "菌生蟹"
   contains: false
   model: "jsx/ai_model.obj"
-  texture: "jsx/ai_model.jpg"
+  texture: "jsx/ai_model.png"
   scale: 128
   # renderAlways: true
 腐巢意志:
