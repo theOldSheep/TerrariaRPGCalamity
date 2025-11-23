@@ -711,6 +711,13 @@ public class PlayerHelper {
                                     break;
                                 }
                                 // equipments that provide buff
+                                case "静谧之靴": {
+                                    if (isTargetedByBOSS(ply))
+                                        EntityHelper.applyEffect(ply, "静谧之靴破损", 260);
+                                    else
+                                        EntityHelper.applyEffect(ply, "静谧之靴", 1220);
+                                    break;
+                                }
                                 case "冰冻海龟壳": {
                                     if (health * 2 < maxHealth)
                                         EntityHelper.applyEffect(ply, "冰障", 20);
@@ -1379,19 +1386,25 @@ public class PlayerHelper {
         // the player is not on mount
         else {
             // speed multiplier
-            double speedMulti = 1d, speedMultiWing = 1d;
+            double speedMulti = 1d, speedMultiWalk = 1d, speedMultiWing = 1d;
             {
                 HashMap<String, Double> attrMap = AttributeHelper.getAttrMap(ply);
                 speedMulti = attrMap.getOrDefault("speedMulti", 1d);
+                speedMultiWalk = speedMulti;
                 speedMultiWing = speedMulti;
-                // speed multiplier that exceeds 100% are only 10% as effective on wings, 20% as effective otherwise.
+                // speed multiplier that exceeds 100%:
+                // - fully effective for walking
+                // - only 10% as effective on wings
+                // - 20% as effective otherwise
                 if (speedMulti > 1d) {
+                    speedMultiWalk = 1 + (speedMulti - 1) * 1.0;
                     speedMulti = 1 + (speedMulti - 1) * 0.2;
                     speedMultiWing = 1 + (speedMultiWing - 1) * 0.1;
                 }
             }
             // set up horizontal speed
-            horizontalSpeed = getHorMoveSpd(ply, accessorySet, speedMulti, speedMultiWing);
+            horizontalSpeed = getHorMoveSpd(ply, accessorySet,
+                    ply.isOnGround() ? speedMultiWalk : speedMulti, speedMultiWing);
             // if the player is not flying
             if (!isThrusting) {
                 // the player can not save a part of jumping progress for a "double jump" after leaving the ground
@@ -1553,7 +1566,7 @@ public class PlayerHelper {
                     }
                 }
 
-                // gravity if applicable
+                // gravity if applicable (not thrusting upward)
                 if (Math.abs(moveDir.getY()) < 1e-5) {
                     vel.subtract(new Vector(0, 0.08, 0));
                 }
@@ -1569,6 +1582,7 @@ public class PlayerHelper {
                     double y = vel.getY();
                     vel.multiply(horVelMulti);
                     vel.setY(y * 0.99);
+//                    Bukkit.broadcastMessage("Hor Decay: " + horVelMulti);
                 }
 //                Bukkit.broadcastMessage(horizontalSpeed + ", " + verticalSpeed);
 
@@ -1581,34 +1595,34 @@ public class PlayerHelper {
                         acceleration.multiply(maxAcceleration / accLength);
                     }
                     // do not change the corresponding component (most likely unreasonably de-accelerate) if not moving in the direction.
+                    if (! movingVer)
+                        acceleration.setY(0);
                     if (! movingHor) {
                         acceleration.setX(0);
                         acceleration.setZ(0);
                     }
                     // if moving horizontally, drop the "dragging" component in the target direction
+                    // this is necessary, otherwise shield dashes will last significantly shorter while moving
                     else {
+                        // use moveDir instead of acceleration, otherwise shield dash will be pulled to early stop
                         double moveY = moveDir.getY(), velY = vel.getY();
                         moveDir.setY(0);
                         vel.setY(0);
                         // angle between move direction and velocity <= 90
                         if (moveDir.dot(vel) > -1e-5) {
-                            Vector accComp = MathHelper.vectorProjection(vel, acceleration);
+                            Vector accComp = MathHelper.vectorProjection(moveDir, acceleration);
                             // if the acceleration is slowing down the speed
-                            if (accComp.dot(vel) < 0) {
+                            if (accComp.dot(moveDir) < 0) {
                                 acceleration.subtract(accComp);
                             }
                         }
                         moveDir.setY(moveY);
                         vel.setY(velY);
                     }
-                    if (! movingVer)
-                        acceleration.setY(0);
                     // update the player's speed
                     vel.add(acceleration);
                 }
             }
-
-
         }
         // save variables
         MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_THRUST_INDEX, thrustIndex);
@@ -1688,10 +1702,10 @@ public class PlayerHelper {
         return vel;
     }
     // saving location info
-private static void saveMovementData(Player ply, Vector velocity, Vector acceleration) {
-    MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_LAST_VELOCITY_ACTUAL, velocity);
-    MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_ACCELERATION, acceleration);
-}
+    private static void saveMovementData(Player ply, Vector velocity, Vector acceleration) {
+        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_LAST_VELOCITY_ACTUAL, velocity);
+        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_ACCELERATION, acceleration);
+    }
     // movement, block collision, oxygen bar etc.
     public static void threadExtraTicking() {
         AtomicLong idx = new AtomicLong(0);
@@ -1710,9 +1724,9 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
                     MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_VELOCITY_MULTI,
                             ply.isOnGround() && ply.isSneaking() ? 0.5 : 1);
 
-                    // get player speed
+                    // get player's internally saved speed; this speed is used for all interaction logic below.
                     Vector plySpd = getPlayerRawVelocity(ply);
-                    // calculate acceleration info before the speed is updated
+                    // calculate acceleration info before the speed is updated. World speed and acceleration are managed for aim helper only.
                     Vector plyWorldSpd = ply.getVelocity();
                     Vector plyAcc = plyWorldSpd.clone().subtract((Vector) MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_LAST_VELOCITY_ACTUAL).value());
                     // account for speed direction changed by basic tick (block collision)
@@ -1727,6 +1741,7 @@ private static void saveMovementData(Player ply, Vector velocity, Vector acceler
 
                     // update speed
                     EntityMovementHelper.setVelocity(ply, plySpd);
+
                     // save location info
                     saveMovementData(ply, plyWorldSpd.clone(), plyAcc);
                 }

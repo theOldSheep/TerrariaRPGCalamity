@@ -764,6 +764,13 @@ public class DamageHelper {
                 // accessories
                 for (String accessory : accessories) {
                     switch (accessory) {
+                        // break on damage
+                        case "静谧之靴": {
+                            if (isDirectDmg) {
+                                EntityHelper.applyEffect(vPly, "静谧之靴破损", 260);
+                            }
+                            break;
+                        }
                         // mana recovery on damage
                         case "魔法手铐":
                         case "天界手铐": {

@@ -39,6 +39,9 @@ buffConflicts:
     磁铁: 0
     无尽空虚: 1
   # 冷却类buff
+  18:
+    静谧之靴: 0
+    静谧之靴破损: 1
   19:
     血肉图腾: 0
     血肉图腾冷却: 1
@@ -518,7 +521,7 @@ effects:
   冰障:
     isBuff: true
     attributes:
-        damageTakenMulti: -0.15
+      damageTakenMulti: -0.15
     tooltip: 所受伤害减少15%
   防御损毁:
     isBuff: false
@@ -580,60 +583,69 @@ effects:
   灵魂恢复:
     isBuff: true
     attributes:
-        regen: 2
+      regen: 2
     tooltip: 恢复生命
   灵魂防御:
     isBuff: true
     attributes:
-        defence: 6
-        damageTakenMulti: -0.02
+      defence: 6
+      damageTakenMulti: -0.02
     tooltip: 增加6点防御力和2%伤害减免
   灵魂力量:
     isBuff: true
     attributes:
-        damageSummonMulti: 0.05
+      damageSummonMulti: 0.05
     tooltip: 增加5%召唤伤害
   神圣之辉:
     isBuff: true
     attributes:
-        regen: 4
+      regen: 4
     tooltip: 恢复生命
   神圣之佑:
     isBuff: true
     attributes:
-        defence: 12
-        damageTakenMulti: -0.03
+      defence: 12
+      damageTakenMulti: -0.03
     tooltip: 增加12点防御力和3%伤害减免
   神圣之力:
     isBuff: true
     attributes:
-        damageSummonMulti: 0.07
+      damageSummonMulti: 0.07
     tooltip: 增加7%召唤伤害
   幻魂还生:
     isBuff: true
     attributes:
-        regen: 6
+      regen: 6
     tooltip: 恢复生命
   幻魂坚盾:
     isBuff: true
     attributes:
-        defence: 20
-        damageTakenMulti: -0.05
+      defence: 20
+      damageTakenMulti: -0.05
     tooltip: 增加20点防御力和5%伤害减免
   幻魂之力:
     isBuff: true
     attributes:
-        damageSummonMulti: 0.1
+      damageSummonMulti: 0.1
     tooltip: 增加10%召唤伤害
   掠夺者护符:
     isBuff: true
     attributes:
-        critRogue: 18
+      critRogue: 18
     tooltip: 下一次攻击时增加18%盗贼暴击率
+  静谧之靴:
+    isBuff: true
+    attributes:
+      regen: 1.4
+      speedMulti: 0.65
+    tooltip: 你很神秘，获得生命恢复和移动速度
+  静谧之靴破损:
+    isBuff: false
+    tooltip: 受到攻击或成为BOSS目标后失去静谧效果
   血肉图腾:
     isBuff: true
     attributes:
-        damageContactTakenMulti: -0.5
+      damageContactTakenMulti: -0.5
     buffOnTimeout: 血肉图腾冷却
     buffOnTimeoutDuration: 400
     tooltip: 下一次接触伤害减半
@@ -657,8 +669,8 @@ effects:
   硫火狂怒:
     isBuff: true
     attributes:
-        damageMagicMulti: 0.5
-        regen: -60
+      damageMagicMulti: 0.5
+      regen: -60
     buffOnTimeout: 硫火狂怒冷却
     buffOnTimeoutDuration: 600
     snowStormParticle: p/bl
@@ -669,15 +681,15 @@ effects:
   掠夺者之怒:
     isBuff: true
     attributes:
-        damageMulti: 0.3
-        useSpeedMeleeMulti: 0.05
-        defence: 10
+      damageMulti: 0.3
+      useSpeedMeleeMulti: 0.05
+      defence: 10
     tooltip: 爷怒了
   瘟疫狂暴:
     isBuff: true
     attributes:
-        damageRangedMulti: 0.6
-        critRanged: 20
+      damageRangedMulti: 0.6
+      critRanged: 20
     buffOnTimeout: 瘟疫狂暴冷却
     buffOnTimeoutDuration: 500
     tooltip: 远程伤害增加60%，远程暴击率增加20%
@@ -687,12 +699,12 @@ effects:
   生命涌流:
     isBuff: true
     attributes:
-        critRanged: 6
+      critRanged: 6
     tooltip: 极速生命恢复
   龙蒿披风:
     isBuff: true
     attributes:
-        damageContactTakenMulti: -0.5
+      damageContactTakenMulti: -0.5
     buffOnTimeout: 龙蒿披风冷却
     buffOnTimeoutDuration: 600
     tooltip: 降低接触伤害
@@ -702,9 +714,9 @@ effects:
   鲜血狂怒:
     isBuff: true
     attributes:
-        damageMeleeMulti: 0.25
-        critMelee: 25
-        damageContactTakenMulti: -0.5
+      damageMeleeMulti: 0.25
+      critMelee: 25
+      damageContactTakenMulti: -0.5
     buffOnTimeout: 鲜血狂怒冷却
     buffOnTimeoutDuration: 400
     tooltip: 怪物接触伤害降低，近战属性大幅提高
@@ -717,9 +729,9 @@ effects:
   深渊狂乱:
     isBuff: true
     attributes:
-        damageMulti: 0.35
-        crit: 35
-        lifeSteal: 0.004
+      damageMulti: 0.35
+      crit: 35
+      lifeSteal: 0.004
     buffOnTimeout: 深渊狂乱冷却
     buffOnTimeoutDuration: 500
     tooltip: 增加伤害，暴击率和生命汲取
@@ -729,8 +741,8 @@ effects:
   弑神者冲刺:
     isBuff: true
     attributes:
-        damageTakenMulti: -0.65
-        knockbackResistance: 1
+      damageTakenMulti: -0.65
+      knockbackResistance: 1
     tooltip: 获得伤害减免并无视击退，受到攻击时进入冷却
   神弑者之停息:
     isBuff: false
@@ -746,9 +758,9 @@ effects:
   黄色天钻宝石:
     isBuff: true
     attributes:
-        damageMeleeMulti: 0.45
-        useSpeedMeleeMulti: 0.26
-        critMelee: 12
+      damageMeleeMulti: 0.45
+      useSpeedMeleeMulti: 0.26
+      critMelee: 12
     tooltip: 近战属性大幅提高
   黄色天钻宝石冷却:
     isBuff: false
@@ -756,8 +768,8 @@ effects:
   绿色天钻宝石:
     isBuff: true
     attributes:
-        damageRangedMulti: 0.5
-        critRanged: 33
+      damageRangedMulti: 0.5
+      critRanged: 33
     tooltip: 远程属性大幅提高
   绿色天钻宝石冷却:
     isBuff: false
@@ -765,9 +777,9 @@ effects:
   红色天钻宝石:
     isBuff: true
     attributes:
-        stealthLimit: 130
-        damageRogueMulti: 0.5
-        critRogue: 33
+      stealthLimit: 130
+      damageRogueMulti: 0.5
+      critRogue: 33
     tooltip: 盗贼属性大幅提高
   红色天钻宝石冷却:
     isBuff: false
@@ -775,9 +787,9 @@ effects:
   紫色天钻宝石:
     isBuff: true
     attributes:
-        damageMagicMulti: 0.5
-        critMagic: 33
-        maxMana: 100
+      damageMagicMulti: 0.5
+      critMagic: 33
+      maxMana: 100
     tooltip: 魔法属性大幅提高
   紫色天钻宝石冷却:
     isBuff: false
@@ -785,9 +797,9 @@ effects:
   蓝色天钻宝石:
     isBuff: true
     attributes:
-        damageSummonMulti: 0.3
-        minionLimit: 4
-        minionDamagePenaltyFactor: 0.5
+      damageSummonMulti: 0.3
+      minionLimit: 4
+      minionDamagePenaltyFactor: 0.5
     tooltip: 召唤属性大幅提高
   蓝色天钻宝石冷却:
     isBuff: false
@@ -795,11 +807,11 @@ effects:
   粉色天钻宝石:
     isBuff: true
     attributes:
-        defence: 150
-        damageTakenMulti: -0.12
-        flightTimeMulti: 0.4
-        regen: 6
-        invulnerabilityTick: 10
+      defence: 150
+      damageTakenMulti: -0.12
+      flightTimeMulti: 0.4
+      regen: 6
+      invulnerabilityTick: 10
     tooltip: 杂项属性大幅提高
   粉色天钻宝石冷却:
     isBuff: false
@@ -807,27 +819,27 @@ effects:
   魔影激怒:
     isBuff: false
     attributes:
-        defenceMulti: -0.15
-        damageTakenMulti: 0.15
-        damageMulti: 0.75
+      defenceMulti: -0.15
+      damageTakenMulti: 0.15
+      damageMulti: 0.75
     tooltip: 你以防御和伤害减免为代价大大提升自身的攻击力
   暴君之怒:
     isBuff: true
     attributes:
-        damageMeleeMulti: 0.05
-        critMelee: 5
+      damageMeleeMulti: 0.05
+      critMelee: 5
     tooltip: 增加5%近战伤害和暴击率
   格拉克斯之助:
     isBuff: true
     attributes:
-        defence: 60
-        damageMeleeMulti: 0.1
-        critMelee: 10
+      defence: 60
+      damageMeleeMulti: 0.1
+      critMelee: 10
     tooltip: 提高防御力，你的肌肉更加强壮
   狮心圣裁能量外壳:
     isBuff: true
     attributes:
-        damageTakenMulti: -0.5
+      damageTakenMulti: -0.5
     tooltip: 提高防御力，你的肌肉更加强壮
   狮心圣裁能量外壳冷却:
     isBuff: false

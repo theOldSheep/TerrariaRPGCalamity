@@ -1356,13 +1356,6 @@
     defence: 6
   worth: 2000000
   rarity: 1000
-火箭靴:
-  item: LEASH
-  lore:
-  - §r[饰品]
-  - §r▣算作鞋子
-  worth: 1000000
-  rarity: 2
 蠕虫围巾:
   item: LEASH
   lore:
@@ -1641,6 +1634,15 @@
   - §6专家模式物品
   worth: 10000000
   rarity: 1000
+静谧之靴:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r▣算作鞋子
+  - §r获得1.4生命恢复和65%移动速度
+  - §a破损：在受到攻击伤害或成为BOSS目标后失效，持续13秒
+  worth: 92500
+  rarity: 2
 航鱼靴:
   item: LEASH
   lore:
@@ -1650,6 +1652,13 @@
     speedMulti: 0.1
   worth: 1000000
   rarity: 1
+火箭靴:
+  item: LEASH
+  lore:
+  - §r[饰品]
+  - §r▣算作鞋子
+  worth: 1000000
+  rarity: 2
 幽灵靴:
   item: LEASH
   lore:

@@ -185,8 +185,9 @@ public class EntityHelper {
             int timeRemaining = allEffects.getOrDefault(effect, 0);
             // some buff should not (solely) disappear over time, they disappear over some other criterion.
             switch (effect) {
+                case "静谧之靴":
                 case "血肉图腾":
-                    if (! PlayerHelper.getAccessories(entity).contains("血肉图腾"))
+                    if (! PlayerHelper.getAccessories(entity).contains(effect))
                         timeRemaining = -1;
                     break;
                 case "防御损毁":
