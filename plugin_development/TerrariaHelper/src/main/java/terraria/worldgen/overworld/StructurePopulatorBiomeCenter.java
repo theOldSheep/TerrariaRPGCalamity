@@ -33,49 +33,52 @@ public class StructurePopulatorBiomeCenter extends BlockPopulator {
         if (isSurface && chunkX == 0 && chunkZ == 0) {
             generateSpawnShelter(wld);
         }
-        // other structures
-        else if (chunkX % STRUCT_INTERVAL == 0 && chunkZ % STRUCT_INTERVAL == 0) {
+        // other structures; determine if the structure should be generated
+        OverworldBiomeGenerator.BiomeFeature feature = getBiomeFeature(chunkX, chunkZ);
+        if (shouldGenerateStructure(feature, chunkX, chunkZ)) {
             int blockX = getBlockCoordByChunk(chunkX), blockZ = getBlockCoordByChunk(chunkZ);
-            if (Math.abs(blockX) < OverworldBiomeGenerator.SPAWN_LOC_PROTECTION_RADIUS &&
-                    Math.abs(blockZ) < OverworldBiomeGenerator.SPAWN_LOC_PROTECTION_RADIUS)
-                return;
-            // determine the structure to generate; for non-structure biomes, do not bother further check.
-            OverworldBiomeGenerator.BiomeFeature feature = getBiomeFeature(chunkX, chunkZ);
             switch (feature.evaluatedBiome) {
                 case ASTRAL_INFECTION:
+                    if (isSurface)
+                        generateAstral(wld, blockX, blockZ);
+                    break;
                 case JUNGLE:
+                    if (! isSurface)
+                        generateLizardTemple(wld, blockX, blockZ);
+                    break;
                 case NORMAL:
+                    generateDungeon(wld, blockX, blockZ);
+                    break;
                 case DESERT:
                 case SUNKEN_SEA:
+                    if (! isSurface)
+                        generateEyeOfSunkenSea(wld, blockX, 100 + rdm.nextInt(50), blockZ, false);
                     break;
-                default:
-                    return;
-            }
-            // determine if the structure should be generated
-            if (shouldGenerateStructure(feature, chunkX, chunkZ)) {
-                switch (feature.evaluatedBiome) {
-                    case ASTRAL_INFECTION:
-                        if (isSurface)
-                            generateAstral(wld, blockX, blockZ);
-                        break;
-                    case JUNGLE:
-                        if (! isSurface)
-                            generateLizardTemple(wld, blockX, blockZ);
-                        break;
-                    case NORMAL:
-                        generateDungeon(wld, blockX, blockZ);
-                        break;
-                    case DESERT:
-                    case SUNKEN_SEA:
-                        if (! isSurface)
-                            generateEyeOfSunkenSea(wld, blockX, 100 + rdm.nextInt(50), blockZ, false);
-                        break;
-                }
             }
         }
     }
+
     // biome-center structure
-    private static boolean shouldGenerateStructure(OverworldBiomeGenerator.BiomeFeature curr, int chunkX, int chunkZ) {
+    public static boolean shouldGenerateStructure(OverworldBiomeGenerator.BiomeFeature curr, int chunkX, int chunkZ) {
+        // for optimization, only check chunks on the "checkerboard"
+        if (chunkX % STRUCT_INTERVAL != 0 || chunkZ % STRUCT_INTERVAL != 0)
+            return false;
+        // spawn point protection
+        int blockX = getBlockCoordByChunk(chunkX), blockZ = getBlockCoordByChunk(chunkZ);
+        if (Math.abs(blockX) < OverworldBiomeGenerator.SPAWN_LOC_PROTECTION_RADIUS &&
+                Math.abs(blockZ) < OverworldBiomeGenerator.SPAWN_LOC_PROTECTION_RADIUS)
+            return false;
+        // determine the structure to generate; for non-structure biomes, do not bother further check.
+        switch (curr.evaluatedBiome) {
+            case ASTRAL_INFECTION:
+            case JUNGLE:
+            case NORMAL:
+            case DESERT:
+            case SUNKEN_SEA:
+                break;
+            default:
+                return false;
+        }
         int[] chunkXCoord = new int[CHECK_STEPS_RADIUS * 2 + 1];
         int[] chunkZCoord = new int[CHECK_STEPS_RADIUS * 2 + 1];
         for (int i = -CHECK_STEPS_RADIUS; i <= CHECK_STEPS_RADIUS; i ++) {
@@ -112,7 +115,8 @@ public class StructurePopulatorBiomeCenter extends BlockPopulator {
         // no termination: this is appropriate.
         return true;
     }
-    private static OverworldBiomeGenerator.BiomeFeature getBiomeFeature(int chunkX, int chunkZ) {
+
+    public static OverworldBiomeGenerator.BiomeFeature getBiomeFeature(int chunkX, int chunkZ) {
         return OverworldBiomeGenerator.getBiomeFeature( getBlockCoordByChunk(chunkX), getBlockCoordByChunk(chunkZ) );
     }
 

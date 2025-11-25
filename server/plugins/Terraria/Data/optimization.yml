@@ -7,7 +7,8 @@ worldGen:
     lakeDepth: 30
     plateauHeight: 40
     nearbyBiomeSampleRadius: 25
-    caveOctaves: 4
+    caveOctaves: 5
+    terrainOctaves: 8
     railYCoordinate: 125
     surfaceChestRate: 0.01
     cavernChestRate: 0.025
@@ -15,7 +16,7 @@ worldGen:
     chunkPrepDurationLog: false
     caveGenDurationLog: false
     caveSketchSize: 3
-    caveSketchThreads: 4
+    caveSketchThreads: 16
     caveDetailThreads: 16
     structureNanoSecond: 10000000
   mapConfig:

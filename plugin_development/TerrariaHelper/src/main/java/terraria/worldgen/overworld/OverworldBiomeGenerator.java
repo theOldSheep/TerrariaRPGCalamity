@@ -8,6 +8,8 @@ import terraria.util.WorldHelper;
 import java.awt.*;
 import java.util.*;
 
+import static terraria.worldgen.overworld.OverworldChunkGenerator.OCTAVES_TERRAIN;
+
 public class OverworldBiomeGenerator {
     static final int
             BIOME_FEATURE_CACHE_SIZE = 500000,
@@ -132,9 +134,9 @@ public class OverworldBiomeGenerator {
         noiseEros = new PerlinOctaveGenerator(rdm.nextLong(), 4);
         noiseEros.setScale(0.0025);
         // terrain height
-        noiseTrH = new PerlinOctaveGenerator(rdm.nextLong(), 8);
+        noiseTrH = new PerlinOctaveGenerator(rdm.nextLong(), OCTAVES_TERRAIN);
         noiseTrH.setScale(0.001);
-        // update continentalness finally, so there is less chance things get broken
+        // update continentalness finally, so there is less chance things get broken - setup is triggered by continentalness.
         noiseCont = new PerlinOctaveGenerator(rdm.nextLong(), 3);
         noiseCont.setScale(0.0005);
     }
@@ -219,5 +221,8 @@ public class OverworldBiomeGenerator {
     }
     public static Biome getBiome(int blockX, int blockZ) {
         return getBiomeFromType( getBiomeFeature(blockX, blockZ).evaluatedBiome );
+    }
+    public static WorldHelper.BiomeType getBiomeType(int blockX, int blockZ) {
+        return WorldHelper.BiomeType.getBiome(getBiome(blockX, blockZ));
     }
 }

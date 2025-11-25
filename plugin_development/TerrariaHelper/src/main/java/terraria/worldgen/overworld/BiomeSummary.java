@@ -1,13 +1,13 @@
 package terraria.worldgen.overworld;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import terraria.TerrariaHelper;
+import terraria.util.WorldHelper;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -16,8 +16,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
+import java.util.Queue;
 
-import static terraria.worldgen.overworld.OverworldBiomeGenerator.getBiome;
+import static terraria.worldgen.overworld.OverworldBiomeGenerator.biomeCache;
+import static terraria.worldgen.overworld.OverworldBiomeGenerator.getBiomeType;
+import static terraria.worldgen.overworld.StructurePopulatorBiomeCenter.getBiomeFeature;
 
 public class BiomeSummary {
     public static final ConfigurationSection CONFIG = TerrariaHelper.optimizationConfig.getConfigurationSection("worldGen.mapConfig");
@@ -31,23 +34,10 @@ public class BiomeSummary {
     public static final int MINIMUM_LABELED_BIOME_AREA_BLOCKS = BLOCKS_PER_PIXEL * BLOCKS_PER_PIXEL * CONFIG.getInt("minLabeledBiomeAreaPixels", 5);
     public static final int GRID_SIZE_IN_PIXELS = CONFIG.getInt("gridSizeInPixels", 16);
     public static final File OUTPUT_FOLDER = new File(CONFIG.getString("outputFolder", "worldGenDebug"));
-    public static HashMap<Biome, List<Point>> biomeCenters = new HashMap<>();
-    public static final HashMap<Biome, Color> BIOME_COLORS = new HashMap<>();
-    // BIOME_COLORS init
-    static {
-        BiomeSummary.BIOME_COLORS.put(Biome.FOREST, new Color(0, 175, 0)); //forest(normal)
-        BiomeSummary.BIOME_COLORS.put(Biome.JUNGLE, new Color(0, 100, 0)); //jungle
-        BiomeSummary.BIOME_COLORS.put(Biome.DESERT, new Color(255, 255, 0)); //desert
-        BiomeSummary.BIOME_COLORS.put(Biome.MUTATED_DESERT, new Color(0, 50, 80)); //sunken sea
-        BiomeSummary.BIOME_COLORS.put(Biome.BEACHES, new Color(255, 255, 150)); //beach
-        BiomeSummary.BIOME_COLORS.put(Biome.OCEAN, new Color(0, 0, 255)); //ocean
-        BiomeSummary.BIOME_COLORS.put(Biome.COLD_BEACH, new Color(130, 110, 100)); //sulphurous beach
-        BiomeSummary.BIOME_COLORS.put(Biome.FROZEN_OCEAN, new Color(120, 200, 150)); //sulphurous ocean
-        BiomeSummary.BIOME_COLORS.put(Biome.TAIGA_COLD, new Color(150, 200, 255)); //tundra
-        BiomeSummary.BIOME_COLORS.put(Biome.MUSHROOM_ISLAND, new Color(150, 0, 150)); //corruption
-        BiomeSummary.BIOME_COLORS.put(Biome.MESA, new Color(50, 25, 60)); //astral infection
-        BiomeSummary.BIOME_COLORS.put(Biome.ICE_FLATS, new Color(255, 255, 255)); //hallow
-    }
+
+    public static BufferedImage BIOME_IMAGE = null;
+    public static HashMap<WorldHelper.BiomeType, List<Map.Entry<Point, Integer>>> BIOME_CENTERS = new HashMap<>();
+    public static HashMap<WorldHelper.BiomeType, List<Point>> BIOME_STRUCTS = new HashMap<>();
 
     // save the biome image for testing purposes and so on
     public static void generateBiomeImage() {
@@ -70,8 +60,8 @@ public class BiomeSummary {
         int minBlockZ = - (halfImageSize * BLOCKS_PER_PIXEL);
 
         // 2. Image Creation
-        BufferedImage biomeImage = new BufferedImage(imageDimension, imageDimension, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2d = biomeImage.createGraphics();
+        BIOME_IMAGE = new BufferedImage(imageDimension, imageDimension, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = BIOME_IMAGE.createGraphics();
 
         // 3. Biome Rendering Loop
         for (int imageX = 0; imageX < imageDimension; imageX++) {
@@ -81,10 +71,9 @@ public class BiomeSummary {
                 int blockZ = minBlockZ + (imageZ * BLOCKS_PER_PIXEL) + (BLOCKS_PER_PIXEL / 2); // Center of the block
 
                 // Get biome and color
-                Biome biome = getBiome(blockX, blockZ);
-                Color biomeColor = BIOME_COLORS.getOrDefault(biome, Color.BLACK);
+                WorldHelper.BiomeType biomeType = getBiomeType(blockX, blockZ);
 
-                g2d.setColor(biomeColor);
+                g2d.setColor(biomeType.color);
                 g2d.fillRect(imageX, imageZ, 1, 1);
             }
         }
@@ -118,15 +107,31 @@ public class BiomeSummary {
         g2d.drawString("X", spawnImageX + AXIS_MARKER_LENGTH_PIXEL - AXIS_MARKER_FONT_SIZE, spawnImageZ);
         g2d.drawString("Z", spawnImageX - AXIS_MARKER_FONT_SIZE, spawnImageZ + AXIS_MARKER_LENGTH_PIXEL);
 
-        // Mark biome centers
+        // Mark biome structures
         int markerSize = BIOME_MARKER_RADIUS_PIXEL * 2 + 1; // Total marker size including the border
-        biomeCenters.forEach((biome, centers) -> centers.forEach(center -> {
+        BIOME_STRUCTS.forEach((biomeType, centers) -> centers.forEach(center -> {
+            int biomeImageX = (center.x + BIOME_SCAN_RADIUS_IN_BLOCKS) / BLOCKS_PER_PIXEL;
+            int biomeImageZ = (center.y + BIOME_SCAN_RADIUS_IN_BLOCKS) / BLOCKS_PER_PIXEL;
+
+            // Draw lighter center
+            g2d.setColor(biomeType.color.brighter());
+            g2d.fillRect(biomeImageX - BIOME_MARKER_RADIUS_PIXEL, biomeImageZ - BIOME_MARKER_RADIUS_PIXEL,
+                    markerSize, markerSize); // Fill without the border
+
+            // Draw darker border
+            g2d.setColor(biomeType.color.darker());
+            g2d.drawRect(biomeImageX - BIOME_MARKER_RADIUS_PIXEL, biomeImageZ - BIOME_MARKER_RADIUS_PIXEL,
+                    markerSize, markerSize); // Outline the border
+        }));
+
+        // Mark biome centers
+        BIOME_CENTERS.forEach((biomeType, centers) -> centers.forEach(centerPair -> {
+            Point center = centerPair.getKey();
             int biomeImageX = (center.x + BIOME_SCAN_RADIUS_IN_BLOCKS) / BLOCKS_PER_PIXEL;
             int biomeImageZ = (center.y + BIOME_SCAN_RADIUS_IN_BLOCKS) / BLOCKS_PER_PIXEL;
 
             // Draw biome-colored center
-            Color biomeColor = BIOME_COLORS.getOrDefault(biome, Color.BLACK);
-            g2d.setColor(biomeColor);
+            g2d.setColor(biomeType.color);
             g2d.fillRect(biomeImageX - BIOME_MARKER_RADIUS_PIXEL, biomeImageZ - BIOME_MARKER_RADIUS_PIXEL,
                     markerSize, markerSize); // Fill without the border
 
@@ -144,7 +149,7 @@ public class BiomeSummary {
             String filename = String.format("biome_map(%dx%d)[%d].png",
                     worldSizeInBlocks, worldSizeInBlocks, GRID_SIZE_IN_PIXELS * BLOCKS_PER_PIXEL);
             File outputFile = new File(OUTPUT_FOLDER, filename);
-            ImageIO.write(biomeImage, "png", outputFile);
+            ImageIO.write(BIOME_IMAGE, "png", outputFile);
             System.out.println("Biome map generated: " + outputFile.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
@@ -169,17 +174,20 @@ public class BiomeSummary {
             return new Point(gridX, gridZ);
         }
     }
+
     public static void createBiomeCenters() {
-        biomeCenters = new HashMap<>();
+        BIOME_CENTERS = new HashMap<>();
+        BIOME_STRUCTS = new HashMap<>();
         // Radius and diameter are for the visited 2D array.
         int diameter = BiomeSearchGridPosition.RADIUS * 2 + 1;
         boolean[][] visited = new boolean[diameter][diameter];
 
+        // get biome "centers"; stepsize is the grid size in blocks
         for (int gridX = -BiomeSearchGridPosition.RADIUS; gridX <= BiomeSearchGridPosition.RADIUS; gridX ++) {
             for (int gridZ = -BiomeSearchGridPosition.RADIUS; gridZ <= BiomeSearchGridPosition.RADIUS; gridZ ++) {
                 BiomeSearchGridPosition currGridPos = new BiomeSearchGridPosition(gridX, gridZ);
-                Biome biome = getBiome(currGridPos.getBlockX(), currGridPos.getBlockZ());
-                if (!visited[currGridPos.getIndexX()][currGridPos.getIndexZ()] && biome != Biome.FOREST) {
+                WorldHelper.BiomeType biomeType = getBiomeType(currGridPos.getBlockX(), currGridPos.getBlockZ());
+                if (!visited[currGridPos.getIndexX()][currGridPos.getIndexZ()] && biomeType != WorldHelper.BiomeType.NORMAL) {
                     List<Point> region = new ArrayList<>();
                     Queue<Point> queue = new LinkedList<>();
                     queue.offer(currGridPos.toPoint());
@@ -193,7 +201,7 @@ public class BiomeSummary {
                             for (int dz = -1; dz <= 1; dz++) {
                                 BiomeSearchGridPosition newGridPos = new BiomeSearchGridPosition(current.x + dx, current.y + dz);
                                 if (newGridPos.isWithinBounds()
-                                        && getBiome(newGridPos.getBlockX(), newGridPos.getBlockZ()) == biome
+                                        && getBiomeType(newGridPos.getBlockX(), newGridPos.getBlockZ()) == biomeType
                                         && !visited[newGridPos.getIndexX()][newGridPos.getIndexZ()]) {
                                     queue.offer(newGridPos.toPoint());
                                     visited[newGridPos.getIndexX()][newGridPos.getIndexZ()] = true;
@@ -204,9 +212,22 @@ public class BiomeSummary {
 
                     if (region.size() * BLOCKS_PER_PIXEL * BLOCKS_PER_PIXEL >= MINIMUM_LABELED_BIOME_AREA_BLOCKS) {
                         Point centralPoint = findCentralPoint(region);
-                        biomeCenters.computeIfAbsent(biome, k -> new ArrayList<>())
-                                .add(new Point(centralPoint.x * BLOCKS_PER_PIXEL, centralPoint.y * BLOCKS_PER_PIXEL));
+                        Point ptBlock = new Point(centralPoint.x * BLOCKS_PER_PIXEL, centralPoint.y * BLOCKS_PER_PIXEL);
+                        BIOME_CENTERS.computeIfAbsent(biomeType, k -> new ArrayList<>())
+                                .add(new AbstractMap.SimpleImmutableEntry<>(ptBlock, region.size()));
                     }
+                }
+            }
+        }
+
+        // get biome structure spawn location; granularity should be minecraft chunk (16 blocks)
+        int chunksRad = BIOME_SCAN_RADIUS_IN_BLOCKS / 16;
+        for (int chunkX = -chunksRad; chunkX <= chunksRad; chunkX ++) {
+            for (int chunkZ = -chunksRad; chunkZ <= chunksRad; chunkZ ++) {
+                OverworldBiomeGenerator.BiomeFeature biomeFeature = getBiomeFeature(chunkX, chunkZ);
+                if (StructurePopulatorBiomeCenter.shouldGenerateStructure(biomeFeature, chunkX, chunkZ)) {
+                    BIOME_STRUCTS.computeIfAbsent(biomeFeature.evaluatedBiome, k -> new ArrayList<>())
+                            .add(new Point((chunkX << 4) + 8, (chunkZ << 4) + 8));
                 }
             }
         }
@@ -231,32 +252,135 @@ public class BiomeSummary {
         return centralPoint;
     }
 
-    public static void testNearestBiomeCenter(Player ply) {
-        Location loc = ply.getLocation();
-        Bukkit.broadcastMessage("Current Location: " + loc);
-        for (Biome b : biomeCenters.keySet()) {
-            Location center = findClosestBiomeCenter(loc, b);
-            Bukkit.broadcastMessage("Biome: " + b + ", closest center: " + center);
+    // utility function - find nearest biome centers for the player
+    @Nullable
+    public static void findClosestBiomeCenters(Player ply) {
+        Location origin = ply.getLocation();
+
+        for (WorldHelper.BiomeType targetBiome : BIOME_CENTERS.keySet()) {
+            // PQ holds the original center entries: <Point, Integer (Size)>
+            PriorityQueue<Map.Entry<Point, Integer>> topCenters = new PriorityQueue<>(
+                    3,
+                    // we want the LARGEST d^2 at the top (min-heap).
+                    (entryA, entryB) -> {
+                        // calculate d^2 for entry A
+                        Point centerA = entryA.getKey();
+                        double distanceSquaredA = origin.distanceSquared(
+                                new Location(origin.getWorld(), centerA.x, origin.getY(), centerA.y)
+                        );
+
+                        // calculate d^2 for entry B
+                        Point centerB = entryB.getKey();
+                        double distanceSquaredB = origin.distanceSquared(
+                                new Location(origin.getWorld(), centerB.x, origin.getY(), centerB.y)
+                        );
+
+                        // comparator returns 0, positive, or negative based on the comparison of distances.
+                        // reverse the order (B vs A) so the LARGEST distance is at the peek (min-heap root).
+                        return Double.compare(distanceSquaredB, distanceSquaredA);
+                    }
+            );
+
+            List<Map.Entry<Point, Integer>> centers = BIOME_CENTERS.get(targetBiome);
+            for (Map.Entry<Point, Integer> centerPair : centers) {
+                Point center = centerPair.getKey();
+                double distanceSquared = origin.distanceSquared(new Location(origin.getWorld(), center.x, origin.getY(), center.y));
+
+                // if the list has fewer than 3 points, add the current center.
+                if (topCenters.size() < 3) {
+                    topCenters.add(centerPair);
+                } else {
+                    // peek returns the FARTHEST point currently in the list
+                    Point farthestCenter = topCenters.peek().getKey();
+                    double farthestDistanceSquared = origin.distanceSquared(
+                            new Location(origin.getWorld(), farthestCenter.x, origin.getY(), farthestCenter.y)
+                    );
+
+                    // if the current center is CLOSER than the FARTHEST center in the list, replace it.
+                    if (distanceSquared < farthestDistanceSquared) {
+                        topCenters.poll(); // Remove the current farthest point
+                        topCenters.add(centerPair); // Add the new, closer point
+                    }
+                }
+            }
+
+            // convert PriorityQueue to a List and sort it explicitly by distance (closest first) for printing
+            List<Map.Entry<Point, Integer>> sortedCenters = new ArrayList<>();
+            while (!topCenters.isEmpty()) {
+                sortedCenters.add(0, topCenters.poll()); // Add to the front to reverse order (closest first)
+            }
+
+            // print the results
+            StringBuilder msgBuilder = new StringBuilder();
+            msgBuilder.append(String.format("§#%02x%02x%02x", targetBiome.color.getRed(), targetBiome.color.getGreen(), targetBiome.color.getBlue()));
+            msgBuilder.append("[");
+            msgBuilder.append(targetBiome.displayName);
+            msgBuilder.append("] ");
+
+            for (int i = 0; i < sortedCenters.size(); i++) {
+                Map.Entry<Point, Integer> entry = sortedCenters.get(i);
+                Point center = entry.getKey();
+
+                msgBuilder.append("(");
+                msgBuilder.append(center.x);
+                msgBuilder.append(",");
+                msgBuilder.append(center.y);
+                msgBuilder.append(")[规模: ");
+                msgBuilder.append(entry.getValue());
+                msgBuilder.append("]");
+
+                if (i < sortedCenters.size() - 1) {
+                    msgBuilder.append(" ");
+                }
+            }
+
+            ply.sendMessage(msgBuilder.toString());
         }
     }
+
+    /**
+     * Finds the closest biome structure point of the player's current biome type.
+     * @param ply The player.
+     */
     @Nullable
-    public static Location findClosestBiomeCenter(Location origin, Biome targetBiome) {
-        List<Point> centers = biomeCenters.get(targetBiome);
-        if (centers == null || centers.isEmpty()) {
-            return null; // No centers found for this biome
+    public static void findClosestBiomeStructure(Player ply) {
+        Location origin = ply.getLocation();
+
+        // get the player's current biome type
+        WorldHelper.BiomeType playerBiome = getBiomeType(origin.getBlockX(), origin.getBlockZ());
+
+        // check if any structures are tracked for this biome
+        if (!BIOME_STRUCTS.containsKey(playerBiome)) {
+            ply.sendMessage(String.format("§e%s 生物群系不会生成特殊结构", playerBiome.displayName));
+            return;
         }
 
-        Point closestCenter = null;
+        List<Point> structures = BIOME_STRUCTS.get(playerBiome);
+        // find the single closest structure
+        Point closestStructure = null;
         double minDistanceSquared = Double.MAX_VALUE;
 
-        for (Point center : centers) {
-            double distanceSquared = origin.distanceSquared(new Location(origin.getWorld(), center.x, origin.getY(), center.y));
+        for (Point structure : structures) {
+            double distanceSquared = origin.distanceSquared(
+                    new Location(origin.getWorld(), structure.x, origin.getY(), structure.y)
+            );
+
             if (distanceSquared < minDistanceSquared) {
                 minDistanceSquared = distanceSquared;
-                closestCenter = center;
+                closestStructure = structure;
             }
         }
 
-        return new Location(origin.getWorld(), closestCenter.x, origin.getY(), closestCenter.y);
+        // print the result
+        if (closestStructure != null) {
+            ply.sendMessage(String.format(
+                    "§a%s 的最近结构位置: 坐标 (%d, %d)",
+                    playerBiome.displayName,
+                    closestStructure.x,
+                    closestStructure.y
+            ));
+        } else {
+            ply.sendMessage(String.format("§c未能找到 %s 的最近结构点", playerBiome.displayName));
+        }
     }
 }

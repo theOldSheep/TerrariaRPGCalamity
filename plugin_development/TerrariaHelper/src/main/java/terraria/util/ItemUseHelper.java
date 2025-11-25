@@ -28,6 +28,7 @@ import terraria.entity.minion.MinionSlime;
 import terraria.event.TerrariaWeaponSwingEvent;
 import terraria.gameplay.EventAndTime;
 import terraria.gameplay.Setting;
+import terraria.worldgen.overworld.BiomeSummary;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -235,6 +236,21 @@ public class ItemUseHelper {
     }
     protected static boolean playerUseMiscellaneous(Player ply, String itemName) {
         switch (itemName) {
+            case "生物群系指南针": {
+                BiomeSummary.findClosestBiomeCenters(ply);
+                applyCD(ply, 100);
+                return true;
+            }
+            case "建筑物指南针": {
+                BiomeSummary.findClosestBiomeStructure(ply);
+                applyCD(ply, 100);
+                return true;
+            }
+            case "宇宙之光": {
+                EventAndTime.switchFastForward();
+                applyCD(ply, 30);
+                return true;
+            }
             case "钱币槽": {
                 ply.openInventory(PlayerHelper.getInventory(ply, "piggyBank"));
                 return true;

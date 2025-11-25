@@ -127,8 +127,11 @@ public class EventAndTime {
         }
     }
     // time, starts at 8:15 AM when server starts.
-    public static final int TIME_CHANGE_PER_ITERATION = 2;
+    public static final int DEFAULT_TIME_CHANGE_PER_ITERATION = 2;
+    public static int TIME_CHANGE_PER_ITERATION = 2;
     public static long currentTime = 2250;
+    public static boolean fastForward = false;
+    public static boolean shouldSyncTime = false; // single-use to overwrite world time with currentTime
     // event
     public static Events currentEvent = Events.NONE, reservedEvent = Events.NONE;
     public static int reservedEventCountdown = 0, NPCRespawnCountdown = 1000;
@@ -229,9 +232,19 @@ public class EventAndTime {
                     Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_CAVERN),
                     Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_UNDERWORLD) };
             World surfaceWorld = worldsToHandle[0];
-            // time mechanic
-            if (surfaceWorld != null)
-                currentTime = surfaceWorld.getTime();
+            // time multiplier - reset to false when boss or event is active
+            if (!BossHelper.bossMap.isEmpty() || currentEvent != Events.NONE) {
+                fastForward = false;
+            }
+            // time change
+            TIME_CHANGE_PER_ITERATION = DEFAULT_TIME_CHANGE_PER_ITERATION * (fastForward ? 10 : 1);
+            if (shouldSyncTime) {
+                if (surfaceWorld != null) {
+                    currentTime = surfaceWorld.getTime();
+                }
+            } else {
+                shouldSyncTime = true;
+            }
             currentTime += TIME_CHANGE_PER_ITERATION;
             for (World currWorld : worldsToHandle)
                 if (currWorld != null) {
@@ -240,6 +253,18 @@ public class EventAndTime {
                 }
             // end events when appropriate
             handleEventTermination();
+            // enter day/night triggers; placed between end event and tick event for consecutive events to be possible
+            {
+                int currTimePhase = (int) (currentTime % 24000);
+                // upon entering night
+                if (currTimePhase >= 13500 && currTimePhase - 13500 < TIME_CHANGE_PER_ITERATION) {
+                    nightBeginTrigger();
+                }
+                // upon entering day
+                if (currTimePhase >= 22500 && currTimePhase - 22500 < TIME_CHANGE_PER_ITERATION) {
+                    dayBeginTrigger();
+                }
+            }
             // tick event
             tickEvent();
             // tick boss rush
@@ -263,7 +288,7 @@ public class EventAndTime {
                 tickFallenStars(surfaceWorld);
                 // NPC respawn
                 if (WorldHelper.isDayTime(surfaceWorld)) {
-                    NPCRespawnCountdown -= delay;
+                    NPCRespawnCountdown -= TIME_CHANGE_PER_ITERATION;
                     if (NPCRespawnCountdown < 0) {
                         for (NPCHelper.NPCType npcType : NPCHelper.NPCType.values()) {
                             // if NPC is alive, move on
@@ -289,6 +314,9 @@ public class EventAndTime {
                 }
             }
         }, 0, delay);
+    }
+    public static void switchFastForward() {
+        fastForward = !fastForward;
     }
     // boss rush
     public static boolean isBossRushActive() {
@@ -450,6 +478,7 @@ public class EventAndTime {
         }
     }
     protected static void tickEvent() {
+        tickReservedEvent();
         // update progress bar
         if (eventProgressBar != null) {
             double progressCurr = eventInfo.getOrDefault(EventInfoMapKeys.INVADE_PROGRESS, 0d);
@@ -466,21 +495,6 @@ public class EventAndTime {
         }
         // tick event and new event if none exists
         switch (currentEvent) {
-            // no event is currently in place.
-            case NONE: {
-                // initialize some events at day/night
-                switch ((int) (currentTime % 24000)) {
-                    case 13500:
-                        initNightEvent();
-                        break;
-                    case 22500:
-                        initDayEvent();
-                        break;
-                }
-                // handle reserved events
-                prepareReservedEvent();
-                break;
-            }
             // frost/pumpkin moon, spawn boss
             case FROST_MOON:
             case PUMPKIN_MOON: {
@@ -508,8 +522,7 @@ public class EventAndTime {
             }
         }
     }
-
-    protected static void prepareReservedEvent() {
+    protected static void tickReservedEvent() {
         if (reservedEvent == Events.NONE)
             return;
         reservedEventCountdown -= TIME_CHANGE_PER_ITERATION;
@@ -534,8 +547,10 @@ public class EventAndTime {
                 eventProgressBar.setVisible(true);
         }
     }
-    protected static void initDayEvent() {
-        // reset fishing
+    protected static void dayBeginTrigger() {
+        // reset fast-forward
+        fastForward = false;
+        // reset fishing quest
         questFish = QuestFish.randomFish();
         questFishSubmitted = new HashSet<>();
         // slime rain
@@ -562,7 +577,9 @@ public class EventAndTime {
             initializeEvent(Events.SOLAR_ECLIPSE);
         }
     }
-    protected static void initNightEvent() {
+    protected static void nightBeginTrigger() {
+        // reset fast-forward
+        fastForward = false;
         // blood moon
         if (Math.random() < 0.05) {
             initializeEvent(Events.BLOOD_MOON);

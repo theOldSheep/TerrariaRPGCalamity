@@ -17,7 +17,8 @@ public class OrePopulator extends BlockPopulator {
     public enum OreMaterial {
         // vanilla
         COPPER(Material.COAL_ORE), IRON(Material.IRON_ORE), SILVER(Material.LAPIS_ORE), GOLD(Material.GOLD_ORE),
-        METEORITE(Material.RED_GLAZED_TERRACOTTA), HELLSTONE(Material.MAGMA), LIFE_CRYSTAL(Material.EMERALD_ORE),
+        DIAMOND(Material.WHITE_GLAZED_TERRACOTTA), LIFE_CRYSTAL(Material.EMERALD_ORE),
+        METEORITE(Material.RED_GLAZED_TERRACOTTA), HELLSTONE(Material.MAGMA),
         COBALT(Material.LAPIS_BLOCK), MYTHRIL(Material.EMERALD_BLOCK), ADAMANTITE(Material.REDSTONE_ORE),
         CHLOROPHYTE(Material.MOSSY_COBBLESTONE),
         // calamity
@@ -136,6 +137,9 @@ public class OrePopulator extends BlockPopulator {
     }
     void generateGold(World wld, Random rdm, Chunk chunk) {
         generateGenericOre(wld, rdm, chunk, DEEP_CAVERN, 64, OreMaterial.GOLD, 4);
+    }
+    void generateDiamond(World wld, Random rdm, Chunk chunk) {
+        generateGenericOre(wld, rdm, chunk, DEEP_CAVERN, 56, OreMaterial.DIAMOND, 1);
     }
     void generateMeteorite(World wld, Random rdm, Chunk chunk) {
         if (yOffset != 0) return; // only surface world get this ore
@@ -259,6 +263,7 @@ public class OrePopulator extends BlockPopulator {
             generateIron(wld, rdm, chunk);
             generateSilver(wld, rdm, chunk);
             generateGold(wld, rdm, chunk);
+            generateDiamond(wld, rdm, chunk);
             generateMeteorite(wld, rdm, chunk);
             generateCobalt(wld, rdm, chunk);
             generateMythril(wld, rdm, chunk);

@@ -547,7 +547,7 @@ ANVIL:
     resultItem: 陨星光剑
     requireItem:
     - 陨星锭:18
-    - 钻石:10
+    - 钻石:5
     recipeCategory: WEAPON_MELEE
   '31':
     requireLevel: 1
@@ -572,8 +572,8 @@ ANVIL:
     requireLevel: 1
     resultItem: 钻石法杖
     requireItem:
-    - 金锭:20
-    - 钻石:10
+    - 金锭:10
+    - 钻石:5
     recipeCategory: WEAPON_MAGIC
   '35':
     requireLevel: 1
@@ -3887,6 +3887,33 @@ WORKBENCH:
     requireItem:
     - 木材:8
     - 石头:2
+    recipeCategory: TOOL
+  '1_1':
+    requireLevel: 1
+    resultItem: 生物群系指南针
+    requireItem:
+    - 钻石
+    - 坠星
+    - 橡实:4
+    - 太阳花:4
+    recipeCategory: TOOL
+  '1_2':
+    requireLevel: 1
+    resultItem: 建筑物指南针
+    requireItem:
+    - 钻石
+    - 坠星
+    - 血珠:4
+    - 腐烂物质:4
+    recipeCategory: TOOL
+  '1_3':
+    requireLevel: 1
+    resultItem: 宇宙之光
+    requireItem:
+    - 火把
+    - 黑曜石:2
+    - 日光精华:2
+    - 暗影之魂:4
     recipeCategory: TOOL
   '2':
     requireLevel: 1
