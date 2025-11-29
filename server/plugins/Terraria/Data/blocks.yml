@@ -208,7 +208,7 @@ GOLD_ORE:
 WHITE_GLAZED_TERRACOTTA:
   totalProgress: 150
   dropItem:
-  - 钻石:1:2
+  - 钻石:2:3
 RED_GLAZED_TERRACOTTA:
   progress: 世界吞噬者
   powerPickaxe: 50
