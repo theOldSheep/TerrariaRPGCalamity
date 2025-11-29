@@ -1,0 +1,12 @@
+# Blender 4.5.4 LTS MTL File: 'None'
+# www.blender.org
+
+newmtl m_01c8505f-09e9-a90e-9b18-87c40fc875e1
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd tripo_image_dfeb21d9-5b2f-4b6f-9fc3-37952c0f729c_0.jpg.png
