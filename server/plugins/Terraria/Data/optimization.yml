@@ -5,7 +5,8 @@ worldGen:
     seaLevel: 90
     riverDepth: 25
     lakeDepth: 30
-    plateauHeight: 40
+    plateauHeight: 50
+    mountainHeight: 80
     nearbyBiomeSampleRadius: 25
     caveOctaves: 5
     terrainOctaves: 8

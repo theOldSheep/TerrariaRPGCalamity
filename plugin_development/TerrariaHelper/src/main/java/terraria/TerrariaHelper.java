@@ -233,8 +233,6 @@ public class TerrariaHelper extends JavaPlugin {
     @Override
     public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
         Bukkit.broadcastMessage(worldName);
-        if (worldName.equalsIgnoreCase("test"))
-            return OverworldChunkGenerator.getInstance();
         if (worldName.equalsIgnoreCase(Constants.WORLD_NAME_SURFACE))
             return OverworldChunkGenerator.getInstance();
         if (worldName.equalsIgnoreCase(Constants.WORLD_NAME_CAVERN))

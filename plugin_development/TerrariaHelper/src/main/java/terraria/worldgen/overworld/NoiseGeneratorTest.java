@@ -20,19 +20,19 @@ public class NoiseGeneratorTest implements CommandExecutor {
             if (args.length >= 1) {
                 double toFind = Double.parseDouble(args[0]);
                 player.sendMessage("The noise you want to find is: " + toFind);
-                int xStart = new Random().nextInt(100000);
-                int zStart = new Random().nextInt(100000);
-                for (int i = 0; i > -200000; i -= 10) {
-                    for (int j = 0; j > -200000; j -= 10) {
+                int xStart = new Random().nextInt(25000);
+                int zStart = new Random().nextInt(25000);
+                for (int i = 0; i > -50000; i -= 50) {
+                    for (int j = 0; j > -50000; j -= 50) {
                         int blockX = xStart + i, blockZ = zStart + j;
                         double noise;
                         switch (args[1]) {
                             case "-2":
-                                noise = OverworldChunkGenerator.riverGenerator.noise(blockX, blockZ,
+                                noise = OverworldChunkGenerator.RIVER_GENERATOR.noise(blockX, blockZ,
                                         2, 0.5, false);
                                 break;
                             case "-1":
-                                noise = OverworldChunkGenerator.lakeGenerator.noise(blockX, blockZ,
+                                noise = OverworldChunkGenerator.LAKE_GENERATOR.noise(blockX, blockZ,
                                         2, 0.5, false);
                                 break;
                             default:
@@ -53,9 +53,9 @@ public class NoiseGeneratorTest implements CommandExecutor {
                 player.sendMessage("Did not find the noise you wanted to go to :(");
                 int blockX = player.getLocation().getBlockX(), blockZ = player.getLocation().getBlockZ();
                 player.sendMessage("river: " +
-                        OverworldChunkGenerator.riverGenerator.noise(blockX, blockZ, 2, 0.5, false));
+                        OverworldChunkGenerator.RIVER_GENERATOR.noise(blockX, blockZ, 2, 0.5, false));
                 player.sendMessage("lake: " +
-                        OverworldChunkGenerator.lakeGenerator.noise(blockX, blockZ, 2, 0.5, false));
+                        OverworldChunkGenerator.LAKE_GENERATOR.noise(blockX, blockZ, 2, 0.5, false));
                 player.sendMessage("features: " +
                         Arrays.toString(OverworldBiomeGenerator.getBiomeFeature(blockX, blockZ).features));
             }

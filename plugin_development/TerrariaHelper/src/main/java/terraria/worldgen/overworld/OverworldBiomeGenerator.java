@@ -5,7 +5,6 @@ import org.bukkit.util.noise.PerlinOctaveGenerator;
 import terraria.TerrariaHelper;
 import terraria.util.WorldHelper;
 
-import java.awt.*;
 import java.util.*;
 
 import static terraria.worldgen.overworld.OverworldChunkGenerator.OCTAVES_TERRAIN;
@@ -23,10 +22,11 @@ public class OverworldBiomeGenerator {
         public static final int
                 // large mag. negative: sulphurous ocean, large mag. positive: ocean
                 CONTINENTALNESS = 0,
-                // has to do with desert identification
+                // has to do with special biomes identification
                 TEMPERATURE = 1,
                 HUMIDITY = 2,
                 WEIRDNESS = 3,
+                // determines the landscape's height
                 EROSION = 4,
                 TERRAIN_H = 5;
         public final Double[] features = new Double[6];
@@ -43,7 +43,7 @@ public class OverworldBiomeGenerator {
             features[HUMIDITY] =            noiseHum .noise(x, z, 2, 0.5) * 2;
             features[WEIRDNESS] =           noiseWrd .noise(x, z, 2, 0.5) * 1.5;
             features[EROSION] =             noiseEros.noise(x, z, 2, 0.5);
-            features[TERRAIN_H] =           noiseTrH .noise(x, z, 2, 0.5);
+            features[TERRAIN_H] =           noiseTrH.noise(x, z, 2, 0.5);
             // spawn protection: feature tweak
             if (distFromSpawn < SPAWN_LOC_PROTECTION_RADIUS) {
                 features[CONTINENTALNESS] *= distFromSpawnFactor;
