@@ -8,15 +8,15 @@ import terraria.util.WorldHelper;
 import java.util.*;
 
 import static terraria.worldgen.overworld.OverworldChunkGenerator.OCTAVES_TERRAIN;
+import static terraria.worldgen.overworld.OverworldChunkGenerator.SCALE_TERRAIN;
 
 public class OverworldBiomeGenerator {
     static final int
             BIOME_FEATURE_CACHE_SIZE = 500000,
-            SPAWN_LOC_PROTECTION_RADIUS = 750;
+            SPAWN_LOC_PROTECTION_RADIUS = 250;
     static final long MASK_LAST_HALF = 0xFFFFL;
 
-    static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseHum, noiseWrd,
-            noiseEros, noiseTrH;
+    static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseHum, noiseWrd, noiseTrH;
 
     public static class BiomeFeature {
         public static final int
@@ -27,29 +27,28 @@ public class OverworldBiomeGenerator {
                 HUMIDITY = 2,
                 WEIRDNESS = 3,
                 // determines the landscape's height
-                EROSION = 4,
-                TERRAIN_H = 5;
+                TERRAIN_H = 4;
         public final Double[] features = new Double[6];
         public final double biomeSignificance;
         public final WorldHelper.BiomeType evaluatedBiome;
 
         public BiomeFeature(int x, int z) {
-            // IMPORTANT: prevent overflow from integer > 32768.
-            double distFromSpawn = Math.sqrt((double) x * (double) x + (double) z * (double) z);
-            double distFromSpawnFactor = distFromSpawn / SPAWN_LOC_PROTECTION_RADIUS;
-
             features[CONTINENTALNESS] =     noiseCont.noise(x, z, 2, 0.5) * 1.25;
             features[TEMPERATURE] =         noiseTemp.noise(x, z, 2, 0.5) * 2;
             features[HUMIDITY] =            noiseHum .noise(x, z, 2, 0.5) * 2;
             features[WEIRDNESS] =           noiseWrd .noise(x, z, 2, 0.5) * 1.5;
-            features[EROSION] =             noiseEros.noise(x, z, 2, 0.5);
-            features[TERRAIN_H] =           noiseTrH.noise(x, z, 2, 0.5);
+            features[TERRAIN_H] =           noiseTrH .noise(x, z, 2, 0.5);
             // spawn protection: feature tweak
-            if (distFromSpawn < SPAWN_LOC_PROTECTION_RADIUS) {
-                features[CONTINENTALNESS] *= distFromSpawnFactor;
-                features[TEMPERATURE] *= distFromSpawnFactor;
-                features[HUMIDITY] *= distFromSpawnFactor;
-                features[WEIRDNESS] *= distFromSpawnFactor;
+            if (Math.abs(x) < SPAWN_LOC_PROTECTION_RADIUS && Math.abs(z) < SPAWN_LOC_PROTECTION_RADIUS) {
+                // legacy: prevent overflow from integer > 32768.
+                double distFromSpawn = Math.sqrt((double) x * (double) x + (double) z * (double) z);
+                double distFromSpawnFactor = distFromSpawn / SPAWN_LOC_PROTECTION_RADIUS;
+                if (distFromSpawn < SPAWN_LOC_PROTECTION_RADIUS) {
+                    features[CONTINENTALNESS] *= distFromSpawnFactor;
+                    features[TEMPERATURE] *= distFromSpawnFactor;
+                    features[HUMIDITY] *= distFromSpawnFactor;
+                    features[WEIRDNESS] *= distFromSpawnFactor;
+                }
             }
             // evaluate the biome for this noise
             double tmp = features[TEMPERATURE], hum = features[HUMIDITY],
@@ -130,15 +129,12 @@ public class OverworldBiomeGenerator {
         // weirdness
         noiseWrd =  new PerlinOctaveGenerator(rdm.nextLong(), 1);
         noiseWrd.setScale(0.001);
-        // erosion
-        noiseEros = new PerlinOctaveGenerator(rdm.nextLong(), 4);
-        noiseEros.setScale(0.0025);
         // terrain height
         noiseTrH = new PerlinOctaveGenerator(rdm.nextLong(), OCTAVES_TERRAIN);
-        noiseTrH.setScale(0.001);
+        noiseTrH.setScale(SCALE_TERRAIN);
         // update continentalness finally, so there is less chance things get broken - setup is triggered by continentalness.
         noiseCont = new PerlinOctaveGenerator(rdm.nextLong(), 3);
-        noiseCont.setScale(0.0005);
+        noiseCont.setScale(0.0002);
     }
 
     // get the key in the biome cache
@@ -220,9 +216,9 @@ public class OverworldBiomeGenerator {
         return result;
     }
     public static Biome getBiome(int blockX, int blockZ) {
-        return getBiomeFromType( getBiomeFeature(blockX, blockZ).evaluatedBiome );
+        return getBiomeFromType( getBiomeType(blockX, blockZ) );
     }
     public static WorldHelper.BiomeType getBiomeType(int blockX, int blockZ) {
-        return WorldHelper.BiomeType.getBiome(getBiome(blockX, blockZ));
+        return getBiomeFeature(blockX, blockZ).evaluatedBiome;
     }
 }

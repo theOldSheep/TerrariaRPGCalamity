@@ -27,7 +27,7 @@ public class TerrariaNPC extends EntityVillager {
         super(world);
         this.NPCType = type;
         Location spawnLoc = world.getWorld().getHighestBlockAt((int) (Math.random() * 32 - 16), (int) (Math.random() * 32 - 16)).getLocation();
-        setLocation(spawnLoc.getX(), spawnLoc.getY(), spawnLoc.getZ(), 0, 0);
+        setLocation(spawnLoc.getX(), 101, spawnLoc.getZ(), 0, 0);
         initTypeInfo();
     }
 
@@ -43,9 +43,6 @@ public class TerrariaNPC extends EntityVillager {
                 (enemy) -> DamageHelper.checkCanDamage( ((EntityLiving) enemy).getBukkitEntity(), this.getBukkitEntity(), true),
                 9.0F, 0.5, 0.75));
         this.goalSelector.a(3, new PathfinderGoalRandomStrollLand(this, 0.6));
-        this.goalSelector.a(4, new PathfinderGoalMoveIndoors(this));
-        this.goalSelector.a(5, new PathfinderGoalRestrictOpenDoor(this));
-        this.goalSelector.a(6, new PathfinderGoalOpenDoor(this, true));
         this.goalSelector.a(8, new PathfinderGoalInteractVillagers(this));
         this.goalSelector.a(9, new PathfinderGoalLookAtPlayer(this, EntityInsentient.class, 12.0F));
         this.goalSelector.a(11, new PathfinderGoalRandomLookaround(this));

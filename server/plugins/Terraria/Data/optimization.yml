@@ -1,16 +1,19 @@
 worldGen:
   params:
-    seed: 876239938
+    seed: 876239938klj
     landHeight: 100
     seaLevel: 90
     riverDepth: 25
-    lakeDepth: 30
-    plateauHeight: 50
+    lakeDepth: 15
+    rollingHillsHeight: 40
     mountainHeight: 80
     nearbyBiomeSampleRadius: 25
     caveOctaves: 5
-    terrainOctaves: 8
-    railYCoordinate: 125
+    terrainOctaves: 4
+    stoneOctaves: 1
+    riverOctaves: 4
+    terrainFreq: 0.02
+    railYCoordinate: 150
     surfaceChestRate: 0.01
     cavernChestRate: 0.025
   opt:
@@ -26,7 +29,7 @@ worldGen:
     spawnMarkerRadiusPixel: 3
     axisMarkerLengthPixel: 25
     axisMarkerFontSize: 15
-    biomeScanRadiusInBlocks: 5000
+    biomeScanRadiusInBlocks: 10000
     minLabeledBiomeAreaPixels: 50
     gridSizeInPixels: 50
     outputFolder: worldGenDebug

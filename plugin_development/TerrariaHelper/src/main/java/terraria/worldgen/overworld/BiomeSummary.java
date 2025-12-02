@@ -1,7 +1,5 @@
 package terraria.worldgen.overworld;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
@@ -18,7 +16,6 @@ import java.util.*;
 import java.util.List;
 import java.util.Queue;
 
-import static terraria.worldgen.overworld.OverworldBiomeGenerator.biomeCache;
 import static terraria.worldgen.overworld.OverworldBiomeGenerator.getBiomeType;
 import static terraria.worldgen.overworld.StructurePopulatorBiomeCenter.getBiomeFeature;
 

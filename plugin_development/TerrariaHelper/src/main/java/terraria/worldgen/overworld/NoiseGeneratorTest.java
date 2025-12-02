@@ -27,12 +27,8 @@ public class NoiseGeneratorTest implements CommandExecutor {
                         int blockX = xStart + i, blockZ = zStart + j;
                         double noise;
                         switch (args[1]) {
-                            case "-2":
-                                noise = OverworldChunkGenerator.RIVER_GENERATOR.noise(blockX, blockZ,
-                                        2, 0.5, false);
-                                break;
                             case "-1":
-                                noise = OverworldChunkGenerator.LAKE_GENERATOR.noise(blockX, blockZ,
+                                noise = OverworldChunkGenerator.RIVER_NOISE_A.noise(blockX, blockZ,
                                         2, 0.5, false);
                                 break;
                             default:
@@ -53,9 +49,7 @@ public class NoiseGeneratorTest implements CommandExecutor {
                 player.sendMessage("Did not find the noise you wanted to go to :(");
                 int blockX = player.getLocation().getBlockX(), blockZ = player.getLocation().getBlockZ();
                 player.sendMessage("river: " +
-                        OverworldChunkGenerator.RIVER_GENERATOR.noise(blockX, blockZ, 2, 0.5, false));
-                player.sendMessage("lake: " +
-                        OverworldChunkGenerator.LAKE_GENERATOR.noise(blockX, blockZ, 2, 0.5, false));
+                        OverworldChunkGenerator.RIVER_NOISE_A.noise(blockX, blockZ, 2, 0.5, false));
                 player.sendMessage("features: " +
                         Arrays.toString(OverworldBiomeGenerator.getBiomeFeature(blockX, blockZ).features));
             }

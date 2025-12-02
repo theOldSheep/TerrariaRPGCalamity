@@ -229,8 +229,8 @@ public class PlayerHelper {
         if (ply.getBedSpawnLocation() != null) {
             return ply.getBedSpawnLocation();
         }
-        return Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE)
-                .getHighestBlockAt(0, 0).getLocation().add(0, 1, 0);
+        return new Location(Bukkit.getWorld(TerrariaHelper.Constants.WORLD_NAME_SURFACE),
+                0, 101, 0);
     }
     // gets the accurate location (when mounted, ply.getLocation() may be inaccurate)
     public static Location getAccurateLocation(Player ply) {
