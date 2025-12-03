@@ -1,5 +1,6 @@
 package terraria.worldgen.overworld;
 
+import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
 import org.bukkit.util.noise.PerlinOctaveGenerator;
 import terraria.TerrariaHelper;
@@ -16,7 +17,7 @@ public class OverworldBiomeGenerator {
             SPAWN_LOC_PROTECTION_RADIUS = 250;
     static final long MASK_LAST_HALF = 0xFFFFL;
 
-    static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseHum, noiseWrd, noiseTrH;
+    static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseHum, noiseWrd, noiseTrH, noiseEros;
 
     public static class BiomeFeature {
         public static final int
@@ -26,8 +27,9 @@ public class OverworldBiomeGenerator {
                 TEMPERATURE = 1,
                 HUMIDITY = 2,
                 WEIRDNESS = 3,
-                // determines the landscape's height
-                TERRAIN_H = 4;
+                // landscape noise
+                TERRAIN_H = 4,
+                EROSION = 5;
         public final Double[] features = new Double[6];
         public final double biomeSignificance;
         public final WorldHelper.BiomeType evaluatedBiome;
@@ -38,6 +40,7 @@ public class OverworldBiomeGenerator {
             features[HUMIDITY] =            noiseHum .noise(x, z, 2, 0.5) * 2;
             features[WEIRDNESS] =           noiseWrd .noise(x, z, 2, 0.5) * 1.5;
             features[TERRAIN_H] =           noiseTrH .noise(x, z, 2, 0.5);
+            features[EROSION] =             noiseEros.noise(x, z, 2, 0.5);
             // spawn protection: feature tweak
             if (Math.abs(x) < SPAWN_LOC_PROTECTION_RADIUS && Math.abs(z) < SPAWN_LOC_PROTECTION_RADIUS) {
                 // legacy: prevent overflow from integer > 32768.
@@ -132,9 +135,12 @@ public class OverworldBiomeGenerator {
         // terrain height
         noiseTrH = new PerlinOctaveGenerator(rdm.nextLong(), OCTAVES_TERRAIN);
         noiseTrH.setScale(SCALE_TERRAIN);
+        // terrain eros.
+        noiseEros = new PerlinOctaveGenerator(rdm.nextLong(), 3);
+        noiseEros.setScale(0.005);
         // update continentalness finally, so there is less chance things get broken - setup is triggered by continentalness.
         noiseCont = new PerlinOctaveGenerator(rdm.nextLong(), 3);
-        noiseCont.setScale(0.0002);
+        noiseCont.setScale(0.0003);
     }
 
     // get the key in the biome cache

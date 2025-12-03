@@ -87,7 +87,7 @@ public class RailPopulator extends BlockPopulator {
         }
 
         // "station" when both directions meet. For now, it is a super simple logic.
-        if (xDirHasRail && zDirHasRail && chunk.getX() != 0 && chunk.getZ() != 0) {
+        if (xDirHasRail && zDirHasRail && !(chunk.getX() == 0 && chunk.getZ() == 0)) {
             for (int xOffset = -1; xOffset <= 1; xOffset ++) {
                 for (int zOffset = -1; zOffset <= 1; zOffset ++) {
                     wld.getBlockAt(xDirRailCenterCoord + xOffset, RAIL_HEIGHT, zDirRailCenterCoord + zOffset).setType(Material.STONE, false);

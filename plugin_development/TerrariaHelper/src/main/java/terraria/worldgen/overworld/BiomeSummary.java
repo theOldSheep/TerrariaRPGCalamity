@@ -1,5 +1,6 @@
 package terraria.worldgen.overworld;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
@@ -15,9 +16,14 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.logging.Level;
 
 import static terraria.worldgen.overworld.OverworldBiomeGenerator.getBiomeType;
 import static terraria.worldgen.overworld.StructurePopulatorBiomeCenter.getBiomeFeature;
+import static terraria.worldgen.overworld.OverworldCaveGenerator.CAVE_DETAIL_THREADS;
 
 public class BiomeSummary {
     public static final ConfigurationSection CONFIG = TerrariaHelper.optimizationConfig.getConfigurationSection("worldGen.mapConfig");
@@ -33,6 +39,7 @@ public class BiomeSummary {
     public static final File OUTPUT_FOLDER = new File(CONFIG.getString("outputFolder", "worldGenDebug"));
 
     public static BufferedImage BIOME_IMAGE = null;
+    private static volatile WorldHelper.BiomeType[][] BIOME_TYPE_CACHE_2D = null;
     public static HashMap<WorldHelper.BiomeType, List<Map.Entry<Point, Integer>>> BIOME_CENTERS = new HashMap<>();
     public static HashMap<WorldHelper.BiomeType, List<Point>> BIOME_STRUCTS = new HashMap<>();
 
@@ -172,10 +179,26 @@ public class BiomeSummary {
         }
     }
 
+    private static void initBiomeMapCache() {
+        if (BIOME_TYPE_CACHE_2D != null) return;
+
+        int diameter = BiomeSearchGridPosition.RADIUS * 2 + 1;
+        BIOME_TYPE_CACHE_2D = new WorldHelper.BiomeType[diameter][diameter];
+
+        for (int i = -BiomeSearchGridPosition.RADIUS; i <= BiomeSearchGridPosition.RADIUS; i++) {
+            for (int j = -BiomeSearchGridPosition.RADIUS; j <= BiomeSearchGridPosition.RADIUS; j++) {
+                BiomeSearchGridPosition currGridPos = new BiomeSearchGridPosition(i, j);
+                WorldHelper.BiomeType biomeType = getBiomeType(currGridPos.getBlockX(), currGridPos.getBlockZ());
+                BIOME_TYPE_CACHE_2D[currGridPos.getIndexX()][currGridPos.getIndexZ()] = biomeType;
+            }
+        }
+    }
+
     public static void createBiomeCenters() {
         BIOME_CENTERS = new HashMap<>();
         BIOME_STRUCTS = new HashMap<>();
         // Radius and diameter are for the visited 2D array.
+        initBiomeMapCache();
         int diameter = BiomeSearchGridPosition.RADIUS * 2 + 1;
         boolean[][] visited = new boolean[diameter][diameter];
 
@@ -183,7 +206,7 @@ public class BiomeSummary {
         for (int gridX = -BiomeSearchGridPosition.RADIUS; gridX <= BiomeSearchGridPosition.RADIUS; gridX ++) {
             for (int gridZ = -BiomeSearchGridPosition.RADIUS; gridZ <= BiomeSearchGridPosition.RADIUS; gridZ ++) {
                 BiomeSearchGridPosition currGridPos = new BiomeSearchGridPosition(gridX, gridZ);
-                WorldHelper.BiomeType biomeType = getBiomeType(currGridPos.getBlockX(), currGridPos.getBlockZ());
+                WorldHelper.BiomeType biomeType = BIOME_TYPE_CACHE_2D[currGridPos.getIndexX()][currGridPos.getIndexZ()];
                 if (!visited[currGridPos.getIndexX()][currGridPos.getIndexZ()] && biomeType != WorldHelper.BiomeType.NORMAL) {
                     List<Point> region = new ArrayList<>();
                     Queue<Point> queue = new LinkedList<>();
@@ -198,7 +221,7 @@ public class BiomeSummary {
                             for (int dz = -1; dz <= 1; dz++) {
                                 BiomeSearchGridPosition newGridPos = new BiomeSearchGridPosition(current.x + dx, current.y + dz);
                                 if (newGridPos.isWithinBounds()
-                                        && getBiomeType(newGridPos.getBlockX(), newGridPos.getBlockZ()) == biomeType
+                                        && BIOME_TYPE_CACHE_2D[newGridPos.getIndexX()][newGridPos.getIndexZ()] == biomeType
                                         && !visited[newGridPos.getIndexX()][newGridPos.getIndexZ()]) {
                                     queue.offer(newGridPos.toPoint());
                                     visited[newGridPos.getIndexX()][newGridPos.getIndexZ()] = true;

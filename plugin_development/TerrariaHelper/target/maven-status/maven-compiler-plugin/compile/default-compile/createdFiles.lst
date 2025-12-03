@@ -329,6 +329,7 @@ terraria\entity\boss\postMoonLord\ceaselessVoid\DarkEnergy.class
 terraria\event\listener\DamageListener$1.class
 terraria\entity\boss\hardMode\astrumAureus\AstrumAureus$1.class
 terraria\util\NMSUtils$MobMeta.class
+terraria\worldgen\overworld\OverworldNoiseProviders.class
 terraria\entity\boss\hardMode\dukeFishron\DukeFishron$1.class
 terraria\entity\boss\postMoonLord\exoMechs\Thanatos$SegmentType.class
 terraria\event\listener\PlayerKeyToggleListener.class

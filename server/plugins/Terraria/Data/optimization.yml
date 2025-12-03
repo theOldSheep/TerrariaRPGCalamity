@@ -29,7 +29,7 @@ worldGen:
     spawnMarkerRadiusPixel: 3
     axisMarkerLengthPixel: 25
     axisMarkerFontSize: 15
-    biomeScanRadiusInBlocks: 10000
+    biomeScanRadiusInBlocks: 5000
     minLabeledBiomeAreaPixels: 50
     gridSizeInPixels: 50
     outputFolder: worldGenDebug

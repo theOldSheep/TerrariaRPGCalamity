@@ -11,6 +11,8 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import java.util.Arrays;
 import java.util.Random;
 
+import static terraria.worldgen.overworld.OverworldNoiseProviders.RIVER_NOISE;
+
 public class NoiseGeneratorTest implements CommandExecutor {
 
     @Override
@@ -28,7 +30,7 @@ public class NoiseGeneratorTest implements CommandExecutor {
                         double noise;
                         switch (args[1]) {
                             case "-1":
-                                noise = OverworldChunkGenerator.RIVER_NOISE_A.noise(blockX, blockZ,
+                                noise = RIVER_NOISE.noise(blockX, blockZ,
                                         2, 0.5, false);
                                 break;
                             default:
@@ -48,8 +50,7 @@ public class NoiseGeneratorTest implements CommandExecutor {
             else {
                 player.sendMessage("Did not find the noise you wanted to go to :(");
                 int blockX = player.getLocation().getBlockX(), blockZ = player.getLocation().getBlockZ();
-                player.sendMessage("river: " +
-                        OverworldChunkGenerator.RIVER_NOISE_A.noise(blockX, blockZ, 2, 0.5, false));
+                player.sendMessage("river: " + RIVER_NOISE.noise(blockX, blockZ, 2, 0.5, false));
                 player.sendMessage("features: " +
                         Arrays.toString(OverworldBiomeGenerator.getBiomeFeature(blockX, blockZ).features));
             }

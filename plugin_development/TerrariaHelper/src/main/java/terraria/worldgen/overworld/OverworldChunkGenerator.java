@@ -5,13 +5,13 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
-import org.bukkit.util.noise.PerlinOctaveGenerator;
 import terraria.TerrariaHelper;
 import terraria.util.WorldHelper;
 import terraria.worldgen.Interpolate;
-import terraria.worldgen.Interpolate.InterpolatePoint;
 
 import java.util.*;
+
+import static terraria.worldgen.overworld.OverworldNoiseProviders.*;
 
 public class OverworldChunkGenerator extends ChunkGenerator {
     // optimization & logging variables
@@ -34,8 +34,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     public static final int MOUNTAIN_HEIGHT = TerrariaHelper.optimizationConfig.getInt("worldGen.params.mountainHeight", 100);
     public static final int Y_OFFSET_OVERWORLD = 0;
     public static final int HEIGHT_SAMPLING_DIAMETER;
-    private static final double
-            HEIGHT_SAMPLE_FACTOR_SUM;
+    private static final double HEIGHT_SAMPLE_FACTOR_SUM;
     private static final double[][] HEIGHT_INFLUENCE_FACTOR;
     // initialize the mapping in which nearby heights influences the current block
     static {
@@ -58,245 +57,11 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 sum += currFactor;
         HEIGHT_SAMPLE_FACTOR_SUM = sum;
     }
-    public static PerlinOctaveGenerator RIVER_NOISE_A, RIVER_NOISE_B, STONE_VEIN_NOISE;
-    // stores: <height provider, relevance provider> pairs
-    public static ArrayList<Map.Entry<Interpolate, Interpolate>>
-            NORMAL_PROVIDERS,
-            JUNGLE_PROVIDERS,
-            ASTRAL_PROVIDERS,
-            DESERT_PROVIDERS,
-            OCEAN_PROVIDERS;
-    public static Interpolate
-            // relevance provider for ocean
-            BEACH_RELEVANCE_PROVIDER, OCEAN_RELEVANCE_PROVIDER, DEEP_OCEAN_RELEVANCE_PROVIDER,
-            // relevance provider for the rest
-            PLAINS_RELEVANCE_PROVIDER, ROLLING_HILLS_RELEVANCE_PROVIDER, MOUNTAINS_RELEVANCE_PROVIDER,
-            // for normal biomes
-            PLAINS_HEIGHT_PROVIDER,
-            ROLLING_HILLS_HEIGHT_PROVIDER,
-            MOUNTAINS_HEIGHT_PROVIDER,
-            // for jungle
-            JUNGLE_LOWLAND_HEIGHT_PROVIDER,
-            JUNGLE_FLATLAND_HEIGHT_PROVIDER,
-            JUNGLE_HILL_HEIGHT_PROVIDER,
-            // for astral infection
-            ASTRAL_FLATLAND_HEIGHT_PROVIDER,
-            ASTRAL_HILLS_HEIGHT_PROVIDER,
-            ASTRAL_PLATEAU_HEIGHT_PROVIDER,
-            // for desert
-            DESERT_FLATLAND_HEIGHT_PROVIDER,
-            DESERT_DUNES_HEIGHT_PROVIDER,
-            DESERT_HILLS_HEIGHT_PROVIDER,
-            // for ocean
-            DEEP_OCEAN_HEIGHT_PROVIDER,
-            OCEAN_HEIGHT_PROVIDER,
-            BEACH_HEIGHT_PROVIDER,
-            // for sulphurous ocean
-            SULPHUROUS_OCEAN_HEIGHT_PROVIDER,
-            // for rivers
-            RIVER_RATIO_PROVIDER, RIVER_ERODE_PROVIDER;
     static OverworldChunkGenerator instance = new OverworldChunkGenerator();
     static List<BlockPopulator> populators;
     static OverworldCaveGenerator CAVE_GENERATOR_OVERWORLD;
     private OverworldChunkGenerator() {
         super();
-        // terrain noise functions
-        Random rdm = new Random(TerrariaHelper.WORLD_SEED);
-
-        RIVER_NOISE_A = new PerlinOctaveGenerator(rdm.nextLong(), OCTAVES_RIVER);
-        RIVER_NOISE_A.setScale(0.0005);
-        RIVER_NOISE_B = new PerlinOctaveGenerator(rdm.nextLong(), OCTAVES_RIVER);
-        RIVER_NOISE_B.setScale(0.0005);
-
-        STONE_VEIN_NOISE = new PerlinOctaveGenerator(rdm.nextLong(), OCTAVES_STONE);
-        STONE_VEIN_NOISE.setScale(0.05);
-        // constants
-
-        // relevance providers
-        {
-            PLAINS_RELEVANCE_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(0.35, 1),
-                    InterpolatePoint.create(0.4, 0),
-            }, "plains_relevance_map");
-            ROLLING_HILLS_RELEVANCE_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(0.35, 0),
-                    InterpolatePoint.create(0.4, 1),
-                    InterpolatePoint.create(0.75, 1),
-                    InterpolatePoint.create(0.8, 0),
-            }, "rolling_hills_relevance_map");
-            MOUNTAINS_RELEVANCE_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(0.75, 0),
-                    InterpolatePoint.create(0.8, 1),
-            }, "mountains_relevance_map");
-
-            BEACH_RELEVANCE_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(0.1, 1),
-                    InterpolatePoint.create(0.2, 0),
-            }, "beach_relevance_map");
-            OCEAN_RELEVANCE_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(0.1 , 0),
-                    InterpolatePoint.create(0.2 , 1),
-                    InterpolatePoint.create(0.3 , 1),
-                    InterpolatePoint.create(0.5 , 0),
-            }, "ocean_relevance_map");
-            DEEP_OCEAN_RELEVANCE_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(0.3 , 0),
-                    InterpolatePoint.create(0.5 , 1),
-            }, "deep_ocean_relevance_map");
-        }
-
-        // normal biomes
-        {
-            // height providers
-            PLAINS_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(-1, SEA_LEVEL - LAKE_DEPTH),
-                    InterpolatePoint.create(0, LAND_HEIGHT),
-                    InterpolatePoint.create(1, LAND_HEIGHT + 10),
-            }, "plains_heightmap");
-            ROLLING_HILLS_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(-1, SEA_LEVEL - LAKE_DEPTH),
-                    InterpolatePoint.create(-0.25, LAND_HEIGHT),
-                    InterpolatePoint.create(1, LAND_HEIGHT + ROLLING_HILLS_HEIGHT),
-            }, "rolling_hills_heightmap");
-            MOUNTAINS_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(-1, SEA_LEVEL - LAKE_DEPTH),
-                    InterpolatePoint.create(-0.5, LAND_HEIGHT),
-                    InterpolatePoint.create(1, LAND_HEIGHT + MOUNTAIN_HEIGHT),
-            }, "mountains_heightmap");
-
-            NORMAL_PROVIDERS = new ArrayList<>();
-            NORMAL_PROVIDERS.add(new AbstractMap.SimpleImmutableEntry<>(PLAINS_HEIGHT_PROVIDER, PLAINS_RELEVANCE_PROVIDER));
-            NORMAL_PROVIDERS.add(new AbstractMap.SimpleImmutableEntry<>(ROLLING_HILLS_HEIGHT_PROVIDER, ROLLING_HILLS_RELEVANCE_PROVIDER));
-            NORMAL_PROVIDERS.add(new AbstractMap.SimpleImmutableEntry<>(MOUNTAINS_HEIGHT_PROVIDER, MOUNTAINS_RELEVANCE_PROVIDER));
-        }
-
-        // jungle
-        {
-            // height providers
-            JUNGLE_LOWLAND_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(-1       , SEA_LEVEL - 10),
-                    InterpolatePoint.create(-0.6     , SEA_LEVEL + 2),
-                    InterpolatePoint.create(-0.4     , SEA_LEVEL + 4),
-                    InterpolatePoint.create(-0.2     , SEA_LEVEL + 2),
-                    InterpolatePoint.create(0        , SEA_LEVEL - 5),
-                    InterpolatePoint.create(0.2      , SEA_LEVEL + 3),
-                    InterpolatePoint.create(0.4      , SEA_LEVEL + 5),
-                    InterpolatePoint.create(0.6      , SEA_LEVEL + 3),
-                    InterpolatePoint.create(1        , SEA_LEVEL - 5),
-            }, "jungle_lowland_heightmap");
-            JUNGLE_FLATLAND_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(-1 , SEA_LEVEL - 10),
-                    InterpolatePoint.create(0.3, LAND_HEIGHT),
-                    InterpolatePoint.create(1  , LAND_HEIGHT + 10),
-            }, "jungle_flatland_heightmap");
-            JUNGLE_HILL_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(-1  , SEA_LEVEL - 10),
-                    InterpolatePoint.create(0.15, LAND_HEIGHT),
-                    InterpolatePoint.create(1   , LAND_HEIGHT + ROLLING_HILLS_HEIGHT),
-            }, "jungle_hill_heightmap");
-
-            JUNGLE_PROVIDERS = new ArrayList<>();
-            JUNGLE_PROVIDERS.add(new AbstractMap.SimpleImmutableEntry<>(JUNGLE_LOWLAND_HEIGHT_PROVIDER, PLAINS_RELEVANCE_PROVIDER));
-            JUNGLE_PROVIDERS.add(new AbstractMap.SimpleImmutableEntry<>(JUNGLE_FLATLAND_HEIGHT_PROVIDER, ROLLING_HILLS_RELEVANCE_PROVIDER));
-            JUNGLE_PROVIDERS.add(new AbstractMap.SimpleImmutableEntry<>(JUNGLE_HILL_HEIGHT_PROVIDER, MOUNTAINS_RELEVANCE_PROVIDER));
-        }
-
-        // astral infection
-        {
-            // height providers
-            ASTRAL_FLATLAND_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(-1       , SEA_LEVEL - LAKE_DEPTH),
-                    InterpolatePoint.create(0        , LAND_HEIGHT),
-                    InterpolatePoint.create(1        , LAND_HEIGHT + 10),
-            }, "astral_flatland_heightmap");
-            ASTRAL_HILLS_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(-1, SEA_LEVEL - 10),
-                    InterpolatePoint.create(0 , LAND_HEIGHT + 10),
-                    InterpolatePoint.create(1 , LAND_HEIGHT + ROLLING_HILLS_HEIGHT),
-            }, "astral_hills_heightmap");
-            ASTRAL_PLATEAU_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(-1  , LAND_HEIGHT + ROLLING_HILLS_HEIGHT / 2d + 8),
-                    InterpolatePoint.create(-0.5, LAND_HEIGHT + ROLLING_HILLS_HEIGHT / 2d),
-                    InterpolatePoint.create(-0.4, LAND_HEIGHT + 5),
-                    InterpolatePoint.create(0   , LAND_HEIGHT),
-                    InterpolatePoint.create(0.4 , LAND_HEIGHT + 10),
-                    InterpolatePoint.create(0.5 , LAND_HEIGHT + ROLLING_HILLS_HEIGHT),
-                    InterpolatePoint.create(1   , LAND_HEIGHT + ROLLING_HILLS_HEIGHT + 10),
-            }, "astral_plateau_heightmap");
-
-            ASTRAL_PROVIDERS = new ArrayList<>();
-            ASTRAL_PROVIDERS.add(new AbstractMap.SimpleImmutableEntry<>(ASTRAL_FLATLAND_HEIGHT_PROVIDER, PLAINS_RELEVANCE_PROVIDER));
-            ASTRAL_PROVIDERS.add(new AbstractMap.SimpleImmutableEntry<>(ASTRAL_HILLS_HEIGHT_PROVIDER, ROLLING_HILLS_RELEVANCE_PROVIDER));
-            ASTRAL_PROVIDERS.add(new AbstractMap.SimpleImmutableEntry<>(ASTRAL_PLATEAU_HEIGHT_PROVIDER, MOUNTAINS_RELEVANCE_PROVIDER));
-        }
-
-        // desert
-        {
-            // height providers
-            DESERT_FLATLAND_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(-1       , SEA_LEVEL - 5),
-                    InterpolatePoint.create(-0.35    , SEA_LEVEL + 8),
-                    InterpolatePoint.create(1        , LAND_HEIGHT + 10),
-            }, "desert_flatland_heightmap");
-            DESERT_DUNES_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(-1, LAND_HEIGHT + 10),
-                    InterpolatePoint.create(0 , LAND_HEIGHT),
-                    InterpolatePoint.create(1 , LAND_HEIGHT + ROLLING_HILLS_HEIGHT / 2d),
-            }, "desert_dunes_heightmap");
-            DESERT_HILLS_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(-1  , LAND_HEIGHT),
-                    InterpolatePoint.create(0   , LAND_HEIGHT + 10),
-                    InterpolatePoint.create(1   , LAND_HEIGHT + ROLLING_HILLS_HEIGHT),
-            }, "desert_hills_heightmap");
-
-            DESERT_PROVIDERS = new ArrayList<>();
-            DESERT_PROVIDERS.add(new AbstractMap.SimpleImmutableEntry<>(DESERT_FLATLAND_HEIGHT_PROVIDER, PLAINS_RELEVANCE_PROVIDER));
-            DESERT_PROVIDERS.add(new AbstractMap.SimpleImmutableEntry<>(DESERT_DUNES_HEIGHT_PROVIDER, ROLLING_HILLS_RELEVANCE_PROVIDER));
-            DESERT_PROVIDERS.add(new AbstractMap.SimpleImmutableEntry<>(DESERT_HILLS_HEIGHT_PROVIDER, MOUNTAINS_RELEVANCE_PROVIDER));
-        }
-
-        // ocean
-        {
-            // height providers
-            BEACH_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(-1       , SEA_LEVEL - 5),
-                    InterpolatePoint.create(0        , LAND_HEIGHT),
-                    InterpolatePoint.create(1        , LAND_HEIGHT + 5),
-            }, "beach_heightmap");
-            OCEAN_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(-1  , SEA_LEVEL - 15),
-                    InterpolatePoint.create(0   , SEA_LEVEL - 5),
-                    InterpolatePoint.create(1   , SEA_LEVEL + 10),
-            }, "ocean_heightmap");
-            DEEP_OCEAN_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                    InterpolatePoint.create(-1  , SEA_LEVEL - 25),
-                    InterpolatePoint.create(1   , SEA_LEVEL - 15),
-            }, "deep_ocean_heightmap");
-
-            OCEAN_PROVIDERS = new ArrayList<>();
-            OCEAN_PROVIDERS.add(new AbstractMap.SimpleImmutableEntry<>(BEACH_HEIGHT_PROVIDER, BEACH_RELEVANCE_PROVIDER));
-            OCEAN_PROVIDERS.add(new AbstractMap.SimpleImmutableEntry<>(OCEAN_HEIGHT_PROVIDER, OCEAN_RELEVANCE_PROVIDER));
-            OCEAN_PROVIDERS.add(new AbstractMap.SimpleImmutableEntry<>(DEEP_OCEAN_HEIGHT_PROVIDER, DEEP_OCEAN_RELEVANCE_PROVIDER));
-        }
-
-        // sulphurous ocean
-        SULPHUROUS_OCEAN_HEIGHT_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                InterpolatePoint.create(0.5    ,      LAND_HEIGHT),
-                InterpolatePoint.create(0.55   ,   0.5),
-        }, "sulphurous_ocean_heightmap");
-
-        // river
-        RIVER_RATIO_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                InterpolatePoint.create(-0.05  , 0),
-                InterpolatePoint.create(0      , 0.9),
-                InterpolatePoint.create(0.05   , 0),
-        }, "river_ratio_map");
-        RIVER_ERODE_PROVIDER = new Interpolate(new InterpolatePoint[]{
-                InterpolatePoint.create(-0.2   , 0),
-                InterpolatePoint.create(-0.05  , 0.3),
-                InterpolatePoint.create(0.05   , 0.3),
-                InterpolatePoint.create(0.2    , 0),
-        }, "river_erode_map");
 
         // block populators
         CAVE_GENERATOR_OVERWORLD = new OverworldCaveGenerator(Y_OFFSET_OVERWORLD, TerrariaHelper.WORLD_SEED, OCTAVES_CAVE);
@@ -431,38 +196,38 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     static double getTerrainHeight(Biome biome, int currX, int currZ) {
         // biome height provider setup
         OverworldBiomeGenerator.BiomeFeature features = OverworldBiomeGenerator.getBiomeFeature(currX, currZ);
-        ArrayList<Map.Entry<Interpolate, Interpolate>> candidateProviderInfo = null;
+        Interpolate[] idxProvider = NORMAL_INTERPOLATE_COORDINATOR;
+        Interpolate[][] heightProviderMat = null;
         double result = 1;
 
         switch (biome) {
             case FROZEN_OCEAN: {
-                double continentalnessFeature = features.features[OverworldBiomeGenerator.BiomeFeature.CONTINENTALNESS];
-                result = SULPHUROUS_OCEAN_HEIGHT_PROVIDER.getY(continentalnessFeature);
+                idxProvider = SULPHUROUS_OCEAN_INTERPOLATE_COORDINATOR;
+                heightProviderMat = SULPHUROUS_OCEAN_INTERPOLATE;
                 break;
             }
             case OCEAN:
-                candidateProviderInfo = OCEAN_PROVIDERS;
+                idxProvider = OCEAN_INTERPOLATE_COORDINATOR;
+                heightProviderMat = OCEAN_INTERPOLATE;
                 break;
             case JUNGLE:
-                candidateProviderInfo = JUNGLE_PROVIDERS;
+                heightProviderMat = JUNGLE_INTERPOLATE;
                 break;
             case MESA:
-                candidateProviderInfo = ASTRAL_PROVIDERS;
+                heightProviderMat = ASTRAL_INTERPOLATE;
                 break;
             case DESERT:
-                candidateProviderInfo = DESERT_PROVIDERS;
+                heightProviderMat = DESERT_INTERPOLATE;
                 break;
             default: {
-                candidateProviderInfo = NORMAL_PROVIDERS;
+                heightProviderMat = NORMAL_INTERPOLATE;
             }
         }
 
-        // river noise could bring down
-//        double riverNoise = RIVER_NOISE_A.noise(currX, currZ, 2, 0.5, false) +
-//                            RIVER_NOISE_B.noise(currX, currZ, 2, 0.5, false);
-        double riverNoise = RIVER_NOISE_A.noise(currX, currZ, 2, 0.5, false);
+        // river noise could boost up the erosion (DO NOT let it modify continentalness)
+        double riverNoise = RIVER_NOISE.noise(currX, currZ, 2, 0.5, false);
         // merge the relevant height providers
-        if (candidateProviderInfo != null) {
+        if (heightProviderMat != null) {
             // elevation deviation: scale 0.5~0 (land) to 0 ~ 1, and 0.5~1 (ocean) to 0 ~ 1
             double elevDeviation = features.features[OverworldBiomeGenerator.BiomeFeature.CONTINENTALNESS];
             elevDeviation = Math.abs(elevDeviation);
@@ -471,15 +236,29 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             } else {
                 elevDeviation = 1 - elevDeviation * 2;
             }
-            elevDeviation -= RIVER_ERODE_PROVIDER.getY(riverNoise);
+            // erosion
+            double erosion = features.features[OverworldBiomeGenerator.BiomeFeature.EROSION];
+            erosion -= RIVER_ERODE_PROVIDER.getY(riverNoise);
+
             // calculate relevant providers' weighted avg. height
             double total = 0d;
             double featTerrH = features.features[OverworldBiomeGenerator.BiomeFeature.TERRAIN_H];
-            for (Map.Entry<Interpolate, Interpolate> heightAndRel : candidateProviderInfo) {
-                double relevance = heightAndRel.getValue().getY(elevDeviation);
-                if (relevance > 1e-5) {
-                    result += heightAndRel.getKey().getY(featTerrH) * relevance;
-                    total += relevance;
+            // calculate the near providers' relevance
+            double elevVal = idxProvider[0].getY(elevDeviation);
+            double erosVal = idxProvider[1].getY(erosion);
+            int elevStart, elevEnd, erosStart, erosEnd;
+            elevStart = (int) Math.floor(elevVal + 1e-9);
+            elevEnd = (int) Math.ceil(elevVal - 1e-9);
+            erosStart = (int) Math.floor(erosVal + 1e-9);
+            erosEnd = (int) Math.ceil(erosVal - 1e-9);
+            // combine near providers' heights
+            for (int i = elevStart; i <= elevEnd; i ++) {
+                for (int j = erosStart; j <= erosEnd; j ++) {
+                    double relevance = (1 - Math.abs(elevVal - i)) * (1 - Math.abs(erosVal - j));
+                    if (relevance > 1e-5) {
+                        result += heightProviderMat[i][j].getY(featTerrH) * relevance;
+                        total += relevance;
+                    }
                 }
             }
             result /= total;
@@ -674,85 +453,6 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         }
     }
 
-    // generates the height and cave multiplier mapping of a chunk
-    public static void generateChunkMaps(int blockXStart, int blockZStart, int[][] heightMap, double[][] caveMultiMap,
-                                         OverworldCaveGenerator caveGen, BiomeGrid biomeGrid, int yOffset) {
-        long timing = System.nanoTime();
-        // create memoization 2D array for the nearby biomes
-        int memoiSize = 16 + NEARBY_BIOME_SAMPLE_RADIUS * 2;
-        Biome[][] biomesMemoization = new Biome[memoiSize][memoiSize];
-        for (int i = 0; i < memoiSize; i ++)
-            for (int j = 0; j < memoiSize; j ++) {
-                biomesMemoization[i][j] = OverworldBiomeGenerator.getBiome(
-                        blockXStart - NEARBY_BIOME_SAMPLE_RADIUS + i, blockZStart - NEARBY_BIOME_SAMPLE_RADIUS + j);
-            }
-        // update the biome grid
-        tweakBiome(biomesMemoization, biomeGrid, yOffset);
-        // record timing info
-        testGenDurTotal[0] += System.nanoTime() - timing;
-
-        timing = System.nanoTime();
-        int currX, currZ;
-
-        // setup height info according to nearby biomes at both offset 0.
-        // Then use sliding window technique to derive the height everywhere.
-        HashMap<Biome, Double> nearbyBiomeMapBackup = new HashMap<>();
-        for (int sampleIdxX = 0; sampleIdxX <= NEARBY_BIOME_SAMPLE_RADIUS * 2; sampleIdxX++) {
-            for (int sampleIdxZ = 0; sampleIdxZ <= NEARBY_BIOME_SAMPLE_RADIUS * 2; sampleIdxZ++) {
-                Biome currBiome = biomesMemoization[sampleIdxX][sampleIdxZ];
-                double updatedBiomeIntensity = nearbyBiomeMapBackup.getOrDefault(currBiome, 0d) +
-                        HEIGHT_INFLUENCE_FACTOR[sampleIdxX][sampleIdxZ];
-                nearbyBiomeMapBackup.put(currBiome, updatedBiomeIntensity);
-            }
-        }
-
-        // loop through all blocks.
-        HashMap<Biome, Double> nearbyBiomeMap;
-        for (int i = 0; i < 16; i ++) {
-            currX = blockXStart + i;
-            nearbyBiomeMap = (HashMap<Biome, Double>) nearbyBiomeMapBackup.clone();
-            for (int j = 0; j < 16; j++) {
-                currZ = blockZStart + j;
-
-                setupHeightAndCaveRatioAtLocation(currX, currZ, i, j, heightMap, caveMultiMap, nearbyBiomeMap, caveGen);
-
-                // sliding window technique
-                if (j + 1 < 16) {
-                    int currSample_dropZ = j;
-                    int currSample_addZ = j + NEARBY_BIOME_SAMPLE_RADIUS * 2 + 1;
-                    for (int sampleIdx = 0; sampleIdx <= NEARBY_BIOME_SAMPLE_RADIUS * 2; sampleIdx++) {
-                        double influence_factor = HEIGHT_INFLUENCE_FACTOR[0][sampleIdx];
-
-                        Biome currBiome_drop = biomesMemoization[sampleIdx + i][currSample_dropZ];
-                        double updatedIntensity_drop = nearbyBiomeMap.getOrDefault(currBiome_drop, 0d) - influence_factor;
-                        nearbyBiomeMap.put(currBiome_drop, updatedIntensity_drop);
-
-                        Biome currBiome_add =  biomesMemoization[sampleIdx + i][currSample_addZ];
-                        double updatedIntensity_add = nearbyBiomeMap.getOrDefault(currBiome_add, 0d) + influence_factor;
-                        nearbyBiomeMap.put(currBiome_add,  updatedIntensity_add);
-                    }
-                }
-            }
-            // sliding window technique.
-            if (i + 1 < 16) {
-                int currSample_dropX = i;
-                int currSample_addX  = i + NEARBY_BIOME_SAMPLE_RADIUS * 2 + 1;
-                for (int sampleIdx = 0; sampleIdx <= NEARBY_BIOME_SAMPLE_RADIUS * 2; sampleIdx++) {
-                    double influence_factor = HEIGHT_INFLUENCE_FACTOR[sampleIdx][0];
-
-                    Biome currBiome_drop = biomesMemoization[currSample_dropX][sampleIdx];
-                    double updatedIntensity_drop = nearbyBiomeMapBackup.getOrDefault(currBiome_drop, 0d) - influence_factor;
-                    nearbyBiomeMapBackup.put(currBiome_drop, updatedIntensity_drop);
-
-                    Biome currBiome_add =  biomesMemoization[currSample_addX][sampleIdx];
-                    double updatedIntensity_add = nearbyBiomeMapBackup.getOrDefault(currBiome_add, 0d) + influence_factor;
-                    nearbyBiomeMapBackup.put(currBiome_add,  updatedIntensity_add);
-                }
-            }
-        }
-        // record timing info
-        testGenDurTotal[1] += System.nanoTime() - timing;
-    }
     /*
      * init terrain (rough + detail)
      */
