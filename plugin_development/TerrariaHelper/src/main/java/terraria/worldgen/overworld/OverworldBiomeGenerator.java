@@ -8,14 +8,13 @@ import terraria.util.WorldHelper;
 
 import java.util.*;
 
-import static terraria.worldgen.overworld.OverworldChunkGenerator.OCTAVES_TERRAIN;
-import static terraria.worldgen.overworld.OverworldChunkGenerator.SCALE_TERRAIN;
+import static terraria.worldgen.overworld.OverworldChunkGenerator.*;
 
 public class OverworldBiomeGenerator {
-    static final int
-            BIOME_FEATURE_CACHE_SIZE = 500000,
-            SPAWN_LOC_PROTECTION_RADIUS = 250;
+    static final int SPAWN_LOC_PROTECTION_RADIUS = 250;
     static final long MASK_LAST_HALF = 0xFFFFL;
+    static long[] testGenDurTotal = {0, 0, 0, 0}; // cache hit, cache miss, biome gen, cache update
+    static long[] testGenAmount = {0, 0}; // cache hit, cache miss
 
     static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseHum, noiseWrd, noiseTrH, noiseEros;
 
@@ -106,13 +105,7 @@ public class OverworldBiomeGenerator {
     }
 
     // biome cache
-    static LinkedHashMap<Long, BiomeFeature> biomeCache = new LinkedHashMap<Long, BiomeFeature>(BIOME_FEATURE_CACHE_SIZE, 0.75f) {
-        @Override
-        // the eldest entry should be removed once the cache reaches its designed capacity
-        protected boolean removeEldestEntry(Map.Entry entry) {
-            return size() >= BIOME_FEATURE_CACHE_SIZE;
-        }
-    };
+    static HashMap<Long, BiomeFeature> biomeCache = new HashMap<>(BIOME_CACHE_LIMIT, (float) BIOME_CACHE_LOAD_FACTOR);
 
     // generate images and store biomes near the spawn
     public static void init() {
@@ -206,19 +199,49 @@ public class OverworldBiomeGenerator {
         return getBiomeFeature((int) actualX, (int) actualZ);
     }
     public static BiomeFeature getBiomeFeature(int blockX, int blockZ) {
+        long timing = System.nanoTime();
+
         long biomeLocKey = getCacheKey(blockX, blockZ);
         // return the cached value if available
-        if (biomeCache.containsKey(biomeLocKey)) {
-            return biomeCache.get(biomeLocKey);
+        BiomeFeature result = biomeCache.get(biomeLocKey);
+        if (result != null) {
+            testGenDurTotal[0] += System.nanoTime() - timing;
+            testGenAmount[0] ++;
+            if (testGenAmount[0] % 1000 == 0) {
+                Bukkit.broadcastMessage("Biome feature cache hit: " + testGenDurTotal[0] / testGenAmount[0]);
+            }
+
+            return result;
         }
+
+        testGenDurTotal[1] += System.nanoTime() - timing;
+        timing = System.nanoTime();
+
         // lazy initialization of noise functions
         if (noiseCont == null) {
             setupGenerators();
         }
         // the biome feature content is generated within the constructor
-        BiomeFeature result = new BiomeFeature(blockX, blockZ);
+        result = new BiomeFeature(blockX, blockZ);
+
+        testGenDurTotal[2] += System.nanoTime() - timing;
+        timing = System.nanoTime();
+
         // save the result and return
+        if (biomeCache.size() > BIOME_CACHE_LIMIT) biomeCache.clear();
         biomeCache.put(biomeLocKey, result);
+
+        testGenDurTotal[3] += System.nanoTime() - timing;
+        testGenAmount[1] ++;
+        if (testGenAmount[1] % 1000 == 0) {
+            Bukkit.broadcastMessage("Biome feature cache miss: " + testGenDurTotal[1] / testGenAmount[1]);
+            Bukkit.broadcastMessage("Biome feature gen: " + testGenDurTotal[2] / testGenAmount[1]);
+            Bukkit.broadcastMessage("Biome feature cache upd: " + testGenDurTotal[3] / testGenAmount[1]);
+            Bukkit.broadcastMessage("Biome feature cache miss total: " + (testGenDurTotal[1] + testGenDurTotal[2] + testGenDurTotal[3]) / testGenAmount[1]);
+            Bukkit.broadcastMessage("Biome cache size: " + biomeCache.size());
+            Bukkit.broadcastMessage("Biome feature cache hit rate: " + ((double) testGenAmount[0] / (double) (testGenAmount[0] + testGenAmount[1])) );
+        }
+
         return result;
     }
     public static Biome getBiome(int blockX, int blockZ) {

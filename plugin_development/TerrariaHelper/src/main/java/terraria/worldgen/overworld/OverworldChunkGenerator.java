@@ -16,6 +16,8 @@ import static terraria.worldgen.overworld.OverworldNoiseProviders.*;
 public class OverworldChunkGenerator extends ChunkGenerator {
     // optimization & logging variables
     public static final boolean LOG_TIMING = TerrariaHelper.optimizationConfig.getBoolean("worldGen.opt.chunkPrepDurationLog", false);
+    public static final double BIOME_CACHE_LOAD_FACTOR = TerrariaHelper.optimizationConfig.getDouble("worldGen.opt.biomeCacheLoadFactor", 0.5);
+    public static final int BIOME_CACHE_LIMIT = TerrariaHelper.optimizationConfig.getInt("worldGen.opt.biomeCacheLimit", 500000);
     static long[] testGenDurTotal = {0, 0, 0, 0};
     static long testGenAmount = 0;
 
@@ -587,11 +589,11 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     public ChunkData generateChunkData(World world, Random random, int x, int z, BiomeGrid biome) {
         // print time benchmarking info
         if (LOG_TIMING && testGenAmount % 20 == 19) {
-            TerrariaHelper.LOGGER.info("区块基础生成（生物群系，高度，土壤，岩石）时长：");
-            TerrariaHelper.LOGGER.info("区块基础生成-载入生物群系 平均使用时间（单位：纳秒）: " + (testGenDurTotal[0] / testGenAmount) );
-            TerrariaHelper.LOGGER.info("区块基础生成-地形高度 平均使用时间（单位：纳秒）: " + (testGenDurTotal[1] / testGenAmount) );
-            TerrariaHelper.LOGGER.info("区块基础生成-粗略地形与岩石 平均使用时间（单位：纳秒）: " + (testGenDurTotal[2] / testGenAmount) );
-            TerrariaHelper.LOGGER.info("区块基础生成-土壤 平均使用时间（单位：纳秒）: " + (testGenDurTotal[3] / testGenAmount) );
+            TerrariaHelper.LOGGER.info("地表区块基础生成（生物群系，高度，土壤，岩石）时长：");
+            TerrariaHelper.LOGGER.info("地表区块基础生成-载入生物群系 平均使用时间（单位：纳秒）: " + (testGenDurTotal[0] / testGenAmount) );
+            TerrariaHelper.LOGGER.info("地表区块基础生成-地形高度 平均使用时间（单位：纳秒）: " + (testGenDurTotal[1] / testGenAmount) );
+            TerrariaHelper.LOGGER.info("地表区块基础生成-粗略地形与岩石 平均使用时间（单位：纳秒）: " + (testGenDurTotal[2] / testGenAmount) );
+            TerrariaHelper.LOGGER.info("地表区块基础生成-土壤 平均使用时间（单位：纳秒）: " + (testGenDurTotal[3] / testGenAmount) );
         }
 
         long timing;

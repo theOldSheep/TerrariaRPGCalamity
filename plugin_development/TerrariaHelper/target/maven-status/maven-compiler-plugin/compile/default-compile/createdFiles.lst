@@ -234,7 +234,6 @@ terraria\entity\boss\preHardMode\wallOfFlesh\WallOfFleshWall.class
 terraria\entity\projectile\RotatingRingProjectile$RingProperties$Builder.class
 terraria\entity\others\TerrariaFishingHook$FishingResultRarity.class
 terraria\util\AimHelper.class
-terraria\worldgen\overworld\OverworldBiomeGenerator$2.class
 terraria\util\DmgDisplayThrottling.class
 terraria\entity\boss\hardMode\dukeFishron\Sharkron.class
 terraria\entity\boss\hardMode\moonLord\MoonLord.class
