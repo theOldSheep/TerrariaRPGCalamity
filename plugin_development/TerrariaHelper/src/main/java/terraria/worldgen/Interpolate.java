@@ -77,6 +77,8 @@ public class Interpolate {
         return 0;
     }
     public void printTestImage(String interpolateName) {
+        if (interpolateName == null) return;
+
         int length = 1000, height = 250;
         double range = 2.25; // 2 is the minimum for drawing out the entire noise map
         double maxY = 0;

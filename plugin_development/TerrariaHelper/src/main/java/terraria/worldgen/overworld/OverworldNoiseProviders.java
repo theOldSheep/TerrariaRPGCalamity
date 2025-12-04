@@ -71,7 +71,7 @@ public class OverworldNoiseProviders {
             SULPHUROUS_OCEAN_INTERPOLATE_COORDINATOR = new Interpolate[]{
                     new Interpolate(new Interpolate.InterpolatePoint[]{
                             Interpolate.InterpolatePoint.create(0.1 , 0),
-                            Interpolate.InterpolatePoint.create(0.15, 1),
+                            Interpolate.InterpolatePoint.create(0.2 , 1),
                     }, "sulphurous_ocean_coordinator_cont"),
                     new Interpolate(new Interpolate.InterpolatePoint[]{
                             Interpolate.InterpolatePoint.create(0, 0),
@@ -273,7 +273,7 @@ public class OverworldNoiseProviders {
                     Interpolate.InterpolatePoint.create(1        , LAND_HEIGHT),
             }, "sulphurous_ocean_beach_hm");
             SULPHUROUS_OCEAN_DEEP = new Interpolate(new Interpolate.InterpolatePoint[]{
-                    Interpolate.InterpolatePoint.create(0   , 0),
+                    Interpolate.InterpolatePoint.create(0   , 0.5),
             }, "sulphurous_ocean_deep_hm");
 
             // assemble

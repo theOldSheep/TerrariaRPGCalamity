@@ -7,7 +7,7 @@ worldGen:
     lakeDepth: 15
     rollingHillsHeight: 40
     mountainHeight: 80
-    nearbyBiomeSampleRadius: 25
+    biomeInterpolate: 0.1
     caveOctaves: 5
     terrainOctaves: 4
     stoneOctaves: 1
@@ -17,12 +17,14 @@ worldGen:
     surfaceChestRate: 0.01
     cavernChestRate: 0.025
   opt:
-    chunkPrepDurationLog: false
-    caveGenDurationLog: false
+    chunkPrepDurationLog: true
+    caveGenDurationLog: true
     caveSketchSize: 3
     caveSketchThreads: 16
     caveDetailThreads: 16
     structureNanoSecond: 10000000
+    biomeCacheLimit: 50000
+    biomeCacheLoadFactor: 0.75
   mapConfig:
     blocksPerPixel: 20
     biomeMarkerRadiusPixel: 2

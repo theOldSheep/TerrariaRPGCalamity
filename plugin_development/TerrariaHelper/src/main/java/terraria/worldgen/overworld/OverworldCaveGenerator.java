@@ -6,6 +6,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 import terraria.TerrariaHelper;
+import terraria.util.WorldHelper;
 import terraria.worldgen.WorldGenHelper;
 
 import java.util.Random;
@@ -51,18 +52,17 @@ public class OverworldCaveGenerator {
         sunkenSeaAbyssCaveGenerator.setYScale(sunkenSeaAbyssCaveGenerator.getYScale() * 3);
 
     }
-    public double getCavernNoiseMulti(Biome biome) {
+    public boolean generateCaveForBiomeType(WorldHelper.BiomeType biome) {
         switch (biome) {
             // caves for these biomes will be customized
-            case DESERT:            // sunken sea/desert
-            case MUTATED_DESERT:    // sunken sea/desert
-                return yOffset == OverworldChunkGenerator.Y_OFFSET_OVERWORLD ? 1 : 0;
-            case COLD_BEACH:        // sulphurous beach
-            case FROZEN_OCEAN:      // sulphurous ocean
-            case DEEP_OCEAN:        // abyss
-                return 0;
+            case DESERT:
+                // the biome type from biome feature always assume surface world, thus sunken sea goes under desert
+                return yOffset == OverworldChunkGenerator.Y_OFFSET_OVERWORLD ? true : false;
+            case SULPHUROUS_OCEAN:
+            case ABYSS:
+                return false;
             default:
-                return 1;
+                return true;
         }
     }
     // gets the "air" material for the biome
@@ -162,10 +162,11 @@ public class OverworldCaveGenerator {
             result[2] = spaghettiGeneratorTwo.noise(currX, effectualY, currZ, 2, 0.5, false);
         }
         double complementNoise = 1 - noiseMulti;
-        // equivalent to + (-1) * complementNoise
-        result[0] = result[0] * noiseMulti - complementNoise;
-        result[1] = result[1] * noiseMulti - complementNoise;
-        result[2] = result[2] * noiseMulti - complementNoise;
+        // cheese - valid near 1; subtract by up to 2 with complement
+        result[0] = result[0] * noiseMulti - 2 * complementNoise;
+        // spaghetti caves - valid near 0 (symmetric); take abs and add by up to 1 with complement
+        result[1] = Math.abs(result[1]) * noiseMulti + complementNoise;
+        result[2] = Math.abs(result[2]) * noiseMulti + complementNoise;
         return result;
     }
     private boolean validateCaveEstimate(double[] noise) {

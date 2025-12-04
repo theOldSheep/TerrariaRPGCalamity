@@ -22,12 +22,12 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     static long testGenAmount = 0;
 
     // world generator parameters
+    public static final double BIOME_INTERPOLATE = TerrariaHelper.optimizationConfig.getDouble("worldGen.params.biomeInterpolate");
     public static final double SCALE_TERRAIN = TerrariaHelper.optimizationConfig.getDouble("worldGen.params.terrainFreq");
     public static final int OCTAVES_TERRAIN = TerrariaHelper.optimizationConfig.getInt("worldGen.params.terrainOctaves", 8);
     public static final int OCTAVES_CAVE = TerrariaHelper.optimizationConfig.getInt("worldGen.params.caveOctaves", 4);
     public static final int OCTAVES_STONE = TerrariaHelper.optimizationConfig.getInt("worldGen.params.stoneOctaves", 2);
     public static final int OCTAVES_RIVER = TerrariaHelper.optimizationConfig.getInt("worldGen.params.riverOctaves", 1);
-    public static final int NEARBY_BIOME_SAMPLE_RADIUS = TerrariaHelper.optimizationConfig.getInt("worldGen.params.nearbyBiomeSampleRadius", 25);
     public static final int LAND_HEIGHT = TerrariaHelper.optimizationConfig.getInt("worldGen.params.landHeight", 100);
     public static final int SEA_LEVEL = TerrariaHelper.optimizationConfig.getInt("worldGen.params.seaLevel", 90);
     public static final int RIVER_DEPTH = TerrariaHelper.optimizationConfig.getInt("worldGen.params.riverDepth", 25);
@@ -35,30 +35,8 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     public static final int ROLLING_HILLS_HEIGHT = TerrariaHelper.optimizationConfig.getInt("worldGen.params.rollingHillsHeight", 60);
     public static final int MOUNTAIN_HEIGHT = TerrariaHelper.optimizationConfig.getInt("worldGen.params.mountainHeight", 100);
     public static final int Y_OFFSET_OVERWORLD = 0;
-    public static final int HEIGHT_SAMPLING_DIAMETER;
-    private static final double HEIGHT_SAMPLE_FACTOR_SUM;
-    private static final double[][] HEIGHT_INFLUENCE_FACTOR;
+
     // initialize the mapping in which nearby heights influences the current block
-    static {
-        HEIGHT_SAMPLING_DIAMETER = 1 + NEARBY_BIOME_SAMPLE_RADIUS * 2;
-        double[][] influence_factors = new double[HEIGHT_SAMPLING_DIAMETER][HEIGHT_SAMPLING_DIAMETER];
-//        double furthestDistance = NEARBY_BIOME_SAMPLE_RADIUS * Math.sqrt(2);
-        for (int i = 0; i <= NEARBY_BIOME_SAMPLE_RADIUS; i ++)
-            for (int j = 0; j <= NEARBY_BIOME_SAMPLE_RADIUS; j ++) {
-                double currFactor;
-                currFactor = 1;
-                influence_factors[NEARBY_BIOME_SAMPLE_RADIUS + i][NEARBY_BIOME_SAMPLE_RADIUS + j] = currFactor;
-                influence_factors[NEARBY_BIOME_SAMPLE_RADIUS + i][NEARBY_BIOME_SAMPLE_RADIUS - j] = currFactor;
-                influence_factors[NEARBY_BIOME_SAMPLE_RADIUS - i][NEARBY_BIOME_SAMPLE_RADIUS + j] = currFactor;
-                influence_factors[NEARBY_BIOME_SAMPLE_RADIUS - i][NEARBY_BIOME_SAMPLE_RADIUS - j] = currFactor;
-            }
-        HEIGHT_INFLUENCE_FACTOR = influence_factors;
-        double sum = 0;
-        for (double[] factors : HEIGHT_INFLUENCE_FACTOR)
-            for (double currFactor : factors)
-                sum += currFactor;
-        HEIGHT_SAMPLE_FACTOR_SUM = sum;
-    }
     static OverworldChunkGenerator instance = new OverworldChunkGenerator();
     static List<BlockPopulator> populators;
     static OverworldCaveGenerator CAVE_GENERATOR_OVERWORLD;
@@ -195,56 +173,55 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         return Math.min(heightOffset, waterOffset);
     }
     // compute the desired terrain height at a specific column
-    static double getTerrainHeight(Biome biome, int currX, int currZ) {
-        // biome height provider setup
-        OverworldBiomeGenerator.BiomeFeature features = OverworldBiomeGenerator.getBiomeFeature(currX, currZ);
-        Interpolate[] idxProvider = NORMAL_INTERPOLATE_COORDINATOR;
-        Interpolate[][] heightProviderMat = null;
-        double result = 1;
-
-        switch (biome) {
-            case FROZEN_OCEAN: {
-                idxProvider = SULPHUROUS_OCEAN_INTERPOLATE_COORDINATOR;
-                heightProviderMat = SULPHUROUS_OCEAN_INTERPOLATE;
-                break;
-            }
-            case OCEAN:
-                idxProvider = OCEAN_INTERPOLATE_COORDINATOR;
-                heightProviderMat = OCEAN_INTERPOLATE;
-                break;
-            case JUNGLE:
-                heightProviderMat = JUNGLE_INTERPOLATE;
-                break;
-            case MESA:
-                heightProviderMat = ASTRAL_INTERPOLATE;
-                break;
-            case DESERT:
-                heightProviderMat = DESERT_INTERPOLATE;
-                break;
-            default: {
-                heightProviderMat = NORMAL_INTERPOLATE;
-            }
-        }
-
-        // river noise could boost up the erosion (DO NOT let it modify continentalness)
+    static double getTerrainHeight(OverworldBiomeGenerator.BiomeFeature biomeFeature, HashMap<WorldHelper.BiomeType, Double> biomeSignificances, int currX, int currZ) {
+        double combinedResult = 0;
+        // river noise could boost up the erosion later on (NOT continentalness)
         double riverNoise = RIVER_NOISE.noise(currX, currZ, 2, 0.5, false);
-        // merge the relevant height providers
-        if (heightProviderMat != null) {
-            // elevation deviation: scale 0.5~0 (land) to 0 ~ 1, and 0.5~1 (ocean) to 0 ~ 1
-            double elevDeviation = features.features[OverworldBiomeGenerator.BiomeFeature.CONTINENTALNESS];
-            elevDeviation = Math.abs(elevDeviation);
-            if (elevDeviation > 0.5) {
-                elevDeviation = elevDeviation * 2 - 1;
-            } else {
-                elevDeviation = 1 - elevDeviation * 2;
+        // elevation deviation: scale 0.5~0 (land) to 0 ~ 1, and 0.5~1 (ocean) to 0 ~ 1
+        double elevDeviation = biomeFeature.features[OverworldBiomeGenerator.BiomeFeature.CONTINENTALNESS];
+        elevDeviation = Math.abs(elevDeviation);
+        if (elevDeviation > 0.5) {
+            elevDeviation = elevDeviation * 2 - 1;
+        } else {
+            elevDeviation = 1 - elevDeviation * 2;
+        }
+        // erosion
+        double erosion = biomeFeature.features[OverworldBiomeGenerator.BiomeFeature.EROSION];
+        erosion -= RIVER_ERODE_PROVIDER.getY(riverNoise);
+
+        for (WorldHelper.BiomeType biomeType : biomeSignificances.keySet()) {
+            // biome height provider setup
+            Interpolate[] idxProvider = NORMAL_INTERPOLATE_COORDINATOR;
+            Interpolate[][] heightProviderMat;
+            double result = 0;
+
+            switch (biomeType) {
+                case SULPHUROUS_OCEAN: {
+                    idxProvider = SULPHUROUS_OCEAN_INTERPOLATE_COORDINATOR;
+                    heightProviderMat = SULPHUROUS_OCEAN_INTERPOLATE;
+                    break;
+                }
+                case OCEAN:
+                    idxProvider = OCEAN_INTERPOLATE_COORDINATOR;
+                    heightProviderMat = OCEAN_INTERPOLATE;
+                    break;
+                case JUNGLE:
+                    heightProviderMat = JUNGLE_INTERPOLATE;
+                    break;
+                case ASTRAL_INFECTION:
+                    heightProviderMat = ASTRAL_INTERPOLATE;
+                    break;
+                case DESERT:
+                    heightProviderMat = DESERT_INTERPOLATE;
+                    break;
+                default: {
+                    heightProviderMat = NORMAL_INTERPOLATE;
+                }
             }
-            // erosion
-            double erosion = features.features[OverworldBiomeGenerator.BiomeFeature.EROSION];
-            erosion -= RIVER_ERODE_PROVIDER.getY(riverNoise);
 
             // calculate relevant providers' weighted avg. height
             double total = 0d;
-            double featTerrH = features.features[OverworldBiomeGenerator.BiomeFeature.TERRAIN_H];
+            double featTerrH = biomeFeature.features[OverworldBiomeGenerator.BiomeFeature.TERRAIN_H];
             // calculate the near providers' relevance
             double elevVal = idxProvider[0].getY(elevDeviation);
             double erosVal = idxProvider[1].getY(erosion);
@@ -254,8 +231,8 @@ public class OverworldChunkGenerator extends ChunkGenerator {
             erosStart = (int) Math.floor(erosVal + 1e-9);
             erosEnd = (int) Math.ceil(erosVal - 1e-9);
             // combine near providers' heights
-            for (int i = elevStart; i <= elevEnd; i ++) {
-                for (int j = erosStart; j <= erosEnd; j ++) {
+            for (int i = elevStart; i <= elevEnd; i++) {
+                for (int j = erosStart; j <= erosEnd; j++) {
                     double relevance = (1 - Math.abs(elevVal - i)) * (1 - Math.abs(erosVal - j));
                     if (relevance > 1e-5) {
                         result += heightProviderMat[i][j].getY(featTerrH) * relevance;
@@ -264,35 +241,27 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 }
             }
             result /= total;
+            combinedResult += result * biomeSignificances.get(biomeType);
         }
 
         // account for rivers
-        double heightOffset = result - LAND_HEIGHT;
+        double heightOffset = combinedResult - LAND_HEIGHT;
         double riverRatio = RIVER_RATIO_PROVIDER.getY(riverNoise);
         if (riverRatio > 1e-5)
             heightOffset = interpolateWaterBodyHeightOffset(heightOffset, riverRatio, RIVER_DEPTH);
-        result = LAND_HEIGHT + heightOffset;
+        combinedResult = LAND_HEIGHT + heightOffset;
 
-        return result;
+        return combinedResult;
     }
     // set up the "desired" block height and special cave ratio at a specific column of a chunk.
     private static void setupHeightAndCaveRatioAtLocation(int currX, int currZ, int i, int j,
                                                           int[][] heightMap, double[][] caveMultiMap,
-                                                          HashMap<Biome, Double> nearbyBiomeMap, OverworldCaveGenerator caveGen) {
+                                                          OverworldCaveGenerator caveGen) {
+        OverworldBiomeGenerator.BiomeFeature biomeFeature = OverworldBiomeGenerator.getBiomeFeature(currX, currZ);
+        HashMap<WorldHelper.BiomeType, Double> biomeSignificances = biomeFeature.getBiomesWeight();
         // calculate each nearby biome's contribution to the current land height
-        HashMap<Biome, Double> biomeWeights = new HashMap<>();
-        double totalWeight = 0;
-        for (Map.Entry<Biome, Double> pair : nearbyBiomeMap.entrySet()) {
-            double valSqr = pair.getValue() * pair.getValue();
-            biomeWeights.put(pair.getKey(), valSqr);
-            totalWeight += valSqr;
-        }
-        // save normalized height sum
-        double totalHeight = 0;
-        for (Biome b : nearbyBiomeMap.keySet()) {
-            double weightCurr = biomeWeights.get(b) / totalWeight;
-            totalHeight += getTerrainHeight(b, currX, currZ) * weightCurr;
-        }
+        double totalHeight = getTerrainHeight(biomeFeature, biomeSignificances, currX, currZ);
+
         // terrain near the spawning point will be around LAND_HEIGHT; use the double value to prevent overflow.
         double distToSpawn = Math.sqrt((double) currX * (double) currX + (double) currZ * (double) currZ);
         if (distToSpawn < OverworldBiomeGenerator.SPAWN_LOC_PROTECTION_RADIUS) {
@@ -304,27 +273,20 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         }
         heightMap[i][j] = (int) Math.round( totalHeight );
 
-        //
-        // setup cave multi according to nearby biomes
-        //
-        double caveMulti = 0;
-        for (Biome bom : nearbyBiomeMap.keySet()) {
-            caveMulti += caveGen.getCavernNoiseMulti(bom) * nearbyBiomeMap.get(bom);
+        // compare the two dominating driving power to prevent multiple biomes diluting the result
+        double noCaveFactor = 0, caveFactor = 0;
+        for (WorldHelper.BiomeType biomeType : biomeSignificances.keySet()) {
+            if (caveGen.generateCaveForBiomeType(biomeType)) {
+                caveFactor = Math.max(caveFactor, biomeSignificances.get(biomeType));
+            } else {
+                noCaveFactor = Math.max(noCaveFactor, biomeSignificances.get(biomeType));
+            }
         }
-        caveMulti /= HEIGHT_SAMPLE_FACTOR_SUM;
+        double caveMulti = caveFactor / (caveFactor + noCaveFactor);
+        // cave multi: scale 0~0.9 to 0~1.0 to leave margins around special biomes (internally)
+        caveMulti = Math.min(caveMulti / 0.9, 1);
         // save cave multi into caveMultiMap
         caveMultiMap[i][j] = caveMulti;
-    }
-    // updates the biome information
-    private static void tweakBiome(Biome[][] biomesMemoization, BiomeGrid biome, int yOffset) {
-        for (int i = 0; i < 16; i++)
-            for (int j = 0; j < 16; j++) {
-                Biome biomeToSet = biomesMemoization[NEARBY_BIOME_SAMPLE_RADIUS + i][NEARBY_BIOME_SAMPLE_RADIUS + j];
-                if (yOffset >= 0)
-                    biome.setBiome(i, j, biomeToSet);
-                else
-                    biome.setBiome(i, j, OverworldBiomeGenerator.getUndergroundEquivalent(biomeToSet));
-            }
     }
     /** tweaks the biome then generates the height and cave multiplier mapping of a chunk
      * @param blockXStart the starting x of the chunk
@@ -338,121 +300,34 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     public static void generateMapsAlternative(int blockXStart, int blockZStart, int[][] heightMap, double[][] caveMultiMap,
                                                OverworldCaveGenerator caveGen, BiomeGrid biomeGrid, int yOffset) {
         long timing = System.nanoTime();
-        // create memoization 2D array for the nearby biomes
-        int memoiSize = 16 + NEARBY_BIOME_SAMPLE_RADIUS * 2;
-        Biome[][] biomesMemoization = new Biome[memoiSize][memoiSize];
-        for (int i = 0; i < memoiSize; i ++)
-            for (int j = 0; j < memoiSize; j ++) {
-                biomesMemoization[i][j] = OverworldBiomeGenerator.getBiome(
-                        blockXStart - NEARBY_BIOME_SAMPLE_RADIUS + i, blockZStart - NEARBY_BIOME_SAMPLE_RADIUS + j);
-            }
-        // update the biome grid
-        tweakBiome(biomesMemoization, biomeGrid, yOffset);
-        // record timing info
-        testGenDurTotal[0] += System.nanoTime() - timing;
-
-        timing = System.nanoTime();
         int currX, currZ;
-
-        // setup height info according to nearby biomes at both offset 0.
-        // then use sliding window technique to derive the height everywhere.
-        HashMap<Biome, Double> nearbyBiomeMap = new HashMap<>();
-        for (int sampleIdxX = 0; sampleIdxX <= NEARBY_BIOME_SAMPLE_RADIUS * 2; sampleIdxX++) {
-            for (int sampleIdxZ = 0; sampleIdxZ <= NEARBY_BIOME_SAMPLE_RADIUS * 2; sampleIdxZ++) {
-                Biome currBiome = biomesMemoization[sampleIdxX][sampleIdxZ];
-                double updatedBiomeIntensity = nearbyBiomeMap.getOrDefault(currBiome, 0d) +
-                        HEIGHT_INFLUENCE_FACTOR[sampleIdxX][sampleIdxZ];
-                nearbyBiomeMap.put(currBiome, updatedBiomeIntensity);
-            }
-        }
-
-        // loop through all blocks in a zigzag fashion with the sliding window technique.
-        boolean increasingZ = true;
+        // update the biome grid
         for (int i = 0; i < 16; i ++) {
             currX = blockXStart + i;
             for (int j = 0; j < 16; j++) {
-                // account for shift direction
-                int actualJ = increasingZ ? j : 15 - j;
-                currZ = blockZStart + actualJ;
-
-                // use actualJ to pass in the correct index corresponding to currZ
-                setupHeightAndCaveRatioAtLocation(currX, currZ, i, actualJ, heightMap, caveMultiMap, nearbyBiomeMap, caveGen);
-
-                // sliding window technique
-                if (j + 1 < 16) {
-                    slidingWindowStep(nearbyBiomeMap, biomesMemoization, i, actualJ, false, increasingZ);
-                }
+                currZ = blockZStart + j;
+                OverworldBiomeGenerator.BiomeFeature biomeFeature = OverworldBiomeGenerator.getBiomeFeature(currX, currZ);
+                Biome vanillaBiome = OverworldBiomeGenerator.getBiomeFromType(biomeFeature.evaluatedBiome);
+                if (yOffset >= 0)
+                    biomeGrid.setBiome(i, j, vanillaBiome);
+                else
+                    biomeGrid.setBiome(i, j, OverworldBiomeGenerator.getUndergroundEquivalent(vanillaBiome));
             }
-            // sliding window technique.
-            if (i + 1 < 16) {
-                int zOffset = increasingZ ? 15 : 0;
-                slidingWindowStep(nearbyBiomeMap, biomesMemoization, i, zOffset, true, increasingZ);
+        }
+        // record timing info
+        testGenDurTotal[0] += System.nanoTime() - timing;
+
+        // setup height and cave ratio
+        timing = System.nanoTime();
+        for (int i = 0; i < 16; i ++) {
+            currX = blockXStart + i;
+            for (int j = 0; j < 16; j++) {
+                currZ = blockZStart + j;
+                setupHeightAndCaveRatioAtLocation(currX, currZ, i, j, heightMap, caveMultiMap, caveGen);
             }
-            // reverse the direction to traverse
-            increasingZ = !increasingZ;
         }
         // record timing info
         testGenDurTotal[1] += System.nanoTime() - timing;
-    }
-    /** helper function; handles a single sliding window step
-     * @param nearbyBiomeMap biome map
-     * @param biomesMemoization memoized nearby biomes
-     * @param x the x position (0-15)
-     * @param z the z position (0-15)
-     * @param isXDirection true if the sliding window is moving in the x direction
-     * @param increasingZ true if the sliding window is moving in the increasing z direction
-     */
-    private static void slidingWindowStep(HashMap<Biome, Double> nearbyBiomeMap, Biome[][] biomesMemoization,
-                                          int x, int z, boolean isXDirection, boolean increasingZ) {
-        // note that x + NEARBY_BIOME_SAMPLE_RADIUS is the actual index in memoization
-        // same for z
-        int indAddX, indAddZ;
-        int indDropX, indDropZ;
-        int xStep, zStep;
-        // sliding window in the x direction
-        if (isXDirection) {
-            // add one to include the information just beyond the current scope
-            // (x + NEARBY_BIOME_SAMPLE_RADIUS) + NEARBY_BIOME_SAMPLE_RADIUS + 1
-            indAddX = x + NEARBY_BIOME_SAMPLE_RADIUS * 2 + 1;
-            // (x + NEARBY_BIOME_SAMPLE_RADIUS) - NEARBY_BIOME_SAMPLE_RADIUS
-            indDropX = x;
-            // (z + NEARBY_BIOME_SAMPLE_RADIUS) - NEARBY_BIOME_SAMPLE_RADIUS
-            indAddZ = z;
-            indDropZ = z;
-            // step in the z direction
-            xStep = 0;
-            zStep = 1;
-        }
-        // sliding in the z direction; note this might be increasing or decreasing.
-        else {
-            // (x + NEARBY_BIOME_SAMPLE_RADIUS) - NEARBY_BIOME_SAMPLE_RADIUS
-            indAddX = x;
-            indDropX = x;
-            // add one to include the information just beyond the current scope
-            indAddZ = z + NEARBY_BIOME_SAMPLE_RADIUS + (NEARBY_BIOME_SAMPLE_RADIUS + 1) * (increasingZ ? 1 : -1);
-            indDropZ = z + NEARBY_BIOME_SAMPLE_RADIUS - (NEARBY_BIOME_SAMPLE_RADIUS) * (increasingZ ? 1 : -1);
-            // step in the x direction
-            xStep = 1;
-            zStep = 0;
-        }
-        // loop to add and remove the two strips for transition
-        for (int sampleIdx = 0; sampleIdx <= NEARBY_BIOME_SAMPLE_RADIUS * 2; sampleIdx++) {
-            double influence_factor = HEIGHT_INFLUENCE_FACTOR[sampleIdx][0];
-
-            Biome currBiome_drop = biomesMemoization[indDropX][indDropZ];
-            double updatedIntensity_drop = nearbyBiomeMap.getOrDefault(currBiome_drop, 0d) - influence_factor;
-            nearbyBiomeMap.put(currBiome_drop, updatedIntensity_drop);
-
-            Biome currBiome_add =  biomesMemoization[indAddX][indAddZ];
-            double updatedIntensity_add = nearbyBiomeMap.getOrDefault(currBiome_add, 0d) + influence_factor;
-            nearbyBiomeMap.put(currBiome_add,  updatedIntensity_add);
-
-            // update indexes
-            indAddX += xStep;
-            indDropX += xStep;
-            indAddZ += zStep;
-            indDropZ += zStep;
-        }
     }
 
     /*

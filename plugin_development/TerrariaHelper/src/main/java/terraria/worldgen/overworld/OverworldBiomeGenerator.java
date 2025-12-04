@@ -5,6 +5,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.util.noise.PerlinOctaveGenerator;
 import terraria.TerrariaHelper;
 import terraria.util.WorldHelper;
+import terraria.worldgen.Interpolate;
 
 import java.util.*;
 
@@ -13,8 +14,6 @@ import static terraria.worldgen.overworld.OverworldChunkGenerator.*;
 public class OverworldBiomeGenerator {
     static final int SPAWN_LOC_PROTECTION_RADIUS = 250;
     static final long MASK_LAST_HALF = 0xFFFFL;
-    static long[] testGenDurTotal = {0, 0, 0, 0}; // cache hit, cache miss, biome gen, cache update
-    static long[] testGenAmount = {0, 0}; // cache hit, cache miss
 
     static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseHum, noiseWrd, noiseTrH, noiseEros;
 
@@ -52,55 +51,119 @@ public class OverworldBiomeGenerator {
                     features[WEIRDNESS] *= distFromSpawnFactor;
                 }
             }
+
+            // find the evaluated biome & significance
+            HashMap<WorldHelper.BiomeType, Double> relevance = getBiomesWeight();
+            WorldHelper.BiomeType evalBiomeType = WorldHelper.BiomeType.NORMAL;
+            double evalBiomeSig = 0d;
+            for (WorldHelper.BiomeType currBiome : relevance.keySet()) {
+                double currSig = relevance.get(currBiome);
+                if (currSig > evalBiomeSig) {
+                    evalBiomeSig = currSig;
+                    evalBiomeType = currBiome;
+                }
+            }
+            this.evaluatedBiome = evalBiomeType;
+            this.biomeSignificance = evalBiomeSig;
+        }
+
+        private static final Interpolate SULPHUROUS_OCEAN_REL;
+        private static final Interpolate OCEAN_REL;
+        private static final Interpolate ASTRAL_REL;
+        private static final Interpolate HALLOW_REL;
+        private static final Interpolate CORRUPTION_REL;
+        private static final Interpolate JUNGLE_REL;
+        private static final Interpolate DESERT_REL;
+        private static final Interpolate TUNDRA_REL;
+        static {
+            // both oceans: pass in cont.
+            SULPHUROUS_OCEAN_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    new Interpolate.InterpolatePoint(0.5 - BIOME_INTERPOLATE, 0),
+                    new Interpolate.InterpolatePoint(0.5 + BIOME_INTERPOLATE, 1),
+            }, null);
+            OCEAN_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    new Interpolate.InterpolatePoint(-0.5 - BIOME_INTERPOLATE, 1),
+                    new Interpolate.InterpolatePoint(-0.5 + BIOME_INTERPOLATE, 0),
+            }, null);
+            // astral: pass in hum + 2 * abs(cnt) (prefer negative)
+            ASTRAL_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    new Interpolate.InterpolatePoint(-0.25 - BIOME_INTERPOLATE, 1),
+                    new Interpolate.InterpolatePoint(-0.25 + BIOME_INTERPOLATE, 0),
+            }, null);
+            // hallow: pass in weirdness (prefer negative)
+            HALLOW_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    new Interpolate.InterpolatePoint(-0.55 - BIOME_INTERPOLATE, 1),
+                    new Interpolate.InterpolatePoint(-0.55 + BIOME_INTERPOLATE, 0),
+            }, null);
+            // corruption: pass in weirdness (prefer positive)
+            CORRUPTION_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    new Interpolate.InterpolatePoint(0.55 - BIOME_INTERPOLATE, 0),
+                    new Interpolate.InterpolatePoint(0.55 + BIOME_INTERPOLATE, 1),
+            }, null);
+            // jungle: pass in max(temp, 0) * hum (prefer positive)
+            JUNGLE_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    new Interpolate.InterpolatePoint(0.085 - BIOME_INTERPOLATE, 0),
+                    new Interpolate.InterpolatePoint(0.085 + BIOME_INTERPOLATE, 1),
+            }, null);
+            // desert: pass in max(temp, 0) * -hum (prefer positive)
+            DESERT_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    new Interpolate.InterpolatePoint(0.085 - BIOME_INTERPOLATE, 0),
+                    new Interpolate.InterpolatePoint(0.085 + BIOME_INTERPOLATE, 1),
+            }, null);
+            // tundra: pass in tmp (prefer negative)
+            TUNDRA_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    new Interpolate.InterpolatePoint(-0.55 - BIOME_INTERPOLATE, 1),
+                    new Interpolate.InterpolatePoint(-0.55 + BIOME_INTERPOLATE, 0),
+            }, null);
+        }
+        public HashMap<WorldHelper.BiomeType, Double> getBiomesWeight() {
+            HashMap<WorldHelper.BiomeType, Double> result = new HashMap<>();
+
             // evaluate the biome for this noise
             double tmp = features[TEMPERATURE], hum = features[HUMIDITY],
                     cnt = features[CONTINENTALNESS], wrd = features[WEIRDNESS];
-            // sulphurous ocean
-            if (cnt > 0.5) {
-                evaluatedBiome = WorldHelper.BiomeType.SULPHUROUS_OCEAN;
-                biomeSignificance = cnt;
-            }
-            // ocean
-            else if (cnt < -0.5) {
-                evaluatedBiome = WorldHelper.BiomeType.OCEAN;
-                biomeSignificance = -cnt;
-            }
-            // astral infection
-            else if (Math.abs(cnt) < 0.25 && hum < -0.5) {
-                evaluatedBiome = WorldHelper.BiomeType.ASTRAL_INFECTION;
-                biomeSignificance = -hum;
-            }
-            // hallow
-            else if (wrd < -0.5) {
-                evaluatedBiome = WorldHelper.BiomeType.HALLOW;
-                biomeSignificance = -wrd;
-            }
-            // corruption
-            else if (wrd > 0.5) {
-                evaluatedBiome = WorldHelper.BiomeType.CORRUPTION;
-                biomeSignificance = wrd;
-            }
-            // jungle
-            else if (tmp > 0.3 && hum > 0.3) {
-                evaluatedBiome = WorldHelper.BiomeType.JUNGLE;
-                biomeSignificance = tmp + hum;
-            }
-            // desert
-            else if (tmp > 0.3 && hum < -0.3) {
-                evaluatedBiome = WorldHelper.BiomeType.DESERT;
-                biomeSignificance = tmp - hum;
-            }
-            // tundra
-            else if (tmp < -0.5) {
-                evaluatedBiome = WorldHelper.BiomeType.TUNDRA;
-                biomeSignificance = -tmp;
-            }
-            // normal
-            else {
-                evaluatedBiome = WorldHelper.BiomeType.NORMAL;
-                // -0.5 is the ocean; the dungeon is closer to the ocean side.
-                biomeSignificance = -Math.abs( cnt + 0.35 );
-            }
+
+            double prioritySum = 0d;
+            // oceans - independent and has the highest priority
+            double sulphurousOcean = SULPHUROUS_OCEAN_REL.getY(cnt);
+            double ocean = OCEAN_REL.getY(cnt);
+            prioritySum += ocean + sulphurousOcean;
+            // astral infection - the second-highest priority
+            double astral = ASTRAL_REL.getY(hum + 2 * Math.abs(cnt));
+            astral = Math.max(astral - prioritySum, 0);
+            prioritySum += astral;
+            // hallow and corruption - next highest, independent
+            double hallow = HALLOW_REL.getY(wrd);
+            double corruption = CORRUPTION_REL.getY(wrd);
+            hallow = Math.max(hallow - prioritySum, 0);
+            corruption = Math.max(corruption - prioritySum, 0);
+            prioritySum += hallow + corruption;
+            // jungle - next highest
+            double jungle = JUNGLE_REL.getY(Math.max(tmp, 0) * hum);
+            jungle = Math.max(jungle - prioritySum, 0);
+            prioritySum += jungle;
+            // desert - next highest
+            double desert = DESERT_REL.getY(Math.max(tmp, 0) * -hum);
+            desert = Math.max(desert - prioritySum, 0);
+            prioritySum += desert;
+            // tundra - next highest
+            double tundra = TUNDRA_REL.getY(tmp);
+            tundra = Math.max(tundra - prioritySum, 0);
+            prioritySum += tundra;
+            // normal - left over
+            double normal = Math.max(1 - prioritySum, 0);
+
+            // assemble the result
+            if (ocean > 1e-9) result.put(WorldHelper.BiomeType.OCEAN, ocean);
+            if (sulphurousOcean > 1e-9) result.put(WorldHelper.BiomeType.SULPHUROUS_OCEAN, sulphurousOcean);
+            if (astral > 1e-9) result.put(WorldHelper.BiomeType.ASTRAL_INFECTION, astral);
+            if (hallow > 1e-9) result.put(WorldHelper.BiomeType.HALLOW, hallow);
+            if (corruption > 1e-9) result.put(WorldHelper.BiomeType.CORRUPTION, corruption);
+            if (jungle > 1e-9) result.put(WorldHelper.BiomeType.JUNGLE, jungle);
+            if (desert > 1e-9) result.put(WorldHelper.BiomeType.DESERT, desert);
+            if (tundra > 1e-9) result.put(WorldHelper.BiomeType.TUNDRA, tundra);
+            if (normal > 1e-9) result.put(WorldHelper.BiomeType.NORMAL, normal);
+            return result;
         }
     }
 
@@ -199,23 +262,12 @@ public class OverworldBiomeGenerator {
         return getBiomeFeature((int) actualX, (int) actualZ);
     }
     public static BiomeFeature getBiomeFeature(int blockX, int blockZ) {
-        long timing = System.nanoTime();
-
         long biomeLocKey = getCacheKey(blockX, blockZ);
         // return the cached value if available
         BiomeFeature result = biomeCache.get(biomeLocKey);
         if (result != null) {
-            testGenDurTotal[0] += System.nanoTime() - timing;
-            testGenAmount[0] ++;
-            if (testGenAmount[0] % 1000 == 0) {
-                Bukkit.broadcastMessage("Biome feature cache hit: " + testGenDurTotal[0] / testGenAmount[0]);
-            }
-
             return result;
         }
-
-        testGenDurTotal[1] += System.nanoTime() - timing;
-        timing = System.nanoTime();
 
         // lazy initialization of noise functions
         if (noiseCont == null) {
@@ -224,23 +276,9 @@ public class OverworldBiomeGenerator {
         // the biome feature content is generated within the constructor
         result = new BiomeFeature(blockX, blockZ);
 
-        testGenDurTotal[2] += System.nanoTime() - timing;
-        timing = System.nanoTime();
-
         // save the result and return
         if (biomeCache.size() > BIOME_CACHE_LIMIT) biomeCache.clear();
         biomeCache.put(biomeLocKey, result);
-
-        testGenDurTotal[3] += System.nanoTime() - timing;
-        testGenAmount[1] ++;
-        if (testGenAmount[1] % 1000 == 0) {
-            Bukkit.broadcastMessage("Biome feature cache miss: " + testGenDurTotal[1] / testGenAmount[1]);
-            Bukkit.broadcastMessage("Biome feature gen: " + testGenDurTotal[2] / testGenAmount[1]);
-            Bukkit.broadcastMessage("Biome feature cache upd: " + testGenDurTotal[3] / testGenAmount[1]);
-            Bukkit.broadcastMessage("Biome feature cache miss total: " + (testGenDurTotal[1] + testGenDurTotal[2] + testGenDurTotal[3]) / testGenAmount[1]);
-            Bukkit.broadcastMessage("Biome cache size: " + biomeCache.size());
-            Bukkit.broadcastMessage("Biome feature cache hit rate: " + ((double) testGenAmount[0] / (double) (testGenAmount[0] + testGenAmount[1])) );
-        }
 
         return result;
     }
