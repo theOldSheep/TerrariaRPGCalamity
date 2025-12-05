@@ -13453,7 +13453,7 @@ Dodu的手炮:
   lore:
   - §r造成会摧毁大部分图格的小爆炸
   - §7▷ 爆炸物：摧毁方块会按照玩家手上的工具和游戏进度进行判定
-  - §r“投出去可不是件易事。”
+  - §r“投出去可不是件易事”
   attributes:
     damage: 200
     damageType: Arrow
@@ -13484,7 +13484,7 @@ Dodu的手炮:
   lore:
   - §r造成会摧毁大部分图格的大爆炸
   - §7▷ 爆炸物：摧毁方块会按照玩家手上的工具和游戏进度进行判定
-  - §r“投出去可不是件易事。”
+  - §r“投出去可不是件易事”
   attributes:
     damage: 500
     damageType: Arrow
@@ -13494,6 +13494,22 @@ Dodu的手炮:
     useTime: 40
   worth: 40000
   rarity: 1
+神圣雷管:
+  item: IRON_NUGGET
+  prefixApplicable: false
+  lore:
+  - §r造成会摧毁大部分图格的巨大爆炸
+  - §r爆炸似乎会留下平整的地面……
+  - §7▷ 爆炸物：摧毁方块会按照玩家手上的工具和游戏进度进行判定
+  attributes:
+    damage: 2000
+    damageType: Arrow
+    crit: 4
+    knockback: 20
+    projectileSpeed: 0.8
+    useTime: 60
+  worth: 40000
+  rarity: 7
 木箭:
   item: ARROW
   attributes:

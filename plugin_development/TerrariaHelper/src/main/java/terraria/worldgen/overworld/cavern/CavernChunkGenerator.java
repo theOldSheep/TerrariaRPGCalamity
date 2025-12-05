@@ -36,18 +36,18 @@ public class CavernChunkGenerator extends ChunkGenerator {
     public ChunkData generateChunkData(World world, Random random, int x, int z, BiomeGrid biome) {
         // init info maps; biome setup is handled here
         int[][] heightMap = new int[16][16];
+        int[][] soilMap = new int[16][16];
         double[][] caveMultiMap = new double[16][16];
-        OverworldChunkGenerator.generateMapsAlternative(x << 4, z << 4, heightMap, caveMultiMap, CAVE_GENERATOR_CAVERN, biome, Y_OFFSET_CAVERN);
+        OverworldChunkGenerator.generateMaps(x << 4, z << 4, heightMap, soilMap, caveMultiMap, CAVE_GENERATOR_CAVERN, biome, Y_OFFSET_CAVERN);
         // init terrain
         ChunkData chunk = createChunkData(world);
         OverworldChunkGenerator.initializeTerrain(chunk, x * 16, z * 16, biome, Y_OFFSET_CAVERN, heightMap);
         Boolean[][][] stoneFlags = OverworldChunkGenerator.setupStoneFlags(x << 4, z << 4, Y_OFFSET_CAVERN, heightMap);
         // tweak terrain
-        CAVE_GENERATOR_CAVERN.populate(world, chunk, biome, heightMap, x, z, caveMultiMap);
-//        CAVE_GENERATOR_CAVERN.populate_no_optimization(chunk, biome, heightMap, x, z, caveMultiMap);
+        CAVE_GENERATOR_CAVERN.populate(world, chunk, biome, heightMap, x << 4, z << 4, caveMultiMap);
         for (int i = 0; i < 16; i ++)
             for (int j = 0; j < 16; j ++)
-                OverworldChunkGenerator.generateTopSoil(chunk, stoneFlags, i, heightMap[i][j], j, (x << 4) + i, (z << 4) + j, biome.getBiome(i, j), Y_OFFSET_CAVERN);
+                OverworldChunkGenerator.generateTopSoil(chunk, stoneFlags, heightMap[i][j], soilMap[i][j], i, j, biome.getBiome(i, j), Y_OFFSET_CAVERN);
         return chunk;
     }
 

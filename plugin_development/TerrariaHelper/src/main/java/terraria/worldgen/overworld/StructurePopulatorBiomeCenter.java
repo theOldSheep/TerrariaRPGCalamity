@@ -87,6 +87,7 @@ public class StructurePopulatorBiomeCenter extends BlockPopulator {
         }
         for (int i = -CHECK_STEPS_RADIUS; i <= CHECK_STEPS_RADIUS; i ++) {
             for (int j = -CHECK_STEPS_RADIUS; j <= CHECK_STEPS_RADIUS; j ++) {
+                // do not compare the current
                 if (i == 0 && j == 0)
                     continue;
                 OverworldBiomeGenerator.BiomeFeature feature = OverworldBiomeGenerator.getBiomeFeature(
@@ -97,7 +98,7 @@ public class StructurePopulatorBiomeCenter extends BlockPopulator {
                     // the other chunk is more significant
                     if (diff > 0)
                         lessSignificant = true;
-                        // equally significant: break tie by chunk X, then by chunk Z.
+                    // equally significant: break tie by chunk X, then by chunk Z.
                     else if (diff == 0) {
                         if (i > 0)
                             lessSignificant = true;

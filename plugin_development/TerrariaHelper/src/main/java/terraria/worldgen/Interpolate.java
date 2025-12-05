@@ -32,7 +32,7 @@ public class Interpolate {
     public Interpolate(InterpolatePoint[] allPivots, boolean sqrSmoothing) {
         double lastX = -10;
         for (InterpolatePoint pt : allPivots) {
-            if (Math.abs(pt.x) > 1 || pt.x <= lastX) {
+            if (pt.x <= lastX) {
                 TerrariaHelper.LOGGER.warning("Interpolate Initialized with UNSORTED pivots, this will not work!");
                 TerrariaHelper.LOGGER.warning("Error pivot: " + pt);
             }

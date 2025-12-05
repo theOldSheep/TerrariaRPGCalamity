@@ -2698,16 +2698,19 @@ Dodu的手炮:
   type: THROW_PROJECTILE
   autoSwing: false
 炸弹:
-  type: THROW_PROJECTILE
+  type: THROW_DIRECT
   autoSwing: false
 粘性炸弹:
-  type: THROW_PROJECTILE
+  type: THROW_DIRECT
   autoSwing: false
 雷管:
-  type: THROW_PROJECTILE
+  type: THROW_DIRECT
   autoSwing: false
 粘性雷管:
-  type: THROW_PROJECTILE
+  type: THROW_DIRECT
+  autoSwing: false
+神圣雷管:
+  type: THROW_DIRECT
   autoSwing: false
 海沫炸弹:
   type: ROGUE

@@ -1,6 +1,5 @@
 package terraria.worldgen.overworld;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
@@ -16,14 +15,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.logging.Level;
 
 import static terraria.worldgen.overworld.OverworldBiomeGenerator.getBiomeType;
 import static terraria.worldgen.overworld.StructurePopulatorBiomeCenter.getBiomeFeature;
-import static terraria.worldgen.overworld.OverworldCaveGenerator.CAVE_DETAIL_THREADS;
 
 public class BiomeSummary {
     public static final ConfigurationSection CONFIG = TerrariaHelper.optimizationConfig.getConfigurationSection("worldGen.mapConfig");
@@ -93,7 +87,7 @@ public class BiomeSummary {
             }
         }
 
-        // 5. Mark Spawn Point and Biome Centers
+        // 5. Mark Spawn Point & biome structures
         int spawnImageX = imageDimension / 2;
         int spawnImageZ = imageDimension / 2;
 
@@ -124,23 +118,6 @@ public class BiomeSummary {
 
             // Draw darker border
             g2d.setColor(biomeType.color.darker());
-            g2d.drawRect(biomeImageX - BIOME_MARKER_RADIUS_PIXEL, biomeImageZ - BIOME_MARKER_RADIUS_PIXEL,
-                    markerSize, markerSize); // Outline the border
-        }));
-
-        // Mark biome centers
-        BIOME_CENTERS.forEach((biomeType, centers) -> centers.forEach(centerPair -> {
-            Point center = centerPair.getKey();
-            int biomeImageX = (center.x + BIOME_SCAN_RADIUS_IN_BLOCKS) / BLOCKS_PER_PIXEL;
-            int biomeImageZ = (center.y + BIOME_SCAN_RADIUS_IN_BLOCKS) / BLOCKS_PER_PIXEL;
-
-            // Draw biome-colored center
-            g2d.setColor(biomeType.color);
-            g2d.fillRect(biomeImageX - BIOME_MARKER_RADIUS_PIXEL, biomeImageZ - BIOME_MARKER_RADIUS_PIXEL,
-                    markerSize, markerSize); // Fill without the border
-
-            // Draw red border
-            g2d.setColor(Color.RED);
             g2d.drawRect(biomeImageX - BIOME_MARKER_RADIUS_PIXEL, biomeImageZ - BIOME_MARKER_RADIUS_PIXEL,
                     markerSize, markerSize); // Outline the border
         }));

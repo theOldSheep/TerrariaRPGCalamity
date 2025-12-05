@@ -15,10 +15,10 @@ import java.util.Random;
 public class FoliagePopulator extends BlockPopulator {
     public static final double GRASS_GROW_CHANCE = 0.1;
     double getTreeAmount(double temp, double moisture) {
-        double result = 4d;
-        // dry+hot=desert, dry+cold=tundra(even less tree?), moist+hot=jungle, moist+cold=tundra
-        result += Math.min(moisture * 8 * Math.abs(temp), 2);
-        return Math.max(result, 2);
+        double result = 2d;
+        // -0.5 ~ 0.5 : 0 ~ 4
+        result += moisture * 4;
+        return Math.min(Math.max(result, 0), 4);
     }
     @Override
     public void populate(World wld, Random rdm, Chunk chunk) {
@@ -40,13 +40,12 @@ public class FoliagePopulator extends BlockPopulator {
             double amount = getTreeAmount( temp, moisture );
             // slightly randomize the amount generated
             if (amount > 0) {
-                amount /= 2;
-                amount += rdm.nextDouble() * amount;
+                amount += rdm.nextDouble() - 0.5;
             }
 
             // plant the trees
             HashMap<WorldHelper.LeafShape, Double>[] treeStylePref = null;
-            for (int i = 1; i < MathHelper.randomRound( amount ); i++) {
+            for (int i = 1; i <= MathHelper.randomRound( amount ); i++) {
                 int X = rdm.nextInt(15);
                 int Z = rdm.nextInt(15);
                 int Y = ((CraftChunk) chunk).getHandle().heightMap[Z << 4 | X];

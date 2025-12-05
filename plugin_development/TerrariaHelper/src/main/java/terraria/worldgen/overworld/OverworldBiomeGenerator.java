@@ -76,43 +76,53 @@ public class OverworldBiomeGenerator {
         private static final Interpolate DESERT_REL;
         private static final Interpolate TUNDRA_REL;
         static {
+            // note: make sure the noise will increase indefinitely from 0.9 to 1.0, so that biome-centers can be computed correctly
+            // sulphurous ocean is an exception - otherwise the deepest places will not show bedrock.
+
             // both oceans: pass in cont.
             SULPHUROUS_OCEAN_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
                     new Interpolate.InterpolatePoint(0.5 - BIOME_INTERPOLATE, 0),
                     new Interpolate.InterpolatePoint(0.5 + BIOME_INTERPOLATE, 1),
             }, null);
             OCEAN_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
-                    new Interpolate.InterpolatePoint(-0.5 - BIOME_INTERPOLATE, 1),
+                    new Interpolate.InterpolatePoint(-2.0, 1),
+                    new Interpolate.InterpolatePoint(-0.5 - BIOME_INTERPOLATE, 0.95),
                     new Interpolate.InterpolatePoint(-0.5 + BIOME_INTERPOLATE, 0),
             }, null);
             // astral: pass in hum + 2 * abs(cnt) (prefer negative)
             ASTRAL_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
-                    new Interpolate.InterpolatePoint(-0.25 - BIOME_INTERPOLATE, 1),
+                    new Interpolate.InterpolatePoint(-2.0, 1),
+                    new Interpolate.InterpolatePoint(-0.25 - BIOME_INTERPOLATE, 0.95),
                     new Interpolate.InterpolatePoint(-0.25 + BIOME_INTERPOLATE, 0),
             }, null);
             // hallow: pass in weirdness (prefer negative)
             HALLOW_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
-                    new Interpolate.InterpolatePoint(-0.55 - BIOME_INTERPOLATE, 1),
+                    new Interpolate.InterpolatePoint(-2.0, 1),
+                    new Interpolate.InterpolatePoint(-0.55 - BIOME_INTERPOLATE, 0.95),
                     new Interpolate.InterpolatePoint(-0.55 + BIOME_INTERPOLATE, 0),
             }, null);
             // corruption: pass in weirdness (prefer positive)
             CORRUPTION_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
                     new Interpolate.InterpolatePoint(0.55 - BIOME_INTERPOLATE, 0),
-                    new Interpolate.InterpolatePoint(0.55 + BIOME_INTERPOLATE, 1),
+                    new Interpolate.InterpolatePoint(0.55 + BIOME_INTERPOLATE, 0.95),
+                    new Interpolate.InterpolatePoint(2.0, 1),
             }, null);
             // jungle: pass in max(temp, 0) * hum (prefer positive)
             JUNGLE_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
-                    new Interpolate.InterpolatePoint(0.085 - BIOME_INTERPOLATE, 0),
-                    new Interpolate.InterpolatePoint(0.085 + BIOME_INTERPOLATE, 1),
+                    new Interpolate.InterpolatePoint(0.08  - BIOME_INTERPOLATE, 0),
+                    new Interpolate.InterpolatePoint(0.08  + BIOME_INTERPOLATE, 0.95),
+                    new Interpolate.InterpolatePoint(2.0, 1),
             }, null);
             // desert: pass in max(temp, 0) * -hum (prefer positive)
             DESERT_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
-                    new Interpolate.InterpolatePoint(0.085 - BIOME_INTERPOLATE, 0),
-                    new Interpolate.InterpolatePoint(0.085 + BIOME_INTERPOLATE, 1),
+                    new Interpolate.InterpolatePoint(0.08  - BIOME_INTERPOLATE, 0),
+                    new Interpolate.InterpolatePoint(0.08  + BIOME_INTERPOLATE, 0.95),
+                    new Interpolate.InterpolatePoint(2.0, 1),
             }, null);
             // tundra: pass in tmp (prefer negative)
             TUNDRA_REL = new Interpolate(new Interpolate.InterpolatePoint[]{
-                    new Interpolate.InterpolatePoint(-0.55 - BIOME_INTERPOLATE, 1),
+                    new Interpolate.InterpolatePoint(-2.0, 1),
+                    new Interpolate.InterpolatePoint(-0.55 - BIOME_INTERPOLATE, 0.95),
                     new Interpolate.InterpolatePoint(-0.55 + BIOME_INTERPOLATE, 0),
             }, null);
         }

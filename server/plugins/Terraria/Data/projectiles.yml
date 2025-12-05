@@ -4670,7 +4670,7 @@
     liveTime: 100
     noGravityTicks: 0
     isGrenade: true
-    blastRadius: 2.5
+    blastRadius: 3
     blastDamageShooter: true
     blastDestroyBlock: true
     slowedByWater: true
@@ -4680,7 +4680,7 @@
     liveTime: 100
     noGravityTicks: 0
     isGrenade: true
-    blastRadius: 2.5
+    blastRadius: 3
     blastDamageShooter: true
     blastDestroyBlock: true
     slowedByWater: true
@@ -4693,7 +4693,7 @@
     liveTime: 100
     noGravityTicks: 0
     isGrenade: true
-    blastRadius: 4
+    blastRadius: 5
     blastDamageShooter: true
     blastDestroyBlock: true
     slowedByWater: true
@@ -4703,7 +4703,17 @@
     liveTime: 100
     noGravityTicks: 0
     isGrenade: true
-    blastRadius: 4
+    blastRadius: 5
+    blastDamageShooter: true
+    blastDestroyBlock: true
+    slowedByWater: true
+神圣雷管:
+    blockHitAction: stick
+    canBeReflected: false
+    liveTime: 60
+    noGravityTicks: 0
+    isGrenade: true
+    blastRadius: 6
     blastDamageShooter: true
     blastDestroyBlock: true
     slowedByWater: true

@@ -851,7 +851,7 @@ public class WorldHelper {
              */
             // empty; really dry and hot
             {
-                LeafShape empty = new LeafShape(0.4, -0.4, 1);
+                LeafShape empty = new LeafShape(0.5, -0.5, 1);
                 candidateCanopyShapes.add(empty);
             }
             // tiny, work with "empty" to make hot&dry places look less lifeless.
@@ -862,9 +862,9 @@ public class WorldHelper {
                 );
                 candidateCanopyShapes.add(tiny);
             }
-            // boxy(spiky), for somewhat hot places with lower hum.
+            // boxy(spiky), for hot places with lower hum.
             {
-                LeafShape boxy = new LeafShape(0.25, -0.25, 2,
+                LeafShape boxy = new LeafShape(0.5, -0.25, 2,
                         new LeafLayerShape(1, 0),
                         new LeafLayerShape(2, 0),
                         new LeafLayerShape(1, 0),
@@ -986,7 +986,7 @@ public class WorldHelper {
             }
             // smaller minecraft-style, use as a transition between jungle and dryer places.
             {
-                LeafShape minecraft = new LeafShape(0.5, 0, 3,
+                LeafShape minecraft = new LeafShape(0.4, -0.1, 3,
                         new LeafLayerShape(2, 1),
                         new LeafLayerShape(2, 0),
                         new LeafLayerShape(0, 0)
@@ -999,12 +999,12 @@ public class WorldHelper {
         {
             // empty for extremely hot & dry places
             {
-                LeafShape empty = new LeafShape(0.5, -0.2, 2);
+                LeafShape empty = new LeafShape(0.5, -0.3, 2);
                 candidateBranchShapes.add(empty);
             }
-            // empty for freezing & dry places
+            // empty for freezing places
             {
-                LeafShape empty = new LeafShape(-0.5, -0.2, 2);
+                LeafShape empty = new LeafShape(-0.5, 0, 2);
                 candidateBranchShapes.add(empty);
             }
             // empty for very dry places

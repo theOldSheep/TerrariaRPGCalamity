@@ -4,6 +4,7 @@ import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.*;
 import org.bukkit.SoundCategory;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.*;
@@ -589,24 +590,68 @@ public class EntityHelper {
             if (sourceEntity instanceof Player)
                 ply = (Player) sourceEntity;
             if (ply != null) {
-                org.bukkit.block.Block blastCenterBlock = loc.getBlock();
-                // subtract 1e-3 from radiusSqr to prevent annoying unnatural shape
-                double radiusSqr = radius * radius - 1e-3;
-                int radInt = (int) Math.ceil(radius);
-                double distSqrX, distSqrY, distSqrZ;
-                for (int xOffset = radInt * -1; xOffset <= radInt; xOffset ++) {
-                    distSqrX = xOffset * xOffset;
-                    // prevent a block of dirt held intact after blowing up a tree
-                    for (int yOffset = radInt; yOffset >= -radInt; yOffset--) {
-                        distSqrY = yOffset * yOffset;
-                        if (distSqrX + distSqrY > radiusSqr) continue;
-                        for (int zOffset = radInt * -1; zOffset <= radInt; zOffset++) {
-                            distSqrZ = zOffset * zOffset;
-                            if (distSqrX + distSqrY + distSqrZ > radiusSqr) continue;
-                            org.bukkit.block.Block currBlock = blastCenterBlock.getRelative(xOffset, yOffset, zOffset);
-                            GameplayHelper.playerBreakBlock(currBlock, ply, true, false);
+                ArrayList<Block> pendingDestruction = new ArrayList<>();
+                // holy hand grenade would leave flat ground
+                if (source.getName().equals("神圣雷管")) {
+                    int minYOffset = 0;
+                    org.bukkit.block.Block blastCenterBlock = loc.getBlock();
+                    int radInt = (int) Math.ceil(radius);
+                    // first get the lowest block y to blast off
+                    // for all x&z pos, look vertically down until finding solid ground to prevent including caves
+                    // at -radInt, make the blast as powerful as it could - so it could blast down pillars etc.
+                    for (int xOffset = -radInt; xOffset <= radInt; xOffset ++) {
+                        for (int zOffset = -radInt; zOffset <= radInt; zOffset++) {
+                            // do not optimize starting yOffset - this is a best-effort to ensure it does not go through into caves
+                            for (int yOffset = 0; yOffset >= -radInt; yOffset--) {
+                                org.bukkit.block.Block currBlock = blastCenterBlock.getRelative(xOffset, yOffset, zOffset);
+                                // upon meeting -radInt - save blast threshold as -radInt
+                                if (yOffset == -radInt) {
+                                    minYOffset = -radInt;
+                                }
+                                // upon meeting a floor - save blast threshold as the block above it, and exit loop
+                                else if (currBlock.getType().isSolid()) {
+                                    minYOffset = Math.min(yOffset + 1, minYOffset);
+                                    break;
+                                }
+                            }
                         }
                     }
+                    // then populate the blocks to blast off
+                    for (int xOffset = -radInt; xOffset <= radInt; xOffset ++) {
+                        for (int yOffset = radInt; yOffset >= minYOffset; yOffset--) {
+                            for (int zOffset = -radInt; zOffset <= radInt; zOffset++) {
+                                org.bukkit.block.Block currBlock = blastCenterBlock.getRelative(xOffset, yOffset, zOffset);
+                                pendingDestruction.add(currBlock);
+                            }
+                        }
+                    }
+
+                }
+                // otherwise, the explosion will be spherical
+                else {
+                    org.bukkit.block.Block blastCenterBlock = loc.getBlock();
+                    // subtract 1e-3 from radiusSqr to prevent annoying unnatural shape
+                    double radiusSqr = radius * radius - 1e-3;
+                    int radInt = (int) Math.ceil(radius);
+                    double distSqrX, distSqrY, distSqrZ;
+                    for (int xOffset = radInt * -1; xOffset <= radInt; xOffset ++) {
+                        distSqrX = xOffset * xOffset;
+                        // prevent a block of dirt held intact after blowing up a tree
+                        for (int yOffset = radInt; yOffset >= -radInt; yOffset--) {
+                            distSqrY = yOffset * yOffset;
+                            if (distSqrX + distSqrY > radiusSqr) continue;
+                            for (int zOffset = radInt * -1; zOffset <= radInt; zOffset++) {
+                                distSqrZ = zOffset * zOffset;
+                                if (distSqrX + distSqrY + distSqrZ > radiusSqr) continue;
+                                org.bukkit.block.Block currBlock = blastCenterBlock.getRelative(xOffset, yOffset, zOffset);
+                                pendingDestruction.add(currBlock);
+                            }
+                        }
+                    }
+                }
+                // destroy
+                for (Block block : pendingDestruction) {
+                    GameplayHelper.playerBreakBlock(block, ply, true, false);
                 }
             }
         }

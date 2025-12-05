@@ -4645,6 +4645,22 @@ AIR:
     - 雷管
     - 凝胶
     recipeCategory: TOOL
+  '12_1':
+    requireLevel: 1
+    resultItem: 神圣雷管
+    requireItem:
+    - 雷管:5
+    - 金锭:2
+    - 水瓶
+    recipeCategory: TOOL
+  '12_2':
+    requireLevel: 1
+    resultItem: 神圣雷管:5
+    requireItem:
+    - 雷管:5
+    - 光明之魂:3
+    - 妖精尘
+    recipeCategory: TOOL
   '13':
     requireLevel: 1
     resultItem: 初学者鱼饵:2

@@ -1,6 +1,6 @@
 worldGen:
   params:
-    seed: 876239938klj
+    seed: 0D000721
     landHeight: 100
     seaLevel: 90
     riverDepth: 25
@@ -17,13 +17,13 @@ worldGen:
     surfaceChestRate: 0.01
     cavernChestRate: 0.025
   opt:
-    chunkPrepDurationLog: true
-    caveGenDurationLog: true
+    chunkPrepDurationLog: false
+    caveGenDurationLog: false
     caveSketchSize: 3
-    caveSketchThreads: 16
-    caveDetailThreads: 16
+    stoneVeinSketchSize: 3
+    optThreads: 16
     structureNanoSecond: 10000000
-    biomeCacheLimit: 50000
+    biomeCacheLimit: 100000
     biomeCacheLoadFactor: 0.75
   mapConfig:
     blocksPerPixel: 20
@@ -31,7 +31,7 @@ worldGen:
     spawnMarkerRadiusPixel: 3
     axisMarkerLengthPixel: 25
     axisMarkerFontSize: 15
-    biomeScanRadiusInBlocks: 5000
+    biomeScanRadiusInBlocks: 8000
     minLabeledBiomeAreaPixels: 50
     gridSizeInPixels: 50
     outputFolder: worldGenDebug

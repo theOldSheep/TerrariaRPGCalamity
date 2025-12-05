@@ -3862,7 +3862,15 @@ public class ItemUseHelper {
         // use the weapon
         double projectileSpeed = attrMap.getOrDefault("projectileSpeed", 1d);
         projectileSpeed *= attrMap.getOrDefault("projectileSpeedMulti", 1d);
-        Vector facingDir = getPlayerAimDir(ply, ply.getEyeLocation(), projectileSpeed, itemType, false, 0);
+        Vector facingDir;
+        // throw projectile would use aim helper
+        if (weaponType.equals("THROW_PROJECTILE")) {
+            facingDir = getPlayerAimDir(ply, ply.getEyeLocation(), projectileSpeed, itemType, false, 0);
+        }
+        // throw direct would throw directly towards facing dir
+        else {
+            facingDir = ply.getLocation().getDirection();
+        }
         facingDir.normalize().multiply(projectileSpeed);
         EntityHelper.ProjectileShootInfo shootInfo = new EntityHelper.ProjectileShootInfo(ply, facingDir, attrMap, itemType);
         EntityHelper.spawnProjectile(shootInfo);
@@ -5352,6 +5360,7 @@ public class ItemUseHelper {
                                 weaponType, maxLoad > 0, autoSwing, weaponSection, attrMap);
                         break;
                     case "THROW_PROJECTILE":
+                    case "THROW_DIRECT":
                         success = playerUseThrowingProjectile(ply, itemName, weaponType,
                                 autoSwing, attrMap, mainHandItem);
                         break;

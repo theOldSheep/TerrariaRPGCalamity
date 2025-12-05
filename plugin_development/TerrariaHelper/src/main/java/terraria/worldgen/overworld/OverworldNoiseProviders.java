@@ -25,9 +25,9 @@ public class OverworldNoiseProviders {
             NORMAL_INTERPOLATE_COORDINATOR,
             OCEAN_INTERPOLATE_COORDINATOR,
             SULPHUROUS_OCEAN_INTERPOLATE_COORDINATOR;
-    public static Interpolate
-            // for rivers
-            RIVER_RATIO_PROVIDER, RIVER_ERODE_PROVIDER;
+    public static Interpolate RIVER_RATIO_PROVIDER, RIVER_ERODE_PROVIDER;
+    // cast world height to soil height
+    public static Interpolate SOIL_HEIGHT_ASTRAL, SOIL_HEIGHT_DESERT, SOIL_HEIGHT_NORMAL;
     static {
         // terrain noise functions
         Random rdm = new Random(TerrariaHelper.WORLD_SEED);
@@ -49,13 +49,13 @@ public class OverworldNoiseProviders {
                             Interpolate.InterpolatePoint.create(0.35, 1),
                             Interpolate.InterpolatePoint.create(0.65, 1),
                             Interpolate.InterpolatePoint.create(0.75, 2),
-                    }, "normal_coordinator_cont"),
+                    }, null),
                     new Interpolate(new Interpolate.InterpolatePoint[]{
                             Interpolate.InterpolatePoint.create(-0.2 , 2),
                             Interpolate.InterpolatePoint.create(-0.1 , 1),
                             Interpolate.InterpolatePoint.create(0.1  , 1),
                             Interpolate.InterpolatePoint.create(0.3  , 0),
-                    }, "normal_coordinator_eros")
+                    }, null)
             };
             OCEAN_INTERPOLATE_COORDINATOR = new Interpolate[]{
                     new Interpolate(new Interpolate.InterpolatePoint[]{
@@ -63,19 +63,19 @@ public class OverworldNoiseProviders {
                             Interpolate.InterpolatePoint.create(0.25, 1),
                             Interpolate.InterpolatePoint.create(0.4 , 1),
                             Interpolate.InterpolatePoint.create(0.65, 2),
-                    }, "ocean_coordinator_cont"),
+                    }, null),
                     new Interpolate(new Interpolate.InterpolatePoint[]{
                             Interpolate.InterpolatePoint.create(0, 0),
-                    }, "ocean_coordinator_eros")
+                    }, null)
             };
             SULPHUROUS_OCEAN_INTERPOLATE_COORDINATOR = new Interpolate[]{
                     new Interpolate(new Interpolate.InterpolatePoint[]{
                             Interpolate.InterpolatePoint.create(0.1 , 0),
                             Interpolate.InterpolatePoint.create(0.2 , 1),
-                    }, "sulphurous_ocean_coordinator_cont"),
+                    }, null),
                     new Interpolate(new Interpolate.InterpolatePoint[]{
                             Interpolate.InterpolatePoint.create(0, 0),
-                    }, "sulphurous_ocean_coordinator_eros")
+                    }, null)
             };
         }
 
@@ -224,12 +224,12 @@ public class OverworldNoiseProviders {
             }, "desert_flatland_hm");
             DESERT_DUNES = new Interpolate(new Interpolate.InterpolatePoint[]{
                     Interpolate.InterpolatePoint.create(-1, LAND_HEIGHT),
-                    Interpolate.InterpolatePoint.create(1 , LAND_HEIGHT + ROLLING_HILLS_HEIGHT / 2d),
+                    Interpolate.InterpolatePoint.create(1 , LAND_HEIGHT + ROLLING_HILLS_HEIGHT / 3d),
             }, "desert_dunes_hm");
             DESERT_HILLS = new Interpolate(new Interpolate.InterpolatePoint[]{
                     Interpolate.InterpolatePoint.create(-1  , LAND_HEIGHT),
-                    Interpolate.InterpolatePoint.create(0   , LAND_HEIGHT + 10),
-                    Interpolate.InterpolatePoint.create(1   , LAND_HEIGHT + ROLLING_HILLS_HEIGHT),
+                    Interpolate.InterpolatePoint.create(0.35, LAND_HEIGHT + 10),
+                    Interpolate.InterpolatePoint.create(0.45, LAND_HEIGHT + ROLLING_HILLS_HEIGHT),
             }, "desert_hills_hm");
 
             // assemble
@@ -288,12 +288,26 @@ public class OverworldNoiseProviders {
                 Interpolate.InterpolatePoint.create(-0.05  , 0),
                 Interpolate.InterpolatePoint.create(0      , 0.9),
                 Interpolate.InterpolatePoint.create(0.05   , 0),
-        }, "river_ratio_map");
+        }, null);
         RIVER_ERODE_PROVIDER = new Interpolate(new Interpolate.InterpolatePoint[]{
                 Interpolate.InterpolatePoint.create(-0.2   , 0),
                 Interpolate.InterpolatePoint.create(-0.05  , 0.3),
                 Interpolate.InterpolatePoint.create(0.05   , 0.3),
                 Interpolate.InterpolatePoint.create(0.2    , 0),
-        }, "river_erode_map");
+        }, null);
+
+        // soil height providers that cast terrain height to soil height
+        SOIL_HEIGHT_ASTRAL = new Interpolate(new Interpolate.InterpolatePoint[]{
+                Interpolate.InterpolatePoint.create(LAND_HEIGHT - 5    , 6),
+                Interpolate.InterpolatePoint.create(LAND_HEIGHT + 15   , 0),
+        }, null);
+        SOIL_HEIGHT_DESERT = new Interpolate(new Interpolate.InterpolatePoint[]{
+                Interpolate.InterpolatePoint.create(LAND_HEIGHT                                  , 30),
+                Interpolate.InterpolatePoint.create(LAND_HEIGHT + ROLLING_HILLS_HEIGHT / 2d   , 0),
+        }, null);
+        SOIL_HEIGHT_NORMAL = new Interpolate(new Interpolate.InterpolatePoint[]{
+                Interpolate.InterpolatePoint.create(LAND_HEIGHT, 30),
+                Interpolate.InterpolatePoint.create(LAND_HEIGHT + MOUNTAIN_HEIGHT, -10),
+        }, null);
     }
 }
