@@ -27,7 +27,7 @@ public class OverworldNoiseProviders {
             SULPHUROUS_OCEAN_INTERPOLATE_COORDINATOR;
     public static Interpolate RIVER_RATIO_PROVIDER, RIVER_ERODE_PROVIDER;
     // cast world height to soil height
-    public static Interpolate SOIL_HEIGHT_ASTRAL, SOIL_HEIGHT_DESERT, SOIL_HEIGHT_NORMAL;
+    public static Interpolate SOIL_HEIGHT_ASTRAL, SOIL_HEIGHT_DESERT, SOIL_HEIGHT_NORMAL, SOIL_HEIGHT_HUM_NORMAL;
     static {
         // terrain noise functions
         Random rdm = new Random(TerrariaHelper.WORLD_SEED);
@@ -298,7 +298,7 @@ public class OverworldNoiseProviders {
 
         // soil height providers that cast terrain height to soil height
         SOIL_HEIGHT_ASTRAL = new Interpolate(new Interpolate.InterpolatePoint[]{
-                Interpolate.InterpolatePoint.create(LAND_HEIGHT - 5    , 6),
+                Interpolate.InterpolatePoint.create(LAND_HEIGHT           , 6),
                 Interpolate.InterpolatePoint.create(LAND_HEIGHT + 15   , 0),
         }, null);
         SOIL_HEIGHT_DESERT = new Interpolate(new Interpolate.InterpolatePoint[]{
@@ -306,8 +306,16 @@ public class OverworldNoiseProviders {
                 Interpolate.InterpolatePoint.create(LAND_HEIGHT + ROLLING_HILLS_HEIGHT / 2d   , 0),
         }, null);
         SOIL_HEIGHT_NORMAL = new Interpolate(new Interpolate.InterpolatePoint[]{
+                Interpolate.InterpolatePoint.create(SEA_LEVEL  , 40),
                 Interpolate.InterpolatePoint.create(LAND_HEIGHT, 30),
+                Interpolate.InterpolatePoint.create(LAND_HEIGHT + ROLLING_HILLS_HEIGHT, 3),
                 Interpolate.InterpolatePoint.create(LAND_HEIGHT + MOUNTAIN_HEIGHT, -10),
+        }, null);
+        // places with high humidity will have thicker dirt layers; the highest mountains would be covered with dirt
+        // dry places will have significantly thinner dirt layers; when hum < -0.85, stone will appear on land level.
+        SOIL_HEIGHT_HUM_NORMAL = new Interpolate(new Interpolate.InterpolatePoint[]{
+                Interpolate.InterpolatePoint.create(-1.0  , -32),
+                Interpolate.InterpolatePoint.create(1.0   , 40),
         }, null);
     }
 }

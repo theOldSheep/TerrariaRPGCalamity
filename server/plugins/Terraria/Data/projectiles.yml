@@ -4667,7 +4667,7 @@
     bounceVelocityMulti: 0.4
     frictionFactor: 0.1
     canBeReflected: false
-    liveTime: 100
+    liveTime: 60
     noGravityTicks: 0
     isGrenade: true
     blastRadius: 3
@@ -4677,7 +4677,7 @@
 粘性炸弹:
     blockHitAction: stick
     canBeReflected: false
-    liveTime: 100
+    liveTime: 60
     noGravityTicks: 0
     isGrenade: true
     blastRadius: 3
@@ -4690,7 +4690,7 @@
     bounceVelocityMulti: 0.4
     frictionFactor: 0.1
     canBeReflected: false
-    liveTime: 100
+    liveTime: 75
     noGravityTicks: 0
     isGrenade: true
     blastRadius: 5
@@ -4700,7 +4700,7 @@
 粘性雷管:
     blockHitAction: stick
     canBeReflected: false
-    liveTime: 100
+    liveTime: 75
     noGravityTicks: 0
     isGrenade: true
     blastRadius: 5
@@ -4708,9 +4708,11 @@
     blastDestroyBlock: true
     slowedByWater: true
 神圣雷管:
+    spawnSound: item.holyhandgrenade
+    spawnSoundVolume: 5
     blockHitAction: stick
     canBeReflected: false
-    liveTime: 60
+    liveTime: 45
     noGravityTicks: 0
     isGrenade: true
     blastRadius: 6

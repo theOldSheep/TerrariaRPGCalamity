@@ -154,8 +154,8 @@ public class TerrariaDroppedItem extends EntityItem {
             return false;
         }
     }
-    public void merge() {
-        if (pickupDelay > 0) return;
+    public void merge(boolean ignorePickupDelay) {
+        if (pickupDelay > 0 && !ignorePickupDelay) return;
         if (!canBeMerged) return;
         // do not bother handle dropped items that are fully stacked
         if (bukkitItemStack.getAmount() < bukkitItemStack.getMaxStackSize()) {
@@ -170,7 +170,7 @@ public class TerrariaDroppedItem extends EntityItem {
     public Entity b(int i) {
         Entity entity = super.b(i);
         if (!this.world.isClientSide && entity instanceof TerrariaDroppedItem)
-            ((TerrariaDroppedItem)entity).merge();
+            ((TerrariaDroppedItem)entity).merge(false);
         return entity;
     }
     // generic ticking
@@ -265,7 +265,7 @@ public class TerrariaDroppedItem extends EntityItem {
 
         // movement tick
         this.move(EnumMoveType.SELF, this.motX, this.motY, this.motZ);
-        this.merge();
+        this.merge(false);
 
         // slow down the item slightly
         float f = 0.95F;

@@ -299,6 +299,7 @@ terraria\util\AimHelper$PlyTargetLocInfo.class
 terraria\util\CritterHelper.class
 terraria\entity\boss\hardMode\queenSlime\QueenSlime.class
 terraria\entity\boss\postMoonLord\profanedGuardians\GuardianCommander.class
+terraria\util\EntityHelper$1.class
 terraria\entity\boss\hardMode\lunaticCultist\LunaticCultistClone.class
 terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitasBHFirework.class
 terraria\gameplay\RestartCommandExecutor.class

@@ -2,6 +2,7 @@ package terraria.util;
 
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.*;
+import org.bukkit.Material;
 import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -593,25 +594,33 @@ public class EntityHelper {
                 ArrayList<Block> pendingDestruction = new ArrayList<>();
                 // holy hand grenade would leave flat ground
                 if (source.getName().equals("神圣雷管")) {
-                    int minYOffset = 0;
-                    org.bukkit.block.Block blastCenterBlock = loc.getBlock();
                     int radInt = (int) Math.ceil(radius);
+                    int minYOffset = radInt;
+                    org.bukkit.block.Block blastCenterBlock = loc.getBlock();
                     // first get the lowest block y to blast off
                     // for all x&z pos, look vertically down until finding solid ground to prevent including caves
                     // at -radInt, make the blast as powerful as it could - so it could blast down pillars etc.
                     for (int xOffset = -radInt; xOffset <= radInt; xOffset ++) {
                         for (int zOffset = -radInt; zOffset <= radInt; zOffset++) {
                             // do not optimize starting yOffset - this is a best-effort to ensure it does not go through into caves
-                            for (int yOffset = 0; yOffset >= -radInt; yOffset--) {
+                            for (int yOffset = radInt; yOffset >= -radInt; yOffset--) {
                                 org.bukkit.block.Block currBlock = blastCenterBlock.getRelative(xOffset, yOffset, zOffset);
-                                // upon meeting -radInt - save blast threshold as -radInt
-                                if (yOffset == -radInt) {
-                                    minYOffset = -radInt;
+                                // upon meeting solid block / liquid - save blast threshold as the block above it, and exit loop
+                                boolean isFloor = currBlock.getType().isSolid();
+                                switch (currBlock.getType()) {
+                                    case WATER:
+                                    case LAVA:
+                                    case STATIONARY_WATER:
+                                    case STATIONARY_LAVA:
+                                        isFloor = true;
                                 }
-                                // upon meeting a floor - save blast threshold as the block above it, and exit loop
-                                else if (currBlock.getType().isSolid()) {
+                                if (isFloor) {
                                     minYOffset = Math.min(yOffset + 1, minYOffset);
                                     break;
+                                }
+                                // otherwise upon meeting -radInt and is not a proper floor - save blast threshold as -radInt
+                                if (yOffset == -radInt) {
+                                    minYOffset = -radInt;
                                 }
                             }
                         }
@@ -651,6 +660,7 @@ public class EntityHelper {
                 }
                 // destroy
                 for (Block block : pendingDestruction) {
+                    if (block.getType() == Material.AIR) continue;
                     GameplayHelper.playerBreakBlock(block, ply, true, false);
                 }
             }

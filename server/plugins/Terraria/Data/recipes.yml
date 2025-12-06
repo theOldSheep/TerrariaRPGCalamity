@@ -4649,7 +4649,7 @@ AIR:
     requireLevel: 1
     resultItem: 神圣雷管
     requireItem:
-    - 雷管:5
+    - 粘性雷管:5
     - 金锭:2
     - 水瓶
     recipeCategory: TOOL
@@ -4657,7 +4657,7 @@ AIR:
     requireLevel: 1
     resultItem: 神圣雷管:5
     requireItem:
-    - 雷管:5
+    - 粘性雷管:5
     - 光明之魂:3
     - 妖精尘
     recipeCategory: TOOL

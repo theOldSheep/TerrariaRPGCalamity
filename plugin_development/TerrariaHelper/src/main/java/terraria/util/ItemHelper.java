@@ -938,15 +938,15 @@ public class ItemHelper {
     }
     public static Item dropItem(Location loc, String itemToDropDescription, boolean randomizePrefixIfNoneExists, boolean canMerge, boolean noOverStack) {
         ItemStack itemToDrop = getItemFromDescription(itemToDropDescription, randomizePrefixIfNoneExists);
-        return dropItem(loc, itemToDrop, canMerge, noOverStack);
+        return dropItem(loc, itemToDrop, canMerge, noOverStack, false);
     }
     public static Item dropItem(Location loc, ItemStack itemToDrop) {
         return dropItem(loc, itemToDrop, true);
     }
     public static Item dropItem(Location loc, ItemStack itemToDrop, boolean canMerge) {
-        return dropItem(loc, itemToDrop, canMerge, true);
+        return dropItem(loc, itemToDrop, canMerge, true, false);
     }
-    public static Item dropItem(Location loc, ItemStack itemToDrop, boolean canMerge, boolean noOverStack) {
+    public static Item dropItem(Location loc, ItemStack itemToDrop, boolean canMerge, boolean noOverStack, boolean tryMerge) {
         int itemAmount = itemToDrop.getAmount();
         if (itemAmount <= 0) return null;
         if (itemToDrop.getType() == Material.AIR) return null;
@@ -958,19 +958,26 @@ public class ItemHelper {
                 while (itemAmount > maxStackSize) {
                     // drop extras
                     itemAmount -= maxStackSize;
-                    dropItemWithoutCheck(loc, itemToDrop, canMerge);
+                    dropItemWithoutCheck(loc, itemToDrop, canMerge, tryMerge);
                 }
                 // update current drop amount
                 itemToDrop.setAmount(itemAmount);
             }
         }
         // drop item
-        return dropItemWithoutCheck(loc, itemToDrop, canMerge);
+        return dropItemWithoutCheck(loc, itemToDrop, canMerge, tryMerge);
     }
-    public static CraftItem dropItemWithoutCheck(Location loc, ItemStack itemToDrop, boolean canMerge) {
+    public static CraftItem dropItemWithoutCheck(Location loc, ItemStack itemToDrop, boolean canMerge, boolean tryMerge) {
         TerrariaDroppedItem entity = new TerrariaDroppedItem(loc, itemToDrop);
         if (!canMerge)
             entity.canBeMerged = false;
+        if (tryMerge) {
+            entity.merge(true);
+            if (entity.dead) {
+                return null;
+            }
+        }
+
         CraftWorld wld = (CraftWorld) loc.getWorld();
         wld.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         return new CraftItem(wld.getHandle().getServer(), entity);

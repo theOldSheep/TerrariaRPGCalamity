@@ -288,7 +288,7 @@ public class GameplayHelper {
                         Location locToDrop = blockToBreak.getLocation().add(0.5, 0.4, 0.5);
                         for (String currItem : itemsToDrop) {
                             org.bukkit.inventory.ItemStack itemToDrop = ItemHelper.getItemFromDescription(currItem);
-                            ItemHelper.dropItem(locToDrop, itemToDrop);
+                            ItemHelper.dropItem(locToDrop, itemToDrop, true, true, true);
                         }
                         // boss spawn
                         String bossSpawn = configSection.getString("spawnBoss");
@@ -297,12 +297,17 @@ public class GameplayHelper {
                     }
                 }
         }
+
         // make the block empty BEFORE recursive breaking mechanism!
         WorldHelper.makeEmptyBlock(blockToBreak, true);
+
         // special handling
         handleTreeConsecutiveBreak(ply, blockToBreak, blockMat, noDrop);
+
         handleGrassConsecutiveBreak(ply, blockToBreak);
+
         handleSpecialBlockBreakMechanism(ply, blockToBreak, blockMat);
+
         return true;
     }
     // tree breaking helpers

@@ -315,18 +315,10 @@ public class OverworldChunkGenerator extends ChunkGenerator {
                 break;
             default: {
                 soilHeight = SOIL_HEIGHT_NORMAL.getY(totalHeight);
-                // places with high humidity will have thicker dirt layers; when hum > 0.35, the highest mountains would be covered with dirt
-                double hum = biomeFeature.features[HUMIDITY];
-                if (hum > 0) {
-                    soilHeight += hum * 27.5;
-                }
-                // dry places will have significantly thinner dirt layers; when hum < -0.75, stone will appear on land level.
-                else {
-                    soilHeight = soilHeight * (1 + hum) + hum * 10;
-                }
+                soilHeight += SOIL_HEIGHT_HUM_NORMAL.getY(biomeFeature.features[HUMIDITY]);
             }
         }
-        soilMap[i][j] = Math.max(MathHelper.randomRound(soilHeight), 0);
+        soilMap[i][j] = Math.max((int) soilHeight, 0);
 
         // cave: compare the two dominating driving power to prevent multiple biomes diluting the result
         double noCaveFactor = 0, caveFactor = 0;
