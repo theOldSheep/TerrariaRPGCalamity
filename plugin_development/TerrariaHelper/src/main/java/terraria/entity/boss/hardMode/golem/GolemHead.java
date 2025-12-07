@@ -40,7 +40,7 @@ public class GolemHead extends EntitySlime {
     }
 
     Golem owner;
-    Vector offsetDir = new Vector(0, 5.5, 0);
+    Vector offsetDir = new Vector(0, 6.5, 0);
     int indexAI = 0;
     EntityHelper.ProjectileShootInfo shootInfoFireball, shootInfoBeam, shootInfoInfernoBolt;
 

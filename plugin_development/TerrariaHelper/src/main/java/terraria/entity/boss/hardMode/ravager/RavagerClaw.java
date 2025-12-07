@@ -18,18 +18,18 @@ import java.util.UUID;
 public class RavagerClaw extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.RAVAGER;
-    public static final double BASIC_HEALTH = 38364 * 2, BASIC_HEALTH_POST_PROVIDENCE = 153456 * 2;
+    public static final double BASIC_HEALTH = 57546 * 2, BASIC_HEALTH_POST_PROVIDENCE = 230184 * 2;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    static final String name = "毁灭魔像手爪";
+    static final String[] name = {"毁灭魔像右爪", "毁灭魔像左爪"};
     static final double PUNCH_SPEED = 3.25, RETRACT_SPEED = 2.75;
 
     Ravager owner;
-    Vector offsetDir = new Vector(0, 4.8, 0),
+    Vector offsetDir = new Vector(0, 3, 0),
             punchVelocity = new Vector();
     int componentIndex;
     int indexAI = 0;
@@ -59,7 +59,7 @@ public class RavagerClaw extends EntitySlime {
                 Location idleLocation;
                 {
                     Vector orthogonalOffsetVec = owner.orthogonalDir.clone();
-                    orthogonalOffsetVec.multiply(componentIndex == 2 ? -4.5 : 4.5);
+                    orthogonalOffsetVec.multiply(componentIndex == 2 ? -8 : 8);
                     idleLocation = owner.getBukkitEntity().getLocation().add(offsetDir).add(orthogonalOffsetVec);
                 }
                 if (indexAI < 15) {
@@ -112,7 +112,7 @@ public class RavagerClaw extends EntitySlime {
         // basic characteristics
         this.owner = owner;
         this.componentIndex = index;
-        setCustomName(name + "§" + index);
+        setCustomName(name[index - 1]);
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");

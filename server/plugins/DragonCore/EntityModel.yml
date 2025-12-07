@@ -111,6 +111,20 @@
   texture: "klw/ys/ai_model.png"
   scale: 60
   # renderAlways: true
+血肉之墙眼:
+  entity: "血肉之墙眼"
+  contains: false
+  model: "kslzy/kslzy/ai_model.obj"
+  texture: "kslzy/kslzy/ai_model.png"
+  scale: 128
+  # renderAlways: true
+血肉之墙嘴:
+  entity: "血肉之墙嘴"
+  contains: false
+  model: "kslzy/kslfy/ai_model.obj"
+  texture: "kslzy/kslfy/ai_model.png"
+  scale: 128
+  # renderAlways: true
 激光眼:
   entity: "激光眼"
   contains: false
@@ -251,6 +265,34 @@
   texture: "bjxj/texture.png"
   scale: 20
   # renderAlways: true
+石巨人头:
+  entity: "石巨人头"
+  contains: true
+  model: "sjr/t/ai_model.obj"
+  texture: "sjr/t/ai_model.png"
+  scale: 125
+  # renderAlways: true
+石巨人身体:
+  entity: "石巨人身体"
+  contains: true
+  model: "sjr/s/ai_model.obj"
+  texture: "sjr/s/ai_model.png"
+  scale: 225
+  # renderAlways: true
+石巨人左拳:
+  entity: "石巨人左拳"
+  contains: true
+  model: "sjr/zq/ai_model.obj"
+  texture: "sjr/zq/ai_model.png"
+  scale: 75
+  # renderAlways: true
+石巨人右拳:
+  entity: "石巨人右拳"
+  contains: true
+  model: "sjr/yq/ai_model.obj"
+  texture: "sjr/yq/ai_model.png"
+  scale: 75
+  # renderAlways: true
 瘟疫使者歌莉娅:
   entity: "瘟疫使者歌莉娅"
   contains: true
@@ -299,6 +341,41 @@
   model: "zsgj/zsgj/ai_model.obj"
   texture: "zsgj/zsgj/ai_model.png"
   scale: 64
+  # renderAlways: true
+毁灭魔像头:
+  entity: "毁灭魔像头"
+  contains: true
+  model: "hmmx/t/ai_model.obj"
+  texture: "hmmx/t/ai_model.png"
+  scale: 150
+  # renderAlways: true
+毁灭魔像身体:
+  entity: "毁灭魔像身体"
+  contains: true
+  model: "hmmx/s/ai_model.obj"
+  texture: "hmmx/s/ai_model.png"
+  scale: 300
+  # renderAlways: true
+毁灭魔像左爪:
+  entity: "毁灭魔像左爪"
+  contains: true
+  model: "hmmx/zz/ai_model.obj"
+  texture: "hmmx/zz/ai_model.png"
+  scale: 100
+  # renderAlways: true
+毁灭魔像右爪:
+  entity: "毁灭魔像右爪"
+  contains: true
+  model: "hmmx/yz/ai_model.obj"
+  texture: "hmmx/yz/ai_model.png"
+  scale: 100
+  # renderAlways: true
+毁灭魔像导弹:
+  entity: "毁灭魔像导弹"
+  contains: true
+  model: "hmmx/dd/ai_model.obj"
+  texture: "hmmx/dd/ai_model.png"
+  scale: 100
   # renderAlways: true
 星神游龙头:
   entity: "星神游龙头"

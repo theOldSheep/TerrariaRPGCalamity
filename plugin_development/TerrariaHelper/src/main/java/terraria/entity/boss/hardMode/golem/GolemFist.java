@@ -27,11 +27,11 @@ public class GolemFist extends EntitySlime {
     BossBattleServer bossbar;
     Player target = null;
     // other variables and AI
-    static final String name = "石巨人拳头";
+    static final String[] name = {"石巨人右拳", "石巨人左拳"};
     static final double PUNCH_SPEED = 3.25, RETRACT_SPEED = 2.75;
 
     Golem owner;
-    Vector offsetDir = new Vector(0, 4.8, 0),
+    Vector offsetDir = new Vector(0, 4, 0),
             punchVelocity = new Vector();
     int componentIndex;
     int indexAI = 0;
@@ -60,7 +60,7 @@ public class GolemFist extends EntitySlime {
                 Location idleLocation;
                 {
                     Vector orthogonalOffsetVec = owner.orthogonalDir.clone();
-                    orthogonalOffsetVec.multiply(componentIndex == 2 ? -4.5 : 4.5);
+                    orthogonalOffsetVec.multiply(componentIndex == 2 ? -5 : 5);
                     idleLocation = owner.getBukkitEntity().getLocation().add(offsetDir).add(orthogonalOffsetVec);
                 }
                 if (indexAI < 15) {
@@ -109,7 +109,7 @@ public class GolemFist extends EntitySlime {
         // basic characteristics
         this.owner = owner;
         this.componentIndex = index;
-        setCustomName(name + "§" + index);
+        setCustomName(name[index - 1]);
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");

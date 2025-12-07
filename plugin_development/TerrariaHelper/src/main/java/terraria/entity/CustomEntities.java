@@ -48,7 +48,6 @@ import terraria.entity.boss.preHardMode.desertScourge.DesertNuisance;
 import terraria.entity.boss.preHardMode.desertScourge.DesertScourge;
 import terraria.entity.boss.hardMode.golem.Golem;
 import terraria.entity.boss.hardMode.golem.GolemFist;
-import terraria.entity.boss.hardMode.golem.GolemFoot;
 import terraria.entity.boss.hardMode.golem.GolemHead;
 import terraria.entity.boss.hardMode.leviathanAndAnahita.Anahita;
 import terraria.entity.boss.hardMode.leviathanAndAnahita.Leviathan;
@@ -147,7 +146,6 @@ public enum CustomEntities {
     BOSS_GOLEM              ("Golem",                  55,  EntityType.SLIME,           EntitySlime.class,           Golem.class),
     BOSS_GOLEM_HEAD         ("GolemHead",              55,  EntityType.SLIME,           EntitySlime.class,           GolemHead.class),
     BOSS_GOLEM_FIST         ("GolemFist",              55,  EntityType.SLIME,           EntitySlime.class,           GolemFist.class),
-    BOSS_GOLEM_FOOT         ("GolemFoot",              55,  EntityType.SLIME,           EntitySlime.class,           GolemFoot.class),
     BOSS_HEADLESS_HORSEMAN  ("HeadlessHorseman",       55,  EntityType.SLIME,           EntitySlime.class,           HeadlessHorseman.class),
     BOSS_HVM                ("TheHiveMind",            55,  EntityType.SLIME,           EntitySlime.class,           TheHiveMind.class),
     BOSS_HVM_BLOB           ("HiveBlob",               55,  EntityType.SLIME,           EntitySlime.class,           HiveBlob.class),
@@ -181,7 +179,6 @@ public enum CustomEntities {
     BOSS_RVG                ("Ravager",                55,  EntityType.SLIME,           EntitySlime.class,           Ravager.class),
     BOSS_RVG_CLAW           ("RavagerClaw",            55,  EntityType.SLIME,           EntitySlime.class,           RavagerClaw.class),
     BOSS_RVG_HEAD           ("RavagerHead",            55,  EntityType.SLIME,           EntitySlime.class,           RavagerHead.class),
-    BOSS_RVG_LEG            ("RavagerLeg",             55,  EntityType.SLIME,           EntitySlime.class,           RavagerLeg.class),
     BOSS_RVG_NUKE           ("RavagerNuke",            55,  EntityType.SLIME,           EntitySlime.class,           RavagerNuke.class),
     BOSS_RVG_PILLAR         ("RavagerRockPillar",      55,  EntityType.SLIME,           EntitySlime.class,           RavagerRockPillar.class),
     BOSS_SANTA_NK1          ("SantaNK1",               55,  EntityType.SLIME,           EntitySlime.class,           SantaNK1.class),

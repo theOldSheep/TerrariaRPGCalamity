@@ -22,7 +22,7 @@ public class Ravager extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.RAVAGER;
     public static final WorldHelper.BiomeType BIOME_REQUIRED = null;
-    public static final double BASIC_HEALTH = 128400 * 2, BASIC_HEALTH_POST_PROVIDENCE = 513600 * 2;
+    public static final double BASIC_HEALTH = 147582 * 2, BASIC_HEALTH_POST_PROVIDENCE = 590328 * 2;
     public static final boolean IGNORE_DISTANCE = false;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
@@ -44,7 +44,6 @@ public class Ravager extends EntitySlime {
     Vector orthogonalDir = new Vector(), cachedVelocity = new Vector();
     RavagerHead head;
     RavagerClaw[] claws;
-    RavagerLeg[] legs;
 
     private Vector getHorizontalDirection() {
         Location targetLoc = target.getLocation();
@@ -65,9 +64,6 @@ public class Ravager extends EntitySlime {
         }
         for (RavagerClaw claw : claws)
             if (claw.isAlive())
-                return false;
-        for (RavagerLeg leg : legs)
-            if (leg.isAlive())
                 return false;
         // enter tier 2
         removeScoreboardTag("noDamage");
@@ -239,7 +235,7 @@ public class Ravager extends EntitySlime {
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName(BOSS_TYPE.msgName);
+        setCustomName(BOSS_TYPE.msgName + "身体");
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("noDamage");
         bukkitEntity.addScoreboardTag("isMonster");
@@ -273,7 +269,7 @@ public class Ravager extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(12, false);
+            setSize(16, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = (postProvidence ? BASIC_HEALTH_POST_PROVIDENCE : BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
@@ -294,10 +290,6 @@ public class Ravager extends EntitySlime {
             claws = new RavagerClaw[] {
                     new RavagerClaw(target, this, 1, postProvidence),
                     new RavagerClaw(target, this, 2, postProvidence),
-            };
-            legs = new RavagerLeg[] {
-                    new RavagerLeg(target, this, 1, postProvidence),
-                    new RavagerLeg(target, this, 2, postProvidence),
             };
         }
     }

@@ -877,23 +877,23 @@
     buffImmute:
         - "中毒"
         - "幻星感染"
-石巨人:
-    soundDamaged: entity.hit.rock
-    buffInflict:
-        - "碎甲|160|1"
-石巨人拳头:
-    soundDamaged: entity.hit.rock
-    buffInflict:
-        - "碎甲|80|1"
-        - "破损盔甲|60|1"
-石巨人脚:
-    soundDamaged: entity.hit.rock
-    buffInflict:
-        - "碎甲|160|1"
 石巨人头:
     soundDamaged: entity.hit.rock
     buffInflict:
         - "碎甲|80|1"
+石巨人身体:
+    soundDamaged: entity.hit.rock
+    buffInflict:
+        - "碎甲|160|1"
+        - "破损盔甲|60|1"
+石巨人左拳:
+    soundDamaged: entity.hit.rock
+    buffInflict:
+        - "碎甲|160|1"
+石巨人右拳:
+    soundDamaged: entity.hit.rock
+    buffInflict:
+        - "碎甲|160|1"
 瘟疫使者歌莉娅:
     soundDamaged: entity.irongolem.hurt
     buffInflict:

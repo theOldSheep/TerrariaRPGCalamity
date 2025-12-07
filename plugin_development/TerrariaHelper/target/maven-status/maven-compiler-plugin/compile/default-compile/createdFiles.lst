@@ -164,7 +164,6 @@ terraria\entity\boss\hardMode\leviathanAndAnahita\Leviathan$AIPhase.class
 terraria\entity\npc\TerrariaNPC.class
 terraria\worldgen\overworld\StructurePopulatorLoot.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHand.class
-terraria\entity\boss\hardMode\ravager\RavagerLeg.class
 terraria\entity\boss\preHardMode\wallOfFlesh\WallOfFleshMouth.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHand$1.class
 terraria\entity\boss\postMoonLord\exoMechs\Thanatos$1.class
@@ -216,7 +215,6 @@ terraria\util\PlayerHelper$GameProgress.class
 terraria\entity\monster\MonsterHelper$1.class
 terraria\entity\boss\postMoonLord\devourerOfGods\AttackPattern.class
 terraria\entity\boss\preHardMode\kingSlime\KingSlime$1.class
-terraria\entity\boss\hardMode\golem\GolemFoot.class
 terraria\event\listener\BossSpawnListener$1.class
 terraria\entity\boss\preHardMode\wallOfFlesh\WallOfFleshEye.class
 terraria\util\EntityMovementHelper$WormSegmentMovementOptions.class

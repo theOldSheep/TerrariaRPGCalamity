@@ -18,7 +18,7 @@ import java.util.UUID;
 public class RavagerHead extends EntitySlime {
     // basic variables
     public static final BossHelper.BossType BOSS_TYPE = BossHelper.BossType.RAVAGER;
-    public static final double BASIC_HEALTH = 57546 + 28773, BASIC_HEALTH_POST_PROVIDENCE = 115092 + 230184;
+    public static final double BASIC_HEALTH = 95910 + 28773, BASIC_HEALTH_POST_PROVIDENCE = 268548 + 230184;
     HashMap<String, Double> attrMap;
     HashMap<UUID, terraria.entity.boss.BossHelper.BossTargetInfo> targetMap;
     ArrayList<LivingEntity> bossParts;
@@ -29,7 +29,7 @@ public class RavagerHead extends EntitySlime {
     static final double FLIGHT_SPEED = 3;
 
     Ravager owner;
-    Vector offsetDir = new Vector(0, 5.5, 0);
+    Vector offsetDir = new Vector(0, 4.5, 0);
     int indexAI = 0;
     boolean free = false;
 

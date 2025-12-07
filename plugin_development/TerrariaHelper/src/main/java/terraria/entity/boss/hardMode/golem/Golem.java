@@ -119,7 +119,8 @@ public class Golem extends EntitySlime {
                                 // as soon as the golem is below player, it can collide with blocks.
                                 noclip = false;
                                 if (locY < 0 || onGround) {
-                                    cachedVelocity = new Vector();
+                                    // move slightly so the client side does not think that the boss is looking away like a slime
+                                    cachedVelocity = getHorizontalDirection().multiply(0.05);
                                     yComp = 0;
                                     indexAI = -30;
                                     jumpIndex ++;
@@ -170,7 +171,7 @@ public class Golem extends EntitySlime {
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName(BOSS_TYPE.msgName);
+        setCustomName(BOSS_TYPE.msgName + "身体");
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("noDamage");
         bukkitEntity.addScoreboardTag("isMonster");
@@ -203,7 +204,7 @@ public class Golem extends EntitySlime {
         }
         // init health and slime size
         {
-            setSize(12, false);
+            setSize(16, false);
             double healthMulti = terraria.entity.boss.BossHelper.getBossHealthMulti(targetMap.size());
             double health = BossHelper.accountForBR(BASIC_HEALTH_BR, BASIC_HEALTH) * healthMulti;
             getAttributeInstance(GenericAttributes.maxHealth).setValue(health);
@@ -225,8 +226,6 @@ public class Golem extends EntitySlime {
                     new GolemFist(target, this, 1),
                     new GolemFist(target, this, 2),
             };
-            new GolemFoot(target, this, 1);
-            new GolemFoot(target, this, 2);
         }
         // shoot info
         {
