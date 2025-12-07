@@ -786,7 +786,13 @@
 激光眼:
     buffImmute:
         - "中毒"
+激光疯眼:
+    buffImmute:
+        - "中毒"
 魔焰眼:
+    buffImmute:
+        - "中毒"
+魔焰疯眼:
     buffImmute:
         - "中毒"
 机械骷髅王:
@@ -843,6 +849,12 @@
         - "燃烧"
         - "硫磺火"
 世纪之花:
+    buffInflict:
+        - "中毒|200|1"
+    buffImmute:
+        - "中毒"
+        - "剧毒"
+狂暴世纪之花:
     buffInflict:
         - "中毒|200|1"
     buffImmute:

@@ -170,7 +170,7 @@ public class Plantera extends EntitySlime {
                 // phase transition
                 if (healthRatio < 0.5 && !secondPhase) {
                     secondPhase = true;
-                    setCustomName(BOSS_TYPE.msgName + "§1");
+                    setCustomName("狂暴" + BOSS_TYPE.msgName);
                     // damage 414 -> 578
                     AttributeHelper.tweakAttribute(attrMap, "damage", "164", true);
                     // defence 64 -> 20

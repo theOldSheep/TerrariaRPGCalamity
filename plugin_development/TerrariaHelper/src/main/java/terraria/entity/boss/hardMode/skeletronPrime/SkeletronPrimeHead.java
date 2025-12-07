@@ -35,6 +35,7 @@ public class SkeletronPrimeHead extends EntitySlime {
     }
     PhaseAI phase = PhaseAI.SKULL;
     int indexAI = 0, handsAlive = 4;
+    float headYawOffset = 0f;
     boolean spinning = false;
     static final double SPINNING_DMG = 612, REGULAR_DMG = 306;
     public EntityHelper.ProjectileShootInfo shootInfoSkull, shootInfoRocket, shootInfoLaser;
@@ -183,11 +184,13 @@ public class SkeletronPrimeHead extends EntitySlime {
                         if (vHeadLen > 2)
                             vHead.multiply(2d / vHeadLen);
                         bukkitEntity.setVelocity(vHead);
+                        headYawOffset += 72;
                         // shoot lasers
-                        if (healthRatio < 0.5 && indexAI % 10 == 0) {
+                        if (healthRatio < 0.5 && indexAI % 10 == 5) {
                             shootLaser();
                         }
-                        if (indexAI >= 59) {
+                        if (indexAI >= 60) {
+                            headYawOffset = 0;
                             switchPhase(healthRatio);
                         }
                         break;
@@ -206,7 +209,7 @@ public class SkeletronPrimeHead extends EntitySlime {
             }
         }
         // face the player
-        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() ) + headYawOffset;
         // collision dmg
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }

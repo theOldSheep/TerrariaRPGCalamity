@@ -29,6 +29,7 @@ public class Spazmatism extends EntitySlime {
     Player target = null;
     // other variables and AI
     static String bossName = "魔焰眼";
+    static String bossNameEnraged = "魔焰疯眼";
     Retinazer twin;
     Vector dashVelocity = new Vector();
     boolean dashingPhase = false;
@@ -56,7 +57,7 @@ public class Spazmatism extends EntitySlime {
             // defence: 20 -> 56
             AttributeHelper.tweakAttribute(attrMap, "defence", "36", true);
             addScoreboardTag("isMechanic");
-            setCustomName(bossName + "§1");
+            setCustomName(bossNameEnraged);
         }
     }
     private void shootCursedFlame(int state) {

@@ -1,3 +1,25 @@
+独角兽坐骑:
+  entity: "独角兽坐骑"
+  contains: false
+  model: "mount/djszq/ai_model.obj"
+  texture: "mount/djszq/ai_model.png"
+  scale: 35
+  # renderAlways: true
+女巫扫帚:
+  entity: "女巫扫帚"
+  contains: false
+  model: "mount/nwsz/ai_model.obj"
+  texture: "mount/nwsz/ai_model.png"
+  scale: 45
+  # renderAlways: true
+星流飞椅:
+  entity: "星流飞椅"
+  contains: false
+  model: "mount/xlfy/ai_model.obj"
+  texture: "mount/xlfy/ai_model.png"
+  scale: 45
+  # renderAlways: true
+
 荒漠灾虫头:
   entity: "荒漠灾虫头"
   contains: false
@@ -47,11 +69,74 @@
   texture: "jsx/ai_model.png"
   scale: 128
   # renderAlways: true
+克苏鲁之眼:
+  entity: "克苏鲁之眼"
+  contains: false
+  model: "kslzy/kslzy/ai_model.obj"
+  texture: "kslzy/kslzy/ai_model.png"
+  scale: 128
+  # renderAlways: true
+克苏鲁疯眼:
+  entity: "克苏鲁疯眼"
+  contains: false
+  model: "kslzy/kslfy/ai_model.obj"
+  texture: "kslzy/kslfy/ai_model.png"
+  scale: 128
+  # renderAlways: true
 腐巢意志:
   entity: "腐巢意志"
   contains: false
   model: "fcyz/ai_model.obj"
   texture: "fcyz/ai_model.png"
+  scale: 128
+  # renderAlways: true
+骷髅王:
+  entity: "骷髅王"
+  contains: false
+  model: "klw/klt/ai_model.obj"
+  texture: "klw/klt/ai_model.png"
+  scale: 100
+  # renderAlways: true
+骷髅王左手:
+  entity: "骷髅王左手"
+  contains: false
+  model: "klw/zs/ai_model.obj"
+  texture: "klw/zs/ai_model.png"
+  scale: 60
+  # renderAlways: true
+骷髅王右手:
+  entity: "骷髅王右手"
+  contains: false
+  model: "klw/ys/ai_model.obj"
+  texture: "klw/ys/ai_model.png"
+  scale: 60
+  # renderAlways: true
+激光眼:
+  entity: "激光眼"
+  contains: false
+  model: "szmy/jgy/ai_model.obj"
+  texture: "szmy/jgy/ai_model.png"
+  scale: 128
+  # renderAlways: true
+激光疯眼:
+  entity: "激光疯眼"
+  contains: false
+  model: "szmy/jgfy/ai_model.obj"
+  texture: "szmy/jgfy/ai_model.png"
+  scale: 128
+  # renderAlways: true
+魔焰眼:
+  entity: "魔焰眼"
+  contains: false
+  model: "szmy/myy/ai_model.obj"
+  texture: "szmy/myy/ai_model.png"
+  scale: 128
+  # renderAlways: true
+魔焰疯眼:
+  entity: "魔焰疯眼"
+  contains: false
+  model: "szmy/myfy/ai_model.obj"
+  texture: "szmy/myfy/ai_model.png"
   scale: 128
   # renderAlways: true
 渊海灾虫头:
@@ -82,6 +167,76 @@
   texture: "lhhys/ai_model.png"
   scale: 100
   # renderAlways: true
+机械骷髅王:
+  entity: "机械骷髅王"
+  contains: false
+  model: "jxklw/jxklw/ai_model.obj"
+  texture: "jxklw/jxklw/ai_model.png"
+  scale: 100
+  # renderAlways: true
+机械锯:
+  entity: "机械锯"
+  contains: false
+  model: "jxklw/jxj/ai_model.obj"
+  texture: "jxklw/jxj/ai_model.png"
+  scale: 60
+  # renderAlways: true
+机械钳:
+  entity: "机械钳"
+  contains: false
+  model: "jxklw/jxq/ai_model.obj"
+  texture: "jxklw/jxq/ai_model.png"
+  scale: 60
+  # renderAlways: true
+机械激光:
+  entity: "机械激光"
+  contains: false
+  model: "jxklw/jxjg/ai_model.obj"
+  texture: "jxklw/jxjg/ai_model.png"
+  scale: 60
+  # renderAlways: true
+机械炮:
+  entity: "机械炮"
+  contains: false
+  model: "jxklw/jxp/ai_model.obj"
+  texture: "jxklw/jxp/ai_model.png"
+  scale: 60
+  # renderAlways: true
+世纪之花:
+  entity: "世纪之花"
+  contains: false
+  model: "sjzh/sjzh/ai_model.obj"
+  texture: "sjzh/sjzh/ai_model.png"
+  scale: 150
+  # renderAlways: true
+狂暴世纪之花:
+  entity: "狂暴世纪之花"
+  contains: false
+  model: "sjzh/kbsjzh/ai_model.obj"
+  texture: "sjzh/kbsjzh/ai_model.png"
+  scale: 150
+  # renderAlways: true
+灾厄之眼:
+  entity: "灾厄之眼"
+  contains: false
+  model: "zezy/ze/ai_model.obj"
+  texture: "zezy/ze/ai_model.png"
+  scale: 100
+  # renderAlways: true
+灾难:
+  entity: "灾难"
+  contains: false
+  model: "zezy/zn/ai_model.obj"
+  texture: "zezy/zn/ai_model.png"
+  scale: 100
+  # renderAlways: true
+灾祸:
+  entity: "灾祸"
+  contains: false
+  model: "zezy/zh/ai_model.obj"
+  texture: "zezy/zh/ai_model.png"
+  scale: 100
+  # renderAlways: true
 利维坦:
   entity: "利维坦"
   contains: true
@@ -102,6 +257,13 @@
   model: "wyszgly/ai_model.obj"
   texture: "wyszgly/ai_model.png"
   scale: 200
+  # renderAlways: true
+光之女皇:
+  entity: "光之女皇"
+  contains: true
+  model: "gznh/ai_model.obj"
+  texture: "gznh/ai_model.png"
+  scale: 100
   # renderAlways: true
 猪鲨公爵常态:
   entity: "猪鲨公爵-常态"

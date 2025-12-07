@@ -69,7 +69,7 @@ public class EyeOfCthulhu extends EntitySlime {
                             rageRotationIndex = 15;
                             bossbar.color = BossBattle.BarColor.YELLOW;
                             bossbar.sendUpdate(PacketPlayOutBoss.Action.UPDATE_STYLE);
-                            setCustomName(BOSS_TYPE.msgName + "§1");
+                            setCustomName("克苏鲁疯眼");
                             // enrage spinning, defence: 24 -> 124
                             AttributeHelper.tweakAttribute(attrMap, "defence", "100", true);
                         }

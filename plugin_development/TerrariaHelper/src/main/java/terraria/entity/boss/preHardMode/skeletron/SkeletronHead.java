@@ -33,6 +33,7 @@ public class SkeletronHead extends EntitySlime {
     Player target = null;
     // other variables and AI
     int indexAI = 0;
+    float headYawOffset = 0f;
     boolean spinning = false, extraHandsSpawned = false;
     Location teleportLoc = null;
     static final double SPINNING_DMG = 342, REGULAR_DMG = 264;
@@ -182,9 +183,11 @@ public class SkeletronHead extends EntitySlime {
                     if (vHeadLen > 1.5)
                         vHead.multiply(1.5d / vHeadLen);
                     bukkitEntity.setVelocity(vHead);
+                    headYawOffset += 72;
                     // return to hand sweeping phase
                     if (indexAI >= 170) {
                         indexAI = -1;
+                        headYawOffset = 0;
                         setCustomName(BOSS_TYPE.msgName);
                         spinning = false;
                     }
@@ -194,7 +197,7 @@ public class SkeletronHead extends EntitySlime {
             }
         }
         // face the player
-        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
+        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() ) + headYawOffset;
         // collision dmg
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }

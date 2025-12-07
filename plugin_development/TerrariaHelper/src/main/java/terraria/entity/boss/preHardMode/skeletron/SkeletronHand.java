@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.util.Vector;
 import terraria.util.*;
+import terraria.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -125,6 +126,8 @@ public class SkeletronHand extends EntitySlime {
                 }
             }
         }
+        // face the player
+        this.yaw = (float) MathHelper.getVectorYaw( target.getLocation().subtract(bukkitEntity.getLocation()).toVector() );
         // collision dmg
         terraria.entity.boss.BossHelper.collisionDamage(this);
     }
@@ -142,7 +145,7 @@ public class SkeletronHand extends EntitySlime {
         // add to world
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
-        setCustomName(BOSS_TYPE.msgName + (index % 2 == 0 ? "左手" : "右手") );
+        setCustomName(BOSS_TYPE.msgName + ((index % 2 == 0) ? "右手" : "左手") );
         setCustomNameVisible(true);
         bukkitEntity.addScoreboardTag("isMonster");
         bukkitEntity.addScoreboardTag("isBOSS");

@@ -30,6 +30,7 @@ public class Retinazer extends EntitySlime {
     Player target = null;
     // other variables and AI
     static String bossName = "激光眼";
+    static String bossNameEnraged = "激光疯眼";
     Spazmatism twin;
     Vector dashVelocity = new Vector();
     boolean dashingPhase = false;
@@ -65,7 +66,7 @@ public class Retinazer extends EntitySlime {
             // defence: 20 -> 40
             AttributeHelper.tweakAttribute(attrMap, "defence", "20", true);
             addScoreboardTag("isMechanic");
-            setCustomName(bossName + "§1");
+            setCustomName(bossNameEnraged);
         }
     }
     private void shootMissile() {
