@@ -1,0 +1,12 @@
+# Blender 4.5.4 LTS MTL File: 'None'
+# www.blender.org
+
+newmtl m_92b34544-b782-2ffb-5deb-06d8be373604
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd C:/Users/User/Desktop/MC/client/[绵羊服]泰拉瑞亚RPG客户端/PCL/.minecraft/resourcepacks/DragonCore/models/entities/_低面数/zezy/zn/ai_model.png
