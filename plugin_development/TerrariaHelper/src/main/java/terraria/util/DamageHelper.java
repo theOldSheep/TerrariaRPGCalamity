@@ -453,10 +453,10 @@ public class DamageHelper {
                     }
                     break;
                 }
-                case "毁灭者": {
+                case "毁灭者强化体节": {
                     if (damageSource instanceof Player) {
                         if (victim.getScoreboardTags().contains("hasProbe") && Math.random() < 0.25) {
-                            victim.setCustomName("毁灭者" + ChatColor.COLOR_CHAR + "4");
+                            victim.setCustomName("毁灭者体节");
                             victim.removeScoreboardTag("hasProbe");
                             MonsterHelper.spawnMob("探测怪", victim.getLocation(), (Player) damageSource);
                         }

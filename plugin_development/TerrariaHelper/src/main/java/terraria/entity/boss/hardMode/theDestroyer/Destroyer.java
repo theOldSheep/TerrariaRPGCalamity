@@ -257,17 +257,17 @@ public class Destroyer extends EntitySlime {
         ((CraftWorld) summonedPlayer.getWorld()).addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
         // basic characteristics
         if (segmentIndex == 0) {
-            setCustomName(BOSS_TYPE.msgName + "§1");
+            setCustomName(BOSS_TYPE.msgName + "头");
             this.head = this;
         }
         else {
             this.head = (Destroyer) ((CraftEntity) bossParts.get(0)).getHandle();
             if (segmentIndex + 1 < TOTAL_LENGTH) {
-                setCustomName(BOSS_TYPE.msgName + "§2");
+                setCustomName(BOSS_TYPE.msgName + "强化体节");
                 addScoreboardTag("hasProbe");
             }
             else
-                setCustomName(BOSS_TYPE.msgName + "§3");
+                setCustomName(BOSS_TYPE.msgName + "尾");
         }
         setCustomNameVisible(true);
         addScoreboardTag("isMechanic");

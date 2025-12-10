@@ -6557,7 +6557,7 @@ Drew之翼:
   lore:
   - §r同时发射两支箭
   - §r将木箭转化为能在物块表面滑动的能量束
-  - §r“啊摩擦~摩↓→↗擦→”
+  - §r“在光滑的地面上摩擦”
   attributes:
     damage: 66
     damageType: Arrow
@@ -16403,7 +16403,7 @@ Dodu的手炮:
   lore:
   - §b右键打开虚空袋
   - §b虚空袋中的弹药、药水、合成材料均可被直接使用
-  - §b可在设置里开关自动拾取物品功能
+  - §b可在/settings命令中开关自动拾取物品功能
   worth: 2000000
   rarity: 3
 垃圾桶:
@@ -17201,7 +17201,7 @@ Dodu的手炮:
   item: IRON_INGOT
   lore:
   - §7▷ 矿车：在主手时，右键铁轨将乘坐矿车；在BOSS存活时速度将大大降低
-  worth: 30000000
+  worth: 86000000
   rarity: 14
 黏鞍:
   item: IRON_INGOT

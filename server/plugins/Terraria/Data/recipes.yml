@@ -1471,8 +1471,9 @@ ANVIL:
     requireLevel: 3
     resultItem: 神明矿车
     requireItem:
-    - 宇宙锭:10
-    - 化神魂精
+    - 灵质:8
+    - 日影面纱:6
+    - 宇宙锭:20
     recipeCategory: MINECART
   '168':
     requireLevel: 2

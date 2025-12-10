@@ -780,9 +780,6 @@
         - "史莱姆法杖:1:1:0.00014"
     buffImmute:
         - "中毒"
-毁灭者:
-    buffImmute:
-        - "中毒"
 激光眼:
     buffImmute:
         - "中毒"

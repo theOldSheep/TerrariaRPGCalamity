@@ -174,6 +174,34 @@
   texture: "yhzc/w/texture.png"
   scale: 45
   # renderAlways: true
+毁灭者头:
+  entity: "毁灭者头"
+  contains: false
+  model: "smtsz/t/head.obj"
+  texture: "smtsz/DestroyerReinforced.png"
+  scale: 55
+  # renderAlways: true
+毁灭者强化体节:
+  entity: "毁灭者强化体节"
+  contains: false
+  model: "smtsz/tj/body.obj"
+  texture: "smtsz/DestroyerReinforced.png"
+  scale: 55
+  # renderAlways: true
+毁灭者体节:
+  entity: "毁灭者体节"
+  contains: false
+  model: "smtsz/tj/body.obj"
+  texture: "smtsz/Destroyer.png"
+  scale: 55
+  # renderAlways: true
+毁灭者尾:
+  entity: "毁灭者尾"
+  contains: false
+  model: "smtsz/w/tail.obj"
+  texture: "smtsz/DestroyerReinforced.png"
+  scale: 55
+  # renderAlways: true
 硫磺火元素:
   entity: "硫磺火元素"
   contains: false
