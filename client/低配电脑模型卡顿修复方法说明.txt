@@ -1,0 +1,5 @@
+大部分主线BOSS和坐骑使用了AI生成的3D模型。打包的客户端默认使用高面数的版本。
+模型文件夹位于客户端的“.minecraft\resourcepacks\DragonCore\models\entities\”文件夹中。
+此文件夹中存在“_低面数”，“_高面数”和“_六面BOSS”三个文件夹。
+当低配电脑遇到BOSS战卡顿时，可考虑视设备性能将这些文件夹中的内容复制到“.minecraft\resourcepacks\DragonCore\models\entities\”文件夹中。
+此后，在服务器内按下键盘上的O+P按键或重启客户端即可应用新的模型。
