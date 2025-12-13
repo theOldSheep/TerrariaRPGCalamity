@@ -3,6 +3,9 @@ regex:
 replace:
  0
 
+6 faces models:
+use template, 11.6 * slime size
+
 AI: 
 https://studio.tripo3d.ai/
 https://hitem3d.ai/

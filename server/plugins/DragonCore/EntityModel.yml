@@ -328,6 +328,20 @@
   texture: "wyszgly/ai_model.png"
   scale: 200
   # renderAlways: true
+瘟疫之雷:
+  entity: "瘟疫之雷"
+  contains: true
+  model: "mob/wyzl/ai_model.obj"
+  texture: "mob/wyzl//ai_model.png"
+  scale: 34.8
+  # renderAlways: true
+制导瘟疫弹:
+  entity: "制导瘟疫弹"
+  contains: true
+  model: "mob/zdwyd/ai_model.obj"
+  texture: "mob/zdwyd//ai_model.png"
+  scale: 34.8
+  # renderAlways: true
 光之女皇:
   entity: "光之女皇"
   contains: true
