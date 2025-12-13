@@ -45,7 +45,3 @@ optimization:
   globalParticleDensity: 1.0
   dmgHologramInterval: 2
   dpsDisplayInterval: 2
-tickCompensationSetting:
-  bufferThreshold: 3
-  bufferThresholdMax: 4
-  bossFightOnly: true

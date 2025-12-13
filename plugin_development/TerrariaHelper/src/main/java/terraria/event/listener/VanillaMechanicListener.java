@@ -31,54 +31,6 @@ import java.util.Set;
 
 
 public class VanillaMechanicListener implements Listener {
-    // deny Vanilla Minecraft's compensation-tick
-    public static final long MS_TO_NS_RATE = 1000000;
-    public static final long NORMAL_TICK_MS = 50;
-    public static final long NORMAL_TICK_NS = NORMAL_TICK_MS * MS_TO_NS_RATE;
-    // when the server tick is running ahead by at least this amount, the mechanism would take effect.
-    public static final long BUFFER_THRESHOLD = (long) (TerrariaHelper.optimizationConfig.getDouble(
-            "tickCompensationSetting.bufferThreshold", 1) * NORMAL_TICK_NS);
-    // when the server tick is running ahead by at least this amount, the mechanism would halt 50 ms each tick.
-    public static final long MAX_EFFECT_THRESHOLD = (long) (TerrariaHelper.optimizationConfig.getDouble(
-            "tickCompensationSetting.bufferThresholdMax", 5) * NORMAL_TICK_NS);
-    // only trigger this effect when a boss is alive
-    public static final boolean BOSS_ACTIVE_ONLY = TerrariaHelper.optimizationConfig.getBoolean(
-            "tickCompensationSetting.bossFightOnly", true);
-    long lastTickNS = System.nanoTime(), bufferNS = 0;
-    private void tick() {
-        long currNanoTime = System.nanoTime();
-        long timeDiff = currNanoTime - lastTickNS;
-        lastTickNS = currNanoTime;
-
-        // if boss is not alive and this mechanism is therefore disabled
-        if (BossHelper.bossMap.isEmpty() && BOSS_ACTIVE_ONLY) {
-            bufferNS = 0;
-            return;
-        }
-
-        // modify the buffer
-        bufferNS += (NORMAL_TICK_NS - timeDiff);
-//        Bukkit.broadcastMessage("BUFFER: " + (double) bufferNS / MS_TO_NS_RATE + ", timediff " + (double) timeDiff / MS_TO_NS_RATE);
-        // positive buffer size enough to trigger tick compensation
-        if (bufferNS > BUFFER_THRESHOLD) {
-            int timeSleepMS = (int) Math.ceil(NORMAL_TICK_MS * Math.min(1d,
-                    (double) (bufferNS - BUFFER_THRESHOLD) / (MAX_EFFECT_THRESHOLD - BUFFER_THRESHOLD)) );
-            bufferNS -= timeSleepMS * MS_TO_NS_RATE;
-//            Bukkit.broadcastMessage("SLP:" + timeSleepMS + " -> BUFFER: " + (double) bufferNS / MS_TO_NS_RATE +
-//                    "Compensated len: " + (timeSleepMS + (double) (timeDiff) / MS_TO_NS_RATE) );
-            try {
-                Thread.sleep(timeSleepMS);
-            } catch (Exception ignored) {
-            }
-        }
-        // excessive negative buffer size is not allowed
-        if (bufferNS < -BUFFER_THRESHOLD) {
-            bufferNS = -BUFFER_THRESHOLD;
-        }
-    }
-    public VanillaMechanicListener() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(TerrariaHelper.getInstance(), this::tick, 1, 1);
-    }
     // entity related
     @EventHandler(priority = EventPriority.LOW)
     public void onInventoryCLose(InventoryCloseEvent evt) {

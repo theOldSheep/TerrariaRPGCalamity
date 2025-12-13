@@ -1513,9 +1513,9 @@ public class DamageHelper {
         String dm = "";
         // special death message cases
         if (v instanceof Player) {
-            Player plyV = (Player) v;
+            Player vPly = (Player) v;
             // tool specific msg
-            String plyTool = ItemHelper.splitItemName(plyV.getInventory().getItemInMainHand() )[1];
+            String plyTool = ItemHelper.splitItemName(vPly.getInventory().getItemInMainHand() )[1];
             switch (plyTool) {
                 case "雷姆的复仇":
                     dm = "<victim>……是谁？";
@@ -1526,17 +1526,20 @@ public class DamageHelper {
                     break;
             }
             // armor set specific msg
-            if ( PlayerHelper.getArmorSet(plyV).contains("天钻套装") && Math.random() < 0.5 ) {
+            if ( PlayerHelper.getArmorSet(vPly).contains("天钻套装") ) {
                 dm = "§4<victim> 一去不复返";
             }
             // accessory specific msg
-            if ( PlayerHelper.getAccessories(plyV).contains("空灵护符") && Math.random() < 0.25 ) {
+            if ( PlayerHelper.getAccessories(vPly).contains("空灵护符") && Math.random() < 0.25 ) {
                 String msg = "§4<victim>死了    <victim>死了".replaceAll("<victim>", v.getName());
                 for (int i = 0; i < 3; i ++) {
                     Bukkit.broadcastMessage(msg);
                 }
                 return;
             }
+            // vehicle specific msg
+            if ( vPly.getVehicle() != null && vPly.getVehicle().getCustomName().equals("神明矿车") )
+                dm = "§4<victim> 的神明矿车亲眼目睹了主人的末路";
         }
         if (dm.length() == 0) {
             // general msg
@@ -1616,6 +1619,8 @@ public class DamageHelper {
             String deathTitle = "你死了！";
             if ( ItemHelper.splitItemName( vPly.getInventory().getItemInMainHand() )[1].equals("雷姆的复仇") )
                 deathTitle = "感谢款待！";
+            if ( vPly.getVehicle() != null && vPly.getVehicle().getCustomName().equals("神明矿车") )
+                deathTitle = "Lose";
             vPly.sendTitle("§c§l" + deathTitle, moneyMsg, 0, respawnTime, 0);
             sendDeathMessage(d, v, damageType, damageReason, debuffType);
             // remove vanilla potion effects except for mining fatigue
