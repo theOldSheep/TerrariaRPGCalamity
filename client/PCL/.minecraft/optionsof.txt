@@ -8,7 +8,7 @@ ofAoLevel:1.0
 ofClouds:3
 ofCloudsHeight:0.0
 ofTrees:0
-ofDroppedItems:0
+ofDroppedItems:1
 ofRain:0
 ofAnimatedWater:0
 ofAnimatedLava:0
@@ -36,7 +36,7 @@ ofWeather:true
 ofSky:false
 ofStars:true
 ofSunMoon:true
-ofVignette:0
+ofVignette:1
 ofChunkUpdates:5
 ofChunkUpdatesDynamic:false
 ofTime:0

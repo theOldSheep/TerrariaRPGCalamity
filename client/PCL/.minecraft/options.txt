@@ -7,7 +7,7 @@ saturation:0.0
 renderDistance:12
 guiScale:0
 particles:0
-bobView:true
+bobView:false
 anaglyph3d:false
 maxFps:260
 fboEnable:true
@@ -43,7 +43,7 @@ mipmapLevels:4
 forceUnicodeFont:true
 reducedDebugInfo:false
 useNativeTransport:true
-entityShadows:true
+entityShadows:false
 mainHand:right
 attackIndicator:0
 showSubtitles:false
