@@ -5004,7 +5004,7 @@ Dodu的手炮:
   autoSwing: true
   size: 16
   particleColor:
-  - 255|0|0
+  - t/rls
   damageMultiPerHit: 0.5
   bonusDamage: 5
 迪朗达尔:
@@ -5012,7 +5012,7 @@ Dodu的手炮:
   autoSwing: true
   size: 25
   particleColor:
-  - 150|150|0
+  - t/ols
   damageMultiPerHit: 0.6
   bonusDamage: 18
 晨星:
@@ -5020,7 +5020,7 @@ Dodu的手炮:
   autoSwing: true
   size: 30
   particleColor:
-  - 0|100|100
+  - t/pls
   damageMultiPerHit: 0.9
   bonusDamage: 12
 暗黑收割:
@@ -5028,7 +5028,7 @@ Dodu的手炮:
   autoSwing: true
   size: 35
   particleColor:
-  - 0|50|50
+  - t/pls
   damageMultiPerHit: 0.75
   bonusDamage: 10
 万花筒:
@@ -5036,11 +5036,6 @@ Dodu的手炮:
   autoSwing: true
   size: 40
   particleColor:
-  - 255|0|0
-  - 255|255|0
-  - 0|255|0
-  - 0|255|255
-  - 0|0|255
-  - 255|0|255
+  - t/rbws
   damageMultiPerHit: 0.5
   bonusDamage: 40
