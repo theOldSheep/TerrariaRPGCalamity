@@ -7,7 +7,7 @@ server/DragonCorePlayerData/
 server/jdk1.8.0_331/
 server/logs/
 server/usercache.json
-# Plugins
+# Server Plugins
 server/plugins/Essentials/userdata/
 server/plugins/Essentials/warps/
 server/plugins/Residence/Backup/
@@ -23,3 +23,6 @@ server/world_surface/
 server/world_cavern/
 server/world_underworld/
 server/WorldGenDebug/
+
+# Plugin Dev
+.idea/
