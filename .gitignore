@@ -26,3 +26,19 @@ server/WorldGenDebug/
 
 # Plugin Dev
 .idea/
+
+
+# Client
+client/PCL/.minecraft/.mixin.out/
+client/PCL/.minecraft/armourers_workshop/fast-cache/
+client/PCL/.minecraft/assets/skins/
+client/PCL/.minecraft/crash-reports/
+client/PCL/.minecraft/CustomSkinLoader/
+client/PCL/.minecraft/logs/
+client/PCL/.minecraft/saves/
+client/PCL/.minecraft/screenshots/
+client/PCL/.minecraft/XaeroWaypoints/
+client/PCL/PCL/Log*.txt
+client/PCL/.minecraft/resourcepacks/泰拉瑞亚灾厄材质包.zip
+client/PCL/.minecraft/usercache.json
+client/PCL/.minecraft/usernamecache.json
