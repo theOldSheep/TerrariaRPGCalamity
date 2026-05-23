@@ -226,7 +226,7 @@ tabname:
 #             Plugin Settings             #
 #=========================================#
 # Check for updates.
-check-update: true
+check-update: false
 
 # Log plugin messages into console.
 logconsole: true

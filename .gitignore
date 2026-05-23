@@ -1,0 +1,25 @@
+# Server files
+server/banned-ips.json
+server/banned-players.json
+server/cache
+server/crash-reports/
+server/DragonCorePlayerData/
+server/jdk1.8.0_331/
+server/logs/
+server/usercache.json
+# Plugins
+server/plugins/Essentials/userdata/
+server/plugins/Essentials/warps/
+server/plugins/Residence/Backup/
+server/plugins/Residence/Save/
+server/plugins/Skript/
+server/plugins/skDragon/
+server/plugins/Terraria/PlayerData/
+# Server Worlds
+server/World/
+server/world_nether/
+server/world_the_end/
+server/world_surface/
+server/world_cavern/
+server/world_underworld/
+server/WorldGenDebug/
