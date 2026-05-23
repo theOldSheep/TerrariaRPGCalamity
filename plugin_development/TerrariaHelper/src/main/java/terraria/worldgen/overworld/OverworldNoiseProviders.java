@@ -298,8 +298,9 @@ public class OverworldNoiseProviders {
 
         // soil height providers that cast terrain height to soil height
         SOIL_HEIGHT_ASTRAL = new Interpolate(new Interpolate.InterpolatePoint[]{
-                Interpolate.InterpolatePoint.create(LAND_HEIGHT           , 6),
-                Interpolate.InterpolatePoint.create(LAND_HEIGHT + 15   , 0),
+                Interpolate.InterpolatePoint.create(LAND_HEIGHT   , 0),
+                Interpolate.InterpolatePoint.create(LAND_HEIGHT + 5  , 2),
+                Interpolate.InterpolatePoint.create(LAND_HEIGHT + 50  , 50),
         }, null);
         SOIL_HEIGHT_DESERT = new Interpolate(new Interpolate.InterpolatePoint[]{
                 Interpolate.InterpolatePoint.create(LAND_HEIGHT                                  , 30),
