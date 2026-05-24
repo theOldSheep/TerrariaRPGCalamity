@@ -42,3 +42,7 @@ client/PCL/PCL/Log*.txt
 client/PCL/.minecraft/resourcepacks/泰拉瑞亚灾厄材质包.zip
 client/PCL/.minecraft/usercache.json
 client/PCL/.minecraft/usernamecache.json
+
+
+# Support
+localization/localizer_gen_scripts/
