@@ -2,7 +2,7 @@
 # Items (name + specific lore)
 # Items (system-generated lore)
 # Monster Enemies (names/variants)
-# Bosses (names, in-bossfight messages, generic bossfight contribution summaries)
+# Bosses (names, in-bossfight messages, generic bossfight contribution summaries) and events
 # Status messages (unlocking tiers, hints on NPC sells when making progress)
 # Death messages / death title
 # NPC messages (angler fishing info, NPC conversation, trading UI)
@@ -3403,3 +3403,413 @@
 "提升生命再生效果10秒钟": "Improves life regeneration effects for 10 seconds"
 "附魔星鱼": "Enchanted Starfish"
 "永久提升魔力上限20点": "Permanently increases maximum mana by 20"
+
+
+# Items (system-generated lore)
+弹药: "Ammo"
+材料: "Material"
+"受到伤害": "Damage taken"
+"受到接触伤害": "Contact damage taken"
+"伤害": "Damage"
+"基础": "Base"
+"近战伤害": "Melee damage"
+"真近战伤害": "True melee damage"
+"远程伤害": "Ranged damage"
+"箭矢伤害": "Arrow damage"
+"子弹伤害": "Bullet damage"
+"火箭伤害": "Rocket damage"
+"盗贼伤害": "Rogue damage"
+"潜伏增伤倍率": "Stealth strike damage multiplier"
+"魔法伤害": "Magic damage"
+"召唤伤害": "Summon damage"
+"飞行时长": "Flight time"
+"潜伏攻击所需潜行值": "Stealth cost for stealth strike"
+"魔力消耗": "Mana usage"
+"最大生命值": "Maximum life"
+"怪物生成速度": "Enemy spawn rate"
+"移动速度": "Movement speed"
+"近战攻击距离": "Melee attack range"
+"生命回复速度": "Life regeneration speed"
+"潜伏值累积速度": "Stealth generation speed"
+"治疗强度": "Healing power"
+"攻击速度": "Attack speed"
+"近战攻击速度": "Melee attack speed"
+"远程攻击速度": "Ranged attack speed"
+"盗贼攻击速度": "Rogue attack speed"
+"魔法攻击速度": "Magic attack speed"
+"挖掘速度": "Mining speed"
+"近战击退": "Melee knockback"
+"弹射物速度": "Projectile velocity"
+"箭矢速度": "Arrow velocity"
+"无击退威力": "No knockback"
+"极弱的击退威力": "Extremely weak knockback"
+"很弱的击退威力": "Very weak knockback"
+"较弱的击退威力": "Weak knockback"
+"普通的击退威力": "Average knockback"
+"较强的击退威力": "Strong knockback"
+"很强的击退威力": "Very strong knockback"
+"极强的击退威力": "Extremely strong knockback"
+"疯狂的击退威力": "Insane knockback"
+暴击率: "Critical strike chance"
+额外暴击倍率: "Extra critical strike multiplier"
+"超快的使用速度": "Super fast speed"
+"很快的使用速度": "Very fast speed"
+"快的使用速度": "Fast speed"
+"普通的使用速度": "Average speed"
+"慢的使用速度": "Slow speed"
+"很慢的使用速度": "Very slow speed"
+"极慢的使用速度": "Extremely slow speed"
+"蜗牛的使用速度": "Snail speed"
+消耗: "Consumable"
+魔力: "Mana"
+镐力: "Pickaxe power"
+渔力: "Fishing power"
+触及范围: "Tile reach"
+无视敌人: "Ignores defense"
+防御: "Defense"
+几率不消耗: "Chance to not consume"
+弹药: "Ammo"
+保护矩阵能量上限: "Maximum protection matrix energy"
+最大生命值: "Maximum life"
+"潜行值上限": "Maximum stealth"
+"魔力上限": "Maximum mana"
+"减少水下适应性": "Decreases underwater breath loss rate"
+"增加水下适应性": "Increases underwater breath loss rate"
+"增加大量水下适应性": "Greatly increases underwater breath loss rate"
+"额外自然生命恢复": "Extra natural life regeneration"
+"减缓魔力恢复": "Slower mana regeneration"
+"加快魔力恢复": "Faster mana regeneration"
+"近战暴击率": "Melee critical strike chance"
+"远程暴击率": "Ranged critical strike chance"
+"盗贼暴击率": "Rogue critical strike chance"
+"潜伏最高额外暴击率": "Maximum stealth bonus critical strike chance"
+"魔法暴击率": "Magic critical strike chance"
+"真近战暴击率": "True melee critical strike chance"
+"缩短无敌帧时间": "Decreases immunity frames"
+"延长无敌帧时间": "Increases immunity frames"
+"仆从上限": "Max minions"
+"哨兵上限": "Max sentries"
+"增加最高刷怪量": "Increases maximum spawn count"
+"减少最高刷怪量": "Decreases maximum spawn count"
+"免疫击退": "Immunity to knockback"
+"击退抗性": "Knockback resistance"
+"免疫": "Immunity to"
+▣算作转换类饰品: "▣Unique - Toggling accessory"
+▷ 转换类饰品：仅限装备一个。按下切换按键[默认为C]可于两种加成形态间转换，冷却为5秒: "▷ Toggling Accessory: Only one can be equipped. Press the hotkey [Default: C] to toggle between two bonus modes, 5-second cooldown"
+一形态：: "First Mode:"
+二形态：: "Second Mode:"
+
+# Monster Enemies (names/variants)
+陨石怪: Meteor Head
+鸟妖: Harpy
+僵尸夫妇: Zombie Couple
+僵尸: Zombie
+僵尸新郎: The Groom
+僵尸新娘: The Bride
+小僵尸: Spore Zombie
+大僵尸: Big Zombie
+木箭僵尸: Skeleton Archer
+凝胶僵尸: Gel Zombie
+火把僵尸: Torch Zombie
+血腥僵尸: Blood Zombie
+恶魔之眼: Demon Eye
+血滴怪: Drippler
+丛林史莱姆: Jungle Slime
+丛林史莱姆§1: Jungle Slime
+钨钢回转器: Wulfrum Gyrator
+钨钢悬浮坦克: Wulfrum Hovercraft
+钨钢无人机: Wulfrum Drone
+钨钢漫步者: Wulfrum Rover
+史莱姆: Blue Slime
+黄史莱姆: Yellow Slime
+黑史莱姆: Black Slime
+岩浆史莱姆: Lava Slime
+史莱姆§1: Slime
+史莱姆§2: Slime
+秃鹰: Vulture
+水母: Jellyfish
+蓝水母: Blue Jellyfish
+粉水母: Pink Jellyfish
+绿水母: Green Jellyfish
+蚁狮马: Antlion Charger
+巨型蚁狮马: Giant Antlion Charger
+风暴蚁狮: Storm Lion
+冰雪精: Ice Element
+冰雪巨人: Ice Golem
+吞噬者: The Devourer
+噬魂怪: Eater of Souls
+小噬魂怪: Little Eater of Souls
+大噬魂怪: Big Eater of Souls
+肉后噬魂怪: Corruptor
+地狱蝙蝠: Hellbat
+丛林蝙蝠: Jungle Bat
+黄蜂: Hornet
+多叶黄蜂: Leafy Hornet
+恶魔: Demon
+巫毒恶魔: Voodoo Demon
+骨蛇: Bone Serpent
+灵魂饮食者: Soul Eater
+强化灵魂饮食者: Encounter Soul Eater
+殒命妖灵: Despair Stone
+强化殒命妖灵: Encounter Despair Stone
+绝望之石: Despair Stone
+强化绝望之石: Encounter Despair Stone
+骷髅: Skeleton
+大骷髅: Big Skeleton
+小骷髅: Small Skeleton
+诅咒骷髅头: Cursed Skull
+神圣宝箱怪: Hallowed Mimic
+腐化宝箱怪: Corrupt Mimic
+妖精: Pixie
+独角兽: Unicorn
+亵渎献祭者: Profaned Energy
+吞食魔: Devourer
+光明木乃伊: Light Mummy
+暗黑木乃伊: Dark Mummy
+骷髅弓箭手: Skeleton Archer
+白羊座: Aries
+星辉史莱姆: Astral Slime
+擎星者: Starish Core
+对撞观星眼: Novae Eye
+幻星探测器: Astral Probe
+装甲幻影魔: Armored Gazer
+幽灵: Wraith
+黑隐士: Black Recluse
+巨型陆龟: Giant Tortoise
+冰雪陆龟: Ice Tortoise
+飞龙: Wyvern
+红恶魔: Red Demon
+瘟疫龟: Plague Tortoise
+装甲骷髅: Armored Skeleton
+巨型诅咒骷髅头: Giant Cursed Skull
+圣骑士: Paladin
+死灵法师: Necromancer
+褴褛邪教徒法师: Ragged Caster
+魔教徒: Diabolist
+骷髅狙击手: Skeleton Sniper
+骷髅特警: Tactical Skeleton
+地牢幽魂: Dungeon Spirit
+幻魂: Phantom Spirit
+蜥蜴人: Lihzahrd
+飞蛇: Flying Snake
+蛤: Clam
+肉后蛤: Clam
+富养鳐鱼: Eutrophic Ray
+鬼铃水母: Ghost Bell
+巨像蛤: Giant Clam
+肉后巨像蛤: Giant Clam
+硫磺比目鱼: Flounder
+炮弹水母: Jellyfish
+剧毒米诺鱼: Viperfish
+眼后剧毒米诺鱼: Viperfish
+流光石首鱼: Luminous Croaker
+激光鱼: Laserfish
+魔鬼鱼: Devil Fish
+幻海水母: Mirage Jelly
+巨像乌贼: Colossal Squid
+猎魂鲨: Reaper Shark
+克苏鲁的仆从: Servant of Cthulhu
+腐化囊: Corrupt Spawn
+沼泽之眼: Bog Eye
+饿鬼: The Hungry
+尖刺史莱姆: Spiked Slime
+水晶史莱姆: Crystal Slime
+飞翔史莱姆: Heavenly Slime
+弹力史莱姆: Bouncy Slime
+探测怪: Probe
+???: ???
+深海吞食者: Deep Sea Devourer
+拜月教教徒: Lunatic Devotee
+哥布林弓箭手: Goblin Archer
+哥布林战士: Goblin Warrior
+哥布林盗贼: Goblin Thief
+哥布林苦力: Goblin Peon
+眼怪: Eyezor
+科学怪人: Frankenstein
+沼泽怪: Swamp Thing
+吸血鬼: Vampire
+水月怪: Creature from the Deep
+弗里茨: Fritz
+攀爬魔: The Possessed
+死神: Reaper
+致命球: Deadly Sphere
+蛾怪: Mothron
+稻草人: Scarecrow
+树精: Splinterling
+地狱犬: Hellhound
+胡闹鬼: Poltergeist
+礼物宝箱怪: Present Mimic
+雪花怪: Flocko
+姜饼人: Gingerbread Man
+僵尸精灵: Zombie Elf
+精灵弓箭手: Elf Archer
+胡桃夹士: Nutcracker
+雪兽: Yeti
+精灵直升机: Elf Copter
+坎卜斯: Krampus
+流星火怪: Crawltipede
+火龙战士: Drakomire Rider
+火龙怪: Drakomire
+火月怪: Selenian
+火滚怪: Sroller
+千足蜈蚣: Crawltipede
+异星黄蜂: Alien Hornet
+星璇怪: Vortexian
+漩泥怪: Alien Larva
+异星幼虫: Alien Larva
+异星蜂王: Alien Queen
+吮脑怪: Brain Suckler
+预言怪: Predictor
+星云浮怪: Evolution Beast
+进化兽: Evolution Beast
+星云球: Nebula Sphere
+星尘细胞: Star Cell
+银河织妖: Stargazer
+流体入侵怪: Flow Invader
+观星怪: Stargazer
+闪耀炮手: Twinkle Popper
+闪耀怪: Twinkle
+
+
+# Bosses (names, in-bossfight messages, generic bossfight contribution summaries) and events
+史莱姆王: "King Slime"
+荒漠灾虫: "Desert Scourge"
+菌生蟹: "Crabulon"
+克苏鲁之眼: "Eye of Cthulhu"
+世界吞噬者: "Eater of Worlds"
+腐巢意志: "The Hive Mind"
+骷髅王: "Skeletron"
+史莱姆之神: "The Slime God"
+血肉之墙: "Wall of Flesh"
+史莱姆皇后: "Queen Slime"
+双子魔眼: "The Twins"
+极地之灵: "Cryogen"
+渊海灾虫: "Aquatic Scourge"
+毁灭者: "The Destroyer"
+硫磺火元素: "Brimstone Elemental"
+机械骷髅王: "Skeletron Prime"
+世纪之花: "Plantera"
+灾厄之眼: "Calamitas Clone"
+阿娜希塔和利维坦: "Anahita and Leviathan"
+白金星舰: "Astrum Aureus"
+石巨人: "Golem"
+瘟疫使者歌莉娅: "The Plaguebringer Goliath"
+光之女皇: "Empress of Light"
+猪鲨公爵: "Duke Fishron"
+毁灭魔像: "Ravager"
+拜月教邪教徒: "Lunatic Cultist"
+星神游龙: "Astrum Deus"
+月球领主: "Moon Lord"
+痴愚金龙: "Bumblebirb"
+亵渎守卫: "The Profaned Guardians"
+亵渎天神，普罗维登斯: "Providence, the Profaned Goddess"
+风暴编织者: "Storm Weaver"
+无尽虚空: "Ceaseless Void"
+神之使徒西格纳斯: "Signus, Envoy of the Devourer"
+噬魂幽花: "Polterghast"
+硫海遗爵: "The Old Duke"
+神明吞噬者: "The Devourer of Gods"
+丛林龙，犽戎: "Yharon, the Jungle Dragon"
+星流巨械: "Exo Meches"
+至尊灾厄: "Supreme Calamitas"
+BOSS仇恨时长（秒）: "Boss Aggro Duration (seconds)"
+伤害汇总: "Damage Summary"
+BOSS的挑战者为：: "The Boss challengers are:"
+被击败了: "has been defeated!"
+恭喜你击败了BOSS: "Congratulations, you defeated the Boss!"
+已经被击败。很遗憾，您对BOSS战的贡献不足以获得一份战利品。: "has been defeated. Unfortunately, your contribution to the boss fight was not enough to earn loot."
+若要获得一份战利品，请在BOSS战中贡献更多的伤害或吸引更久的仇恨。: "To receive loot, please contribute more damage or draw aggro for longer during the boss fight."
+史莱姆正在从天而降！: "Slime is falling from the sky!"
+哥布林军团来了！: "The Goblin Army is arriving!"
+一支哥布林军团正在逼近...: "A goblin army is approaching..."
+正在发生日食！: "A solar eclipse is happening!"
+血月: "Blood Moon"
+南瓜月: "Pumpkin Moon"
+冰霜月: "Frost Moon"
+正在升起！: "is rising!"
+被击退了！: "has been defeated!"
+史莱姆不再从天而降: "Slime has stopped falling from the sky."
+过去了！（得分：: "has passed! (Score: "
+)！: ")!"
+第一波：稻草人: "Wave 1: Scarecrow"
+第二波：树精和稻草人: "Wave 2: Scarecrow, Splinterling"
+第三波：地狱犬和树精: "Wave 3: Hellhound, Splinterling"
+第四波：胡闹鬼，树精和稻草人: "Wave 4: Poltergeist, Scarecrow, Splinterling"
+第五波：无头骑士和地狱犬: "Wave 5: Hellhound, Headless Horseman"
+第六波：哀木，树精和稻草人: "Wave 6: Mourning Wood, Scarecrow, Splinterling"
+第七波：哀木，胡闹鬼和地狱犬: "Wave 7: Hellhound, Mourning Wood, Poltergeist"
+第八波：无头骑士，胡闹鬼和地狱犬: "Wave 8: Headless Horseman, Hellhound, Poltergeist"
+第九波：哀木，胡闹鬼，地狱犬，树精和稻草人: "Wave 9: Hellhound, Mourning Wood, Poltergeist, Scarecrow, Splinterling"
+第十波：南瓜王，地狱犬和树精: "Wave 10: Hellhound, Pumpking, Splinterling"
+第十一波：哀木，胡闹鬼和树精: "Wave 11: Mourning Wood, Poltergeist, Splinterling"
+第十二波：南瓜王和胡闹鬼: "Wave 12: Poltergeist, Pumpking"
+第十三波：哀木，无头骑士，胡闹鬼，地狱犬和树精: "Wave 13: Headless Horseman, Hellhound, Mourning Wood, Poltergeist, Splinterling"
+第十四波：南瓜王，哀木，无头骑士，胡闹鬼，地狱犬，树精和稻草人: "Wave 14: Headless Horseman, Hellhound, Mourning Wood, Poltergeist, Pumpking, Scarecrow, Splinterling"
+第十五波：南瓜王，哀木，胡闹鬼，树精和稻草人: "Wave 15: Mourning Wood, Poltergeist, Pumpking, Scarecrow, Splinterling"
+第十六波：南瓜王，无头骑士，胡闹鬼，地狱犬和树精: "Wave 16: Headless Horseman, Hellhound, Poltergeist, Pumpking, Splinterling"
+第十七波：南瓜王，哀木，无头骑士，胡闹鬼和地狱犬: "Wave 17: Headless Horseman, Hellhound, Mourning Wood, Poltergeist, Pumpking"
+第十八波：南瓜王，哀木，无头骑士和胡闹鬼: "Wave 18: Headless Horseman, Mourning Wood, Poltergeist, Pumpking"
+第十九波：南瓜王，哀木和无头骑士: "Wave 19: Headless Horseman, Mourning Wood, Pumpking"
+第二十波：南瓜王，哀木和无头骑士: "Wave 20: Headless Horseman, Mourning Wood, Pumpking"
+第一波：僵尸精灵和姜饼人: "Wave 1: Gingerbread Man, Zombie Elf"
+第二波：僵尸精灵和精灵弓箭手: "Wave 2: Elf Archer, Zombie Elf"
+第三波：僵尸精灵，精灵弓箭手，姜饼人和胡桃夹士: "Wave 3: Elf Archer, Gingerbread Man, Nutcracker, Zombie Elf"
+第四波：常绿尖叫怪，僵尸精灵，精灵弓箭手和姜饼人: "Wave 4: Elf Archer, Everscream, Gingerbread Man, Zombie Elf"
+第五波：常绿尖叫怪，僵尸精灵，精灵弓箭手和胡桃夹士: "Wave 5: Elf Archer, Everscream, Nutcracker, Zombie Elf"
+第六波：常绿尖叫怪，精灵弓箭手，胡桃夹士和精灵直升机: "Wave 6: Elf Archer, Elf Copter, Everscream, Nutcracker"
+第七波：圣诞坦克，姜饼人，精灵弓箭手和僵尸精灵: "Wave 7: Elf Archer, Gingerbread Man, Santa-NK1, Zombie Elf"
+第八波：圣诞坦克，精灵直升机，精灵弓箭手，胡桃夹士和坎卜斯: "Wave 8: Elf Archer, Elf Copter, Krampus, Nutcracker, Santa-NK1"
+第九波：圣诞坦克，常绿尖叫怪，胡桃夹士，精灵直升机和姜饼人: "Wave 9: Elf Copter, Everscream, Gingerbread Man, Nutcracker, Santa-NK1"
+第十波：圣诞坦克，常绿尖叫怪，坎卜斯，僵尸精灵和精灵直升机: "Wave 10: Elf Copter, Everscream, Krampus, Santa-NK1, Zombie Elf"
+第十一波：冰雪女王，雪花怪，僵尸精灵和姜饼人: "Wave 11: Flocko, Gingerbread Man, Ice Queen, Zombie Elf"
+第十二波：冰雪女王，常绿尖叫怪，姜饼人，雪兽和僵尸精灵: "Wave 12: Everscream, Gingerbread Man, Ice Queen, Yeti, Zombie Elf"
+第十三波：冰雪女王，圣诞坦克，精灵直升机，姜饼人和雪花怪: "Wave 13: Elf Copter, Flocko, Gingerbread Man, Ice Queen, Santa-NK1"
+第十四波：冰雪女王，圣诞坦克，常绿尖叫怪，雪兽和坎卜斯: "Wave 14: Everscream, Ice Queen, Krampus, Santa-NK1, Yeti"
+第十五波：冰雪女王，圣诞坦克，常绿尖叫怪，雪兽和精灵直升机: "Wave 15: Elf Copter, Everscream, Ice Queen, Santa-NK1, Yeti"
+第十六波：冰雪女王，圣诞坦克，常绿尖叫怪，雪兽和雪花怪: "Wave 16: Everscream, Flocko, Ice Queen, Santa-NK1, Yeti"
+第十七波：冰雪女王，圣诞坦克，常绿尖叫怪，雪兽，坎卜斯和精灵直升机: "Wave 17: Elf Copter, Everscream, Ice Queen, Krampus, Santa-NK1, Yeti"
+第十八波：冰雪女王，圣诞坦克，常绿尖叫怪，雪兽，胡桃夹士和坎卜斯: "Wave 18: Everscream, Ice Queen, Krampus, Nutcracker, Santa-NK1, Yeti"
+第十九波：冰雪女王，圣诞坦克，常绿尖叫怪和雪兽: "Wave 19: Everscream, Ice Queen, Santa-NK1, Yeti"
+第二十波：冰雪女王，圣诞坦克和常绿尖叫怪: "Wave 20: Everscream, Ice Queen, Santa-NK1"
+"......自从上次已经多久了？一个世纪？还是都一个千年了？": "'...How long has it been since the last time? A century? Or a whole millennium?'"
+"我把这圣物隐匿于纷争的焦点，就是为了防止它被再度使用。": "'I hid this relic away from the focal point of conflict precisely to prevent it from being used again.'"
+"几乎没人知晓它的存在，那那些知道的人呢？": "'Hardly anyone knows of its existence, and those who do?'"
+"他们都知道这件圣物曾经所提供的无穷的力量，现在都已经没法被利用了。": "'They all know that the boundless power this relic once provided can no longer be harnessed.'"
+"在明知这些的情况下，却还是有人勇敢地制造了它的复制品，令人惊讶。": "'Knowing all this, that someone was still brave enough to craft a replica of it is quite surprising.'"
+"这次竟是个凡人！多么有趣......": "'And a mortal, no less! How intriguing...'"
+"它不过是块腐烂的石碑，究竟是什么驱使你竭尽全力也要制造它？": "'It is but a decaying slab of stone; what could have driven you to such lengths to recreate it?'"
+"......这或许是个机会。得到这圣物可不是什么小打小闹。": '...Perhaps this is an opportunity. Acquiring this relic is no minor feat.'"
+"是你，在终结一个时代的过程中，得到了曾终结了另一个时代的圣物......": "'It was you who, in the process of ending one era, obtained a relic that had ended another...'"
+"是你，杀死了无名的巨蛇......": "'It was you who slew the nameless serpent...'"
+"是你，击败了我的故友，不死之龙......": "'It was you who defeated my old friend, the immortal dragon...'"
+"是你的力量，能和那唯一一个让我怀疑自己的凡人所匹敌......": "'It is your power that rivals the only mortal who ever made me doubt myself...'"
+"我想测试你的力量，我会用我原始之光的碎片捏造出你过往敌人的形象。": "'I wish to test your strength. I shall fashion the likenesses of your past adversaries from fragments of my primordial light.'"
+"这不是什么简单的活，但只要你能证明自己足够强大，我会给你一个提案。": "'This is no simple task, but if you can prove yourself strong enough, I shall offer you a proposal.'"
+"你觉得自己能赢下这场挑战么？": "'Do you think you can win this challenge?'"
+"到目前为止只是无足轻重的热身罢了，根本没达到我的期望。": "'Thus far, it has been nothing more than a trivial warm-up, falling well short of my expectations.'"
+"让你的身体和灵魂准备好面对接下来的一切。": "'Prepare your body and soul for what comes next.'"
+"我没错，你确实是一位值得令人敬重的战士。": "'I was not mistaken; you truly are a warrior worthy of respect.'"
+"不过，你所展现的还不够。我们继续吧？": "'However, what you have shown is not yet enough. Shall we continue?'"
+"你渴望变强的决心和意志......让我想起了自己，那时候我还只是一介凡人。": "'Your resolve and will to grow stronger... remind me of myself, back when I was but a mere mortal.'"
+"但最为困难的挑战仍在前方，不要放松警惕，一刻也不要。": "'Yet the most difficult challenges still lie ahead. Do not let your guard down, not even for a moment.'"
+"试炼就将抵达它的高潮。": "'The trial is about to reach its climax.'"
+"是时候展现你的决心，和你力量与意志的真正限度了。": "'It is time to display your resolve, and the true limits of your power and will.'"
+"向我证明，你足以超越自身。": "'Prove to me that you are capable of surpassing yourself.'"
+"着实完美的展演。看来我是对的！你确实可能是这个世界最强大的战士，但......": "'A truly flawless performance. It seems I was right! You may indeed be the strongest warrior in this world, but...'"
+"看来就算是那种力量......还是不够。恐怕我不能向你分享我的提案了。": "'It appears even that measure of strength... is still not enough. I am afraid I cannot share my proposal with you.'"
+"尽管如此，虽然只是安慰奖，但我还是希望你拿着这些古代石头。": "'Nonetheless, though it is but a consolation prize, I would like you to take these ancient stones.'"
+"它们是我从巨龙天巢上刻下来的；我带着当......纪念品，某种程度上。": "'They were carved from the Dragon Aerie by my own hand; I kept them as... mementos, in a way.'"
+"尽管你没能达成我的需求，但未来我们的道路肯定还会有交叉！": "'Though you failed to meet my requirements, our paths will surely cross again in the future!'"
+"继续寻求更为强大的力量吧，当我们再度相遇时，或许你的力量就够格了。": "'Continue your pursuit of greater power. Perhaps when we meet again, your strength will be sufficient.'"
+"与此同时，我自己也还有必须要亲自处理的事情。": "'In the meantime, I have matters of my own that I must personally attend to.'"
+"至于现在，先再见吧。": "'For now, farewell.'"
+菜就多练，菜，就多练！: "If you're bad, practice more! Skill issue, just practice!"
+
+
+# Status messages (unlocking tiers, hints on NPC sells when making progress)
+# Death messages / death title
+# NPC messages (angler fishing info, NPC conversation, trading UI)
+# Buff/Debuff (name + tooltip)
+# Biomes
+# Gameplay guide
+# ... And more?
