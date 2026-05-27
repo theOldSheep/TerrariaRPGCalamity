@@ -1,0 +1,14 @@
+§#.{6} -> remove
+\" -> '
+
+
+
+I'm creating a locale mapping for my Terraria+Calamity in Minecraft plugin.
+
+Please provide translations to this file, make sure all lines are translated into English accurately according to terraria/calamity if possible, and returned in the order they appear, with the Chinese original as key and translation as value.
+
+Some lines may contain jokes, puns or referens to movies/games/anime, please try your best to identify and translate them accurately as well. 
+
+```yaml
+
+```

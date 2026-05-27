@@ -840,7 +840,7 @@ effects:
     isBuff: true
     attributes:
       damageTakenMulti: -0.5
-    tooltip: 提高防御力，你的肌肉更加强壮
+    tooltip: 狮心圣裁能量外壳为你阻挡伤害
   狮心圣裁能量外壳冷却:
     isBuff: false
     tooltip: 狮心圣裁能量外壳正在冷却

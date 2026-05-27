@@ -6,8 +6,10 @@
 # Status messages (unlocking tiers, hints on NPC sells when making progress)
 # Death messages / death title
 # NPC messages (angler fishing info, NPC conversation, trading UI)
+# Projectiles
 # Buff/Debuff (name + tooltip)
-# Biomes
+# Biomes and heights
+# Game title name
 # Gameplay guide
 
 # Items (name + specific lore)
@@ -3807,9 +3809,1495 @@ BOSS的挑战者为：: "The Boss challengers are:"
 
 
 # Status messages (unlocking tiers, hints on NPC sells when making progress)
+"地下沙漠的深处轰隆作响……": "A rumble echoes from the deep desert..."
+"苍青色的光辉照耀着这片土地。": "A teal shimmer illuminates the land."
+"沉沦之海在颤动……": "The Sunken Sea trembles..."
+"一颗明星从天堂中坠陨！": "A star has fallen from the heavens!"
+"寒晶能量从冰之洞穴中迸发而出。": "Cryonic energy erupts from the glacial caves."
+"富含能量的植物物质已在地下形成。": "Energetic plant matter has formed underground."
+"海洋的深处传来震动。": "A rumble echoes from the deep seas."
+"星幻敌人得到了增强！": "The Astral Infection enemies have been empowered!"
+"一场瘟疫席卷了丛林。": "A plague sweeps through the jungle."
+"幻星的封印已破碎！你可以挖掘炫星矿了。": "The Astral seal has been broken! You can now mine Astral Ore."
+"亵渎之火猛烈燃烧！": "The Profaned Flame flares up!"
+"宇宙的恐惧正注视着这一切……": "The cosmic horror is watching you..."
+"冷黯的能量散布至宇宙之间。": "Exo-energy has been released into the atmosphere."
+"尖叫声回荡于地牢之中。": "Screams echo from the Dungeon."
+"灾厄造物已被血石洗礼。": "Calamitous entities have been baptized in Bloodstone."
+"石化树皮正在丛林的淤泥中爆发。": "Petrified bark is erupting within the jungle mud."
+"深渊之灵受到了威胁。": "The spirits of the abyss have been threatened."
+"收割之月散布着诡异的光芒。": "The Pumpkin Moon shines with eerie light."
+"寒霜之月散发着明洁的光辉。": "The Frost Moon shines with bright light."
+"黑蚀之日蓄势待发。": "The Eclipse looms..."
+"远古巨龙的力量在洞穴中显现，交织着穿过岩石。": "The power of an ancient dragon manifests in the caverns, weaving through the stone."
+"以下NPC开放新的交易：": "The following NPCs have new wares for sale:"
+
+
 # Death messages / death title
+"<victim> 的肠子被扯出来了": "<victim> had their entrails ripped out."
+"<victim> 的旅程结束了": "<victim>'s journey has come to an end."
+"<victim> 被送去见奥库瑞姆了": "<victim> was sent to meet Ocram."
+"<victim> 被浸渍了": "<victim> was macerated."
+"<victim> 被放干了血": "<victim> was drained of blood."
+"<victim> 被送到了骷髅区": "<victim> was sent to the Bone Zone."
+"<victim> 被自发切除了脑叶": "<victim> underwent a spontaneous lobotomy."
+"<victim> 被压成了肉酱": "<victim> was crushed into a pulp."
+"<victim> 被碾成了肉泥": "<victim> was ground into paste."
+"<victim> 的骨头被敲得粉碎": "<victim>'s bones were shattered to pieces."
+"<victim> 成了怪物的食物": "<victim> became monster food."
+"<victim> 的家被重塑了": "<victim>'s home was remodeled."
+"<victim> 被迫自愿献血了": "<victim> was forced to voluntarily donate blood."
+"<victim> 的天灵盖被掀了": "<victim> had their skull cracked open."
+"<victim> 的头顶被削掉了": "<victim> had the top of their head taken off."
+"<victim> 的零件放错了位置": "<victim>'s parts were misplaced."
+"<victim> 被打成了爽口酱汁": "<victim> was turned into a refreshing sauce."
+"<victim> 的脊椎被扯掉了": "<victim>'s spine was ripped out."
+"<victim> 的存活纪录被终结了": "<victim>'s survival streak was ended."
+"<victim> 接受了强制截肢": "<victim> underwent a forced amputation."
+"<victim> 的脖子被折断了": "<victim>'s neck was snapped."
+"<victim> 被撕成了碎片": "<victim> was torn to shreds."
+"<victim> 重伤不治": "<victim> succumbed to their severe injuries."
+"<victim> 被告知阳寿已尽": "<victim> was informed their time was up."
+"<victim> 的无能被展示了": "<victim>'s incompetence was put on display."
+"<victim> 的灵魂被抽离了": "<victim>'s soul was extracted."
+"<victim> 经历了仁慈的安乐死": "<victim> experienced a merciful euthanasia."
+"<victim> 被自下而上地吃掉了": "<victim> was eaten from the bottom up."
+"<victim> 被去骨了": "<victim> was deboned."
+"<victim> 的两个肾都被偷了": "<victim> had both kidneys stolen."
+"<victim> 的堕落结束了": "<victim>'s downfall has concluded."
+"<victim> 的椎间盘脱出了": "<victim> suffered a herniated disc."
+"<victim> 的遗体被捐赠给了科学": "<victim>'s remains were donated to science."
+"<victim> 的大脑变成了果酱": "<victim>'s brain turned to jam."
+"<victim> 变成了下酒菜": "<victim> became a side dish for drinks."
+"<victim> 被送到了农场": "<victim> was sent to the farm."
+"<victim> 咽下了最后一口气": "<victim> drew their last breath."
+"<victim> 的心跳停止了": "<victim>'s heart stopped beating."
+"<victim> 的头部挨了一记猛的": "<victim> took a heavy blow to the head."
+"<victim> 被抹杀了": "<victim> was obliterated."
+"<victim> 受了脱套伤": "<victim> suffered a degloving injury."
+"<victim> 被剥了皮": "<victim> was skinned alive."
+"<victim> 被围杀了": "<victim> was ganked."
+"<victim> 被打屁股了": "<victim> got spanked."
+"<victim> 被抓到了": "<victim> was caught."
+"<victim> 被杀掉了": "<victim> was slain."
+"<victim> 被放进水晶棺里了": "<victim> was put into a crystal casket."
+"<victim> 已经被埋了": "<victim> has been buried."
+"<victim> 很快就会被遗忘": "<victim> will soon be forgotten."
+"<victim> 被劈了": "<victim> was cleaved in two."
+"<victim> 被杀害了": "<victim> was slain"
+"<victim> 被从这个世界里剔除了": "<victim> was removed from this world"
+"<victim> 被谋杀了": "<victim> was murdered"
+"<victim> 被毁容了": "<victim> was mangled"
+"<victim> 的内脏被拽出来了": "<victim> was eviscerated"
+"<victim> 被锤爆了": "<victim> was pummeled"
+"<victim> 的脑阔碎了": "<victim>'s skull was crushed"
+"<victim> 惨遭屠杀": "<victim> was slaughtered"
+"<victim> 被捅了个透心凉": "<victim> was impaled"
+"<victim> 被撕成了两半": "<victim> was torn in half"
+"<victim> 被斩首": "<victim> was decapitated"
+"<victim> 的胳膊被扯掉了": "<victim> was dismembered"
+"<victim> 的内脏变成了外脏": "<victim>'s insides became their outsides"
+"<victim> 惨遭肢解": "<victim> was ripped apart"
+"<victim> 被撕裂了": "<victim> was torn asunder"
+"<victim> 的重要器官毁了": "<victim>'s vital organs were destroyed"
+"<victim> 变成了一坨肉": "<victim> was reduced to a heap of flesh"
+"<victim> 惨遭腰斩": "<victim> was cut in two"
+"<victim> 被对半劈开": "<victim> was cleft in twain"
+"<victim> 被切成了臊子": "<victim> was minced"
+"<victim> 求死的愿望实现了": "<victim>'s wish for death was granted"
+"<victim> 被做成了脱骨肉": "<victim> was de-boned"
+"<victim> 停止了呼吸": "<victim> expired"
+"<victim> 身首异处": "<victim> was decapitated"
+"<victim> 的头飞了": "<victim>'s head rolled"
+"英灵殿在等着 <victim>": "Valhalla awaits <victim>"
+"<victim> 光荣地死去": "<victim> died gloriously"
+"<victim> 肌肉不够多": "<victim> didn't have enough muscle"
+"<victim> 能够逃脱": "<victim> managed to escape"
+"<victim> 犯了人类的经典错误": "<victim> made a classic blunder"
+"<victim> 在英灵殿中安息": "<victim> rests in Valhalla"
+"<victim> 在死后的世界冲浪": "<victim> is surfing in the afterlife"
+"<victim> 的运气用光了": "<victim>'s luck ran out"
+"<victim> 满身疮痍": "<victim> was riddled with wounds"
+"<victim> 被挂在了地灵殿门口": "<victim> was hung up at Chireiden's entrance"
+"<victim> 的死毫无意义": "<victim>'s death was meaningless"
+"<victim> 面带安详": "<victim> passed away peacefully"
+"<victim> 的骨灰像雨点一样飘落": "<victim>'s ashes rained down"
+"<victim> 多了一个肚脐眼": "<victim> got an extra belly button"
+"<victim> 被登dua郎": "<victim> was taken to adulthood"
+"<victim> 心花怒放": "<victim>'s heart blossomed"
+"<victim> 脑洞大开": "<victim>'s mind was blown"
+"<victim> 被熔化了": "<victim> was melted"
+"<victim> 被烧成了灰": "<victim> was turned to ash"
+"<victim> 试图在熔岩中游泳": "<victim> tried to swim in lava"
+"<victim> 喜欢在岩浆中玩耍": "<victim> liked playing in lava"
+"<victim> 不擅长玩“地板是熔岩”": "<victim> wasn't good at 'the floor is lava'"
+"<victim> 摔死了": "<victim> fell to their death"
+"<victim> 没有反弹": "<victim> didn't bounce"
+"<victim> 发明了重力": "<victim> discovered gravity"
+"<victim> 领悟了“抛出窗外”的意思": "<victim> learned the meaning of 'defenestration'."
+"<victim> 自由......自由落体了": "<victim> went... free falling."
+"<victim> 尝试了滑冰上坡": "<victim> tried to ice skate uphill."
+"<victim> 认为自己会飞": "<victim> thought they could fly."
+"<victim> 留下了一个大坑": "<victim> left a crater."
+"<victim> 忘记了自己绝妙的想法": "<victim> forgot their brilliant idea."
+"<victim> 亲吻了大地": "<victim> kissed the ground."
+"<victim> 忘记了呼吸": "<victim> forgot to breathe."
+"<victim> 与鱼同眠": "<victim> sleeps with the fishes."
+"<victim> 溺死了": "<victim> drowned."
+"<victim> 成了鲨鱼的食物": "<victim> became shark bait."
+"<victim> 试图饮尽湖水": "<victim> tried to drink the lake."
+"<victim> 发现了亚特兰蒂斯": "<victim> discovered Atlantis."
+"<victim> 忘了带毛巾": "<victim> forgot their towel."
+"<victim> 无法呼吸": "<victim> couldn't breathe."
+"<victim> 被活埋了": "<victim> was buried alive."
+"<victim> 试图逃跑": "<victim> tried to escape."
+"<victim> 无法把火扑灭": "<victim> couldn't put the fire out."
+"<victim> 被烧成了焦炭": "<victim> was burnt to a crisp."
+"<victim> 被烧得只剩渣了": "<victim> was reduced to ashes."
+"<victim> 成了全熟牛排": "<victim> became a well-done steak."
+"<victim> 无法把火扑灭": "<victim> couldn't put the fire out."
+"<victim> 被烧成了焦炭": "<victim> was burnt to a crisp."
+"<victim> 被烧得只剩渣了": "<victim> was reduced to ashes."
+"<victim> 成了全熟牛排": "<victim> became a well-done steak."
+"<victim> 被狱火吞噬了": "<victim> was consumed by the hellfire."
+"<victim> 无法把火扑灭": "<victim> couldn't put the fire out."
+"<victim> 被烧成了焦炭": "<victim> was burnt to a crisp."
+"<victim> 被烧得只剩渣了": "<victim> was reduced to ashes."
+"<victim> 成了全熟牛排": "<victim> became a well-done steak."
+"<victim> 的灵魂化作了灰烬": "<victim>'s soul turned to ash."
+"<victim> 无法找到解药": "<victim> could not find the antidote."
+"<victim> 无法找到解药": "<victim> could not find the antidote."
+"<victim> 无法控制瓦数": "<victim> could not handle the wattage."
+"<victim> 变成了电池": "<victim> became a battery."
+"<victim> 的生命力从正变负": "<victim>'s vitality flipped from positive to negative."
+"<victim> 成了避雷针": "<victim> became a lightning rod."
+"<victim> 被压力碾碎了": "<victim> was crushed by the pressure."
+"<victim> 的肺坍缩成了一团": "<victim>'s lungs collapsed into a singularity."
+"<victim> 血如泉涌": "<victim> is bleeding out."
+"<victim> 被漆黑的烈焰燃尽": "<victim> was consumed by the dark flames."
+"<victim> 死于辐射": "<victim> died to radiation."
+"<victim> 成为了星辉瘟疫的一部分": "<victim> became one with the Astral Infection."
+"<victim> 的皮肤被星体病毒侵蚀了": "<victim>'s skin was corroded by the astral virus."
+"<victim> 的血肉被瘟疫所融化": "<victim>'s flesh was melted by the plague."
+"<victim> 已无药可医": "<victim> was beyond medical help."
+"<victim> 被日耀射线焚烧殆尽": "<victim> was incinerated by solar rays."
+"<victim> 被自己的罪孽吞噬了": "<victim> was consumed by their own sins."
+"<victim> 被月之射线焚烧殆尽": "<victim> was disintegrated by lunar rays."
+"<victim> 融入了元素交响乐": "<victim> faded into the elemental symphony."
+"<victim> 被亵渎之神变成了灰烬": "<victim> was turned to ash by the Profaned Goddess."
+"<victim> 被剧毒废物融化了": "<victim> was dissolved by toxic waste."
+"<victim> 的灵魂消散了": "<victim>'s soul dissipated."
+"<victim> 离解成灰": "<victim> dissociated into ashes."
+"<victim> 被奇迹般的科技进步扫进了历史的垃圾堆": "<victim> was swept into the dustbin of history by miraculous technological progress."
+"<victim> 与星流能量共振而塌缩了": "<victim> collapsed into resonance with exo-energy."
+"<victim> 被硫磺烈焰烧焦了": "<victim> was scorched by brimstone flames."
+"<victim> 的灵魂已支离破碎": "<victim>'s soul is shattered."
+"<victim> 成为了血神的祭品": "<victim> became a sacrifice for the Blood God."
+"<victim> 将自己所剩无几的灵魂转化成了魔力": "<victim> converted what little remained of their soul into mana."
+"<victim> 试图在怒火中与敌人同归于尽": "<victim> tried to perish together with the enemy in anger."
+"<victim> 被魔力焚毁": "<victim> was incinerated by mana."
+"<victim> 被熔融的魔力化为灰烬": "<victim> was turned to ash by molten mana."
+"<victim> 的灵魂已支离破碎": "<victim>'s soul is shattered."
+"<victim> 的生命完全升华为了魔力": "<victim>'s life was completely sublimated into mana."
+"<victim> 与魔力合为一体": "<victim> became one with the mana."
+"<victim> 过于迷恋巨龙之力": "<victim> was too obsessed with the power of dragons."
+"<victim> 的身形被过载的魔法摧毁了": "<victim>'s form was destroyed by overloaded magic."
+"<victim> 于仇恨中幻灭": "<victim> was disillusioned in hatred."
+"<victim>……是谁？": "Who is... <victim>?"
+"<victim> 忘记了抱头蹲防": "<victim> forgot to head-hug and crouch."
+"<victim> 一去不复返": "<victim> went away, never to return."
+"<victim> 的神明矿车亲眼目睹了主人的末路": "<victim>'s Deific Minecart witnessed its master's demise."
+"死了": "died"
+"你死了！": "You were slain..."
+"感谢款待！": "Thanks for the treat!"
+"掉了": "Dropped"
+"铂": "Platinum"
+"金": "Gold"
+"银": "Silver"
+"铜": "Copper"
+
+
 # NPC messages (angler fishing info, NPC conversation, trading UI)
+"向导": "Guide"
+"玩法提示": "Gameplay Tips"
+"BOSS会将召唤者附近所有达成挑战所需游戏进度的玩家视为敌人并以此获得生命加成。因此请尽量邀请世界中所有符合挑战资格的玩家一同作战，这样会大大增强成功率。造成伤害或仇恨时长足够的玩家都将自动获得一份战利品哦~": "BOSSes will view all players near the summoner who have reached the required progression as enemies and gain a health boost accordingly. Therefore, try to invite all eligible players in the world to fight together, which will greatly increase the success rate. Players who deal enough damage or hold aggro for long enough will automatically receive a copy of the loot~"
+"右键基岩时可以进入上一层或下一层世界": "Right-click bedrock to enter the upper or lower world layer."
+"新手期": "Pre-Boss"
+"<name>，你好~请问有什么需要我帮忙的吗": "Hello, <name>~ Is there anything I can help you with?"
+"请不要迟疑，迅速去挖掘原木，制作火把后下矿，提升自己的实力吧": "Do not hesitate! Quickly chop some logs, make torches, and head underground to mine and increase your strength."
+"挖到生命水晶后可以右键使用增加生命上限哦~": "Once you mine a Life Crystal, you can right-click to use it and increase your maximum health~"
+"点击背包里的合成格子可以打开随身合成配方列表": "Clicking on the crafting grid in your inventory opens the portable crafting recipe list."
+"你如果感觉已经准备好了，请在合成台中制作一个祭坛，放置后可以合成BOSS召唤物。": "If you feel you are ready, please craft an Altar at a Crafting Table. Once placed, it can be used to craft BOSS summoning items."
+"在做好准备后，可以尝试挑战史莱姆王，荒漠灾虫和克苏鲁之眼。战胜克苏鲁之眼后，我将会指导您的下一步行动。": "Once you are fully prepared, you can try challenging King Slime, the Desert Scourge, and the Eye of Cthulhu. After defeating the Eye of Cthulhu, I will guide your next steps."
+"记得合成圈地锄头后圈地，这样财物才不会失窃！": "Remember to craft a Residence Boundary Hoe to claim your area so your belongings won't be stolen!"
+"克苏鲁之眼后": "Post-Eye of Cthulhu"
+"丛林地下的夜光蘑菇可以用来合成菌生蟹的召唤物。": "Glowing Mushrooms from the Underground Jungle can be used to craft the summoning item for Crabulon."
+"<name>，我听说你已经击败了克苏鲁之眼了。恭喜！": "<name>, I heard you've defeated the Eye of Cthulhu. Congratulations!"
+"据说，腐化之地有一种多节的巨虫，让他们现身需要筹备一些虫饵。这种虫的体表有鳞片，可以用来做更好的装备。": "They say a multi-segmented giant worm resides in the Corruption, and making it appear requires preparing some Worm Bait. This worm's body has scales that can be used to craft better gear."
+"用克苏鲁之眼宝藏袋开的腐化种子右键泥土可以把一片地方变成腐化哦。": "You can use the Corrupt Seeds from the Eye of Cthulhu's Treasure Bag by right-clicking dirt to turn an area into the Corruption."
+"世界吞噬者后": "Post-Eater of Worlds"
+"腐化之地偶尔会生成一些恶心的囊肿。": "Disgusting cysts will occasionally spawn in the Corruption."
+"世界吞噬者掉落的鳞片制作的镐足以挖掘地狱的狱炎石。尝试用狱炎石制作武器吧！": "The pickaxe crafted from Shadow Scales dropped by the Eater of Worlds is strong enough to mine Hellstone in the Underworld. Try making some weapons with Hellstone!"
+"我有幸摸过一次勇者送给我的世界吞噬者的鳞片。真的坚硬又轻便，做成护甲效果应该很出色吧！": "I was fortunate enough to once touch a Shadow Scale given to me by a hero. It's truly hard yet lightweight; it would probably make excellent armor!"
+"据说裁缝年轻时不幸深受诅咒。要小心，晚上向他提起这事他就会突然变成怪物……": "It is said that the Clothier suffered a terrible curse in his youth. Be careful, if you bring it up to him at night, he will suddenly turn into a monster..."
+"裁缝最近精神越来越反常了……": "The Clothier's mind has been getting more and more unstable lately..."
+"骷髅王后": "Post-Skeletron"
+"史莱姆的神祇……有趣的传言。": "The god of slimes... an interesting rumor."
+"你现在可以安全进入地牢了。地牢中的敌怪和武器可以为你今后的冒险提供助力！": "You can now safely enter the Dungeon. The enemies and weapons within can aid you in your future adventures!"
+"血肉之墙后": "Post-Wall of Flesh"
+"你听说过吗？丛林的地下可以偶尔生长出生命果，吃掉能获得新的力量！": "Have you heard? Life Fruits occasionally grow in the Underground Jungle, eating them grants new strength!"
+"极寒的冰天雪地中，有一种强大的生物游荡……": "In the freezing snow and ice, a powerful creature wanders..."
+"硫磺海里的巨型蠕虫不只是传说！有趣的是，它们与沙漠里的某条巨虫有很近的亲缘关系。": "The giant worms in the Sulphurous Sea aren't just legends! Interestingly, they share a very close lineage with a certain giant worm in the desert."
+"我很好奇，如果能够击败并拆解坚固的机器，能铸造出怎样的兵器呢？": "I am curious, if we could defeat and dismantle those sturdy machines, what kind of weapons could be forged?"
+"去挖铁吧，传说用铁和其他物品可以做出很神奇的东西，能引来某些机械的注意！虽然这不一定是好事儿……": "Go mine some Iron! Legend says Iron combined with other items can create something wondrous that attracts the attention of certain machinery! Though, that might not necessarily be a good thing..."
+"神圣之地和腐化之地地表的生物开始携带珍贵的碎片了，用这些碎片似乎可以合成新武器！": "Creatures on the surface of the Hallow and Corruption have started carrying precious shards. It seems they can be used to craft new weapons!"
+"神圣之地的洞穴中有时会发现水晶碎块。而此中最为稀有，最为晶莹剔透的种类可以吸引到史莱姆皇后的注意力！": "Crystal Shards can sometimes be found in Hallow caves. The rarest and most translucent type among them can catch the attention of Queen Slime!"
+"神圣之地和腐化之地地下的生物开始掉落神奇的灵魂。不知道这些灵魂有什么作用……": "Creatures in the Underground Hallow and Underground Corruption have started dropping mysterious souls. I wonder what purposes these souls serve..."
+"机械三王后": "Post-Mechanical Bosses"
+"硫火之崖的元素灵在一场大战中失去了她所有的子民。去为她送上解脱吧……": "The elemental sprite of the Brimstone Crags lost all her people in a great war. Go and bring her peace..."
+"地下丛林有几率长出一种神奇的红色果实，它们深受地下巨型植物的眷顾！不过，最好不要摘下这种果子，除非你想要激怒未知的植物……": "There is a chance for a mysterious red bulb to grow in the Underground Jungle, heavily blessed by a giant underground plant! However, it's best not to pluck it, unless you want to enrage an unknown plant..."
+"这么大的植物……真的有可能存在吗？": "A plant that massive... could it truly exist?"
+"世纪之花后": "Post-Plantera"
+"星辉瘟疫污染了一台嘉登的采矿机。你有兴趣去看看吗？": "The Astral Infection has contaminated one of Draedon's mining machines. Are you interested in checking it out?"
+"海洋中两位相依为命的生物……不合群的危险者……": "Two creatures depending on each other in the ocean... dangerous outcasts..."
+"蜥蜴人……这种生物并不只存在于传说中！": "Lihzahrds... such creatures do not just exist in legends!"
+"阿嚏！你是不是去过丛林了？": "Achoo! Have you been to the Jungle?"
+"现在地牢生物更加强大了，他们偶尔会携带一些更加强力的武器！": "The Dungeon creatures are much stronger now, and they occasionally carry far more powerful weapons!"
+"石巨人后": "Post-Golem"
+"硫磺海下的深渊中有一种坚硬炽热的矿石，请利用石巨人掉落的镐尝试挖掘。": "There is a hard, scorching ore deep within the Abyss beneath the Sulphurous Sea. Please try to mine it using the pickaxe dropped by Golem."
+"丛林地下偶尔会出现松露虫，用它在海里钓鱼可能会引出庞然大物！": "Truffle Worms occasionally appear in the Underground Jungle. Fishing with them in the ocean might lure out a colossal behemoth!"
+"魔君的敌人曾在绝望中召唤出了一尊活跃至今的恐怖巨像。传言他们成为了巨像脚下的第一批亡魂……": "The Tyrant's enemies once, in desperation, summoned a terrifying colossus that remains active to this day. Rumor has it they became the very first souls crushed beneath its feet..."
+"反抗者仅仅为抵抗嘉登，融合死去同伴的血肉和黑魔法制成了怪物。它践踏了所见的一切，包括制作者本人。": "Merely to resist Draedon, the rebels fused the flesh of their fallen comrades with dark magic to create a monster. It trampled everything in its sight, including its own creators."
+"你听说过拜月教吗？据说他们的信徒最近开始出现在地牢里。一定要小心，他们看起来令人毛骨悚然！": "Have you heard of the Lunar Cult? Word is their devotees have recently started appearing at the Dungeon. Be careful, they look absolutely spine-chilling!"
+"月球领主后": "Post-Moon Lord"
+"巨龙的复制品在漫无目的地游荡在丛林中。你接下来的冒险想必将布满危险，先用它练练手并且提升实力吧！": "A clone of the dragon wanders aimlessly through the Jungle. Your upcoming adventures are bound to be perilous; use it to practice and hone your strength first!"
+"亵渎天神……祂的守卫在神圣之地发觉了你的力量。倘若击杀这些守卫的话，你将直面天神的怒火！": "Providence... Her guardians have sensed your power within the Hallow. If you slay these guardians, you will face the undying wrath of the Goddess Herself!"
+"亵渎天神后": "Post-Providence"
+"地牢中的灵魂聚集在一起，创造了一个奇特的灵魂聚合体。小心；它并非善类！": "The spirits within the Dungeon have coalesced, creating a bizarre amalgam of souls. Watch out; it is by no means benevolent!"
+"据传，硫磺海中有一只年迈的猪鲨。它的年龄并未减缓它的速度；相反，常年累积的战斗经验和硫磺海带来的异变使他异常棘手。": "Rumor has it that an ancient Duke Fishron resides in the Sulphurous Sea. Its age has not slowed it down; on the contrary, years of combat experience and mutations from the Sulphurous Sea make it exceptionally troublesome."
+"亵渎天神的落败惊扰了宇宙之虫的仆从们。": "The defeat of Providence has disturbed the servants of the Devourer of Gods."
+"神明吞噬者后": "Post-Devourer of Gods"
+"宇宙之虫所吞噬的力量已为你所用；它们应该可以大幅度提升你的实力。": "The power consumed by the Devourer of Gods is now yours to command; it should significantly boost your strength."
+"犽戎是魔君儿时起最忠诚的伙伴，一只巨龙。你或许已经具备了挑战他的能力。": "Yharon is a dragon, and the Tyrant's most loyal companion since childhood. You might finally possess the strength to challenge him."
+"星流巨械前": "Pre-Exo Mechs"
+"嘉登是魔君的匠人。他的造物已超越了人类的一切认知，甚至足以击败神明。": "Draedon is the Tyrant's blacksmith. His creations have surpassed all human comprehension, enough to best even the gods."
+"至尊灾厄前": "Pre-Supreme Calamitas"
+"硫火女巫，灾厄。在魔君的支配下缔造了无边的罪业。千万小心；被蒸干的大海只是她能力的冰山一角。": "The Brimstone Witch, Calamitas. Under the Tyrant's dominion, she wrought boundless sins. Be exceptionally careful; the evaporated oceans are merely the tip of the iceberg of her power."
+"哥布林工匠": "Goblin Tinkerer"
+"<name>，你现在的装备还不值得我去重铸。打败外面追杀我的哥布林军团证明自己吧！": "<name>, your current gear isn't even worth reforging. Go prove yourself by defeating the Goblin Army out there that's hunting me!"
+"至少帮我赶走我那群烦死个人的同胞再来找我吧……我现在很忙……忙着研究新产品，也忙着逃命！": "At least help me drive away my incredibly annoying kin before coming to me... I'm very busy right now... busy researching new products, and busy running for my life!"
+"我那群哥布林同族觉得我是异类，还说要一大早把我拿来炖汤喝！<name>，你能帮我吗？": "My fellow goblins think I'm an outcast, and they even threatened to stew me for breakfast! <name>, can you help me?"
+"<name>，你有什么需要重铸的吗？我可以帮你刷新武器 and 饰品的前缀哦~": "<name>, do you have anything that needs reforging? I can help you reset the prefixes on your weapons and accessories~"
+"你不觉得那边的电工妹很酷吗，<name>？": "Don't you think the Mechanic over there is pretty cool, <name>?"
+"谢谢你，<name>！自从你们胖揍了那群哥布林之后，他们好久都没来烦我了！": "Thank you, <name>! Ever since you thrashed those goblins, they haven't bothered me in ages!"
+"昨天我的锤子把坏掉了，还好我擅长修理！": "The handle on my hammer broke yesterday, good thing I'm an expert at fixing things!"
+"金就是比铁硬，你蝌学课上是不是一直在睡觉？": "Gold is just harder than iron. Were you sleeping during science class?"
+"来看看吧，<name>！我的产品经过改进后已经不会在你对着它吹气的时候猛烈爆炸啦！": "Take a look, <name>! My products have been improved so they won't violently explode the moment you blow on them anymore!"
+"护士": "Nurse"
+"<name>，你浑身都黏糊糊的，是不是又去追史莱姆玩了……": "<name>, you're completely covered in slime, did you go chasing them for fun again..."
+"别嚎了，这不就刮了一下吗": "Stop crying, tis but a scratch."
+"我这里还有点创可贴，给你贴上就走吧": "I've still got a few Band-Aids left, let me patch you up so you can get going."
+"又去和小混混约架了？": "Out picking fights with thugs again?"
+"淤青而已，没什么大事": "It's just a bruise, nothing major."
+"告诉过你玩史莱姆要小心点了，你来晚点手就要化成水了！": "I told you to be careful around slimes! If you had come any later, your arm would've dissolved into water!"
+"这还不是最糟糕的……我见过比这惨的……": "This isn't even the worst... I've seen way worse than this..."
+"<name>老师，发生肾摸逝了？": "Master <name>, wut on earth happened?"
+"你又去哪鬼混了？": "Where have you been fooling around this time?"
+"别磨蹭了<name>，要治疗就快过来，要等死就跑远点！": "Stop dilly-dallying <name>! If you want treatment, get over here; if you want to die, go somewhere else!"
+"我的天啊，你是掉到怪物堆里了吗？": "Oh my goodness, did you fall into a horde of monsters?"
+"我不一定能完美接回去你的下巴。做好心理准备吧": "I can't guarantee I can perfectly reattach your jaw. Brace yourself."
+"喔，这怕是要留疤": "Oof, that's probably going to leave a scar."
+"我不是美容师，所以现在我帮不了忙": "I am not a beautician, so I can't help with that right now."
+"不知道为什么，向导同志总是被岩浆烫伤。他也太不小心了吧！": "For some reason, Comrade Guide is always getting burned by lava. He is way too careless!"
+"你帮我问问军火商……额，需不需要……治疗？": "Could you ask the Arms Dealer for me... um, if he needs... treatment?"
+"又是普普通通的一天呢……但这样也没什么不好的嘛！": "Just another ordinary day... but there's nothing wrong with that!"
+"我梦到了在月亮变成血红色的晚上，我赚了个盆满钵满！": "I dreamed that on a night when the moon turned blood red, I made an absolute fortune!"
+"军火商": "Arms Dealer"
+"这又不是动作大片，子弹当然会用完了！": "This isn't an action movie, of course you're going to run out of ammo!"
+"如果不买就别碰我的迷你鲨，很贵的": "If you aren't buying, don't touch my Minishark. It's very expensive."
+"这部件不合法？这个世界里钱就是法！": "This part is illegal? In this world, money IS the law!"
+"来看看我新进的子弹吧，好枪就要配上好子弹！": "Come check out my new stock of ammo. A great gun deserves great bullets!"
+"砰！哈哈，吓到你了吗？": "Bang! Haha, did I scare you?"
+"爆破专家": "Demolitionist"
+"艺术就是爆炸！": "Art is an explosion!"
+"我一直好奇这样会（嘣！）额，那条腿…你还要的吧……": "I've always wondered if doing this would—(BOOM!) Uh, that leg... you still want it, right...?"
+"手雷是新手对付一大批敌人的终极武器！": "Grenades are a novice's ultimate weapon for dealing with hordes of enemies!"
+"炸弹和雷管，前期开矿时的好朋友！只是，用的时候记得保持距离……": "Bombs and Dynamite, a miner's best friends in the early game! Just remember to keep your distance when using them..."
+"你知道吗？炸弹和雷管在投出后切换到镐并挥舞一次将以对应的镐力判定破坏方块！": "Did you know? Swinging your pickaxe right after throwing a bomb or dynamite will use that pickaxe's power to determine block breaking!"
+"渔夫": "Angler"
+"我听说过有种<fishName>，你给我整一条来！": "I've heard tales of a <fishName>, go fetch one for me!"
+"<name>，别啰嗦，快给我弄条<fishName>！我要把它扔到向导的脸上！": "<name>, stop talking and get me a <fishName> already! I want to throw it right into the Guide's face!"
+"我一直好奇<fishName>的味道是怎么样的，快给我弄一条尝尝鲜！不，当然没你的份！": "I've always wondered what a <fishName> tastes like. Hurry up and catch one for me to try! No, of course you don't get any!"
+"我见过一种神奇的鱼，我叫他<fishName>！给我把它抓过来！": "I've seen a magical fish, I call it the <fishName>! Catch it and bring it to me!"
+"不错，猴子！这是给你的，拍拍屁股滚蛋吧！": "Not bad, monkey! Here's your reward, now beat it!"
+"鱼不算野味，尝一条也无妨嘛……": "Fish don't count as bushmeat, so there's no harm in having a taste..."
+"不错不错，给你这些！": "Nice, nice! Here's your stuff!"
+"知道了知道了，烦不烦啊！": "Yeah, yeah, I get it, stop annoying me!"
+"一天就一条鱼，走开！": "Only one fish a day, go away!"
+"明天再说，今天我要好好地玩玩这条鱼！": "Come back tomorrow, I'm going to have some fun playing with this fish today!"
+"你完蛋了，史上伟大的渔夫要把你解雇一天！哈哈！": "You're finished! The greatest angler in history is firing you for the day! Haha!"
+"我没见过父母长啥样，不过我倒是见过许多鱼，好看的，难看的，好吃的，难吃的……他们才是我的家人！": "I've never seen what my parents look like, but I've seen plenty of fish—pretty ones, ugly ones, tasty ones, nasty ones... they are my real family!"
+"建材商人": "Architect"
+"来买建筑材料吧！": "Come buy some building materials!"
+"不来买点方块吗？": "Want to buy some blocks?"
+"我这里可是有各种好玩的方块哦！": "I've got all kinds of fun blocks here!"
+"裁缝": "Clothier"
+"请帮我解除诅咒……太痛苦了……": "Please help me break the curse... it's so painful..."
+"被诅咒的时候好无聊，只能做点针线活打发时间……": "Being cursed was so boring, I could only do needlework to pass the time..."
+"好兄弟，帮我解除诅咒吧！": "Help me break the curse, brother!"
+"不要贸然进入地牢，否则必将受到电刑的调教……": "Do not enter the Dungeon recklessly, or you will surely be disciplined with electrocution..."
+"<name>，再次感谢你帮我解除诅咒！感觉像是被什么东西跳起来咬了一口。": "<name>, thanks again for breaking my curse! It felt like something jumped up and took a bite out of me."
+"<name>，来看看我刚做好的服装吗？或者……你是来陪我这个老人聊天的？": "<name>, care to look at the clothes I just tailored? Or... did you come just to keep this old man company?"
+"看好了，这样可以完整的抽出蛛丝中坚韧的线，制成的丝绸坚韧又光滑！": "Watch closely, this is how you extract the strongest threads from cobwebs to make silk that is both tough and smooth!"
+"强盗": "Bandit"
+"就凭你这小胳膊也想投掷武器？去健健身吧。": "You expect to throw weapons with those noodle arms? Go hit the gym."
+"嘿，走路瞧着点，我的飞镖可不长眼睛！": "Hey, watch where you're walking, my darts don't have eyes!"
+"你站在那肯定是想被钨钢无人机射成马蜂窝，是吧？": "Standing there like that, you must want to get turned into swiss cheese by a Wulfrum Drone, huh?"
+"僵尸们不怎么擅长躲避，但愿你比它们强一点。": "Zombies aren't exactly great at dodging, I hope you're a bit better than them."
+"嘿，别靠近那边！我刚刚做了点手脚，踏错一步你下一秒可能就躺地板上了。": "Hey, don't go near there! I just rigged the place; one wrong step and you'll be biting the dust next second."
+"只要够大力，任何物品都能当作武器。": "As long as you throw it hard enough, anything can be a weapon."
+"看好了，全靠手腕的巧劲，四两拨千斤！哦，就当无事发生过。": "Watch this, it's all in the wrist—using soft strength to overcome brute force! Oh... let's just pretend that didn't happen."
+"你知道我是做什么的；劫富济贫。当然，中饱私囊。": "You know what I do; rob the rich, give to the poor. And of course, line my own pockets."
+"啊，蛇，为什么总是蛇？": "Ah, snakes, why is it always snakes?"
+"这才不是偷！我只不过是借，死的时候再还DA☆ZE！": "This isn't stealing! I'm just borrowing it until I die DA☆ZE!"
+"你知道，拥有你想要的一切事物是超级好的，有些人从来没有过这种奢华的体验。": "You know, having everything you want is pretty great. Some people never get to experience that kind of luxury."
+"哥布林工匠的口袋里不仅有刺球还有一大笔钱，但他心不在焉都没注意到被我偷了，笑死我了。": "The Goblin Tinkerer has loads of cash alongside those Spiky Balls in his pockets, but he's so clueless he didn't even notice me lifting them. Hilarious."
+"想听点秘密？既然哥布林工匠每次都拿走你那么多钱，我其实早就盯上他了。这件事我要你保密。": "Want to hear a secret? Since the Goblin Tinkerer takes so much of your cash anyway, I've had my eye on him for a while. Keep this between us."
+"嘿，既然政府的人能收税，为什么我就不能？什么？你说我们完全没有可比性？": "Hey, if the tax collector can do it, why can't I? What? You say we're completely incomparable?"
+"帮助": "Help"
+"关闭": "Close"
+"治疗": "Heal"
+"需要": "Requires"
+"提示": "Tip"
+"可以在": "Can be caught at an altitude of"
+"高度的": "in"
+"钓到！": "!"
+"诅咒": "Curse"
+"商店": "Shop"
+"重铸": "Reforge"
+"返现": "Cashback"
+"您可以按左键买卖单个物品，shift+左键买卖整组物品，或右键查看物品价格。": "You can Left-click to buy/sell a single item, Shift+Left-click to buy/sell a whole stack, or Right-click to check the item's price."
+"花费": "Costs"
+
+
+# Projectiles
+"暗影冰晶": "Absolute Zero"
+"黑檀深渊之球": "Abyssal Tome"
+"黑檀球": "Abyssal Tome Sphere"
+"深渊三叉戟": "Abyss Blade Trident"
+"加速弹": "Acceleration Round"
+"精金投斧": "Adamantite Throwing Axe"
+"庇护之火": "Aegis Blade"
+"空旋": "Air Spinner"
+"异星黏液": "Alien Goop"
+"亚马逊悠悠球": "Amazon"
+"阿米迪亚斯漩涡": "Amidias Trident"
+"高音谱号": "Anahitas Arpeggio"
+"魅惑之音": "Anahitas Arpeggio Note"
+"末渊石板": "Apoctolith"
+"末渊石板碎块": "Apoctolith Shard"
+"追踪蓝晶碎片": "Aquashard Shotgun Homing"
+"蓝晶碎片": "Aquashard Shotgun"
+"玄法花朵": "Arch Amaryllis Flower"
+"玄法花瓣": "Arch Amaryllis Pedal"
+"北极箭": "Arctic Arrow"
+"冰爪": "Arctic Bear Paw"
+"阿瑞斯外骨骼高斯核弹": "Ares Exoskeleton Gauss Nuke"
+"星流高斯核弹": "Exo Gauss Nuke"
+"阿瑞斯外骨骼等离子光球": "Ares Exoskeleton Plasma"
+"阿瑞斯外骨骼球状闪电": "Ares Exoskeleton Tesla Sphere"
+"特斯拉星流闪电": "Exo Tesla Sphere"
+"真·远古剑气": "Ark Of The Ancients"
+"远古之星": "Ark Of The Ancients Star"
+"永恒之雷": "Ark Of The Cosmos Mine"
+"撕裂之针": "Ark Of The Cosmos Needle"
+"元素日炎针": "Ark Of The Elements Needle"
+"元素之星": "Ark Of The Elements Star"
+"灰烬石钟乳": "Ashen Stalactite"
+"行星法杖小行星": "Asteroid Staff Meteor"
+"幻星弹": "Astral Blaster"
+"星幻凝晶": "Astral Crystal Aureus"
+"幻星雷": "Astral Mine"
+"彗星": "Astral Pike Comet"
+"幻星水晶": "Astral Staff"
+"星能之箭": "Astreal Defeat Arrow"
+"魂灵星炎": "Astreal Defeat Shard"
+"爆炸禅心导弹": "Ataraxia Explode"
+"针形禅心导弹": "Ataraxia Needle"
+"分裂禅心导弹": "Ataraxia Split"
+"源野天光": "Auroradical Throw"
+"冰霜炸弹": "Avalanche Bomb"
+"冰锥": "Avalanche Shard"
+"阿撒托斯": "Azathoth"
+"寰宇之球": "Azathoth Secondary"
+"灵魂鬼爪": "Banshee Hook"
+"闪电箭": "Barinade Bolt"
+"蝙蝠": "Bat"
+"黑翼蝙蝠": "Black-winged Bat"
+"蜜蜂": "Bee"
+"生命光流射线": "Biofusillade Ray"
+"纯净": "Biome Blade Clarity"
+"水球": "Biome Blade Water"
+"冲击波": "Biome Blade Water Shockwave"
+"血之镰刀": "Bladecrest Oathsword"
+"炸药桶": "Blast Barrel"
+"烈火不洁剑气": "Blazing Defiled Greatsword"
+"烈火之星": "Blazing Star"
+"炽炎幻影刃": "Blighted Cleaver"
+"圣火火箭": "Blissful Bombardier Rocket"
+"暴雪": "Blizzard"
+"寒霜碎块": "Blizzard Shard"
+"血陨之炎箭": "Bloodflare Arrow"
+"血炎箭": "Bloodfire Arrow"
+"血炎弹": "Bloodfire Bullet"
+"血沫重斧": "Bloodsoaked Crasher"
+"血炎灵魂": "Blood Flare Soul"
+"叶之箭": "Blossom Flux Arrow"
+"蓝烟花火箭": "Blue Firework"
+"蓝月": "Blue Moon"
+"史莱姆尖刺": "Blue Slime Spike"
+"炸弹": "Bomb"
+"骨头": "Bone"
+"弹跳眼球": "Bouncing Eyeball"
+"咸水追踪弹": "Brackish Bubble"
+"咸水瓶": "Brackish Flask"
+"硫火刃": "Brimlash"
+"追踪硫火刃": "Homing Brimlash Blade"
+"硫火飞弹": "Brimlash Dart"
+"硫火仆从飞弹": "Brimlash Servant Dart"
+"无际裂变": "Brimstone Fire Blast"
+"深渊炙颅": "Brimstone Flame Skull"
+"深渊炙炎": "Brimstone Megablast"
+"深渊炙炎弹": "Brimstone Gigablast"
+"炼狱硫火球": "Brimstone Hellfireball"
+"硫火之刃": "Brimstone Sword"
+"硫火手里剑": "Brim Blade"
+"泡泡": "Bubble Gun"
+"鼠疫弹": "Bubonic Round"
+"硫磺火球": "Burning Sea"
+"干缩硫海龙鲨": "Cadaverous Carrion Sharkron"
+"追踪墨汁": "Calamaris Lament Ink"
+"玉米糖": "Candy Corn"
+"硫火碎魂拳": "Cataclysm Fist"
+"灾难巨剑剑气": "Catastrophe Claymore"
+"斩魂幻锋": "Catastrophe Slash"
+"蓝色宙能聚爆": "Celestial Claymore Blue"
+"红色宙能聚爆": "Celestial Claymore Red"
+"掠星镰": "Celestial Reaper"
+"星神之杀": "Celestus"
+"小鸡火箭": "Chicken Cannon Rocket"
+"叶绿箭": "Chlorophyte Arrow"
+"绿藻弹": "Chlorophyte Bullet"
+"叶绿珠": "Chlorophyte Orb"
+"五指剑": "Cinquedea"
+"破空星辰": "Clamor Noctus Star"
+"破空暗夜飞龙": "Clamor Noctus Wyvern"
+"海蚌锤": "Clam Crusher"
+"发条精密箭": "Clockwork Bow Arrow"
+"集束破片": "Cluster Fragment"
+"集束榴弹": "Cluster Grenade"
+"钴蓝苦无": "Cobalt Kunai"
+"陨落流星": "Comet Quasher"
+"诘责之矢": "Condemnation Arrow"
+"诘责分裂箭": "Condemnation Arrow Split"
+"瘟疫疫毒箭": "Contagion Arrow"
+"瘟疫疫病球": "Contagion Sphere"
+"珊瑚块": "Coral Chunk"
+"珊瑚碎片": "Coral Shard"
+"憎恶血刃": "Corpus Avertor"
+"归墟爆破之星": "Cosmic Immaterializer Star"
+"星体苦无": "Cosmic Kunai"
+"无限灯笼": "Cosmic Lantern"
+"西格纳斯鬼镰": "Cosmic Scythe"
+"宇宙之刃": "Cosmic Shiv Blade"
+"宇宙之刃分裂弹幕": "Cosmic Shiv Star"
+"宙蝰子母火箭": "Cosmic Viper Cluster"
+"宙蝰制导火箭": "Cosmic Viper Homing"
+"宇宙灯笼光束": "Cosmilamp Bullet"
+"碎颅飞盘": "Cranium Smasher"
+"血化深渊之球": "Crimulan Glob"
+"硫火飞爪": "Crushsaw Crasher"
+"晶体飞刀": "Crystalline"
+"水晶子弹": "Crystal Bullet"
+"水晶": "Crystal"
+"水晶碎块": "Crystal Fragment"
+"水晶穿刺者": "Crystal Piercer"
+"史莱姆水晶": "Crystal Slime Spike"
+"水晶": "Crystal Spike"
+"诅咒箭": "Cursed Arrow"
+"诅咒弹": "Cursed Bullet"
+"咒焰匕首": "Cursed Dagger"
+"咒火球": "Cursed Fireball"
+"紫蓝色小球": "Daedalus Golem"
+"恶魔焰火球": "Daemons Flame"
+"太极连枷": "Dao Of Pow"
+"水晶镖": "Darkecho Greatbow Dart"
+"夜之星光": "Darklight Greatsword"
+"暗能量球": "Dark Energy Ball"
+"破晓之光": "Daybreak"
+"死神擢升镰刀": "Deaths Ascension"
+"死亡之风星云射线": "Deathwind Ray"
+"弑神激光": "Death Laser"
+"死神镰刀": "Death Sickle"
+"死亡粉尘": "Death Valley Duster"
+"始源粉尘": "Primal Duster"
+"渊海哑铃": "Deep Sea Dumbbell"
+"深渊裂斧": "Deep Wounder"
+"恶魔之镰": "Demon Scythe"
+"渎神邪水": "Desecrated Water"
+"渎神邪水泡": "Desecrated Water Bubble"
+"爆炸泡泡": "Detonating Bubble"
+"钻石射线": "Diamond Bolt"
+"神圣天罚": "Divine Retribution Spear"
+"花生壳": "Dodus Handcannon Peanut"
+"血炎龙息": "Dragonblood Disgorger Breath"
+"龙息弹": "Dragons Breath Bullet"
+"龙魂破": "Dragon Pow"
+"龙魂破花瓣": "Dragon Pow Petal"
+"巨龙之怒火球": "Dragon Rage"
+"炎龙崩啸": "Drataliornus Arrow"
+"追踪炎龙崩啸": "Homing Drataliornus Arrow"
+"充能炎龙崩啸": "Charged Drataliornus Arrow"
+"炎龙陨石": "Drataliornus Meteror"
+"公爵斩首者": "Dukes Decapitator"
+"瓶中沙尘": "Duststorm From A Bottle"
+"瓶中尘": "Duststorm In A Bottle"
+"动能寻迹镖": "Dynamic Pursuer"
+"雷管": "Dynamite"
+"蓝色大地流星": "Earth Blue"
+"绿色大地流星": "Earth Green"
+"红色大地流星": "Earth Red"
+"三色大地流星": "Earth Rgb"
+"日蚀之陨": "Eclipses Fall"
+"淡蓝色泡沫": "Effervescence Blue"
+"紫色泡沫": "Effervescence Purple"
+"哀怨之声": "Eidolic Wail Projectile"
+"元素飞盘": "Elemental Disk"
+"蓝色元素光束": "Elemental Lance Blue"
+"绿色元素光束": "Elemental Lance Green"
+"橙色元素光束": "Elemental Lance Orange"
+"粉色元素光束": "Elemental Lance Pink"
+"元素短剑": "Elemental Shiv"
+"元素短剑分裂弹幕": "Elemental Subshiv"
+"极乐之箭": "Elysian Arrow"
+"极乐陨石": "Elysian Arrow Meteor"
+"皇天星辰": "Empyrean Star"
+"附魔飞斧": "Enchanted Axe"
+"附魔回力镖": "Enchanted Boomerang"
+"源生冰片": "Endogenesis Ice Shard"
+"源生冰锥": "Endogenesis Ice Cone"
+"瘟疫解离者": "Epidemic Shredder"
+"宁静回旋镖": "Equanimity"
+"宁静暗黑碎块": "Equanimity Dark"
+"宁静光明碎块": "Equanimity Light"
+"湮灭": "Eradicator"
+"弑神火球": "Essence Fireball"
+"精元镰刀": "Essence Flayer"
+"幽花追踪能量弹": "Homing Ethereal Subjugator Projectile"
+"幽花子母弹": "Ethereal Subjugator Projectile"
+"黑蚀黑洞": "Event Horizon Blackhole"
+"黑蚀之星": "Event Horizon Star"
+"光明光束": "Excalibur Beam"
+"宙魔之纹": "Excelsus"
+"终结者之刃": "Executioners Blade"
+"星流能量矢": "Exoblade Beam"
+"星流能量爆炸_1": "Exoblade Blast 1"
+"星流能量爆炸_10": "Exoblade Blast 10"
+"星流能量爆炸_11": "Exoblade Blast 11"
+"星流能量爆炸_12": "Exoblade Blast 12"
+"星流能量爆炸_13": "Exoblade Blast 13"
+"星流能量爆炸_14": "Exoblade Blast 14"
+"星流能量爆炸_15": "Exoblade Blast 15"
+"星流能量爆炸_16": "Exoblade Blast 16"
+"星流能量爆炸_2": "Exoblade Blast 2"
+"星流能量爆炸_3": "Exoblade Blast 3"
+"星流能量爆炸_4": "Exoblade Blast 4"
+"星流能量爆炸_5": "Exoblade Blast 5"
+"星流能量爆炸_6": "Exoblade Blast 6"
+"星流能量爆炸_7": "Exoblade Blast 7"
+"星流能量爆炸_8": "Exoblade Blast 8"
+"星流能量爆炸_9": "Exoblade Blast 9"
+"驱魔十字架": "Exorcism"
+"神圣流星": "Exorcism Star"
+"橙色星流脉冲激光": "Exo Laser Orange"
+"红色星流脉冲激光": "Exo Laser Red"
+"阿瑞斯外骨骼热能激光": "Exo Mech Laser"
+"星流等离子束": "Exo Plasma"
+"巨大挥发性等离子光球": "Exo Plasma Giant"
+"高爆等离子火箭": "Exo Rocket"
+"爆炸弹": "Exploding Bullet"
+"弹跳爆炸弹": "Bouncing Exploding Bullet"
+"爆炸杰克南瓜灯": "Explosive Jacko Lantern"
+"烈焰杰克南瓜": "Flame Jacko Lantern"
+"瘟疫细胞": "Eye Of Night"
+"坠星": "Fallen Star"
+"幻想符札": "Fantasy Talisman"
+"幻想符札幽灵": "Fantasy Talisman Ghost"
+"命运幽灵魂火": "Fates Reveal Flame"
+"断层": "Fault Line"
+"羽刃": "Feather Knife"
+"腐烂肉块": "Fetid Emesis"
+"火球": "Fireball"
+"鱼骨回旋镖": "Fishbone Boomerang"
+"猪鲨链球": "Flairon"
+"气泡弹": "Flairon Bubble"
+"烈焰回旋镖": "Flamarang"
+"烈焰箭": "Flame Arrow"
+"火焰锤": "Flaming Mace"
+"火焰碎片": "Flaming Shard"
+"烈焰木": "Flaming Wood"
+"霜火球": "Flarefrost Blade"
+"火矢": "Flare Bolt"
+"流体入侵怪": "Flow Invader"
+"禁忌镰刀": "Forbidden Oathblade"
+"禁忌烈阳": "Forbidden Sun"
+"沙刃": "Forsaken Saber"
+"远古剑气": "Fractured Ark"
+"自由之星能量球": "Freedom Star Projectile"
+"变频器": "Frequency Manipulator"
+"冰火矢": "Frigidflash Bolt"
+"霜碎回旋镖": "Frostcrush Valari"
+"冰焰箭": "Frostfire Arrow"
+"冰矢": "Frost Bolt"
+"霜雾": "Frost Mist Anahita"
+"寒霜波": "Frost Wave"
+"爆炸导弹": "Fuel Cell Bundle Explosive Missile"
+"追踪瘟疫导弹": "Fuel Cell Bundle Plague Missile"
+"南十字星蜗": "Gacruxian Mollusk"
+"巨大血骷髅": "Gaels Greatsword Giant"
+"跟踪血骷髅": "Gaels Greatsword Homing"
+"银河之雷": "Galaxia Mine"
+"摩羯之祈星环": "Galaxia Ring Purple"
+"巨蟹之礼星环": "Galaxia Ring Red"
+"天蓝羽毛": "Galeforce Feather"
+"伽利略新月": "Galileo Gladius Crescent"
+"伽利略小行星": "Galileo Gladius Planetoid"
+"硫酸泡泡": "Gastric Belcher Bubble"
+"呕吐物": "Gastric Belcher Vomit"
+"凝胶波": "Gelitic Blade"
+"凝胶飞镖": "Gel Dart"
+"鬼魂能量球": "Ghastly Visage Sphere"
+"狱卒之镰": "Ghoulish Gouger"
+"镀金匕首": "Gilded Dagger"
+"冰钉": "Glacial Embrace"
+"回飞刃": "Glaive"
+"闪光花朵": "Gleaming Magnolia Flower"
+"闪光花瓣": "Gleaming Magnolia Pedal"
+"神明妄论": "Gods Paranoia"
+"妄论弑神苦无": "Gods Paranoia Kunai"
+"弑神弹": "God Slayer Slug"
+"弑神折返弹": "Warped God Slayer Slug"
+"信风羽": "Goldplume Spear"
+"利维坦毒牙": "Greentide"
+"绿烟花火箭": "Green Firework"
+"星旋激光": "Vortex Laser"
+"绿激光": "Green Laser"
+"手榴弹": "Grenade"
+"初级榴弹": "Grenade1"
+"二级榴弹": "Grenade2"
+"三级榴弹": "Grenade3"
+"四级榴弹": "Grenade4"
+"小异端诡灵": "Mini Gruesome Eminence Projectile"
+"异端诡灵": "Gruesome Eminence Projectile"
+"鸟妖羽毛": "Harpy Feather"
+"南瓜": "Harvest Staff"
+"缠怨鬼碟": "Haunted Scroll"
+"天堂星流晶体": "Heavenly Gale"
+"天堂充能星流晶体": "Energized Heavenly Gale"
+"氦闪挥发性星核": "Helium Flash Projectile"
+"狱炎箭": "Hellfire Arrow"
+"尖刺": "Slime Spike"
+"地底太阳": "Hells Sun"
+"地底太阳追踪球": "Hells Sun Sphere"
+"异端镀金灵魂": "Heresy Gold"
+"异端迷失灵魂": "Heresy Lost"
+"异端复仇灵魂": "Heresy Revenge"
+"冰雾箭": "Hoarfrost Bow Arrow"
+"圣箭": "Holy Arrow"
+"圣之爆焱": "Holy Blast"
+"闪耀之弹": "Holy Bombs"
+"神圣新星": "Holy Cocoon Star"
+"神圣之火": "Holy Fire"
+"圣火弹": "Holy Fire Bullet"
+"神圣雷管": "Holy Hand Grenade"
+"神圣之矛": "Holy Spear"
+"海伯里斯弹": "Hyperius Bullet"
+"至高不洁剑气": "Hyper Defiled Greatsword"
+"孢子": "Hyphae Rod"
+"破冰者": "Icebreaker"
+"冰霜爆": "Ice Blast"
+"冰花": "Ice Star"
+"冰坠箭": "Icicle Arrow"
+"三叉戟冰锥": "Icicle Trident"
+"冰砾弹": "Icy Bullet"
+"地狱飞剑": "Infernal Kris"
+"狱炎三叉戟": "Infernal Rift"
+"真菌回旋爪": "Infested Clawmerang"
+"解离弹": "Infinity Bullet"
+"解离分裂弹": "Infinity Disintegrated Bullet"
+"阴险穿刺者鱼叉": "Insidious Impaler"
+"离子光波": "Ion Blaster"
+"蓝色绚辉圣剑光束": "Iridescent Excalibur Blue"
+"绿色绚辉圣剑光束": "Iridescent Excalibur Green"
+"红色绚辉圣剑光束": "Iridescent Excalibur Red"
+"黄色绚辉圣剑光束": "Iridescent Excalibur Yellow"
+"铁质飞斧": "Iron Francisca"
+"遗忘之颚": "Jaws Of Oblivion"
+"小丑之箭": "Jester Arrow"
+"冰灵旋刃": "Kelvin Catalyst"
+"旋刃冰星": "Kelvin Star"
+"回飞棒": "Kylie"
+"裂魔": "Lacerator"
+"pattern:*激光": "Laser"
+"树叶": "Leaf"
+"利维坦之牙": "Leviathan Teeth"
+"猎命镰刀": "Lifehunt Scythe"
+"圣神爆破光球": "Light Gods Brilliance Sphere Large"
+"圣神追踪光球": "Light Gods Brilliance Sphere Small"
+"夜明箭": "Luminite Arrow"
+"夜明弹": "Luminite Bullet"
+"月之耀斑": "Lunar Flare"
+"月明苦无": "Lunar Kunai"
+"链锤": "Mace"
+"麦格纳冲击波": "Magna Shockwave"
+"磁场之融磁球": "Magnetic Meltdown Sphere"
+"磁球": "Magnet Sphere Ball"
+"嘉登火箭": "Magnomaly Cannon Rocket"
+"孔雀翎": "Malachite"
+"抑郁球": "Malaise"
+"瘟疫箭": "Malevolence Arrow"
+"魔法花朵": "Mana Rose Flower"
+"魔法花瓣": "Mana Rose Pedal"
+"红木环刃": "Mangrove Chakram"
+"彩虹猫之刃": "Meowmere"
+"易碎金属球": "Metal Monstrosity"
+"陨星之拳": "Meteor Fist"
+"陨星弹": "Meteor Shot"
+"流星喷射": "Meteor Vomit"
+"极昼激光": "Midnight Sun Beacon Laser"
+"玛瑙火箭弹": "Mineral Mortar Rocket"
+"远古岩鲨": "Mineral Mortar Shark"
+"镜之刃镜子": "Mirror Blade"
+"熔岩切碎者": "Molten Amputator"
+"猴子飞镖": "Monkey Dart"
+"台风箭": "Monsoon Arrow"
+"迷你鲨鱼龙": "Monsoon Shark"
+"火枪子弹": "Musket Ball"
+"小遗爵鲨牙刺球": "Mutated Truffle Tooth Ball"
+"小遗爵鲨牙尖刺": "Mutated Truffle Tooth Ball Spike"
+"小遗爵硫海漩涡_1": "Mutated Truffle Vortex"
+"狂菌根系": "Mycoroot"
+"秘银飞刀": "Mythril Knife"
+"纳米能量刀刃": "Nanoblack Blade"
+"纳米黑死神": "Nanoblack Reaper"
+"汽油箭": "Napalm Arrow"
+"星云奥秘": "Nebula Arcanum"
+"星云奥秘爆炸弹碎块": "Nebula Arcanum Fragment"
+"星云烈焰": "Nebula Blaze"
+"星云烈焰炮弹": "Nebula Blaze Ex"
+"星云激光": "Nebula Laser"
+"星云针弹": "Nebula Piercer"
+"圣杖星云爆炸": "Nebulous Cataclysm Blast"
+"圣杖星云": "Nebulous Cataclysm Nebula"
+"海神之馈赠三叉戟": "Neptunes Bounty"
+"追踪海神之馈赠三叉戟": "Homing Neptunes Bounty"
+"彩虹水晶": "Nightglow"
+"水晶矢": "Nightglow Bolt"
+"永夜光束": "Nights Edge Beam"
+"暗夜凝视": "Nights Gaze"
+"北极雪花": "North Pole Snowflake"
+"北极长矛": "North Pole Spear"
+"原核台风": "Nuclear Fury Projectile"
+"遗殇": "Oblivion"
+"硫海龙鲨": "Old Duke Sharkron"
+"遗爵鲨牙刺球": "Old Duke Tooth Ball"
+"遗爵鲨牙尖刺": "Old Duke Tooth Ball Spike"
+"遗爵硫海漩涡_1": "Old Duke Vortex"
+"玛瑙能量": "Onyx Blaster"
+"鹅卵石冲击波": "Opal Striker"
+"装饰": "Ornament"
+"装饰弹片": "Ornament Fragment"
+"圣骑士锤": "Paladins Hammer"
+"瘟疫狂潮": "Pandemic"
+"半影飞弹": "Penumbra"
+"阴暗球": "Perfect Dark"
+"幻影眼": "Phantasmal Eye"
+"幻象亡魂之怒": "Phantasmal Fury Ghost"
+"幻象幻魂": "Phantasmal Fury Shard"
+"幻魂归墟": "Phantasmal Ruin"
+"归墟幻魂": "Phantasmal Ruin Soul"
+"幻象箭": "Phantasm Arrow"
+"热熔光刃": "Phaseslayer"
+"星火凤凰雨": "Phoenix Flame Barrage Flame"
+"松针": "Pine Needle"
+"瘟疫蜜蜂手雷": "Plaguenade"
+"瘟疫蜜蜂": "Plague Bee"
+"种子": "Poison Seed"
+"等离子手雷爆炸_1": "Plasma Blast 1"
+"等离子手雷爆炸_2": "Plasma Blast 2"
+"等离子手雷爆炸_3": "Plasma Blast 3"
+"等离子手雷爆炸_4": "Plasma Blast 4"
+"等离子手雷爆炸_5": "Plasma Blast 5"
+"等离子手雷爆炸_6": "Plasma Blast 6"
+"等离子手雷爆炸_7": "Plasma Blast 7"
+"等离子手雷爆炸_8": "Plasma Blast 8"
+"等离子手雷爆炸_9": "Plasma Blast 9"
+"等离子手雷": "Plasma Grenade"
+"幽花弹幕": "Polterghast Projectile"
+"海神之台风": "Poseidon"
+"疯狂飞斧": "Possessed Hatchet"
+"始源之遗粉尘": "Primordial Ancient Dust"
+"棱晶飞刀": "Prismalline"
+"虹光剑气": "Prismatic Breaker"
+"渎神投矛": "Profaned Partisan"
+"脉冲龙链枷": "Pulse Dragon"
+"南瓜榴弹": "Pumpkin Grenade"
+"投矛": "Pygmy Spear"
+"泥潭": "Quagmire"
+"光辉星剑": "Radiant Star"
+"怨戾之手": "Rancor Arms"
+"怨戾熔岩": "Rancor Fog"
+"裂世投矛": "Reality Rupture"
+"裂世投矛Ex": "Reality Rupture Ex"
+"狂野之镰": "Recitation Of The Beast Scythe"
+"殷红弹幕": "Red Bolt"
+"红烟花火箭": "Red Firework"
+"闪耀红羽": "Red Lightning Feather"
+"衍曜旋刃": "Refraction Rotor"
+"衍曜棱晶火箭": "Refraction Rotor Rocket"
+"木箭": "Regular Arrow"
+"星体暴乱": "Regulus Riot"
+"遗忘沙刃": "Relic Of Ruin"
+"雷姆的复仇": "Rems Revenge"
+"涡旋": "Riptide"
+"腐蚀之球": "Rot Ball"
+"大殷红利刃": "Rouge Slash Projectile Large"
+"中殷红利刃": "Rouge Slash Projectile Mid"
+"小殷红利刃": "Rouge Slash Projectile Small"
+"牺牲": "Sacrifice"
+"回春环刃": "Samsara Slicer"
+"沙暴手里剑": "Sandslasher"
+"沙尘暴弹幕": "Sandstorm Desert Scourge"
+"沙钱": "Sand Dollar"
+"渊海灾虫沙爆": "Sand Poison Cloud"
+"微型沙鲨": "Sand Sharknado"
+"渊海灾虫毒牙": "Sand Teeth Aquatic Scourge"
+"猩红烈焰珠": "Sanguine Flare Orb"
+"星律辐射溶解球": "Saros Possession Orb"
+"绯红恶魔": "Scarlet Devil"
+"绯红恶魔珠": "Scarlet Devil Bullet"
+"空气燃料焦土火箭": "Scorched Earth Rocket"
+"天蝎座大号核弹": "Scorpio Nuke"
+"天蝎座迷你火箭": "Scorpio Rocket"
+"沙漠之灾": "Scourge Of The Desert"
+"渊海之灾": "Scourge Of The Seas"
+"海沫炸弹": "Seafoam Bomb"
+"秘封奇点": "Sealed Singularity"
+"焦锅": "Seared Pan"
+"水之剑气": "Seashine"
+"海之烧灼水泡": "Seas Searing Bubble"
+"海之烧灼泡泡": "Seas Searing Bomble"
+"海龙追踪火箭": "Sea Dragon Rocket"
+"种子弯刀坚果": "Seed"
+"种子弯刀坚果碎片": "Seed Shard"
+"深渊亡魂": "Seething Discharge"
+"剧毒鱼叉": "Septic Skewer Projectile"
+"炽天使": "Seraphim"
+"炽天使光球": "Seraphim Sphere"
+"暗晶碎片": "Shadecrystal Barrage"
+"暗影之雨": "Shade Rain"
+"腐蚀之云": "Shade Cloud"
+"腐蚀雨云": "Shade Rain Cloud"
+"暗影焰": "Shadow Fireball"
+"半影裂片": "Shard Of Antumbra"
+"裂阳": "Shattered Sun"
+"贝壳箭": "Shellshooter Shell"
+"烁光": "Shimmerspark"
+"pattern:冲击波1_*": "Shockwave Type1"
+"追踪蘑菇": "Shroomer"
+"手里剑": "Shuriken"
+"银子弹": "Silver Bullet"
+"诅咒头": "Cursed Skull"
+"骷髅头": "Skull"
+"天鳍毁灭者": "Skyfin Bomber"
+"裂天剑": "Sky Fracture Projectile"
+"污泥斑点": "Sludge Splotch"
+"烟陨彗星": "Smoking Comet"
+"集束雪人火箭": "Snowman Cluster"
+"初级雪人火箭": "Snowman Rocket1"
+"二级雪人火箭": "Snowman Rocket2"
+"三级雪人火箭": "Snowman Rocket3"
+"四级雪人火箭": "Snowman Rocket4"
+"冰晶雪花": "Snowstorm Staff"
+"日炎": "Solar Flare"
+"日炎爆炸余烬": "Solar Flare Ash"
+"白天剑气": "Day Solstice Beam"
+"夜晚剑气": "Night Solstice Beam"
+"惧魂": "Soul Edge"
+"灵魂镰刀": "Soul Harvester"
+"小火花": "Spark"
+"希腊烈火": "Greek Fire"
+"火焰": "Flame"
+"命运之矛": "Spear Of Destiny"
+"命运之矛Ex": "Spear Of Destiny Ex"
+"古岩投矛": "Spear Of Paleolith"
+"蜘蛛卵": "Spider Turret"
+"尖刺球": "Spiky Ball"
+"孢子球": "Spore"
+"孢子云": "Spore Cloud"
+"橡子": "Squirrel Squire"
+"尖桩": "Stake"
+"星尘细胞弹": "Stardust Cell"
+"星夜光束": "Starnight Lance"
+"毁灭之星": "Star Of Destruction"
+"酸液滴": "Star Swallower"
+"狂星之怒": "Star Wrath"
+"落星": "Summoned Star"
+"恒星匕首": "Stellar Knife"
+"粘性炸弹": "Sticky Bomb"
+"粘性雷管": "Sticky Dynamite"
+"毒刺": "Stinger"
+"风暴剃刃": "Stormfront Razor"
+"风暴管束者剑气": "Storm Ruler"
+"风暴剑气": "Storm Saber"
+"风暴冲击波": "Storm Surge"
+"板块斩切者": "Subduction Slicer"
+"归元漩涡": "Subsuming Vortex Large"
+"小型归元漩涡": "Subsuming Vortex Small"
+"日炎不洁剑气": "Sunlight Defiled Greatsword"
+"弹球弹": "Superball Bullet"
+"超新星": "Supernova"
+"超新星小爆炸_1": "Supernova Blast 1"
+"超新星小爆炸_2": "Supernova Blast 2"
+"超新星小爆炸_3": "Supernova Blast 3"
+"超新星小爆炸_4": "Supernova Blast 4"
+"超新星小爆炸_5": "Supernova Blast 5"
+"超新星小爆炸_6": "Supernova Blast 6"
+"超新星大爆炸_1": "Supernova Giga Blast 1"
+"超新星大爆炸_2": "Supernova Giga Blast 2"
+"超新星大爆炸_3": "Supernova Giga Blast 3"
+"超新星大爆炸_4": "Supernova Giga Blast 4"
+"超新星大爆炸_5": "Supernova Giga Blast 5"
+"超新星大爆炸_6": "Supernova Giga Blast 6"
+"超新星牵引": "Supernova Formation"
+"爆破剑气": "Swordsplosion"
+"神经系统紊乱装置": "System Bane"
+"龙蒿投镖": "Tarragon Throwing Dart"
+"电钩": "Taser"
+"天堂之泪": "Tears Of Heaven"
+"地核燃弧箭": "Telluric Glare Arrow"
+"泰拉悠悠球": "Terrarian"
+"泰拉悠悠球光束": "Terrarian Projectile"
+"泰拉能量爆炸_1": "Terratomere Blast 1"
+"泰拉能量爆炸_10": "Terratomere Blast 10"
+"泰拉能量爆炸_11": "Terratomere Blast 11"
+"泰拉能量爆炸_12": "Terratomere Blast 12"
+"泰拉能量爆炸_13": "Terratomere Blast 13"
+"泰拉能量爆炸_14": "Terratomere Blast 14"
+"泰拉能量爆炸_15": "Terratomere Blast 15"
+"泰拉能量爆炸_16": "Terratomere Blast 16"
+"泰拉能量爆炸_2": "Terratomere Blast 2"
+"泰拉能量爆炸_3": "Terratomere Blast 3"
+"泰拉能量爆炸_4": "Terratomere Blast 4"
+"泰拉能量爆炸_5": "Terratomere Blast 5"
+"泰拉能量爆炸_6": "Terratomere Blast 6"
+"泰拉能量爆炸_7": "Terratomere Blast 7"
+"泰拉能量爆炸_8": "Terratomere Blast 8"
+"泰拉能量爆炸_9": "Terratomere Blast 9"
+"泰拉箭": "Terra Arrow"
+"泰拉追踪箭": "Homing Terra Arrow"
+"泰拉光束": "Terra Blade Beam"
+"泰拉弹": "Terra Bullet"
+"泰拉追踪弹": "Terra Bullet Fragment"
+"泰拉长枪枪气": "Terra Lance"
+"惊惧光束": "Terror Blade"
+"异象纳米裂变炸弹": "The Anomalys Nanogun Bomb"
+"微元劫裂者": "The Atom Splitter"
+"破城巨箭": "The Ballista Arrow"
+"化石碎片": "The Ballista Shard"
+"焚灭天惩燃烧陨石": "The Burning Sky"
+"光之舞闪光_1": "The Dance Of Light Flash"
+"舞光之刃": "The Dance Of Light Projectile"
+"克苏鲁之眼悠悠球": "The Eye Of Cthulhu"
+"终曲黎明": "The Final Dawn"
+"神旨": "The Gods Gambit"
+"蜜蜂RPG": "The Hive Bee Rpg"
+"瘟疫导弹": "The Hive Goliath Rocket"
+"蜂巢炸弹": "The Hive Hive Bomb"
+"蜂巢火箭": "The Hive Hive Missile"
+"幽漩水爆炸": "The Maelstrom Blast"
+"充能猎魂鲨": "The Maelstrom Shark"
+"微波辐照": "The Microwave"
+"混沌射线": "The Obliterator"
+"死神遗镰": "The Old Reaper"
+"神谕": "The Oracle"
+"大集束火箭": "The Pack Cluster Rocket"
+"集束迷你火箭": "The Pack Split Rocket"
+"王子火球": "The Prince Fireball"
+"王子火焰": "The Prince Flame"
+"风暴能源箭矢": "The Storm Arrow"
+"瘟疫注射器": "The Syringe"
+"瘟疫残渣": "The Syringe Shard"
+"刺球": "Thorn Ball"
+"荆棘烁兰花朵": "Thorn Blossom Flower"
+"荆棘烁兰花瓣": "Thorn Blossom Petal"
+"荆棘旋刃": "Thorn Chakram"
+"板砖": "Throwing Brick"
+"板砖碎块": "Throwing Brick Shard"
+"时空交叉刃": "Time Bolt"
+"燃爆瓶": "Totality Breakers"
+"剧毒旋风": "Toxicant Twister"
+"渊海灾虫毒云": "Toxic Cloud"
+"逐影飞盘": "Tracking Disk"
+"绝望光束": "True Caustic"
+"风滚草": "Tumbleweed"
+"追踪花球": "Tundra Flame Blossom"
+"乱流": "Turbulance"
+"闪耀怪": "Twinkle"
+"雷劫": "Twisting Thunder"
+"台风": "Typhoon"
+"创世之光": "Ultima"
+"终结裂空戟": "Ultra Liquidator Projectile"
+"深渊女神标枪": "Undines Projectile"
+"邪箭": "Unholy Arrow"
+"邪恶三叉戟": "Unholy Trident"
+"唤星弹": "Universal Genesis Bullet"
+"五彩星": "Universal Genesis Star"
+"解封奇点": "Unleashed Singularity"
+"海胆链枷": "Urchin Mace"
+"海胆链球": "Urchin Flail"
+"涡流": "Urchin Mace Whirlpool"
+"百变餐叉": "Utensil Poker"
+"百变屠刀": "Utensil Poker Buchery Knife"
+"辞别飞镰": "Valediction"
+"征戮箭": "Vanquisher Arrow"
+"征戮分裂箭": "Vanquisher Disintegrated Arrow"
+"狞桀": "Vehemence Bolt"
+"狞桀颅骨云": "Vehemence Skull"
+"毒液箭": "Venom Arrow"
+"毒液弹": "Venom Bullet"
+"金星狱炎三叉戟": "Venusian Trident Projectile"
+"钫弹": "Verium Bullet"
+"熔岩陨星": "Vesuvius"
+"恶毒瘤块": "Vile Clot"
+"魔唾液": "Vile Spit"
+"鼠尾草针叶": "Viral Sprout"
+"瘟疫云": "Virulence"
+"毒刃瘟疫云": "Virulence's Blade"
+"毒蝰之牙": "Vitriolic Viper Tooth"
+"毒蝰喷吐物": "Vitriolic Viper Vomit"
+"漩涡光伏磁球": "Void Vortex Sphere"
+"挥发明胶": "Volatile Gelatin"
+"小挥发明胶": "Volatile Gelatin Small"
+"极点光伏磁球": "Voltaic Climax Sphere"
+"星璇导弹": "Vortex Rocket"
+"水之枪": "Water Spear Anahita"
+"海蓝射线": "Aqua Ray"
+"水矢": "Water Stream"
+"震波炸弹": "Wave Pounder"
+"越浪蛟": "Wave Skipper"
+"旋风": "Wind Blade"
+"木制回力镖": "Wooden Boomerang"
+"木制悠悠球": "Wooden Yoyo"
+"狂龙翼火": "Wrathwing"
+"钨钢飞刀": "Wulfrum Knife"
+"螺丝钉": "Wulfrum Screw"
+"迷你飞龙": "Wyverns Call"
+"绽花毒藤": "Yateveo Bloom Flail"
+"黄烟花火箭": "Yellow Firework"
+"星河陨石": "Yellow Meteor"
+"炽焰天龙火球": "Yharons Kindle Fireball"
+"追踪灼焱余烬": "Homing Yharon Flare Bombs"
+"灼焱余烬": "Yharon Flare Bombs"
+"大型火焰龙卷": "Yharon Tornado"
+"阴阳": "Yin Yo"
+
+
 # Buff/Debuff (name + tooltip)
-# Biomes
+中毒: Poisoned
+缓慢损失生命值: Slowly losing life
+剧毒: Venom
+在酸性毒液的腐蚀下损失生命值: Losing life under the corrosion of acid venom
+燃烧: On Fire!
+霜火: Frostburn
+不是特别烫就是特别冻。反正都是特别特别痛: It's either really hot or really cold. Either way, it hurts a lot
+狱炎: Hellfire
+咒火: Cursed Flames
+正在损失生命值: Losing life
+暗影焰: Shadowflame
+深渊水压: Abyss Vent Pressure
+深海压强似乎作用于身: Deep-sea pressure seems to be acting on your body
+带电: Electrified
+极速损失生命值: Rapidly losing life
+破晓: Daybreak
+被日耀射线焚烧: Incinerated by solar rays
+血液沸腾: Burning Blood
+你的血液沸腾了: Your blood is boiling
+硫磺火: Brimstone Flames
+被漆黑的火焰吞噬: Consumed by pitch-black flames
+辐射: Irradiation
+你的皮肤正被侵蚀: Your skin is being eroded
+孱弱巫咒: Weakness Curse
+你很虚弱: You are weak
+幻星感染: Astral Infection
+你的血肉正在被幻星熔蚀: Your flesh is being melted by astral stars
+瘟疫: The Plague
+从内部腐烂: Rotting from the inside
+神圣之火: Holy Flames
+神圣之光正将你焚化: Holy light is incinerating you
+夜魇: Nightwither
+被月之射线瓦解: Disintegrated by lunar rays
+元素谐鸣: Elemental Resonance
+美妙的元素交响乐正在活剥你: A beautiful elemental symphony is skinning you alive
+圣狱神火: Holy Inferno
+你离亵渎天神太远了！: You are too far away from the Profaned Goddess!
+死亡低语: Death Whistle
+死亡临近；攻击力和生命再生降低: Death approaches; attack power and life regeneration are reduced
+硫磺海剧毒: Sulphuric Poisoning
+有毒的硫磺海水正在烧灼你的皮肤: Toxic sulphuric seawater is burning your skin
+弑神怒焰: God Slayer Inferno
+你的血肉在燃烧: Your flesh is burning
+龙焰: Dragonfire
+被咆哮的火焰吞没: Engulfed by roaring flames
+超位崩解: Vaporfied
+星流共振撕碎了组成你身体的物质: Exo-resonant frequencies shred the very matter that forms your body
+解离: Disintegrated
+有人造了十把三尖匕首……: Someone crafted ten trident daggers...
+流血: Bleeding
+无法再生生命: Cannot regenerate life
+缓慢: Slow
+移动速度降低: Movement speed reduced
+恐惧: Horrified
+你已经看到污秽之物，无可逃脱。: You have seen the abomination, there is no escape.
+破损盔甲: Broken Armor
+防御力减半: Defense cut in half
+碎甲: Armor Shattered
+你的护甲被撕裂了: Your armor has been torn apart
+死亡标记: Marked for Death
+降低伤害减免: Reduced damage reduction
+枯萎: Wither
+软弱无力: Weak and powerless
+诅咒: Cursed
+无法使用任何物品: Cannot use any items
+扭曲: Distorted
+你周围的重力是扭曲的: Gravity is distorted around you
+冷冻: Chilled
+你的移动速度已降低: Your movement speed has been reduced
+冰冻: Frozen
+你不能动！: You can't move!
+极限重力: Extreme Gravity
+翅膀飞行时间减少35%: Wing flight time reduced by 35%
+耐药性: Potion Sickness
+不能再使用治疗物品: Cannot use healing items anymore
+魔力疾病: Mana Sickness
+魔法伤害降低: Magic damage reduced
+失明: Blindness
+视力下降: Vision reduced
+阻塞: Obstructed
+你看不见了！: You can't see!
+弹药储备: Ammo Reservation
+75%概率不消耗弹药: 75% chance to not consume ammo
+射术: Archery
+远程伤害增加5%，盗贼伤害增加10%: Ranged damage increased by 5%, Rogue damage increased by 10%
+战斗: Battle
+刷怪效率和上限增加: Spawn rate and max spawns increased
+虫潮: Zerg
+刷怪倍率和上限增加: Spawn multiplier and max spawns increased
+冷静: Calming
+刷怪倍率和上限减少: Spawn multiplier and max spawns reduced
+禅定: Zen
+刷怪倍率和上限大幅度减少: Spawn multiplier and max spawns greatly reduced
+耐力: Endurance
+伤害减免增加5%: Damage reduction increased by 5%
+鱼鳃: Gills
+水下适应性和视野增加！: Underwater adaptability and vision increased!
+隐身: Invisibility
+刷怪率和上限减少: Spawn rate and max spawns reduced
+铁皮: Ironskin
+获得 16 防御力；防御力额外提升 2%: Gain 16 defense; defense increased by an additional 2%
+生命力: Lifeforce
+获得 20% 最大生命值: Gain 20% max life
+魔能: Magic Power
+魔法伤害增加 15%: Magic damage increased by 15%
+魔力掌控: Mana Regeneration
+魔力消耗减少 20%: Mana consumption reduced by 20%
+黑曜石皮: Obsidian Skin
+免疫岩浆和燃烧: Immune to lava and burning
+再生: Regeneration
+生命再生增加: Life regeneration increased
+血鳍之助: Bloodfin Boost
+不要让血液冲昏头脑: Don't let the blood rush to your head
+召唤: Summoning
+召唤伤害增加 15%: Summon damage increased by 15%
+敏捷: Swiftness
+速度增加 15%: Speed increased by 15%
+荆棘: Thorns
+受伤时反弹部分伤害: Attacking enemies take damage when they hit you
+泰坦: Titan
+击退增加 50%: Knockback increased by 50%
+怒气: Wrath
+伤害增加 10%: Damage increased by 10%
+吃饱: Well Fed
+所有属性小幅提升: Minor improvements to all stats
+饱足: Plenty Satisfied
+所有属性中幅提升: Medium improvements to all stats
+饕餮: Exquisitely Stuffed
+所有属性大幅提升: Major improvements to all stats
+拾心: Heartreach
+提升拾取心的范围: Increased heart pickup range
+钙质: Calcium Boost
+不会受到摔落伤害！: Immune to fall damage!
+磁铁: Magnet Boost
+“看，吸铁石！”: "Look, a magnet!"
+无尽空虚: Void Pickup
+物品拾取范围获得极大加强: Item pickup range is greatly increased
+饰品转换冷却: Accessory Swap Cooldown
+你需要稍等片刻才能再次使用饰品属性转换: You need to wait a moment before swapping accessory attributes again
+闪避冷却: Dodge Cooldown
+闪避饰品需要一段时间重振旗鼓: Dodge accessories need some time to recover
+圣骑士护盾: Paladin's Shield
+代替附近的队友承受部分伤害: Absorb a portion of damage taken by nearby teammates
+冰障: Ice Barrier
+所受伤害减少15%: Damage taken reduced by 15%
+防御损毁: Armor Crunch
+缓慢恢复损伤的防御力: Slowly recovering damaged defense
+防御修补冷却: Armor Repair Cooldown
+突如其来的攻击打乱了防御的修复: A sudden attack disrupted armor repair
+血炎防御损毁: Bloodflare Armor Crunch
+缓慢恢复损伤的防御力与生命值: Slowly recovering damaged defense and life
+血神之凋零: Blood God's Wither
+血神短暂允诺于你的生命正在消散……: The life briefly promised to you by the Blood God is fading...
+伤害星云: Damage Nebula
+每层使伤害增加 7.5%: Increases damage by 7.5% per stack
+伤害星云1: Damage Nebula I
+伤害增加 7.5%: Damage increased by 7.5%
+伤害星云2: Damage Nebula II
+伤害增加 15%: Damage increased by 15%
+伤害星云3: Damage Nebula III
+伤害增加 22.5%: Damage increased by 22.5%
+生命星云: Life Nebula
+每层使每秒生命再生增加 6: Increases life regen by 6 per second per stack
+生命星云1: Life Nebula I
+每秒生命再生增加 6: Life regen increased by 6 per second
+生命星云2: Life Nebula II
+每秒生命再生增加 12: Life regen increased by 12 per second
+生命星云3: Life Nebula III
+每秒生命再生增加 18: Life regen increased by 18 per second
+魔力星云: Mana Nebula
+每层使每秒被动和闲置魔力再生增加 5: Increases passive and idle mana regen by 5 per second per stack
+魔力星云1: Mana Nebula I
+每秒被动和闲置魔力再生增加 5: Passive and idle mana regen increased by 5 per second
+魔力星云2: Mana Nebula II
+每秒被动和闲置魔力再生增加 10: Passive and idle mana regen increased by 10 per second
+魔力星云3: Mana Nebula III
+每秒被动和闲置魔力再生增加 15: Passive and idle mana regen increased by 15 per second
+魔力烧蚀: Mana Ablation
+过多的魔力正在烧蚀你的身心: Excessive mana is ablating your mind and body
+魔力熔蚀: Mana Melt
+你的生命正在升华为魔力: Your life is sublimating into mana
+灵魂恢复: Soul Recovery
+恢复生命: Recovering life
+灵魂防御: Soul Defense
+增加6点防御力和2%伤害减免: Increases defense by 6 and damage reduction by 2%
+灵魂力量: Soul Power
+增加5%召唤伤害: Increases summon damage by 5%
+神圣之辉: Holy Radiance
+神圣之佑: Holy Protection
+增加12点防御力和3%伤害减免: Increases defense by 12 and damage reduction by 3%
+神圣之力: Holy Power
+增加7%召唤伤害: Increases summon damage by 7%
+幻魂还生: Polterghist Rebirth
+幻魂坚盾: Polterghist Shield
+增加20点防御力和5%伤害减免: Increases defense by 20 and damage reduction by 5%
+幻魂之力: Polterghist Power
+增加10%召唤伤害: Increases summon damage by 10%
+掠夺者护符: Raider's Talisman
+下一次攻击时增加18%盗贼暴击率: Increases Rogue critical strike chance by 18% on your next attack
+静谧之靴: Boots of Serenity
+你很神秘，获得生命恢复和移动速度: You are mysterious, gaining life recovery and movement speed
+静谧之靴破损: Broken Boots of Serenity
+受到攻击或成为BOSS目标后失去静谧效果: Serenity effect lost after taking damage or being targeted by a boss
+血肉图腾: Flesh Totem
+下一次接触伤害减半: Next contact damage is halved
+血肉图腾冷却: Flesh Totem Cooldown
+血肉图腾效果冷却: Flesh Totem effect cooldown
+保护矩阵: Protection Matrix
+保护你并为你阻挡伤害: Protects you and blocks damage
+保护矩阵充能: Protection Matrix Charging
+保护矩阵被攻击扰乱，正在准备充能: Protection matrix disrupted by attack, preparing to charge
+星云之核冷却: Nebula Core Cooldown
+星云之核复活仍未就绪: Nebula Core revive is not ready yet
+进升证章冷却: Badge of Bravery Cooldown
+进升证章仍未就绪: Badge of Bravery is not ready yet
+硫火狂怒: Brimstone Fury
+以生命为代价，黑魔法大大增强了你的力量: At the cost of life, dark magic greatly enhances your strength
+硫火狂怒冷却: Brimstone Fury Cooldown
+燃烧生命的黑魔法令你精疲力尽: The life-burning dark magic has left you exhausted
+掠夺者之怒: Raider's Fury
+爷怒了: You are furious
+瘟疫狂暴: Plague Overdrive
+远程伤害增加60%，远程暴击率增加20%: Ranged damage increased by 60%, Ranged critical strike chance increased by 20%
+瘟疫狂暴冷却: Plague Overdrive Cooldown
+你需要稍等片刻才能再次使用瘟疫狂暴: You need to wait a moment before using Plague Overdrive again
+生命涌流: Lifeforce Surge
+极速生命恢复: Extremely fast life recovery
+龙蒿披风: Tarragon Cloak
+降低接触伤害: Reduces contact damage
+龙蒿披风冷却: Tarragon Cloak Cooldown
+你需要稍等片刻才能再次使用龙蒿披风: You need to wait a moment before using Tarragon Cloak again
+鲜血狂怒: Blood Frenzy
+怪物接触伤害降低，近战属性大幅提高: Enemy contact damage reduced, melee stats greatly increased
+鲜血狂怒冷却: Blood Frenzy Cooldown
+你需要稍等片刻才能再次使用鲜血狂怒: You need to wait a moment before using Blood Frenzy again
+幽火游魂冷却: Phantom Spirit Cooldown
+你需要稍等片刻才能再次使用幽火游魂: You need to wait a moment before using Phantom Spirit again
+深渊狂乱: Abyssal Madness
+增加伤害，暴击率和生命汲取: Increases damage, critical strike chance, and life steal
+深渊狂乱冷却: Abyssal Madness Cooldown
+你需要稍等片刻才能再次使用深渊狂乱: You need to wait a moment before using Abyssal Madness again
+弑神者冲刺: God Slayer Dash
+获得伤害减免并无视击退，受到攻击时进入冷却: Gain damage reduction and ignore knockback, goes on cooldown when hit
+神弑者之停息: God Slayer Cooldown
+你需要稍等片刻才能再次使用弑神者冲刺: You need to wait a moment before using God Slayer Dash again
+始源林海无敌: Silva Immunity
+短暂的无敌效果: Brief immunity effect
+始源林海无敌冷却: Silva Immunity Cooldown
+你需要稍等片刻才能再次使用始源林海无敌: You need to wait a moment before using Silva Immunity again
+黄色天钻宝石: Yellow Diamond Buff
+近战属性大幅提高: Melee stats greatly increased
+黄色天钻宝石冷却: Yellow Diamond Cooldown
+黄色天钻宝石破碎了！: The Yellow Diamond has shattered!
+绿色天钻宝石: Green Diamond Buff
+远程属性大幅提高: Ranged stats greatly increased
+绿色天钻宝石冷却: Green Diamond Cooldown
+绿色天钻宝石破碎了！: The Green Diamond has shattered!
+红色天钻宝石: Red Diamond Buff
+盗贼属性大幅提高: Rogue stats greatly increased
+红色天钻宝石冷却: Red Diamond Cooldown
+红色天钻宝石破碎了！: The Red Diamond has shattered!
+紫色天钻宝石: Purple Diamond Buff
+魔法属性大幅提高: Magic stats greatly increased
+紫色天钻宝石冷却: Purple Diamond Cooldown
+紫色天钻宝石破碎了！: The Purple Diamond has shattered!
+蓝色天钻宝石: Blue Diamond Buff
+召唤属性大幅提高: Summon stats greatly increased
+蓝色天钻宝石冷却: Blue Diamond Cooldown
+蓝色天钻宝石破碎了！: The Blue Diamond has shattered!
+粉色天钻宝石: Pink Diamond Buff
+杂项属性大幅提高: Miscellaneous stats greatly increased
+粉色天钻宝石冷却: Pink Diamond Cooldown
+粉色天钻宝石破碎了！: The Pink Diamond has shattered!
+魔影激怒: Shadowspec Rage
+你以防御和伤害减免为代价大大提升自身的攻击力: You greatly increase your attack power at the cost of defense and damage reduction
+暴君之怒: Tyrant's Fury
+增加5%近战伤害和暴击率: Increases melee damage and critical strike chance by 5%
+格拉克斯之助: Grax Boost
+提高防御力，你的肌肉更加强壮: Increased defense, your muscles feel stronger
+狮心圣裁能量外壳: Lion Heart Energy Shell
+狮心圣裁能量外壳为你阻挡伤害: The Lion Heart energy shell blocks damage for you
+狮心圣裁能量外壳冷却: Lion Heart Energy Shell Cooldown
+狮心圣裁能量外壳正在冷却: The Lion Heart energy shell is cooling down
+
+
+# Biomes and heights
+"深渊": "Abyss"
+"星辉瘟疫": "Astral Infection"
+"硫火之崖": "Brimstone Crag"
+"腐化之地": "The Corruption"
+"沙漠": "Desert"
+"地牢": "Dungeon"
+"神圣之地": "The Hallow"
+"丛林": "Jungle"
+"陨石": "Meteorite"
+"森林": "Forest"
+"海洋": "Ocean"
+"太空": "Space"
+"硫磺海": "Sulphurous Sea"
+"沉沦之海": "Sunken Sea"
+"丛林神庙": "Lihzahrd Temple"
+"雪原": "Snow"
+"地狱": "The Underworld"
+"地表": "Surface"
+"地下": "Underground"
+"洞穴": "Cavern"
+
+
+# Game title name
+"我的世界：忘却的旋律": "Minecraft: The Forgotten Melody"
+"我的世界：试试《泰拉瑞亚》！": "Minecraft: Also try Terraria!"
+"我的世界：不要打架，不要打架！": "Minecraft: Why can't we be friends?"
+"我的世界：世界有2+1个维度，不适合⑨岁玩家游玩": "Minecraft: The world has 2+1 dimensions, not for ⑨-year-olds"
+"泰拉瑞亚：试试《我的世界》！": "Terraria: Also try Minecraft!"
+"泰拉瑞亚：也试试饥荒吧！": "Terraria: Also try Don't Starve!"
+"泰拉瑞亚：试试《旷野之息》！": "Terraria: Also try Breath of the Wild!"
+"泰拉瑞亚：试试《星露谷》！": "Terraria: Also try Stardew Valley!"
+"泰拉瑞亚：试试《地心护核者》！": "Terraria: Also try Core Keeper!"
+"泰拉瑞亚：试试《太空边缘》！": "Terraria: Also try Edge of Space!"
+"泰拉瑞亚：建议观看《边缘行者》！": "Terraria: Highly recommending Cyberpunk: Edgerunners!"
+"泰拉瑞亚：来试试《死亡细胞》！": "Terraria: Also try Dead Cells!"
+"泰拉瑞亚：试试《地牢守护者2》！": "Terraria: Also try Dungeon Defenders 2!"
+"泰拉瑞亚：逝逝《守望先锋》？": "Terraria: Wanna 'die' in Overwatch?"
+"泰拉瑞亚：被沙子制服了": "Terraria: Suffocated by sand"
+"泰拉瑞亚：黑曜石被制服了": "Terraria: Obsidanianed"
+"泰拉瑞亚第3部分：向导归来": "Terraria Part 3: The Guide Returns"
+"泰拉瑞亚：泰拉瑞亚：泰拉瑞亚：": "Terraria: Terraria: Terraria:"
+"泰拉瑞亚：按alt-f4": "Terraria: Press alt-f4"
+"泰拉瑞亚：美味又易燃": "Terraria: Yummy, and flammable"
+"泰拉瑞亚：内含小块块，不适合5岁以下的儿童": "Terraria: May contain small parts, not for children under 5"
+"泰拉瑞亚：现已加入音效": "Terraria: Now with sound"
+"泰拉瑞亚：兄弟你疯了吧？": "Terraria: Dude, are you crazy?"
+"泰拉瑞亚：重挖好吗？": "Terraria: Can you dig it?"
+"泰拉瑞亚：强迫症现象模仿者": "Terraria: OCD simulator"
+"泰拉瑞亚：劳工挖啊挖！": "Terraria: Dig pepto dig!"
+"泰拉瑞亚：神土": "Terraria: Holy soil"
+"泰拉瑞亚：向导死亡的谣言被严重夸大了": "Terraria: Rumors of the Guide's death were greatly exaggerated"
+"泰拉瑞亚：为什么丢向导玩偶会死别的npc": "Terraria: Why does throwing the Guide Voodoo Doll kill other NPCs?"
+"泰拉瑞亚：强迫症现象模仿者": "Terraria: OCD simulator"
+"泰拉瑞亚：Cenx邪教": "Terraria: Cult of Cenx"
+"泰拉瑞亚：Maxx传奇": "Terraria: Legend of Maxx"
+"泰拉瑞亚：查询Red精神状态": "Terraria: Checking Red's mental state"
+"泰拉瑞亚：克苏鲁疯了……还失去了一只眼睛！": "Terraria: Cthulhu is mad... and he lost an eye!"
+"泰拉瑞亚：奥克瑞姆重回江湖！！": "Terraria: Ocram returns!!"
+"泰拉瑞亚：远超生命": "Terraria: More than life"
+"泰拉瑞亚：除数为零": "Terraria: Divide by zero"
+"泰拉瑞亚：我同情这些工具……": "Terraria: I feel bad for the tools..."
+"泰拉瑞亚：Red开发救赎": "Terraria: Red's Redemption"
+"泰拉瑞亚：有矿自有天相": "Terraria: In ores we trust"
+"泰拉瑞亚：大地边境": "Terraria: Earth Bound"
+"泰拉瑞亚：兔兔传说": "Terraria: Legend of the Bunny"
+"泰拉瑞亚：亡了亡了，我没有急支糖浆啊": "Terraria: It's over, I don't have any cough syrup!"
+"泰拉瑞亚：很有精神！": "Terraria: Show some spirit!"
+"泰拉瑞亚：哇真的是你呀": "Terraria: Wow, it really is you!"
+"泰拉瑞亚：我不知道--啊啊啊~哎呦~！": "Terraria: I don't know--aaaaah~ Ouch~!"
+"泰拉瑞亚：哎呦你干嘛~~": "Terraria: Aw, what are you doing~~"
+"泰拉瑞亚：生存时长两年半！": "Terraria: Survival time: Two and a half years!"
+"泰拉瑞亚：现在有更多小黑子！": "Terraria: Now with more haters!"
+"泰拉瑞亚：原来你也玩……": "Terraria: Oh, you play it too..."
+"泰拉瑞亚：我明白了，原来你们各个都身怀撅寄啊！！": "Terraria: I see, so every single one of you possesses an absolute ass-kicking masterclass skill!!"
+"泰拉瑞亚：ln（0）= 0 / 0": "Terraria: ln(0) = 0 / 0"
+"泰拉瑞亚：旅途的终点，不，是旅途的中点！！！": "Terraria: Journey's End? No, it's Journey's Midpoint!!!"
+"泰拉瑞亚：这绝对是最后一次更新": "Terraria: This is absolutely the final update"
+"泰拉瑞亚：欢迎来到泰拉瑞亚！": "Terraria: Welcome to Terraria!"
+"泰拉瑞亚：别对一个东西期望太高，这样你就会有惊喜": "Terraria: Don't set your expectations too high for something, that way you'll be pleasantly surprised"
+"泰拉瑞亚：1帧能玩，2帧流畅，3帧电竞": "Terraria: 1 FPS is playable, 2 FPS is smooth, 3 FPS is e-sports level"
+"泰拉瑞亚：暴风雪绝迹": "Terraria: The Blizzard is extinct"
+"泰拉瑞亚：你知道我要说什么": "Terraria: You know what I'm about to say"
+"泰拉瑞亚：新手围观老手似": "Terraria: Newbies watching a veteran die"
+"泰拉瑞亚：哦，达令，看！你浑身都是坚硬的盔↑甲口牙！": "Terraria: Oh, darling, look! You're covered in hard ar↑mor, aren't ya?!"
+"泰拉瑞亚：BOSS强而有力，强而有力口牙！": "Terraria: The BOSS is powerful, so damn powerful!"
+"泰拉瑞亚：你不要点它口牙！（指BOSS召唤物）": "Terraria: Don't click it, for goodness' sake! (Refers to BOSS summoning item)"
+"泰拉¤瑞亚：ᕕ(@ x @)ᕗ 耐药性 10秒": "Terraria: ᕕ(@ x @)ᕗ Potion Sickness 10s"
+"泰拉瑞亚：40秒，只需要继续拖40秒，40秒之后我一定会马上喝药": "40 seconds... I just need to stall for 40 more seconds. After 40 seconds, I will definitely drink a potion right away!"
+"泰拉瑞亚：1997年，我学会了开矿车": "Terraria: In 1997, I learned how to drive a minecart"
+"泰拉瑞亚：那我问你，那我问你": "Terraria: Then let me ask you, let me ask you this"
+"泰拉瑞亚灾厄：敢召唤我就三小弟安排你，听到没有": "Terraria Calamity: Dare to summon me and my three minions will sort you out, you hear me?"
+"泰拉瑞亚灾厄：为什么一个怕被虫子吞了的飞蛾比虫子强？": "Terraria Calamity: Why is a moth that's afraid of being swallowed by a worm stronger than the worm itself?"
+"泰拉瑞亚灾厄：花朵艳丽，终将飘散": "Terraria Calamity: Flowers are beautiful, and they must eventually scatter"
+"泰拉瑞亚灾厄：欢迎来到灾厄！": "Terraria Calamity: Welcome to Calamity!"
+"泰拉瑞亚灾厄：查询山猪喝醉没": "Terraria Calamity: Checking if Fabsol is drunk yet"
+"泰拉瑞亚灾厄：谁还能玩就削谁": "Terraria Calamity: Nerf whoever is still viable"
+"泰拉瑞亚灾厄：看我回血": "Terraria Calamity: Watch me regenerate health"
+
+
 # Gameplay guide
 # ... And more?
