@@ -1,0 +1,284 @@
+# Buff/Debuff (name + tooltip)
+中毒: Poisoned
+缓慢损失生命值: Slowly losing life
+剧毒: Venom
+在酸性毒液的腐蚀下损失生命值: Losing life under the corrosion of acid venom
+燃烧: On Fire!
+霜火: Frostburn
+不是特别烫就是特别冻。反正都是特别特别痛: It's either really hot or really cold. Either way, it hurts a lot
+狱炎: Hellfire
+咒火: Cursed Flames
+正在损失生命值: Losing life
+暗影焰: Shadowflame
+深渊水压: Abyss Vent Pressure
+深海压强似乎作用于身: Deep-sea pressure seems to be acting on your body
+带电: Electrified
+极速损失生命值: Rapidly losing life
+破晓: Daybreak
+被日耀射线焚烧: Incinerated by solar rays
+血液沸腾: Burning Blood
+你的血液沸腾了: Your blood is boiling
+硫磺火: Brimstone Flames
+被漆黑的火焰吞噬: Consumed by pitch-black flames
+辐射: Irradiation
+你的皮肤正被侵蚀: Your skin is being eroded
+孱弱巫咒: Weakness Curse
+你很虚弱: You are weak
+幻星感染: Astral Infection
+你的血肉正在被幻星熔蚀: Your flesh is being melted by astral stars
+瘟疫: The Plague
+从内部腐烂: Rotting from the inside
+神圣之火: Holy Fire
+神圣之光正将你焚化: Holy light is incinerating you
+夜魇: Nightwither
+被月之射线瓦解: Disintegrated by lunar rays
+元素谐鸣: Elemental Resonance
+美妙的元素交响乐正在活剥你: A beautiful elemental symphony is skinning you alive
+圣狱神火: Holy Inferno
+你离亵渎天神太远了！: You are too far away from the Profaned Goddess!
+死亡低语: Death Whisper
+死亡临近；攻击力和生命再生降低: Death approaches; attack power and life regeneration are reduced
+硫磺海剧毒: Sulphuric Poisoning
+有毒的硫磺海水正在烧灼你的皮肤: Toxic sulphuric seawater is burning your skin
+弑神怒焰: God Slayer Inferno
+你的血肉在燃烧: Your flesh is burning
+龙焰: Dragonfire
+被咆哮的火焰吞没: Engulfed by roaring flames
+超位崩解: Vaporfied
+星流共振撕碎了组成你身体的物质: Exo-resonant frequencies shred the very matter that forms your body
+解离: Disintegrated
+有人造了十把三尖匕首……: Someone crafted ten trident daggers...
+流血: Bleeding
+无法再生生命: Cannot regenerate life
+缓慢: Slow
+移动速度降低: Movement speed reduced
+恐惧: Horrified
+你已经看到污秽之物，无可逃脱。: You have seen the abomination, there is no escape.
+破损盔甲: Broken Armor
+防御力减半: Defense cut in half
+碎甲: Armor Shattered
+你的护甲被撕裂了: Your armor has been torn apart
+死亡标记: Marked for Death
+降低伤害减免: Reduced damage reduction
+枯萎: Wither
+软弱无力: Weak and powerless
+诅咒: Curse
+无法使用任何物品: Cannot use any items
+扭曲: Distorted
+你周围的重力是扭曲的: Gravity is distorted around you
+冷冻: Chilled
+你的移动速度已降低: Your movement speed has been reduced
+冰冻: Frozen
+你不能动！: You can't move!
+极限重力: Extreme Gravity
+翅膀飞行时间减少35%: Wing flight time reduced by 35%
+耐药性: Potion Sickness
+不能再使用治疗物品: Cannot use healing items anymore
+魔力疾病: Mana Sickness
+魔法伤害降低: Magic damage reduced
+失明: Blindness
+视力下降: Vision reduced
+阻塞: Obstructed
+你看不见了！: You can't see!
+弹药储备: Ammo Reservation
+75%概率不消耗弹药: 75% chance to not consume ammo
+射术: Archery
+远程伤害增加5%，盗贼伤害增加10%: Ranged damage increased by 5%, Rogue damage increased by 10%
+战斗: Battle
+刷怪效率和上限增加: Spawn rate and max spawns increased
+虫潮: Zerg
+刷怪倍率和上限增加: Spawn multiplier and max spawns increased
+冷静: Calming
+刷怪倍率和上限减少: Spawn multiplier and max spawns reduced
+禅定: Zen
+刷怪倍率和上限大幅度减少: Spawn multiplier and max spawns greatly reduced
+耐力: Endurance
+伤害减免增加5%: Damage reduction increased by 5%
+鱼鳃: Gills
+水下适应性和视野增加！: Underwater adaptability and vision increased!
+隐身: Invisibility
+刷怪率和上限减少: Spawn rate and max spawns reduced
+铁皮: Ironskin
+获得 16 防御力；防御力额外提升 2%: Gain 16 defense; defense increased by an additional 2%
+生命力: Lifeforce
+获得 20% 最大生命值: Gain 20% max life
+魔能: Magic Power
+魔法伤害增加 15%: Magic damage increased by 15%
+魔力掌控: Mana Regeneration
+魔力消耗减少 20%: Mana consumption reduced by 20%
+黑曜石皮: Obsidian Skin
+免疫岩浆和燃烧: Immune to lava and burning
+再生: Regeneration
+生命再生增加: Life regeneration increased
+血鳍之助: Bloodfin Boost
+不要让血液冲昏头脑: Don't let the blood rush to your head
+召唤: Summoning
+召唤伤害增加 15%: Summon damage increased by 15%
+敏捷: Swiftness
+速度增加 15%: Speed increased by 15%
+荆棘: Thorns
+受伤时反弹部分伤害: Attacking enemies take damage when they hit you
+泰坦: Titan
+击退增加 50%: Knockback increased by 50%
+怒气: Wrath
+伤害增加 10%: Damage increased by 10%
+吃饱: Well Fed
+所有属性小幅提升: Minor improvements to all stats
+饱足: Plenty Satisfied
+所有属性中幅提升: Medium improvements to all stats
+饕餮: Exquisitely Stuffed
+所有属性大幅提升: Major improvements to all stats
+拾心: Heartreach
+提升拾取心的范围: Increased heart pickup range
+钙质: Calcium Boost
+不会受到摔落伤害！: Immune to fall damage!
+磁铁: Magnet Boost
+“看，吸铁石！”: "Look, a magnet!"
+无尽空虚: Void Pickup
+物品拾取范围获得极大加强: Item pickup range is greatly increased
+饰品转换冷却: Accessory Swap Cooldown
+你需要稍等片刻才能再次使用饰品属性转换: You need to wait a moment before swapping accessory attributes again
+闪避冷却: Dodge Cooldown
+闪避饰品需要一段时间重振旗鼓: Dodge accessories need some time to recover
+圣骑士护盾: Paladin Shield
+代替附近的队友承受部分伤害: Absorb a portion of damage taken by nearby teammates
+冰障: Ice Barrier
+所受伤害减少15%: Damage taken reduced by 15%
+防御损毁: Armor Crunch
+缓慢恢复损伤的防御力: Slowly recovering damaged defense
+防御修补冷却: Armor Repair Cooldown
+突如其来的攻击打乱了防御的修复: A sudden attack disrupted armor repair
+血炎防御损毁: Bloodflare Armor Crunch
+缓慢恢复损伤的防御力与生命值: Slowly recovering damaged defense and life
+血神之凋零: Blood God's Wither
+血神短暂允诺于你的生命正在消散……: The life briefly promised to you by the Blood God is fading...
+伤害星云: Damage Nebula
+每层使伤害增加 7.5%: Increases damage by 7.5% per stack
+伤害星云1: Damage Nebula I
+伤害增加 7.5%: Damage increased by 7.5%
+伤害星云2: Damage Nebula II
+伤害增加 15%: Damage increased by 15%
+伤害星云3: Damage Nebula III
+伤害增加 22.5%: Damage increased by 22.5%
+生命星云: Life Nebula
+每层使每秒生命再生增加 6: Increases life regen by 6 per second per stack
+生命星云1: Life Nebula I
+每秒生命再生增加 6: Life regen increased by 6 per second
+生命星云2: Life Nebula II
+每秒生命再生增加 12: Life regen increased by 12 per second
+生命星云3: Life Nebula III
+每秒生命再生增加 18: Life regen increased by 18 per second
+魔力星云: Mana Nebula
+每层使每秒被动和闲置魔力再生增加 5: Increases passive and idle mana regen by 5 per second per stack
+魔力星云1: Mana Nebula I
+每秒被动和闲置魔力再生增加 5: Passive and idle mana regen increased by 5 per second
+魔力星云2: Mana Nebula II
+每秒被动和闲置魔力再生增加 10: Passive and idle mana regen increased by 10 per second
+魔力星云3: Mana Nebula III
+每秒被动和闲置魔力再生增加 15: Passive and idle mana regen increased by 15 per second
+魔力烧蚀: Mana Ablation
+过多的魔力正在烧蚀你的身心: Excessive mana is ablating your mind and body
+魔力熔蚀: Mana Melt
+你的生命正在升华为魔力: Your life is sublimating into mana
+灵魂恢复: Soul Recovery
+恢复生命: Recovering life
+灵魂防御: Soul Defense
+增加6点防御力和2%伤害减免: Increases defense by 6 and damage reduction by 2%
+灵魂力量: Soul Power
+增加5%召唤伤害: Increases summon damage by 5%
+神圣之辉: Holy Radiance
+神圣之佑: Holy Protection
+增加12点防御力和3%伤害减免: Increases defense by 12 and damage reduction by 3%
+神圣之力: Holy Power
+增加7%召唤伤害: Increases summon damage by 7%
+幻魂还生: Polterghist Rebirth
+幻魂坚盾: Polterghist Shield
+增加20点防御力和5%伤害减免: Increases defense by 20 and damage reduction by 5%
+幻魂之力: Polterghist Power
+增加10%召唤伤害: Increases summon damage by 10%
+掠夺者护符: Raider's Talisman
+下一次攻击时增加18%盗贼暴击率: Increases Rogue critical strike chance by 18% on your next attack
+静谧之靴: Tranquil Boots
+你很神秘，获得生命恢复和移动速度: You are mysterious, gaining life recovery and movement speed
+静谧之靴破损: Broken Tranquil Boots
+受到攻击或成为BOSS目标后失去静谧效果: Serenity effect lost after taking damage or being targeted by a boss
+血肉图腾: Flesh Totem
+下一次接触伤害减半: Next contact damage is halved
+血肉图腾冷却: Flesh Totem Cooldown
+血肉图腾效果冷却: Flesh Totem effect cooldown
+保护矩阵: Protection Matrix
+保护你并为你阻挡伤害: Protects you and blocks damage
+保护矩阵充能: Protection Matrix Charging
+保护矩阵被攻击扰乱，正在准备充能: Protection matrix disrupted by attack, preparing to charge
+星云之核冷却: Nebula Core Cooldown
+星云之核复活仍未就绪: Nebula Core revive is not ready yet
+进升证章冷却: Badge of Bravery Cooldown
+进升证章仍未就绪: Badge of Bravery is not ready yet
+硫火狂怒: Brimstone Fury
+以生命为代价，黑魔法大大增强了你的力量: At the cost of life, dark magic greatly enhances your strength
+硫火狂怒冷却: Brimstone Fury Cooldown
+燃烧生命的黑魔法令你精疲力尽: The life-burning dark magic has left you exhausted
+掠夺者之怒: Raider's Fury
+爷怒了: You are furious
+瘟疫狂暴: Plague Overdrive
+远程伤害增加60%，远程暴击率增加20%: Ranged damage increased by 60%, Ranged critical strike chance increased by 20%
+瘟疫狂暴冷却: Plague Overdrive Cooldown
+你需要稍等片刻才能再次使用瘟疫狂暴: You need to wait a moment before using Plague Overdrive again
+生命涌流: Lifeforce Surge
+极速生命恢复: Extremely fast life recovery
+龙蒿披风: Tarragon Cloak
+降低接触伤害: Reduces contact damage
+龙蒿披风冷却: Tarragon Cloak Cooldown
+你需要稍等片刻才能再次使用龙蒿披风: You need to wait a moment before using Tarragon Cloak again
+鲜血狂怒: Blood Frenzy
+怪物接触伤害降低，近战属性大幅提高: Enemy contact damage reduced, melee stats greatly increased
+鲜血狂怒冷却: Blood Frenzy Cooldown
+你需要稍等片刻才能再次使用鲜血狂怒: You need to wait a moment before using Blood Frenzy again
+幽火游魂冷却: Phantom Spirit Cooldown
+你需要稍等片刻才能再次使用幽火游魂: You need to wait a moment before using Phantom Spirit again
+深渊狂乱: Abyssal Madness
+增加伤害，暴击率和生命汲取: Increases damage, critical strike chance, and life steal
+深渊狂乱冷却: Abyssal Madness Cooldown
+你需要稍等片刻才能再次使用深渊狂乱: You need to wait a moment before using Abyssal Madness again
+弑神者冲刺: God Slayer Dash
+获得伤害减免并无视击退，受到攻击时进入冷却: Gain damage reduction and ignore knockback, goes on cooldown when hit
+神弑者之停息: God Slayer Cooldown
+你需要稍等片刻才能再次使用弑神者冲刺: You need to wait a moment before using God Slayer Dash again
+始源林海无敌: Silva Immunity
+短暂的无敌效果: Brief immunity effect
+始源林海无敌冷却: Silva Immunity Cooldown
+你需要稍等片刻才能再次使用始源林海无敌: You need to wait a moment before using Silva Immunity again
+黄色天钻宝石: Yellow Diamond Buff
+近战属性大幅提高: Melee stats greatly increased
+黄色天钻宝石冷却: Yellow Diamond Cooldown
+黄色天钻宝石破碎了！: The Yellow Diamond has shattered!
+绿色天钻宝石: Green Diamond Buff
+远程属性大幅提高: Ranged stats greatly increased
+绿色天钻宝石冷却: Green Diamond Cooldown
+绿色天钻宝石破碎了！: The Green Diamond has shattered!
+红色天钻宝石: Red Diamond Buff
+盗贼属性大幅提高: Rogue stats greatly increased
+红色天钻宝石冷却: Red Diamond Cooldown
+红色天钻宝石破碎了！: The Red Diamond has shattered!
+紫色天钻宝石: Purple Diamond Buff
+魔法属性大幅提高: Magic stats greatly increased
+紫色天钻宝石冷却: Purple Diamond Cooldown
+紫色天钻宝石破碎了！: The Purple Diamond has shattered!
+蓝色天钻宝石: Blue Diamond Buff
+召唤属性大幅提高: Summon stats greatly increased
+蓝色天钻宝石冷却: Blue Diamond Cooldown
+蓝色天钻宝石破碎了！: The Blue Diamond has shattered!
+粉色天钻宝石: Pink Diamond Buff
+杂项属性大幅提高: Miscellaneous stats greatly increased
+粉色天钻宝石冷却: Pink Diamond Cooldown
+粉色天钻宝石破碎了！: The Pink Diamond has shattered!
+魔影激怒: Shadowspec Rage
+你以防御和伤害减免为代价大大提升自身的攻击力: You greatly increase your attack power at the cost of defense and damage reduction
+暴君之怒: Tyrant's Fury
+增加5%近战伤害和暴击率: Increases melee damage and critical strike chance by 5%
+格拉克斯之助: Grax Boost
+提高防御力，你的肌肉更加强壮: Increased defense, your muscles feel stronger
+狮心圣裁能量外壳: Lion Heart Energy Shell
+狮心圣裁能量外壳为你阻挡伤害: The Lion Heart energy shell blocks damage for you
+狮心圣裁能量外壳冷却: Lion Heart Energy Shell Cooldown
+狮心圣裁能量外壳正在冷却: The Lion Heart energy shell is cooling down
