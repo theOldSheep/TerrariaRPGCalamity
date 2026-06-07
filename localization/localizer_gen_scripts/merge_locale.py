@@ -19,6 +19,7 @@ TOPIC_FILES = [
     "localizer_gen_scripts/locale_EN_NPC.yml",
     "localizer_gen_scripts/locale_EN_prefix.yml",
     "localizer_gen_scripts/locale_EN_projectiles.yml",
+    "localizer_gen_scripts/locale_EN_resourcepack.yml",
     "localizer_gen_scripts/locale_EN_status_msg.yml",
 ]
 
