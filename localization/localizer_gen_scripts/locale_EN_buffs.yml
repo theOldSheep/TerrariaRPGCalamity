@@ -1,7 +1,10 @@
 # Buff/Debuff (name + tooltip)
+增益: Buff
+减益: Debuff
 中毒: Poisoned
 缓慢损失生命值: Slowly losing life
 剧毒: Venom
+酸性毒液: Venom
 在酸性毒液的腐蚀下损失生命值: Losing life under the corrosion of acid venom
 燃烧: On Fire!
 霜火: Frostburn
@@ -41,6 +44,7 @@
 硫磺海剧毒: Sulphuric Poisoning
 有毒的硫磺海水正在烧灼你的皮肤: Toxic sulphuric seawater is burning your skin
 弑神怒焰: God Slayer Inferno
+神弑者之怒焰: God Slayer Inferno
 你的血肉在燃烧: Your flesh is burning
 龙焰: Dragonfire
 被咆哮的火焰吞没: Engulfed by roaring flames

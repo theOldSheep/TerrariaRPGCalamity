@@ -6,52 +6,56 @@ from collections import defaultdict
 # CONFIGURATION
 # =====================================================================
 TOPIC_FILES = [
-    "locale_EN_biome_height.yml",
-    "locale_EN_boss_event.yml",
-    "locale_EN_buffs.yml",
-    "locale_EN_death_msg_title.yml",
-    "locale_EN_enemy.yml",
-    "locale_EN_game_title.yml",
-    "locale_EN_items.yml",
-    "locale_EN_item_lore_generated.yml",
-    "locale_EN_menu.yml",
-    "locale_EN_NPC.yml",
-    "locale_EN_projectiles.yml",
-    "locale_EN_status_msg.yml"
+    "localizer_gen_scripts/locale_EN_armor_sets.yml",
+    "localizer_gen_scripts/locale_EN_biome_height.yml",
+    "localizer_gen_scripts/locale_EN_boss_event.yml",
+    "localizer_gen_scripts/locale_EN_buffs.yml",
+    "localizer_gen_scripts/locale_EN_death_msg_title.yml",
+    "localizer_gen_scripts/locale_EN_enemy.yml",
+    "localizer_gen_scripts/locale_EN_game_title.yml",
+    "localizer_gen_scripts/locale_EN_item_lore_generated.yml",
+    "localizer_gen_scripts/locale_EN_items.yml",
+    "localizer_gen_scripts/locale_EN_menu.yml",
+    "localizer_gen_scripts/locale_EN_NPC.yml",
+    "localizer_gen_scripts/locale_EN_prefix.yml",
+    "localizer_gen_scripts/locale_EN_projectiles.yml",
+    "localizer_gen_scripts/locale_EN_status_msg.yml",
 ]
 
-OVERRIDE_FILE = "override.yml"
-OUTPUT_FILE = "processed.yml"
+OVERRIDE_FILE = "localizer_gen_scripts/override.yml"
+OUTPUT_FILE = "localizer_gen_scripts/processed.yml"
 
 # =====================================================================
 # HELPER FUNCTIONS
 # =====================================================================
+import os
+import yaml  # Requires `pip install pyyaml`
+
+
 def parse_yaml_lines(file_path):
-    """
-    Parses a pseudo-YAML file line by line using regex to handle
-    inconsistent quoting safely.
-    """
+    """Parses a YAML file safely using PyYAML, handling comments and complex quoting."""
     translations = {}
     if not os.path.exists(file_path):
         print(f"[Warning] File not found: {file_path}")
         return translations
 
-    # Regex matches: optional quotes around key, a colon, optional spaces, optional quotes around value
-    # It accounts for single, double, or no quotes.
-    kv_pattern = re.compile(r"^\s*['\"]?(.*?)['\"]?\s*:\s*['\"]?(.*?)['\"]?\s*$")
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            # yaml.safe_load automatically skips comments and handles all string quotes perfectly
+            data = yaml.safe_load(f)
 
-    with open(file_path, "r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            # Skip comments and empty lines
-            if not line or line.startswith("#"):
-                continue
-            
-            match = kv_pattern.match(line)
-            if match:
-                key, value = match.groups()
-                translations[key] = value
-                
+            if data and isinstance(data, dict):
+                translations = data
+            else:
+                print(
+                    f"[Warning] File parsed successfully but did not return a valid dictionary structure."
+                )
+
+    except yaml.YAMLError as e:
+        print(f"[Error] Failed to parse YAML file due to a syntax issue: {e}")
+    except Exception as e:
+        print(f"[Error] An unexpected error occurred: {e}")
+
     return translations
 
 # =====================================================================
@@ -66,10 +70,20 @@ def main():
     # Map to track key -> list of all translations found across topics
     key_to_topic_translations = defaultdict(list)
     
+    original_ordering = []
+    original_ordering_seen = set()
     for path in TOPIC_FILES:
+        print(f"Loading topic file {path}...")
         topic_data = parse_yaml_lines(path)
         for key, value in topic_data.items():
+            if key not in original_ordering_seen:
+                original_ordering.append(key)
+                original_ordering_seen.add(key)
             key_to_topic_translations[key].append(value)
+    for key, value in overrides.items():
+        if key not in original_ordering_seen:
+            original_ordering.append(key)
+            original_ordering_seen.add(key)
 
     # 2. Process unique keys and apply rules
     final_translations = {}
@@ -112,10 +126,12 @@ def main():
     # =====================================================================
     # Save processed key-values
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write("# Generated Translation File\n")
-        for key, val in sorted(final_translations.items()):
+        towrite = []
+        towrite.append("# Generated Translation File\n")
+        for key in original_ordering:
             # Safe-formatting with double quotes
-            f.write(f'"{key}": "{val}"\n')
+            towrite.append(f'"{key}": "{final_translations[key]}"')
+        f.write('\n'.join(towrite))
             
     print(f"\nSuccessfully saved compiled translations to: {OUTPUT_FILE}")
 

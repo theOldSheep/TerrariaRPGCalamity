@@ -1,9 +1,20 @@
+### for trimming color codes
 §#.{6} -> remove
+### chinese characters
 [\u4e00-\u9fa5]
+### lines without chinese character
 ^((?![\u4e00-\u9fa5]).)*$
+### change double quote into single
 \" -> '
 
+### trim merge_locale.py warnings
+.+\|\|      ->    "
+ -> .+      ->    ": "TODO"
 
+
+
+
+### LLM translation prompt
 
 I'm creating a locale mapping for my Terraria+Calamity in Minecraft plugin.
 
