@@ -1,12 +1,10 @@
 [+] Loading translations from locale_EN.yml...
 [+] Scanning workspace: c:\Users\User\Documents\GitHub\TerrariaRPGCalamity\localization\workspace
-    [!] MISSING/PARTIAL at server\server.properties:40 || motd=欢迎来到泰拉瑞亚 -> motd=欢迎来到泰拉瑞亚
+[✓] Localized: server\server.properties
 [✓] Localized: server\plugins\ChatItem\config.yml
-    [!] MISSING/PARTIAL at server\plugins\ChatItem\config.yml:48 ||     name: "&f[{display-name}的爪爪&f]" -> name: "&f[{display-name}的爪爪&f]"
-    [!] MISSING/PARTIAL at server\plugins\ChatItem\config.yml:51 ||       - "&a{display-name}想让大家看看他的爪爪" -> - "&a{display-name}想让Large家看看他的爪爪"
 [✓] Localized: server\plugins\DragonCore\ArmorLayer.yml
     [!] MISSING/PARTIAL at server\plugins\DragonCore\ArmorLayer.yml:1 || # 困难模式前护甲 -> # 困难模式前护甲
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\ArmorLayer.yml:3 ||   # 当盔甲的 lore 或 name 或 某个nbt【包含】测试材质  -> 穿在身上的盔甲外壳就会显示为xxx材质 -> # 当盔甲的 lore 或 name 或 某个nbt【包含】测试材质  -> 穿在身上的盔甲外壳就会显示为xxx材质
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\ArmorLayer.yml:3 ||   # 当盔甲的 lore 或 name 或 某个nbt【包含】测试材质  -> 穿在身上的盔甲外壳就会显示为xxx材质 -> # 当盔甲 ✪ lore 或 name 或 某个nbt【包含】测试材质  -> 穿在身上的盔甲外壳就会显示为xxx材质
     [!] MISSING/PARTIAL at server\plugins\DragonCore\ArmorLayer.yml:5 ||   # 贴图名称,需要在客户端放置盔甲贴图 -> # 贴图名称,Requires在客户端放置盔甲贴图
     [!] MISSING/PARTIAL at server\plugins\DragonCore\ArmorLayer.yml:6 ||   # DragonCore/armor/你这里填的_layer_1.png和DragonCore/armor/你这里填的_layer_2.png -> # DragonCore/armor/你这里填的_layer_1.png和DragonCore/armor/你这里填的_layer_2.png
     [!] MISSING/PARTIAL at server\plugins\DragonCore\ArmorLayer.yml:197 || # 困难模式（肉后）护甲 -> # 困难模式（肉后）护甲
@@ -53,78 +51,6 @@
     [!] MISSING/PARTIAL at server\plugins\DragonCore\config.yml:63 || # 也就是变量名带这串内容就屏蔽 -> # 也就是变量名带这串内容就屏蔽
     [!] MISSING/PARTIAL at server\plugins\DragonCore\config.yml:64 || # 如果你想添加,这里三个也需要加上 -> # 如果你想添加,这里三个也Requires加上
 [✓] Localized: server\plugins\DragonCore\EntityModel.yml
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:23 || 荒漠灾虫头: -> Desert Scourge头:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:24 ||   entity: "荒漠灾虫头" -> entity: "Desert Scourge头"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:30 || 荒漠灾虫体节: -> Desert Scourge体节:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:31 ||   entity: "荒漠灾虫体节" -> entity: "Desert Scourge体节"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:37 || 荒漠灾虫尾: -> Desert Scourge尾:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:38 ||   entity: "荒漠灾虫尾" -> entity: "Desert Scourge尾"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:44 || 黄沙恶虫头: -> 黄沙恶虫头:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:45 ||   entity: "黄沙恶虫头" -> entity: "黄沙恶虫头"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:51 || 黄沙恶虫体节: -> 黄沙恶虫体节:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:52 ||   entity: "黄沙恶虫体节" -> entity: "黄沙恶虫体节"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:58 || 黄沙恶虫尾: -> 黄沙恶虫尾:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:59 ||   entity: "黄沙恶虫尾" -> entity: "黄沙恶虫尾"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:79 || 克苏鲁疯眼: -> 克苏鲁疯眼:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:80 ||   entity: "克苏鲁疯眼" -> entity: "克苏鲁疯眼"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:114 || 血肉之墙眼: -> Wall of Flesh眼:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:115 ||   entity: "血肉之墙眼" -> entity: "Wall of Flesh眼"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:121 || 血肉之墙嘴: -> Wall of Flesh嘴:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:122 ||   entity: "血肉之墙嘴" -> entity: "Wall of Flesh嘴"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:156 || 渊海灾虫头: -> Aquatic Scourge头:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:157 ||   entity: "渊海灾虫头" -> entity: "Aquatic Scourge头"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:163 || 渊海灾虫体节: -> Aquatic Scourge体节:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:164 ||   entity: "渊海灾虫体节" -> entity: "Aquatic Scourge体节"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:170 || 渊海灾虫尾: -> Aquatic Scourge尾:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:171 ||   entity: "渊海灾虫尾" -> entity: "Aquatic Scourge尾"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:177 || 毁灭者头: -> The Destroyer头:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:178 ||   entity: "毁灭者头" -> entity: "The Destroyer头"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:184 || 毁灭者强化体节: -> The Destroyer强化体节:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:185 ||   entity: "毁灭者强化体节" -> entity: "The Destroyer强化体节"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:191 || 毁灭者体节: -> The Destroyer体节:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:192 ||   entity: "毁灭者体节" -> entity: "The Destroyer体节"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:198 || 毁灭者尾: -> The Destroyer尾:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:199 ||   entity: "毁灭者尾" -> entity: "The Destroyer尾"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:352 || 猪鲨公爵常态: -> Duke Fishron常态:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:359 || 猪鲨公爵狂暴: -> Duke Fishron狂暴:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:366 || 猪鲨公爵幽魂: -> Duke Fishron幽魂:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:373 || 龙卷鲨: -> 龙卷鲨:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:374 ||   entity: "龙卷鲨" -> entity: "龙卷鲨"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:387 || 毁灭魔像头: -> Ravager头:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:388 ||   entity: "毁灭魔像头" -> entity: "Ravager头"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:394 || 毁灭魔像身体: -> Ravager身体:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:395 ||   entity: "毁灭魔像身体" -> entity: "Ravager身体"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:401 || 毁灭魔像左爪: -> Ravager左爪:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:402 ||   entity: "毁灭魔像左爪" -> entity: "Ravager左爪"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:408 || 毁灭魔像右爪: -> Ravager右爪:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:409 ||   entity: "毁灭魔像右爪" -> entity: "Ravager右爪"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:450 || 圣晶守卫: -> 圣晶守卫:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:457 || 神石守卫: -> 神石守卫:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:464 || 统御守卫: -> 统御守卫:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:527 || 西格纳斯: -> 西格纳斯:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:604 || 小星宇神卫头: -> Cosmic Guardian头:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:605 ||   entity: "小星宇神卫头" -> entity: "Cosmic Guardian头"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:611 || 小星宇神卫体节: -> Cosmic Guardian体节:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:618 || 犽戎: -> 犽戎:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:625 || 阿尔忒弥斯: -> 阿尔忒弥斯:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:632 || 阿尔忒弥斯EX: -> 阿尔忒弥斯EX:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:639 || 阿波罗: -> 阿波罗:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:646 || 阿波罗EX: -> 阿波罗EX:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:653 || 塔纳托斯头: -> 塔纳托斯头:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:660 || 塔纳托斯激光头: -> 塔纳托斯Laser头:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:667 || 塔纳托斯体节: -> 塔纳托斯体节:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:674 || 塔纳托斯散热体节: -> 塔纳托斯散热体节:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:681 || 塔纳托斯尾: -> 塔纳托斯尾:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:688 || 阿瑞斯: -> 阿瑞斯:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:695 || 阿瑞斯核弹: -> 阿瑞斯核弹:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:702 || 阿瑞斯激光: -> 阿瑞斯Laser:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:709 || 阿瑞斯离子: -> 阿瑞斯离子:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:716 || 阿瑞斯特斯拉: -> 阿瑞斯特斯拉:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:723 || 嘉登: -> 嘉登:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:786 || 灾坟仆从体节: -> Sepulcher Servant体节:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:787 ||   entity: "灾坟仆从体节" -> entity: "Sepulcher Servant体节"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:793 || 灾坟仆从尾: -> Sepulcher Servant尾:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\EntityModel.yml:794 ||   entity: "灾坟仆从尾" -> entity: "Sepulcher Servant尾"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\FontConfig.yml:1 || # 该文件用于替换 某个字 为 图片 -> # 该文件用于替换 某个字 为 图片
     [!] MISSING/PARTIAL at server\plugins\DragonCore\FontConfig.yml:4 || # 多个字则每个字都会显示成马儿.gif -> # 多个字则每个字都会显示成马儿.gif
     [!] MISSING/PARTIAL at server\plugins\DragonCore\FontConfig.yml:5 || 傻: -> 傻:
@@ -133,7 +59,7 @@
 [✓] Localized: server\plugins\DragonCore\ItemIcon.yml
     [!] MISSING/PARTIAL at server\plugins\DragonCore\ItemIcon.yml:1 || # 该名称随意 -> # 该名称随意
     [!] MISSING/PARTIAL at server\plugins\DragonCore\ItemIcon.yml:2 || 贴图1: -> 贴图1:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\ItemIcon.yml:3 ||   # 当物品的 lore 或 name 或 某个nbt【包含】测试材质  -> 就会显示为xxx材质 -> # 当物品的 lore 或 name 或 某个nbt【包含】测试材质  -> 就会显示为xxx材质
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\ItemIcon.yml:3 ||   # 当物品的 lore 或 name 或 某个nbt【包含】测试材质  -> 就会显示为xxx材质 -> # 当物品 ✪ lore 或 name 或 某个nbt【包含】测试材质  -> 就会显示为xxx材质
     [!] MISSING/PARTIAL at server\plugins\DragonCore\ItemIcon.yml:4 ||   match: "测试材质1" -> match: "测试材质1"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\ItemIcon.yml:5 ||   # 贴图材质均需要放置在DragonCore/icon/文件夹内 -> # 贴图材质均Requires放置在DragonCore/icon/文件夹内
     [!] MISSING/PARTIAL at server\plugins\DragonCore\ItemIcon.yml:7 ||   # 放大1倍（默认是1倍） -> # 放Large1倍（默认是1倍）
@@ -149,7 +75,7 @@
 [✓] Localized: server\plugins\DragonCore\ItemModel.yml
     [!] MISSING/PARTIAL at server\plugins\DragonCore\ItemModel.yml:1 || # 该名称随意 -> # 该名称随意
     [!] MISSING/PARTIAL at server\plugins\DragonCore\ItemModel.yml:2 || 测试模型1: -> 测试模型1:
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\ItemModel.yml:3 ||   # 当物品的 lore 或 name 或 某个nbt【包含】测试模型  -> 就会显示为xxx材质 -> # 当物品的 lore 或 name 或 某个nbt【包含】测试模型  -> 就会显示为xxx材质
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\ItemModel.yml:3 ||   # 当物品的 lore 或 name 或 某个nbt【包含】测试模型  -> 就会显示为xxx材质 -> # 当物品 ✪ lore 或 name 或 某个nbt【包含】测试模型  -> 就会显示为xxx材质
     [!] MISSING/PARTIAL at server\plugins\DragonCore\ItemModel.yml:4 ||   match: "测试模型1" -> match: "测试模型1"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\ItemModel.yml:5 ||   # 贴图材质均需要放置在DragonCore/models/items/<path>/文件夹内 -> # 贴图材质均Requires放置在DragonCore/models/items/<path>/文件夹内
     [!] MISSING/PARTIAL at server\plugins\DragonCore\ItemModel.yml:6 ||   # 且模型文件命名为model.json -> # 且模型文件命名为model.json
@@ -168,10 +94,6 @@
     [!] MISSING/PARTIAL at server\plugins\DragonCore\SlotConfig.yml:1 || # 自定义的槽位必须填在此处，否则槽位将不允许点击操作 -> # 自定义的槽位必须填在此处, 否则槽位将不允许点击操作
     [!] MISSING/PARTIAL at server\plugins\DragonCore\SlotConfig.yml:37 || # 脚本功能，不会改的不要乱改哦~ -> # 脚本功能, 不会改的不要乱改哦~
     [!] MISSING/PARTIAL at server\plugins\DragonCore\SlotConfig.yml:39 ||   # 判定饰品 -> # 判定饰品
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\SlotConfig.yml:63 ||           if(line!=null && line.contains("▣算作")){ -> if(line!=null && line.contains("▣算作")){
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\SlotConfig.yml:64 ||             results[nextIdx++] = line.split("▣算作")[1]; -> results[nextIdx++] = line.split("▣算作")[1];
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\SlotConfig.yml:116 ||       if (itemName.contains("的 ")) { -> if (itemName.contains("的 ")) {
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\SlotConfig.yml:117 ||         return itemName.split("的 ")[1]; -> return itemName.split("的 ")[1];
     [!] MISSING/PARTIAL at server\plugins\DragonCore\SlotConfig.yml:155 ||   # 用于判断物品的某行lore里是否包含了xxx -> # 用于判断物品的某行lore里是否包含了xxx
     [!] MISSING/PARTIAL at server\plugins\DragonCore\SlotConfig.yml:170 ||   # 用于判断物品是否有一行lore为xxx -> # 用于判断物品是否有一行lore为xxx
     [!] MISSING/PARTIAL at server\plugins\DragonCore\SlotConfig.yml:177 ||     	player.sendMessage("§c该槽位需要Lore: "+limitString); -> player.sendMessage("§c该槽位RequiresLore: "+limitString);
@@ -2234,7 +2156,7 @@
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest.yml:24 ||     方法.异步执行方法('update_variables'); -> 方法.异步执行方法('update_variables');
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest.yml:27 ||     方法.异步执行方法('update_variables'); -> 方法.异步执行方法('update_variables');
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest.yml:28 ||     方法.设置变量值('GUI_subinv_slot_amount', '27'); -> 方法.设置变量值('GUI_subinv_slot_amount', '27');
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest.yml:29 ||     方法.设置变量值('GUI_subinv_title', '宝箱'); -> 方法.设置变量值('GUI_subinv_title', '宝箱');
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest.yml:29 ||     方法.设置变量值('GUI_subinv_title', '宝箱'); -> 方法.设置变量值('GUI_subinv_title', 'Chest');
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest.yml:32 ||     方法.设置变量值('label_scale', 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size')); -> 方法.设置变量值('label_scale', 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size'));
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest.yml:34 ||     方法.设置变量值('subinv_slot_size', 方法.取屏幕宽度() * 14 / 方法.取变量('adjusted_scr_size')); -> 方法.设置变量值('subinv_slot_size', 方法.取屏幕宽度() * 14 / 方法.取变量('adjusted_scr_size'));
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest.yml:35 ||     方法.设置变量值('subinv_slot_offset', 方法.取变量('subinv_slot_size') * 8 / 7); -> 方法.设置变量值('subinv_slot_offset', 方法.取变量('subinv_slot_size') * 8 / 7);
@@ -2254,7 +2176,6 @@
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest_large.yml:3 || # GuiIngameMenu可以替换ESC -> # GuiIngameMenu可以替换ESC
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest_large.yml:4 || # 或者直接填写箱子界面名称，即可替换箱子界面(颜色符号需写为§) -> # 或者直接填写箱子界面名称, 即可替换箱子界面(颜色符号需写为§)
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest_large.yml:5 || # PS：当你打开任意界面时，客户端的log内会提示本次打开的界面名哦 -> # PS：当你打开任意界面时, 客户端的log内会Tip本次打开的界面名哦
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest_large.yml:6 || match: "大型箱子" -> match: "Large型箱子"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest_large.yml:11 || interactHud: true # 可以看到血量/魔力提示 -> interactHud: true # 可以看到血量/ManaTip
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest_large.yml:14 ||   # 通过判断按键，异步执行下面的这个【延时关闭界面】，它会延时100毫秒后才关闭，延时的这段时间是用来做背包的关闭动画的 -> # 通过判断按键, 异步执行下面的这个【延时Close界面】, 它会延时100毫秒后才Close, 延时的这段时间是用来做背包的Close动画的
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest_large.yml:15 ||   # 判断的格式是  (条件)?{达成执行;}:{否则执行;};  如果没有否则执行  可以用0代替 写成 (条件)?{达成执行;}:0; -> # 判断的格式是  (条件)?{达成执行;}:{否则执行;};  如果没有否则执行  可以用0代替 写成 (条件)?{达成执行;}:0;
@@ -2267,7 +2188,7 @@
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest_large.yml:24 ||     方法.异步执行方法('update_variables'); -> 方法.异步执行方法('update_variables');
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest_large.yml:27 ||     方法.异步执行方法('update_variables'); -> 方法.异步执行方法('update_variables');
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest_large.yml:28 ||     方法.设置变量值('GUI_subinv_slot_amount', '54'); -> 方法.设置变量值('GUI_subinv_slot_amount', '54');
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest_large.yml:29 ||     方法.设置变量值('GUI_subinv_title', '大型宝箱'); -> 方法.设置变量值('GUI_subinv_title', 'Large型宝箱');
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest_large.yml:29 ||     方法.设置变量值('GUI_subinv_title', '大型宝箱'); -> 方法.设置变量值('GUI_subinv_title', 'Large型Chest');
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest_large.yml:32 ||     方法.设置变量值('label_scale', 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size')); -> 方法.设置变量值('label_scale', 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size'));
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest_large.yml:34 ||     方法.设置变量值('subinv_slot_size', 方法.取屏幕宽度() * 14 / 方法.取变量('adjusted_scr_size')); -> 方法.设置变量值('subinv_slot_size', 方法.取屏幕宽度() * 14 / 方法.取变量('adjusted_scr_size'));
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_chest_large.yml:35 ||     方法.设置变量值('subinv_slot_offset', 方法.取变量('subinv_slot_size') * 8 / 7); -> 方法.设置变量值('subinv_slot_offset', 方法.取变量('subinv_slot_size') * 8 / 7);
@@ -2362,7 +2283,7 @@
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:77 ||   x: "方法.取屏幕宽度() * 20 / 方法.取变量('adjusted_scr_size')" -> x: "方法.取屏幕宽度() * 20 / 方法.取变量('adjusted_scr_size')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:78 ||   y: "方法.取屏幕宽度() * 106 / 方法.取变量('adjusted_scr_size')" -> y: "方法.取屏幕宽度() * 106 / 方法.取变量('adjusted_scr_size')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:79 ||   scale: "0.8 * 方法.取变量('label_scale')" -> scale: "0.8 * 方法.取变量('label_scale')"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:81 ||     - "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? '将物品放到此处重铸' : 方法.取物品名(方法.取物品('container_4'))" -> - "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? '将物品放到此处Reforge' : 方法.取物品名(方法.取物品('container_4'))"
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:81 ||     - "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? '将物品放到此处重铸' : 方法.取物品名(方法.取物品('container_4'))" -> - "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? 'Place items here to reforge' : 方法.取物品名(方法.取物品('container_4'))"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:83 ||   x: "方法.取屏幕宽度() * 20 / 方法.取变量('adjusted_scr_size')" -> x: "方法.取屏幕宽度() * 20 / 方法.取变量('adjusted_scr_size')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:84 ||   y: "方法.取屏幕宽度() * 116 / 方法.取变量('adjusted_scr_size')" -> y: "方法.取屏幕宽度() * 116 / 方法.取变量('adjusted_scr_size')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:85 ||   scale: "0.8 * 方法.取变量('label_scale')" -> scale: "0.8 * 方法.取变量('label_scale')"
@@ -2378,13 +2299,12 @@
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:98 ||     enter: "方法.设置变量值('reforge_btn_texture', 'gui/Reforge_1.png')" -> enter: "方法.设置变量值('reforge_btn_texture', 'gui/Reforge_1.png')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:99 ||     leave: "方法.设置变量值('reforge_btn_texture', 'gui/Reforge_0.png')" -> leave: "方法.设置变量值('reforge_btn_texture', 'gui/Reforge_0.png')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:100 ||     click: "方法.模拟点击槽位('container_13', 0, 'CLONE', 1)" -> click: "方法.模拟点击槽位('container_13', 0, 'CLONE', 1)"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:101 || # 存款、重铸花费 -> # 存款、ReforgeCosts
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:103 ||   x: "方法.取屏幕宽度() * 55 / 方法.取变量('adjusted_scr_size')" -> x: "方法.取屏幕宽度() * 55 / 方法.取变量('adjusted_scr_size')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:104 ||   y: "方法.取屏幕宽度() * 86 / 方法.取变量('adjusted_scr_size')" -> y: "方法.取屏幕宽度() * 86 / 方法.取变量('adjusted_scr_size')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:105 ||   scale: "0.8 * 方法.取变量('label_scale')" -> scale: "0.8 * 方法.取变量('label_scale')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:106 ||   visible: "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? 0 : 1" -> visible: "方法.取文本长度(方法.取物品名(方法.取物品('container_4'))) < 0.1 ? 0 : 1"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:108 ||     - "方法.取物品名(方法.取物品('container_13'))" -> - "方法.取物品名(方法.取物品('container_13'))"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:109 ||     - "方法.合并文本( '存款: ', 方法.取变量('terraria_money') )" -> - "方法.合并文本( '存款: ', 方法.取变量('terraria_money') )"
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_reforge.yml:109 ||     - "方法.合并文本( '存款: ', 方法.取变量('terraria_money') )" -> - "方法.合并文本( ': "Balance:: ', 方法.取变量('terraria_money') )"
 [✓] Localized: server\plugins\DragonCore\Gui\inventory_regular.yml
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:1 || # 匹配界面名,hud为自动开启 -> # 匹配界面名,hud为自动开启
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:2 || # GuiInventory可以替换背包 -> # GuiInventory可以替换背包
@@ -2510,12 +2430,12 @@
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:174 ||   y: "方法.取屏幕高度 - (方法.取屏幕宽度 * 40 / 方法.取变量('adjusted_scr_size'))" -> y: "方法.取屏幕高度 - (方法.取屏幕宽度 * 40 / 方法.取变量('adjusted_scr_size'))"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:175 ||   width: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')" -> width: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:176 ||   height: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')" -> height: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:178 ||   tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')" -> tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' Defense力')"
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:178 ||   tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')" -> tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' : "Defense:')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:180 ||   x: "方法.取屏幕宽度 - (方法.取屏幕宽度 * 43 / 方法.取变量('adjusted_scr_size'))" -> x: "方法.取屏幕宽度 - (方法.取屏幕宽度 * 43 / 方法.取变量('adjusted_scr_size'))"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:181 ||   y: "方法.取屏幕高度 - (方法.取屏幕宽度 * 37 / 方法.取变量('adjusted_scr_size'))" -> y: "方法.取屏幕高度 - (方法.取屏幕宽度 * 37 / 方法.取变量('adjusted_scr_size'))"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:183 ||   scale: "0.8 * 界面变量.label_scale" -> scale: "0.8 * 界面变量.label_scale"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:184 ||   texts: "方法.合并文本('&#CCCCCC&l', 方法.取变量('terraria_defence'))" -> texts: "方法.合并文本('&#CCCCCC&l', 方法.取变量('terraria_defence'))"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:185 ||   tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')" -> tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' Defense力')"
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:185 ||   tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')" -> tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' : "Defense:')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:188 ||   x: "界面变量.acc_x + 界面变量.slot_offset * 0.5" -> x: "界面变量.acc_x + 界面变量.slot_offset * 0.5"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:189 ||   y: "界面变量.acc_y + 界面变量.slot_offset * 5" -> y: "界面变量.acc_y + 界面变量.slot_offset * 5"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:190 ||   texts: "信息菜单" -> texts: "信息Menu"
@@ -2526,7 +2446,7 @@
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:197 || # 显示钱币 -> # 显示钱币
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:199 ||   x: "方法.取屏幕宽度 * 8 / 方法.取变量('adjusted_scr_size')" -> x: "方法.取屏幕宽度 * 8 / 方法.取变量('adjusted_scr_size')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:200 ||   y: "方法.取屏幕宽度 * 82 / 方法.取变量('adjusted_scr_size')" -> y: "方法.取屏幕宽度 * 82 / 方法.取变量('adjusted_scr_size')"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:201 ||   texts: "方法.合并文本('金钱: ', 方法.取变量('terraria_money'))" -> texts: "方法.合并文本('Gold钱: ', 方法.取变量('terraria_money'))"
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:201 ||   texts: "方法.合并文本('金钱: ', 方法.取变量('terraria_money'))" -> texts: "方法.合并文本('Money: ', 方法.取变量('terraria_money'))"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:202 ||   scale: "界面变量.label_scale" -> scale: "界面变量.label_scale"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:203 || # 设置4个装备槽和副手槽 -> # 设置4个装备槽和副手槽
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:205 ||   x: "界面变量.hlmt_x" -> x: "界面变量.hlmt_x"
@@ -2970,10 +2890,10 @@
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:944 ||     - 部分物品的特殊攻击方式导致其使用间隔为固定值，此时最终攻速将用于提升物品面板伤害 -> - 部分物品的特殊攻击方式导致其使用间隔为固定值, 此时最终攻速将用于提升物品面板Damage
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:946 ||     name: 属性-防御 -> name: 属性-Defense
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:948 ||     - 计算百分比伤害/暴击后，伤害进行以下计算： -> - 计算百分比Damage/暴击后, Damage进行以下计算：
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:949 ||     - 首先减去有效防御力，即防御力-护甲穿透(至少为0) -> - 首先减去有效Defense力, 即Defense力-护甲穿透(至少为0)
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:949 ||     - 首先减去有效防御力，即防御力-护甲穿透(至少为0) -> - 首先减去有效: "Defense:, 即: "Defense:-护甲穿透(至少为0)
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:950 ||     - 此后，伤害会乘以受伤倍率；此数值由各项伤害减免分别计算而得的乘数乘算得出 -> - 此后, Damage会乘以受伤倍率；此数值由各项Damage减免分别计算而得的乘数乘算得出
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:951 ||     - 受伤倍率亦会乘算减少因接触敌人受到的减益状态时长 -> - 受伤倍率亦会乘算减少因接触敌人受到的Debuff状态时长
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:952 ||     - 各项伤害减免属性转化为受伤倍率乘数的公式为：1/(1-伤害减免)；例如，“&a-50%受到伤害&r”会被转化为1/(1+0.5)，即“&a受伤倍率乘以2/3&r” -> - 各项Damage减免属性转化为受伤倍率乘数的公式为：1/(1-Damage减免)；例如, “&a-50%Damage taken&r”会被转化为1/(1+0.5), 即“&a受伤倍率乘以2/3&r”
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:952 ||     - 各项伤害减免属性转化为受伤倍率乘数的公式为：1/(1-伤害减免)；例如，“&a-50%受到伤害&r”会被转化为1/(1+0.5)，即“&a受伤倍率乘以2/3&r” -> - 各项Damage减免属性转化为受伤倍率乘数的公式为：1/(1-Damage减免)；例如, &a-50%Damage taken&r会被转化为1/(1+0.5), 即&a受伤倍率乘以2/3&r
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:954 ||     name: 关于物品 -> name: 关于物品
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:956 ||     - 可点击左键使用物品；镐和部分武器亦可右键使用 -> - 可点击左键使用物品；镐和部分武器亦可右键使用
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:959 ||     - 另外，在聊天中输入 [i] 可以展示手上物品 -> - 另外, 在聊天中输入 [i] 可以展示手上物品
@@ -2984,7 +2904,7 @@
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:971 ||     - 与合成站点方块交互时可以开启相对应的合成窗口，显示当前可进行的合成 -> - Interacting with a crafting station block will open its corresponding crafting window, 显示当前可进行的合成
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:972 ||     - 潜行模式下与站点交互可以查询站点中的所有配方；此时，若手中有物品，则显示本物品参与制作的配方 -> - 潜行模式下与站点交互可以查询站点中的所有配方；If you are holding an item, it will show the recipes that this item is used to craft
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:974 ||     name: 更多信息 -> name: 更多信息
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:976 ||     - 可通过点击物品栏中的“信息菜单”查看更多信息 -> - 可通过点击物品栏中的“信息Menu”查看更多信息
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:976 ||     - 可通过点击物品栏中的“信息菜单”查看更多信息 -> - 可通过点击物品栏中的信息Menu查看更多信息
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_regular.yml:977 ||     - 例如，BOSS的召唤方式，AI解析以及打法攻略 -> - 例如, BOSS的Summoning方式, AI解析以及打法攻略
 [✓] Localized: server\plugins\DragonCore\Gui\inventory_shop.yml
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_shop.yml:1 || # 匹配界面名,hud为自动开启 -> # 匹配界面名,hud为自动开启
@@ -3009,7 +2929,7 @@
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_shop.yml:33 ||     方法.异步执行方法('update_variable_money'); -> 方法.异步执行方法('update_variable_money');
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_shop.yml:34 ||     方法.设置变量值('GUI_subinv_slot_amount', '54'); -> 方法.设置变量值('GUI_subinv_slot_amount', '54');
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_shop.yml:37 ||     方法.设置变量值('label_scale', 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size')); -> 方法.设置变量值('label_scale', 方法.取屏幕宽度() / 方法.取变量('adjusted_scr_size'));
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_shop.yml:38 ||     方法.设置变量值('GUI_subinv_title', 方法.合并文本('商店<n><n>存款<n>', 方法.取变量("terraria_money"))); -> 方法.设置变量值('GUI_subinv_title', 方法.合并文本('Shop<n><n>存款<n>', 方法.取变量("terraria_money")));
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_shop.yml:38 ||     方法.设置变量值('GUI_subinv_title', 方法.合并文本('商店<n><n>存款<n>', 方法.取变量("terraria_money"))); -> 方法.设置变量值('GUI_subinv_title', 方法.合并文本('Shop<n><n>: "Balance:<n>', 方法.取变量("terraria_money")));
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_shop.yml:40 ||     方法.设置变量值('subinv_slot_size', 方法.取屏幕宽度() * 14 / 方法.取变量('adjusted_scr_size')); -> 方法.设置变量值('subinv_slot_size', 方法.取屏幕宽度() * 14 / 方法.取变量('adjusted_scr_size'));
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_shop.yml:41 ||     方法.设置变量值('subinv_slot_offset', 方法.取变量('subinv_slot_size') * 8 / 7); -> 方法.设置变量值('subinv_slot_offset', 方法.取变量('subinv_slot_size') * 8 / 7);
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_shop.yml:42 ||     方法.设置变量值('subinv_x', 方法.取屏幕宽度() * 26 / 方法.取变量('adjusted_scr_size')); -> 方法.设置变量值('subinv_x', 方法.取屏幕宽度() * 26 / 方法.取变量('adjusted_scr_size'));
@@ -3108,12 +3028,12 @@
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_slots_inventory_open.yml:126 ||   y: "方法.取屏幕高度-(方法.取屏幕宽度 * 40 / 方法.取变量('adjusted_scr_size'))" -> y: "方法.取屏幕高度-(方法.取屏幕宽度 * 40 / 方法.取变量('adjusted_scr_size'))"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_slots_inventory_open.yml:127 ||   width: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')" -> width: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_slots_inventory_open.yml:128 ||   height: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')" -> height: "方法.取屏幕宽度 * 14 / 方法.取变量('adjusted_scr_size')"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_slots_inventory_open.yml:130 ||   tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')" -> tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' Defense力')"
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_slots_inventory_open.yml:130 ||   tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')" -> tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' : "Defense:')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_slots_inventory_open.yml:132 ||   x: "方法.取屏幕宽度-(方法.取屏幕宽度 * 43 / 方法.取变量('adjusted_scr_size'))" -> x: "方法.取屏幕宽度-(方法.取屏幕宽度 * 43 / 方法.取变量('adjusted_scr_size'))"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_slots_inventory_open.yml:133 ||   y: "方法.取屏幕高度-(方法.取屏幕宽度 * 37 / 方法.取变量('adjusted_scr_size'))" -> y: "方法.取屏幕高度-(方法.取屏幕宽度 * 37 / 方法.取变量('adjusted_scr_size'))"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_slots_inventory_open.yml:135 ||   scale: "0.8 * 方法.取变量('label_scale')" -> scale: "0.8 * 方法.取变量('label_scale')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_slots_inventory_open.yml:136 ||   texts: "方法.合并文本('&#CCCCCC&l', 方法.取变量('terraria_defence'))" -> texts: "方法.合并文本('&#CCCCCC&l', 方法.取变量('terraria_defence'))"
-    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_slots_inventory_open.yml:137 ||   tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')" -> tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' Defense力')"
+    [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_slots_inventory_open.yml:137 ||   tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' 防御力')" -> tip: "方法.合并文本('&2&3&3&r', 方法.取变量('terraria_defence'), ' : "Defense:')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_slots_inventory_open.yml:138 || # 背包 -> # 背包
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_slots_inventory_open.yml:140 ||   x: "方法.取屏幕宽度 * 17 / 方法.取变量('adjusted_scr_size')" -> x: "方法.取屏幕宽度 * 17 / 方法.取变量('adjusted_scr_size')"
     [!] MISSING/PARTIAL at server\plugins\DragonCore\Gui\inventory_slots_inventory_open.yml:142 ||   scale: "方法.取变量('label_scale')" -> scale: "方法.取变量('label_scale')"
@@ -4822,7 +4742,7 @@
     [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:495 || 'LEATHER_CHESTPLATE': 皮革外套 -> 'LEATHER_CHESTPLATE': 皮革外套
     [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:496 || 'LEATHER_LEGGINGS': 皮革裤子 -> 'LEATHER_LEGGINGS': 皮革裤子
     [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:497 || 'LEATHER_BOOTS': 皮革靴子 -> 'LEATHER_BOOTS': 皮革靴子
-    [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:498 || 'CHAINMAIL_HELMET': 锁链头盔 -> 'CHAINMAIL_HELMET': 锁链头盔
+    [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:498 || 'CHAINMAIL_HELMET': 锁链头盔 -> 'CHAINMAIL_HELMET': 锁链Head盔
     [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:499 || 'CHAINMAIL_CHESTPLATE': 锁链胸甲 -> 'CHAINMAIL_CHESTPLATE': 锁链胸甲
     [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:500 || 'CHAINMAIL_LEGGINGS': 锁链护腿 -> 'CHAINMAIL_LEGGINGS': 锁链护腿
     [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:501 || 'CHAINMAIL_BOOTS': 锁链靴子 -> 'CHAINMAIL_BOOTS': 锁链靴子
@@ -4941,9 +4861,8 @@
     [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:628 || 'GOLDEN_CARROT': 金胡萝卜 -> 'GOLDEN_CARROT': Gold胡萝卜
     [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:629 || 'SKULL_ITEM': 骷髅头颅 -> 'SKULL_ITEM': Skull颅
     [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:630 || 'SKULL_ITEM:1': 凋零骷髅头颅 -> 'SKULL_ITEM:1': 凋零Skull颅
-    [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:631 || 'SKULL_ITEM:2': 僵尸的头 -> 'SKULL_ITEM:2': Zombie的头
-    [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:632 || 'SKULL_ITEM:3': 头 -> 'SKULL_ITEM:3': 头
-    [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:633 || 'SKULL_ITEM:4': 爬行者的头 -> 'SKULL_ITEM:4': 爬行者的头
+    [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:631 || 'SKULL_ITEM:2': 僵尸的头 -> 'SKULL_ITEM:2': Zombie的Head
+    [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:633 || 'SKULL_ITEM:4': 爬行者的头 -> 'SKULL_ITEM:4': 爬行者的Head
     [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:634 || 'SKULL_ITEM:5': 龙首 -> 'SKULL_ITEM:5': 龙首
     [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:635 || 'CARROT_STICK': 胡萝卜钓竿 -> 'CARROT_STICK': 胡萝卜钓竿
     [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:636 || 'NETHER_STAR': 下界之星 -> 'NETHER_STAR': 下界之星
@@ -5075,7 +4994,8 @@
     [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:766 || 'RECORD_10': 音乐唱片 -> 'RECORD_10': 音乐唱片
     [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:767 || 'RECORD_11': 音乐唱片 -> 'RECORD_11': 音乐唱片
     [!] MISSING/PARTIAL at server\plugins\GrItemTags\ItemName.yml:768 || 'RECORD_12': 音乐唱片 -> 'RECORD_12': 音乐唱片
-    [!] MISSING/PARTIAL at server\plugins\Residence\groups.yml:66 ||            DefaultEnter: 欢迎 %player 来到 %owner 的 %residence -> DefaultEnter: 欢迎 %player 来到 %owner 的 %residence
+[✓] Localized: server\plugins\Residence\groups.yml
+    [!] MISSING/PARTIAL at server\plugins\Residence\groups.yml:66 ||            DefaultEnter: 欢迎 %player 来到 %owner 的 %residence -> DefaultEnter: 欢迎 %player 来到 %owner  ✪ %residence
     [!] MISSING/PARTIAL at server\plugins\Residence\groups.yml:69 ||            DefaultLeave: 现已离开 %residence -> DefaultLeave: 现已离开 %residence
 [✓] Localized: server\plugins\Residence\Language\Chinese.yml
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:9 ||     Player: '&c无效的玩家名...' -> Player: '&c无效的玩家名...'
@@ -5107,9 +5027,9 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:36 ||     ToSmallX: '&c选区 &6X &c方向长度 (&6%1&c) 过小. &e该值必须为 &6%2 &e或更大.' -> ToSmallX: '&c选区 &6X &c方向长度 (&6%1&c) 过Small. &e该值必须为 &6%2 &e或更Large.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:37 ||     ToSmallY: '&c选区高度 (&6%1&c) 过小. &e该值必须为 &6%2 &e或更大.' -> ToSmallY: '&c选区高度 (&6%1&c) 过Small. &e该值必须为 &6%2 &e或更Large.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:38 ||     ToSmallZ: '&c选区 &6Z &c方向长度 (&6%1&c) 过小. &e该值必须为 &6%2 &e或更大.' -> ToSmallZ: '&c选区 &6Z &c方向长度 (&6%1&c) 过Small. &e该值必须为 &6%2 &e或更Large.'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:39 ||     ToBigX: '&c你选择的 &6X &c坐标 (&6%1&c) 太大了. &e请保证选择大小在 &6%2 &e之内' -> ToBigX: '&c你选择的 &6X &c坐标 (&6%1&c) 太Large了. &e请保证选择Size在 &6%2 &e之内'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:40 ||     ToBigY: '&c你选择的 &6Y &c坐标 (&6%1&c) 太大了. &e请保证选择大小在 &6%2 &e之内' -> ToBigY: '&c你选择的 &6Y &c坐标 (&6%1&c) 太Large了. &e请保证选择Size在 &6%2 &e之内'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:41 ||     ToBigZ: '&c你选择的 &6Z &c坐标 (&6%1&c) 太大了. &e请保证选择大小在 &6%2 &e之内' -> ToBigZ: '&c你选择的 &6Z &c坐标 (&6%1&c) 太Large了. &e请保证选择Size在 &6%2 &e之内'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:39 ||     ToBigX: '&c你选择的 &6X &c坐标 (&6%1&c) 太大了. &e请保证选择大小在 &6%2 &e之内' -> ToBigX: '&c你选择 ✪ &6X &c坐标 (&6%1&c) 太Large了. &e请保证选择Size在 &6%2 &e之内'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:40 ||     ToBigY: '&c你选择的 &6Y &c坐标 (&6%1&c) 太大了. &e请保证选择大小在 &6%2 &e之内' -> ToBigY: '&c你选择 ✪ &6Y &c坐标 (&6%1&c) 太Large了. &e请保证选择Size在 &6%2 &e之内'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:41 ||     ToBigZ: '&c你选择的 &6Z &c坐标 (&6%1&c) 太大了. &e请保证选择大小在 &6%2 &e之内' -> ToBigZ: '&c你选择 ✪ &6Z &c坐标 (&6%1&c) 太Large了. &e请保证选择Size在 &6%2 &e之内'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:42 ||     Rename: '&e区域 &6%1 &e已被重命名为 &6%2' -> Rename: '&e区域 &6%1 &e已被Heavy命名为 &6%2'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:43 ||     Remove: '&e已删除区域 &6%1&e.' -> Remove: '&e已删除区域 &6%1&e.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:44 ||     Name: '&e名称: &2%1' -> Name: '&e名称: &2%1'
@@ -5128,7 +5048,7 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:58 ||     Fail: '&c无效的选择命令...' -> Fail: '&c无效的选择命令...'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:59 ||     Bedrock: '&e将选区扩展到最大深度.' -> Bedrock: '&e将选区扩展到最Large深度.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:60 ||     Sky: '&e将选区扩展到最大高度.' -> Sky: '&e将选区扩展到最Large高度.'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:61 ||     Area: '&e已选择 &6%2 &e领地的 &6%1 &e区域.' -> Area: '&e已选择 &6%2 &e领地的 &6%1 &e区域.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:61 ||     Area: '&e已选择 &6%2 &e领地的 &6%1 &e区域.' -> Area: '&e已选择 &6%2 &e领地 ✪ &6%1 &e区域.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:62 ||     Tool: '&e- 选区工具: &6%1' -> Tool: '&e- 选区工具: &6%1'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:63 ||     PrimaryPoint: '&e已选择 &6第一个 &e选取点 %1' -> PrimaryPoint: '&e已选择 &6第一个 &e选取点 %1'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:64 ||     SecondaryPoint: '&e已选择 &6第二个 &e选取点 %1' -> SecondaryPoint: '&e已选择 &6第二个 &e选取点 %1'
@@ -5146,7 +5066,7 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:80 ||     ForRentBottomLine: '&9可用' -> ForRentBottomLine: '&9可用'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:87 ||     ForSaleTopLine: '&8出售' -> ForSaleTopLine: '&8出售'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:91 ||     LookAt: '&c请将鼠标准星对准木牌.' -> LookAt: '&c请将鼠标准星对准木牌.'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:107 ||     Set: '&6%2 &e的 &6%1 &e权限已设置为 &6%3 &e状态.' -> Set: '&6%2 &e的 &6%1 &e权限已设置为 &6%3 &e状态.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:107 ||     Set: '&6%2 &e的 &6%1 &e权限已设置为 &6%3 &e状态.' -> Set: '&6%2 &e ✪ &6%1 &e权限已设置为 &6%3 &e状态.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:108 ||     SetFailed: '&c你没有权限设置 &6%1 &c权限' -> SetFailed: '&c你没有权限设置 &6%1 &c权限'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:109 ||     CheckTrue: '&e玩家 &6%2 &e已在领地 &6%3 &e中将 &6%1 &e权限设置为 &6%4&e.' -> CheckTrue: '&e玩家 &6%2 &e已在领地 &6%3 &e中将 &6%1 &e权限设置为 &6%4&e.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:110 ||     CheckFalse: '&e玩家 &6%2 &e没有在领地中设置 &6%1 &e权限.' -> CheckFalse: '&e玩家 &6%2 &e没有在领地中设置 &6%1 &e权限.'
@@ -5159,8 +5079,8 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:117 ||     ChangeDeny: '&c此时领地内有 &6%2 &c名玩家, 所以你无法更改 &6%1 &c权限.' -> ChangeDeny: '&c此时领地内有 &6%2 &c名玩家, 所以你无法更改 &6%1 &c权限.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:123 ||     NoAccess: '&c你没有权限使用银行.' -> NoAccess: '&c你没有权限使用Silver行.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:124 ||     Name: ' &e银行: &6%1' -> Name: ' &eSilver行: &6%1'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:125 ||     NoMoney: '&c你的银行存款不足.' -> NoMoney: '&c你的Silver行存款不足.'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:126 ||     Deposit: '&e你向领地银行存款 &6%1 &e元.' -> Deposit: '&e你向领地Silver行存款 &6%1 &e元.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:125 ||     NoMoney: '&c你的银行存款不足.' -> NoMoney: '&c你的Silver行: "Balance:不足.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:126 ||     Deposit: '&e你向领地银行存款 &6%1 &e元.' -> Deposit: '&e你向领地Silver行: "Balance: &6%1 &e元.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:127 ||     Withdraw: '&e你从领地银行中取出 &6%1 &e元.' -> Withdraw: '&e你从领地Silver行中取出 &6%1 &e元.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:129 ||     Rename: '&e领地子区域 &6%1 &e已被重命名为 &6%2' -> Rename: '&e领地子区域 &6%1 &e已被Heavy命名为 &6%2'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:130 ||     Remove: '&e已删除领地子区域 &6%1&e.' -> Remove: '&e已删除领地子区域 &6%1&e.'
@@ -5179,7 +5099,7 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:143 ||     DeleteConfirm: '&e如果你确定要删除子区域 &6%1&e, 输入 &6/res confirm &e来确认操作.' -> DeleteConfirm: '&e如果你确定要删除子区域 &6%1&e, 输入 &6/res confirm &e来确认操作.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:144 ||     OwnerChange: '&e已将子区域 &6%1 &e的所有者更改为 &6%2' -> OwnerChange: '&e已将子区域 &6%1 &e的所有者更改为 &6%2'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:148 ||     Bought: '&e成功购买领地 &6%1' -> Bought: '&e成功购买领地 &6%1'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:149 ||     Buy: '&6%1 &e购买了你的 &6%2 &e领地.' -> Buy: '&6%1 &e购买了你的 &6%2 &e领地.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:149 ||     Buy: '&6%1 &e购买了你的 &6%2 &e领地.' -> Buy: '&6%1 &e购买了你 ✪ &6%2 &e领地.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:150 ||     BuyTooBig: '&c你无法购买尺寸这么大的领地.' -> BuyTooBig: '&c你无法购买尺寸这么Large的领地.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:151 ||     NotForSale: '&c该领地目前并未出售.' -> NotForSale: '&c该领地目前并未出售.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:152 ||     ForSale: '&e领地 &6%1 &e现在正以 &6%2 &e的价格出售.' -> ForSale: '&e领地 &6%1 &e现在正以 &6%2 &e的价格出售.'
@@ -5204,10 +5124,10 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:171 ||     CantRemove: '&c领地 &6%1 &c无法被删除，因为 &6%2 &c子领地正在被出租给玩家 &6%3' -> CantRemove: '&c领地 &6%1 &c无法被删除, 因为 &6%2 &c子领地正在被出租给玩家 &6%3'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:172 ||     MoveDeny: '&c你没有领地 &6%1 &c的移动权限.' -> MoveDeny: '&c你没有领地 &6%1 &c的移动权限.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:173 ||     TeleportNoFlag: '&c你没有该领地的传送权限.' -> TeleportNoFlag: '&c你没有该领地的传送权限.'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:174 ||     FlagDeny: '&c你没有领地 &6%2 &c的 &6%1 &c权限.' -> FlagDeny: '&c你没有领地 &6%2 &c的 &6%1 &c权限.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:174 ||     FlagDeny: '&c你没有领地 &6%2 &c的 &6%1 &c权限.' -> FlagDeny: '&c你没有领地 &6%2 &c ✪ &6%1 &c权限.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:175 ||     GiveLimits: '&c目标玩家超出限制, 无法给予领地.' -> GiveLimits: '&c目标玩家超出限制, 无法给予领地.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:176 ||     Give: '&e你将领地 &6%1 &e送给了 &6%2' -> Give: '&e你将领地 &6%1 &e送给了 &6%2'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:177 ||     Recieve: '&e你收到了 &6%2 &e送给你的 &6%1 &e领地.' -> Recieve: '&e你收到了 &6%2 &e送给你的 &6%1 &e领地.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:177 ||     Recieve: '&e你收到了 &6%2 &e送给你的 &6%1 &e领地.' -> Recieve: '&e你收到了 &6%2 &e送给你 ✪ &6%1 &e领地.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:179 ||     List: ' &a%1%2 &e- &6世界&e: &6%3' -> List: ' &a%1%2 &e- &6世界&e: &6%3'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:180 ||     TeleportNear: '&e已传送到附近的领地.' -> TeleportNear: '&e已传送到附近的领地.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:181 ||     SetTeleportLocation: '&e设置传送位置.' -> SetTeleportLocation: '&e设置传送位置.'
@@ -5268,10 +5188,10 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:240 ||     DisableRenew: '&6%1 &e不会在到期时自动更新租用状态.' -> DisableRenew: '&6%1 &e不会在到期时自动更新租用状态.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:241 ||     EnableRenew: '&6%1 &e将会在到期时自动更新租用状态.' -> EnableRenew: '&6%1 &e将会在到期时自动更新租用状态.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:243 ||     LandForSale: '&e出售领地:' -> LandForSale: '&e出售领地:'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:244 ||     NotEnoughMoney: '&c你没有足够的金钱.' -> NotEnoughMoney: '&c你没有足够的Gold钱.'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:245 ||     MoneyCharged: '&e已从你的 &6%2 &e账户中支出 &6%1 &e元.' -> MoneyCharged: '&e已从你的 &6%2 &e账户中支出 &6%1 &e元.'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:246 ||     MoneyAdded: '&e你的 &6%2 &e账户增加了 &6%1 &e元.' -> MoneyAdded: '&e你的 &6%2 &e账户增加了 &6%1 &e元.'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:247 ||     MoneyCredit: '&e你的 &6%2 &e账户收入了 &6%1 &e元.' -> MoneyCredit: '&e你的 &6%2 &e账户收入了 &6%1 &e元.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:244 ||     NotEnoughMoney: '&c你没有足够的金钱.' -> NotEnoughMoney: '&c你没有足够的Money.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:245 ||     MoneyCharged: '&e已从你的 &6%2 &e账户中支出 &6%1 &e元.' -> MoneyCharged: '&e已从你 ✪ &6%2 &e账户中支出 &6%1 &e元.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:246 ||     MoneyAdded: '&e你的 &6%2 &e账户增加了 &6%1 &e元.' -> MoneyAdded: '&e你 ✪ &6%2 &e账户增加了 &6%1 &e元.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:247 ||     MoneyCredit: '&e你的 &6%2 &e账户收入了 &6%1 &e元.' -> MoneyCredit: '&e你 ✪ &6%2 &e账户收入了 &6%1 &e元.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:248 ||     RentReleaseInvalid: '&e领地 &6%1 &e没有被租用或者出租.' -> RentReleaseInvalid: '&e领地 &6%1 &e没有被租用或者出租.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:249 ||     RentSellFail: '&c无法出售正在出租的领地.' -> RentSellFail: '&c无法出售正在出租的领地.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:250 ||     SubzoneRentSellFail: '&c无法出售领地，因为其中一个子领地正在出租' -> SubzoneRentSellFail: '&c无法出售领地, 因为其中一个子领地正在出租'
@@ -5411,7 +5331,7 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:423 ||     WorldEditNotFound: '&c未检测到 WorldEdit.' -> WorldEditNotFound: '&c未检测到 WorldEdit.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:426 ||     AdminToggleTurnOn: '&e自动管理模式&6开启' -> AdminToggleTurnOn: '&e自动管理模式&6开启'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:427 ||     AdminToggleTurnOff: '&e自动管理模式&6关闭' -> AdminToggleTurnOff: '&e自动管理模式&6Close'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:428 ||     NoSpawn: '&e你没有在出生点的 &6移动 &e权限, 正在重新定位.' -> NoSpawn: '&e你没有在出生点的 &6移动 &e权限, 正在Heavy新定位.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:428 ||     NoSpawn: '&e你没有在出生点的 &6移动 &e权限, 正在重新定位.' -> NoSpawn: '&e你没有在出生点 ✪ &6移动 &e权限, 正在Heavy新定位.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:429 ||     CompassTargetReset: '&e你的指南针已被还原' -> CompassTargetReset: '&e你的指南针已被还原'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:430 ||     CompassTargetSet: '&e你的指南针目前指向 &6%1' -> CompassTargetSet: '&e你的指南针目前指向 &6%1'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:431 ||     Ignorelist: '&2忽略名单:&6' -> Ignorelist: '&2忽略名单:&6'
@@ -5483,7 +5403,7 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:536 ||           - 为玩家添加基本权限 -> - 为玩家添加基本权限
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:538 ||           Description: 将 ResidenceSign 的告示牌转换为新格式 -> Description: 将 ResidenceSign 的告示牌转换为新格式
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:540 ||           - '&e用法: &6/res signconvert' -> - '&e用法: &6/res signconvert'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:541 ||           - 尝试转换已有的 ResidenceSign 告示牌 -> - 尝试转换已有的 ResidenceSign 告示牌
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:541 ||           - 尝试转换已有的 ResidenceSign 告示牌 -> - 尝试转换已有 ✪ ResidenceSign 告示牌
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:543 ||           Description: 显示所有隐藏领地 -> Description: 显示所有隐藏领地
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:545 ||           - '&e用法: &6/res listhidden <页码>' -> - '&e用法: &6/res listhidden <页码>'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:546 ||           - 显示所有玩家的隐藏领地 -> - 显示所有玩家的隐藏领地
@@ -5814,7 +5734,7 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1181 ||               - '&e用法: &6/res set/pset <领地> [权限] true/false/remove' -> - '&e用法: &6/res set/pset <领地> [权限] true/false/remove'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1183 ||               Description: 物品不会损失耐久 -> Description: 物品不会损失耐久
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1185 ||               - '&e用法: &6/res set <领地> [权限] true/false/remove' -> - '&e用法: &6/res set <领地> [权限] true/false/remove'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1187 ||               Description: 覆盖任何插件的 PVP 保护 -> Description: 覆盖任何插件的 PVP 保护
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1187 ||               Description: 覆盖任何插件的 PVP 保护 -> Description: 覆盖任何插件 ✪ PVP 保护
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1189 ||               - '&e用法: &6/res set <领地> [权限] true/false/remove' -> - '&e用法: &6/res set <领地> [权限] true/false/remove'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1191 ||               Description: 允许或禁止玩家使用压力板 -> Description: 允许或禁止玩家使用压力板
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1193 ||               - '&e用法: &6/res set/pset <领地> [权限] true/false/remove' -> - '&e用法: &6/res set/pset <领地> [权限] true/false/remove'
@@ -5926,7 +5846,7 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1395 ||           - '&e用法: &6/res tpset' -> - '&e用法: &6/res tpset'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1396 ||           - 该命令将会把你站的位置设置为领地的传送点 -> - 该命令将会把你站的位置设置为领地的传送点
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1397 ||           - 你必须站在一个领地里才能使用这个命令 -> - 你必须站在一个领地里才能使用这个命令
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1398 ||           - 你必须是领地的所有者或者拥有领地的 +admin 权限 -> - 你必须是领地的所有者或者拥有领地的 +admin 权限
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1398 ||           - 你必须是领地的所有者或者拥有领地的 +admin 权限 -> - 你必须是领地的所有者或者拥有领地 ✪ +admin 权限
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1400 ||           Description: 忽略不安全传送警告 -> Description: 忽略不安全传送警告
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1402 ||           - '&e用法: &6/res tpconfirm' -> - '&e用法: &6/res tpconfirm'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\Chinese.yml:1403 ||           - 强制传送到领地, 忽略传送不安全的警告 -> - 强制传送到领地, 忽略传送不安全的警告
@@ -6020,7 +5940,7 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:60 ||     Fail: '&c無效的選擇命令...' -> Fail: '&c無效的選擇命令...'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:61 ||     Bedrock: '&e將選區擴展到最大深度.' -> Bedrock: '&e將選區擴展到最Large深度.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:62 ||     Sky: '&e將選區擴展到最大高度.' -> Sky: '&e將選區擴展到最Large高度.'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:63 ||     Area: '&e已選擇 &6%2 &e領地的 &6%1 &e區域.' -> Area: '&e已選擇 &6%2 &e領地的 &6%1 &e區域.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:63 ||     Area: '&e已選擇 &6%2 &e領地的 &6%1 &e區域.' -> Area: '&e已選擇 &6%2 &e領地 ✪ &6%1 &e區域.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:64 ||     Tool: '&e- 選區工具: &6%1' -> Tool: '&e- 選區工具: &6%1'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:65 ||     PrimaryPoint: '&e已選擇 &6第一個 &e選取點 %1' -> PrimaryPoint: '&e已選擇 &6第一個 &e選取點 %1'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:66 ||     SecondaryPoint: '&e已選擇 &6第二個 &e選取點 %1' -> SecondaryPoint: '&e已選擇 &6第二個 &e選取點 %1'
@@ -6035,7 +5955,7 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:76 ||     Updated: '&6%1 &e告示牌已更新!' -> Updated: '&6%1 &e告示牌已更新!'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:82 ||     ForRentBottomLine: '&9可用' -> ForRentBottomLine: '&9可用'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:93 ||     LookAt: '&c請將滑鼠準星對準告示牌.' -> LookAt: '&c請將滑鼠準星對準告示牌.'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:109 ||     Set: '&6%2 &e的 &6%1 &e許可權已設置為 &6%3 &e狀態.' -> Set: '&6%2 &e的 &6%1 &e許可權已設置為 &6%3 &e狀態.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:109 ||     Set: '&6%2 &e的 &6%1 &e許可權已設置為 &6%3 &e狀態.' -> Set: '&6%2 &e ✪ &6%1 &e許可權已設置為 &6%3 &e狀態.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:110 ||     SetFailed: '&c你沒有許可權設置 &6%1 &c許可權' -> SetFailed: '&c你沒有許可權設置 &6%1 &c許可權'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:111 ||     CheckTrue: '&e玩家 &6%2 &e已在領地 &6%3 &e中將 &6%1 &e許可權設置為 &6%4&e.' -> CheckTrue: '&e玩家 &6%2 &e已在領地 &6%3 &e中將 &6%1 &e許可權設置為 &6%4&e.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:112 ||     CheckFalse: '&e玩家 &6%2 &e沒有在領地中設置 &6%1 &e許可權.' -> CheckFalse: '&e玩家 &6%2 &e沒有在領地中設置 &6%1 &e許可權.'
@@ -6046,8 +5966,8 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:119 ||     ChangeDeny: '&c此時領地內有 &6%2 &c名玩家, 所以你無法更改 &6%1 &c許可權.' -> ChangeDeny: '&c此時領地內有 &6%2 &c名玩家, 所以你無法更改 &6%1 &c許可權.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:125 ||     NoAccess: '&c你沒有許可權使用銀行.' -> NoAccess: '&c你沒有許可權使用銀行.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:126 ||     Name: ' &e銀行: &6%1' -> Name: ' &e銀行: &6%1'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:127 ||     NoMoney: '&c你的銀行存款不足.' -> NoMoney: '&c你的銀行存款不足.'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:128 ||     Deposit: '&e你向領地銀行存款 &6%1 &e元.' -> Deposit: '&e你向領地銀行存款 &6%1 &e元.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:127 ||     NoMoney: '&c你的銀行存款不足.' -> NoMoney: '&c你的銀行: "Balance:不足.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:128 ||     Deposit: '&e你向領地銀行存款 &6%1 &e元.' -> Deposit: '&e你向領地銀行: "Balance: &6%1 &e元.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:129 ||     Withdraw: '&e你從領地銀行中取出 &6%1 &e元.' -> Withdraw: '&e你從領地銀行中取出 &6%1 &e元.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:131 ||     Rename: '&e領地子區域 &6%1 &e已被重命名為 &6%2' -> Rename: '&e領地子區域 &6%1 &e已被Heavy命名為 &6%2'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:132 ||     Remove: '&e已刪除領地子區域 &6%1&e.' -> Remove: '&e已刪除領地子區域 &6%1&e.'
@@ -6065,7 +5985,7 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:145 ||     DeleteConfirm: '&e如果你確定要刪除子區域 &6%1&e, 輸入 &6/res confirm &e來確認操作.' -> DeleteConfirm: '&e如果你確定要刪除子區域 &6%1&e, 輸入 &6/res confirm &e來確認操作.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:146 ||     OwnerChange: '&e已將子區域 &6%1 &e的所有者更改為 &6%2' -> OwnerChange: '&e已將子區域 &6%1 &e的所有者更改為 &6%2'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:150 ||     Bought: '&e成功購買領地 &6%1' -> Bought: '&e成功購買領地 &6%1'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:151 ||     Buy: '&6%1 &e購買了你的 &6%2 &e領地.' -> Buy: '&6%1 &e購買了你的 &6%2 &e領地.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:151 ||     Buy: '&6%1 &e購買了你的 &6%2 &e領地.' -> Buy: '&6%1 &e購買了你 ✪ &6%2 &e領地.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:152 ||     BuyTooBig: '&c你無法購買尺寸這麼大的領地.' -> BuyTooBig: '&c你無法購買尺寸這麼Large的領地.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:153 ||     NotForSale: '&c該領地目前並未出售.' -> NotForSale: '&c該領地目前並未出售.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:154 ||     ForSale: '&e領地 &6%1 &e現在正以 &6%2 &e的價格出售.' -> ForSale: '&e領地 &6%1 &e現在正以 &6%2 &e的價格出售.'
@@ -6087,10 +6007,10 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:172 ||     Remove: '&e領地 &6%1 &e已刪除.' -> Remove: '&e領地 &6%1 &e已刪除.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:175 ||     MoveDeny: '&c你沒有領地 &6%1 &c的移動許可權.' -> MoveDeny: '&c你沒有領地 &6%1 &c的移動許可權.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:176 ||     TeleportNoFlag: '&c你沒有該領地的傳送許可權.' -> TeleportNoFlag: '&c你沒有該領地的傳送許可權.'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:177 ||     FlagDeny: '&c你沒有領地 &6%2 &c的 &6%1 &c許可權.' -> FlagDeny: '&c你沒有領地 &6%2 &c的 &6%1 &c許可權.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:177 ||     FlagDeny: '&c你沒有領地 &6%2 &c的 &6%1 &c許可權.' -> FlagDeny: '&c你沒有領地 &6%2 &c ✪ &6%1 &c許可權.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:178 ||     GiveLimits: '&c目標玩家超出限制, 無法給予領地.' -> GiveLimits: '&c目標玩家超出限制, 無法給予領地.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:179 ||     Give: '&e你將領地 &6%1 &e送給了 &6%2' -> Give: '&e你將領地 &6%1 &e送給了 &6%2'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:180 ||     Recieve: '&e你收到了 &6%2 &e送給你的 &6%1 &e領地.' -> Recieve: '&e你收到了 &6%2 &e送給你的 &6%1 &e領地.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:180 ||     Recieve: '&e你收到了 &6%2 &e送給你的 &6%1 &e領地.' -> Recieve: '&e你收到了 &6%2 &e送給你 ✪ &6%1 &e領地.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:182 ||     List: ' &a%1%2 &e- &6世界&e: &6%3' -> List: ' &a%1%2 &e- &6世界&e: &6%3'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:183 ||     TeleportNear: '&e已傳送到附近的領地.' -> TeleportNear: '&e已傳送到附近的領地.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:184 ||     SetTeleportLocation: '&e設置傳送位置.' -> SetTeleportLocation: '&e設置傳送位置.'
@@ -6126,9 +6046,9 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:245 ||     EnableRenew: '&6%1 &e將會在到期時自動更新租用狀態.' -> EnableRenew: '&6%1 &e將會在到期時自動更新租用狀態.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:247 ||     LandForSale: '&e出售領地:' -> LandForSale: '&e出售領地:'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:248 ||     NotEnoughMoney: '&c你沒有足夠的金錢.' -> NotEnoughMoney: '&c你沒有足夠的Gold錢.'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:249 ||     MoneyCharged: '&e已從你的 &6%2 &e帳戶中支出 &6%1 &e元.' -> MoneyCharged: '&e已從你的 &6%2 &e帳戶中支出 &6%1 &e元.'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:250 ||     MoneyAdded: '&e你的 &6%2 &e帳戶增加了 &6%1 &e元.' -> MoneyAdded: '&e你的 &6%2 &e帳戶增加了 &6%1 &e元.'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:251 ||     MoneyCredit: '&e你的 &6%2 &e帳戶收入了 &6%1 &e元.' -> MoneyCredit: '&e你的 &6%2 &e帳戶收入了 &6%1 &e元.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:249 ||     MoneyCharged: '&e已從你的 &6%2 &e帳戶中支出 &6%1 &e元.' -> MoneyCharged: '&e已從你 ✪ &6%2 &e帳戶中支出 &6%1 &e元.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:250 ||     MoneyAdded: '&e你的 &6%2 &e帳戶增加了 &6%1 &e元.' -> MoneyAdded: '&e你 ✪ &6%2 &e帳戶增加了 &6%1 &e元.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:251 ||     MoneyCredit: '&e你的 &6%2 &e帳戶收入了 &6%1 &e元.' -> MoneyCredit: '&e你 ✪ &6%2 &e帳戶收入了 &6%1 &e元.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:252 ||     RentReleaseInvalid: '&e領地 &6%1 &e沒有被租用或者出租.' -> RentReleaseInvalid: '&e領地 &6%1 &e沒有被租用或者出租.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:253 ||     RentSellFail: '&c無法出售正在出租的領地.' -> RentSellFail: '&c無法出售正在出租的領地.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:257 ||     SellRentFail: '&c無法出租正在出售的領地.' -> SellRentFail: '&c無法出租正在出售的領地.'
@@ -6252,7 +6172,7 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:427 ||     WorldEditNotFound: '&c未檢測到 WorldEdit.' -> WorldEditNotFound: '&c未檢測到 WorldEdit.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:430 ||     AdminToggleTurnOn: '&e自動管理模式&6開啟' -> AdminToggleTurnOn: '&e自動管理模式&6開啟'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:431 ||     AdminToggleTurnOff: '&e自動管理模式&6關閉' -> AdminToggleTurnOff: '&e自動管理模式&6關閉'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:432 ||     NoSpawn: '&e你沒有在出生點的 &6移動 &e許可權, 正在重新定位.' -> NoSpawn: '&e你沒有在出生點的 &6移動 &e許可權, 正在Heavy新定位.'
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:432 ||     NoSpawn: '&e你沒有在出生點的 &6移動 &e許可權, 正在重新定位.' -> NoSpawn: '&e你沒有在出生點 ✪ &6移動 &e許可權, 正在Heavy新定位.'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:433 ||     CompassTargetReset: '&e你的指南針已被還原' -> CompassTargetReset: '&e你的指南針已被還原'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:434 ||     CompassTargetSet: '&e你的指南針目前指向 &6%1' -> CompassTargetSet: '&e你的指南針目前指向 &6%1'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:435 ||     Ignorelist: '&2忽略名單:&6' -> Ignorelist: '&2忽略名單:&6'
@@ -6317,7 +6237,7 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:540 ||           - 為玩家添加基本許可權 -> - 為玩家添加基本許可權
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:542 ||           Description: 將 ResidenceSign 的告示牌轉換為新格式 -> Description: 將 ResidenceSign 的告示牌轉換為新格式
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:544 ||           - '&e用法: &6/res signconvert' -> - '&e用法: &6/res signconvert'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:545 ||           - 嘗試轉換已有的 ResidenceSign 告示牌 -> - 嘗試轉換已有的 ResidenceSign 告示牌
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:545 ||           - 嘗試轉換已有的 ResidenceSign 告示牌 -> - 嘗試轉換已有 ✪ ResidenceSign 告示牌
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:547 ||           Description: 顯示所有隱藏領地 -> Description: 顯示所有隱藏領地
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:549 ||           - '&e用法: &6/res listhidden <頁碼>' -> - '&e用法: &6/res listhidden <頁碼>'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:550 ||           - 顯示所有玩家的隱藏領地 -> - 顯示所有玩家的隱藏領地
@@ -6584,7 +6504,7 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1188 ||               - '&e用法: &6/res set/pset <領地> [許可權] true/false/remove' -> - '&e用法: &6/res set/pset <領地> [許可權] true/false/remove'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1190 ||               Description: 物品不會損失耐久 -> Description: 物品不會損失耐久
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1192 ||               - '&e用法: &6/res set <領地> [許可權] true/false/remove' -> - '&e用法: &6/res set <領地> [許可權] true/false/remove'
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1194 ||               Description: 覆蓋任何外掛程式的 PVP 保護 -> Description: 覆蓋任何外掛程式的 PVP 保護
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1194 ||               Description: 覆蓋任何外掛程式的 PVP 保護 -> Description: 覆蓋任何外掛程式 ✪ PVP 保護
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1196 ||               - '&e用法: &6/res set <領地> [許可權] true/false/remove' -> - '&e用法: &6/res set <領地> [許可權] true/false/remove'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1198 ||               Description: 允許或禁止玩家使用壓力板 -> Description: 允許或禁止玩家使用壓力板
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1200 ||               - '&e用法: &6/res set/pset <領地> [許可權] true/false/remove' -> - '&e用法: &6/res set/pset <領地> [許可權] true/false/remove'
@@ -6668,7 +6588,7 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1403 ||           - '&e用法: &6/res tpset' -> - '&e用法: &6/res tpset'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1404 ||           - 該命令將會把你站的位置設置為領地的傳送點 -> - 該命令將會把你站的位置設置為領地的傳送點
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1405 ||           - 你必須站在一個領地裡才能使用這個命令 -> - 你必須站在一個領地裡才能使用這個命令
-    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1406 ||           - 你必須是領地的所有者或者擁有領地的 +admin 許可權 -> - 你必須是領地的所有者或者擁有領地的 +admin 許可權
+    [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1406 ||           - 你必須是領地的所有者或者擁有領地的 +admin 許可權 -> - 你必須是領地的所有者或者擁有領地 ✪ +admin 許可權
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1408 ||           Description: 忽略不安全傳送警告 -> Description: 忽略不安全傳送警告
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1410 ||           - '&e用法: &6/res tpconfirm' -> - '&e用法: &6/res tpconfirm'
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1411 ||           - 強制傳送到領地, 忽略傳送不安全的警告 -> - 強制傳送到領地, 忽略傳送不安全的警告
@@ -6714,9 +6634,6 @@
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1493 ||           - 該命令不安全! 它不會先保存領地狀態. -> - 該命令不安全! 它不會先保存領地狀態.
     [!] MISSING/PARTIAL at server\plugins\Residence\Language\ChineseTW.yml:1494 ||           - 對領地做出改變後重新載入存檔. -> - 對領地做出改變後Heavy新載入存檔.
 [✓] Localized: server\plugins\TabList\tablist.yml
-    [!] MISSING/PARTIAL at server\plugins\TabList\tablist.yml:40 || - "&a欢迎来到&6泰拉瑞亚RPG" -> - "&a欢迎来到&6泰拉瑞亚RPG"
-    [!] MISSING/PARTIAL at server\plugins\TabList\tablist.yml:45 || - "&e金钱: &r%terraria_money%" -> - "&eGold钱: &r%terraria_money%"
-    [!] MISSING/PARTIAL at server\plugins\TabList\tablist.yml:46 || - "&r防御力: &r%terraria_defence%" -> - "&rDefense力: &r%terraria_defence%"
 [✓] Localized: server\plugins\Terraria\Data\animals.yml
 [✓] Localized: server\plugins\Terraria\Data\armorSet.yml
 [✓] Localized: server\plugins\Terraria\Data\blocks.yml
@@ -6750,8 +6667,6 @@
     [!] MISSING/PARTIAL at server\plugins\Terraria\Data\fishing.yml:279 ||       biomeException: 同biome部分 -> biomeException: 同biome部分
 [✓] Localized: server\plugins\Terraria\Data\hooks.yml
 [✓] Localized: server\plugins\Terraria\Data\items.yml
-    [!] MISSING/PARTIAL at server\plugins\Terraria\Data\items.yml:3708 ||   - §r发射水刃剑气 -> - §rShoots水刃剑气
-    [!] MISSING/PARTIAL at server\plugins\Terraria\Data\items.yml:3763 ||   - §r发射恶毒球体，黏附于物块并爆炸 -> - §rShootsVicious球体, stick to blocks and explode
 [✓] Localized: server\plugins\Terraria\Data\menus.yml
 [✓] Localized: server\plugins\Terraria\Data\messages.yml
 [✓] Localized: server\plugins\Terraria\Data\mobSpawning.yml
@@ -6761,7 +6676,7 @@
 [✓] Localized: server\plugins\Terraria\Data\prefix.yml
 [✓] Localized: server\plugins\Terraria\Data\projectiles.yml
     [!] MISSING/PARTIAL at server\plugins\Terraria\Data\projectiles.yml:1 || 弹射物示例: -> 弹射物示例:
-    [!] MISSING/PARTIAL at server\plugins\Terraria\Data\projectiles.yml:2 ||     # 贴图使用箭矢还是药水？不写则将名称以"箭"结尾的视为箭矢，否则视为药水 -> # 贴图使用箭矢还是药水？不写则将名称以"箭"结尾的视为箭矢, 否则视为药水
+    [!] MISSING/PARTIAL at server\plugins\Terraria\Data\projectiles.yml:2 ||     # 贴图使用箭矢还是药水？不写则将名称以"箭"结尾的视为箭矢，否则视为药水 -> # 贴图使用箭矢还是药水？不写则将名称以"箭"结Tail的视为箭矢, 否则视为药水
     [!] MISSING/PARTIAL at server\plugins\Terraria\Data\projectiles.yml:4 ||     # 贴图药水瓶物品名；不写则默认为弹射物名称。 -> # 贴图药Bottled Water物品名；不写则默认为弹射物名称。
     [!] MISSING/PARTIAL at server\plugins\Terraria\Data\projectiles.yml:5 ||     projDisguiseName: 弹射物示例 -> projDisguiseName: 弹射物示例
     [!] MISSING/PARTIAL at server\plugins\Terraria\Data\projectiles.yml:6 ||     # 是否自动追踪，不写则视为false -> # 是否自动追踪, 不写则视为false
@@ -6775,7 +6690,7 @@
     [!] MISSING/PARTIAL at server\plugins\Terraria\Data\projectiles.yml:20 ||     # 自动追踪时长结束但未丢失目标时速度增加的倍数。不写则视为1 -> # 自动追踪时长结束但未丢失目标时速度增加的倍数。不写则视为1
     [!] MISSING/PARTIAL at server\plugins\Terraria\Data\projectiles.yml:22 ||     # 弹射物存在多久前无法自动追踪？不写则视为0 -> # 弹射物存在多久前无法自动追踪？不写则视为0
     [!] MISSING/PARTIAL at server\plugins\Terraria\Data\projectiles.yml:24 ||     # 弹射物生成多久后无法自动追踪？不写则视为999999 -> # 弹射物生成多久后无法自动追踪？不写则视为999999
-    [!] MISSING/PARTIAL at server\plugins\Terraria\Data\projectiles.yml:26 ||     # 这个弹射物会不会被闭合的宝箱怪，旋转的火月怪等反弹？不写则视为true -> # 这个弹射物会不会被闭合的宝箱怪, 旋转的Selenian等反弹？不写则视为true
+    [!] MISSING/PARTIAL at server\plugins\Terraria\Data\projectiles.yml:26 ||     # 这个弹射物会不会被闭合的宝箱怪，旋转的火月怪等反弹？不写则视为true -> # 这个弹射物会不会被闭合的Chest怪, 旋转的Selenian等反弹？不写则视为true
     [!] MISSING/PARTIAL at server\plugins\Terraria\Data\projectiles.yml:28 ||     # 击中怪物后敌人多少帧后才能被本弹射物再次伤害？（一秒=20帧）不写则视为5 -> # 击中怪物后敌人多少帧后才能被本弹射物再次Damage？（一秒=20帧）不写则视为5
     [!] MISSING/PARTIAL at server\plugins\Terraria\Data\projectiles.yml:30 ||     # 弹射物多少帧后超时自动损毁？（一秒=20帧）不写则视为200（10秒） -> # 弹射物多少帧后超时自动损毁？（一秒=20帧）不写则视为200（10秒）
     [!] MISSING/PARTIAL at server\plugins\Terraria\Data\projectiles.yml:32 ||     # 穿透敌怪次数，不写则视为0 -> # 穿透敌怪次数, 不写则视为0
@@ -6845,11 +6760,9 @@
 [✓] Localized: server\plugins\Terraria\Data\setting.yml
 [✓] Localized: server\plugins\Terraria\Data\sounds.yml
 [✓] Localized: server\plugins\Terraria\Data\weapons.yml
-    [!] MISSING/PARTIAL at server\plugins\Terraria\Data\weapons.yml:4726 ||   minionName: 小血腥史莱姆 -> minionName: Small血腥Blue Slime
 [✓] Localized: server\plugins\Terraria\Data\wings.yml
     [!] MISSING/PARTIAL at server\plugins\Terraria\Data\wings.yml:42 || # maxAcceleration = 0.1 + 加速度 / 100% / 20 -> # maxAcceleration = 0.1 + 加速度 / 100% / 20
 [✓] Localized: server\plugins\Terraria\PlayerData\laomianyang.yml
-    [!] MISSING/PARTIAL at server\plugins\Terraria\PlayerData\laomianyang.yml:12 ||   - "能源核心\t钨钢金属废料:4\t轻快的 镣铐\t急切的 钨钢电池\tAIR\tAIR\tAIR\tAIR\tAIR" -> - "Energy Core\tWulfrum Metal Scrap:4\tBrisk的 Shackle\tEager的 Wulfrum Battery\tAIR\tAIR\tAIR\tAIR\tAIR"
     [!] MISSING/PARTIAL at server\plugins\VexView\dataconfig.yml:2 ||   #是否启用MySQL数据库存储数据 -> #是否启用MySQL数据库存储数据
     [!] MISSING/PARTIAL at server\plugins\VexView\dataconfig.yml:3 ||   #跨服请请一定使用MySQL数据库并开启此选项 -> #跨服请请一定使用MySQL数据库并开启此选项
     [!] MISSING/PARTIAL at server\plugins\VexView\dataconfig.yml:4 ||   #否则可能会出现一些不同步的问题 -> #否则可能会出现一些不同步的问题
@@ -6859,9 +6772,7 @@
     [!] MISSING/PARTIAL at server\plugins\VexView\gamemenu.yml:1 || #是否启用自定义游戏菜单（玩家按下ESC时的界面） -> #是否启用自定义游戏Menu（玩家按下ESC时的界面）
     [!] MISSING/PARTIAL at server\plugins\VexView\gamemenu.yml:3 || #您的服务器官网链接（没有则填none） -> #您的服务器官网链接（没有则填none）
     [!] MISSING/PARTIAL at server\plugins\VexView\gamemenu.yml:5 || #您的服务器名称 -> #您的服务器名称
-    [!] MISSING/PARTIAL at server\plugins\VexView\gamemenu.yml:6 || name: '绵羊泰拉瑞亚服' -> name: '绵羊泰拉瑞亚服'
     [!] MISSING/PARTIAL at server\plugins\VexView\gamemenu.yml:7 || #服务器公告内容 -> #服务器公告内容
-    [!] MISSING/PARTIAL at server\plugins\VexView\gamemenu.yml:9 || - '欢迎来到老绵羊的泰拉瑞亚服务器！' -> - '欢迎来到老绵羊的泰拉瑞亚服务器！'
 [✓] Localized: server\plugins\VexView\login.yml
     [!] MISSING/PARTIAL at server\plugins\VexView\login.yml:1 || #是否使用自定义的登录界面 -> #是否使用自定义的登录界面
     [!] MISSING/PARTIAL at server\plugins\VexView\login.yml:2 || #需要AuthMe作为前置 -> #RequiresAuthMe作为前置
@@ -6891,8 +6802,6 @@
     [!] MISSING/PARTIAL at server\plugins\VexView\verification.yml:3 || #客户端收到服务端的初始化数据会越慢（详情参阅Wiki） -> #客户端收到服务端的初始化数据会越慢（详情参阅Wiki）
     [!] MISSING/PARTIAL at server\plugins\VexView\verification.yml:5 || #如果玩家没有安装MOD，是否踢出玩家 -> #如果玩家没有安装MOD, 是否踢出玩家
     [!] MISSING/PARTIAL at server\plugins\VexView\verification.yml:7 || #文本内容 -> #文本内容
-    [!] MISSING/PARTIAL at server\plugins\VexView\verification.yml:8 || kicktext: '您的VexView版本与服务器不匹配！' -> kicktext: '您的VexView版本与服务器不匹配！'
-    [!] MISSING/PARTIAL at server\plugins\VexView\verification.yml:9 || nomodtext: '您未安装VexView于客户端！' -> nomodtext: '您未安装VexView于客户端！'
 [✓] Localized: server\plugins\VexView\button\test.yml
     [!] MISSING/PARTIAL at server\plugins\VexView\button\test.yml:1 || #按钮的ID，每一个按钮的ID必须不相同，否则会出现不可预料的后果 -> #按钮的ID, 每一个按钮的ID必须不相同, 否则会出现不可预料的后果
     [!] MISSING/PARTIAL at server\plugins\VexView\button\test.yml:4 || #按钮上显示的文字 -> #按钮上显示的文字
@@ -6995,4 +6904,4 @@
     [!] MISSING/PARTIAL at server\plugins\VexView\text\text.yml:14 || - '这只是一个GUI样式的一种，你可以使用自定义的GUI样式' -> - '这只是一个GUI样式的一种, 你可以使用自定义的GUI样式'
 
 [+] Localization process completed.
-[!] Found 6929 unlocalized occurrences. Update your locale_EN.yml to resolve them.
+[!] Found 6836 unlocalized occurrences. Update your locale_EN.yml to resolve them.

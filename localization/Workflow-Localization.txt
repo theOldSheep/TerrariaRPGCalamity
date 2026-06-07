@@ -1,0 +1,14 @@
+1. Localize:
+Server:
+- plugins/Dragoncore
+- plugins/GrItemTags
+- plugins/Tablist
+- plugins/Terraria
+- plugins/VexView
+- server.properties
+Client:
+- Resource pack folder
+- .minecraft/resources/Dragoncore/
+
+2. Change locale for plugins:
+- Residence
