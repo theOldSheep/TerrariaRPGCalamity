@@ -355,16 +355,16 @@ public class GenericHelper {
     public static void dropMoney(Location loc, long amount) {
         long[] stackSize = coinConversion(amount);
         if (stackSize[0] > 0)
-            ItemHelper.dropItem(loc, "铂金币:" + stackSize[0],
+            ItemHelper.dropItem(loc, "铂金币::" + stackSize[0],
                     false, false, false);
         if (stackSize[1] > 0)
-            ItemHelper.dropItem(loc, "金币:" + stackSize[1],
+            ItemHelper.dropItem(loc, "金币::" + stackSize[1],
                     false, false, false);
         if (stackSize[2] > 0)
-            ItemHelper.dropItem(loc, "银币:" + stackSize[2],
+            ItemHelper.dropItem(loc, "银币::" + stackSize[2],
                     false, false, false);
         if (stackSize[3] > 0)
-            ItemHelper.dropItem(loc, "铜币:" + stackSize[3],
+            ItemHelper.dropItem(loc, "铜币::" + stackSize[3],
                     false, false, false);
     }
     public static double getHorizontalDistance(Location locationA, Location locationB) {

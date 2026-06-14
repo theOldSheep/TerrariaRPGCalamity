@@ -1908,7 +1908,7 @@ public class DamageHelper {
                         if (itemType != null && Math.random() < dropChance) {
                             int dropAmountFinal = dropAmountMin + (int) (Math.random() * (dropAmountMax - dropAmountMin + 1));
                             ItemHelper.dropItem(vLiving.getEyeLocation(),
-                                    itemType + ":" + dropAmountFinal, false);
+                                    itemType + "::" + dropAmountFinal, false);
                         }
                     }
 

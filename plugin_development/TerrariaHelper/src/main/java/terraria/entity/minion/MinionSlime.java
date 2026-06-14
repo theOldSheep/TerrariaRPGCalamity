@@ -1677,8 +1677,7 @@ public class MinionSlime extends EntitySlime {
                 }
                 break;
             }
-            case "沙龙卷":
-            case "暴风雨": {
+            case "沙龙卷": {
                 // movement
                 Location targetLoc = target.getEyeLocation();
                 if (targetIsOwner) {
@@ -1698,7 +1697,7 @@ public class MinionSlime extends EntitySlime {
                 if (!targetIsOwner && index % 15 == 0) {
                     EntityHelper.spawnProjectile(minionBukkit,
                             MathHelper.getDirection(minionBukkit.getEyeLocation(), target.getEyeLocation(), 1.75),
-                            attrMap, minionType.equals("沙龙卷") ? "微型沙鲨" : "迷你鲨鱼龙");
+                            attrMap, "微型沙鲨");
                 }
                 break;
             }

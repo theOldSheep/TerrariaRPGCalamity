@@ -494,9 +494,9 @@ public class ItemUseHelper {
                 potion.setAmount(potion.getAmount() - 1);
             // play consumption sound
             String sound = "entity.generic.eat";
-            if (itemType.endsWith("药水"))
+            if (itemType.contains("药水"))
                 sound = "entity.generic.drink";
-            else if (itemType.endsWith("瓶"))
+            else if (itemType.contains("瓶"))
                 sound = "entity.generic.drink";
             ply.getWorld().playSound(ply.getEyeLocation(), sound, SoundCategory.PLAYERS, 1, 1);
             // potion use cool down if the potion is being drank manually etc.
@@ -3019,8 +3019,7 @@ public class ItemUseHelper {
         }
         switch (itemType) {
             case "残缺环境刃[拥怀之凛冽]":
-            case "环境之刃[拥怀之凛冽]":
-            case "真·环境之刃[拥怀之凛冽]": {
+            case "环境之刃[拥怀之凛冽]": {
                 switch (swingAmount % 3) {
                     case 0:
                         pitchMin = pitch - 50;

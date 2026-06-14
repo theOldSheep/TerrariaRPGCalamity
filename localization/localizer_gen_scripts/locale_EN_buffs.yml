@@ -84,6 +84,7 @@
 视力下降: Vision reduced
 阻塞: Obstructed
 你看不见了！: You can't see!
+宝匣: Crate
 弹药储备: Ammo Reservation
 75%概率不消耗弹药: 75% chance to not consume ammo
 射术: Archery
@@ -140,6 +141,7 @@
 “看，吸铁石！”: "Look, a magnet!"
 无尽空虚: Void Pickup
 物品拾取范围获得极大加强: Item pickup range is greatly increased
+冷却: Cooldown
 饰品转换冷却: Accessory Swap Cooldown
 你需要稍等片刻才能再次使用饰品属性转换: You need to wait a moment before swapping accessory attributes again
 闪避冷却: Dodge Cooldown

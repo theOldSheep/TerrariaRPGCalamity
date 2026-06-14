@@ -1,6 +1,7 @@
 import os
 import re
 from collections import defaultdict
+import yaml  # Requires `pip install pyyaml`
 
 # =====================================================================
 # CONFIGURATION
@@ -15,6 +16,7 @@ TOPIC_FILES = [
     "localizer_gen_scripts/locale_EN_game_title.yml",
     "localizer_gen_scripts/locale_EN_item_lore_generated.yml",
     "localizer_gen_scripts/locale_EN_items.yml",
+    "localizer_gen_scripts/locale_EN_java.yml",
     "localizer_gen_scripts/locale_EN_menu.yml",
     "localizer_gen_scripts/locale_EN_NPC.yml",
     "localizer_gen_scripts/locale_EN_prefix.yml",
@@ -29,8 +31,6 @@ OUTPUT_FILE = "localizer_gen_scripts/processed.yml"
 # =====================================================================
 # HELPER FUNCTIONS
 # =====================================================================
-import os
-import yaml  # Requires `pip install pyyaml`
 
 
 def parse_yaml_lines(file_path):

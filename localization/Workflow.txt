@@ -11,6 +11,9 @@
 .+\|\|      ->    "
  -> .+      ->    ": "TODO"
 
+### item:amount:maxamount:rate -> ::
+:(?=[\d\p{L}])      -> ::
+
 
 
 

@@ -162,7 +162,7 @@ public class ItemHelper {
                     item.setItemMeta(meta);
                 }
             }
-            ITEM_MAP.put(itemInfo, item);
+            ITEM_MAP.put(itemInfo.toLowerCase(Locale.ROOT), item);
         }
         // setup material tooltip
         Set<String> allMaterials = new HashSet<>();
@@ -173,14 +173,14 @@ public class ItemHelper {
                 List<String> currMaterials = blockSection.getStringList(recipeIndex + ".requireItem");
                 if (currMaterials == null) continue;
                 for (String itemInfo : currMaterials) {
-                    if (itemInfo.contains(":")) itemInfo = itemInfo.split(":")[0];
+                    if (itemInfo.contains("::")) itemInfo = itemInfo.split("::")[0];
                     allMaterials.add(itemInfo);
                 }
             }
         }
         for (String mat : allMaterials) {
             // no cloning here needed, as we are intended to tweak the item value.
-            ItemStack item = ITEM_MAP.get(mat);
+            ItemStack item = ITEM_MAP.get(mat.toLowerCase(Locale.ROOT));
             if (item == null) {
                 if (printDebugMessage) TerrariaHelper.LOGGER.log(Level.SEVERE, mat + " is supposed to be an crafting material, but it is not found.");
                 continue;
@@ -344,7 +344,7 @@ public class ItemHelper {
             String trimLore = GenericHelper.trimText(meta.getLore().get(0));
             if (trimLore.equals("[饰品]")) {
                 for (String prefix : TerrariaHelper.prefixConfig.getStringList("prefixList.Accessory")) {
-                    String[] prefixInfo = prefix.split(":");
+                    String[] prefixInfo = prefix.split("::");
                     result.put(prefixInfo[0], Double.parseDouble(prefixInfo[1]));
                 }
                 return result;
@@ -379,7 +379,7 @@ public class ItemHelper {
         }
         for (String prefixClass : prefixClassesApplicable) {
             for (String prefix : TerrariaHelper.prefixConfig.getStringList("prefixList." + prefixClass)) {
-                String[] prefixInfo = prefix.split(":");
+                String[] prefixInfo = prefix.split("::");
                 result.put(prefixInfo[0], Double.parseDouble(prefixInfo[1]));
             }
         }
@@ -487,7 +487,7 @@ public class ItemHelper {
         }
         if (regularizedItemType == null)
             return item;
-        return getItemFromDescription(regularizedItemType + ":" + itemAmount, true);
+        return getItemFromDescription(regularizedItemType + "::" + itemAmount, true);
     }
     public static ItemStack randomPrefix(ItemStack item) {
         String[] itemInfo = splitItemName(item);
@@ -506,10 +506,10 @@ public class ItemHelper {
     }
     public static ItemStack getItemFromDescription(String information, boolean randomizePrefixIfNoneExists, ItemStack notFoundDefault) {
         try {
-            if (information.contains(":")) {
+            if (information.contains("::")) {
                 // the amount info is specified.
                 // take one recursive call to get the item then set the amount.
-                String[] info = information.split(":");
+                String[] info = information.split("::");
                 ItemStack result = getItemFromDescription(info[0], randomizePrefixIfNoneExists, notFoundDefault);
                 if (!result.isSimilar(notFoundDefault)) {
                     // 物品名:最小数量:最大数量:几率
@@ -539,7 +539,7 @@ public class ItemHelper {
                 // get the itemstack
                 ItemStack resultItem;
                 try {
-                    resultItem = ITEM_MAP.get(itemType);
+                    resultItem = ITEM_MAP.get(itemType.toLowerCase(Locale.ROOT));
                     // attempt to return the item from vanilla material
                     if (resultItem == null || resultItem.getType() == Material.AIR) {
                         try {
@@ -592,8 +592,12 @@ public class ItemHelper {
         }
     }
     public static ItemStack getRawItem(String information) {
-        if (information != null && ITEM_MAP.containsKey(information))
-            return ITEM_MAP.get(information).clone();
+        if (information != null) {
+            information = information.toLowerCase(Locale.ROOT);
+            if (ITEM_MAP.containsKey(information)) {
+                return ITEM_MAP.get(information).clone();
+            }
+        }
         return new ItemStack(Material.AIR);
     }
     public static int getItemRarity(ItemStack item) {
@@ -921,7 +925,7 @@ public class ItemHelper {
                 }
             } else itemInfo = item.getType().toString();
             int itemAmount = item.getAmount();
-            return itemInfo + (itemAmount > 1 ? (":" + itemAmount) : "");
+            return itemInfo + (itemAmount > 1 ? ("::" + itemAmount) : "");
         } catch (Exception e) {
             TerrariaHelper.LOGGER.log(Level.SEVERE, "ItemHelper.getItemDescription", e);
             return item.getType().toString();

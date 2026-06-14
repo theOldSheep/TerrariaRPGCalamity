@@ -281,45 +281,45 @@ fish:
       fishingPower: 100
 questFish:
   天使鱼:
-  - NORMAL:SPACE
+  - NORMAL::SPACE
   蝙蝠鱼:
-  - NORMAL:CAVERN
-  - NORMAL:UNDERWORLD
+  - NORMAL::CAVERN
+  - NORMAL::UNDERWORLD
   骷髅鱼:
-  - NORMAL:CAVERN
-  - NORMAL:UNDERWORLD
+  - NORMAL::CAVERN
+  - NORMAL::UNDERWORLD
   兔兔鱼:
-  - NORMAL:SURFACE
+  - NORMAL::SURFACE
   小丑鱼:
-  - OCEAN:SURFACE
+  - OCEAN::SURFACE
   泥鱼:
-  - JUNGLE:SURFACE
-  - JUNGLE:UNDERGROUND
-  - JUNGLE:CAVERN
+  - JUNGLE::SURFACE
+  - JUNGLE::UNDERGROUND
+  - JUNGLE::CAVERN
   土鱼:
-  - NORMAL:SURFACE
-  - NORMAL:UNDERGROUND
+  - NORMAL::SURFACE
+  - NORMAL::UNDERGROUND
   克苏鲁鱼:
-  - NORMAL:SPACE
-  - NORMAL:SURFACE
+  - NORMAL::SPACE
+  - NORMAL::SURFACE
   向导巫毒鱼:
-  - NORMAL:CAVERN
-  - NORMAL:UNDERWORLD
+  - NORMAL::CAVERN
+  - NORMAL::UNDERWORLD
   突变弗林鱼:
-  - TUNDRA:CAVERN
+  - TUNDRA::CAVERN
   蝎子鱼:
-  - DESERT:SURFACE
+  - DESERT::SURFACE
   碎浪蛤:
-  - SUNKEN_SEA:CAVERN
+  - SUNKEN_SEA::CAVERN
   饮食者鱼:
-  - BRIMSTONE_CRAG:UNDERWORLD
+  - BRIMSTONE_CRAG::UNDERWORLD
 questRewards:
-- 金币:5:15:1
+- 金币::5::15::1
 - 钻石
-- 跳跃之瓶:1:1:0.05
-- 航鱼靴:1:1:0.05
-- 初学者鱼饵:5:10:0.5
-- 专家鱼饵:5:10:0.3
-- 大师鱼饵:5
-- 金捕虫网:1:1:0.05
-- 金钓竿:1:1:0.1
+- 跳跃之瓶::1::1::0.05
+- 航鱼靴::1::1::0.05
+- 初学者鱼饵::5::10::0.5
+- 专家鱼饵::5::10::0.3
+- 大师鱼饵::5
+- 金捕虫网::1::1::0.05
+- 金钓竿::1::1::0.1

@@ -42,8 +42,8 @@ public class CraftingListener implements Listener {
     private static LinkedHashMap<String, Integer> getRecipeIngredientMap(ConfigurationSection recipeConfigSection) {
         LinkedHashMap<String, Integer> ingredients = new LinkedHashMap<>();
         for (String item : recipeConfigSection.getStringList("requireItem")) {
-            if (item.contains(":")) {
-                String[] itemInfo = item.split(":");
+            if (item.contains("::")) {
+                String[] itemInfo = item.split("::");
                 ingredients.put(itemInfo[0], Integer.parseInt(itemInfo[1]));
             } else {
                 ingredients.put(item, 1);
