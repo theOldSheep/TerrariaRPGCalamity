@@ -1,6 +1,5 @@
 package terraria.worldgen.overworld;
 
-import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
 import org.bukkit.util.noise.PerlinOctaveGenerator;
 import terraria.TerrariaHelper;
@@ -15,7 +14,21 @@ public class OverworldBiomeGenerator {
     static final int SPAWN_LOC_PROTECTION_RADIUS = 250;
     static final long MASK_LAST_HALF = 0xFFFFL;
 
-    static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseHum, noiseWrd, noiseTrH, noiseEros;
+    public static Interpolate RIVER_RATIO_PROVIDER, RIVER_ERODE_PROVIDER;
+    static {
+        RIVER_RATIO_PROVIDER = new Interpolate(new Interpolate.InterpolatePoint[]{
+                Interpolate.InterpolatePoint.create(-0.015  , 0),
+                Interpolate.InterpolatePoint.create(0       , 0.8),
+                Interpolate.InterpolatePoint.create(0.015   , 0),
+        }, null);
+        RIVER_ERODE_PROVIDER = new Interpolate(new Interpolate.InterpolatePoint[]{
+                Interpolate.InterpolatePoint.create(-0.04   , 0),
+                Interpolate.InterpolatePoint.create(0       , 0.6),
+                Interpolate.InterpolatePoint.create(0.04    , 0),
+        }, null);
+    }
+
+    static PerlinOctaveGenerator noiseCont = null, noiseTemp, noiseHum, noiseWrd, noiseTrH, noiseEros, noiseRiver;
 
     public static class BiomeFeature {
         public static final int
@@ -27,8 +40,9 @@ public class OverworldBiomeGenerator {
                 WEIRDNESS = 3,
                 // landscape noise
                 TERRAIN_H = 4,
-                EROSION = 5;
-        public final Double[] features = new Double[6];
+                EROSION = 5,
+                RIVER = 6;
+        public final Double[] features = new Double[7];
         public final double biomeSignificance;
         public final WorldHelper.BiomeType evaluatedBiome;
 
@@ -39,6 +53,16 @@ public class OverworldBiomeGenerator {
             features[WEIRDNESS] =           noiseWrd .noise(x, z, 2, 0.5) * 1.5;
             features[TERRAIN_H] =           noiseTrH .noise(x, z, 2, 0.5);
             features[EROSION] =             noiseEros.noise(x, z, 2, 0.5);
+            features[RIVER] =               noiseRiver.noise(x, z, 2, 0.5, false);
+
+            // river tweak - increase erosion and make the terrain height feature go down
+            // river ratio -> 1: erosion -> 1
+            double riverErodeRatio = RIVER_ERODE_PROVIDER.getY(features[RIVER]);
+            features[EROSION] = features[EROSION] * (1 - riverErodeRatio) + riverErodeRatio;
+            // river ratio -> 1: terr H -> -1
+            double riverDepthRatio = RIVER_RATIO_PROVIDER.getY(features[RIVER]);
+            features[TERRAIN_H] = features[TERRAIN_H] * (1 - riverDepthRatio) - riverDepthRatio;
+
             // spawn protection: feature tweak
             if (Math.abs(x) < SPAWN_LOC_PROTECTION_RADIUS && Math.abs(z) < SPAWN_LOC_PROTECTION_RADIUS) {
                 // legacy: prevent overflow from integer > 32768.
@@ -204,6 +228,9 @@ public class OverworldBiomeGenerator {
         // terrain eros.
         noiseEros = new PerlinOctaveGenerator(rdm.nextLong(), 3);
         noiseEros.setScale(0.005);
+        // river
+        noiseRiver = new PerlinOctaveGenerator(rdm.nextLong(), OCTAVES_RIVER);
+        noiseRiver.setScale(0.00025);
         // update continentalness finally, so there is less chance things get broken - setup is triggered by continentalness.
         noiseCont = new PerlinOctaveGenerator(rdm.nextLong(), 3);
         noiseCont.setScale(0.0003);

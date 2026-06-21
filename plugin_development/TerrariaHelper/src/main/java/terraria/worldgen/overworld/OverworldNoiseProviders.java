@@ -9,7 +9,7 @@ import java.util.Random;
 import static terraria.worldgen.overworld.OverworldChunkGenerator.*;
 
 public class OverworldNoiseProviders {
-    public static PerlinOctaveGenerator RIVER_NOISE, STONE_VEIN_NOISE;
+    public static PerlinOctaveGenerator STONE_VEIN_NOISE;
     // index: continentalness factor, erosion factor
     public static Interpolate[][]
             NORMAL_INTERPOLATE,
@@ -25,15 +25,11 @@ public class OverworldNoiseProviders {
             NORMAL_INTERPOLATE_COORDINATOR,
             OCEAN_INTERPOLATE_COORDINATOR,
             SULPHUROUS_OCEAN_INTERPOLATE_COORDINATOR;
-    public static Interpolate RIVER_RATIO_PROVIDER, RIVER_ERODE_PROVIDER;
     // cast world height to soil height
     public static Interpolate SOIL_HEIGHT_ASTRAL, SOIL_HEIGHT_DESERT, SOIL_HEIGHT_NORMAL, SOIL_HEIGHT_HUM_NORMAL;
     static {
         // terrain noise functions
         Random rdm = new Random(TerrariaHelper.WORLD_SEED);
-
-        RIVER_NOISE = new PerlinOctaveGenerator(rdm.nextLong(), OCTAVES_RIVER);
-        RIVER_NOISE.setScale(0.0005);
 
         STONE_VEIN_NOISE = new PerlinOctaveGenerator(rdm.nextLong(), OCTAVES_STONE);
         STONE_VEIN_NOISE.setScale(0.05);
@@ -51,30 +47,32 @@ public class OverworldNoiseProviders {
                             Interpolate.InterpolatePoint.create(0.75, 2),
                     }, null),
                     new Interpolate(new Interpolate.InterpolatePoint[]{
-                            Interpolate.InterpolatePoint.create(-0.2 , 2),
+                            Interpolate.InterpolatePoint.create(-0.4 , 2),
                             Interpolate.InterpolatePoint.create(-0.1 , 1),
                             Interpolate.InterpolatePoint.create(0.1  , 1),
-                            Interpolate.InterpolatePoint.create(0.3  , 0),
+                            Interpolate.InterpolatePoint.create(0.4  , 0),
                     }, null)
             };
             OCEAN_INTERPOLATE_COORDINATOR = new Interpolate[]{
                     new Interpolate(new Interpolate.InterpolatePoint[]{
-                            Interpolate.InterpolatePoint.create(0.1 , 0),
+                            Interpolate.InterpolatePoint.create(0.1 , 2),
                             Interpolate.InterpolatePoint.create(0.25, 1),
                             Interpolate.InterpolatePoint.create(0.4 , 1),
-                            Interpolate.InterpolatePoint.create(0.65, 2),
+                            Interpolate.InterpolatePoint.create(0.65, 0),
                     }, null),
                     new Interpolate(new Interpolate.InterpolatePoint[]{
-                            Interpolate.InterpolatePoint.create(0, 0),
+                            Interpolate.InterpolatePoint.create(0.2 , 1),
+                            Interpolate.InterpolatePoint.create(0.4 , 0),
                     }, null)
             };
             SULPHUROUS_OCEAN_INTERPOLATE_COORDINATOR = new Interpolate[]{
                     new Interpolate(new Interpolate.InterpolatePoint[]{
-                            Interpolate.InterpolatePoint.create(0.1 , 0),
-                            Interpolate.InterpolatePoint.create(0.2 , 1),
+                            Interpolate.InterpolatePoint.create(0.1 , 1),
+                            Interpolate.InterpolatePoint.create(0.2 , 0),
                     }, null),
                     new Interpolate(new Interpolate.InterpolatePoint[]{
-                            Interpolate.InterpolatePoint.create(0, 0),
+                            Interpolate.InterpolatePoint.create(0.2  , 1),
+                            Interpolate.InterpolatePoint.create(0.4  , 0),
                     }, null)
             };
         }
@@ -84,8 +82,9 @@ public class OverworldNoiseProviders {
             // plains variants
             Interpolate PLAINS_LAKE, PLAINS_NORM, PLAINS_HILL;
             PLAINS_LAKE = new Interpolate(new Interpolate.InterpolatePoint[] {
-                    Interpolate.InterpolatePoint.create(-1, SEA_LEVEL - LAKE_DEPTH - 2),
-                    Interpolate.InterpolatePoint.create(1, SEA_LEVEL - LAKE_DEPTH),
+                    Interpolate.InterpolatePoint.create(-2, SEA_LEVEL - LAKE_DEPTH - 10),
+                    Interpolate.InterpolatePoint.create(-1, SEA_LEVEL - LAKE_DEPTH),
+                    Interpolate.InterpolatePoint.create(1, SEA_LEVEL + 5),
             }, "plains_lake_hm");
             PLAINS_NORM = new Interpolate(new Interpolate.InterpolatePoint[] {
                     Interpolate.InterpolatePoint.create(-1, LAND_HEIGHT),
@@ -98,6 +97,7 @@ public class OverworldNoiseProviders {
             // rolling hills variants
             Interpolate ROLLING_HILLS_LAKE, ROLLING_HILLS_LOWER, ROLLING_HILLS_HIGHER;
             ROLLING_HILLS_LAKE = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    Interpolate.InterpolatePoint.create(-2, SEA_LEVEL - LAKE_DEPTH - 10),
                     Interpolate.InterpolatePoint.create(-1, SEA_LEVEL - LAKE_DEPTH),
                     Interpolate.InterpolatePoint.create(1, LAND_HEIGHT + 10),
             }, "rolling_hills_lake_hm");
@@ -113,14 +113,13 @@ public class OverworldNoiseProviders {
             // mountains variants
             Interpolate MOUNTAINS_LAKE, MOUNTAINS_FOOTHILL, MOUNTAINS_NORM;
             MOUNTAINS_LAKE = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    Interpolate.InterpolatePoint.create(-2  , SEA_LEVEL - LAKE_DEPTH - 10),
                     Interpolate.InterpolatePoint.create(-1  , SEA_LEVEL - LAKE_DEPTH),
-                    Interpolate.InterpolatePoint.create(-0.3, SEA_LEVEL - LAKE_DEPTH + 5),
-                    Interpolate.InterpolatePoint.create(0.1 , LAND_HEIGHT),
                     Interpolate.InterpolatePoint.create(1   , LAND_HEIGHT + 25),
             }, "mountains_lake_hm");
             MOUNTAINS_FOOTHILL = new Interpolate(new Interpolate.InterpolatePoint[]{
                     Interpolate.InterpolatePoint.create(-1, LAND_HEIGHT),
-                    Interpolate.InterpolatePoint.create(1 , LAND_HEIGHT + ROLLING_HILLS_HEIGHT),
+                    Interpolate.InterpolatePoint.create(1 , LAND_HEIGHT + ROLLING_HILLS_HEIGHT + 10),
             }, "mountains_foothill_hm");
             MOUNTAINS_NORM = new Interpolate(new Interpolate.InterpolatePoint[]{
                     Interpolate.InterpolatePoint.create(-1, LAND_HEIGHT),
@@ -139,10 +138,12 @@ public class OverworldNoiseProviders {
         {
             Interpolate JUNGLE_LAKE, JUNGLE_SWAMP, JUNGLE_FLATLAND_WET, JUNGLE_FLATLAND, JUNGLE_HILL;
             JUNGLE_LAKE = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    Interpolate.InterpolatePoint.create(-2       , SEA_LEVEL - 25),
                     Interpolate.InterpolatePoint.create(-1       , SEA_LEVEL - 15),
-                    Interpolate.InterpolatePoint.create(1        , SEA_LEVEL - 10),
+                    Interpolate.InterpolatePoint.create(1        , SEA_LEVEL + 5),
             }, "jungle_lake_hm");
             JUNGLE_SWAMP = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    Interpolate.InterpolatePoint.create(-2       , SEA_LEVEL - 20),
                     Interpolate.InterpolatePoint.create(-1       , SEA_LEVEL - 10),
                     Interpolate.InterpolatePoint.create(-0.6     , SEA_LEVEL),
                     Interpolate.InterpolatePoint.create(-0.4     , SEA_LEVEL + 2),
@@ -154,6 +155,7 @@ public class OverworldNoiseProviders {
                     Interpolate.InterpolatePoint.create(1        , SEA_LEVEL - 5),
             }, "jungle_swamp_hm");
             JUNGLE_FLATLAND_WET = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    Interpolate.InterpolatePoint.create(-2 , SEA_LEVEL - 20),
                     Interpolate.InterpolatePoint.create(-1 , SEA_LEVEL - 10),
                     Interpolate.InterpolatePoint.create(0.3, SEA_LEVEL + 5),
                     Interpolate.InterpolatePoint.create(1  , LAND_HEIGHT),
@@ -180,22 +182,25 @@ public class OverworldNoiseProviders {
         {
             Interpolate ASTRAL_LAKE, ASTRAL_FLATLAND, ASTRAL_HILLS, ASTRAL_PLATEAU;
             ASTRAL_LAKE = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    Interpolate.InterpolatePoint.create(-2       , SEA_LEVEL - LAKE_DEPTH - 10),
                     Interpolate.InterpolatePoint.create(-1       , SEA_LEVEL - LAKE_DEPTH),
-                    Interpolate.InterpolatePoint.create(1        , SEA_LEVEL - LAKE_DEPTH + 5),
+                    Interpolate.InterpolatePoint.create(1        , LAND_HEIGHT),
             }, "astral_lake_hm");
             ASTRAL_FLATLAND = new Interpolate(new Interpolate.InterpolatePoint[]{
-                    Interpolate.InterpolatePoint.create(-1       , SEA_LEVEL - LAKE_DEPTH),
+                    Interpolate.InterpolatePoint.create(-2       , SEA_LEVEL - 22),
+                    Interpolate.InterpolatePoint.create(-1       , SEA_LEVEL - 12),
                     Interpolate.InterpolatePoint.create(0        , LAND_HEIGHT),
                     Interpolate.InterpolatePoint.create(1        , LAND_HEIGHT + 5),
             }, "astral_flatland_hm");
             ASTRAL_HILLS = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    Interpolate.InterpolatePoint.create(-2, SEA_LEVEL - 20),
                     Interpolate.InterpolatePoint.create(-1, SEA_LEVEL - 10),
                     Interpolate.InterpolatePoint.create(0 , LAND_HEIGHT + 10),
                     Interpolate.InterpolatePoint.create(1 , LAND_HEIGHT + ROLLING_HILLS_HEIGHT),
             }, "astral_hills_hm");
             ASTRAL_PLATEAU = new Interpolate(new Interpolate.InterpolatePoint[]{
-                    Interpolate.InterpolatePoint.create(-1  , LAND_HEIGHT + ROLLING_HILLS_HEIGHT / 2d + 8),
-                    Interpolate.InterpolatePoint.create(-0.5, LAND_HEIGHT + ROLLING_HILLS_HEIGHT / 2d),
+                    Interpolate.InterpolatePoint.create(-1  , LAND_HEIGHT + 20),
+                    Interpolate.InterpolatePoint.create(-0.5, LAND_HEIGHT + 15),
                     Interpolate.InterpolatePoint.create(-0.4, LAND_HEIGHT + 5),
                     Interpolate.InterpolatePoint.create(0   , LAND_HEIGHT),
                     Interpolate.InterpolatePoint.create(0.4 , LAND_HEIGHT + 10),
@@ -213,10 +218,16 @@ public class OverworldNoiseProviders {
 
         // desert
         {
-            Interpolate DESERT_OASIS, DESERT_FLATLAND, DESERT_DUNES, DESERT_HILLS;
+            Interpolate DESERT_OASIS, DESERT_OASIS_DRY, DESERT_FLATLAND, DESERT_DUNES, DESERT_HILLS;
             DESERT_OASIS = new Interpolate(new Interpolate.InterpolatePoint[]{
-                    Interpolate.InterpolatePoint.create(-1       , SEA_LEVEL - 10),
-                    Interpolate.InterpolatePoint.create(1        , SEA_LEVEL - 8),
+                    Interpolate.InterpolatePoint.create(-2       , SEA_LEVEL - 18),
+                    Interpolate.InterpolatePoint.create(-1       , SEA_LEVEL - 8),
+                    Interpolate.InterpolatePoint.create(1        , SEA_LEVEL + 15),
+            }, "desert_oasis_hm");
+            DESERT_OASIS_DRY = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    Interpolate.InterpolatePoint.create(-2       , SEA_LEVEL - 15),
+                    Interpolate.InterpolatePoint.create(-1       , SEA_LEVEL - 5),
+                    Interpolate.InterpolatePoint.create(1        , LAND_HEIGHT),
             }, "desert_oasis_hm");
             DESERT_FLATLAND = new Interpolate(new Interpolate.InterpolatePoint[]{
                     Interpolate.InterpolatePoint.create(-1       , LAND_HEIGHT),
@@ -235,66 +246,67 @@ public class OverworldNoiseProviders {
             // assemble
             DESERT_INTERPOLATE = new Interpolate[][]{
                     {DESERT_OASIS, DESERT_FLATLAND, DESERT_DUNES},
-                    {DESERT_FLATLAND, DESERT_DUNES, DESERT_DUNES},
-                    {DESERT_DUNES, DESERT_DUNES, DESERT_HILLS}
+                    {DESERT_OASIS_DRY, DESERT_FLATLAND, DESERT_DUNES},
+                    {DESERT_OASIS_DRY, DESERT_DUNES, DESERT_HILLS}
             };
         }
 
         // ocean
         {
-            Interpolate OCEAN_BEACH, OCEAN_NORM, OCEAN_DEEP;
+            Interpolate OCEAN_BEACH, OCEAN_BEACH_ERODED, OCEAN_NORM, OCEAN_DEEP;
             OCEAN_BEACH = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    Interpolate.InterpolatePoint.create(-2       , SEA_LEVEL - 10),
                     Interpolate.InterpolatePoint.create(-1       , SEA_LEVEL - 5),
                     Interpolate.InterpolatePoint.create(1        , LAND_HEIGHT),
             }, "ocean_beach_hm");
+            OCEAN_BEACH_ERODED = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    Interpolate.InterpolatePoint.create(-2       , SEA_LEVEL - LAKE_DEPTH),
+                    Interpolate.InterpolatePoint.create(-1       , SEA_LEVEL - LAKE_DEPTH + 10),
+                    Interpolate.InterpolatePoint.create(1        , LAND_HEIGHT),
+            }, "ocean_beach_eroded_hm");
             OCEAN_NORM = new Interpolate(new Interpolate.InterpolatePoint[]{
-                    Interpolate.InterpolatePoint.create(-1  , SEA_LEVEL - 15),
+                    Interpolate.InterpolatePoint.create(-2  , SEA_LEVEL - LAKE_DEPTH - 5),
+                    Interpolate.InterpolatePoint.create(-1  , SEA_LEVEL - LAKE_DEPTH),
                     Interpolate.InterpolatePoint.create(0   , SEA_LEVEL - 5),
                     Interpolate.InterpolatePoint.create(1   , SEA_LEVEL + 10),
             }, "ocean_norm_hm");
             OCEAN_DEEP = new Interpolate(new Interpolate.InterpolatePoint[]{
-                    Interpolate.InterpolatePoint.create(-1  , SEA_LEVEL - 30),
-                    Interpolate.InterpolatePoint.create(1   , SEA_LEVEL - 20),
+                    Interpolate.InterpolatePoint.create(-2  , SEA_LEVEL - LAKE_DEPTH - 12),
+                    Interpolate.InterpolatePoint.create(-1  , SEA_LEVEL - LAKE_DEPTH - 10),
+                    Interpolate.InterpolatePoint.create(1   , SEA_LEVEL - LAKE_DEPTH),
             }, "ocean_deep_hm");
 
             // assemble
             OCEAN_INTERPOLATE = new Interpolate[][]{
-                    {OCEAN_BEACH},
-                    {OCEAN_NORM},
-                    {OCEAN_DEEP}
+                    {OCEAN_DEEP, OCEAN_DEEP},
+                    {OCEAN_NORM, OCEAN_NORM},
+                    {OCEAN_BEACH_ERODED, OCEAN_BEACH}
             };
         }
 
         // sulphurous ocean
         {
-            Interpolate SULPHUROUS_OCEAN_BEACH, SULPHUROUS_OCEAN_DEEP;
+            Interpolate SULPHUROUS_OCEAN_BEACH, SULPHUROUS_OCEAN_BEACH_ERODED, SULPHUROUS_OCEAN_DEEP;
             SULPHUROUS_OCEAN_BEACH = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    Interpolate.InterpolatePoint.create(-2       , SEA_LEVEL - 15),
                     Interpolate.InterpolatePoint.create(-1       , SEA_LEVEL - 5),
                     Interpolate.InterpolatePoint.create(1        , LAND_HEIGHT),
             }, "sulphurous_ocean_beach_hm");
+            SULPHUROUS_OCEAN_BEACH_ERODED = new Interpolate(new Interpolate.InterpolatePoint[]{
+                    Interpolate.InterpolatePoint.create(-2          , SEA_LEVEL - LAKE_DEPTH),
+                    Interpolate.InterpolatePoint.create(-1          , SEA_LEVEL - LAKE_DEPTH + 10),
+                    Interpolate.InterpolatePoint.create(1           , LAND_HEIGHT),
+            }, "sulphurous_ocean_beach_eroded_hm");
             SULPHUROUS_OCEAN_DEEP = new Interpolate(new Interpolate.InterpolatePoint[]{
                     Interpolate.InterpolatePoint.create(0   , 0.5),
             }, "sulphurous_ocean_deep_hm");
 
             // assemble
             SULPHUROUS_OCEAN_INTERPOLATE = new Interpolate[][]{
-                    {SULPHUROUS_OCEAN_BEACH},
-                    {SULPHUROUS_OCEAN_DEEP}
+                    {SULPHUROUS_OCEAN_DEEP, SULPHUROUS_OCEAN_DEEP},
+                    {SULPHUROUS_OCEAN_BEACH_ERODED, SULPHUROUS_OCEAN_BEACH}
             };
         }
-
-        // river
-        RIVER_RATIO_PROVIDER = new Interpolate(new Interpolate.InterpolatePoint[]{
-                Interpolate.InterpolatePoint.create(-0.05  , 0),
-                Interpolate.InterpolatePoint.create(0      , 0.9),
-                Interpolate.InterpolatePoint.create(0.05   , 0),
-        }, null);
-        RIVER_ERODE_PROVIDER = new Interpolate(new Interpolate.InterpolatePoint[]{
-                Interpolate.InterpolatePoint.create(-0.2   , 0),
-                Interpolate.InterpolatePoint.create(-0.05  , 0.3),
-                Interpolate.InterpolatePoint.create(0.05   , 0.3),
-                Interpolate.InterpolatePoint.create(0.2    , 0),
-        }, null);
 
         // soil height providers that cast terrain height to soil height
         SOIL_HEIGHT_ASTRAL = new Interpolate(new Interpolate.InterpolatePoint[]{

@@ -181,9 +181,7 @@ public class OverworldChunkGenerator extends ChunkGenerator {
     // compute the desired terrain height at a specific column
     static double getTerrainHeight(OverworldBiomeGenerator.BiomeFeature biomeFeature, HashMap<WorldHelper.BiomeType, Double> biomeSignificances, int currX, int currZ) {
         double combinedResult = 0;
-        // river noise could boost up the erosion later on (NOT continentalness)
-        double riverNoise = RIVER_NOISE.noise(currX, currZ, 2, 0.5, false);
-        // elevation deviation: scale 0.5~0 (land) to 0 ~ 1, and 0.5~1 (ocean) to 0 ~ 1
+        // elevation deviation: scale 0.5~0 (land) to 0 ~ 1, and 0.5~1 (ocean) to 0 ~ 1 (smooth transition for 0.5)
         double elevDeviation = biomeFeature.features[OverworldBiomeGenerator.BiomeFeature.CONTINENTALNESS];
         elevDeviation = Math.abs(elevDeviation);
         if (elevDeviation > 0.5) {
@@ -193,7 +191,6 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         }
         // erosion
         double erosion = biomeFeature.features[OverworldBiomeGenerator.BiomeFeature.EROSION];
-        erosion -= RIVER_ERODE_PROVIDER.getY(riverNoise);
 
         // merge biome types with the same generation (keys merged into one representative)
         HashMap<WorldHelper.BiomeType, Double> providerWts = new HashMap<>();
@@ -272,9 +269,8 @@ public class OverworldChunkGenerator extends ChunkGenerator {
 
         // account for rivers
         double heightOffset = combinedResult - LAND_HEIGHT;
-        double riverRatio = RIVER_RATIO_PROVIDER.getY(riverNoise);
-        if (riverRatio > 1e-5)
-            heightOffset = interpolateWaterBodyHeightOffset(heightOffset, riverRatio, RIVER_DEPTH);
+//        if (riverRatio > 1e-5)
+//            heightOffset = interpolateWaterBodyHeightOffset(heightOffset, riverRatio, RIVER_DEPTH);
         combinedResult = LAND_HEIGHT + heightOffset;
 
         return combinedResult;

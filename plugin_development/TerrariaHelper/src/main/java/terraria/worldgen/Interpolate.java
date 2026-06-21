@@ -1,6 +1,5 @@
 package terraria.worldgen;
 
-import org.bukkit.Bukkit;
 import terraria.TerrariaHelper;
 import terraria.util.MathHelper;
 import terraria.worldgen.overworld.BiomeSummary;
@@ -13,6 +12,54 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class Interpolate {
+
+    // --- Interpolation Method Enum ---
+    public enum InterpolationMethod {
+        /**
+         * The original fast, custom S-curve using MathHelper.xsin.
+         */
+        NAIVE {
+            @Override
+            public double getMultiplier(double xDiff) {
+                return MathHelper.xsin(xDiff * 2 - 1) / 2 + 0.5;
+            }
+        },
+        /**
+         * Standard linear interpolation (fastest, hard edges).
+         */
+        LINEAR {
+            @Override
+            public double getMultiplier(double xDiff) {
+                return xDiff;
+            }
+        },
+        /**
+         * Smooth interpolation using a cosine curve.
+         */
+        COSINE {
+            @Override
+            public double getMultiplier(double xDiff) {
+                return (1 - Math.cos(xDiff * Math.PI)) / 2;
+            }
+        },
+        /**
+         * Standard cubic smoothstep (3x^2 - 2x^3), excellent for natural terrain.
+         */
+        SMOOTHSTEP {
+            @Override
+            public double getMultiplier(double xDiff) {
+                return xDiff * xDiff * (3 - 2 * xDiff);
+            }
+        };
+
+        /**
+         * Computes the interpolation weight/multiplier.
+         * @param xDiff The normalized distance between two points, bounded to [0, 1].
+         * @return The weight applied to the right-hand point.
+         */
+        public abstract double getMultiplier(double xDiff);
+    }
+
     public static class InterpolatePoint {
         public final double x, y;
         public InterpolatePoint(double x, double y) {
@@ -27,9 +74,17 @@ public class Interpolate {
             return "(" + x + ", " + y + ")";
         }
     }
-    public InterpolatePoint[] points;
-    public final boolean useSquareSmoothing;
-    public Interpolate(InterpolatePoint[] allPivots, boolean sqrSmoothing) {
+
+    public final InterpolatePoint[] points;
+    private final InterpolationMethod method;
+
+    // Overloaded constructor for backwards compatibility (defaults to SMOOTHSTEP)
+    public Interpolate(InterpolatePoint[] allPivots, String interpolateName) {
+        this(allPivots, interpolateName, InterpolationMethod.SMOOTHSTEP);
+    }
+
+    // Main constructor accepting the interpolation strategy
+    public Interpolate(InterpolatePoint[] allPivots, String interpolateName, InterpolationMethod method) {
         double lastX = -10;
         for (InterpolatePoint pt : allPivots) {
             if (pt.x <= lastX) {
@@ -38,16 +93,11 @@ public class Interpolate {
             }
             lastX = pt.x;
         }
-        points = allPivots;
-        useSquareSmoothing = sqrSmoothing;
-    }
-    public Interpolate(InterpolatePoint[] allPivots, String interpolateName, boolean useSquareSmoothing) {
-        this(allPivots, useSquareSmoothing);
+        this.points = allPivots;
+        this.method = method;
         printTestImage(interpolateName);
     }
-    public Interpolate(InterpolatePoint[] allPivots, String interpolateName) {
-        this(allPivots, interpolateName,false);
-    }
+
     public double getY(double x) {
         InterpolatePoint ptLeft = null, ptRight = null;
         for (InterpolatePoint pt : points) {
@@ -58,42 +108,37 @@ public class Interpolate {
             }
         }
         if (ptLeft != null && ptRight != null) {
-            // the progress between the two points normalized to [0, 1]
+            // The progress between the two points normalized to [0, 1]
             double xDiff = Math.max(0, x - ptLeft.x) / (ptRight.x - ptLeft.x);
 
-            // xsin called with range [-1, 1], output normalized to [0, 1]
-            double multiplier = MathHelper.xsin(xDiff * 2 - 1) / 2 + 0.5;
+            // Delegate calculations to the selected enum strategy
+            double multiplier = method.getMultiplier(xDiff);
 
-            // apply the xsin transformation again
-            if (useSquareSmoothing) {
-                multiplier = MathHelper.xsin(multiplier * 2 - 1) / 2 + 0.5;
-            }
-
-            // weighted average of both end points determined by multiplier
+            // Weighted average of both end points determined by multiplier
             return ptRight.y * multiplier + ptLeft.y * (1 - multiplier);
         }
-        else if (ptLeft  != null) return ptLeft.y ;
+        else if (ptLeft  != null) return ptLeft.y;
         else if (ptRight != null) return ptRight.y;
         return 0;
     }
+
     public void printTestImage(String interpolateName) {
         if (interpolateName == null) return;
 
         int length = 1000, height = 250;
-        double range = 2.25; // 2 is the minimum for drawing out the entire noise map
+        double range = 2.25;
         double maxY = 0;
         for (InterpolatePoint pt : points) {
             maxY = Math.max(maxY, pt.y);
         }
         File outputFolder = BiomeSummary.OUTPUT_FOLDER;
-        // Ensure the output folder exists
         if (!outputFolder.exists()) {
             outputFolder.mkdirs();
         }
         File dir_biome_map = new File(outputFolder,  interpolateName + ".png");
 
         TerrariaHelper.LOGGER.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        TerrariaHelper.LOGGER.info("START GENERATING INTERPOLATE MAP " + interpolateName);
+        TerrariaHelper.LOGGER.info("START GENERATING INTERPOLATE MAP " + interpolateName + " (" + method.name() + ")");
         TerrariaHelper.LOGGER.info("Interpolate Pivots: " + Arrays.toString(points));
         BufferedImage heightMap = new BufferedImage(length, height, BufferedImage.TYPE_INT_RGB);
         for (int i = 0; i < length; i++) {
@@ -109,14 +154,10 @@ public class Interpolate {
             }
         }
         for (InterpolatePoint pt : points) {
-            // calculate pixel coordinates for the point
             int x = (int) ((pt.x + range / 2) / range * length);
             int y = (int) (height - (pt.y / maxY * height));
-
-            // define the size of the point marker (radius)
             int pointRadius = 3;
 
-            // mark the point on the image
             for (int i = x - pointRadius; i <= x + pointRadius; i++) {
                 if (i < 0 || i >= length) continue;
                 for (int j = y - pointRadius; j <= y + pointRadius; j++) {

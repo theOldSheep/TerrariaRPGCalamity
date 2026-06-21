@@ -22,6 +22,7 @@ terraria\util\ItemUseHelper$1.class
 terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitasBHBrimstone.class
 terraria\entity\boss\postMoonLord\exoMechs\AresArm$ArmType.class
 terraria\util\DamageHelper$1.class
+terraria\worldgen\Interpolate$InterpolationMethod$2.class
 terraria\event\listener\PlayerQuitListener.class
 terraria\entity\npc\TerrariaNPCGoblinTinkerer.class
 terraria\entity\boss\preHardMode\kingSlime\CrownJewel.class
@@ -58,6 +59,7 @@ terraria\util\MonsterHelper$UniqueMonsterInfo.class
 terraria\util\WorldHelper$LeafLayerShape.class
 terraria\entity\boss\preHardMode\eyeOfCthulhu\EyeOfCthulhu$1.class
 terraria\util\MetadataHelper.class
+terraria\worldgen\Interpolate$InterpolationMethod.class
 terraria\entity\others\TerrariaFishingHook.class
 terraria\util\DamageHelper$DamageInfoBus.class
 terraria\entity\boss\postMoonLord\providence\Providence.class
@@ -138,6 +140,7 @@ terraria\entity\npc\TerrariaNPCArmsDealer.class
 terraria\entity\monster\MonsterSpider.class
 terraria\entity\boss\event\pumpking\PumpkingHead.class
 terraria\util\EntityHelper.class
+terraria\worldgen\Interpolate$InterpolationMethod$4.class
 terraria\entity\boss\hardMode\dukeFishron\WaterBlob.class
 terraria\entity\others\TerrariaDroppedItem.class
 terraria\worldgen\overworld\StructurePopulatorBiomeCenter.class
@@ -162,6 +165,7 @@ terraria\util\EntityMovementHelper.class
 terraria\entity\boss\postMoonLord\supremeCalamitas\SupremeCalamitasBHBrother.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Leviathan$AIPhase.class
 terraria\entity\npc\TerrariaNPC.class
+terraria\worldgen\Interpolate$1.class
 terraria\worldgen\overworld\StructurePopulatorLoot.class
 terraria\entity\boss\hardMode\skeletronPrime\SkeletronPrimeHand.class
 terraria\entity\boss\preHardMode\wallOfFlesh\WallOfFleshMouth.class
@@ -223,6 +227,7 @@ terraria\util\GenericHelper$ParticleLineOptions.class
 terraria\worldgen\overworld\StructureInfo$StructureOperation.class
 terraria\worldgen\Maze.class
 terraria\event\listener\BossTickListener.class
+terraria\worldgen\Interpolate$InterpolationMethod$3.class
 terraria\entity\boss\postMoonLord\exoMechs\Draedon$SubBossType.class
 terraria\entity\monster\MonsterWitherSkeleton.class
 terraria\entity\npc\TerrariaNPCNurse.class
@@ -252,6 +257,7 @@ terraria\entity\projectile\Flail.class
 terraria\entity\boss\hardMode\moonLord\MoonLordPhantasmalBolt.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Anahita$1.class
 terraria\entity\projectile\Boomerang.class
+terraria\worldgen\Interpolate$InterpolationMethod$1.class
 terraria\entity\boss\postMoonLord\exoMechs\Draedon.class
 terraria\event\listener\VanillaMechanicListener$1.class
 terraria\util\WorldHelper$BiomeType.class
