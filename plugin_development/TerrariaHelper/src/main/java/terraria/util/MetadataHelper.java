@@ -165,6 +165,8 @@ public class MetadataHelper {
         PLAYER_BIOME("playerBiome"),
         PLAYER_CRAFTING_RECIPE_INDEX("recipeNumber"),
         PLAYER_CRAFTING_STATION("craftingStation"),
+        PLAYER_CUSTOM_DAMAGE_SOUND("cstmDmgSd"),
+        PLAYER_CUSTOM_DEATH_SOUND("cstmDthSd"),
         PLAYER_DAMAGE_SOUND_MEMO("lastDmgPlayed"),
         PLAYER_DASH_DIRECTION("chargeDir"),
         PLAYER_DASH_KEY_PRESSED_MS("chargeDirLastPressed"),

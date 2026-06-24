@@ -1,4 +1,148 @@
 {
+	"player.barrierActivate": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/barrier_activate"
+			}
+		]
+	},
+	"player.barrierBreak": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/barrier_break"
+			}
+		]
+	},
+	"player.barrierHit": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/barrier_hit"
+			}
+		]
+	},
+	"player.damageBalloon": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_balloon"
+			}
+		]
+	},
+	"player.damageCat": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_cat"
+			}
+		]
+	},
+	"player.damageChicken": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_chicken"
+			}
+		]
+	},
+	"player.damageCowBell": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_cow_bell"
+			}
+		]
+	},
+	"player.damageCrow": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_crow"
+			}
+		]
+	},
+	"player.damageDog": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_dog"
+			}
+		]
+	},
+	"player.damageFart": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_fart"
+			}
+		]
+	},
+	"player.damageFrog": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_frog"
+			}
+		]
+	},
+	"player.damageGoat": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_goat"
+			}
+		]
+	},
+	"player.damageGoblin": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_goblin"
+			}
+		]
+	},
+	"player.damageRetro": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_retro"
+			}
+		]
+	},
+	"player.deathRetro": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/death_retro"
+			}
+		]
+	},
+	"player.damageTurkey": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_turkey"
+			}
+		]
+	},
+	"player.damageUndead": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_undead"
+			}
+		]
+	},
+	"player.damageVampire": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_vampire"
+			}
+		]
+	},
 	"entity.generic.fallSmall": {
         "category": "player",
 		"sounds": [

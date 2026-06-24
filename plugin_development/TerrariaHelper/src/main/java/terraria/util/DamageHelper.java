@@ -357,7 +357,14 @@ public class DamageHelper {
                 if (EntityHelper.hasEffect(victim, "保护矩阵")) {
                     // 20 ticks = 10 dmg
                     int damageShield = EntityHelper.getEffectMap(victim).get("保护矩阵") / 2;
-                    int damageBlocked = (int) Math.min(Math.ceil(dmg), damageShield);
+                    int damageBlocked;
+                    if (Math.ceil(dmg) > damageShield) {
+                        damageBlocked = damageShield;
+                        victim.getWorld().playSound(victim.getLocation(), "player.barrierBreak", 3f, 1f);
+                    } else {
+                        damageBlocked = (int) Math.ceil(dmg);
+                        victim.getWorld().playSound(victim.getLocation(), "player.barrierHit", 3f, 1f);
+                    }
                     dmg -= damageBlocked;
                     EntityHelper.applyEffect(victim, "保护矩阵", (damageShield - damageBlocked) * 2);
                     // interrupt barrier regen: 8 seconds when damaged with barrier
@@ -977,12 +984,9 @@ public class DamageHelper {
                 // hurts the target
                 else {
                     damageTaker.setHealth(Math.max(0, damageTaker.getHealth() - dmg));
-                    if (!(damageType == DamageType.DEBUFF)) {
-                        // if damage cause is not debuff, play hurt sound
-                        if (victimTags.contains("isMechanic")) sound = "entity.irongolem.hurt";
-                        else sound = "entity." + damageTaker.getType() + ".hurt";
-                        sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundDamaged", sound);
-                    }
+                    if (victimTags.contains("isMechanic")) sound = "entity.irongolem.hurt";
+                    else sound = "entity." + damageTaker.getType() + ".hurt";
+                    sound = TerrariaHelper.entityConfig.getString(GenericHelper.trimText(damageTaker.getName()) + ".soundDamaged", sound);
                 }
                 // fall damage sound
                 if (damageReason == DamageReason.FALL) {
@@ -993,9 +997,25 @@ public class DamageHelper {
                     else
                         sound = "entity.generic.fallSmall";
                 }
+                // custom sound accessories
+                if (damageTaker instanceof Player) {
+                    MetadataValue mdv;
+                    if (isFatal) {
+                        mdv = MetadataHelper.getMetadata(damageTaker, MetadataHelper.MetadataName.PLAYER_CUSTOM_DEATH_SOUND);
+                    } else {
+                        mdv = MetadataHelper.getMetadata(damageTaker, MetadataHelper.MetadataName.PLAYER_CUSTOM_DAMAGE_SOUND);
+                    }
+                    if (mdv != null) {
+                        sound = mdv.asString();
+                    }
+                }
                 // play sound
-                if (sound != null)
+                if (damageType == DamageType.DEBUFF && !isFatal) {
+                    sound = null;
+                }
+                if (sound != null) {
                     playDamageSound(victim.getLocation(), sound, soundVolume);
+                }
                 // knockback
                 if (damageInfoBus.getKnockback() > 0) {
                     Vector vec = victim.getLocation().subtract(damager.getLocation()).toVector();

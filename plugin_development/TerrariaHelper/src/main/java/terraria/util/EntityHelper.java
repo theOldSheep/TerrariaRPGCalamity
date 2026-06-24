@@ -323,6 +323,10 @@ public class EntityHelper {
                 for (PotionEffectType effectInflict : getVanillaEffectInflict(effect))
                     ((LivingEntity) entity).removePotionEffect(effectInflict);
             }
+            // re-activation sound only when protection barrier is present (player ticking handles other cases)
+            if (effect.equals("保护矩阵充能") && allEffects.containsKey("保护矩阵")) {
+                entity.getWorld().playSound(entity.getLocation(), "player.barrierActivate", 5f, 1f);
+            }
         } catch (Exception e) {
             TerrariaHelper.LOGGER.log(Level.SEVERE, "[Entity Helper] endTickEffect", e);
         }

@@ -288,6 +288,109 @@ public class ItemUseHelper {
                 PlayerHelper.showAresExoskeletonConfig(ply);
                 return true;
             }
+            case "整蛊坐垫":
+            case "牛铃":
+            case "鸡护身符":
+            case "山羊鬃毛":
+            case "老同伴挂坠":
+            case "猫铃":
+            case "狗项圈":
+            case "火鸡肉垂项链":
+            case "卑鄙哥布林的尖刺":
+            case "乌鸦喙":
+            case "气球珠":
+            case "阴森的旧倒钩":
+            case "吸血鬼吊坠":
+            case "仙灵项圈":
+            case "青蛙颈带": {
+                if ( ! ply.getScoreboardTags().contains("temp_useCD") ) {
+                    String newHurtSound = null;
+                    String newDeathSound = null;
+                    switch (itemName) {
+                        case "整蛊坐垫": {
+                            newHurtSound = "player.damageFart";
+                            break;
+                        }
+                        case "牛铃": {
+                            newHurtSound = "player.damageCowBell";
+                            break;
+                        }
+                        case "鸡护身符": {
+                            newHurtSound = "player.damageChicken";
+                            break;
+                        }
+                        case "山羊鬃毛": {
+                            newHurtSound = "player.damageGoat";
+                            break;
+                        }
+                        case "老同伴挂坠": {
+                            newHurtSound = "player.damageRetro";
+                            newDeathSound = "player.deathRetro";
+                            break;
+                        }
+                        case "猫铃": {
+                            newHurtSound = "player.damageCat";
+                            break;
+                        }
+                        case "狗项圈": {
+                            newHurtSound = "player.damageDog";
+                            break;
+                        }
+                        case "火鸡肉垂项链": {
+                            newHurtSound = "player.damageTurkey";
+                            break;
+                        }
+                        case "卑鄙哥布林的尖刺": {
+                            newHurtSound = "player.damageGoblin";
+                            break;
+                        }
+                        case "乌鸦喙": {
+                            newHurtSound = "player.damageCrow";
+                            break;
+                        }
+                        case "气球珠": {
+                            newHurtSound = "player.damageBalloon";
+                            break;
+                        }
+                        case "阴森的旧倒钩": {
+                            newHurtSound = "player.damageUndead";
+                            break;
+                        }
+                        case "吸血鬼吊坠": {
+                            newHurtSound = "player.damageVampire";
+                            break;
+                        }
+                        case "仙灵项圈": {
+                            newHurtSound = "entity.hit.pixie";
+                            break;
+                        }
+                        case "青蛙颈带": {
+                            newHurtSound = "player.damageFrog";
+                            break;
+                        }
+                    }
+                    MetadataValue dmgSound = MetadataHelper.getMetadata(ply, MetadataHelper.MetadataName.PLAYER_CUSTOM_DAMAGE_SOUND);
+                    // update custom sound
+                    if (dmgSound == null || ! dmgSound.asString().equals(newHurtSound)) {
+                        // death sound fallback
+                        if (newDeathSound == null) {
+                            newDeathSound = newHurtSound;
+                        }
+                        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_CUSTOM_DAMAGE_SOUND, newHurtSound);
+                        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_CUSTOM_DEATH_SOUND, newDeathSound);
+                        ply.getWorld().playSound(ply.getLocation(), newHurtSound, 5f, 1f);
+                        PlayerHelper.sendActionBar(ply, "已启用自定义受伤音效");
+                    }
+                    // remove custom sound
+                    else {
+                        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_CUSTOM_DAMAGE_SOUND, null);
+                        MetadataHelper.setMetadata(ply, MetadataHelper.MetadataName.PLAYER_CUSTOM_DEATH_SOUND, null);
+                        PlayerHelper.sendActionBar(ply, "已关闭自定义受伤音效");
+                    }
+                    applyCD(ply, 20);
+                }
+                return true;
+            }
         }
         return false;
     }

@@ -3197,6 +3197,96 @@ Drew之翼:
     barrierMax: 175
   worth: 22000000
   rarity: 11
+整蛊坐垫:
+  item: EMERALD
+  lore:
+  - §r右键改变你的受伤音效！
+  worth: 2000
+  rarity: 2
+牛铃:
+  item: EMERALD
+  lore:
+  - §r右键改变你的受伤音效！
+  worth: 1000000
+  rarity: 2
+鸡护身符:
+  item: EMERALD
+  lore:
+  - §r右键改变你的受伤音效！
+  worth: 1000000
+  rarity: 2
+山羊鬃毛:
+  item: EMERALD
+  lore:
+  - §r右键改变你的受伤音效！
+  worth: 1000000
+  rarity: 2
+老同伴挂坠:
+  item: EMERALD
+  lore:
+  - §r右键改变你的受伤音效！
+  worth: 1000000
+  rarity: 2
+猫铃:
+  item: EMERALD
+  lore:
+  - §r右键改变你的受伤音效！
+  worth: 1000000
+  rarity: 2
+狗项圈:
+  item: EMERALD
+  lore:
+  - §r右键改变你的受伤音效！
+  worth: 1000000
+  rarity: 2
+火鸡肉垂项链:
+  item: EMERALD
+  lore:
+  - §r右键改变你的受伤音效！
+  worth: 1000000
+  rarity: 2
+卑鄙哥布林的尖刺:
+  item: EMERALD
+  lore:
+  - §r右键改变你的受伤音效！
+  worth: 1000000
+  rarity: 2
+乌鸦喙:
+  item: EMERALD
+  lore:
+  - §r右键改变你的受伤音效！
+  worth: 1000000
+  rarity: 2
+气球珠:
+  item: EMERALD
+  lore:
+  - §r右键改变你的受伤音效！
+  worth: 1000000
+  rarity: 2
+阴森的旧倒钩:
+  item: EMERALD
+  lore:
+  - §r右键改变你的受伤音效！
+  worth: 1000000
+  rarity: 2
+吸血鬼吊坠:
+  item: EMERALD
+  lore:
+  - §r右键改变你的受伤音效！
+  worth: 1000000
+  rarity: 2
+仙灵项圈:
+  item: EMERALD
+  lore:
+  - §r右键改变你的受伤音效！
+  worth: 1000000
+  rarity: 2
+青蛙颈带:
+  item: EMERALD
+  lore:
+  - §r右键改变你的受伤音效！
+  worth: 1000000
+  rarity: 2
 钓鱼竿:
   item: FISHING_ROD
   lore:

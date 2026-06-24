@@ -118,7 +118,7 @@ public class OverworldNoiseProviders {
                     Interpolate.InterpolatePoint.create(1   , LAND_HEIGHT + 25),
             }, "mountains_lake_hm");
             MOUNTAINS_FOOTHILL = new Interpolate(new Interpolate.InterpolatePoint[]{
-                    Interpolate.InterpolatePoint.create(-1, LAND_HEIGHT),
+                    Interpolate.InterpolatePoint.create(-1, SEA_LEVEL - LAKE_DEPTH / 2d),
                     Interpolate.InterpolatePoint.create(1 , LAND_HEIGHT + ROLLING_HILLS_HEIGHT + 10),
             }, "mountains_foothill_hm");
             MOUNTAINS_NORM = new Interpolate(new Interpolate.InterpolatePoint[]{

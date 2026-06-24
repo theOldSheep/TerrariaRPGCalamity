@@ -25,7 +25,7 @@ TOPIC_FILES = [
     "localizer_gen_scripts/locale_EN_status_msg.yml",
 ]
 
-OVERRIDE_FILE = "localizer_gen_scripts/override.yml"
+OVERRIDE_FILE = "localizer_gen_scripts/locale_EN_override.yml"
 OUTPUT_FILE = "localizer_gen_scripts/processed.yml"
 
 # =====================================================================

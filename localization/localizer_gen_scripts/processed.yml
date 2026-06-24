@@ -4928,6 +4928,7 @@
 "泰拉瑞亚RPG插件部分已启动。": "The Terraria Plugin has started."
 "世界种子": "World's seed"
 "泰拉瑞亚RPG插件部分已停用。": "The Terraria Plugin has stopped."
+"物品名::最小数量::最大数量::几率": "[item name]::[minimum count]::[maximum count]::[chance]"
 "你可能需要一些鱼饵才能钓鱼。": "You may need some bait to fish."
 "正在处理合成请求中....": "Handling crafting request..."
 "材料不足....": "You don't have enough material..."

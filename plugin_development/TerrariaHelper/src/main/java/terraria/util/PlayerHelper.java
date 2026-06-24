@@ -1802,8 +1802,10 @@ public class PlayerHelper {
                         // attempt regenerating the player's damage barrier
                         {
                             if (attrMap.getOrDefault("barrierMax", 0d) > 0d &&
-                                    (! effectMap.containsKey("保护矩阵充能")) && (! effectMap.containsKey("保护矩阵")) )
+                                    (! effectMap.containsKey("保护矩阵充能")) && (! effectMap.containsKey("保护矩阵")) ) {
                                 EntityHelper.applyEffect(ply, "保护矩阵", 1);
+                                ply.getWorld().playSound(ply.getLocation(), "player.barrierActivate", 5f, 1f);
+                            }
                         }
                         // make sure mana do not exceed maximum
                         {
