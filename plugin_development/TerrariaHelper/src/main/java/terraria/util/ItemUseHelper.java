@@ -302,7 +302,13 @@ public class ItemUseHelper {
             case "阴森的旧倒钩":
             case "吸血鬼吊坠":
             case "仙灵项圈":
-            case "青蛙颈带": {
+            case "青蛙颈带":
+            case "帕秋莉的帽子":
+            case "忍者雕像":
+            case "熟透的西瓜":
+            case "粉色小狗项圈":
+            case "红色衬衫":
+            case "黑色地球仪": {
                 if ( ! ply.getScoreboardTags().contains("temp_useCD") ) {
                     String newHurtSound = null;
                     String newDeathSound = null;
@@ -317,6 +323,7 @@ public class ItemUseHelper {
                         }
                         case "鸡护身符": {
                             newHurtSound = "player.damageChicken";
+                            newDeathSound = "player.deathChicken";
                             break;
                         }
                         case "山羊鬃毛": {
@@ -366,6 +373,35 @@ public class ItemUseHelper {
                         }
                         case "青蛙颈带": {
                             newHurtSound = "player.damageFrog";
+                            break;
+                        }
+                        case "帕秋莉的帽子": {
+                            newHurtSound = "player.damageKnowledge";
+                            newDeathSound = "player.deathKnowledge";
+                            break;
+                        }
+                        case "忍者雕像": {
+                            newHurtSound = "player.damageLexNinja";
+                            newDeathSound = "player.deathLexNinja";
+                            break;
+                        }
+                        case "熟透的西瓜": {
+                            newHurtSound = "player.damageMelon";
+                            newDeathSound = "player.deathMelon";
+                            break;
+                        }
+                        case "粉色小狗项圈": {
+                            newHurtSound = "player.damagePinkDog";
+                            break;
+                        }
+                        case "红色衬衫": {
+                            newHurtSound = "player.damageRedTShirt";
+                            newDeathSound = "player.deathRedTShirt";
+                            break;
+                        }
+                        case "黑色地球仪": {
+                            newHurtSound = "player.damageWorldOfWonder";
+                            newDeathSound = "player.deathWorldOfWonder";
                             break;
                         }
                     }

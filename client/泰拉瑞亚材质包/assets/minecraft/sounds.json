@@ -43,7 +43,24 @@
         "category": "player",
 		"sounds": [
 			{
-				"name": "player/damage_chicken"
+				"name": "player/damage_chicken_1"
+			},
+			{
+				"name": "player/damage_chicken_2"
+			},
+			{
+				"name": "player/damage_chicken_3"
+			},
+			{
+				"name": "player/damage_chicken_4"
+			}
+		]
+	},
+	"player.deathChicken": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/death_chicken"
 			}
 		]
 	},
@@ -103,6 +120,90 @@
 			}
 		]
 	},
+	"player.damageKnowledge": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_knowledge"
+			}
+		]
+	},
+	"player.deathKnowledge": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/death_knowledge"
+			}
+		]
+	},
+	"player.damageLexNinja": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_lex_ninja_1"
+			},
+			{
+				"name": "player/damage_lex_ninja_2"
+			}
+		]
+	},
+	"player.deathLexNinja": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/death_lex_ninja_1"
+			},
+			{
+				"name": "player/death_lex_ninja_2"
+			}
+		]
+	},
+	"player.damageMelon": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_melon_1"
+			},
+			{
+				"name": "player/damage_melon_2"
+			}
+		]
+	},
+	"player.deathMelon": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/death_melon"
+			}
+		]
+	},
+	"player.damagePinkDog": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_pink_dog"
+			}
+		]
+	},
+	"player.damageRedTShirt": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_red_tshirt_1"
+			},
+			{
+				"name": "player/damage_red_tshirt_2"
+			}
+		]
+	},
+	"player.deathRedTShirt": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/death_red_tshirt"
+			}
+		]
+	},
 	"player.damageRetro": {
         "category": "player",
 		"sounds": [
@@ -140,6 +241,43 @@
 		"sounds": [
 			{
 				"name": "player/damage_vampire"
+			}
+		]
+	},
+	"player.damageWorldOfWonder": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/damage_world_of_wonder_1"
+			},
+			{
+				"name": "player/damage_world_of_wonder_2"
+			},
+			{
+				"name": "player/damage_world_of_wonder_3"
+			},
+			{
+				"name": "player/damage_world_of_wonder_4"
+			},
+			{
+				"name": "player/damage_world_of_wonder_5"
+			},
+			{
+				"name": "player/damage_world_of_wonder_6"
+			},
+			{
+				"name": "player/damage_world_of_wonder_7"
+			}
+		]
+	},
+	"player.deathWorldOfWonder": {
+        "category": "player",
+		"sounds": [
+			{
+				"name": "player/death_world_of_wonder_1"
+			},
+			{
+				"name": "player/death_world_of_wonder_2"
 			}
 		]
 	},
