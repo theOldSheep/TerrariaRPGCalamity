@@ -426,24 +426,24 @@ public class OverworldChunkGenerator extends ChunkGenerator {
         // setup cave estimates
         long timing = System.nanoTime();
 
-        Boolean[][][] caveFlags;
+        Boolean[][][] stoneFlags;
         try {
             // create estimates
-            caveFlags = WorldGenHelper.getChunkFlag(STONE_VEIN_ROUGH_SKETCH_DIAMETER,
-                    (info) -> checkStoneNoise(xStart + info[0], yOffset + info[1], zStart + info[2], heightMap[info[0]][info[2]]),
-                    LOG_TIMING, testStoneSetupDurTotal, testInfoIndex);
+            stoneFlags = WorldGenHelper.getChunkData(16, 255, 16, STONE_VEIN_ROUGH_SKETCH_DIAMETER,
+                    Boolean.class, (info) -> checkStoneNoise(xStart + info[0], yOffset + info[1], zStart + info[2], heightMap[info[0]][info[2]]),
+                    false, null, null, testInfoIndex);
         }
         catch (Exception e) {
             TerrariaHelper.LOGGER.warning("利用线程计算泥土/石头镶嵌时以下错误出现。本区块改为以单线程模式生成。");
             e.printStackTrace();
 
-            caveFlags = setupStoneFlagsSingleThread(xStart, zStart, yOffset, heightMap);
+            stoneFlags = setupStoneFlagsSingleThread(xStart, zStart, yOffset, heightMap);
         }
         if (LOG_TIMING) {
             testStoneDurTotal[testInfoIndex] += (System.nanoTime() - timing);
             testStoneGenAmount[testInfoIndex] ++;
         }
-        return caveFlags;
+        return stoneFlags;
     }
 
     // single-threaded, brute force as a fallback for rare exception scenarios

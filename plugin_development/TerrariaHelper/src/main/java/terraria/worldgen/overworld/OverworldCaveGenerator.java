@@ -17,11 +17,13 @@ import static terraria.util.WorldHelper.CAVERN_Y_BELOW_BEDROCK;
 public class OverworldCaveGenerator {
     int yOffset;
     SimplexOctaveGenerator cheeseCaveGenerator, spaghettiGeneratorOne, spaghettiGeneratorTwo,
-            caveLiquidGenerator, aquiferFeatureNoise, aquiferBarrierNoise, sunkenSeaAbyssCaveGenerator;
+            aquiferFeatureNoise, aquiferBarrierNoise,
+            sunkenSeaAbyssCaveGenerator;
 
     int testInfoIndex;
-    static long[] testCaveDurTotal = {0, 0}, testCaveSetupDurTotal = {0, 0}, testCaveGenAmount = {0, 0},
-            testAquiferDurTotal = {0, 0};
+    static long[] testCaveDurTotal = {0, 0}, testCaveSetupDurEst = {0, 0}, testCaveSetupDurFill = {0, 0},
+            testAquiferDurTotal = {0, 0},
+            testCaveGenAmount = {0, 0};
     static final boolean CAVE_GEN_TIME_LOG = TerrariaHelper.optimizationConfig.getBoolean("worldGen.opt.caveGenDurationLog", false);
     static final int CAVE_ROUGH_SKETCH_DIAMETER = Math.max( TerrariaHelper.optimizationConfig.getInt("worldGen.opt.caveSketchSize", 3), 1);
 
@@ -29,7 +31,12 @@ public class OverworldCaveGenerator {
     private static final double CHEESE_THRESHOLD = 0.5;
     private static final double SPAGHETTI_THRESHOLD = 0.15;
     // Aquifer
-    private static final int GRID_SCALE = 16;
+    private static final double AQUIFER_NOISE_REQUIREMENT = 0.35;
+    private static final int GRID_SCALE_XZ = 24;
+    private static final int GRID_SCALE_Y = 12;
+    private static final int CELL_SIZE_XZ = 36;
+    private static final int CELL_SIZE_Y = 12;
+    private static final int LAVA_DEPTH_THRESHOLD = -150;
 
     /*
      * ===============================
@@ -53,10 +60,6 @@ public class OverworldCaveGenerator {
         spaghettiGeneratorTwo = new SimplexOctaveGenerator(rdm.nextLong(), OCTAVES);
         spaghettiGeneratorTwo.setScale(0.005);
         spaghettiGeneratorTwo.setYScale(spaghettiGeneratorTwo.getYScale() * 5 / 3);
-
-        caveLiquidGenerator = new SimplexOctaveGenerator(rdm.nextLong(), OCTAVES);
-        caveLiquidGenerator.setScale(0.005);
-        caveLiquidGenerator.setYScale(caveLiquidGenerator.getYScale() * 2 / 3);
 
         // Drives the properties of the 3D Voronoi cells
         aquiferFeatureNoise = new SimplexOctaveGenerator(rdm.nextLong(), 4);
@@ -92,7 +95,7 @@ public class OverworldCaveGenerator {
             case COLD_BEACH:        // sulphurous beach
             case FROZEN_OCEAN:      // sulphurous ocean
             case DEEP_OCEAN:        // abyss
-                return Material.STATIONARY_WATER;
+                return Material.WATER;
             default:
                 return Material.AIR;
         }
@@ -237,10 +240,9 @@ public class OverworldCaveGenerator {
     }
 
     private AquiferSubzone getVoronoiSubzone(int globalX, int globalY, int globalZ) {
-        int cellScale = 36;
-        int cellX = Math.floorDiv(globalX, cellScale);
-        int cellY = Math.floorDiv(globalY, cellScale);
-        int cellZ = Math.floorDiv(globalZ, cellScale);
+        int cellX = Math.floorDiv(globalX, CELL_SIZE_XZ);
+        int cellY = Math.floorDiv(globalY, CELL_SIZE_Y);
+        int cellZ = Math.floorDiv(globalZ, CELL_SIZE_XZ);
 
         double minDist = Double.MAX_VALUE;
         double secondMinDist = Double.MAX_VALUE;
@@ -255,13 +257,13 @@ public class OverworldCaveGenerator {
                     int cy = cellY + dy;
                     int cz = cellZ + dz;
 
-                    double offsetX = getFastJitter(cx, cy, cz, 1L) * cellScale;
-                    double offsetY = getFastJitter(cx, cy, cz, 2L) * cellScale;
-                    double offsetZ = getFastJitter(cx, cy, cz, 3L) * cellScale;
+                    double offsetX = getFastJitter(cx, cy, cz, 1L) * CELL_SIZE_XZ;
+                    double offsetY = getFastJitter(cx, cy, cz, 2L) * CELL_SIZE_Y;
+                    double offsetZ = getFastJitter(cx, cy, cz, 3L) * CELL_SIZE_XZ;
 
-                    double centerX = (cx * cellScale) + offsetX;
-                    double centerY = (cy * cellScale) + offsetY;
-                    double centerZ = (cz * cellScale) + offsetZ;
+                    double centerX = (cx * CELL_SIZE_XZ) + offsetX;
+                    double centerY = (cy * CELL_SIZE_Y) + offsetY;
+                    double centerZ = (cz * CELL_SIZE_XZ) + offsetZ;
 
                     double dist = ((centerX - globalX) * (centerX - globalX)) +
                             ((centerY - globalY) * (centerY - globalY)) +
@@ -289,13 +291,12 @@ public class OverworldCaveGenerator {
         Material fluid = null;
         int surfaceLevel = -999;
 
-        if (featureNoise > 0.25) {
+        if (featureNoise > AQUIFER_NOISE_REQUIREMENT) {
             surfaceLevel = targetCenterY + (int) (featureNoise * 15);
-            int LAVA_DEPTH_THRESHOLD = -150;
             if (surfaceLevel <= LAVA_DEPTH_THRESHOLD) {
-                fluid = Material.STATIONARY_LAVA;
+                fluid = Material.LAVA;
             } else {
-                fluid = Material.STATIONARY_WATER;
+                fluid = Material.WATER;
             }
         }
 
@@ -303,13 +304,13 @@ public class OverworldCaveGenerator {
     }
 
     private double get3DVertexDensity(int globalX, int effectualY, int globalZ) {
-        int xGrid = Math.floorDiv(globalX, GRID_SCALE);
-        int yGrid = Math.floorDiv(effectualY, GRID_SCALE);
-        int zGrid = Math.floorDiv(globalZ, GRID_SCALE);
+        int xGrid = Math.floorDiv(globalX, GRID_SCALE_XZ);
+        int yGrid = Math.floorDiv(effectualY, GRID_SCALE_Y);
+        int zGrid = Math.floorDiv(globalZ, GRID_SCALE_XZ);
 
-        double tx = ((double) globalX / GRID_SCALE) - xGrid;
-        double ty = ((double) effectualY / GRID_SCALE) - yGrid;
-        double tz = ((double) globalZ / GRID_SCALE) - zGrid;
+        double tx = ((double) globalX / GRID_SCALE_XZ) - xGrid;
+        double ty = ((double) effectualY / GRID_SCALE_Y) - yGrid;
+        double tz = ((double) globalZ / GRID_SCALE_XZ) - zGrid;
 
         double densityTotal = 0;
         double weightTotal = 0;
@@ -324,9 +325,9 @@ public class OverworldCaveGenerator {
                     double wz = 1.0 - Math.abs(tz - idz);
                     if (wz <= 0) continue;
 
-                    int vx = (xGrid + idx) * GRID_SCALE;
-                    int vy = (yGrid + idy) * GRID_SCALE;
-                    int vz = (zGrid + idz) * GRID_SCALE;
+                    int vx = (xGrid + idx) * GRID_SCALE_XZ;
+                    int vy = (yGrid + idy) * GRID_SCALE_Y;
+                    int vz = (zGrid + idz) * GRID_SCALE_XZ;
 
                     double sample = aquiferFeatureNoise.noise(vx, vy, vz, 2, 0.5, false);
                     double combinedWeight = wx * wy * wz;
@@ -346,26 +347,29 @@ public class OverworldCaveGenerator {
     public void populate(World wld, ChunkGenerator.ChunkData chunk, ChunkGenerator.BiomeGrid biome, int[][] heightMap, int blockXStart, int blockZStart, double[][] caveMultiMap) {
         if (CAVE_GEN_TIME_LOG && testCaveGenAmount[testInfoIndex] % 20 == 19) {
             TerrariaHelper.LOGGER.info("洞穴所属世界：" + testInfoIndex + "（0为地表，1为地下）");
-            TerrariaHelper.LOGGER.info("洞穴估算平均使用时间（单位：纳秒）: " + (testCaveSetupDurTotal[testInfoIndex] / testCaveGenAmount[testInfoIndex]) );
+            TerrariaHelper.LOGGER.info("洞穴粗略估算平均使用时间（单位：纳秒）: " + (testCaveSetupDurEst[testInfoIndex] / testCaveGenAmount[testInfoIndex]) );
+            TerrariaHelper.LOGGER.info("洞穴上采样估算平均使用时间（单位：纳秒）: " + (testCaveSetupDurFill[testInfoIndex] / testCaveGenAmount[testInfoIndex]) );
+            TerrariaHelper.LOGGER.info("地下水平均使用时间（单位：纳秒）: " + (testAquiferDurTotal[testInfoIndex] / testCaveGenAmount[testInfoIndex]) );
             TerrariaHelper.LOGGER.info("洞穴总体平均使用时间（单位：纳秒，含估算时长）: " + (testCaveDurTotal[testInfoIndex] / testCaveGenAmount[testInfoIndex]) );
-            TerrariaHelper.LOGGER.info("液体水槽/地下水(Aquifers)平均使用时间（单位：纳秒）: " + (testAquiferDurTotal[testInfoIndex] / testCaveGenAmount[testInfoIndex]) );
         }
 
         long timing = System.nanoTime();
 
         try {
-            Boolean[][][] caveFlags = WorldGenHelper.getChunkFlag(CAVE_ROUGH_SKETCH_DIAMETER, (info) -> {
-                int i = info[0];
-                int yCoord = info[1];
-                int j = info[2];
+            Boolean[][][] caveFlags = WorldGenHelper.getChunkData(16, 255, 16, CAVE_ROUGH_SKETCH_DIAMETER,
+                    Boolean.class, (info) -> {
+                        int i = info[0];
+                        int yCoord = info[1];
+                        int j = info[2];
 
-                int currX = blockXStart + i;
-                int effectualY = yOffset + yCoord;
-                int currZ = blockZStart + j;
+                        int currX = blockXStart + i;
+                        int effectualY = yOffset + yCoord;
+                        int currZ = blockZStart + j;
 
-                Biome columnBiome = OverworldBiomeGenerator.getBiome(currX, currZ);
-                return validateCaveEstimate(getCavernNoise(columnBiome, heightMap[i][j], currX, effectualY, currZ, caveMultiMap[i][j]));
-            }, CAVE_GEN_TIME_LOG, testCaveSetupDurTotal, testInfoIndex);
+                        Biome columnBiome = OverworldBiomeGenerator.getBiome(currX, currZ);
+                        return validateCaveEstimate(getCavernNoise(columnBiome, heightMap[i][j], currX, effectualY, currZ, caveMultiMap[i][j]));
+                    },
+                    CAVE_GEN_TIME_LOG, testCaveSetupDurEst, testCaveSetupDurFill, testInfoIndex);
 
             long aquiferTiming = System.nanoTime();
             for (int i = 0; i < 16; i ++) {
@@ -377,16 +381,15 @@ public class OverworldCaveGenerator {
                     int currZ = blockZStart + k;
 
                     for (int j = 1; j <= CAVERN_Y_BELOW_BEDROCK; j ++) {
-                        if (caveFlags[i][j][k]) {
-                            int effectualY = yOffset + j;
-
+                        int effectualY = yOffset + j;
+                        if (caveFlags[i][j][k] && effectualY < 50) {
                             AquiferSubzone subzone = aquiferAllowed ? getVoronoiSubzone(currX, effectualY, currZ) : null;
 
                             if (subzone != null && subzone.fluidType != null) {
                                 // 1. Determine local 3D barrier noise
                                 double barrierNoise = aquiferBarrierNoise.noise(currX, effectualY, currZ, 2, 0.5, true);
-                                int topCrust = (int) Math.round(barrierNoise);          // Yields -1, 0, or 1 block height above
-                                int bottomCrust = 3 + (int) Math.round(barrierNoise);   // Yields 2, 3, or 4 block shell thickness below
+                                int topCrust = (int) Math.round((barrierNoise + 1) * 1.75 - 1.5);      // Yields -1.5 - 2 block height above
+                                int bottomCrust = 2 + (int) Math.round(barrierNoise);                  // Yields 1, 2, or 3 block shell thickness below
 
                                 // 2. Determine Density Zones
                                 double fluidDensity = get3DVertexDensity(currX, effectualY, currZ);
