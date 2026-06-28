@@ -4,7 +4,6 @@ server/banned-players.json
 server/cache
 server/crash-reports/
 server/DragonCorePlayerData/
-server/jdk1.8.0_331/
 server/logs/
 server/usercache.json
 # Server Plugins

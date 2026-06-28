@@ -1,0 +1,6 @@
+JAVA_VERSION="1.8.0_331"
+OS_NAME="Windows"
+OS_VERSION="5.2"
+OS_ARCH="amd64"
+SOURCE=" .:22c1285b4fe1"
+BUILD_TYPE="commercial"
