@@ -69,4 +69,4 @@ ofFullscreenMode:Default
 ofFastMath:true
 ofFastRender:true
 ofTranslucentBlocks:2
-key_of.key.zoom:51
+key_of.key.zoom:46
