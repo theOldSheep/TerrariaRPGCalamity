@@ -5,6 +5,7 @@ server/cache
 server/crash-reports/
 server/DragonCorePlayerData/
 server/logs/
+server/ops.json
 server/usercache.json
 # Server Plugins
 server/plugins/Essentials/userdata/
