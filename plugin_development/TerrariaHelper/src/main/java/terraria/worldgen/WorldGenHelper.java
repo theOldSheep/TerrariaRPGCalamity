@@ -12,8 +12,8 @@ import java.util.concurrent.Future;
 import java.util.function.Function;
 
 public class WorldGenHelper {
-    static final int OPT_THREADS = Math.max(TerrariaHelper.optimizationConfig.getInt("worldGen.opt.optThreads", 16), 1);
-    static ExecutorService THREAD_POOL = Executors.newFixedThreadPool(OPT_THREADS);
+    public static final int OPT_THREADS = Math.max(TerrariaHelper.optimizationConfig.getInt("worldGen.opt.optThreads", 16), 1);
+    public static ExecutorService THREAD_POOL = Executors.newFixedThreadPool(OPT_THREADS);
 
     /**
      * Generic helper for 3D array generation with upsampling.

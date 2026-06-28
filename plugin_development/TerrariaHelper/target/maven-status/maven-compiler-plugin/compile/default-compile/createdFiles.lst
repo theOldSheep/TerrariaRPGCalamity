@@ -149,6 +149,7 @@ terraria\entity\boss\hardMode\astrumAureus\AstrumAureus.class
 terraria\entity\boss\postMoonLord\signus\Signus.class
 terraria\entity\boss\hardMode\leviathanAndAnahita\Leviathan$1.class
 terraria\entity\boss\hardMode\moonLord\MoonLordEye$MoonLordEyeLocation.class
+terraria\worldgen\overworld\OverworldCaveGenerator$CellCalculation.class
 terraria\entity\boss\preHardMode\kingSlime\KingSlime$SizeState.class
 terraria\entity\npc\TerrariaNPC$1.class
 terraria\entity\others\Critter.class
