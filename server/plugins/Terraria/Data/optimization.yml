@@ -18,7 +18,7 @@ worldGen:
     cavernChestRate: 0.025
   opt:
     chunkPrepDurationLog: false
-    caveGenDurationLog: false
+    caveGenDurationLog: true
     caveSketchSize: 3
     stoneVeinSketchSize: 3
     optThreads: 16

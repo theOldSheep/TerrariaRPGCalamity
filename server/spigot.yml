@@ -12,21 +12,21 @@
 
 config-version: 11
 settings:
-  save-user-cache-on-stop-only: false
   sample-count: 12
-  moved-wrongly-threshold: 10
-  filter-creative-items: true
+  save-user-cache-on-stop-only: false
   moved-too-quickly-multiplier: 10.0
+  filter-creative-items: true
+  moved-wrongly-threshold: 10
+  netty-threads: 4
   player-shuffle: 0
   late-bind: false
-  netty-threads: 4
-  item-dirty-ticks: 20
-  int-cache-limit: 1024
   timeout-time: 60
   restart-on-crash: true
   restart-script: ./start.sh
+  item-dirty-ticks: 20
   user-cache-size: 1000
   bungeecord: false
+  int-cache-limit: 1024
   attribute:
     maxHealth:
       max: 1.14514191981E12
@@ -63,28 +63,28 @@ stats:
 world-settings:
   default:
     verbose: true
-    arrow-despawn-rate: 12000
-    merge-radius:
-      item: 2.5
-      exp: 3.0
-    item-despawn-rate: 3000
+    mob-spawn-range: 4
     view-distance: 10
+    arrow-despawn-rate: 12000
+    enable-zombie-pigmen-portal-spawns: true
     wither-spawn-sound-radius: 0
+    hanging-tick-frequency: 100
+    merge-radius:
+      exp: 3.0
+      item: 2.5
+    item-despawn-rate: 3000
     zombie-aggressive-towards-villager: true
     nerf-spawner-mobs: false
-    enable-zombie-pigmen-portal-spawns: true
-    hanging-tick-frequency: 100
-    mob-spawn-range: 4
+    dragon-death-sound-radius: 0
+    seed-village: 10387312
+    seed-feature: 14357617
+    seed-monument: 10387313
+    seed-slime: 987234911
     ticks-per:
       hopper-transfer: 8
       hopper-check: 1
     hopper-amount: 1
-    random-light-updates: true
-    max-tick-time:
-      tile: 1000
-      entity: 1000
-    squid-spawn-range:
-      min: 45.0
+    save-structure-info: true
     growth:
       cactus-modifier: 1
       cane-modifier: 1
@@ -96,6 +96,10 @@ world-settings:
       netherwart-modifier: 1
       vine-modifier: 1
       cocoa-modifier: 1
+    max-tnt-per-tick: 100
+    max-tick-time:
+      tile: 1000
+      entity: 1000
     hunger:
       jump-walk-exhaustion: 10
       jump-sprint-exhaustion: 10
@@ -104,23 +108,19 @@ world-settings:
       swim-multiplier: 10
       sprint-multiplier: 10
       other-multiplier: 10
-    entity-activation-range:
-      animals: 180
-      monsters: 180
-      misc: 180
-      water: 180
-      tick-inactive-villagers: true
+    squid-spawn-range:
+      min: 45.0
     entity-tracking-range:
       players: 180
       animals: 180
       monsters: 180
       misc: 180
       other: 180
-    save-structure-info: true
-    max-tnt-per-tick: 100
-    dragon-death-sound-radius: 0
-    seed-village: 10387312
-    seed-feature: 14357617
-    seed-monument: 10387313
-    seed-slime: 987234911
+    random-light-updates: true
+    entity-activation-range:
+      animals: 180
+      monsters: 180
+      misc: 180
+      water: 180
+      tick-inactive-villagers: true
     max-entity-collisions: -1

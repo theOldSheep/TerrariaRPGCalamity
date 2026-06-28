@@ -272,6 +272,7 @@ terraria\entity\boss\hardMode\empressOfLight\EmpressOfLight$1.class
 terraria\util\NPCHelper.class
 terraria\worldgen\overworld\OrePopulator$OreMaterial.class
 terraria\entity\projectile\GenericProjectile.class
+terraria\worldgen\overworld\OverworldCaveGenerator$AquiferSubzone.class
 terraria\worldgen\overworld\OverworldBiomeGenerator.class
 terraria\util\NMSUtils$NBTTagType.class
 terraria\entity\boss\hardMode\thePlaguebringerGoliath\ThePlaguebringerGoliath$AIPhase.class
