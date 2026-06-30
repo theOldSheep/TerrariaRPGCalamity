@@ -1,6 +1,6 @@
 worldGen:
   params:
-    seed: 0D000721
+    seed: 0x0d000721
     landHeight: 100
     seaLevel: 90
     riverDepth: 25
