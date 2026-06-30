@@ -99,7 +99,7 @@ public class ItemUseHelper {
         double pickaxeReach = 4 + attrMap.getOrDefault("reachExtra", 0d);
         pickaxeReach *= attrMap.getOrDefault("meleeReachMulti", 1d);
         // mine block if applicable
-        Block blk = ply.getTargetBlock(GameplayHelper.noMiningSet, (int) Math.round(pickaxeReach));
+        Block blk = ply.getTargetBlock(GameplayHelper.NO_MINING_SET, (int) Math.round(pickaxeReach));
         if (blk != null) GameplayHelper.playerMineBlock(blk, ply);
         // left click swings until stopped
         if (!isRightClick)

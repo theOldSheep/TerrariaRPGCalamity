@@ -105,6 +105,14 @@
   lore:
   - §r右键在脚下31*31的范围内生成玻璃
   rarity: 1
+虚无海绵:
+  item: SPONGE
+  data: 1
+  lore:
+  - §r被挖掘时，摧毁一定范围内的海绵方块
+  - §r被摧毁时扩散至附近流体
+  worth: 20000
+  rarity: 2
 铁轨:
   item: RAILS
   worth: 1000

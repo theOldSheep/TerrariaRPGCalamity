@@ -662,6 +662,12 @@ public class EntityHelper {
                         }
                     }
                 }
+                // sort by distance
+                pendingDestruction.sort((a,b) -> {
+                    double distSqrA = a.getLocation().add(0, 0.5, 0).distanceSquared(loc);
+                    double distSqrB = b.getLocation().add(0, 0.5, 0).distanceSquared(loc);
+                    return distSqrA > distSqrB ? 1 : -1;
+                });
                 // destroy
                 for (Block block : pendingDestruction) {
                     if (block.getType() == Material.AIR) continue;

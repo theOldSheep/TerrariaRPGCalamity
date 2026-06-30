@@ -4,7 +4,7 @@ mouseSensitivity:0.5
 fov:0.0
 gamma:1.0
 saturation:0.0
-renderDistance:8
+renderDistance:16
 guiScale:0
 particles:0
 bobView:false
@@ -52,8 +52,8 @@ enableWeakAttacks:false
 autoJump:false
 narrator:0
 tutorialStep:none
-key_key.attack:-100
-key_key.use:-99
+key_key.attack:203
+key_key.use:205
 key_key.forward:17
 key_key.left:30
 key_key.back:31
@@ -61,11 +61,11 @@ key_key.right:32
 key_key.jump:57
 key_key.sneak:42
 key_key.sprint:29
-key_key.drop:16
+key_key.drop:55
 key_key.inventory:18
 key_key.chat:20
 key_key.playerlist:15
-key_key.pickItem:-98
+key_key.pickItem:208
 key_key.command:53
 key_key.screenshot:60
 key_key.togglePerspective:63
@@ -73,7 +73,7 @@ key_key.smoothCamera:0
 key_key.fullscreen:87
 key_key.spectatorOutlines:0
 key_key.swapHands:33
-key_key.saveToolbarActivator:46
+key_key.saveToolbarActivator:0
 key_key.loadToolbarActivator:45
 key_key.advancements:38
 key_key.hotbar.1:2
@@ -108,7 +108,7 @@ key_gui.xaero_reverse_entity_radar:0
 key_gui.xaero_toggle_manual_cave_mode:0
 key_gui.xaero_minimap_settings:21
 key_NBTEdit Shortcut:0
-soundCategory_master:1.0
+soundCategory_master:0.31456953
 soundCategory_music:1.0
 soundCategory_record:1.0
 soundCategory_weather:1.0

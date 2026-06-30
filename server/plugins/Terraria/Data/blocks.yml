@@ -424,6 +424,8 @@ CHEST:
   totalProgress: 150
   dropItem:
   - CHEST
+SPONGE_1:
+  totalProgress: 1
 # unbreakables
 SMOOTH_BRICK_1:
   powerPickaxe: 999999

@@ -17,21 +17,32 @@ import terraria.TerrariaHelper;
 import terraria.entity.others.TerrariaMinecart;
 import terraria.worldgen.overworld.OverworldBiomeGenerator;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class GameplayHelper {
+    public static final int SPONGE_CHAINING_DEPTH = 4;
     // this set is also used by ItemUseHelper to determine ray trace block result.
     // that is, materials in this set would be ignored while mining.
-    public static Set<Material> noMiningSet;
+    public static final Set<Material> NO_MINING_SET;
+    public static final Set<BlockFace> SPONGE_CHANING_DIRS;
     static {
-        noMiningSet = new HashSet<>();
-        noMiningSet.add(Material.AIR);
-        noMiningSet.add(Material.WATER);
-        noMiningSet.add(Material.STATIONARY_WATER);
-        noMiningSet.add(Material.LAVA);
-        noMiningSet.add(Material.STATIONARY_LAVA);
+        NO_MINING_SET = new HashSet<>();
+        NO_MINING_SET.add(Material.AIR);
+        NO_MINING_SET.add(Material.WATER);
+        NO_MINING_SET.add(Material.STATIONARY_WATER);
+        NO_MINING_SET.add(Material.LAVA);
+        NO_MINING_SET.add(Material.STATIONARY_LAVA);
+
+        SPONGE_CHANING_DIRS = new HashSet<>();
+        SPONGE_CHANING_DIRS.add(BlockFace.EAST);
+        SPONGE_CHANING_DIRS.add(BlockFace.WEST);
+        SPONGE_CHANING_DIRS.add(BlockFace.SOUTH);
+        SPONGE_CHANING_DIRS.add(BlockFace.NORTH);
+        SPONGE_CHANING_DIRS.add(BlockFace.UP);
+        SPONGE_CHANING_DIRS.add(BlockFace.DOWN);
     }
     public static String getBlockCategory(Block block) {
         switch (block.getType()) {
@@ -139,7 +150,7 @@ public class GameplayHelper {
         return ! unBreakable(block, ply, false);
     }
     public static boolean unBreakable(Block block, Player ply, boolean denyNoMiningSet) {
-        if (denyNoMiningSet && noMiningSet.contains(block.getType())) return true;
+        if (denyNoMiningSet && NO_MINING_SET.contains(block.getType())) return true;
         // blocks near the spawn point can not be broken
         if (WorldHelper.isSpawnProtected(block.getLocation(), ply)) {
             PlayerHelper.sendActionBar(ply, "请勿破坏出生点附近的方块！");
@@ -298,6 +309,9 @@ public class GameplayHelper {
                 }
         }
 
+        // sponge consecutive break should happen before set empty
+        handleSpongeConsecutiveBreak(ply, blockToBreak);
+
         // make the block empty BEFORE recursive breaking mechanism!
         WorldHelper.makeEmptyBlock(blockToBreak, true);
 
@@ -372,6 +386,67 @@ public class GameplayHelper {
             case BED:
             case BED_BLOCK:
                 playerBreakBlock(blockAbove, ply, true, false);
+        }
+    }
+    // sponge breaks consecutively
+    private static void handleSpongeConsecutiveBreak(Player ply, Block brokenBlock) {
+        if (brokenBlock.getType() != Material.SPONGE) {
+            return;
+        }
+        HashSet<Block> visited = new HashSet<>();
+        ArrayList<Block> queueBlk = new ArrayList<>();
+        ArrayList<Integer> queueRecDepths = new ArrayList<>();
+        Set<Block> liquids = new HashSet<>();
+        queueBlk.add(brokenBlock);
+        queueRecDepths.add(0);
+        // consecutive break
+        while (!queueBlk.isEmpty()) {
+            int idx = queueBlk.size() - 1;
+            Block curr = queueBlk.remove(idx);
+            int currDepth = queueRecDepths.remove(idx);
+            if (visited.contains(curr)) {
+                continue;
+            }
+            visited.add(curr);
+            // perm check & breaking
+            if (unBreakable(curr, ply, true)) {
+                continue;
+            }
+            WorldHelper.makeEmptyBlock(curr, true);
+            // chain breaking
+            for (BlockFace face : SPONGE_CHANING_DIRS) {
+                Block next = curr.getRelative(face);
+                if (visited.contains(next)) {
+                    continue;
+                }
+                switch (next.getType()) {
+                    case SPONGE: {
+                        if (currDepth < SPONGE_CHAINING_DEPTH) {
+                            queueBlk.add(next);
+                            queueRecDepths.add(currDepth + 1);
+                        }
+                        break;
+                    }
+                    case WATER:
+                    case STATIONARY_WATER:
+                    case LAVA:
+                    case STATIONARY_LAVA: {
+                        if (! WorldHelper.BiomeType.getBiome(next.getLocation()).isWaterFilled) {
+                            liquids.add(next);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        // water replacement
+        for (Block toReplace : liquids) {
+            // liquid is "no mining"!
+            if (unBreakable(toReplace, ply, false)) {
+                continue;
+            }
+            toReplace.setTypeIdAndData(Material.SPONGE.getId(), (byte)1, false);
         }
     }
     // other block special feature when broken

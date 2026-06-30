@@ -95,7 +95,7 @@ public class OverworldCaveGenerator {
             case COLD_BEACH:        // sulphurous beach
             case FROZEN_OCEAN:      // sulphurous ocean
             case DEEP_OCEAN:        // abyss
-                return Material.WATER;
+                return Material.STATIONARY_WATER;
             default:
                 return Material.AIR;
         }
@@ -173,7 +173,7 @@ public class OverworldCaveGenerator {
 
                         result[0] += amplify;
                         // noise multi closer to 0 -> position deeper within the biome
-                        result[0] = (result[0]) * (1 - noiseMulti) + (-1) * noiseMulti;
+                            result[0] = (result[0]) * (1 - noiseMulti) + (-2) * noiseMulti;
                     }
                     return result;
                 }
@@ -200,94 +200,6 @@ public class OverworldCaveGenerator {
         return (noise[0] > CHEESE_THRESHOLD) || (
                 (Math.abs(noise[1]) < SPAGHETTI_THRESHOLD) &&
                         (Math.abs(noise[2]) < SPAGHETTI_THRESHOLD));
-    }
-
-    /*
-     * ===============================
-     * Cached Voronoi Subzone Helper
-     * ===============================
-     */
-    private static class CellCalculation {
-        final double minDist;
-        final double secondMinDist;
-        final int targetCenterY;
-        final double featureNoise;
-
-        CellCalculation(double minDist, double secondMinDist, int targetCenterY, double featureNoise) {
-            this.minDist = minDist;
-            this.secondMinDist = secondMinDist;
-            this.targetCenterY = targetCenterY;
-            this.featureNoise = featureNoise;
-        }
-    }
-
-    private AquiferSubzone getVoronoiSubzoneWithCache(int globalX, int globalY, int globalZ, java.util.concurrent.ConcurrentHashMap<String, CellCalculation> cache) {
-        int cellX = Math.floorDiv(globalX, CELL_SIZE_XZ);
-        int cellY = Math.floorDiv(globalY, CELL_SIZE_Y);
-        int cellZ = Math.floorDiv(globalZ, CELL_SIZE_XZ);
-
-        String cacheKey = cellX + "," + cellY + "," + cellZ;
-
-        // Compute or fetch shared cell definitions (closest/second-closest tracking fields)
-        CellCalculation cell = cache.computeIfAbsent(cacheKey, k -> {
-            double mDist = Double.MAX_VALUE;
-            double sMinDist = Double.MAX_VALUE;
-            int tCenterX = 0;
-            int tCenterY = 0;
-            int tCenterZ = 0;
-
-            for (int dx = -1; dx <= 1; dx++) {
-                for (int dy = -1; dy <= 1; dy++) {
-                    for (int dz = -1; dz <= 1; dz++) {
-                        int cx = cellX + dx;
-                        int cy = cellY + dy;
-                        int cz = cellZ + dz;
-
-                        double offsetX = getFastJitter(cx, cy, cz, 1L) * CELL_SIZE_XZ;
-                        double offsetY = getFastJitter(cx, cy, cz, 2L) * CELL_SIZE_Y;
-                        double offsetZ = getFastJitter(cx, cy, cz, 3L) * CELL_SIZE_XZ;
-
-                        double centerX = (cx * CELL_SIZE_XZ) + offsetX;
-                        double centerY = (cy * CELL_SIZE_Y) + offsetY;
-                        double centerZ = (cz * CELL_SIZE_XZ) + offsetZ;
-
-                        double dist = ((centerX - globalX) * (centerX - globalX)) +
-                                ((centerY - globalY) * (centerY - globalY)) +
-                                ((centerZ - globalZ) * (centerZ - globalZ));
-
-                        if (dist < mDist) {
-                            sMinDist = mDist;
-                            mDist = dist;
-                            tCenterX = (int) centerX;
-                            tCenterY = (int) centerY;
-                            tCenterZ = (int) centerZ;
-                        } else if (dist < sMinDist) {
-                            sMinDist = dist;
-                        }
-                    }
-                }
-            }
-
-            double fNoise = aquiferFeatureNoise.noise(tCenterX, tCenterY, tCenterZ, 2, 0.5, true);
-            return new CellCalculation(mDist, sMinDist, tCenterY, fNoise);
-        });
-
-        // Boundary distances must still be computed relative to the unique block's global coordinates
-        boolean isBoundary = (cell.secondMinDist - cell.minDist) < 150.0;
-
-        Material fluid = null;
-        int surfaceLevel = -999;
-
-        if (cell.featureNoise > AQUIFER_NOISE_REQUIREMENT) {
-            surfaceLevel = cell.targetCenterY + (int) (cell.featureNoise * 15);
-            if (surfaceLevel <= LAVA_DEPTH_THRESHOLD) {
-                fluid = Material.LAVA;
-            } else {
-                fluid = Material.WATER;
-            }
-        }
-
-        return new AquiferSubzone(surfaceLevel, fluid, isBoundary);
     }
 
     /*
@@ -382,9 +294,9 @@ public class OverworldCaveGenerator {
         if (featureNoise > AQUIFER_NOISE_REQUIREMENT) {
             surfaceLevel = targetCenterY + (int) (featureNoise * 15);
             if (surfaceLevel <= LAVA_DEPTH_THRESHOLD) {
-                fluid = Material.LAVA;
+                fluid = Material.STATIONARY_LAVA;
             } else {
-                fluid = Material.WATER;
+                fluid = Material.STATIONARY_WATER;
             }
         }
 
@@ -451,9 +363,9 @@ public class OverworldCaveGenerator {
         if (featureNoise > AQUIFER_NOISE_REQUIREMENT) {
             surfaceLevel = targetCenterY + (int) (featureNoise * 15);
             if (surfaceLevel <= LAVA_DEPTH_THRESHOLD) {
-                fluid = Material.LAVA;
+                fluid = Material.STATIONARY_LAVA;
             } else {
-                fluid = Material.WATER;
+                fluid = Material.STATIONARY_WATER;
             }
         }
 
@@ -645,10 +557,10 @@ public class OverworldCaveGenerator {
                             for (int j = 1; j <= CAVERN_Y_BELOW_BEDROCK; j++) {
                                 Material mat = blockPlacements[i][j][k];
 
-                                if (mat == Material.WATER || mat == Material.LAVA) {
+                                if (mat == Material.STATIONARY_WATER || mat == Material.STATIONARY_LAVA) {
                                     if (j > 1) {
                                         Material belowMat = blockPlacements[i][j - 1][k];
-                                        if (belowMat == biomeAir || belowMat == Material.AIR) {
+                                        if (belowMat == Material.AIR) {
                                             blockPlacements[i][j - 1][k] = Material.STONE;
                                         }
                                     }

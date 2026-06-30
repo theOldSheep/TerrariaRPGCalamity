@@ -126,29 +126,31 @@ public class WorldHelper {
         }
     }
     public enum BiomeType {
-        ABYSS("深渊", new Color(0, 0, 150)),
-        ASTRAL_INFECTION("星辉瘟疫", new Color(125, 75, 125)),
-        BRIMSTONE_CRAG("硫火之崖", new Color(75, 0, 0)),
-        CORRUPTION("腐化之地", new Color(200, 0, 255)),
-        DESERT("沙漠", new Color(255, 255, 0)),
-        DUNGEON("地牢", new Color(0, 0, 0)),
-        HALLOW("神圣之地", new Color(255, 255, 255)),
-        JUNGLE("丛林", new Color(0, 160, 0)),
-        METEOR("陨石", new Color(255, 150, 100)),
-        NORMAL("森林", new Color(0, 255, 0)),
-        OCEAN("海洋", new Color(0, 150, 255)),
-        SPACE("太空", new Color(175, 225, 255)),
-        SULPHUROUS_OCEAN("硫磺海", new Color(120, 200, 150)),
-        SUNKEN_SEA("沉沦之海", new Color(0, 150, 180)),
-        TEMPLE("丛林神庙", new Color(255, 100, 50)),
-        TUNDRA("雪原", new Color(150, 200, 255)),
-        UNDERWORLD("地狱", new Color(150, 0, 0));
+        ABYSS("深渊", new Color(0, 0, 150), true),
+        ASTRAL_INFECTION("星辉瘟疫", new Color(125, 75, 125), false),
+        BRIMSTONE_CRAG("硫火之崖", new Color(75, 0, 0), false),
+        CORRUPTION("腐化之地", new Color(200, 0, 255), false),
+        DESERT("沙漠", new Color(255, 255, 0), false),
+        DUNGEON("地牢", new Color(0, 0, 0), false),
+        HALLOW("神圣之地", new Color(255, 255, 255), false),
+        JUNGLE("丛林", new Color(0, 160, 0), false),
+        METEOR("陨石", new Color(255, 150, 100), false),
+        NORMAL("森林", new Color(0, 255, 0), false),
+        OCEAN("海洋", new Color(0, 150, 255), false),
+        SPACE("太空", new Color(175, 225, 255), false),
+        SULPHUROUS_OCEAN("硫磺海", new Color(120, 200, 150), false),
+        SUNKEN_SEA("沉沦之海", new Color(0, 150, 180), true),
+        TEMPLE("丛林神庙", new Color(255, 100, 50), false),
+        TUNDRA("雪原", new Color(150, 200, 255), false),
+        UNDERWORLD("地狱", new Color(150, 0, 0), false);
 
         public final String displayName;
         public final Color color;
-        BiomeType(String displayName, Color color) {
+        public final boolean isWaterFilled;
+        BiomeType(String displayName, Color color, boolean isWaterFilled) {
             this.displayName = displayName;
             this.color = color;
+            this.isWaterFilled = isWaterFilled;
         }
 
         public static BiomeType getBiome(Player ply) {
@@ -315,14 +317,10 @@ public class WorldHelper {
     public static void makeEmptyBlock(Block block, boolean airApplicable, boolean changeSolidOnly) {
         if (changeSolidOnly && !block.getType().isSolid())
             return;
-        switch (BiomeType.getBiome(block.getLocation())) {
-            case ABYSS:
-            case SUNKEN_SEA:
-                block.setType(Material.STATIONARY_WATER);
-                break;
-            default:
-                if (airApplicable)
-                    block.setType(Material.AIR);
+        if (BiomeType.getBiome(block.getLocation()).isWaterFilled) {
+            block.setType(Material.STATIONARY_WATER);
+        } else if (airApplicable) {
+            block.setType(Material.AIR);
         }
     }
     public static void attemptDestroyVegetation(Location startLoc, Location endLoc) {
