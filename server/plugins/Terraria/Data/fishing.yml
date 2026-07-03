@@ -138,6 +138,7 @@ fish:
     双鳍鳕鱼:
       height:
       - SPACE
+      - SURFACE
       biome:
       - JUNGLE
     黑檀锦鲤:
